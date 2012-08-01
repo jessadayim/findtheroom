@@ -5,3 +5,4 @@ FTRWebBundle_homepage:
 FTRWebBundle_search:
     pattern:  /search
     defaults: { _controller: FTRWebBundle:Search:search }
+
