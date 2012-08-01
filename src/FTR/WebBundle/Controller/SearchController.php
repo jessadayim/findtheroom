@@ -10,7 +10,6 @@ class SearchController extends Controller
     
     public function searchAction()
     {
-        echo "789";
         return $this->render('FTRWebBundle:Search:search.html.twig', array());
     }
 }
