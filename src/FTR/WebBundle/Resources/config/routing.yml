@@ -1,0 +1,7 @@
+FTRWebBundle_homepage:
+    pattern:  /
+    defaults: { _controller: FTRWebBundle:Main:index }
+    
+FTRWebBundle_search:
+    pattern:  /search
+    defaults: { _controller: FTRWebBundle:Search:search }

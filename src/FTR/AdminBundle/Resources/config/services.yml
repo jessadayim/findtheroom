@@ -1,0 +1,7 @@
+parameters:
+#    ftr_admin.example.class: FTR\AdminBundle\Example
+
+services:
+#    ftr_admin.example:
+#        class: %ftr_admin.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

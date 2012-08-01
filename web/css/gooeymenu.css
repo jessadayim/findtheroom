@@ -1,0 +1,46 @@
+ul { width:100%; font-size:20px;font-weight: normal;}
+
+ul li.active{ /*IE6 hack- hide gooey effect from that browser*/
+_visibility: hidden; /*IE6 rule*/
+}
+
+/* ######### Gel Menu CSS ######### */
+
+ul.gelbuttonmenu{
+position:relative;
+padding: 0;
+margin: 0 auto;
+text-align: center;
+z-index:999;
+width:1000px;
+}
+
+ul.gelbuttonmenu li{
+display: inline;
+}
+
+ul.gelbuttonmenu li a{
+color: #423C3B;
+padding: 5px 15px; /*make sure padding is sufficient that the height of the link is enough to fully show the gel button*/
+margin-right: 50px; /*spacing between each menu link*/
+text-decoration: none;
+font-weight: normal;
+}
+
+ul.gelbuttonmenu li a:hover{
+color: #FFFFFF;
+background:#BF1E2D;
+padding: 5px 15px; /*make sure padding is sufficient that the height of the link is enough to fully show the gel button*/
+margin-right: 50px; /*spacing between each menu link*/
+text-decoration: none;
+font-weight: normal;
+}
+
+ul.gelbuttonmenu li a.selected{
+color: #FFFFFF;
+background:#BF1E2D;
+padding: 5px 15px; /*make sure padding is sufficient that the height of the link is enough to fully show the gel button*/
+margin-right: 50px; /*spacing between each menu link*/
+text-decoration: none;
+font-weight: normal;
+}

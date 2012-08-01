@@ -1,0 +1,739 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>FindTheRoom</title>
+<link rel="stylesheet" type="text/css" href="{{asset('css/main.css')}}" />
+<link rel="stylesheet" type="text/css" href="{{asset('css/gooeymenu.css')}}" />
+<link rel="stylesheet" type="text/css" href="{{asset('css/global.css')}}">
+<script src="{{asset('js/jquery.min.js')}}"></script>
+<script src="{{asset('js/html5placeholder.jquery.js')}}"></script>
+<script src="{{asset('js/jquery.easing.1.3.js')}}"></script>
+<script src="{{asset('js/slides.min.jquery.js')}}"></script>
+<script>
+		$(function(){
+			$('#slides').slides({
+				preload: true,
+				preloadImage: "{{asset('images/slider/loading.gif')}}",
+				play: 5000,
+				pause: 2500,
+				hoverPause: true,
+				effect: 'fade',
+				fadeSpeed: 350,
+				fadeEasing: "easeOutQuad",
+				crossfade: true
+			});
+			$('#slides2').slides({
+				preload: true,
+				preloadImage: "{{asset('images/slider/loading.gif')}}",
+				play: 5000,
+				pause: 5000,
+				hoverPause: true,
+				generatePagination: false
+			});
+			$('#slides3').slides({
+				preload: true,
+				preloadImage: "{{asset('images/slider/loading.gif')}}",
+				play: 5000,
+				pause: 5000,
+				hoverPause: true,
+				generatePagination: false
+			});
+			$('#slides4').slides({
+				preload: true,
+				preloadImage: "{{asset('images/slider/loading.gif')}}",
+				play: 5000,
+				pause: 5000,
+				hoverPause: true,
+				generatePagination: false
+			});
+		});
+</script>
+<script>
+    $(function(){
+      $(':input[placeholder]').placeholder();
+    });
+</script>
+<script language="javascript">
+		$(document).ready(function(){
+		var mybrowser=navigator.userAgent;
+		if(mybrowser.indexOf('Firefox')>0){
+		$(".login").css("marginLeft","5px");
+		$(".head hr").css("marginTop","5px");
+		//$(".or").css("marginLeft","20px");
+		//$(".link").css("marginLeft","80px");
+		}
+		});
+</script>
+<script type="text/javascript">  
+$(function(){  
+    $("ul#navi_containTab > li").click(function(event){  
+            var menuIndex=$(this).index();  
+            $("ul#detail_containTab > li:visible").hide();             
+            $("ul#detail_containTab > li").eq(menuIndex).show(); 
+    });  
+	$("ul#navi_containTab2 > li").click(function(event){  
+            var menuIndex=$(this).index();  
+            $("ul#detail_containTab2 > li:visible").hide();             
+            $("ul#detail_containTab2 > li").eq(menuIndex).show(); 
+    });  
+	$("li#tabNavi1").click(function(event){  
+            $("#recommend").css("marginTop","15px");             
+    });  
+	$("li#tabNavi2").click(function(event){  
+            $("#recommend").css("marginTop","15px");             
+    }); 
+	$("li#tabNavi3").click(function(event){  
+            $("#recommend").css("marginTop","215px");             
+    }); 
+});  
+</script>
+
+<script type="text/javascript"> 
+function enact(what){
+     var p = what.parentNode;
+     var els = p.getElementsByTagName('li');
+     for(i=0;i<els.length;i++){
+          els[i].className = '';
+     }
+     what.className = 'active';
+}
+</script>
+
+</head>
+
+<body>
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<div id="header">
+	<span>Follow Us On :</span><div class="social"><a href="http://www.facebook.com/FindTheRoom" target="_new"><img src="{{asset('images/fb-icon.gif')}}" /></a> <a href="#" target="_blank"><img src="{{asset('images/tw-icon.gif')}}" /></a></div>
+	<div id="logo"></div>
+    <div id="login">
+    	<form>
+    		<input name="username" type="text" value="" maxlength="25" placeholder="Username" /> <input name="password" type="password" value="" maxlength="25" placeholder="Password" /> <input class="login" type="submit" value="" />
+        </form>
+    </div>
+</div>
+
+<div id="menu">
+	<hr />
+    <ul id="gooeymenu1" class="gelbuttonmenu">
+    	 <li><a href="index.html">หน้าแรก</a></li>
+         <li><a href="search.html" class="selected">ค้นหาอย่างละเอียด</a></li>
+         <li><a href="#">ลงโฆษณา</a></li>
+         <li><a href="#">ลงประกาศห้องพักฟรี</a></li>
+         <li><a href="#">กระดานพูดคุย</a></li>
+         <li><a href="#" style="margin-right:0px;">ติดต่อเรา</a></li>
+    </ul>
+    <hr />
+</div>
+
+<div id="search2">
+	<img src="{{asset('images/search-i.png')}}" />
+	<hr class="line" style="top: 60px;" />
+    <div>
+		<table>
+			<tr height="50" valign="middle">
+				<td align="right" style="padding-right:15px;">ประเภทห้องพัก :</td>
+				<td width="350">
+					<div class="styled-select">
+						<select class="select">
+							<option value="all">ทุกประเภท</option>
+							<option value="apartment">อพาร์ทเม้นต์</option>
+							<option value="man">หอชาย</option>
+							<option value="woman">หอหญิง</option>
+						</select>
+					</div>
+				</td>
+				<td align="right" style="padding-right:15px;">ราคาเริ่มต้น :</td>
+				<td width="350">
+					<input class="price" name="lessprice" type="text" maxlength="10" placeholder="กรุณากรอกราคาเริ่มต้น" />&nbsp;&nbsp;&nbsp;&nbsp;บาท
+				</td>
+			</tr>
+			<tr height="50" valign="middle">
+				<td align="right" style="padding-right:15px;">ชนิด :</td>
+				<td>
+					<div class="styled-select">
+						<select class="select">
+							<option value="daymonth">รายวันและรายเดือน</option>
+							<option value="day">รายวัน</option>
+							<option value="month">รายเดือน</option>
+						</select>
+					</div>
+				</td>
+				<td align="right" style="padding-right:15px;">ราคาไม่เกิน :</td>
+				<td>
+					<input class="price" name="mostprice" type="text" maxlength="10" placeholder="กรุณากรอกราคาไม่เกิน" />&nbsp;&nbsp;&nbsp;&nbsp;บาท
+				</td>
+			</tr>
+		</table>
+	</div>
+    <hr class="line" style="top: 185px;" />
+    <div>
+		<table>
+        	<tr>
+            	<td colspan="4">
+                ที่ตั้ง :
+                </td>
+            </tr>
+			<tr height="50" valign="middle">
+				<td align="left" width="165"><input id="bk" name="place" type="radio" value="bangkok" checked="checked" /><label for="bk">เขตกรุงเทพฯ :</label></td>
+				<td width="300">
+					<div class="styled-select">
+                    <label for="bk">
+						<select class="select">
+							<option value="all">ทุกเขต</option>
+							<option value="banken">บางเขน</option>
+							<option value="vipawadee">วิภาวดีรังสิต</option>
+							<option value="etc">อื่นๆ</option>
+						</select>
+                    </label>
+					</div>
+				</td>
+				<td align="left" width="145"><input id="bt" name="place" type="radio" value="bts" /><label for="bt">ใกล้รถไฟฟ้า BTS :</label></td>
+				<td width="300">
+					<div class="styled-select">
+                    <label for="bt">
+						<select class="select">
+							<option value="all">ทุกสถานี</option>
+							<option value="siam">สยาม</option>
+							<option value="chidlom">ชิดลม</option>
+							<option value="tonglo">ทองหล่อ</option>
+						</select>
+                    </label>
+					</div>
+				</td>
+			</tr>
+			<tr height="50" valign="middle">
+				<td align="left" width="165"><input id="uni" name="place" type="radio" value="university" /><label for="uni">ใกล้มหาวิทยาลัย :</label></td>
+				<td width="300">
+					<div class="styled-select">
+                    <label for="uni">
+						<select class="select">
+							<option value="all">- กรุณาระบุ -</option>
+							<option value="kmitl">สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</option>
+							<option value="jula">มหาวิทยาลับจุฬาลงกรณ์</option>
+							<option value="tammasard">มหาวิทยาลัยธรรมศาสตร์</option>
+						</select>
+                    </label>
+					</div>
+				</td>
+				<td align="left" width="145"><input id="mr" name="place" type="radio" value="mrt" /><label for="mr">ใกล้รถไฟฟ้า MRT :</label></td>
+				<td width="300">
+					<div class="styled-select">
+                    <label for="mr">
+						<select class="select">
+							<option value="all">ทุกสถานี</option>
+							<option value="banken">สยาม</option>
+							<option value="vipawadee">ชิดลม</option>
+							<option value="etc">ทองหล่อ</option>
+						</select>
+                    </label>
+					</div>
+				</td>
+			</tr>
+            <tr height="50" valign="middle">
+				<td align="left" width="165"><input id="pl" name="place" type="radio" value="etcp" /><label for="pl">ตามสถานที่ใกล้เคียง :</label></td>
+				<td width="300">
+					<div class="styled-select">
+                    <label for="pl">
+						<select class="select">
+							<option value="all">- กรุณาระบุ -</option>
+							<option value="suwannapum">สนามบินสุวรรณภูมิ</option>
+                            <option value="donmeung">สนามบินดอนเมือง</option>
+							<option value="train">รถไฟห้วยขวาง</option>
+						</select>
+                    </label>
+					</div>
+				</td>
+				<td colspan="2">&nbsp;
+				</td>
+			</tr>
+		</table>
+	</div>
+	<hr class="line" style="top: 385px;" />
+    <div>
+		<table>
+        	<tr>
+            	<td colspan="4" style="padding-bottom:5px;">
+                สิ่งอำนวยความสะดวกในห้อง :
+                </td>
+            </tr>
+			<tr height="40" valign="middle">
+				<td width="250"><input id="in" name="option1" type="checkbox" value="lan" /> <label for="in">อินเตอร์เน็ต</label></td>
+				<td width="250"><input id="wi" name="option2" type="checkbox" value="wifi" /> <label for="wi">อินเตอร์เน็ตไร้สาย</label></td>
+				<td width="250"><input id="ai" name="option3" type="checkbox" value="air" /> <label for="ai">เครื่องปรับอากาศ</label></td>
+				<td width="250"><input id="fa" name="option4" type="checkbox" value="fan" /> <label for="fa">พัดลม</label></td>
+			</tr>
+			<tr height="40" valign="middle">
+				<td width="250"><input id="to" name="option5" type="checkbox" value="toilet" /> <label for="to">ห้องน้ำส่วนตัว</label></td>
+				<td width="250"><input id="ho" name="option6" type="checkbox" value="hot" /> <label for="ho">เครื่องทำน้ำอุ่น</label></td>
+				<td width="250"><input id="te" name="option7" type="checkbox" value="tel" /> <label for="te">โทรศัพท์สายตรง</label></td>
+				<td width="250"><input id="fu" name="option8" type="checkbox" value="furniture" /> <label for="fu">เฟอร์นิเจอร์</label></td>			
+			</tr>
+            <tr height="40" valign="middle">
+				<td width="250"><input id="ki" name="option9" type="checkbox" value="kitchen" /> <label for="ki">ห้องครัว</label></td>
+				<td width="250"><input id="ba" name="option10" type="checkbox" value="balcony" /> <label for="ba">ระเบียง</label></td>
+				<td width="250"><input id="tv" name="option11" type="checkbox" value="cabel" /> <label for="tv">เคเบิ้ลทีวี/ดาวเทียม</label></td>
+				<td width="250"><input id="pe" name="option12" type="checkbox" value="pet" /> <label for="pe">อนุญาตให้เลี้ยงสัตว์</label></td>			
+			</tr>
+		</table>
+	</div>
+    <hr class="line" style="top: 560px;" />
+    <div>
+		<table>
+        	<tr>
+            	<td colspan="4" style="padding-bottom:5px;">
+                สิ่งอำนวยความสะดวกในอาคารและใกล้เคียงอาคาร :
+                </td>
+            </tr>
+			<tr height="40" valign="middle">
+				<td width="250"><input id="ca" name="option13" type="checkbox" value="carpark" /> <label for="ca">ที่จอดรถ</label></td>
+				<td width="250"><input id="ke" name="option14" type="checkbox" value="keycard" /> <label for="ke">คีย์การ์ด</label></td>
+				<td width="250"><input id="se" name="option15" type="checkbox" value="security" /> <label for="se">ยามรักษาความปลอดภัย</label></td>
+				<td width="250"><input id="came" name="option16" type="checkbox" value="camera" /> <label for="came">กล้องวงจรปิด</label></td>
+			</tr>
+			<tr height="40" valign="middle">
+				<td width="250"><input id="pow" name="option17" type="checkbox" value="power" /> <label for="pow">ไฟฉุกเฉิน</label></td>
+				<td width="250"><input id="cl" name="option18" type="checkbox" value="cloth" /> <label for="cl">ตู้ซักผ้าหยอดเหรียญ</label></td>
+				<td width="250"><input id="wa" name="option19" type="checkbox" value="water" /> <label for="wa">ตู้น้ำหยอดเหรียญ</label></td>
+				<td width="250"><input id="li" name="option20" type="checkbox" value="lift" /> <label for="li">ลิฟท์</label></td>			
+			</tr>
+            <tr height="40" valign="middle">
+				<td width="250"><input id="ser" name="option21" type="checkbox" value="service" /> <label for="ser">บริการซัก อบ รีด</label></td>
+				<td width="250"><input id="com" name="option22" type="checkbox" value="computer" /> <label for="com">บริการคอมพิวเตอร์</label></td>
+				<td width="250"><input id="food" name="option23" type="checkbox" value="foodshop" /> <label for="food">ร้านอาหาร</label></td>
+				<td width="250"><input id="mini" name="option24" type="checkbox" value="minimart" /> <label for="mini">มินิมาร์ท</label></td>			
+			</tr>
+            <tr height="40" valign="middle">
+				<td width="250"><input id="fit" name="option25" type="checkbox" value="fitness" /> <label for="fit">ฟิตเนส</label></td>
+				<td width="250"><input id="po" name="option26" type="checkbox" value="pool" /> <label for="po">สระว่ายน้ำ</label></td>
+				<td width="250"><input id="jog" name="option27" type="checkbox" value="jogging" /> <label for="jog">สวนสาธารณะ</label></td>
+				<td width="250"><input id="spa" name="option28" type="checkbox" value="spabeauty" /> <label for="spa">ร้านเสริมสวย</label></td>			
+			</tr>
+            <tr height="40" valign="middle">
+				<td width="250"><input id="fc" name="option29" type="checkbox" value="fclean" /> <label for="fc">ทำความสะอาดห้อง(ฟรี)</label></td>
+				<td width="250"><input id="nc" name="option30" type="checkbox" value="nclean" /> <label for="nc">ทำความสะอาดห้อง(ไม่ฟรี)</label></td>
+				<td width="250">&nbsp;</td>
+				<td width="250">&nbsp;</td>			
+			</tr>
+		</table>
+	</div>
+    <input class="search2" type="submit" value="" />
+</div>
+
+<div id="recommend">
+	<div id="i_containTab2">
+        <ul id="navi_containTab2">  
+            <li id="tabNavi4" class="active" onclick="enact(this);"></li> 
+            <li id="tabNavi5" onclick="enact(this);"></li>
+            <li id="tabNavi6" onclick="enact(this);"></li>
+        </ul>
+        <hr class="line" style="top: 60px; position: inherit;" />
+    	<ul id="detail_containTab2">  
+            <li class="detailContent4">
+                <div id="container2">
+                    <div id="slides2">
+                        <div class="slides_container" style="width:950px;">
+                            <div class="slide" style="width:950px;">
+                            
+                                <div class="ap">
+                                	<div class="recom"></div>
+                                    <img src="{{asset('images/Apartment/ap1.png')}}" /><br /><br />
+                                    <span style="color:#FFF;">
+                                    	<b style="font-size:24px">Saint View House Apartment</b><br />
+                                        ประเภท : อพาร์ทเม้นต์<br />
+                                        เขต : สาทร<br /><br />
+                                        ราคา : 4,000 - 9,500 บาท
+                                    </span>
+                                </div>
+                                
+                                <div class="ap">
+                                	<div class="recom"></div>
+                                	<img src="{{asset('images/Apartment/ap2.png')}}" /><br /><br />
+                                    <span style="color:#FFF;">
+                                    	<b style="font-size:24px">Saint View House Apartment</b><br />
+                                        ประเภท : อพาร์ทเม้นต์<br />
+                                        เขต : สาทร<br /><br />
+                                        ราคา : 4,000 - 9,500 บาท
+                                    </span>
+                                </div>
+                                
+                                <div class="ap2">
+                                	<div class="recom"></div>
+                                	<img src="{{asset('images/Apartment/ap3.png')}}" /><br /><br />
+                                    <span style="color:#FFF;">
+                                    	<b style="font-size:24px">Saint View House Apartment</b><br />
+                                        ประเภท : อพาร์ทเม้นต์<br />
+                                        เขต : สาทร<br /><br />
+                                        ราคา : 4,000 - 9,500 บาท
+                                    </span>
+                                </div>
+                                
+                            </div>
+                            <div class="slide" style="width:950px;">
+                                
+                                <div class="ap">
+                                	<div class="recom"></div>
+                                	<img src="{{asset('images/Apartment/ap2.png')}}" /><br /><br />
+                                    <span style="color:#FFF;">
+                                    	<b style="font-size:24px">Supakorn Apartment</b><br />
+                                        ประเภท : อพาร์ทเม้นต์<br />
+                                        เขต : สาทร<br /><br />
+                                        ราคา : 4,000 - 9,500 บาท
+                                    </span>
+                                </div>
+                                
+                                <div class="ap">
+                                	<div class="recom"></div>
+                                	<img src="{{asset('images/Apartment/ap3.png')}}" /><br /><br />
+                                    <span style="color:#FFF;">
+                                    	<b style="font-size:24px">Supakorn Apartment</b><br />
+                                        ประเภท : อพาร์ทเม้นต์<br />
+                                        เขต : สาทร<br /><br />
+                                        ราคา : 4,000 - 9,500 บาท
+                                    </span>
+                                </div>
+                                
+                                <div class="ap2">
+                                	<div class="recom"></div>
+                                	<img src="{{asset('images/Apartment/ap1.png')}}" /><br /><br />
+                                    <span style="color:#FFF;">
+                                    	<b style="font-size:24px">Supakorn Apartment</b><br />
+                                        ประเภท : อพาร์ทเม้นต์<br />
+                                        เขต : สาทร<br /><br />
+                                        ราคา : 4,000 - 9,500 บาท
+                                    </span>
+                                </div>
+                                
+                            </div>
+                            <div class="slide" style="width:950px;">
+                                
+                                <div class="ap">
+                                	<div class="recom"></div>
+                                	<img src="{{asset('images/Apartment/ap3.png')}}" /><br /><br />
+                                    <span style="color:#FFF;">
+                                    	<b style="font-size:24px">Test Apartment</b><br />
+                                        ประเภท : อพาร์ทเม้นต์<br />
+                                        เขต : สาทร<br /><br />
+                                        ราคา : 4,000 - 9,500 บาท
+                                    </span>
+                                </div>
+                                
+                                <div class="ap">
+                                	<div class="recom"></div>
+                                	<img src="{{asset('images/Apartment/ap1.png')}}" /><br /><br />
+                                    <span style="color:#FFF;">
+                                    	<b style="font-size:24px">Test Apartment</b><br />
+                                        ประเภท : อพาร์ทเม้นต์<br />
+                                        เขต : สาทร<br /><br />
+                                        ราคา : 4,000 - 9,500 บาท
+                                    </span>
+                                </div>
+                                
+                                <div class="ap2">
+                                	<div class="recom"></div>
+                                	<img src="{{asset('images/Apartment/ap2.png')}}" /><br /><br />
+                                    <span style="color:#FFF;">
+                                    	<b style="font-size:24px">Test Apartment</b><br />
+                                        ประเภท : อพาร์ทเม้นต์<br />
+                                        เขต : สาทร<br /><br />
+                                        ราคา : 4,000 - 9,500 บาท
+                                    </span>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <a href="#" class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>
+                        <a href="#" class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>
+                    </div>
+                </div>
+            </li>
+            
+            <li class="detailContent5">
+                <div id="container3">
+                    <div id="slides3">
+                        <div class="slides_container" style="width:950px;">
+                            <div class="slide" style="width:950px;">
+                            
+                                <div class="ap">
+                                	<div class="recom"></div>
+                                	<img src="{{asset('images/Apartment/ap1.png')}}" /><br /><br />
+                                    <span style="color:#FFF;">
+                                    	<b style="font-size:24px">Saint View House Apartment</b><br />
+                                        ประเภท : อพาร์ทเม้นต์<br />
+                                        เขต : สาทร<br /><br />
+                                        ราคา : 4,000 - 9,500 บาท
+                                    </span>
+                                </div>
+                                
+                                <div class="ap">
+                                	<div class="recom"></div>
+                                	<img src="{{asset('images/Apartment/ap2.png')}}" /><br /><br />
+                                    <span style="color:#FFF;">
+                                    	<b style="font-size:24px">Saint View House Apartment</b><br />
+                                        ประเภท : อพาร์ทเม้นต์<br />
+                                        เขต : สาทร<br /><br />
+                                        ราคา : 4,000 - 9,500 บาท
+                                    </span>
+                                </div>
+                                
+                                <div class="ap2">
+                                	<div class="recom"></div>
+                                	<img src="{{asset('images/Apartment/ap3.png')}}" /><br /><br />
+                                    <span style="color:#FFF;">
+                                    	<b style="font-size:24px">Saint View House Apartment</b><br />
+                                        ประเภท : อพาร์ทเม้นต์<br />
+                                        เขต : สาทร<br /><br />
+                                        ราคา : 4,000 - 9,500 บาท
+                                    </span>
+                                </div>
+                                
+                            </div>
+                            <div class="slide" style="width:950px;">
+                                
+                                <div class="ap">
+                                	<div class="recom"></div>
+                                	<img src="{{asset('images/Apartment/ap2.png')}}" /><br /><br />
+                                    <span style="color:#FFF;">
+                                    	<b style="font-size:24px">Supakorn Apartment</b><br />
+                                        ประเภท : อพาร์ทเม้นต์<br />
+                                        เขต : สาทร<br /><br />
+                                        ราคา : 4,000 - 9,500 บาท
+                                    </span>
+                                </div>
+                                
+                                <div class="ap">
+                                	<div class="recom"></div>
+                                	<img src="{{asset('images/Apartment/ap3.png')}}" /><br /><br />
+                                    <span style="color:#FFF;">
+                                    	<b style="font-size:24px">Supakorn Apartment</b><br />
+                                        ประเภท : อพาร์ทเม้นต์<br />
+                                        เขต : สาทร<br /><br />
+                                        ราคา : 4,000 - 9,500 บาท
+                                    </span>
+                                </div>
+                                
+                                <div class="ap2">
+                                	<div class="recom"></div>
+                                	<img src="{{asset('images/Apartment/ap1.png')}}" /><br /><br />
+                                    <span style="color:#FFF;">
+                                    	<b style="font-size:24px">Supakorn Apartment</b><br />
+                                        ประเภท : อพาร์ทเม้นต์<br />
+                                        เขต : สาทร<br /><br />
+                                        ราคา : 4,000 - 9,500 บาท
+                                    </span>
+                                </div>
+                                
+                            </div>
+                            <div class="slide" style="width:950px;">
+                                
+                                <div class="ap">
+                                	<div class="recom"></div>
+                                	<img src="{{asset('images/Apartment/ap3.png')}}" /><br /><br />
+                                    <span style="color:#FFF;">
+                                    	<b style="font-size:24px">Test Apartment</b><br />
+                                        ประเภท : อพาร์ทเม้นต์<br />
+                                        เขต : สาทร<br /><br />
+                                        ราคา : 4,000 - 9,500 บาท
+                                    </span>
+                                </div>
+                                
+                                <div class="ap">
+                                	<div class="recom"></div>
+                                	<img src="{{asset('images/Apartment/ap1.png')}}" /><br /><br />
+                                    <span style="color:#FFF;">
+                                    	<b style="font-size:24px">Test Apartment</b><br />
+                                        ประเภท : อพาร์ทเม้นต์<br />
+                                        เขต : สาทร<br /><br />
+                                        ราคา : 4,000 - 9,500 บาท
+                                    </span>
+                                </div>
+                                
+                                <div class="ap2">
+                                	<div class="recom"></div>
+                                	<img src="{{asset('images/Apartment/ap2.png')}}" /><br /><br />
+                                    <span style="color:#FFF;">
+                                    	<b style="font-size:24px">Test Apartment</b><br />
+                                        ประเภท : อพาร์ทเม้นต์<br />
+                                        เขต : สาทร<br /><br />
+                                        ราคา : 4,000 - 9,500 บาท
+                                    </span>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <a href="#" class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>
+                        <a href="#" class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>
+                    </div>
+                </div>
+            </li>
+            
+            <li class="detailContent6">
+                <div id="container4">
+                    <div id="slides4">
+                        <div class="slides_container" style="width:950px;">
+                            <div class="slide" style="width:950px;">
+                            
+                                <div class="ap">
+                                	<div class="recom"></div>
+                                	<img src="{{asset('images/Apartment/ap1.png')}}" /><br /><br />
+                                    <span style="color:#FFF;">
+                                    	<b style="font-size:24px">Saint View House Apartment</b><br />
+                                        ประเภท : อพาร์ทเม้นต์<br />
+                                        เขต : สาทร<br /><br />
+                                        ราคา : 4,000 - 9,500 บาท
+                                    </span>
+                                </div>
+                                
+                                <div class="ap">
+                                	<div class="recom"></div>
+                                	<img src="{{asset('images/Apartment/ap2.png')}}" /><br /><br />
+                                    <span style="color:#FFF;">
+                                    	<b style="font-size:24px">Saint View House Apartment</b><br />
+                                        ประเภท : อพาร์ทเม้นต์<br />
+                                        เขต : สาทร<br /><br />
+                                        ราคา : 4,000 - 9,500 บาท
+                                    </span>
+                                </div>
+                                
+                                <div class="ap2">
+                                	<div class="recom"></div>
+                                	<img src="{{asset('images/Apartment/ap3.png')}}" /><br /><br />
+                                    <span style="color:#FFF;">
+                                    	<b style="font-size:24px">Saint View House Apartment</b><br />
+                                        ประเภท : อพาร์ทเม้นต์<br />
+                                        เขต : สาทร<br /><br />
+                                        ราคา : 4,000 - 9,500 บาท
+                                    </span>
+                                </div>
+                                
+                            </div>
+                            <div class="slide" style="width:950px;">
+                                
+                                <div class="ap">
+                                	<div class="recom"></div>
+                                	<img src="{{asset('images/Apartment/ap2.png')}}" /><br /><br />
+                                    <span style="color:#FFF;">
+                                    	<b style="font-size:24px">Supakorn Apartment</b><br />
+                                        ประเภท : อพาร์ทเม้นต์<br />
+                                        เขต : สาทร<br /><br />
+                                        ราคา : 4,000 - 9,500 บาท
+                                    </span>
+                                </div>
+                                
+                                <div class="ap">
+                                	<div class="recom"></div>
+                                	<img src="{{asset('images/Apartment/ap3.png')}}" /><br /><br />
+                                    <span style="color:#FFF;">
+                                    	<b style="font-size:24px">Supakorn Apartment</b><br />
+                                        ประเภท : อพาร์ทเม้นต์<br />
+                                        เขต : สาทร<br /><br />
+                                        ราคา : 4,000 - 9,500 บาท
+                                    </span>
+                                </div>
+                                
+                                <div class="ap2">
+                                	<div class="recom"></div>
+                                	<img src="{{asset('images/Apartment/ap1.png')}}" /><br /><br />
+                                    <span style="color:#FFF;">
+                                    	<b style="font-size:24px">Supakorn Apartment</b><br />
+                                        ประเภท : อพาร์ทเม้นต์<br />
+                                        เขต : สาทร<br /><br />
+                                        ราคา : 4,000 - 9,500 บาท
+                                    </span>
+                                </div>
+                                
+                            </div>
+                            <div class="slide" style="width:950px;">
+                                
+                                <div class="ap">
+                                	<div class="recom"></div>
+                                	<img src="{{asset('images/Apartment/ap3.png')}}" /><br /><br />
+                                    <span style="color:#FFF;">
+                                    	<b style="font-size:24px">Test Apartment</b><br />
+                                        ประเภท : อพาร์ทเม้นต์<br />
+                                        เขต : สาทร<br /><br />
+                                        ราคา : 4,000 - 9,500 บาท
+                                    </span>
+                                </div>
+                                
+                                <div class="ap">
+                                	<div class="recom"></div>
+                                	<img src="{{asset('images/Apartment/ap1.png')}}" /><br /><br />
+                                    <span style="color:#FFF;">
+                                    	<b style="font-size:24px">Test Apartment</b><br />
+                                        ประเภท : อพาร์ทเม้นต์<br />
+                                        เขต : สาทร<br /><br />
+                                        ราคา : 4,000 - 9,500 บาท
+                                    </span>
+                                </div>
+                                
+                                <div class="ap2">
+                                	<div class="recom"></div>
+                                	<img src="{{asset('images/Apartment/ap2.png')}}" /><br /><br />
+                                    <span style="color:#FFF;">
+                                    	<b style="font-size:24px">Test Apartment</b><br />
+                                        ประเภท : อพาร์ทเม้นต์<br />
+                                        เขต : สาทร<br /><br />
+                                        ราคา : 4,000 - 9,500 บาท
+                                    </span>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <a href="#" class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>
+                        <a href="#" class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>
+                    </div>
+                </div>
+            </li>
+    	</ul>  
+    </div>
+</div>
+
+<div id="ad1">
+	<a href="#"><img src="{{asset('images/ad/ad1.gif')}}" /></a>
+    <a href="#"><img src="{{asset('images/ad/ad2.gif')}}" /></a>
+    <a href="#"><img src="{{asset('images/ad/ad3.gif')}}" /></a>
+    <a href="#" style="margin-right:0px !important"><img src="{{asset('images/ad/ad4.gif')}}" /></a>
+</div>
+
+<div id="ad2">
+	<a href="#"><img src="{{asset('images/ad/ad1.gif')}}" /></a>
+    <a href="#"><img src="{{asset('images/ad/ad2.gif')}}" /></a>
+    <a href="#"><img src="{{asset('images/ad/ad3.gif')}}" /></a>
+    <a href="#" style="margin-right:0px !important"><img src="{{asset('images/ad/ad4.gif')}}" /></a>
+</div>
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div id="footer">
+	<ul>
+        <li class="head"><img src="{{asset('images/footer1.png')}}" /><hr /><a href="#">หน้าแรก</a> <a href="#">ค้นหาอย่างละเอียด</a> <a href="#">ลงโฆษณา</a> <a href="#">ลงประกาศห้องพักฟรี</a> <a href="#">กระดานพูดคุย</a> <a href="#">ติดต่อเรา</a></li>
+        <li class="head"><img src="{{asset('images/footer2.png')}}" /><hr /><a href="#">อพาร์ทเม้นต์</a> <a href="#">หอพักชาย</a> <a href="#">หอพักหญิง</a></li>
+        <li class="head"><img src="{{asset('images/footer3.png')}}" /><hr /><a href="#">เขตกรุงเทพฯ</a> <a href="#">ใกล้มหาวิทยาลัย</a> <a href="#">ใกล้รถไฟฟ้า BTS</a> <a href="#">ใกล้รถไฟฟ้า MRT</a> <a href="#">ตามสถานที่ใกล้เคียง</a></li>
+        <li class="head"><img src="{{asset('images/footer4.png')}}" /><hr /><a href="#">Facebook</a> <a href="#">Twitter</a> <div class="fb-like-box" data-href="http://www.facebook.com/FindTheRoom" data-width="205" data-height="65" data-show-faces="false" data-stream="false" data-header="true" style="background-color:#FFF; margin-left: 10px; margin-top: 10px;"></div></li>
+	</ul>
+</div>
+
+<div id="copyr">
+<span>&copy; 2012 FindTheRoom.com</span> <span style="float:right;">ติดต่อสอบถามโทร. 02-123-4567</span>
+</div>
+
+</body>
+</html>

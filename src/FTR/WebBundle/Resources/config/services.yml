@@ -1,0 +1,7 @@
+parameters:
+#    ftr_web.example.class: FTR\WebBundle\Example
+
+services:
+#    ftr_web.example:
+#        class: %ftr_web.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

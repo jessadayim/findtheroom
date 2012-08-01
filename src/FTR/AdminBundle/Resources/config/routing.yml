@@ -1,0 +1,3 @@
+FTRAdminBundle_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: FTRAdminBundle:Default:index }
