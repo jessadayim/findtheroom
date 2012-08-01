@@ -14,7 +14,7 @@ class MainController extends Controller
     	$em = $this->getDoctrine()->getEntityManager();
     	$building = $em->getRepository('FTRWebBundle:Building_site')->findall();
 		
-		var_dump($building);
+		//var_dump($building);
         return $this->render('FTRWebBundle:Main:index.html.twig', array());
     }
 }

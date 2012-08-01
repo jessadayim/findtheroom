@@ -113,7 +113,7 @@ function enact(what){
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 <div id="header">
-	<span>Follow Us On :</span><div class="social"><a href="http://www.facebook.com/FindTheRoom" target="_new"><img src="images/fb-icon.gif" /></a> <a href='#' target="_blank"><img src="images/tw-icon.gif" /></a></div>
+	<span>Follow Us On :</span><div class="social"><a href="http://www.facebook.com/FindTheRoom" target="_new"><img src="{{asset('images/fb-icon.gif')}}" /></a> <a href='#' target="_blank"><img src="{{asset('images/tw-icon.gif')}}" /></a></div>
 	<div id="logo"></div>
     <div id="login">
     	<form>
@@ -125,8 +125,8 @@ function enact(what){
 <div id="menu">
 	<hr />
     <ul id="gooeymenu1" class="gelbuttonmenu">
-    	 <li><a href="index.html" class="selected">หน้าแรก</a></li>
-         <li><a href="search.html">ค้นหาอย่างละเอียด</a></li>
+    	 <li><a href="{{path('FTRWebBundle_homepage')}}" class="selected">หน้าแรก</a></li>
+         <li><a href="{{path('FTRWebBundle_search')}}">ค้นหาอย่างละเอียด</a></li>
          <li><a href='#'>ลงโฆษณา</a></li>
          <li><a href='#'>ลงประกาศห้องพักฟรี</a></li>
          <li><a href='#'>กระดานพูดคุย</a></li>
@@ -139,19 +139,19 @@ function enact(what){
 	<div id="slides">
 		<div class="slides_container">
 			<div class="slide">
-				<a href='#' title="" target="_new"><img src="images/slider/slide-1.jpg" width="1000" height="300"></a>
+				<a href='#' title="" target="_new"><img src="{{asset('images/slider/slide-1.jpg')}}" width="1000" height="300"></a>
                 <div class="caption">
                 	<p>1 ห้องพักสุดหรู พร้อมชุดห้องครัวในตัว ราคาพิเศษ <span class="sale">7,000</span> บาท -> 5,000 บาท</p>
                 </div>
             </div>
             <div class="slide">
-				<a href='#' title="" target="_new"><img src="images/slider/slide-2.jpg" width="1000" height="300"></a>
+				<a href='#' title="" target="_new"><img src="{{asset('images/slider/slide-2.jpg')}}" width="1000" height="300"></a>
                 <div class="caption">
                     <p>2 ห้องพักสุดหรู พร้อมชุดห้องครัวในตัว ราคาพิเศษ <span class="sale">7,000</span> บาท -> 5,000 บาท</p>
                 </div>
             </div>
             <div class="slide">
-				<a href='#' title="" target="_new"><img src="images/slider/slide-3.jpg" width="1000" height="300"></a>
+				<a href='#' title="" target="_new"><img src="{{asset('images/slider/slide-3.jpg')}}" width="1000" height="300"></a>
                 <div class="caption">
                     <p>3 ห้องพักสุดหรู พร้อมชุดห้องครัวในตัว ราคาพิเศษ <span class="sale">7,000</span> บาท -> 5,000 บาท</p>
                 </div>
@@ -274,8 +274,8 @@ function enact(what){
                      <input class="map4" type="submit" value="" />
                 </div>
                 <div style="float:left; margin-left: 30px;">
-                	<img src="images/gg-map.png" />
-                    <img src="images/gg-type.png" class="style" />
+                	<img src="{{asset('images/gg-map.png')}}" />
+                    <img src="{{asset('images/gg-type.png')}}" class="style" />
                 </div>
             </li>
     	</ul>  
@@ -299,7 +299,7 @@ function enact(what){
                             
                                 <div class="ap">
                                 	<div class="recom"></div>
-                                    <img src="images/Apartment/ap1.png" /><br /><br />
+                                    <img src="{{asset('images/Apartment/ap1.png')}}" /><br /><br />
                                     <span style='color:#FFF;'>
                                     	<b style="font-size:24px">Saint View House Apartment</b><br />
                                         ประเภท : อพาร์ทเม้นต์<br />
@@ -310,7 +310,7 @@ function enact(what){
                                 
                                 <div class="ap">
                                 	<div class="recom"></div>
-                                	<img src="images/Apartment/ap2.png" /><br /><br />
+                                	<img src="{{asset('images/Apartment/ap2.png')}}" /><br /><br />
                                     <span style='color:#FFF;'>
                                     	<b style="font-size:24px">Saint View House Apartment</b><br />
                                         ประเภท : อพาร์ทเม้นต์<br />
@@ -321,7 +321,7 @@ function enact(what){
                                 
                                 <div class="ap2">
                                 	<div class="recom"></div>
-                                	<img src="images/Apartment/ap3.png" /><br /><br />
+                                	<img src="{{asset('images/Apartment/ap3.png')}}" /><br /><br />
                                     <span style='color:#FFF;'>
                                     	<b style="font-size:24px">Saint View House Apartment</b><br />
                                         ประเภท : อพาร์ทเม้นต์<br />
@@ -335,7 +335,7 @@ function enact(what){
                                 
                                 <div class="ap">
                                 	<div class="recom"></div>
-                                	<img src="images/Apartment/ap2.png" /><br /><br />
+                                	<img src="{{asset('images/Apartment/ap2.png')}}" /><br /><br />
                                     <span style='color:#FFF;'>
                                     	<b style="font-size:24px">Supakorn Apartment</b><br />
                                         ประเภท : อพาร์ทเม้นต์<br />
@@ -346,7 +346,7 @@ function enact(what){
                                 
                                 <div class="ap">
                                 	<div class="recom"></div>
-                                	<img src="images/Apartment/ap3.png" /><br /><br />
+                                	<img src="{{asset('images/Apartment/ap3.png')}}" /><br /><br />
                                     <span style='color:#FFF;'>
                                     	<b style="font-size:24px">Supakorn Apartment</b><br />
                                         ประเภท : อพาร์ทเม้นต์<br />
@@ -357,7 +357,7 @@ function enact(what){
                                 
                                 <div class="ap2">
                                 	<div class="recom"></div>
-                                	<img src="images/Apartment/ap1.png" /><br /><br />
+                                	<img src="{{asset('images/Apartment/ap1.png')}}" /><br /><br />
                                     <span style='color:#FFF;'>
                                     	<b style="font-size:24px">Supakorn Apartment</b><br />
                                         ประเภท : อพาร์ทเม้นต์<br />
@@ -371,7 +371,7 @@ function enact(what){
                                 
                                 <div class="ap">
                                 	<div class="recom"></div>
-                                	<img src="images/Apartment/ap3.png" /><br /><br />
+                                	<img src="{{asset('images/Apartment/ap3.png')}}" /><br /><br />
                                     <span style='color:#FFF;'>
                                     	<b style="font-size:24px">Test Apartment</b><br />
                                         ประเภท : อพาร์ทเม้นต์<br />
@@ -382,7 +382,7 @@ function enact(what){
                                 
                                 <div class="ap">
                                 	<div class="recom"></div>
-                                	<img src="images/Apartment/ap1.png" /><br /><br />
+                                	<img src="{{asset('images/Apartment/ap1.png')}}" /><br /><br />
                                     <span style='color:#FFF;'>
                                     	<b style="font-size:24px">Test Apartment</b><br />
                                         ประเภท : อพาร์ทเม้นต์<br />
@@ -393,7 +393,7 @@ function enact(what){
                                 
                                 <div class="ap2">
                                 	<div class="recom"></div>
-                                	<img src="images/Apartment/ap2.png" /><br /><br />
+                                	<img src="{{asset('images/Apartment/ap2.png')}}" /><br /><br />
                                     <span style='color:#FFF;'>
                                     	<b style="font-size:24px">Test Apartment</b><br />
                                         ประเภท : อพาร์ทเม้นต์<br />
@@ -404,8 +404,8 @@ function enact(what){
                                 
                             </div>
                         </div>
-                        <a href='#' class="prev"><img src="images/slider/arrow-prev2.png" width="29" height="57" alt="Arrow Prev"></a>
-                        <a href='#' class="next"><img src="images/slider/arrow-next2.png" width="29" height="57" alt="Arrow Next"></a>
+                        <a href='#' class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>
+                        <a href='#' class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>
                     </div>
                 </div>
             </li>
