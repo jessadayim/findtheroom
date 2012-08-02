@@ -113,7 +113,7 @@ function enact(what){
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 <div id="header">
-	<span>Follow Us On :</span><div class="social"><a href="http://www.facebook.com/FindTheRoom" target="_new"><img src="{{asset('images/fb-icon.gif')}}" /></a> <a href="#" target="_blank"><img src="{{asset('images/tw-icon.gif')}}" /></a></div>
+	<span>Follow Us On :</span><div class="social"><a href="http://www.facebook.com/FindTheRoom" target="_new"><img src="{{asset('images/fb-icon.gif')}}" /></a> <a href="https://twitter.com/FindTheRoom" target="_blank"><img src="{{asset('images/tw-icon.gif')}}" /></a></div>
 	<div id="logo"></div>
     <div id="login">
     	<form>
@@ -266,24 +266,15 @@ function enact(what){
                 สิ่งอำนวยความสะดวกในห้อง :
                 </td>
             </tr>
-			<tr height="40" valign="middle">
-				<td width="250"><input id="in" name="option1" type="checkbox" value="lan" /> <label for="in">อินเตอร์เน็ต</label></td>
-				<td width="250"><input id="wi" name="option2" type="checkbox" value="wifi" /> <label for="wi">อินเตอร์เน็ตไร้สาย</label></td>
-				<td width="250"><input id="ai" name="option3" type="checkbox" value="air" /> <label for="ai">เครื่องปรับอากาศ</label></td>
-				<td width="250"><input id="fa" name="option4" type="checkbox" value="fan" /> <label for="fa">พัดลม</label></td>
-			</tr>
-			<tr height="40" valign="middle">
-				<td width="250"><input id="to" name="option5" type="checkbox" value="toilet" /> <label for="to">ห้องน้ำส่วนตัว</label></td>
-				<td width="250"><input id="ho" name="option6" type="checkbox" value="hot" /> <label for="ho">เครื่องทำน้ำอุ่น</label></td>
-				<td width="250"><input id="te" name="option7" type="checkbox" value="tel" /> <label for="te">โทรศัพท์สายตรง</label></td>
-				<td width="250"><input id="fu" name="option8" type="checkbox" value="furniture" /> <label for="fu">เฟอร์นิเจอร์</label></td>			
-			</tr>
+            {% for list in fac_inroom %}
             <tr height="40" valign="middle">
-				<td width="250"><input id="ki" name="option9" type="checkbox" value="kitchen" /> <label for="ki">ห้องครัว</label></td>
-				<td width="250"><input id="ba" name="option10" type="checkbox" value="balcony" /> <label for="ba">ระเบียง</label></td>
-				<td width="250"><input id="tv" name="option11" type="checkbox" value="cabel" /> <label for="tv">เคเบิ้ลทีวี/ดาวเทียม</label></td>
-				<td width="250"><input id="pe" name="option12" type="checkbox" value="pet" /> <label for="pe">อนุญาตให้เลี้ยงสัตว์</label></td>			
-			</tr>
+            	{% for loops in list.loop %}
+            	<td width="250">
+            		<input id="{{loops.id}}" name="{{loops.id}}" type="checkbox" value="{{loops.id}}" /> <label for="{{loops.id}}">{{loops.facility_name}}</label>
+            	</td>
+            	{% endfor %}
+            </tr>
+            {% endfor %}
 		</table>
 	</div>
     <hr class="line" style="top: 560px;" />
