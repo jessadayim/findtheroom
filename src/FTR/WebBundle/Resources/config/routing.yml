@@ -5,6 +5,34 @@ FTRWebBundle_homepage:
 FTRWebBundle_search:
     pattern:  /search
     defaults: { _controller: FTRWebBundle:Search:search }
+    
+FTRWebBundle_publish:
+    pattern:  /publish
+    defaults: { _controller: FTRWebBundle:Publish:publish }
+    
+FTRWebBundle_contact:
+    pattern:  /contact
+    defaults: { _controller: FTRWebBundle:Contact:contact }
+
+FTRWebBundle_layout:
+    pattern:  /layout
+    defaults: { _controller: FTRWebBundle:Layout:layout }
+
+FTRWebBundle_regis:
+    pattern:  /regis
+    defaults: { _controller: FTRWebBundle:Register:register }
+    
+FTRWebBundle_confirm:
+    pattern:  /regis/confirm
+    defaults: { _controller: FTRWebBundle:Register:RegisConfirm}
+    
+FTRWebBundle_login:
+    pattern:  /login
+    defaults: { _controller: FTRWebBundle:Security:login}
+
+FTRWebBundle_logout:
+    pattern:  /logout
+    defaults: { _controller: FTRWebBundle:Security:logout}
 
 FTRWebBundle_userbuilding:
     pattern:  /listap
