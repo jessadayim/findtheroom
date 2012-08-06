@@ -60,15 +60,25 @@
 		var selobj;
 		for(var i = 0; i < o.count; i++){
 			var val = i+1;
-			if(val == selectedpage){
-				var _obj = $(document.createElement('li')).html('<span class="jPag-current">'+val+'</span>');
-				selobj = _obj;
-				_ul.append(_obj);
-			}	
-			else{
-				var _obj = $(document.createElement('li')).html('<a>'+ val +'</a>');
-				_ul.append(_obj);
-			}
+			
+				if(val == selectedpage){
+					if(val > 0 & val < 10){
+					var _obj = $(document.createElement('li')).html('<span class="jPag-current">'+val+'</span>');
+					}else{
+					var _obj = $(document.createElement('li')).html('<span class="jPag-current-two">'+val+'</span>');
+					}
+					selobj = _obj;
+					_ul.append(_obj);
+				}	
+				else{
+					if(val > 0 & val < 10){
+					var _obj = $(document.createElement('li')).html('<a>'+ val +'</a>');
+					}else{
+					var _obj = $(document.createElement('li')).html('<a class="two">'+ val +'</a>');	
+					}
+					_ul.append(_obj);
+				}
+			
 		}		
 		_ulwrapdiv.append(_ul);
 		
@@ -200,9 +210,16 @@
 		
 		//click a page
 		_ulwrapdiv.find('li').click(function(e){
-			selobj.html('<a>'+selobj.find('.jPag-current').html()+'</a>'); 
-			var currval = $(this).find('a').html();
-			$(this).html('<span class="jPag-current">'+currval+'</span>');
+				
+				selobj.html('<a>'+selobj.find('.jPag-current').html()+'</a>');
+				 
+				var currval = $(this).find('a').html();
+				if(currval < 10){
+					$(this).html('<span class="jPag-current">'+currval+'</span>');
+				}else{
+					$(this).html('<span class="jPag-current-two">'+currval+'</span>');
+				}
+			alert(currval);
 			selobj = $(this);
 			$.fn.applystyle(o,$(this).parent().parent().parent(),a_css,hover_css,_first,_ul,_ulwrapdiv,_divwrapright);	
 			var left = (this.offsetLeft) / 2;
@@ -213,6 +230,7 @@
 			else
 				_ulwrapdiv.animate({scrollLeft: left + tmp - _first.parent().width() + 'px'});	
 			o.onChange(currval);	
+			
 		});
 		
 		var last = _ulwrapdiv.find('li').eq(o.start-1);

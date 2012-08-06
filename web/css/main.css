@@ -157,8 +157,13 @@ hr.line {
 
 /*Login Popup*/
 input.loginp { background: url(../images/login-bt2.png) no-repeat; border: 0; width: 78px; height: 80px; cursor: pointer; position:absolute;}
+<<<<<<< HEAD
 input.pubp { background: url(../images/pub-bt2.png) no-repeat; border: 0; width: 78px; height: 80px; cursor: pointer; position:absolute; margin-left: 100px;}
 a.link{ padding: 3px 10px; color: #FFF; background-color: #BF1E2D; text-decoration: none; margin-top:70px; position:absolute; font-size:22px; display:block;}
+=======
+input.pubp { border: 0; width: 78px; height: 80px; cursor: pointer;}
+a.link{ padding: 3px 10px; color: #FFF; background-color: #BF1E2D; text-decoration: none; margin-top:10px; position:absolute; font-size:22px; display:block;}
+>>>>>>> 6c3f25cfe29d5b8c9e043466d0526d84ad32bb4c
 
 /*Forget Password Popup*/
 input.forgetp { background: url(../images/forget-bt.png) no-repeat; border: 0; width: 78px; height: 80px; cursor: pointer; position:absolute; margin-top:-40px;}
