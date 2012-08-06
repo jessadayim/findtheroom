@@ -10,6 +10,8 @@ class SearchController extends Controller
     
     public function searchAction()
     {
+        $fac_inroomlist = NULL;	
+		
         $conn= $this->get('database_connection');
 		if(!$conn){ die("MySQL Connection error");}
 			try{

@@ -13,3 +13,4 @@ app/config/parameters.ini
 
 # Project files from aptana
 .project
+.DS_Store

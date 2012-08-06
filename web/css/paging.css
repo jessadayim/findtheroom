@@ -73,6 +73,19 @@ span.jPag-current{
 	background:url(../images/paging/bg_paging.png);
 	color:#FFF !important;
 }
+span.jPag-current-two{
+    cursor:default;
+    font-weight:normal;
+    line-height:15px;
+    height:20px;
+	width:24px;
+    padding-top:5px;
+	padding-left:4px;
+    margin:0px;
+    float:left;
+	background:url(../images/paging/bg_paging.png);
+	color:#FFF !important;
+}
 ul.jPag-pages li span.jPag-previous,
 ul.jPag-pages li span.jPag-next,
 span.jPag-sprevious,
