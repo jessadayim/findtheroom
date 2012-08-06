@@ -9,7 +9,7 @@ class SearchController extends Controller
 {
     
     public function searchAction()
-    {
+    {echo "";
         $conn= $this->get('database_connection');
 		if(!$conn){ die("MySQL Connection error");}
 			try{
