@@ -1,0 +1,143 @@
+{% extends 'FTRWebBundle:Layout:Layout.html.twig' %}
+{% block body %}
+<script>
+        window.fbAsyncInit = function() {
+          FB.init({
+            appId      : '414830161885886', // App ID
+            channelUrl : '//www.findtheroom.com//login.php', // Channel File ระบุไฟล์ที่จะใช้ login
+            status     : true, // check login status
+            cookie     : true, // enable cookies to allow the server to access the session
+            xfbml      : true  // parse XFBML
+          });
+        };
+        // Load the SDK Asynchronously
+        (function(d){
+           var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+           if (d.getElementById(id)) {return;}
+           js = d.createElement('script'); js.id = id; js.async = true;
+           js.src = "//connect.facebook.net/en_US/all.js";
+           ref.parentNode.insertBefore(js, ref);
+         }(document));
+</script>
+<form action="{{path('FTRWebBundle_confirm')}}" method="post">
+<div class="detail" style="height: 460px; margin-bottom: 15px;">
+	<img src="{{asset('images/user.png')}}" style="display:block; position:relative; float:none;" />
+	<hr class="line" style="top: 60px;" />
+    <div style="width:1000px; display:block; position:relative; height:240px; margin-top: 40px;">
+		<table style="margin-top: 0px;">
+        	<tr height="50" valign="middle">
+				<td align="left" width="200" style="font-size:24px;">ชื่อแรก : *</td>
+                <td align="left" width="300"><input name="firstname" id="firstname" type="text" maxlength="30" placeholder="กรุณากรอกชื่อแรก" style=" padding:2px; font-size:20px;" /><label id="alert_fname" class="alertmsg"></label></td>
+                <td align="left" width="200" style="font-size:24px;">นามสกุล : *</td>
+                <td align="left" width="120"><input name="lastname" id="lastname" type="text" maxlength="30" placeholder="กรุณากรอกนามสกล" style=" padding:2px; font-size:20px;" /><label id="alert_lname" class="alertmsg"></label></td>
+            </tr>
+            <tr height="50" valign="middle">
+				<td align="left" width="200" style="font-size:24px;">ชื่อผู้ใช้งาน : *</td>
+                <td align="left" width="300"><input name="username" id="username" type="text" maxlength="30" placeholder="กรุณากรอกชื่อผู้ใช้งาน" style=" padding:2px; font-size:20px;" /><label id="alert_uname" class="alertmsg"></label></td>
+                <td align="left" width="200" style="font-size:24px;">อีเมล : *</td>
+                <td align="left" width="120"><input name="email" id="email" type="text" maxlength="30" placeholder="กรุณากรอกอีเมล" style=" padding:2px; font-size:20px;" /><label id="alert_email" class="alertmsg"></label></td>
+            </tr>
+            <tr height="50" valign="middle">
+				<td align="left" width="200" style="font-size:24px;">รหัสผ่าน : *</td>
+                <td align="left" width="300"><input name="password" id="password" type="password" maxlength="30" placeholder="กรุณากรอกรหัสผ่าน" style=" padding:2px; font-size:20px;" /><label id="alert_password" class="alertmsg"></label></td>
+                <td align="left" width="200" style="font-size:24px;">ยืนยันรหัสผ่าน : *</td>
+                <td align="left" width="120"><input name="confirmpass" id="confirmpass" type="password" maxlength="30" placeholder="ยืนยันรหัสผ่าน" style=" padding:2px; font-size:20px;" /><label id="alert_conpassword" class="alertmsg"></label></td>
+            </tr>
+            <tr height="50" valign="middle">
+				<td align="left" width="200" style="font-size:24px;">เบอร์โทรศัพท์ : </td>
+                <td align="left" width="300"><input name="tel" id="tel" type="text" maxlength="30" placeholder="กรุณากรอกเบอร์โทรศัพท์" style=" padding:2px; font-size:20px;" /><label id="alert_tel"></label class="alertmsg"></td>
+                <td align="left" width="200" style="font-size:24px;" colspan="2"></td>
+            </tr>
+            <tr height="50" valign="middle">
+				<td align="left" style="font-size:24px;" colspan="2"><input id="ac" name="option1" type="checkbox" value="acc" /> <label for="ac">ยอมรับ <a href="terms.html" target="_new">เงื่อนไขการใช้งานและนโยบายความเป็นส่วนตัว</a></label><div id="alert_chakgree" class="alertmsg"></div></td>
+                <td align="left" style="font-size:24px;">&nbsp;</td>
+                <td align="left" width="150">
+                	<input class="regis" type="submit" value="" onclick="return clickagree();"/>
+                		<a id="login" href="login.html" ><img src="{{asset('images/userlog.png')}}" style="margin-left:80px; margin-top:-10px;" />
+                		</a>
+                </td>
+            </tr>
+        </table>
+	</div>
+    <hr class="line" style="top: 400px;" />
+    <div style="width:1000px; display:block; position:relative;">
+		<table style="margin-top: 70px;">
+            <tr height="50" valign="middle">
+				<td align="right" width="400" style="font-size:24px;">หรือ</td>
+                <td align="left" width="600"><div class="fb-login-button">เข้าสู่ระบบด้วย Facebook</div></td>
+            </tr>
+        </table>
+	</div>
+</div>
+</form>
+<script>
+	function clickagree() {
+		if(document.getElementById('firstname').value=="")
+		{
+            $("#alert_fname").html("กรุณากรอก ชื่อ");
+			$("#alert_fname").hide();
+			$("#alert_fname").show("slow");
+            document.getElementById('firstname').focus();
+            return false;
+        } 
+        else if(document.getElementById('lastname').value=="")
+        {
+            $("#alert_lname").html("กรุณากรอก สกุล");
+			$("#alert_lname").hide();
+			$("#alert_lname").show("slow");
+            document.getElementById('lastname').focus();
+            return false;
+        }
+        else if(document.getElementById('username').value=="")
+        {
+            $("#alert_uname").html("กรุณากรอก Email");
+			$("#alert_uname").hide();
+			$("#alert_uname").show("slow");
+            document.getElementById('username').focus();
+            return false;
+        }        
+        else if(document.getElementById('email').value=="")
+        {
+            $("#alert_email").html("กรุณากรอก Email");
+			$("#alert_email").hide();
+			$("#alert_email").show("slow");
+            document.getElementById('email').focus();
+            return false;
+        }
+         else if(document.getElementById('password').value=="")
+        {
+            $("#alert_password").html("กรุณากรอก รหัสผ่าน");
+			$("#alert_password").hide();
+			$("#alert_password").show("slow");
+            document.getElementById('password').focus();
+            return false;
+        }
+         else if(document.getElementById('confirmpass').value=="")
+        {
+            $("#alert_conpassword").html("กรุณากรอก รหัสผ่าน");
+			$("#alert_conpassword").hide();
+			$("#alert_conpassword").show("slow");
+            document.getElementById('confirmpass').focus();
+            return false;
+        }
+         else if(document.getElementById('tel').value=="")
+        {
+            $("#alert_tel").html("กรุณากรอก รหัสผ่าน");
+			$("#alert_tel").hide();
+			$("#alert_tel").show("slow");
+            document.getElementById('tel').focus();
+            return false;
+        }
+		else if(document.getElementById('ac').checked==false){
+			document.getElementById("alert_chakgree").innerHTML = "กรุณาเช็ค ยอมรับเงื่อนไขและข้อตกลง";
+			$("#alert_chakgree").hide();
+			$("#alert_chakgree").show("slow");
+			return false;
+		}
+		else{
+			document.getElementById("alert_chakgree").innerHTML = "";
+			return true;
+		}
+	}
+</script>
+{% endblock %}

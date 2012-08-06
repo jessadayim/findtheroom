@@ -72,6 +72,12 @@
 	display:block;
 }
 
+.slides_container a.pop {
+	width:300px;
+	height:150px;
+	margin-top: -20px;
+}
+
 .slides_container a img {
 	display:block;
 }
