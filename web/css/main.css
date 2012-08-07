@@ -105,8 +105,8 @@ hr.line {
 #show span.normal { font-size:20px;}
 #show .styled-select { background: url(../images/new_arrow.png) no-repeat right center #FFF; width:70px; height: 30px; overflow: hidden; float:right; margin-top:-5px;}
 #show .styled-select .select{border: 0; font-family: DB Adman X; font-size: 18px; color: #423C3B; background: transparent; padding: 5px; width:100px; height: 30px; -webkit-appearance: none;}
-#show .resultf{ border: 0; font-family: DB Adman X; font-size: 18px; color: #FFF; background: #423C3B; padding: 25px 0 0 30px;; width:970px; height: 160px; margin: 40px auto 0px auto;}
-#show .result{ border: 0; font-family: DB Adman X; font-size: 18px; color: #FFF; background: #423C3B; padding: 25px 0 0 30px;; width:970px; height: 160px; margin: 10px auto 0px auto;}
+#show .resultf{ border: 0; font-family: DB Adman X; font-size: 18px; color: #FFF; background: #423C3B; padding: 25px 0 0 30px; width:970px; height: 160px; margin: 40px auto 0px auto;}
+#show .result{ border: 0; font-family: DB Adman X; font-size: 18px; color: #FFF; background: #423C3B; padding: 25px 0 0 30px; width:970px; height: 160px; margin: 10px auto 0px auto;}
 #show .resultf .wifi, #show .result .wifi { background: url(../images/wifi.png) no-repeat; border: 0; width: 32px; height: 32px; position:absolute; margin-top:-11px; margin-left: -16px;}
 #show .resultf .wifi-none, #show .result .wifi-none { background: none; border: 0; width: 32px; height: 32px; position:absolute; margin-top:-11px; margin-left: -16px;}
 #show .resultf img, #show .result img { float: left;}
@@ -157,13 +157,8 @@ hr.line {
 
 /*Login Popup*/
 input.loginp { background: url(../images/login-bt2.png) no-repeat; border: 0; width: 78px; height: 80px; cursor: pointer; position:absolute;}
-<<<<<<< HEAD
 input.pubp { background: url(../images/pub-bt2.png) no-repeat; border: 0; width: 78px; height: 80px; cursor: pointer; position:absolute; margin-left: 100px;}
 a.link{ padding: 3px 10px; color: #FFF; background-color: #BF1E2D; text-decoration: none; margin-top:70px; position:absolute; font-size:22px; display:block;}
-=======
-input.pubp { border: 0; width: 78px; height: 80px; cursor: pointer;}
-a.link{ padding: 3px 10px; color: #FFF; background-color: #BF1E2D; text-decoration: none; margin-top:10px; position:absolute; font-size:22px; display:block;}
->>>>>>> 6c3f25cfe29d5b8c9e043466d0526d84ad32bb4c
 
 /*Forget Password Popup*/
 input.forgetp { background: url(../images/forget-bt.png) no-repeat; border: 0; width: 78px; height: 80px; cursor: pointer; position:absolute; margin-top:-40px;}
@@ -213,7 +208,7 @@ input.regis { background: url(../images/regis-bt.png) no-repeat; border: 0; widt
 #footer ul li.head hr { color: #FFF; background-color: #FFF; width:95%; height: 1px; border: 0 none; padding:0; margin-top:10px;}
 #footer ul li.head a { color: #FFF; border: 0 none; text-decoration: none; display: block; margin-left: 10px; margin-top: 5px;}
 
-#footer ul.ft { display:block; list-style:none; padding-left:25px;; margin-top:0px;; width:100%; text-decoration:none; float: none; width: 230px; position:relative;}
+#footer ul.ft { display:block; list-style:none; padding-left:25px; margin-top:0px; width:100%; text-decoration:none; float: none; width: 230px; position:relative;}
 #footer ul.ft li { margin-top: 10px;}
 #footer ul.ft li a { font-family: DB Adman X; font-size: 20px; color: #FFF; text-decoration:none;}
 
