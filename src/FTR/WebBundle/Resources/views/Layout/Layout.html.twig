@@ -136,12 +136,12 @@ function enact(what){
 <div id="menu">
 	<hr />
     <ul id="gooeymenu1" class="gelbuttonmenu">
-    	 <li><a href="http://localhost:11001/findtheroom/web/app_dev.php" class="selected">หน้าแรก</a></li>
-         <li><a href="http://localhost:11001/findtheroom/web/app_dev.php/search">ค้นหาอย่างละเอียด</a></li>
+    	 <li><a href="{{path('FTRWebBundle_homepage')}}" class="selected">หน้าแรก</a></li>
+         <li><a href="{{path('FTRWebBundle_search')}}">ค้นหาอย่างละเอียด</a></li>
          <li><a href='#'>ลงโฆษณา</a></li>
-         <li><a href='http://localhost:11001/findtheroom/web/app_dev.php/publish'>ลงประกาศห้องพักฟรี</a></li>
+         <li><a href="{{path('FTRWebBundle_publish')}}">ลงประกาศห้องพักฟรี</a></li>
          <li><a href='#'>กระดานพูดคุย</a></li>
-         <li><a href='http://localhost:11001/findtheroom/web/app_dev.php/contact'>ติดต่อเรา</a></li>
+         <li><a href="{{path('FTRWebBundle_contact')}}">ติดต่อเรา</a></li>
     </ul>
     <hr />
 </div>
