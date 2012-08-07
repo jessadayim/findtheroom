@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends 'FTRWebBundle:Layout:Layout.html.twig' %}
 {% block body %}
 <link rel="stylesheet" type="text/css" href="{{asset('css/paging.css')}}">
@@ -97,4 +98,105 @@
     <a href="#"><img src="{{asset('images/ad/ad3.gif')}}" /></a>
     <a href="#" style="margin-right:0px !important"><img src="{{asset('images/ad/ad4.gif')}}" /></a>
 </div>
+=======
+{% extends 'FTRWebBundle:Layout:Layout.html.twig' %}
+{% block body %}
+<link rel="stylesheet" type="text/css" href="{{asset('css/paging.css')}}">
+<script src="{{asset('js/paging/jquery.paginate.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/fancybox/jquery.fancybox-1.3.4.pack.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/fancybox/jquery.easing-1.4.pack.js')}}"></script>
+<link rel="stylesheet" type="text/css" href="{{asset('css/jquery.fancybox-1.3.4.css')}}" media="screen" />
+<script type="text/javascript">
+		$(function() {
+			$("#demo5").paginate({
+				count 		: 30,
+				start 		: 1,
+				display     : 20,
+				border					: false,
+				text_color  			: '#423C3B',	
+				text_hover_color  		: '#423C3B', 
+				images					: false,
+				mouse					: 'press'
+			});
+		});
+</script>
+<script type="text/javascript">
+		$(document).ready(function() {
+			$("a#gmap").fancybox({
+				'overlayShow'	: true,
+				'transitionIn'	: 'elastic',
+				'transitionOut'	: 'elastic'
+			});
+			$("a#imap").fancybox({
+				'overlayShow'	: true,
+				'transitionIn'	: 'elastic',
+				'transitionOut'	: 'elastic'
+			});
+			$("a#cmap").fancybox({
+				'overlayShow'	: true,
+				'transitionIn'	: 'elastic',
+				'transitionOut'	: 'elastic'
+			});
+			$("a#login").fancybox({
+				'width'				: 700,
+				'height'			: 400,
+				'autoScale'			: false,
+				'transitionIn'		: 'elastic',
+				'transitionOut'		: 'elastic',
+				'type'				: 'iframe'
+			});
+		});
+</script>
+<div class="detail" style="height: 290px; margin-bottom: 15px;">
+    <div style="width:500px; display:block; position:relative; float:left; border-right:1px solid #FFF; height:250px; margin-top: 20px;">
+		<a href="#"><img src="{{asset('images/pub-bt.png')}}" style="margin-left:30px; margin-top:20px;;" /></a>
+	</div>
+    <div style="width:490px; display:block; position:relative; float:left;">
+		<a id="login" href="{{path('FTRWebBundle_login')}}"><img src="{{asset('images/login.png')}}" style="margin-left:10px; margin-top:40px;" /></a>
+	</div>
+</div>
+<div class="detail" style="margin-bottom: 15px; height: 500px">
+    <div id="i_containTab3">
+        <ul id="navi_containTab3">  
+            <li id="tabNavi7" class="active" onclick="enact(this);"></li> 
+            <li id="tabNavi8" onclick="enact(this);"></li>
+            <li id="tabNavi9" onclick="enact(this);"></li>
+   		</ul>
+        <hr class="line" style="top: 60px;" />
+    	<ul id="detail_containTab3">  
+            <li class="detailContent7">
+            	<div>
+                   
+                </div>
+            </li>
+            
+            <li class="detailContent8">
+            	<div>
+                    
+                </div>
+            </li>
+            
+            <li class="detailContent9">
+            	<div>
+                	
+                </div>
+            </li>
+    	</ul>  
+    </div>
+</div>
+
+<div id="ad1">
+	<a href="#"><img src="{{asset('images/ad/ad1.gif')}}" /></a>
+    <a href="#"><img src="{{asset('images/ad/ad2.gif')}}" /></a>
+    <a href="#"><img src="{{asset('images/ad/ad3.gif')}}" /></a>
+    <a href="#" style="margin-right:0px !important"><img src="{{asset('images/ad/ad4.gif')}}" /></a>
+</div>
+
+<div id="ad2">
+	<a href="#"><img src="{{asset('images/ad/ad1.gif')}}" /></a>
+    <a href="#"><img src="{{asset('images/ad/ad2.gif')}}" /></a>
+    <a href="#"><img src="{{asset('images/ad/ad3.gif')}}" /></a>
+    <a href="#" style="margin-right:0px !important"><img src="{{asset('images/ad/ad4.gif')}}" /></a>
+</div>
+>>>>>>> 4fbbd3126486e0d40859d98733bd413b05f71eaf
 {% endblock %}

@@ -13,3 +13,4 @@ class UserbuildingController extends Controller
         return $this->render('FTRWebBundle:Userbuilding:listap.html.twig', array());
     }
 }
+

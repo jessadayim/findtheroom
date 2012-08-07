@@ -36,3 +36,4 @@ class SecurityController extends Controller
 		return $this->redirect($this->generateUrl('FTRWebBundle_homepage'));
 	}
 }
+

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Bootstrap
 app/bootstrap*
 
@@ -13,4 +14,21 @@ app/config/parameters.ini
 
 # Project files from aptana
 .project
+=======
+# Bootstrap
+app/bootstrap*
+
+# Symfony directories
+vendor/*
+*/logs/*
+*/cache/*
+web/uploads/*
+web/bundles/*
+
+# Configuration files
+app/config/parameters.ini
+
+# Project files from aptana
+.project
+>>>>>>> 4fbbd3126486e0d40859d98733bd413b05f71eaf
 .DS_Store
