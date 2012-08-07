@@ -21,13 +21,17 @@ a img{
 input {
 	font-family: DB Adman X, Helvetica, Arial, sans-serif;
 	font-size: 16px;
-	color: #bababa;
+	color: #423C3B;
 }
 
 hr.line {
 	color: #FFF; background-color: #FFF; width:95%; height: 1px; border: 0 none; position:absolute; left:25px;
 }
 
+.alertmsg{
+	font-size:16px;
+	color:#FF0000;
+}
 /* Header*/
 #header { width:1000px; margin: 40px auto 0 auto; font-size:22px;}
 #header span { margin: 40px 0 0 0; font-size:22px;}
@@ -101,8 +105,8 @@ hr.line {
 #show span.normal { font-size:20px;}
 #show .styled-select { background: url(../images/new_arrow.png) no-repeat right center #FFF; width:70px; height: 30px; overflow: hidden; float:right; margin-top:-5px;}
 #show .styled-select .select{border: 0; font-family: DB Adman X; font-size: 18px; color: #423C3B; background: transparent; padding: 5px; width:100px; height: 30px; -webkit-appearance: none;}
-#show .resultf{ border: 0; font-family: DB Adman X; font-size: 18px; color: #FFF; background: #423C3B; padding: 25px 0 0 30px;; width:970px; height: 145px; margin: 40px auto 0px auto;}
-#show .result{ border: 0; font-family: DB Adman X; font-size: 18px; color: #FFF; background: #423C3B; padding: 25px 0 0 30px;; width:970px; height: 145px; margin: 10px auto 0px auto;}
+#show .resultf{ border: 0; font-family: DB Adman X; font-size: 18px; color: #FFF; background: #423C3B; padding: 25px 0 0 30px; width:970px; height: 160px; margin: 40px auto 0px auto;}
+#show .result{ border: 0; font-family: DB Adman X; font-size: 18px; color: #FFF; background: #423C3B; padding: 25px 0 0 30px; width:970px; height: 160px; margin: 10px auto 0px auto;}
 #show .resultf .wifi, #show .result .wifi { background: url(../images/wifi.png) no-repeat; border: 0; width: 32px; height: 32px; position:absolute; margin-top:-11px; margin-left: -16px;}
 #show .resultf .wifi-none, #show .result .wifi-none { background: none; border: 0; width: 32px; height: 32px; position:absolute; margin-top:-11px; margin-left: -16px;}
 #show .resultf img, #show .result img { float: left;}
@@ -124,10 +128,46 @@ hr.line {
 .detail table a:hover{ border:0px; color:#BF1E2D; text-decoration:none;}
 .detail table span.right { background: url(../images/right.png) no-repeat; border: 0; height: 27px; margin-top:0px; margin-left:0px; display:block; padding-left: 30px; padding-top: 7px;}
 .detail table span.noright { background: url(../images/no-right.png) no-repeat; border: 0; height: 27px; margin-top:0px; margin-left:0px; display:block; padding-left: 30px; padding-top: 7px;}
+.detail table input.send { background: url(../images/send.png) no-repeat; border: 0; width: 55px; height: 55px; cursor: pointer; position:absolute; margin-left: 155px;}
+.detail table input.cancel { background: url(../images/cancel.png) no-repeat; border: 0; width: 55px; height: 55px; cursor: pointer; position:absolute; margin-left: 220px;}
+.detail div table tbody tr td textarea.longdesc { max-width:455px; max-height:80px; min-width:455px; min-height:80px; font-family: DB Adman X, Helvetica, Arial, sans-serif; color: #423C3B; font-size:16px;}
+
+.detail ul#navi_containTab3 { list-style:none; padding:0; margin:0; width:100%; height: 60px;}
+.detail ul#navi_containTab3 li { display:block; float:left; height:32px; border:0px; line-height:25px; cursor:pointer; text-align:left; padding-top:10px; color:#FFF; margin-top:15px; margin-left:20px; padding-left: 50px;} 
+  
+.detail ul#detail_containTab3 { list-style:none; padding:0; margin-top:0; width:100%;}
+.detail ul#detail_containTab3 li{ float:left; width:100%; margin-top: 10px; margin-left: 0px; height: 335px;}
+
+.detail #i_containTab3 ul#navi_containTab3 li#tabNavi7{ background:url(../images/pub.png) no-repeat; background-position:0 0; display:block;width:125px; }
+.detail #i_containTab3 ul#navi_containTab3 li#tabNavi8{ background:url(../images/pay.png) no-repeat; background-position:0 0; display:block;width:100px; }
+.detail #i_containTab3 ul#navi_containTab3 li#tabNavi9{ background:url(../images/package.png) no-repeat; background-position:0 0; display:block;width:100px; }
+
+/* class รูปแบบของแต่ละเนื้อหา */
+.detail .detailContent7{ display:block;}
+.detail .detailContent8{ display:none;}
+.detail .detailContent9{ display:none;}
+
+.detail #i_containTab3 ul#navi_containTab3 li#tabNavi7.active {background:url(../images/pub.png) no-repeat; background-position:0 -43px; display:block;}
+.detail #i_containTab3 ul#navi_containTab3 li#tabNavi8.active {background:url(../images/pay.png) no-repeat; background-position:0 -43px; display:block;}
+.detail #i_containTab3 ul#navi_containTab3 li#tabNavi9.active {background:url(../images/package.png) no-repeat; background-position:0 -43px; display:block;}
 
 /*Gallery*/
 #gallery { background-color: #423C3B; width: 1000px; height: 400px; display:block; position:relative; margin:15px auto 0px auto;}
 #gallery img.head { padding-top:15px; padding-left:20px;}
+
+/*Login Popup*/
+input.loginp { background: url(../images/login-bt2.png) no-repeat; border: 0; width: 78px; height: 80px; cursor: pointer; position:absolute;}
+input.pubp { background: url(../images/pub-bt2.png) no-repeat; border: 0; width: 78px; height: 80px; cursor: pointer; position:absolute; margin-left: 100px;}
+a.link{ padding: 3px 10px; color: #FFF; background-color: #BF1E2D; text-decoration: none; margin-top:70px; position:absolute; font-size:22px; display:block;}
+
+/*Forget Password Popup*/
+input.forgetp { background: url(../images/forget-bt.png) no-repeat; border: 0; width: 78px; height: 80px; cursor: pointer; position:absolute; margin-top:-40px;}
+
+/*Reset Password Popup*/
+input.resetp { background: url(../images/reset-bt.png) no-repeat; border: 0; width: 78px; height: 80px; cursor: pointer; position:absolute; margin-top:-20px;}
+
+/*Register*/
+input.regis { background: url(../images/regis-bt.png) no-repeat; border: 0; width: 78px; height: 80px; cursor: pointer; position:absolute; margin-top: 5px;}
 
 /*Recommend Block*/
 #recommend { background-color: #423C3B; width: 1000px; height: 405px; margin:15px auto 0 auto;}
@@ -168,7 +208,7 @@ hr.line {
 #footer ul li.head hr { color: #FFF; background-color: #FFF; width:95%; height: 1px; border: 0 none; padding:0; margin-top:10px;}
 #footer ul li.head a { color: #FFF; border: 0 none; text-decoration: none; display: block; margin-left: 10px; margin-top: 5px;}
 
-#footer ul.ft { display:block; list-style:none; padding-left:25px;; margin-top:0px;; width:100%; text-decoration:none; float: none; width: 230px; position:relative;}
+#footer ul.ft { display:block; list-style:none; padding-left:25px; margin-top:0px; width:100%; text-decoration:none; float: none; width: 230px; position:relative;}
 #footer ul.ft li { margin-top: 10px;}
 #footer ul.ft li a { font-family: DB Adman X; font-size: 20px; color: #FFF; text-decoration:none;}
 

@@ -1,0 +1,35 @@
+{% extends 'FTRWebBundle:Layout:Layout.html.twig' %}
+{% block body %}
+<div class="detail" style="height: 100%; margin-bottom: 15px;">
+	<img src="{{asset('images/owner.png')}}" style="display:block; position:relative; float:none;" />
+	<hr class="line" style="top: 60px;" />
+    <div style="width:1000px; display:block; position:relative; height:100%; margin-top: 0px;">
+		<table style="margin-top: 0px;">
+        	<tr height="80" valign="middle">
+				<td align="left" width="250" style="font-size:24px;">ชื่อตึก</td>
+                <td align="center" width="250" style="font-size:24px;">สถานะการแสดง</td>
+                <td align="center" width="250" style="font-size:24px;">ดูหน้าตัวอย่าง</td>
+                <td align="center" width="250" style="font-size:24px;">แก้ไขรายละเอียด</td>
+            </tr>
+            <hr class="line" style="top: 60px;" />
+        	<tr height="50" valign="middle">
+				<td align="left" width="250" style="font-size:24px;">หอขวัญ อพาร์ทเม้นต์</td>
+                <td align="center" width="250" style="font-size:24px;">รอการยืนยัน</td>
+                <td align="center" width="250" style="font-size:24px;"><a href="#">ดู</a></td>
+                <td align="center" width="250" style="font-size:24px;"><a herf="#">แก้ไข</a></td>
+            </tr>
+            <tr height="50" valign="middle">
+				<td align="left" width="250" style="font-size:24px;">หอขวัญ อพาร์ทเม้นต์</td>
+                <td align="center" width="250" style="font-size:24px;">รอการยืนยัน</td>
+                <td align="center" width="250" style="font-size:24px;"><a href="#">ดู</a></td>
+                <td align="center" width="250" style="font-size:24px;"><a herf="#">แก้ไข</a></td>
+            </tr>
+            <tr height="70" valign="middle">
+                <td align="left"><a href="add.html"><img src="{{asset('images/add-bt.png')}}" style="padding:0" /></a></td>
+                <td align="left" style="font-size:24px;" colspan="3">&nbsp;</td>
+            </tr>
+        </table>
+	</div>
+</div>
+
+{% endblock %}

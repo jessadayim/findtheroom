@@ -134,6 +134,62 @@ class Building_site
     private $user_owner_id;
 
     /**
+     * @var text $detail
+     *
+     * @ORM\Column(name="detail", type="text")
+     */
+    private $detail;
+
+    /**
+     * @var string $contact_name
+     *
+     * @ORM\Column(name="contact_name", type="string", length=127)
+     */
+    private $contact_name;
+
+    /**
+     * @var string $contact_email
+     *
+     * @ORM\Column(name="contact_email", type="string", length=127)
+     */
+    private $contact_email;
+
+    /**
+     * @var string $website
+     *
+     * @ORM\Column(name="website", type="string", length=127)
+     */
+    private $website;
+
+    /**
+     * @var string $month_stay
+     *
+     * @ORM\Column(name="month_stay", type="string", length=127)
+     */
+    private $month_stay;
+
+    /**
+     * @var float $water_unit
+     *
+     * @ORM\Column(name="water_unit", type="float")
+     */
+    private $water_unit;
+
+    /**
+     * @var float $electricity_unit
+     *
+     * @ORM\Column(name="electricity_unit", type="float")
+     */
+    private $electricity_unit;
+
+    /**
+     * @var integer $internet_price
+     *
+     * @ORM\Column(name="internet_price", type="integer")
+     */
+    private $internet_price;
+
+    /**
      * @var boolean $deleted
      *
      * @ORM\Column(name="deleted", type="boolean")
@@ -469,6 +525,166 @@ class Building_site
     public function getUserOwnerId()
     {
         return $this->user_owner_id;
+    }
+
+    /**
+     * Set detail
+     *
+     * @param text $detail
+     */
+    public function setDetail($detail)
+    {
+        $this->detail = $detail;
+    }
+
+    /**
+     * Get detail
+     *
+     * @return text 
+     */
+    public function getDetail()
+    {
+        return $this->detail;
+    }
+
+    /**
+     * Set contact_name
+     *
+     * @param string $contact_name
+     */
+    public function setContactName($contact_name)
+    {
+        $this->contact_name = $contact_name;
+    }
+
+    /**
+     * Get contact_name
+     *
+     * @return string 
+     */
+    public function getContactName()
+    {
+        return $this->contact_name;
+    }
+
+    /**
+     * Set contact_email
+     *
+     * @param string $contact_email
+     */
+    public function setContactEmail($contact_email)
+    {
+        $this->contact_email = $contact_email;
+    }
+
+    /**
+     * Get contact_email
+     *
+     * @return string 
+     */
+    public function getContactEmail()
+    {
+        return $this->contact_email;
+    }
+
+    /**
+     * Set website
+     *
+     * @param string $website
+     */
+    public function setWebsite($website)
+    {
+        $this->website = $website;
+    }
+
+    /**
+     * Get website
+     *
+     * @return string 
+     */
+    public function getWebsite()
+    {
+        return $this->website;
+    }
+
+    /**
+     * Set month_stay
+     *
+     * @param string $month_stay
+     */
+    public function setMonthStay($month_stay)
+    {
+        $this->month_stay = $month_stay;
+    }
+
+    /**
+     * Get month_stay
+     *
+     * @return string 
+     */
+    public function getMonthStay()
+    {
+        return $this->month_stay;
+    }
+
+    /**
+     * Set water_unit
+     *
+     * @param float $water_unit
+     */
+    public function setWaterUnit($waterUnit)
+    {
+        $this->water_unit = $waterUnit;
+    }
+
+    /**
+     * Get water_unit
+     *
+     * @return float 
+     */
+    public function getWaterUnit()
+    {
+        return $this->water_unit;
+    }
+
+    /**
+     * Set electricity_unit
+     *
+     * @param float $electricity_unit
+     */
+    public function setElectricityUnit($electricityUnit)
+    {
+        $this->electricity_unit = $electricityUnit;
+    }
+
+    /**
+     * Get electricity_unit
+     *
+     * @return float 
+     */
+    public function getElectricityUnit()
+    {
+        return $this->electricity_unit;
+    }
+
+    /**
+     * Set internet_price
+     *
+     * @param integer $internet_price
+     */
+    public function setInternetPrice($internetPrice)
+    {
+        $this->internet_price = $internetPrice;
+    }
+
+    /**
+     * Get internet_price
+     *
+     * @return integer 
+     */
+    public function getInternetPrice()
+    {
+        return $this->internet_price;
     }
 
     /**
