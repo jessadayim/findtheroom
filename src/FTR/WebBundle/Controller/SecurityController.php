@@ -39,6 +39,7 @@ class SecurityController extends Controller
     {    	
 		return $this->render('FTRWebBundle:Security:login.html.twig',array());
     }
+
 	public function logoutAction()
 	{
 		$session = $this->get('session');
@@ -46,3 +47,4 @@ class SecurityController extends Controller
 		return $this->redirect($this->generateUrl('FTRWebBundle_homepage'));
 	}
 }
+
