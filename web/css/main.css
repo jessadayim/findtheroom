@@ -124,7 +124,7 @@ hr.line {
 .detail img { padding-top:15px; padding-left:20px;}
 .detail img.nopad { padding-top:0px; padding-left:0px;}
 .detail table{ border:0px; color:#FFF; font-size:20px; margin-left:30px; margin-top: 20px;}
-.detail table a{ border:0px; color:#FFF; text-decoration:none;}
+.detail table a{ border:0px; color:#FFF; text-decoration:none; cursor:pointer;}
 .detail table a:hover{ border:0px; color:#BF1E2D; text-decoration:none;}
 .detail table span.right { background: url(../images/right.png) no-repeat; border: 0; height: 27px; margin-top:0px; margin-left:0px; display:block; padding-left: 30px; padding-top: 7px;}
 .detail table span.noright { background: url(../images/no-right.png) no-repeat; border: 0; height: 27px; margin-top:0px; margin-left:0px; display:block; padding-left: 30px; padding-top: 7px;}
@@ -168,6 +168,14 @@ input.resetp { background: url(../images/reset-bt.png) no-repeat; border: 0; wid
 
 /*Register*/
 input.regis { background: url(../images/regis-bt.png) no-repeat; border: 0; width: 78px; height: 80px; cursor: pointer; position:absolute; margin-top: 5px;}
+/*Add Data Apartment*/
+.detail table .styled-select { background: url(../images/new_arrow.png) no-repeat right center #FFF; width:180px; height: 30px; overflow: hidden; margin-left:2px;}
+.detail table .styled-select .select{border: 0px; font-family: DB Adman X; font-size: 18px; color: #423C3B; background: transparent; padding: 5px; width:210px; height: 30px; -webkit-appearance: none;}
+.detail table input.save{ background: url(../images/save.png) no-repeat; border: 0; width: 51px; height: 51px; cursor: pointer; position:absolute; margin-top:-10px; margin-left:100px;}
+.detail table input.canc{ background: url(../images/canc.png) no-repeat; border: 0; width: 51px; height: 51px; cursor: pointer; position:absolute; margin-top:-10px; margin-left:160px;}
+.detail div table tbody tr td textarea.place { max-width:180px; max-height:80px; min-width:180px; min-height:80px; font-family: DB Adman X, Helvetica, Arial, sans-serif; color: #423C3B; font-size:16px;}
+.detail div table tbody tr td textarea.ldesc { max-width:595px; max-height:40px; min-width:595px; min-height:40px; font-family: DB Adman X, Helvetica, Arial, sans-serif; color: #423C3B; font-size:16px;}
+#gallery .upload { position:absolute; display:block; z-index: 999; margin-left: 35%; margin-top: 130px;}
 
 /*Recommend Block*/
 #recommend { background-color: #423C3B; width: 1000px; height: 405px; margin:15px auto 0 auto;}

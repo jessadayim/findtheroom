@@ -1,0 +1,11 @@
+userbuilding:
+    pattern:  /
+    defaults: { _controller: FTRWebBundle:Userbuilding:index }
+    
+addData:
+    pattern: /add/{id}
+    defaults: { _controller: FTRWebBundle:Userbuilding:addData ,'id' :null }
+    
+saveData:
+    pattern: /save/{id}
+    defaults: { _controller: FTRWebBundle:Userbuilding:addData }
