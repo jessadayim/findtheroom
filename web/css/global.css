@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* 
 	Resets defualt browser settings
 	reset.css
@@ -436,4 +437,444 @@ a:hover,a:active {
 
 #slides5 .next {
 	left:975px;
+=======
+/* 
+	Resets defualt browser settings
+	reset.css
+*/
+
+/*
+	Page style
+*/
+
+#container {
+	width:1000px;
+	height:340px;
+	padding:0px;
+	margin:0 auto;
+	position:relative;
+	z-index:0;
+}
+
+
+
+#frame {
+	position:absolute;
+	z-index:0;
+	width:1000px;
+	height:300px;
+	top:-3px;
+	left:-80px;
+}
+
+/*
+	Slideshow
+*/
+
+#slides {
+	position:absolute;
+	top:15px;
+	left:0px;
+	z-index:100;
+}
+
+/*
+	Slides container
+	Important:
+	Set the width of your slides container
+	Set to display none, prevents content flash
+*/
+
+.slides_container {
+	width:1000px;
+	overflow:hidden;
+	position:relative;
+	display:none;
+}
+
+.slides_container div.slide {
+	width:1000px;
+	height:300px;
+	display:block;
+}
+
+/*
+	Each slide
+	Important:
+	Set the width of your slides
+	If height not specified height will be set by the slide content
+	Set to display block
+*/
+
+.slides_container a {
+	width:1000px;
+	height:300px;
+	display:block;
+}
+
+.slides_container a.pop {
+	width:300px;
+	height:150px;
+	margin-top: -20px;
+}
+
+.slides_container a img {
+	display:block;
+}
+
+/*
+	Next/prev buttons
+*/
+
+#slides .next,#slides .prev {
+	position:absolute;
+	top:120px;
+	left:-29px;
+	width:29px;
+	height:57px;
+	display:block;
+	z-index:101;
+}
+
+#slides .next {
+	left:1000px;
+}
+
+/*
+	Pagination
+*/
+
+.pagination {
+	margin:-40px 0 0 850px;
+	width:120px;
+	position:absolute;
+	z-index:102;
+}
+
+.pagination li {
+	float:left;
+	margin:0 1px;
+	list-style:none;
+}
+
+.pagination li a {
+	display:block;
+	width:21px;
+	height:24px;
+	padding-top:4px;
+	padding-left:11px;
+	background-image:url(../images/slider/pagination.png);
+	background-position:0 0;
+	float:left;
+	overflow:hidden;
+	color:#423C3B;
+	z-index:103;
+	text-decoration: none;
+}
+
+.pagination li.current a {
+	background-position:0 -28px;
+	color:#FFF;
+}
+
+/*
+	Caption
+*/
+
+.caption {
+	z-index:101;
+	position:absolute;
+	left:0;
+	height:50px;
+	padding:0 20px 0 20px;
+	background:#423C3B;
+	background:rgba(0,0,0,.5);
+	width:1000px;
+	font-size:20px;
+	color:#fff;
+	/*border-top:1px solid #000;*/
+	text-shadow:none;
+	bottom:0;
+}
+
+.caption p{
+	margin-top:15px;
+}
+
+.caption p span.sale{
+	text-decoration:line-through;
+}
+
+/*
+	Footer
+
+
+#footer {
+	text-align:center;
+	width:580px;
+	margin-top:9px;
+	padding:4.5px 0 18px;
+	border-top:1px solid #dfdfdf;
+}
+
+#footer p {
+	margin:4.5px 0;
+	font-size:1.0em;
+}
+*/
+/*
+	Anchors
+
+
+a:link,a:visited {
+	color:#599100;
+	text-decoration:none;
+}
+
+a:hover,a:active {
+	color:#599100;
+	text-decoration:underline;
+}*/
+
+
+/*Slide Recommend*/
+
+#container2 {
+	width:950px;
+	height:340px;
+	padding:0px;
+	margin:0 auto;
+	position:relative;
+	z-index:0;
+}
+
+
+
+#frame2 {
+	position:absolute;
+	z-index:0;
+	width:950px;
+	height:300px;
+	top:-3px;
+	left:-80px;
+}
+
+/*
+	Slideshow
+*/
+
+#slides2 {
+	position:absolute;
+	top:0px;
+	left:0px;
+	z-index:100;
+}
+
+
+#slides2 .next,#slides2 .prev {
+	position:absolute;
+	top:80px;
+	left:-54px;
+	width:29px;
+	height:57px;
+	display:block;
+	z-index:101;
+}
+
+#slides2 .next {
+	left:975px;
+}
+
+.slides_container div.slide .ap{
+	width:300px;
+	height:300px;
+	display:block;
+	float:left;
+	margin-right: 12px;
+	padding-top:8px;
+	padding-left:8px;
+}
+
+.slides_container div.slide .ap2{
+	width:300px;
+	height:300px;
+	display:block;
+	float:left;
+	margin-right: 0px;
+	padding-top:8px;
+	padding-left:8px;
+}
+
+.slides_container div.slide .ap3{
+	width:300px;
+	height:300px;
+	display:block;
+	float:left;
+	margin-right: 25px;
+	padding-top:8px;
+}
+
+.slides_container div.slide .ap4{
+	width:300px;
+	height:300px;
+	display:block;
+	float:left;
+	margin-right: 0px;
+	padding-top:8px;
+}
+
+.slides_container div.slide .ap .recom, .slides_container div.slide .ap2 .recom{
+	width:134px;
+	height:141px;
+	display:block;
+	position:absolute;
+	z-index:200;
+	background:url(../images/recommend.png) no-repeat top left;
+	margin-top: -8px;
+	margin-left: -8px;
+}
+
+/*Slide Recommend2*/
+
+#container3 {
+	width:950px;
+	height:340px;
+	padding:0px;
+	margin:0 auto;
+	position:relative;
+	z-index:0;
+}
+
+
+
+#frame3 {
+	position:absolute;
+	z-index:0;
+	width:950px;
+	height:300px;
+	top:-3px;
+	left:-80px;
+}
+
+/*
+	Slideshow
+*/
+
+#slides3 {
+	position:absolute;
+	top:0px;
+	left:0px;
+	z-index:100;
+}
+
+
+#slides3 .next,#slides3 .prev {
+	position:absolute;
+	top:80px;
+	left:-54px;
+	width:29px;
+	height:57px;
+	display:block;
+	z-index:101;
+}
+
+#slides3 .next {
+	left:975px;
+}
+
+/*Slide Recommend3*/
+
+#container4 {
+	width:950px;
+	height:340px;
+	padding:0px;
+	margin:0 auto;
+	position:relative;
+	z-index:0;
+}
+
+
+
+#frame4 {
+	position:absolute;
+	z-index:0;
+	width:950px;
+	height:300px;
+	top:-3px;
+	left:-80px;
+}
+
+/*
+	Slideshow
+*/
+
+#slides4 {
+	position:absolute;
+	top:0px;
+	left:0px;
+	z-index:100;
+}
+
+
+#slides4 .next,#slides4 .prev {
+	position:absolute;
+	top:80px;
+	left:-54px;
+	width:29px;
+	height:57px;
+	display:block;
+	z-index:101;
+}
+
+#slides4 .next {
+	left:975px;
+}
+
+/*Slide Gallery*/
+
+#container5 {
+	width:950px;
+	height:340px;
+	padding:0px;
+	margin:0 auto;
+	position:relative;
+	z-index:0;
+}
+
+
+
+#frame5 {
+	position:absolute;
+	z-index:0;
+	width:950px;
+	height:300px;
+	top:-3px;
+	left:-80px;
+}
+
+/*
+	Slideshow
+*/
+
+#slides5 {
+	position:absolute;
+	top:20px;
+	left:0px;
+	z-index:100;
+}
+
+
+#slides5 .next,#slides5 .prev {
+	position:absolute;
+	top:95px;
+	left:-54px;
+	width:29px;
+	height:57px;
+	display:block;
+	z-index:101;
+}
+
+#slides5 .next {
+	left:975px;
+>>>>>>> 4fbbd3126486e0d40859d98733bd413b05f71eaf
 }

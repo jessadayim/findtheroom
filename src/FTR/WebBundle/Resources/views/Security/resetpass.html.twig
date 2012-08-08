@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Forget Password</title>
+<link rel="stylesheet" type="text/css" href="{{asset('css/main.css')}}" />
+<script src="{{asset('js/jquery.min.js')}}"></script>
+<script src="{{asset('js/html5placeholder.jquery.js')}}"></script>
+<script src="{{asset('js/jquery.easing.1.3.js')}}"></script>
+<script>
+    $(function(){
+      $(':input[placeholder]').placeholder();
+    });
+</script>
+</head>
+
+<body style=" background-color:#FFF; color:#423C3B;">
+
+	<div id="fb-root"></div>
+      <script>
+        window.fbAsyncInit = function() {
+          FB.init({
+            appId      : '414830161885886', // App ID
+            channelUrl : '//www.findtheroom.com//login.php', // Channel File ระบุไฟล์ที่จะใช้ login
+            status     : true, // check login status
+            cookie     : true, // enable cookies to allow the server to access the session
+            xfbml      : true  // parse XFBML
+          });
+        };
+        // Load the SDK Asynchronously
+        (function(d){
+           var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+           if (d.getElementById(id)) {return;}
+           js = d.createElement('script'); js.id = id; js.async = true;
+           js.src = "//connect.facebook.net/en_US/all.js";
+           ref.parentNode.insertBefore(js, ref);
+         }(document));
+      </script>
+
+	<img src="{{asset('images/forget.png')}}" style="padding-top: 20px;" />
+	<hr style=" width:98%; margin-left:-5px; margin-top:15px; margin-bottom:10px;" />
+		<table style="padding-left:10px;">
+        	<tr height="60" valign="middle">
+				<td align="left" width="600" style="font-size:24px;" colspan="3">ตั้งค่ารหัสผ่านใหม่ กรุณากรอกรหัสผ่านใหม่ และยืนยันรหัสผ่านใหม่ให้ตรงกัน</td>
+            </tr>
+            <tr height="40" valign="middle">
+				<td align="left" width="180" style="font-size:24px;">&nbsp;</td>
+                <td align="left" style="font-size:22px;" colspan="2"><font style="color:#BF1E2D;">Alert error message Test Test Test Test!!</font></td>
+            </tr>
+            <tr height="50" valign="middle">
+				<td align="left" width="180" style="font-size:24px;">รหัสผ่านใหม่ : *</td>
+                <td align="left" width="120"><input name="username" type="text" maxlength="30" placeholder="กรอกรหัสผ่านใหม่" style=" padding:2px; font-size:20px;" /></td>
+            </tr>
+            <tr height="50" valign="middle">
+				<td align="left" width="180" style="font-size:24px;">ยืนยันรหัสผ่านใหม่ : *</td>
+                <td align="left" width="120"><input name="username" type="text" maxlength="30" placeholder="ยืนยันรหัสผ่านใหม่" style=" padding:2px; font-size:20px;" /></td>
+            </tr>
+            <tr height="50" valign="middle">
+				<td align="left" width="180" style="font-size:24px;">&nbsp;</td>
+                <td align="left" width="120"><input class="resetp" type="submit" value="" /></td>
+            </tr>
+        </table>
+	</div>
+</body>
+</html>

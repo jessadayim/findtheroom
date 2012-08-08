@@ -34,8 +34,18 @@ FTRWebBundle_logout:
     pattern:  /logout
     defaults: { _controller: FTRWebBundle:Security:logout}
 
+TRWebBundle_reset:
+    pattern:  /reset
+    defaults: { _controller: FTRWebBundle:Reset:reset}
 
-FTRWebBundle_sendmail:
+FTRWebBundle_forget:
+    pattern:  /forget
+    defaults: { _controller: FTRWebBundle:Forget:forget}
+
+FTRWebBundle_sendemail:
+    pattern:  /sendemail
+    defaults: { _controller: FTRWebBundle:Forget:sendEmail}
+
+FTRWebBundle_sendmail_extest:
     pattern:  /sendemail
     defaults: { _controller: FTRWebBundle:Userbuilding:sendemail}
-    

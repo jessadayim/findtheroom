@@ -10,25 +10,36 @@ class SecurityController extends Controller
 {
     public function loginAction()
     {
-    	//var_dump($_POST);
-		$username = $_POST['username'];
+    	$username = $_POST['username'];
 		$password = $_POST['password'];
-		$conn= $this->get('database_connection');
-		if(!$conn){ die("MySQL Connection error");}
-			try{
-				$sql1 ="SELECT * FROM user_owner WHERE username = '$username' and password = '$password'";
-				$objSQL1 = $conn->fetchAll($sql1);
-				
-				$session = $this->get('session');
-				$user = $objSQL1[0]['username'];
-				$session->set('user', $user);
-				//var_dump($objSQL1);
+		if($username !=NULL&& $password !=NULL){
+			$conn= $this->get('database_connection');
+			if(!$conn){ die("MySQL Connection error");}
+				try{
+					$sql1 ="SELECT * FROM user_owner WHERE username = '$username' and password = '$password'";
+					$objSQL1 = $conn->fetchAll($sql1);
+					
+					$session = $this->get('session');
+					$user = $objSQL1[0]['username'];
+					$session->set('user', $user);
+					//var_dump($objSQL1);
+			
+				} catch (Exception $e) {
+					echo 'Caught exception: ',  $e->getMessage(), "\n";
+				}
+				//echo "success";
+				// exit();
+			return $this->redirect($this->generateUrl('FTRWebBundle_homepage'));
+		}else{
+			return $this->render('FTRWebBundle:Security:login.html.twig',array());
+		}
 		
-			} catch (Exception $e) {
-				echo 'Caught exception: ',  $e->getMessage(), "\n";
-			}
-		return $this->redirect($this->generateUrl('FTRWebBundle_homepage'));
+	}
+	public function logPublishAction()
+    {    	
+		return $this->render('FTRWebBundle:Security:login.html.twig',array());
     }
+
 	public function logoutAction()
 	{
 		$session = $this->get('session');
@@ -36,3 +47,4 @@ class SecurityController extends Controller
 		return $this->redirect($this->generateUrl('FTRWebBundle_homepage'));
 	}
 }
+
