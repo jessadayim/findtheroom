@@ -29,10 +29,26 @@ FTRWebBundle_confirm:
 FTRWebBundle_login:
     pattern:  /login
     defaults: { _controller: FTRWebBundle:Security:login}
+    
+FTRWebBundle_loginpublish:
+    pattern:  /loginpub
+    defaults: { _controller: FTRWebBundle:Security:logPublish}
 
 FTRWebBundle_logout:
     pattern:  /logout
     defaults: { _controller: FTRWebBundle:Security:logout}
+
+FTRWebBundle_reset:
+    pattern:  /reset
+    defaults: { _controller: FTRWebBundle:Reset:reset}
+
+FTRWebBundle_forget:
+    pattern:  /forget
+    defaults: { _controller: FTRWebBundle:Forget:forget}
+
+FTRWebBundle_sendemail:
+    pattern:  /sendemail
+    defaults: { _controller: FTRWebBundle:Forget:sendEmail}
 
 FTRWebBundle_userbuilding:
     pattern:  /listap
