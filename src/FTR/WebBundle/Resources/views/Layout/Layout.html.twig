@@ -6,10 +6,14 @@
 <link rel="stylesheet" type="text/css" href="{{asset('css/main.css')}}" />
 <link rel="stylesheet" type="text/css" href="{{asset('css/gooeymenu.css')}}" />
 <link rel="stylesheet" type="text/css" href="{{asset('css/global.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('css/paging.css')}}">
 <script src="{{asset('js/jquery.min.js')}}"></script>
 <script src="{{asset('js/html5placeholder.jquery.js')}}"></script>
 <script src="{{asset('js/jquery.easing.1.3.js')}}"></script>
 <script src="{{asset('js/slides.min.jquery.js')}}"></script>
+<script src="{{asset('js/paging/jquery.paginate.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/fancybox/jquery.fancybox-1.3.4.pack.js')}}"></script>
+<link rel="stylesheet" type="text/css" href="{{asset('css/jquery.fancybox-1.3.4.css')}}" media="screen" />
 <script>
 		$(function(){
 			$('#slides').slides({
@@ -126,7 +130,7 @@ function enact(what){
         	</form>
         {% else %}	
 	        <form action="{{path('FTRWebBundle_login')}}" method="post">
-	    		<input name="username" type="text" value="" maxlength="25" placeholder="Username" /> <input name="password" type="password" value="" maxlength="25" placeholder="Password" /> <input class="login" type="submit" value="" />
+	    		<input name="username" type="text" value="" maxlength="25" placeholder="กรุณากรอกชื่อผู้ใช้งาน" /> <input name="password" type="password" value="" maxlength="25" placeholder="กรุณากรอกรหัสผ่าน" /> <input class="login" type="submit" value="" />
 	        </form>
         {% endif %}
     </div>
@@ -145,7 +149,19 @@ function enact(what){
     </ul>
     <hr />
 </div>
+<script>	
+	var url = window.location.href,check=false;
+	var urlparts = url.split("/");
+	for(i = 0; i < urlparts.length; i++){
+		if (urlparts[i]=='search'){$("#searchpage").addClass("selected");check=true}
+		else if (urlparts[i]=='special/beauty'){$("#").addClass("selected");check=true}
+		else if (urlparts[i]=='publish'){$("#publishpage").addClass("selected");check=true}
+		else if (urlparts[i]=='special/beauty'){$("#").addClass("selected");check=true}
+		else if (urlparts[i]=='contact'){$("#contactpage").addClass("selected");check=true}
+	}
+	if(check==false)	$("#mainpage").addClass("selected");
 
+</script>
 {% block body %}
 {% endblock %}
 
