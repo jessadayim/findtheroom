@@ -1,0 +1,26 @@
+RewriteEngine on
+
+# If you are having problems or are using VirtualDocumentRoot, uncomment this line and set it to your vBulletin directory.
+# RewriteBase /forum/
+
+RewriteCond %{REQUEST_FILENAME} -s [OR]
+RewriteCond %{REQUEST_FILENAME} -l [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+
+RewriteRule ^.*$ - [NC,L]
+
+# Forum
+RewriteRule ^threads/.* showthread.php [QSA]
+RewriteRule ^forums/.* forumdisplay.php [QSA]
+RewriteRule ^members/.* member.php [QSA]
+RewriteRule ^blogs/.* blog.php [QSA]
+ReWriteRule ^entries/.* entry.php [QSA]
+
+RewriteCond %{REQUEST_FILENAME} -s [OR]
+RewriteCond %{REQUEST_FILENAME} -l [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+
+RewriteRule ^.*$ - [NC,L]
+
+# MVC
+RewriteRule ^(?:(.*?)(?:/|$))(.*|$)$ $1.php?r=$2 [QSA]
