@@ -87,21 +87,21 @@ class Building_site
     /**
      * @var string $latitude
      *
-     * @ORM\Column(name="latitude", type="string", length=127)
+     * @ORM\Column(name="latitude", type="string", length=127, nullable="true")
      */
     private $latitude;
 
     /**
      * @var string $longitude
      *
-     * @ORM\Column(name="longitude", type="string", length=127)
+     * @ORM\Column(name="longitude", type="string", length=127, nullable="true")
      */
     private $longitude;
 
     /**
      * @var boolean $recommend
      *
-     * @ORM\Column(name="recommend", type="boolean")
+     * @ORM\Column(name="recommend", type="boolean", nullable="true")
      */
     private $recommend;
 	
@@ -136,7 +136,7 @@ class Building_site
     /**
      * @var text $detail
      *
-     * @ORM\Column(name="detail", type="text")
+     * @ORM\Column(name="detail", type="text", nullable="true")
      */
     private $detail;
 
@@ -157,7 +157,7 @@ class Building_site
     /**
      * @var string $website
      *
-     * @ORM\Column(name="website", type="string", length=127)
+     * @ORM\Column(name="website", type="string", length=127, nullable="true")
      */
     private $website;
 
@@ -185,14 +185,21 @@ class Building_site
     /**
      * @var integer $internet_price
      *
-     * @ORM\Column(name="internet_price", type="integer")
+     * @ORM\Column(name="internet_price", type="integer", nullable="true")
      */
     private $internet_price;
 
     /**
+     * @var string $googlemap_url
+     *
+     * @ORM\Column(name="googlemap_url", type="string", length=255)
+     */
+    private $googlemap_url;
+
+    /**
      * @var boolean $deleted
      *
-     * @ORM\Column(name="deleted", type="boolean")
+     * @ORM\Column(name="deleted", type="boolean", nullable="true")
      */
     private $deleted;
 

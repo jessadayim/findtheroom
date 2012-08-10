@@ -1,5 +1,5 @@
 userbuilding:
-    pattern:  /
+    pattern:  /listap
     defaults: { _controller: FTRWebBundle:Userbuilding:index }
     
 addData:
@@ -8,4 +8,4 @@ addData:
     
 saveData:
     pattern: /save/{id}
-    defaults: { _controller: FTRWebBundle:Userbuilding:addData }
+    defaults: { _controller: FTRWebBundle:Userbuilding:saveData ,'id' :null }

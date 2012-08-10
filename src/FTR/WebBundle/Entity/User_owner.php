@@ -71,9 +71,51 @@ class User_owner
     private $fax_number;
 
     /**
+     * @var string $user_level
+     *
+     * @ORM\Column(name="user_level", type="string", length=127, nullable="true")
+     */
+    private $user_level;
+
+    /**
+     * @var datetime $last_login
+     *
+     * @ORM\Column(name="last_login", type="datetime", nullable="true")
+     */
+    private $last_login;
+
+    /**
+     * @var datetime $password_requested
+     *
+     * @ORM\Column(name="password_requested", type="datetime", nullable="true")
+     */
+    private $password_requested;
+
+    /**
+     * @var string $confirm_token
+     *
+     * @ORM\Column(name="confirm_token", type="string", length=255, nullable="true")
+     */
+    private $confirm_token;
+
+    /**
+     * @var boolean $enabled
+     *
+     * @ORM\Column(name="enabled", type="boolean", nullable="true")
+     */
+    private $enabled;
+
+    /**
+     * @var string $facebook_id
+     *
+     * @ORM\Column(name="facebook_id", type="string", length=64, nullable="true")
+     */
+    private $facebook_id;
+
+    /**
      * @var boolean $deleted
      *
-     * @ORM\Column(name="deleted", type="boolean")
+     * @ORM\Column(name="deleted", type="boolean", nullable="true")
      */
     private $deleted;
 

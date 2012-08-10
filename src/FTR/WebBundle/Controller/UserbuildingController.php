@@ -26,7 +26,7 @@ class UserbuildingController extends Controller
 				/**
 				 * query for facility list inroom type
 				 */
-				$sql ="select * from facilitylist where facility_type = 'inroom'";
+				$sql ="select * from facilitylist where facility_type = 'inroom' and display = 1";
 				$faclist_inroom = $conn->fetchAll($sql);
 				$countall_inroom = count($faclist_inroom);
 				foreach ($faclist_inroom as $key => $value) {
@@ -69,7 +69,8 @@ class UserbuildingController extends Controller
 						$list = NULL;
 					}elseif($count==$countall_outroom){
 						$countlist = count($list);
-						$fac_outroomlist[] = array('loop'=>$list,'stat'=>'end','count'=>$countlist);
+						$num = 4-$countlist;
+						$fac_outroomlist[] = array('loop'=>$list,'stat'=>'end','count'=>$num);
 						$list = NULL;
 					}
 				}
@@ -82,14 +83,19 @@ class UserbuildingController extends Controller
 				}
 				
 		return $this->render('FTRWebBundle:Userbuilding:add.html.twig', array(
+			'build_id'		=> $id,
 			'fac_inroom'	=> $fac_inroomlist,
 			'fac_outroom'	=> $fac_outroomlist,
 		));
 	}
 	
-	public function saveDataAction($id)
+	public function saveDataAction($id=null)
 	{
-		
+		if($_POST)
+		{
+			var_dump($_POST);
+		}
+		exit();
 	}
 	
 	public function sendemailAction()

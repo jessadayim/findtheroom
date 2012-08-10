@@ -50,6 +50,6 @@ FTRWebBundle_sendemail:
     pattern:  /sendemail
     defaults: { _controller: FTRWebBundle:Forget:sendEmail}
 
-FTRWebBundle_sendmail_extest:
-    pattern:  /sendemail
-    defaults: { _controller: FTRWebBundle:Userbuilding:sendemail}
+#FTRWebBundle_sendmail_extest:
+#    pattern:  /sendemail
+#    defaults: { _controller: FTRWebBundle:Userbuilding:sendemail}
