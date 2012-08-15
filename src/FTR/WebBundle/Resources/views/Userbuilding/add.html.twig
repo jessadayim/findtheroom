@@ -329,7 +329,7 @@
             <tr height="40" valign="middle">
             	{% for loops in list.loop %}
             	<td width="250">
-            		<input id="fac{{loops.id}}" name="fac{{loops.id}}" type="checkbox" value="{{loops.id}}" /> <label for="fac{{loops.id}}">{{loops.facility_name}}</label>
+            		<input id="fac{{loops.id}}" name="fac[]" type="checkbox" value="{{loops.id}}" /> <label for="fac{{loops.id}}">{{loops.facility_name}}</label>
             	</td>
             	{% endfor %}
             </tr>
@@ -348,7 +348,7 @@
             <tr height="40" valign="middle">
             	{% for loops in list.loop %}
             	<td width="250">
-            		<input id="fac{{loops.id}}" name="fac{{loops.id}}" type="checkbox" value="{{loops.id}}" /> <label for="fac{{loops.id}}">{{loops.facility_name}}</label>
+            		<input id="fac{{loops.id}}" name="fac[]" type="checkbox" value="{{loops.id}}" /> <label for="fac{{loops.id}}">{{loops.facility_name}}</label>
             	</td>
             	{% endfor %}
             	{% if list.stat == 'end' %}
