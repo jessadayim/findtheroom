@@ -30,7 +30,7 @@ class RegisterController extends Controller
 			if(!$conn){ die("MySQL Connection error");}
 				try{
 					$sql1 ="INSERT INTO user_owner(username,password,firstname,lastname,email,phone_number,fax_number,deleted) VALUES('$username','$password','$firstname','$lastname','$email','$tel','0000000000','0')";
-					$objSQL1 = $conn->fetchAll($sql1);
+					$conn->query($sql1);
 			
 				} catch (Exception $e) {
 					echo 'Caught exception: ',  $e->getMessage(), "\n";
