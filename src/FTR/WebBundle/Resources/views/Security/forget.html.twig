@@ -11,6 +11,32 @@
     $(function(){
       $(':input[placeholder]').placeholder();
     });
+    $(document).ready(function(){
+    	$("#send").click(function(e) {
+    		if($('input#email').val() == ""){
+    			$("td#txt").html("<font style='color:#BF1E2D;'>กรุณากรอกอีแมล์</font>");
+    		}
+    		else{
+	    		$.ajax({
+					url: "{{path('FTRWebBundle_sendemail')}}",
+					type: 'POST',
+					data: "email="+$('input#email').val(),
+					success: function(data) {
+						if(data == 1){
+							// alert("sdfsd");
+							$("td#txt").html("<font style='color:#006600;'>ส่งอีเมลล์เรียบร้อยแล้ว</font>");
+						}else{
+							$("td#txt").html("<font style='color:#BF1E2D;'>ไม่มีอีเมล์นี้ในระบบ</font>");
+						}
+					},
+					error: function(e) {
+						$("#txterror").html("กรุณาตรวจสอบ ชื่อผู้ใช้งาน และรหัสผ่าน");
+				  	}
+				});
+			}
+	    	
+		});
+    });
 </script>
 </head>
 
@@ -39,22 +65,20 @@
 
 	<img src="{{asset('images/forget.png')}}" style="padding-top: 20px;" />
 	<hr style=" width:98%; margin-left:-5px; margin-top:15px; margin-bottom:10px;" />
-		<form action="{{path('FTRWebBundle_sendemail')}}" method="post">
 		<table style="padding-left:10px;">
         	<tr height="80" valign="middle">
 				<td align="left" width="600" style="font-size:24px;" colspan="3">กรุณากรอก"ชื่อผู้ใช้งาน"หรือ"อีเมล"ของคุณที่ได้ทำการสมัคเอาไว้ เพื่อรับอีเมลในการตั้งค่ารหัสใหม่</td>
             </tr>
             <tr height="70" valign="middle">
 				<td align="left" width="180" style="font-size:24px;">ชื่อผู้ใช้งาน / อีเมล : *</td>
-                <td align="left" width="120"><input name="username" type="text" maxlength="30" placeholder="กรอกชื่อผู้ใช้งานหรืออีเมล" style=" padding:2px; font-size:20px;" /></td>
-                <td align="left" width="120" style="font-size:22px;"><input class="forgetp" type="submit" value="" /></td>
+                <td align="left" width="120"><input id="email" name="email" type="text" maxlength="30" placeholder="กรอกชื่อผู้ใช้งานหรืออีเมล" style=" padding:2px; font-size:20px;" /></td>
+                <td align="left" width="120" style="font-size:22px;"><input id="send" class="forgetp" type="submit" value="" /></td>
             </tr>
             <tr height="50" valign="middle">
 				<td align="left" width="180" style="font-size:24px;">&nbsp;</td>
-                <td align="left" style="font-size:22px;" colspan="2"><font style="color:#BF1E2D;">Alert error message Test Test Test Test!!</font></td>
+                <td id="txt" align="left" style="font-size:22px;" colspan="2">&nbsp;</td>
             </tr>
         </table>
-        </form>
 	</div>
 </body>
 </html>

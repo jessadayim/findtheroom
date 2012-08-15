@@ -1,5 +1,8 @@
 {% extends 'FTRWebBundle:Layout:Layout.html.twig' %}
 {% block body %}
+<script type="text/javascript" src="{{asset('js/fancybox/jquery.fancybox-1.3.4.pack.js')}}"></script>
+<link rel="stylesheet" type="text/css" href="{{asset('css/jquery.fancybox-1.3.4.css')}}" media="screen" />
+<script type="text/javascript" src="{{asset('js/fancybox/jquery.easing-1.4.pack.js')}}"></script>
 <script>
         window.fbAsyncInit = function() {
           FB.init({
@@ -17,7 +20,19 @@
            js = d.createElement('script'); js.id = id; js.async = true;
            js.src = "//connect.facebook.net/en_US/all.js";
            ref.parentNode.insertBefore(js, ref);
-         }(document));
+         }(document));         
+</script>
+<script>
+	$(document).ready(function() {
+			$("a#login").fancybox({
+				'width'				: 700,
+				'height'			: 400,
+				'autoScale'			: false,
+				'transitionIn'		: 'elastic',
+				'transitionOut'		: 'elastic',
+				'type'				: 'iframe'
+			});
+		});
 </script>
 <form action="{{path('FTRWebBundle_confirm')}}" method="post">
 <div class="detail" style="height: 460px; margin-bottom: 15px;">
@@ -53,7 +68,7 @@
                 <td align="left" style="font-size:24px;">&nbsp;</td>
                 <td align="left" width="150">
                 	<input class="regis" type="submit" value="" onclick="return clickagree();"/>
-                		<a id="login" href="login.html" ><img src="{{asset('images/userlog.png')}}" style="margin-left:80px; margin-top:-10px;" />
+                		<a id="login" href="{{path('FTRWebBundle_loginpublish')}}" ><img src="{{asset('images/userlog.png')}}" style="margin-left:80px; margin-top:-10px;" />
                 		</a>
                 </td>
             </tr>

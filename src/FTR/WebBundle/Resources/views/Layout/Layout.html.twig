@@ -130,7 +130,10 @@ function enact(what){
         	</form>
         {% else %}	
 	        <form action="{{path('FTRWebBundle_login')}}" method="post">
-	    		<input name="username" type="text" value="" maxlength="25" placeholder="กรุณากรอกชื่อผู้ใช้งาน" /> <input name="password" type="password" value="" maxlength="25" placeholder="กรุณากรอกรหัสผ่าน" /> <input class="login" type="submit" value="" />
+	    		<input name="username" type="text" value="" maxlength="25" placeholder="กรุณากรอกชื่อผู้ใช้งาน" />
+				<input name="password" type="password" value="" maxlength="25" placeholder="กรุณากรอกรหัสผ่าน" />
+				<input class="login" type="submit" value="" />
+				<input type="hidden" name="layoutlog" value="layout" />
 	        </form>
         {% endif %}
     </div>
@@ -142,9 +145,9 @@ function enact(what){
     <ul id="gooeymenu1" class="gelbuttonmenu">
     	 <li><a id="mainpage" href="{{path('FTRWebBundle_homepage')}}">หน้าแรก</a></li>
          <li><a id="searchpage" href="{{path('FTRWebBundle_search')}}">ค้นหาอย่างละเอียด</a></li>
-         <li><a id="nullpage" href='#'>ลงโฆษณา</a></li>
+         <li><a id="mainpage" href='#'>ลงโฆษณา</a></li>
          <li><a id="publishpage" href="{{path('FTRWebBundle_publish')}}">ลงประกาศห้องพักฟรี</a></li>
-         <li><a id="nullpage" href='#'>กระดานพูดคุย</a></li>
+         <li><a id="mainpage" href="{{asset('forum/upload/index.php')}}">กระดานพูดคุย</a></li>
          <li><a id="contactpage" href="{{path('FTRWebBundle_contact')}}">ติดต่อเรา</a></li>
     </ul>
     <hr />

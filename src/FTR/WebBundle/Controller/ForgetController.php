@@ -28,7 +28,7 @@ class ForgetController extends Controller
 		// return $this->render('FTRWebBundle:Security:emailreset.html.twig',array(
         		// 'name' => $name
 		// ));
-		$name = "extest";
+		$name = "send to dol";
 		$message = \Swift_Message::newInstance()
         ->setSubject('Hello Email')
         ->setFrom('suriya257_@hotmail.com')
