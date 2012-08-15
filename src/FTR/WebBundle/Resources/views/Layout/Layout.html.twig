@@ -131,7 +131,7 @@ function enact(what){
         {% else %}	
 	        <form action="{{path('FTRWebBundle_login')}}" method="post">
 	    		<input name="username" type="text" value="" maxlength="25" placeholder="กรุณากรอกชื่อผู้ใช้งาน" />
-				<input name="password" type="password" value="" maxlength="25" placeholder="กรุณากรอกรหัสผ่าน" />
+				<input name="password" style="margin-right:5px;" type="password" value="" maxlength="25" placeholder="กรุณากรอกรหัสผ่าน" />
 				<input class="login" type="submit" value="" />
 				<input type="hidden" name="layoutlog" value="layout" />
 	        </form>
