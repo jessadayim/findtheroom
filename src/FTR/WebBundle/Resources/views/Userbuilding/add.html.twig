@@ -45,7 +45,79 @@
 			});
 		});
 </script>
-<form id="add_form" method="post" action="{{path('saveData', {'id': build_id })}}">
+<script language="javascript">
+	function CreateNewRow()
+	{
+		var intLine = parseInt(document.addform.hdnMaxLine.value);
+		intLine++;
+			
+		var theTable = document.all.tbtype
+		var newRow = theTable.insertRow(theTable.rows.length)
+		newRow.id = newRow.uniqueID
+		
+		var item1 = 1
+		var newCell
+		
+		//*** Column 1 ***//
+		newCell = newRow.insertCell(0)
+		newCell.id = newCell.uniqueID
+		newCell.setAttribute("className", "css-name");
+		newCell.innerHTML = "<img src=\"{{asset('images/addmore.png')}}\" class=\"nopad\" onclick=\"CreateNewRow();\">"
+
+		//*** Column 2 ***//
+		newCell = newRow.insertCell(1)
+		newCell.id = newCell.uniqueID
+		newCell.setAttribute("className", "css-name");
+		newCell.innerHTML = "<img src=\"{{asset('images/show.png')}}\" style=\"margin-top: 10px;\" /> <img src=\"{{asset('images/upload.png')}}\" style=\"margin-left: 30px; margin-top: -10px; margin-bottom: 10px; display:block;\" />"		
+		
+		//*** Column 3 ***//
+		newCell = newRow.insertCell(2)
+		newCell.id = newCell.uniqueID
+		newCell.setAttribute("className", "css-name");
+		newCell.innerHTML = "<input name=\"typeap_name"+intLine+"\" type=\"text\" maxlength=\"30\" placeholder=\"กรุณากรอกประเภทห้องพัก\" style=\" padding:2px; font-size:20px;\" />"				
+		
+		//*** Column 4 ***//
+		newCell = newRow.insertCell(3)
+		newCell.id = newCell.uniqueID
+		newCell.setAttribute('align', 'center');
+		newCell.innerHTML = "<input name=\"typeap_size"+intLine+"\" type=\"text\" maxlength=\"10\" placeholder=\"ขนาด\" style=\" padding:2px; font-size:20px; width:80px;\" />"		
+		
+		//*** Column 5 ***//
+		newCell = newRow.insertCell(4)
+		newCell.id = newCell.uniqueID
+		newCell.setAttribute("className", "css-name");
+		newCell.innerHTML = "<LABEL align=\"left\">ตารางเมตร</LABEL>"			
+		
+		//*** Column 6 ***//
+		newCell = newRow.insertCell(5)
+		newCell.id = newCell.uniqueID
+		newCell.setAttribute('align', 'center');
+		newCell.innerHTML = "<input name=\"typeap_price"+intLine+"\" type=\"text\" maxlength=\"10\" placeholder=\"อัตราค่าเช่า\" style=\" padding:2px; font-size:20px; width:80px;\" />"		
+		
+		//*** Column 7 ***//
+		newCell = newRow.insertCell(6)
+		newCell.id = newCell.uniqueID
+		newCell.setAttribute("className", "css-name");
+		newCell.innerHTML = "<LABEL align=\"left\">บาท</LABEL>"			
+		
+		document.addform.hdnMaxLine.value = intLine;
+	}
+	
+	function RemoveRow()
+	{
+		intLine = parseInt(document.addform.hdnMaxLine.value);
+		if(parseInt(intLine) > 0)
+		{
+				theTable = (document.all) ? document.all.tbtype : 
+				document.getElementById("tbtype")
+				theTableBody = theTable.tBodies[0];
+				theTableBody.deleteRow(intLine);
+				intLine--;
+				document.addform.hdnMaxLine.value = intLine;
+		}	
+	}	
+</script>
+<form name="addform" id="addform" method="post" action="{{path('saveData', {'id': build_id })}}">
 <div class="detail" style="height: 670px; margin-bottom: 15px;">
 	<img src="{{asset('images/apdata.png')}}" style="display:block; position:relative; float:none;" />
 	<hr class="line" style="top: 60px;" />
@@ -151,7 +223,7 @@
 	<img src="{{asset('images/roomap.png')}}" style="display:block; position:relative; float:none;" />
 	<hr class="line" style="top: 60px;" />
     <div>
-		<table>
+		<table id="tbtype">
         	<tr height="40" valign="bottom">
             	<td align="left" colspan="3" style="font-size:24px;" width="500">ประเภทห้องพัก</td>
                 <td align="center" width="100">ขนาด</td>
@@ -160,15 +232,16 @@
                 <td width="60">&nbsp;</td>
             </tr>
             <tr valign="middle">
-            	<td align="left" style="font-size:24px;"><img src="{{asset('images/addmore.png')}}" class="nopad"></td>
-                <td align="left" style="font-size:24px;"><img src="{{asset('images/show.png')}}" style="margin-top: 10px;" /> <img src="{{asset('images/upload.png')}}" style="margin-left: 30px; margin-top: -10px; margin-bottom: 10px; display:block;" /></td>
-                <td align="left" style="font-size:24px;"><input name="typeap" type="text" maxlength="30" placeholder="กรุณากรอกประเภทห้องพัก" style=" padding:2px; font-size:20px;" /></td>
-                <td align="center">24</td>
-                <td align="left">ตารางเมตร</td>
-                <td align="center">4,500</td>
-                <td align="left">บาท</td>
-            </tr>
+			     <td align="left" style="font-size:24px;"><img src="{{asset('images/addmore.png')}}" class="nopad" onclick="CreateNewRow();"></td>
+			     <td align="left" style="font-size:24px;"><img src="{{asset('images/show.png')}}" style="margin-top: 10px;" /> <img src="{{asset('images/upload.png')}}" style="margin-left: 30px; margin-top: -10px; margin-bottom: 10px; display:block;" /></td>
+			     <td align="left" style="font-size:24px;"><input name="typeap_name" type="text" maxlength="30" placeholder="กรุณากรอกประเภทห้องพัก" style=" padding:2px; font-size:20px;" /></td>
+			     <td align="center"><input name="typeap_size" type="text" maxlength="10" placeholder="ขนาด" style=" padding:2px; font-size:20px; width:80px;" /></td>
+			     <td align="left">ตารางเมตร</td>
+			     <td align="center"><input name="typeap_price" type="text" maxlength="10" placeholder="อัตราค่าเช่า" style=" padding:2px; font-size:20px; width:80px;" /></td>
+			     <td align="left">บาท</td>
+			  </tr>
         </table>
+        <input type="hidden" id="hdnMaxLine" name="hdnMaxLine" value="0">
     </div>
 </div>
 
@@ -253,10 +326,10 @@
                 </td>
             </tr>
 			<tr height="50" valign="middle">
-				<td align="left" width="165"><input id="bk" name="option31" type="checkbox" value="bangkok" /><label for="bk">เขตกรุงเทพฯ :</label></td>
+				<td align="left" width="165"><input id="bk_check" name="bk_check" type="checkbox" value="bangkok" /><label for="bk_check">เขตกรุงเทพฯ :</label></td>
 				<td width="300">
-					<div class="styled-select">
-						<select class="select">
+					<div id="nearly_area" class="styled-select">
+						<select name="nearly_bk" id="nearly_location" class="select">
 							<option value="all">ทุกเขต</option>
 							<option value="banken">บางเขน</option>
 							<option value="vipawadee">วิภาวดีรังสิต</option>
@@ -264,10 +337,10 @@
 						</select>
 					</div>
 				</td>
-				<td align="left" width="145"><input id="bt" name="option32" type="checkbox" value="bts" /><label for="bt">ใกล้รถไฟฟ้า BTS :</label></td>
+				<td align="left" width="145"><input id="bts_check" name="bts_check" type="checkbox" value="bts" /><label for="bts_check">ใกล้รถไฟฟ้า BTS :</label></td>
 				<td width="300">
 					<div class="styled-select">
-						<select class="select">
+						<select name="bts" id="bts" class="select">
 							<option value="all">ทุกสถานี</option>
 							<option value="siam">สยาม</option>
 							<option value="chidlom">ชิดลม</option>
@@ -277,10 +350,10 @@
 				</td>
 			</tr>
 			<tr height="50" valign="middle">
-				<td align="left" width="165"><input id="uni" name="option33" type="checkbox" value="university" /><label for="uni">ใกล้มหาวิทยาลัย :</label></td>
+				<td align="left" width="165"><input id="university_check" name="university_check" type="checkbox" value="university" /><label for="university_check">ใกล้มหาวิทยาลัย :</label></td>
 				<td width="300">
 					<div class="styled-select">
-						<select class="select">
+						<select name="university" id="university" class="select">
 							<option value="all">- กรุณาระบุ -</option>
 							<option value="kmitl">สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</option>
 							<option value="jula">มหาวิทยาลับจุฬาลงกรณ์</option>
@@ -288,10 +361,10 @@
 						</select>
 					</div>
 				</td>
-				<td align="left" width="145"><input id="mr" name="option34" type="checkbox" value="mrt" /><label for="mr">ใกล้รถไฟฟ้า MRT :</label></td>
+				<td align="left" width="145"><input id="mrt_check" name="mrt_check" type="checkbox" value="mrt" /><label for="mrt_check">ใกล้รถไฟฟ้า MRT :</label></td>
 				<td width="300">
 					<div class="styled-select">
-						<select class="select">
+						<select name="mrt" id="mrt" class="select">
 							<option value="all">ทุกสถานี</option>
 							<option value="banken">สยาม</option>
 							<option value="vipawadee">ชิดลม</option>
@@ -301,10 +374,10 @@
 				</td>
 			</tr>
             <tr height="50" valign="middle">
-				<td align="left" width="165"><input id="pl" name="option35" type="checkbox" value="etcp" /><label for="pl">ตามสถานที่ใกล้เคียง :</label></td>
+				<td align="left" width="165"><input id="nearly_place_check" name="nearly_place_check" type="checkbox" value="nearly_place" /><label for="nearly_place_check">ตามสถานที่ใกล้เคียง :</label></td>
 				<td width="300">
 					<div class="styled-select">
-						<select class="select">
+						<select name="nearly_place" id="nearly_place" class="select">
 							<option value="all">- กรุณาระบุ -</option>
 							<option value="suwannapum">สนามบินสุวรรณภูมิ</option>
                             <option value="donmeung">สนามบินดอนเมือง</option>

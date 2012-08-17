@@ -59,7 +59,7 @@ class Building_site
     /**
      * @var boolean $publish
      *
-     * @ORM\Column(name="publish", type="boolean")
+     * @ORM\Column(name="publish", type="boolean", nullable="true")
      */
     private $publish;
 
@@ -115,7 +115,7 @@ class Building_site
 	/**
      * @var integer $zone_id
      *
-     * @ORM\Column(name="zone_id", type="integer")
+     * @ORM\Column(name="zone_id", type="integer", nullable="true")
      */
     private $zone_id;
 	
@@ -192,7 +192,7 @@ class Building_site
     /**
      * @var string $googlemap_url
      *
-     * @ORM\Column(name="googlemap_url", type="string", length=255)
+     * @ORM\Column(name="googlemap_url", type="string", length=255, nullable="true")
      */
     private $googlemap_url;
 

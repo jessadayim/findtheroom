@@ -50,6 +50,10 @@ FTRWebBundle_sendemail:
     pattern:  /sendemail
     defaults: { _controller: FTRWebBundle:Forget:sendEmail}
 
+FTRFacebook_login:
+    pattern:  /fbconnect
+    defaults: { _controller: FTRWebBundle:Facebook:index}
+    
 #FTRWebBundle_sendmail_extest:
 #    pattern:  /sendemail
 #    defaults: { _controller: FTRWebBundle:Userbuilding:sendemail}
