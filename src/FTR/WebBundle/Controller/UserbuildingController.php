@@ -133,11 +133,51 @@ class UserbuildingController extends Controller
 	
 	public function saveDataAction($id=null)
 	{
+		$conn= $this->get('database_connection');
+		if(!$conn){ die("MySQL Connection error");}
+		$check = NULL;
+		
+		$session = $this->get('session');
+		$user = $session->get('user');
+		
+		$today = date("Y-m-d H:i:s");
 		if($_POST)
 		{
-			var_dump($_POST);
+			echo "<pre>";var_dump($_POST);echo "</pre>";exit();
+			try{
+				if($id){
+					$sql ="select * from building_site where id = $id";
+					$check = $conn->fetchAll($sql);
+				}
+				//เช็คข้อมูลก่อน เพื่อทราบว่าจะ Insert หรือ Update
+				if(!empty($check))
+				{//ส่วนนี้ พบข้อมูล ทำการอัพเดต
+				
+					
+				}
+				else {//ส่วนนี้ ไม่พบข้อมูล ทำการ insert
+				
+					$sqlinsert ="INSERT INTO `building_site` (
+									`building_name`,`building_address`,`start_price`,`end_price`,`phone_number`,
+									`datetimestamp`,`lastupdate`,`userupdate`,`latitude`,`longitude`,
+									`building_type_id`,`pay_type_id`,`user_owner_id`,`detail`,`contact_name`,
+									`contact_email`,`website`,`month_stay`,`water_unit`,`electricity_unit`,
+									`internet_price`) 
+								VALUE('ทดสอบ','7/513 หมู่7','1500','4500','0863494353',
+									'$today','$today','$user','1','1',
+									'1','1','1','ทดสอบดีเทลล์','เจษฎา ยิ้มวิลัย',
+									'exodist@gmail.com','','6','4','8',
+									'799')";
+					//echo "<pre>";var_dump($sqlinsert);echo "</pre>";exit();
+					$conn->query($sqlinsert);
+					
+				}
+			} catch (Exception $e) {
+				echo 'Caught exception: ',  $e->getMessage(), "\n";
+				}
 		}
 		exit();
+		return $this->redirect($this->generateUrl('userbuilding'));
 	}
 	
 	public function sendemailAction()

@@ -1,0 +1,103 @@
+<html>
+<head>
+<title>ThaiCreate.Com JavaScript Add/Remove Element</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<script language="javascript">
+	function CreateNewRow()
+	{
+		var intLine = parseInt(document.addform.hdnMaxLine.value);
+		intLine++;
+			
+		var theTable = document.all.tbtype
+		var newRow = theTable.insertRow(theTable.rows.length)
+		newRow.id = newRow.uniqueID
+		
+		var item1 = 1
+		var newCell
+		
+		//*** Column 1 ***//
+		newCell = newRow.insertCell(0)
+		newCell.id = newCell.uniqueID
+		newCell.setAttribute("className", "css-name");
+		newCell.innerHTML = "<img src=\"images/addmore.png\" class=\"nopad\" onclick=\"CreateNewRow();\">"
+
+		//*** Column 2 ***//
+		newCell = newRow.insertCell(1)
+		newCell.id = newCell.uniqueID
+		newCell.setAttribute("className", "css-name");
+		newCell.innerHTML = "<img src=\"images/show.png\" style=\"margin-top: 10px;\" /> <img src=\"images/upload.png\" style=\"margin-left: 30px; margin-top: -10px; margin-bottom: 10px; display:block;\" />"		
+		
+		//*** Column 3 ***//
+		newCell = newRow.insertCell(2)
+		newCell.id = newCell.uniqueID
+		newCell.setAttribute("className", "css-name");
+		newCell.innerHTML = "<input name=\"typeap_name"+intLine+"\" type=\"text\" maxlength=\"30\" placeholder=\"กรุณากรอกประเภทห้องพัก\" style=\" padding:2px; font-size:20px;\" />"				
+		
+		//*** Column 4 ***//
+		newCell = newRow.insertCell(3)
+		newCell.id = newCell.uniqueID
+		newCell.setAttribute("className", "css-name");
+		newCell.innerHTML = "<input name=\"typeap_size"+intLine+"\" type=\"text\" maxlength=\"10\" placeholder=\"กรุณากรอกขนาด\" style=\" padding:2px; font-size:20px;\" />"		
+		
+		//*** Column 5 ***//
+		newCell = newRow.insertCell(4)
+		newCell.id = newCell.uniqueID
+		newCell.setAttribute("className", "css-name");
+		newCell.innerHTML = "<LABEL align=\"left\">ตารางเมตร</LABEL>"			
+		
+		//*** Column 6 ***//
+		newCell = newRow.insertCell(5)
+		newCell.id = newCell.uniqueID
+		newCell.setAttribute("className", "css-name");
+		newCell.innerHTML = "<input name=\"typeap_price"+intLine+"\" type=\"text\" maxlength=\"10\" placeholder=\"กรุณากรอกอัตราค่าเช่า\" style=\" padding:2px; font-size:20px;\" />"		
+		
+		//*** Column 7 ***//
+		newCell = newRow.insertCell(6)
+		newCell.id = newCell.uniqueID
+		newCell.setAttribute("className", "css-name");
+		newCell.innerHTML = "<LABEL align=\"left\">บาท</LABEL>"			
+		
+		document.addform.hdnMaxLine.value = intLine;
+	}
+	
+	function RemoveRow()
+	{
+		intLine = parseInt(document.frmMain.hdnMaxLine.value);
+		if(parseInt(intLine) > 0)
+		{
+				theTable = (document.all) ? document.all.tbExp : 
+				document.getElementById("tbExp")
+				theTableBody = theTable.tBodies[0];
+				theTableBody.deleteRow(intLine);
+				intLine--;
+				document.frmMain.hdnMaxLine.value = intLine;
+		}	
+	}	
+</script>
+<body>
+<form name="addform" method="post">
+<table width="900" border="1" id="tbtype">
+  <tr height="40" valign="bottom">
+    <td align="left" colspan="3" style="font-size:24px;" width="500">ประเภทห้องพัก</td>
+    <td align="center" width="100">ขนาด</td>
+    <td width="100">&nbsp;</td>
+    <td align="center" width="150">อัตราค่าเช่า / เดือน</td>
+    <td width="60">&nbsp;</td>
+  </tr>
+  <tr valign="middle">
+     <td align="left" style="font-size:24px;"><img src="images/addmore.png" class="nopad" onclick="CreateNewRow();"></td>
+     <td align="left" style="font-size:24px;"><img src="images/show.png" style="margin-top: 10px;" /> <img src="images/upload.png" style="margin-left: 30px; margin-top: -10px; margin-bottom: 10px; display:block;" /></td>
+     <td align="left" style="font-size:24px;"><input name="typeap_name" type="text" maxlength="30" placeholder="กรุณากรอกประเภทห้องพัก" style=" padding:2px; font-size:20px;" /></td>
+     <td align="center"><input name="typeap_size" type="text" maxlength="10" placeholder="กรุณากรอกขนาด" style=" padding:2px; font-size:20px;" /></td>
+     <td align="left">ตารางเมตร</td>
+     <td align="center"><input name="typeap_price" type="text" maxlength="10" placeholder="กรุณากรอกอัตราค่าเช่า" style=" padding:2px; font-size:20px;" /></td>
+     <td align="left">บาท</td>
+  </tr>
+</table>
+<input type="hidden" name="hdnMaxLine" value="0">
+<input name="btnAdd" type="button" id="btnAdd" value="+" onClick="CreateNewRow();">
+<input name="btnDel" type="button" id="btnDel" value="-" onClick="RemoveRow();">
+</form>
+</body>
+</html>
