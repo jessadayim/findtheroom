@@ -34,101 +34,101 @@
             <li id="tabNavi2" onclick="enact(this)"></li>
             <li id="tabNavi3" onclick="enact(this)"></li>
    		</ul>
-        <span class="or">หรือ</span><a href='#' class="link" target="_new">ค้นหาอย่างละเอียด</a>
+        <span class="or">หรือ</span><a href='{{path('FTRWebBundle_search')}}' class="link" target="_new">ค้นหาอย่างละเอียด</a>
         <hr class="line" style="top: 60px" />
     	<ul id="detail_containTab">  
             <li class="detailContent1">
-            	<div>
-                    <table>
-                        <tr height="50" valign="middle">
-                            <td align="right" style="padding-right:15px">เขต :</td>
-                            <td width="350">
-                            	<div class="styled-select">
-                            	<select class="select">
-  									<option value="all">ทุกเขต</option>
-                                    <option value="banken">บางเขน</option>
-                                    <option value="vipawadee">วิภาวดีรังสิต</option>
-                                    <option value="etc">อื่นๆ</option>
-								</select>
-                                </div>
-                            </td>
-                            <td align="right" style="padding-right:15px">ราคาเริ่มต้น :</td>
-                            <td width="330">
-                            	<input class="price" name="lessprice" type="text" maxlength="10" placeholder="กรุณากรอกราคาเริ่มต้น" />&nbsp;&nbsp;&nbsp;&nbsp;บาท
-                            </td>
-                            <td>&nbsp;
-                            	
-                            </td>
-                        </tr>
-                        <tr height="50" valign="middle">
-                            <td align="right" style="padding-right:15px">ประเภทห้องพัก :</td>
-                            <td>
-                            	<div class="styled-select">
-                            	<select class="select">
-                                	<option value="all">ทุกประเภท</option>
-  									<option value="apartment">อพาร์ทเม้นต์</option>
-                                    <option value="man">หอชาย</option>
-                                    <option value="woman">หอหญิง</option>
-								</select>
-                                </div>
-                            </td>
-                            <td align="right" style="padding-right:15px">ราคาไม่เกิน :</td>
-                            <td>
-                            	<input class="price" name="mostprice" type="text" maxlength="10" placeholder="กรุณากรอกราคาไม่เกิน" />&nbsp;&nbsp;&nbsp;&nbsp;บาท
-                            </td>
-                            <td>
-                            	<input class="search" type="submit" value="" />
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+				<form action='{{path('FTRWebBundle_list')}}' method="post">
+					<div>
+						<table>
+							<tr height="50" valign="middle">
+								<td align="right" style="padding-right:15px">เขต :</td>
+								<td width="350">
+									<div class="styled-select">
+									<select class="select">
+										{% for zlistm in zonelist_month %}
+											<option value="{{ zlistm.id }}">{{ zlistm.zonename }}</option>
+										{% endfor %}
+									</select>
+									</div>
+								</td>
+								<td align="right" style="padding-right:15px">ราคาเริ่มต้น :</td>
+								<td width="330">
+									<input class="price" name="lessprice" type="text" maxlength="10" placeholder="กรุณากรอกราคาเริ่มต้น" />&nbsp;&nbsp;&nbsp;&nbsp;บาท
+								</td>
+								<td>&nbsp;
+									
+								</td>
+							</tr>
+							<tr height="50" valign="middle">
+								<td align="right" style="padding-right:15px">ประเภทห้องพัก :</td>
+								<td>
+									<div class="styled-select">
+									<select class="select">
+										{% for blistm in buildingtype_month %}
+											<option value="{{ blistm.id }}">{{ blistm.type_name }}</option>
+										{% endfor %}
+									</select>
+									</div>
+								</td>
+								<td align="right" style="padding-right:15px">ราคาไม่เกิน :</td>
+								<td>
+									<input class="price" name="mostprice" type="text" maxlength="10" placeholder="กรุณากรอกราคาไม่เกิน" />&nbsp;&nbsp;&nbsp;&nbsp;บาท
+								</td>
+								<td>
+									<input class="search" type="submit" value="" />
+								</td>
+							</tr>
+						</table>
+					</div>
+				</form>	
             </li>
             
             <li class="detailContent2">
-            	<div>
-                    <table>
-                        <tr height="50" valign="middle">
-                            <td align="right">เขต :</td>
-                            <td width="350">
-                            	<div class="styled-select">
-                            	<select class="select">
-  									<option value="all">ทุกเขต</option>
-                                    <option value="banken">บางเขน</option>
-                                    <option value="vipawadee">ดินแดง</option>
-                                    <option value="etc">อื่นๆ</option>
-								</select>
-                                </div>
-                            </td>
-                            <td align="right">ราคาเริ่มต้น :</td>
-                            <td width="350">
-                            	<input class="price" name="lessprice" type="text" maxlength="10" placeholder="กรุณากรอกราคาเริ่มต้น" /> บาท
-                            </td>
-                            <td>&nbsp;
-                            	
-                            </td>
-                        </tr>
-                        <tr height="50" valign="middle">
-                            <td align="right">ประเภทห้องพัก :</td>
-                            <td>
-                            	<div class="styled-select">
-                            	<select class="select">
-                                	<option value="all">ทุกประเภท</option>
-  									<option value="apartment">อพาร์ทเม้นต์</option>
-                                    <option value="man">หอชาย</option>
-                                    <option value="woman">หอหญิง</option>
-								</select>
-                                </div>
-                            </td>
-                            <td align="right">ราคาไม่เกิน :</td>
-                            <td>
-                            	<input class="price" name="mostprice" type="text" maxlength="10" placeholder="กรุณากรอกราคาไม่เกิน" /> บาท
-                            </td>
-                            <td>
-                            	<input class="search" type="submit" value="" />
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+				<form action='{{path('FTRWebBundle_list')}}' method="post">
+					<div>
+						<table>
+							<tr height="50" valign="middle">
+								<td align="right" style="padding-right:15px">เขต :</td>
+								<td width="350">
+									<div class="styled-select">
+									<select class="select">
+										{% for zlistd in zonelist_day %}
+											<option value="{{ zlistd.id }}">{{ zlistd.zonename }}</option>
+										{% endfor %}
+									</select>
+									</div>
+								</td>
+								<td align="right" style="padding-right:15px">ราคาเริ่มต้น :</td>
+								<td width="330">
+									<input class="price" name="lessprice" type="text" maxlength="10" placeholder="กรุณากรอกราคาเริ่มต้น" />&nbsp;&nbsp;&nbsp;&nbsp;บาท
+								</td>
+								<td>&nbsp;
+									
+								</td>
+							</tr>
+							<tr height="50" valign="middle">
+								<td align="right" style="padding-right:15px">ประเภทห้องพัก :</td>
+								<td>
+									<div class="styled-select">
+									<select class="select">
+										{% for blistd in buildingtype_day %}
+											<option value="{{ blistd.id }}">{{ blistd.type_name }}</option>
+										{% endfor %}
+									</select>
+									</div>
+								</td>
+								<td align="right" style="padding-right:15px">ราคาไม่เกิน :</td>
+								<td>
+									<input class="price" name="mostprice" type="text" maxlength="10" placeholder="กรุณากรอกราคาไม่เกิน" />&nbsp;&nbsp;&nbsp;&nbsp;บาท
+								</td>
+								<td>
+									<input class="search" type="submit" value="" />
+								</td>
+							</tr>
+						</table>
+					</div>
+				</form>
             </li>
             
             <li class="detailContent3">

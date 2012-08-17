@@ -37,7 +37,7 @@ hr.line {
 #header span { margin: 40px 0 0 0; font-size:22px;}
 #header .social { margin-top: -30px; margin-left: 110px;}
 #header #logo { margin: -45px auto 0 auto; background: url(../images/logo.png) no-repeat; width: 184px; height: 119px;}
-#header #login { text-align: left; margin-top: -105px; margin-left: 700px;}
+#header #login { text-align: left; margin-top: -105px; margin-left: 690px;}
 #header #login input { width: 120px;}
 #header #login input.login { background: url(../images/login-bt.png) no-repeat; border: 0; width: 51px; height: 51px; cursor: pointer; position:absolute; margin-top:-10px;}
 
@@ -174,8 +174,8 @@ input.regis { background: url(../images/regis-bt.png) no-repeat; border: 0; widt
 .detail table input.save{ background: url(../images/save.png) no-repeat; border: 0; width: 51px; height: 51px; cursor: pointer; position:absolute; margin-top:-10px; margin-left:100px;}
 .detail table input.canc{ background: url(../images/canc.png) no-repeat; border: 0; width: 51px; height: 51px; cursor: pointer; position:absolute; margin-top:-10px; margin-left:160px;}
 .detail div table tbody tr td textarea.place { max-width:180px; max-height:80px; min-width:180px; min-height:80px; font-family: DB Adman X, Helvetica, Arial, sans-serif; color: #423C3B; font-size:16px;}
-.detail div table tbody tr td textarea.ldesc { max-width:595px; max-height:40px; min-width:595px; min-height:40px; font-family: DB Adman X, Helvetica, Arial, sans-serif; color: #423C3B; font-size:16px;}
-#gallery .upload { position:absolute; display:block; z-index: 999; margin-left: 35%; margin-top: 130px;}
+.detail div table tbody tr td textarea.ldesc { max-width:625px; max-height:40px; min-width:625px; min-height:40px; font-family: DB Adman X, Helvetica, Arial, sans-serif; color: #423C3B; font-size:16px;}
+#gallery .upload { position:absolute; display:block; z-index: 999; margin-left: 85%; margin-top: -60px;}
 
 /*Recommend Block*/
 #recommend { background-color: #423C3B; width: 1000px; height: 405px; margin:15px auto 0 auto;}

@@ -118,7 +118,7 @@
 	}	
 </script>
 <form name="addform" id="addform" method="post" action="{{path('saveData', {'id': build_id })}}">
-<div class="detail" style="height: 670px; margin-bottom: 15px;">
+<div class="detail" style="height: 680px; margin-bottom: 15px;">
 	<img src="{{asset('images/apdata.png')}}" style="display:block; position:relative; float:none;" />
 	<hr class="line" style="top: 60px;" />
     <div style="width:1000px; display:block; position:relative; height:250px; margin-top: 20px;">
@@ -136,33 +136,30 @@
         	<tr height="50" valign="middle">
 				<td align="right" width="210" style="font-size:24px;">ชื่อหอพัก / อพาร์ทเม้นต์ : *</td>
                 <td align="left" width="190"><input name="nameap" type="text" maxlength="30" placeholder="กรุณากรอกชื่อหอพัก" style=" padding:2px; font-size:20px;" /></td>
-                <td align="left" width="30" style="font-size:24px;">&nbsp;</td>
             </tr>
             <tr height="50" valign="middle">
 				<td align="right" width="210" style="font-size:24px;">ที่อยู่ : *</td>
                 <td align="left" width="190"><textarea name="placeap" type="text" maxlength="500" class="place" /></textarea></td>
-                <td align="left" width="30" style="font-size:24px;">&nbsp;</td>
             </tr>
             <tr height="50" valign="middle">
-				<td align="right" width="210" style="font-size:24px;">ราคา : *</td>
-                <td align="left" width="190"><input name="priceap" type="text" maxlength="10" placeholder="กรุณากรอกราคา" style=" padding:2px; font-size:20px;" /></td>
-                <td align="left" width="30" style="font-size:24px;">บาท</td>
+				<td align="right" width="240" style="font-size:24px;">รูปแผนที่ : *</td>
+                <td align="left" width="200" style="font-size:24px;"><img src="{{asset('images/upload.png')}}" class="nopad" /></td>
             </tr>
         </table>
-        <table style="margin-top: 0px; float:none;">
+        <table style="margin-top: 0px; float:left;">
         	<tr>
             	<td align="right" width="240" valign="top" style="font-size:24px;">รายละเอียดเพิ่มเติม : &nbsp;</td>
-                <td><textarea name="placedetail" type="text" maxlength="500" class="ldesc" /></textarea></td>
+                <td align="left"><textarea name="placedetail" type="text" maxlength="500" class="ldesc" /></textarea></td>
             </tr>
         </table>
     </div>
     <div style="width:1000px; display:block; position:relative; height:240px; margin-top: 20px;">
 		<table style="margin-top: 0px;">
         	<tr height="50" valign="middle">
-				<td align="right" width="240" style="font-size:24px;">แผนที่บน Google Map URL : *</td>
-                <td align="left" width="200"><input name="url" type="text" maxlength="30" placeholder="กรุณากรอก URL" style=" padding:2px; font-size:20px;" /></td>
-                <td align="right" width="210" style="font-size:24px;">รูปแผนที่ : *</td>
-                <td align="left" width="190" style="font-size:24px;"><img src="{{asset('images/upload.png')}}" class="nopad" /></td>
+				<td align="right" width="240" style="font-size:24px;">Google Map ลองติจูด : *</td>
+                <td align="left" width="200"><input name="url" type="text" maxlength="30" placeholder="กรุณากรอกตำแหน่งลองติจูด" style=" padding:2px; font-size:20px;" /></td>
+				<td align="right" width="240" style="font-size:24px;">Google Map ละติจูด : *</td>
+                <td align="left" width="200"><input name="url" type="text" maxlength="30" placeholder="กรุณากรอกตำแหน่งละติจูด" style=" padding:2px; font-size:20px;" /></td>
                 <td align="left" width="30" style="font-size:24px;">&nbsp;</td>
             </tr>
             <tr height="50" valign="middle">
@@ -249,9 +246,9 @@
 	<img src="{{asset('images/gallery.png')}}" class="head" />
         <hr class="line" style="top: 60px;" />
         <div id="container5">
-			<div id="slides5"><div class="upload"><img src="{{asset('images/bigupload.png')}}" /></div>
+			<div id="slides5"><div class="upload"><img src="{{asset('images/upload.png')}}" /></div>
 				<div class="slides_container" style="width:950px;">
-					<div class="slide" style="width:950px; margin-top:20px !important;">
+					<div class="slide" style="width:950px;">
                             
 						<div class="ap3">
 							<a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><img src="{{asset('images/Apartment/ap1.png')}}" /></a><br /><br />

@@ -52,7 +52,7 @@ class MainController extends Controller
 			} catch (Exception $e) {
 				echo 'Caught exception: ',  $e->getMessage(), "\n";
 			}
-		//var_dump($objSQL1,$objSQL2,$objSQL3);
+		//var_dump($objSQL1,$objSQL2,$objSQL3); test
 		//exit();
        return $this->render('FTRWebBundle:Main:index.html.twig',array('item1'=>$objSQL1,'item2'=>$objSQL2,'item3'=>$objSQL3));
     }
