@@ -73,14 +73,20 @@ class MainController extends Controller
     }
 	
 	function getZone($paytype=1){
+		$result_data = array();
+		
 		$em = $this->getDoctrine()->getEntityManager();
 		
 		$conn= $this->get('database_connection');
 		if(!$conn){ die("MySQL Connection error");}
-		$sql = "
-			select * from zone where id in (select distinct(zone_id) from building_site where pay_type_id = $paytype)
-		";
-		$result_data = $conn->fetchAll($sql);
+		try{
+			$sql = "
+				select * from zone where id in (select distinct(zone_id) from building_site where pay_type_id = $paytype)
+			";
+			$result_data = $conn->fetchAll($sql);
+		} catch (Exception $e) {
+			echo 'Caught exception: ',  $e->getMessage(), "\n";
+		}
 		$all[] = array('id'=>0,'zonename'=>'ทุกเขต');
 		
 		$result = array_merge($all,$result_data);
@@ -88,14 +94,19 @@ class MainController extends Controller
 	}
 	
 	function getBuildingType($type=1){
+		$result_data = array();
 		$em = $this->getDoctrine()->getEntityManager();
 		
 		$conn= $this->get('database_connection');
 		if(!$conn){ die("MySQL Connection error");}
-		$sql = "
-			select * from building_type where id in (select distinct(building_type_id) from building_site where pay_type_id = $type)
-		";
-		$result_data = $conn->fetchAll($sql);
+		try{
+			$sql = "
+				select * from building_type where id in (select distinct(building_type_id) from building_site where pay_type_id = $type)
+			";
+			$result_data = $conn->fetchAll($sql);
+		} catch (Exception $e) {
+			echo 'Caught exception: ',  $e->getMessage(), "\n";
+		}
 		$all[] = array('id'=>0,'type_name'=>'ทุกประเภท');
 		
 		$result = array_merge($all,$result_data);
