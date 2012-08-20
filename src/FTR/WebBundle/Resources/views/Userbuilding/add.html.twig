@@ -116,8 +116,47 @@
 				document.addform.hdnMaxLine.value = intLine;
 		}	
 	}	
+	
+	function CreateNewRowGallery()
+	{
+		var intLine = parseInt(document.addform.hdnMaxLineGal.value);
+		intLine++;
+			
+		var theTable = document.all.tbgal
+		var newRow = theTable.insertRow(theTable.rows.length)
+		newRow.id = newRow.uniqueID
+		
+		var item1 = 1
+		var newCell
+		
+		//*** Column 1 ***//
+		newCell = newRow.insertCell(0)
+		newCell.id = newCell.uniqueID
+		newCell.setAttribute("className", "css-name");
+		newCell.innerHTML = "<img src=\"{{asset('images/addmore.png')}}\" class=\"nopad\" onclick=\"CreateNewRowGallery();\">"
+
+		//*** Column 2 ***//
+		newCell = newRow.insertCell(1)
+		newCell.id = newCell.uniqueID
+		newCell.setAttribute("className", "css-name");
+		newCell.innerHTML = "<img src=\"{{asset('images/show.png')}}\" style=\"margin-top: 10px;\" /> <img src=\"{{asset('images/upload.png')}}\" style=\"margin-left: 30px; margin-top: -10px; margin-bottom: 10px; display:block;\" />"		
+		
+		//*** Column 3 ***//
+		newCell = newRow.insertCell(2)
+		newCell.id = newCell.uniqueID
+		newCell.setAttribute("className", "css-name");
+		newCell.innerHTML = "<textarea id=\"galtitle"+intLine+"\" name=\"galtitle"+intLine+"\" maxlenght=\"500\" placeholder=\"กรอกข้อมูลของรูปที่นี่\" class=\"galdesc\"></textarea>"				
+			
+		document.addform.hdnMaxLineGal.value = intLine;
+	}
 </script>
 <form name="addform" id="addform" method="post" action="{{path('saveData', {'id': build_id })}}">
+
+<div id="fix">
+	<input class="upimg" type="submit" value="" />
+	<input class="save" type="submit" value="" />
+</div>
+
 <div class="detail" style="height: 680px; margin-bottom: 15px;">
 	<img src="{{asset('images/apdata.png')}}" style="display:block; position:relative; float:none;" />
 	<hr class="line" style="top: 60px;" />
@@ -137,7 +176,7 @@
 				<td align="right" width="210" style="font-size:24px;">ชื่อหอพัก / อพาร์ทเม้นต์ : *</td>
                 <td align="left" width="190"><input name="nameap" type="text" maxlength="30" placeholder="กรุณากรอกชื่อหอพัก" style=" padding:2px; font-size:20px;" /></td>
             </tr>
-            <tr height="50" valign="middle">
+            <tr height="50" valign="top">
 				<td align="right" width="210" style="font-size:24px;">ที่อยู่ : *</td>
                 <td align="left" width="190"><textarea name="placeap" type="text" maxlength="500" class="place" /></textarea></td>
             </tr>
@@ -242,73 +281,18 @@
     </div>
 </div>
 
-<div id="gallery">
-	<img src="{{asset('images/gallery.png')}}" class="head" />
-        <hr class="line" style="top: 60px;" />
-        <div id="container5">
-			<div id="slides5"><div class="upload"><img src="{{asset('images/upload.png')}}" /></div>
-				<div class="slides_container" style="width:950px;">
-					<div class="slide" style="width:950px;">
-                            
-						<div class="ap3">
-							<a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><img src="{{asset('images/Apartment/ap1.png')}}" /></a><br /><br />
-                            <a class="pop" rel="group" href="{{asset('images/slider/slide-2.jpg')}}"><img src="{{asset('images/Apartment/ap1.png')}}" /></a>       
-						</div>
-                                
-						<div class="ap3">
-							<a class="pop" rel="group" href="{{asset('images/slider/slide-3.jpg')}}"><img src="{{asset('images/Apartment/ap2.png')}}" /></a><br /><br />
-                            <a class="pop" rel="group" href="{{asset('images/slider/slide-4.jpg')}}"><img src="{{asset('images/Apartment/ap2.png')}}" /></a>       
-						</div>
-                                
-						<div class="ap4">
-							<a class="pop" rel="group" href="{{asset('images/slider/slide-5.jpg')}}"><img src="{{asset('images/Apartment/ap3.png')}}" /></a><br /><br />
-                            <a class="pop" rel="group" href="{{asset('images/slider/slide-6.jpg')}}"><img src="{{asset('images/Apartment/ap3.png')}}" /></a>       
-						</div>
-                                
-					</div>
-
-					<div class="slide" style="width:950px;">
-                                
-						<div class="ap3">
-							<a class="pop" rel="group" href="{{asset('images/slider/slide-7.jpg')}}"><img src="{{asset('images/Apartment/ap3.png')}}" /></a><br /><br />
-                            <a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><img src="{{asset('images/Apartment/ap3.png')}}" /></a>       
-						</div>
-                                
-						<div class="ap3">
-							<a class="pop" rel="group" href="{{asset('images/slider/slide-2.jpg')}}"><img src="{{asset('images/Apartment/ap1.png')}}" /></a><br /><br />
-                            <a class="pop" rel="group" href="{{asset('images/slider/slide-3.jpg')}}"><img src="{{asset('images/Apartment/ap1.png')}}" /></a>     
-						</div>
-                                
-						<div class="ap4">
-							<a class="pop" rel="group" href="images/slider/slide-4.jpg')}}"><img src="{{asset('images/Apartment/ap2.png')}}" /></a><br /><br />
-                            <a class="pop" rel="group" href="images/slider/slide-5.jpg')}}"><img src="{{asset('images/Apartment/ap2.png')}}" /></a>    
-						</div>
-                                
-					</div>
-
-					<div class="slide" style="width:950px;">
-                                
-						<div class="ap3">
-							<a class="pop" rel="group" href="{{asset('images/slider/slide-6.jpg')}}"><img src="{{asset('images/Apartment/ap2.png')}}" /></a><br /><br />
-                            <a class="pop" rel="group" href="{{asset('images/slider/slide-7.jpg')}}"><img src="{{asset('images/Apartment/ap2.png')}}" /></a>     
-						</div>
-                                
-						<div class="ap3">
-							<a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><img src="{{asset('images/Apartment/ap3.png')}}" /></a><br /><br />
-                            <a class="pop" rel="group" href="{{asset('images/slider/slide-2.jpg')}}"><img src="{{asset('images/Apartment/ap3.png')}}" /></a>         
-						</div>
-                                
-						<div class="ap4">
-							<a class="pop" rel="group" href="{{asset('images/slider/slide-3.jpg')}}"><img src="{{asset('images/Apartment/ap1.png')}}" /></a><br /><br />
-                            <a class="pop" rel="group" href="{{asset('images/slider/slide-4.jpg')}}"><img src="{{asset('images/Apartment/ap1.png')}}" /></a>  
-						</div>
-                                
-					</div>
-				</div>
-				<a href="#" class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>
-				<a href="#" class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>
-			</div>
-		</div>  
+<div class="detail" style="height: 100%; margin-bottom: 15px;">
+	<img src="{{asset('images/gallery.png')}}" style="display:block; position:relative; float:none;" />
+	<hr class="line" style="top: 60px;" />
+    <div>
+		<table id="tbgal">
+            <tr valign="middle">
+			     <td align="left" style="font-size:24px;"><img src="{{asset('images/addmore.png')}}" class="nopad" onclick="CreateNewRowGallery();"></td>
+			     <td align="left" style="font-size:24px;" width="260"><img src="{{asset('images/show.png')}}" style="margin-top: 10px;" /> <img src="{{asset('images/upload.png')}}" style="margin-left: 30px; margin-top: -10px; margin-bottom: 10px; display:block;" /></td>
+			     <td align="left" style="font-size:24px;"><textarea id="galtitle" name="galtitle" maxlenght="500" placeholder="กรอกข้อมูลของรูปที่นี่" class="galdesc"></textarea></td>
+			  </tr>
+        </table>
+        <input type="hidden" id="hdnMaxLineGal" name="hdnMaxLineGal" value="0">
     </div>
 </div>
 
