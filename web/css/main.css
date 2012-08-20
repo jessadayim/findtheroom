@@ -175,6 +175,7 @@ input.regis { background: url(../images/regis-bt.png) no-repeat; border: 0; widt
 .detail table input.canc{ background: url(../images/canc.png) no-repeat; border: 0; width: 51px; height: 51px; cursor: pointer; position:absolute; margin-top:-10px; margin-left:160px;}
 .detail div table tbody tr td textarea.place { max-width:180px; max-height:80px; min-width:180px; min-height:80px; font-family: DB Adman X, Helvetica, Arial, sans-serif; color: #423C3B; font-size:16px;}
 .detail div table tbody tr td textarea.ldesc { max-width:625px; max-height:40px; min-width:625px; min-height:40px; font-family: DB Adman X, Helvetica, Arial, sans-serif; color: #423C3B; font-size:16px;}
+.detail div table tbody tr td textarea.galdesc { max-width:625px; max-height:70px; min-width:625px; min-height:70px; font-family: DB Adman X, Helvetica, Arial, sans-serif; color: #423C3B; font-size:16px;}
 #gallery .upload { position:absolute; display:block; z-index: 999; margin-left: 85%; margin-top: -60px;}
 #fix {width: 1000px; margin:15px auto 0px auto;}
 #fix input.save { background: url(../images/save.png) no-repeat; border: 0; width: 51px; height: 51px; cursor: pointer; position: fixed; margin-top:60px; margin-left: 1030px;}
