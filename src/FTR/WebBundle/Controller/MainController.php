@@ -54,6 +54,51 @@ class MainController extends Controller
 			}
 		//var_dump($objSQL1,$objSQL2,$objSQL3); test
 		//exit();
-       return $this->render('FTRWebBundle:Main:index.html.twig',array('item1'=>$objSQL1,'item2'=>$objSQL2,'item3'=>$objSQL3));
+		
+		$zonelist_day		= $this->getZone(1);
+		$zonelist_month		= $this->getZone(2);
+		$buildingtype_day	= $this->getBuildingType(1);
+		$buildingtype_month	= $this->getBuildingType(2);
+		
+		
+		return $this->render('FTRWebBundle:Main:index.html.twig',array(
+			'item1'					=>$objSQL1,
+			'item2'					=>$objSQL2,
+			'item3'					=>$objSQL3,
+			'zonelist_day' 			=>$zonelist_day,
+			'zonelist_month' 		=>$zonelist_month,
+			'buildingtype_day' 		=>$buildingtype_day,
+			'buildingtype_month' 	=>$buildingtype_month,
+			));
     }
+	
+	function getZone($paytype=1){
+		$em = $this->getDoctrine()->getEntityManager();
+		
+		$conn= $this->get('database_connection');
+		if(!$conn){ die("MySQL Connection error");}
+		$sql = "
+			select * from zone where id in (select distinct(zone_id) from building_site where pay_type_id = $paytype)
+		";
+		$result_data = $conn->fetchAll($sql);
+		$all[] = array('id'=>0,'zonename'=>'ทุกเขต');
+		
+		$result = array_merge($all,$result_data);
+		return $result;
+	}
+	
+	function getBuildingType($type=1){
+		$em = $this->getDoctrine()->getEntityManager();
+		
+		$conn= $this->get('database_connection');
+		if(!$conn){ die("MySQL Connection error");}
+		$sql = "
+			select * from building_type where id in (select distinct(building_type_id) from building_site where pay_type_id = $type)
+		";
+		$result_data = $conn->fetchAll($sql);
+		$all[] = array('id'=>0,'type_name'=>'ทุกประเภท');
+		
+		$result = array_merge($all,$result_data);
+		return $result;
+	}
 }

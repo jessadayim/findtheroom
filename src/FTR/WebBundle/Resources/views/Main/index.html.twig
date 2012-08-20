@@ -45,7 +45,7 @@
 								<td align="right" style="padding-right:15px">เขต :</td>
 								<td width="350">
 									<div class="styled-select">
-									<select class="select">
+									<select class="select" >
 										{% for zlistm in zonelist_month %}
 											<option value="{{ zlistm.id }}">{{ zlistm.zonename }}</option>
 										{% endfor %}
@@ -311,8 +311,40 @@
     <a href='#' style="margin-right:0px !important"><img src="{{asset('images/ad/ad4.gif')}}" /></a>
 </div>
 
-<div id="board">
+<!--<div id="board">
 	<br /><br />กระดานพูดคุย
+</div>-->
+
+<div id="update">
+	<img src="{{asset('images/update.png')}}" /> <span class="time">(20-08-2555 13:56)</span>
+	<hr class="line" style="top: 60px;" />
+	<table>
+		<thead>
+			<tr>
+				<th width="250">ชื่อหอพัก</th>
+				<th width="150">ประเภท</th>
+				<th width="150">ชนิด</th>
+				<th width="200">เขต</th>
+				<th width="150">ราคา</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td class="first">หอขวัญ</td>
+				<td>อพาร์ทเม้นต์</td>
+				<td>รายวันและรายเดือน</td>
+				<td>บางเขน</td>
+				<td>2,000 - 2,500 บาท</td>
+			</tr>
+			<tr>
+				<td class="first">หอขวัญ</td>
+				<td>อพาร์ทเม้นต์</td>
+				<td>รายวันและรายเดือน</td>
+				<td>บางเขน</td>
+				<td>2,000 - 2,500 บาท</td>
+			</tr>
+		</tbody>
+	</table>
 </div>
 
 <div id="ad1">

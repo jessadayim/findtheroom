@@ -177,6 +177,9 @@ input.regis { background: url(../images/regis-bt.png) no-repeat; border: 0; widt
 .detail div table tbody tr td textarea.ldesc { max-width:625px; max-height:40px; min-width:625px; min-height:40px; font-family: DB Adman X, Helvetica, Arial, sans-serif; color: #423C3B; font-size:16px;}
 .detail div table tbody tr td textarea.galdesc { max-width:625px; max-height:70px; min-width:625px; min-height:70px; font-family: DB Adman X, Helvetica, Arial, sans-serif; color: #423C3B; font-size:16px;}
 #gallery .upload { position:absolute; display:block; z-index: 999; margin-left: 85%; margin-top: -60px;}
+#fix {width: 1000px; margin:15px auto 0px auto;}
+#fix input.save { background: url(../images/save.png) no-repeat; border: 0; width: 51px; height: 51px; cursor: pointer; position: fixed; margin-top:60px; margin-left: 1030px;}
+#fix input.upimg { background: url(../images/uploadimg.png) no-repeat; border: 0; width: 51px; height: 51px; cursor: pointer; position: fixed; margin-top:0px; margin-left: 1030px;}
 
 /*Recommend Block*/
 #recommend { background-color: #423C3B; width: 1000px; height: 405px; margin:15px auto 0 auto;}
@@ -207,8 +210,25 @@ input.regis { background: url(../images/regis-bt.png) no-repeat; border: 0; widt
 #ad3 { width:1000px; margin: 0 auto -5px auto;}
 #ad3 a { margin-right: 17px;}
 
-/**/
-#board { background-color:#423C3B; width:1000px; height: 300px; margin:20px auto 20px auto; color: #FFF; font-size:55px; text-align:center;}
+/*#board { background-color:#423C3B; width:1000px; height: 300px; margin:20px auto 20px auto; color: #FFF; font-size:55px; text-align:center;}*/
+
+/*update table*/
+#update { background-color:#423C3B; width:1000px; height: 100%; margin:20px auto 20px auto; color: #FFF; display:block; position: relative;}
+#update img { padding-top: 15px; padding-left: 20px;}
+#update span.time { font-size: 20px; margin-top: 28px; position: absolute; margin-left: 10px;}
+#update table { padding: 20px;}
+#update table th { font-size: 25px; text-align: center; padding: 5px; background-color:#BF1E2D;}
+#update table td { font-size: 20px; text-align: center; padding: 5px;}
+#update table td.first { font-size: 20px; text-align: left; padding: 5px;}
+
+#update TR:nth-child(odd) {
+    background-color: #2e2e2e;
+}
+ 
+#update  TR:nth-child(even) {
+    background-color: #131313;
+}
+
 
 /*Footer*/
 #footer { background-color: #423C3B; width: 1000px; height: 250px; display:block; position:relative; margin:10px auto 0 auto;}
