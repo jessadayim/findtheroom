@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 FTRWebBundle_homepage:
     pattern:  /
     defaults: { _controller: FTRWebBundle:Main:index }
