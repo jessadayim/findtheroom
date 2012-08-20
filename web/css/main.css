@@ -206,8 +206,25 @@ input.regis { background: url(../images/regis-bt.png) no-repeat; border: 0; widt
 #ad3 { width:1000px; margin: 0 auto -5px auto;}
 #ad3 a { margin-right: 17px;}
 
-/**/
-#board { background-color:#423C3B; width:1000px; height: 300px; margin:20px auto 20px auto; color: #FFF; font-size:55px; text-align:center;}
+/*#board { background-color:#423C3B; width:1000px; height: 300px; margin:20px auto 20px auto; color: #FFF; font-size:55px; text-align:center;}*/
+
+/*update table*/
+#update { background-color:#423C3B; width:1000px; height: 100%; margin:20px auto 20px auto; color: #FFF; display:block; position: relative;}
+#update img { padding-top: 15px; padding-left: 20px;}
+#update span.time { font-size: 20px; margin-top: 28px; position: absolute; margin-left: 10px;}
+#update table { padding: 20px;}
+#update table th { font-size: 25px; text-align: center; padding: 5px; background-color:#BF1E2D;}
+#update table td { font-size: 20px; text-align: center; padding: 5px;}
+#update table td.first { font-size: 20px; text-align: left; padding: 5px;}
+
+#update TR:nth-child(odd) {
+    background-color: #2e2e2e;
+}
+ 
+#update  TR:nth-child(even) {
+    background-color: #131313;
+}
+
 
 /*Footer*/
 #footer { background-color: #423C3B; width: 1000px; height: 250px; display:block; position:relative; margin:10px auto 0 auto;}
