@@ -22,7 +22,7 @@ display: inline;
 ul.gelbuttonmenu li a{
 color: #423C3B;
 padding: 5px 15px; /*make sure padding is sufficient that the height of the link is enough to fully show the gel button*/
-margin-right: 50px; /*spacing between each menu link*/
+margin-right: 105px/*50px*/; /*spacing between each menu link*/
 text-decoration: none;
 font-weight: normal;
 }
@@ -31,7 +31,7 @@ ul.gelbuttonmenu li a:hover{
 color: #FFFFFF;
 background:#BF1E2D;
 padding: 5px 15px; /*make sure padding is sufficient that the height of the link is enough to fully show the gel button*/
-margin-right: 50px; /*spacing between each menu link*/
+margin-right: 105px/*50px*/; /*spacing between each menu link*/
 text-decoration: none;
 font-weight: normal;
 }
@@ -40,7 +40,7 @@ ul.gelbuttonmenu li a.selected{
 color: #FFFFFF;
 background:#BF1E2D;
 padding: 5px 15px; /*make sure padding is sufficient that the height of the link is enough to fully show the gel button*/
-margin-right: 50px; /*spacing between each menu link*/
+margin-right: 105px/*50px*/; /*spacing between each menu link*/
 text-decoration: none;
 font-weight: normal;
 }
