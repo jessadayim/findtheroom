@@ -211,6 +211,7 @@ input.regis { background: url(../images/regis-bt.png) no-repeat; border: 0; widt
 /*update table*/
 #update { background-color:#423C3B; width:1000px; height: 100%; margin:20px auto 20px auto; color: #FFF; display:block; position: relative;}
 #update img { padding-top: 15px; padding-left: 20px;}
+#update span.time { font-size: 20px; margin-top: 28px; position: absolute; margin-left: 10px;}
 #update table { padding: 20px;}
 #update table th { font-size: 25px; text-align: center; padding: 5px; background-color:#BF1E2D;}
 #update table td { font-size: 20px; text-align: center; padding: 5px;}
