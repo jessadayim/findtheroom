@@ -176,6 +176,9 @@ input.regis { background: url(../images/regis-bt.png) no-repeat; border: 0; widt
 .detail div table tbody tr td textarea.place { max-width:180px; max-height:80px; min-width:180px; min-height:80px; font-family: DB Adman X, Helvetica, Arial, sans-serif; color: #423C3B; font-size:16px;}
 .detail div table tbody tr td textarea.ldesc { max-width:625px; max-height:40px; min-width:625px; min-height:40px; font-family: DB Adman X, Helvetica, Arial, sans-serif; color: #423C3B; font-size:16px;}
 #gallery .upload { position:absolute; display:block; z-index: 999; margin-left: 85%; margin-top: -60px;}
+#fix {width: 1000px; margin:15px auto 0px auto;}
+#fix input.save { background: url(../images/save.png) no-repeat; border: 0; width: 51px; height: 51px; cursor: pointer; position: fixed; margin-top:60px; margin-left: 1030px;}
+#fix input.upimg { background: url(../images/uploadimg.png) no-repeat; border: 0; width: 51px; height: 51px; cursor: pointer; position: fixed; margin-top:0px; margin-left: 1030px;}
 
 /*Recommend Block*/
 #recommend { background-color: #423C3B; width: 1000px; height: 405px; margin:15px auto 0 auto;}
