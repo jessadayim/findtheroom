@@ -6,21 +6,90 @@
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
 	<script type="text/javascript" src="js/uploadify/jquery.uploadify-3.1.min.js"></script>
 	<script type="text/javascript" src="js/uploadify.control.js"></script>
-	<script type="text/javascript">
+<script language="javascript">
+
+	var stridupload;
+	var strownername = 'hdnownername';
+	function loopbutton()
+	{
+		var number = parseInt(document.addform.hdnMaxLine.value);
+		var numberline = document.addform.hdnMaxLine.value;
+		/*var num=0;
+		for(i=0;i<=count;i++)
+		{
+			
+			if(i==0){
+				stridupload = '#room'+i;
+			}else{
+				stridupload = stridupload+',#room'+i;
+			}
+			
+		}*/
+		test();
+	}
+	function CreateNewRow()
+	{
+		var intLine = parseInt(document.addform.hdnMaxLine.value);
+		intLine++;
+			
+		var theTable = document.all.tbtype
+		var newRow = theTable.insertRow(theTable.rows.length)
+		newRow.id = newRow.uniqueID
+		
+		var item1 = 1
+		var newCell
+		
+		//*** Column 1 ***//
+		newCell = newRow.insertCell(0)
+		newCell.id = newCell.uniqueID
+		newCell.setAttribute("className", "css-name");
+		newCell.innerHTML = "<input type=\"file\" name=\"room"+intLine+"\" id=\"room"+intLine+"\" /><input type=\"text\" name=\"hdnfilename"+intLine+"\" id=\"hdnfilename"+intLine+"\" />"
+		
+		document.addform.hdnMaxLine.value = intLine;
+		loopbutton();
+	}
 	
-	
-	</script>
+	function RemoveRow()
+	{
+		intLine = parseInt(document.addform.hdnMaxLine.value);
+		if(parseInt(intLine) > 0)
+		{
+				theTable = (document.all) ? document.all.tbtype : 
+				document.getElementById("tbtype")
+				theTableBody = theTable.tBodies[0];
+				theTableBody.deleteRow(intLine);
+				intLine--;
+				document.addform.hdnMaxLine.value = intLine;
+		}	
+	}
+</script>
 </head>
 <body>
-<form id="addform">
+<form id="addform" name="addform" method="post" action="getpostupload.php">
 <input type="file" name="file_upload" id="file_upload" />
 <input type="text" name="hdnfilename" id="hdnfilename" />
-<input type="file" name="room1" id="room1" />
-<input type="text" name="hdnfilename2" id="hdnfilename2" />
-<input type="file" name="room2" id="room2" />
-<input type="text" name="hdnfilename3" id="hdnfilename3" />
 <input type="hidden" name="hdnownername" id="hdnownername" value="jessada" />
 <input type="hidden" name="hdnbuildid" id="hdnbuildid" value="2" />
+<table id="tbtype" border="1">
+	<tr>
+		<td>
+			<input type="file" name="room0" id="room0" /><input type="text" name="hdnfilename0" id="hdnfilename0" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<input type="file" name="room1" id="room1" /><input type="text" name="hdnfilename1" id="hdnfilename1" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<input type="file" name="room2" id="room2" /><input type="text" name="hdnfilename2" id="hdnfilename2" />
+		</td>
+	</tr>
+</table>
+<img src="images/addmore.png" class="nopad" onclick="CreateNewRow();" style="margin-left: 110px;margin-top: 10px;">
+<br>line<input type="text" id="hdnMaxLine" name="hdnMaxLine" value="2">
+<button type="submit" id="submit">Go</button>
 </form>
 </body>
 </html>

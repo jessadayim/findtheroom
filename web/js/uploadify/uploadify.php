@@ -17,7 +17,7 @@ if (!empty($_FILES)) {
 	$fileParts = pathinfo($_FILES['Filedata']['name']);
 	
 	$fileextension = $fileParts['extension'];
-	$fixfilename = $fieldname.'.'.$fileextension;
+	$fixfilename = $now.$fieldname.'.'.$fileextension;
 	
 	$tempFile = $_FILES['Filedata']['tmp_name'];
 	$targetPath = $_SERVER['DOCUMENT_ROOT'] . $targetFolder . '/' .$build_id;

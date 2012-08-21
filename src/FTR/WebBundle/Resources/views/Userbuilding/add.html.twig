@@ -62,13 +62,13 @@
 		newCell = newRow.insertCell(0)
 		newCell.id = newCell.uniqueID
 		newCell.setAttribute("className", "css-name");
-		newCell.innerHTML = "<img src=\"{{asset('images/addmore.png')}}\" class=\"nopad\" onclick=\"CreateNewRow();\">"
+		newCell.innerHTML = "<img src=\"{{asset('images/show.png')}}\" style=\"margin-top: 10px;\" />"
 
 		//*** Column 2 ***//
 		newCell = newRow.insertCell(1)
 		newCell.id = newCell.uniqueID
 		newCell.setAttribute("className", "css-name");
-		newCell.innerHTML = "<img src=\"{{asset('images/show.png')}}\" style=\"margin-top: 10px;\" /> <img src=\"{{asset('images/upload.png')}}\" style=\"margin-left: 30px; margin-top: -10px; margin-bottom: 10px; display:block;\" />"		
+		newCell.innerHTML = " <img src=\"{{asset('images/upload.png')}}\" style=\"margin-left: -20px; margin-top: -5px; margin-bottom: 10px; display:block;\" />"		
 		
 		//*** Column 3 ***//
 		newCell = newRow.insertCell(2)
@@ -268,15 +268,16 @@
                 <td width="60">&nbsp;</td>
             </tr>
             <tr valign="middle">
-			     <td align="left" style="font-size:24px;"><img src="{{asset('images/addmore.png')}}" class="nopad" onclick="CreateNewRow();"></td>
-			     <td align="left" style="font-size:24px;"><img src="{{asset('images/show.png')}}" style="margin-top: 10px;" /> <img src="{{asset('images/upload.png')}}" style="margin-left: 30px; margin-top: -10px; margin-bottom: 10px; display:block;" /></td>
+			     <td align="left" style="font-size:24px;"><img src="{{asset('images/show.png')}}" style="margin-top: -10px;" /></td>
+			     <td><img src="{{asset('images/upload.png')}}" style="margin-left: -20px; margin-top: -5px; margin-bottom: 10px; display:block;" /></td>
 			     <td align="left" style="font-size:24px;"><input name="typeap_name" type="text" maxlength="30" placeholder="กรุณากรอกประเภทห้องพัก" style=" padding:2px; font-size:20px;" /></td>
 			     <td align="center"><input name="typeap_size" type="text" maxlength="10" placeholder="ขนาด" style=" padding:2px; font-size:20px; width:80px;" /></td>
 			     <td align="left">ตารางเมตร</td>
 			     <td align="center"><input name="typeap_price" type="text" maxlength="10" placeholder="อัตราค่าเช่า" style=" padding:2px; font-size:20px; width:80px;" /></td>
 			     <td align="left">บาท</td>
-			  </tr>
+			</tr>
         </table>
+        <img src="{{asset('images/addmore.png')}}" class="nopad" onclick="CreateNewRow();" style="margin-left: 140px;margin-top: 10px;margin-bottom: 10px;">
         <input type="hidden" id="hdnMaxLine" name="hdnMaxLine" value="0">
     </div>
 </div>
