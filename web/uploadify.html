@@ -12,20 +12,7 @@
 	var strownername = 'hdnownername';
 	function loopbutton()
 	{
-		var number = parseInt(document.addform.hdnMaxLine.value);
-		var numberline = document.addform.hdnMaxLine.value;
-		/*var num=0;
-		for(i=0;i<=count;i++)
-		{
-			
-			if(i==0){
-				stridupload = '#room'+i;
-			}else{
-				stridupload = stridupload+',#room'+i;
-			}
-			
-		}*/
-		test();
+		uploadpicroom();
 	}
 	function CreateNewRow()
 	{
@@ -73,17 +60,17 @@
 <table id="tbtype" border="1">
 	<tr>
 		<td>
-			<input type="file" name="room0" id="room0" /><input type="text" name="hdnfilename0" id="hdnfilename0" />
+			<input class="room" type="file" name="room0" id="room0" /><input type="text" name="hdnfilename0" id="hdnfilename0" />
 		</td>
 	</tr>
 	<tr>
 		<td>
-			<input type="file" name="room1" id="room1" /><input type="text" name="hdnfilename1" id="hdnfilename1" />
+			<input class="room" type="file" name="room1" id="room1" /><input type="text" name="hdnfilename1" id="hdnfilename1" />
 		</td>
 	</tr>
 	<tr>
 		<td>
-			<input type="file" name="room2" id="room2" /><input type="text" name="hdnfilename2" id="hdnfilename2" />
+			<input class="room" type="file" name="room2" id="room2" /><input type="text" name="hdnfilename2" id="hdnfilename2" />
 		</td>
 	</tr>
 </table>
