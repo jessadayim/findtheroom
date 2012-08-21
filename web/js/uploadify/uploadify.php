@@ -10,6 +10,7 @@ $targetFolder = '/findtheroom/web/images/building'; // Relative to the root
 $ownername = $_POST['ownername'];
 $build_id = $_POST['buildid'];
 $fieldname = $_POST['fieldname'];
+$type =$_POST['typefield'];
 $now = date('Y-m-d');
 if (!empty($_FILES)) {
 	// Validate the file type
@@ -17,8 +18,11 @@ if (!empty($_FILES)) {
 	$fileParts = pathinfo($_FILES['Filedata']['name']);
 	
 	$newfieldname1 = str_replace('#', '', $fieldname);
-	$newfieldname2 = str_replace('#room', '', $fieldname);
-	
+	if($type=='room'){
+		$newfieldname2 = str_replace('#room', '', $fieldname);
+	}elseif($type=='galler'){
+		$newfieldname2 = str_replace('#gallery', '', $fieldname);
+	}
 	$fileextension = $fileParts['extension'];
 	$fixfilename = $now.$newfieldname1.'.'.$fileextension;
 	

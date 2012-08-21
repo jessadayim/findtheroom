@@ -32,7 +32,7 @@ function uploadpicroom()
 	for(i=0;i<=numberline;i++){
 	var name = '#room'+i
 	$(name).uploadify({
-			'formData'      : {'ownername' : ownername, 'buildid' : buildid ,'fieldname' : name},
+			'formData'      : {'ownername' : ownername, 'buildid' : buildid ,'fieldname' : name ,'typefield' : 'room'},
 			//'debug'    : true,
 			'swf'      : 'js/uploadify/uploadify.swf',
 			'uploader' : 'js/uploadify/uploadify.php',
