@@ -2,6 +2,7 @@
 {% block body %}
 
 <!-- peung -->
+<form method="post" action="{{path('FTRWebBundle_list')}}">
 <div id="search2">
 	<img src="{{asset('images/search-i.png')}}" />
 	<hr class="line" style="top: 60px;" />
@@ -12,10 +13,9 @@
 				<td width="350">
 					<div class="styled-select">
 						<select class="select">
-							<option value="all">ทุกประเภท</option>
-							<option value="apartment">อพาร์ทเม้นต์</option>
-							<option value="man">หอชาย</option>
-							<option value="woman">หอหญิง</option>
+							{% for btype in buildingTypeList %}
+								<option value="{{ btype.id }}">{{ btype.type_name }}</option>
+							{% endfor %}
 						</select>
 					</div>
 				</td>
@@ -29,9 +29,9 @@
 				<td>
 					<div class="styled-select">
 						<select class="select">
-							<option value="daymonth">รายวันและรายเดือน</option>
-							<option value="day">รายวัน</option>
-							<option value="month">รายเดือน</option>
+							{% for ptype in payType %}
+								<option value="{{ ptype.id }}">{{ ptype.typename }}</option>
+							{% endfor %}
 						</select>
 					</div>
 				</td>
@@ -56,10 +56,9 @@
 					<div class="styled-select">
                     <label for="bk">
 						<select class="select">
-							<option value="all">ทุกเขต</option>
-							<option value="banken">บางเขน</option>
-							<option value="vipawadee">วิภาวดีรังสิต</option>
-							<option value="etc">อื่นๆ</option>
+							{% for zlist in zonelist %}
+								<option value="{{ zlist.id }}">{{ zlist.zonename }}</option>
+							{% endfor %}
 						</select>
                     </label>
 					</div>
@@ -69,10 +68,9 @@
 					<div class="styled-select">
                     <label for="bt">
 						<select class="select">
-							<option value="all">ทุกสถานี</option>
-							<option value="siam">สยาม</option>
-							<option value="chidlom">ชิดลม</option>
-							<option value="tonglo">ทองหล่อ</option>
+							{% for btslist in nearBTS %}
+								<option value="{{ btslist.id }}">{{ btslist.name }}</option>
+							{% endfor %}
 						</select>
                     </label>
 					</div>
@@ -84,10 +82,9 @@
 					<div class="styled-select">
                     <label for="uni">
 						<select class="select">
-							<option value="all">- กรุณาระบุ -</option>
-							<option value="kmitl">สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</option>
-							<option value="jula">มหาวิทยาลับจุฬาลงกรณ์</option>
-							<option value="tammasard">มหาวิทยาลัยธรรมศาสตร์</option>
+							{% for ulist in nearUniversity %}
+								<option value="{{ ulist.id }}">{{ ulist.name }}</option>
+							{% endfor %}
 						</select>
                     </label>
 					</div>
@@ -97,10 +94,9 @@
 					<div class="styled-select">
                     <label for="mr">
 						<select class="select">
-							<option value="all">ทุกสถานี</option>
-							<option value="banken">สยาม</option>
-							<option value="vipawadee">ชิดลม</option>
-							<option value="etc">ทองหล่อ</option>
+							{% for mrtlist in nearMRT %}
+								<option value="{{ mrtlist.id }}">{{ mrtlist.name }}</option>
+							{% endfor %}
 						</select>
                     </label>
 					</div>
@@ -112,10 +108,9 @@
 					<div class="styled-select">
                     <label for="pl">
 						<select class="select">
-							<option value="all">- กรุณาระบุ -</option>
-							<option value="suwannapum">สนามบินสุวรรณภูมิ</option>
-                            <option value="donmeung">สนามบินดอนเมือง</option>
-							<option value="train">รถไฟห้วยขวาง</option>
+							{% for blist in nearBy %}
+								<option value="{{ blist.id }}">{{ blist.name }}</option>
+							{% endfor %}
 						</select>
                     </label>
 					</div>
@@ -152,41 +147,20 @@
                 สิ่งอำนวยความสะดวกในอาคารและใกล้เคียงอาคาร :
                 </td>
             </tr>
-			<tr height="40" valign="middle">
-				<td width="250"><input id="ca" name="option13" type="checkbox" value="carpark" /> <label for="ca">ที่จอดรถ</label></td>
-				<td width="250"><input id="ke" name="option14" type="checkbox" value="keycard" /> <label for="ke">คีย์การ์ด</label></td>
-				<td width="250"><input id="se" name="option15" type="checkbox" value="security" /> <label for="se">ยามรักษาความปลอดภัย</label></td>
-				<td width="250"><input id="came" name="option16" type="checkbox" value="camera" /> <label for="came">กล้องวงจรปิด</label></td>
-			</tr>
-			<tr height="40" valign="middle">
-				<td width="250"><input id="pow" name="option17" type="checkbox" value="power" /> <label for="pow">ไฟฉุกเฉิน</label></td>
-				<td width="250"><input id="cl" name="option18" type="checkbox" value="cloth" /> <label for="cl">ตู้ซักผ้าหยอดเหรียญ</label></td>
-				<td width="250"><input id="wa" name="option19" type="checkbox" value="water" /> <label for="wa">ตู้น้ำหยอดเหรียญ</label></td>
-				<td width="250"><input id="li" name="option20" type="checkbox" value="lift" /> <label for="li">ลิฟท์</label></td>			
-			</tr>
+			{% for outlist in fac_outroom %}
             <tr height="40" valign="middle">
-				<td width="250"><input id="ser" name="option21" type="checkbox" value="service" /> <label for="ser">บริการซัก อบ รีด</label></td>
-				<td width="250"><input id="com" name="option22" type="checkbox" value="computer" /> <label for="com">บริการคอมพิวเตอร์</label></td>
-				<td width="250"><input id="food" name="option23" type="checkbox" value="foodshop" /> <label for="food">ร้านอาหาร</label></td>
-				<td width="250"><input id="mini" name="option24" type="checkbox" value="minimart" /> <label for="mini">มินิมาร์ท</label></td>			
-			</tr>
-            <tr height="40" valign="middle">
-				<td width="250"><input id="fit" name="option25" type="checkbox" value="fitness" /> <label for="fit">ฟิตเนส</label></td>
-				<td width="250"><input id="po" name="option26" type="checkbox" value="pool" /> <label for="po">สระว่ายน้ำ</label></td>
-				<td width="250"><input id="jog" name="option27" type="checkbox" value="jogging" /> <label for="jog">สวนสาธารณะ</label></td>
-				<td width="250"><input id="spa" name="option28" type="checkbox" value="spabeauty" /> <label for="spa">ร้านเสริมสวย</label></td>			
-			</tr>
-            <tr height="40" valign="middle">
-				<td width="250"><input id="fc" name="option29" type="checkbox" value="fclean" /> <label for="fc">ทำความสะอาดห้อง(ฟรี)</label></td>
-				<td width="250"><input id="nc" name="option30" type="checkbox" value="nclean" /> <label for="nc">ทำความสะอาดห้อง(ไม่ฟรี)</label></td>
-				<td width="250">&nbsp;</td>
-				<td width="250">&nbsp;</td>			
-			</tr>
+            	{% for outloops in outlist.loop %}
+            	<td width="250">
+            		<input id="{{outloops.id}}" name="{{outloops.id}}" type="checkbox" value="{{outloops.id}}" /> <label for="{{outloops.id}}">{{outloops.facility_name}}</label>
+            	</td>
+            	{% endfor %}
+            </tr>
+            {% endfor %}
 		</table>
 	</div>
     <input class="search2" type="submit" value="" />
 </div>
-
+</form>
 <!-- end peung -->
 
 
