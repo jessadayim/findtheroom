@@ -256,7 +256,7 @@
     <div>
 		<table id="tbtype">
         	<tr height="40" valign="bottom">
-            	<td align="left" colspan="3" style="font-size:24px;" width="500">ประเภทห้องพัก</td>
+            	<td align="left" colspan="4" style="font-size:24px;" width="500">ประเภทห้องพัก</td>
                 <td align="center" width="100">ขนาด</td>
                 <td width="100">&nbsp;</td>
                 <td align="center" width="150">อัตราค่าเช่า / เดือน</td>
@@ -264,9 +264,10 @@
             </tr>
             {% if rooms == null %}
             <tr valign="middle">
+				 <td><img src="{{asset('images/delete.png')}}" style="padding-left:0px; margin-left:-10px;" /></td>
 			     <td align="left" style="font-size:24px;"><img src="{{asset('images/show.png')}}" style="margin-top: -10px;" /></td>
 			     <td><img src="{{asset('images/upload.png')}}" style="margin-left: -20px; margin-top: -5px; margin-bottom: 10px; display:block;" /></td>
-			     <td align="left" style="font-size:24px;"><input name="typeap_name" type="text" maxlength="30" placeholder="กรุณากรอกประเภทห้องพัก" style=" padding:2px; font-size:20px;" /></td>
+			     <td align="left" style="font-size:24px;"><input name="typeap_name" type="text" maxlength="30" placeholder="กรุณากรอกชื่อห้องพัก" style=" padding:2px; font-size:20px;" /></td>
 			     <td align="center"><input name="typeap_size" type="text" maxlength="10" placeholder="ขนาด" style=" padding:2px; font-size:20px; width:80px;" /></td>
 			     <td align="left">ตารางเมตร</td>
 			     <td align="center"><input name="typeap_price" type="text" maxlength="10" placeholder="อัตราค่าเช่า" style=" padding:2px; font-size:20px; width:80px;" /></td>
@@ -278,7 +279,7 @@
 			{% endfor %}
 			{% endif %}
         </table>
-        <img src="{{asset('images/addmore.png')}}" class="nopad" onclick="CreateNewRow();" style="margin-left: 140px;margin-top: 10px;margin-bottom: 10px;">
+        <img src="{{asset('images/addmore2.png')}}" class="nopad" onclick="CreateNewRow();" style="margin-left: 130px;margin-top: 10px;margin-bottom: 10px;">
         <input type="hidden" id="hdnMaxLine" name="hdnMaxLine" value="{{roomlines}}">
     </div>
 </div>
@@ -290,7 +291,9 @@
 		<table id="tbgal">
 			{% if galleries == null %}
             <tr valign="middle">
-				<td align="left" style="font-size:24px;" width="260"><img src="{{asset('images/show.png')}}" style="margin-top: 10px;" /> <img src="{{asset('images/upload.png')}}" style="margin-left: 30px; margin-top: -10px; margin-bottom: 10px; display:block;" /></td>
+				<td><img src="{{asset('images/delete.png')}}" style="padding-left:0px; margin-left:-10px;" /></td>
+				<td align="left" style="font-size:24px;"><img src="{{asset('images/show.png')}}" style="margin-top: -10px;" /></td>
+				<td><img src="{{asset('images/upload.png')}}" style="margin-left: -20px; margin-top: -5px; margin-bottom: 10px; display:block;" /></td>
 				<td align="left" style="font-size:24px;"><textarea id="galtitle" name="galtitle" maxlenght="500" placeholder="กรอกข้อมูลของรูปที่นี่" class="galdesc"></textarea></td>
 			</tr>
 			{% else %}
@@ -299,23 +302,18 @@
 			{% endfor %}
 			{% endif %}
         </table>
-        <img src="{{asset('images/addmore.png')}}" class="nopad" onclick="CreateNewRowGallery();" style="margin-left: 140px;margin-top: 10px;margin-bottom: 10px;">
+        <img src="{{asset('images/addmore2.png')}}" class="nopad" onclick="CreateNewRowGallery();" style="margin-left: 130px;margin-top: 10px;margin-bottom: 10px;">
         <input type="hidden" id="hdnMaxLineGal" name="hdnMaxLineGal" value="{{gellerylines}}">
     </div>
 </div>
 
-<div class="detail" style="height: 770px; margin-bottom: 15px;">
+<div class="detail" style="height: 750px; margin-bottom: 15px;">
 	<img src="{{asset('images/etc.png')}}" style="display:block; position:relative; float:none;" />
 	<hr class="line" style="top: 60px;" />
     <div>
 		<table>
-        	<tr>
-            	<td colspan="4">
-                ที่ตั้ง :
-                </td>
-            </tr>
 			<tr height="50" valign="middle">
-				<td align="left" width="165"><input id="bk_check" name="bk_check" type="checkbox" value="bangkok" /><label for="bk_check">เขตกรุงเทพฯ :</label></td>
+				<td align="left" width="165">จังหวัด :</td>
 				<td width="300">
 					<div id="nearly_area" class="styled-select">
 						<select name="nearly_bk" id="nearly_location" class="select">
@@ -339,14 +337,14 @@
 				</td>
 			</tr>
 			<tr height="50" valign="middle">
-				<td align="left" width="165"><input id="university_check" name="university_check" type="checkbox" value="university" /><label for="university_check">ใกล้มหาวิทยาลัย :</label></td>
+				<td align="left" width="165"><input id="bk_check" name="bk_check" type="checkbox" value="bangkok" /><label for="bk_check">โซนกรุงเทพฯ :</label></td>
 				<td width="300">
-					<div class="styled-select">
-						<select name="university" id="university" class="select">
-							<option value="all">- กรุณาระบุ -</option>
-							<option value="kmitl">สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</option>
-							<option value="jula">มหาวิทยาลับจุฬาลงกรณ์</option>
-							<option value="tammasard">มหาวิทยาลัยธรรมศาสตร์</option>
+					<div id="nearly_area" class="styled-select">
+						<select name="nearly_bk" id="nearly_location" class="select">
+							<option value="all">ทุกเขต</option>
+							<option value="banken">บางเขน</option>
+							<option value="vipawadee">วิภาวดีรังสิต</option>
+							<option value="etc">อื่นๆ</option>
 						</select>
 					</div>
 				</td>
@@ -363,6 +361,17 @@
 				</td>
 			</tr>
             <tr height="50" valign="middle">
+				<td align="left" width="165"><input id="university_check" name="university_check" type="checkbox" value="university" /><label for="university_check">ใกล้มหาวิทยาลัย :</label></td>
+				<td width="300">
+					<div class="styled-select">
+						<select name="university" id="university" class="select">
+							<option value="all">- กรุณาระบุ -</option>
+							<option value="kmitl">สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</option>
+							<option value="jula">มหาวิทยาลับจุฬาลงกรณ์</option>
+							<option value="tammasard">มหาวิทยาลัยธรรมศาสตร์</option>
+						</select>
+					</div>
+				</td>
 				<td align="left" width="165"><input id="nearly_place_check" name="nearly_place_check" type="checkbox" value="nearly_place" /><label for="nearly_place_check">ตามสถานที่ใกล้เคียง :</label></td>
 				<td width="300">
 					<div class="styled-select">
@@ -374,13 +383,11 @@
 						</select>
 					</div>
 				</td>
-				<td colspan="2">&nbsp;
-				</td>
 			</tr>
 		</table>
 	</div>
-	<hr class="line" style="top: 270px;" />
-    <div style="margin-top:40px;">
+	<hr class="line" style="top: 240px;" />
+    <div style="margin-top:30px;">
 		<table>
         	<tr>
             	<td colspan="4" style="padding-bottom:5px;">
@@ -398,7 +405,7 @@
             {% endfor %}
 		</table>
 	</div>
-    <hr class="line" style="top: 460px;" />
+    <hr class="line" style="top: 430px;" />
     <div style="margin-top:30px;">
 		<table>
         	<tr>
