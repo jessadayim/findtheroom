@@ -57,9 +57,9 @@ class Building_site
     private $phone_number;
 
     /**
-     * @var boolean $publish
+     * @var integer $publish
      *
-     * @ORM\Column(name="publish", type="boolean", nullable="true")
+     * @ORM\Column(name="publish", type="integer", nullable="true")
      */
     private $publish;
 
@@ -317,7 +317,7 @@ class Building_site
     /**
      * Set publish
      *
-     * @param boolean $publish
+     * @param integer $publish
      */
     public function setPublish($publish)
     {
@@ -327,7 +327,7 @@ class Building_site
     /**
      * Get publish
      *
-     * @return boolean 
+     * @return integer 
      */
     public function getPublish()
     {
@@ -692,6 +692,26 @@ class Building_site
     public function getInternetPrice()
     {
         return $this->internet_price;
+    }
+
+    /**
+     * Set googlemap_url
+     *
+     * @param integer $googlemap_url
+     */
+    public function setGoogleMapUrl($googlemapUrl)
+    {
+        $this->googlemap_url = $googlemapUrl;
+    }
+
+    /**
+     * Get googlemap_url
+     *
+     * @return integer 
+     */
+    public function getGoogleMapUrl()
+    {
+        return $this->googlemap_url;
     }
 
     /**
