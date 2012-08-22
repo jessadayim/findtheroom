@@ -1,10 +1,18 @@
 FTRWebBundle_homepage:
     pattern:  /
     defaults: { _controller: FTRWebBundle:Main:index }
+
+FTRWebBundle_recom:
+    pattern:  /slide
+    defaults: { _controller: FTRWebBundle:Main:recom }
     
 FTRWebBundle_search:
     pattern:  /search
     defaults: { _controller: FTRWebBundle:Search:search }
+    
+FTRWebBundle_detail:
+    pattern:  /detail
+    defaults: { _controller: FTRWebBundle:Detail:detail }
     
 FTRWebBundle_publish:
     pattern:  /publish
@@ -41,6 +49,14 @@ FTRWebBundle_logout:
 TRWebBundle_reset:
     pattern:  /reset
     defaults: { _controller: FTRWebBundle:Reset:reset}
+    
+TRWebBundle_change:
+    pattern:  /reset/change
+    defaults: { _controller: FTRWebBundle:Reset:change}
+
+TRWebBundle_chgconfirm:
+    pattern:  /reset/change/confirm
+    defaults: { _controller: FTRWebBundle:Reset:passchg}
 
 FTRWebBundle_forget:
     pattern:  /forget

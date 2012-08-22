@@ -1,0 +1,325 @@
+{% extends 'FTRWebBundle:Layout:Layout.html.twig' %}
+{% block body %}
+<script type="text/javascript">
+		$(document).ready(function() {
+			$("a#gmap").fancybox({
+				'overlayShow'	: true,
+				'transitionIn'	: 'elastic',
+				'transitionOut'	: 'elastic',
+				'showNavArrows' : false
+			});
+			$("a#imap").fancybox({
+				'overlayShow'	: true,
+				'transitionIn'	: 'elastic',
+				'transitionOut'	: 'elastic',
+				'showNavArrows' : false
+			});
+			$("a#cmap").fancybox({
+				'overlayShow'	: true,
+				'transitionIn'	: 'elastic',
+				'transitionOut'	: 'elastic',
+				'showNavArrows' : false
+			});
+			$("a#login").fancybox({
+				'width'				: 700,
+				'height'			: 400,
+				'autoScale'			: false,
+				'transitionIn'		: 'elastic',
+				'transitionOut'		: 'elastic',
+				'showNavArrows' : false,
+				'type'				: 'iframe'
+			});
+			$("a[rel=group]").fancybox({
+				'transitionIn'	: 'elastic',
+				'transitionOut'	: 'none',
+				'titlePosition' : 'over'
+			});
+		});
+</script>
+
+<script type="text/javascript">  
+$(function(){  
+    $("ul#navi_containTab > li").click(function(event){  
+            var menuIndex=$(this).index();  
+            $("ul#detail_containTab > li:visible").hide();             
+            $("ul#detail_containTab > li").eq(menuIndex).show(); 
+    });  
+	$("ul#navi_containTab2 > li").click(function(event){  
+            var menuIndex=$(this).index();  
+            $("ul#detail_containTab2 > li:visible").hide();             
+            $("ul#detail_containTab2 > li").eq(menuIndex).show(); 
+    });  
+	$("li#tabNavi1").click(function(event){  
+            $("#recommend").css("marginTop","15px");             
+    });  
+	$("li#tabNavi2").click(function(event){  
+            $("#recommend").css("marginTop","15px");             
+    }); 
+	$("li#tabNavi3").click(function(event){  
+            $("#recommend").css("marginTop","215px");             
+    }); 
+});  
+</script>
+
+<script>
+		$(function(){
+			$('#slides5').slides({
+				preload: true,
+				preloadImage: "{{asset('images/slider/loading.gif')}}",
+				hoverPause: true,
+				generatePagination: false
+			});
+		});
+</script>
+
+<div id="show">
+    <div class="result">
+    	<div class="wifi"></div><div style=" display:block; position: absolute; margin-left: 0px; margin-top: 127px; width:200px; text-align:center;">ราคา {{item1.start_price}} - {{item1.end_price}} บาท</div><img src="{{asset('images/show.png')}}" />
+    	<div class="desc">
+        	<table border="0" width="500" style="margin-top:-8px;">
+            	<tr style="font-size:26px">
+                	<td width="90">
+                    	หอพัก
+                    </td>
+                    <td colspan="3">
+                    	{{item1.building_name}}
+                    </td>
+                </tr>
+                <tr>
+                	<td width="90">
+                    	ประเภท
+                    </td>
+                    <td width="180">
+                    	{{item1.type_name}}
+                    </td>
+                    <td width="90">
+                    	ชนิด
+                    </td>
+                    <td width="180">
+                    	{{item1.typename}}
+                    </td>
+                </tr>
+                <tr>
+                	<td width="90" valign="top">
+                    	ที่อยู่
+                    </td>
+                	<td colspan="3">
+                    	{{item1.address}}
+                    </td>
+                </tr>
+                <tr>
+                	<td width="90" valign="top" id="tade">
+                    	รายละเอียด
+                    </td>
+                	<td colspan="3">
+                    	<div style="height:43px; overflow:hidden;">{{item1.detail}}</div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="dmap">
+        	<span style="float:left; margin-right: 15px;">แผนที่</span>
+            <a id="gmap" href="{{asset('images/Apartment/ap1.png')}}" style="float:left; margin-right: 10px; margin-top: -10px;"><img src="{{asset('images/gmap.png')}}" /></a>
+            <a id="imap" href="{{asset('images/Apartment/ap1.png')}}" style="float:left; margin-top: -10px;"><img src="{{asset('images/imap.png')}}" /></a>
+        </div>
+    </div>
+</div>
+
+<div class="detail">
+	<img src="{{asset('images/detail.png')}}" />
+	<hr class="line" style="top: 60px;" />
+    <div>
+		<table>
+			<tr height="20" valign="middle">
+				<td align="right" width="150" style="padding-right:20px;">เบอร์โทรติดต่อ :</td>
+				<td width="300">{{item1.phone_number}}</td>
+				<td align="right" width="150" style="padding-right:10px;">ระยะเวลาเช่าขั้นต่ำ :</td>
+				<td align="center" width="50">6</td>
+                <td width="100">เดือน</td>
+			</tr>
+			<tr height="20" valign="middle">
+				<td align="right" width="150" style="padding-right:20px;">ติดต่อคุณ :</td>
+				<td width="300">{{item1.contact_name}}</td>
+				<td align="right" width="150" style="padding-right:10px;">ค่าน้ำ :</td>
+				<td align="center" width="50">{{item1.water_unit}}</td>
+                <td width="100">บาท ต่อหน่วย</td>
+			</tr>
+           <tr height="20" valign="middle">
+				<td align="right" width="150" style="padding-right:20px;">อีเมล :</td>
+				<td width="300"><a href="#">{{item1.contact_email}}</a></td>
+				<td align="right" width="150" style="padding-right:10px;">ค่าไฟ :</td>
+				<td align="center" width="50">{{item1.electricity_unit}}</td>
+                <td width="100">บาท ต่อหน่วย</td>
+			</tr>
+			<tr height="20" valign="middle">
+				<td align="right" width="150" style="padding-right:20px;">เว็บไซต์ :</td>
+				<td width="300"><a href="facebook.com" target="_new">{{item1.website}}</a></td>
+				<td align="right" width="150" style="padding-right:10px;">ค่าอินเตอร์เน็ต :</td>
+				<td align="center" width="50">{{item1.internet_price}}</td>
+                <td width="100">บาท ต่อเดือน</td>
+			</tr>
+		</table>
+	</div>
+</div>
+
+<div class="detail" style="height:100%; padding-bottom:10px;">
+	<img src="{{asset('images/room.png')}}" />
+	<hr class="line" style="top: 60px;" />
+    <div>
+		<table>
+			<tr height="20" valign="middle">
+				<td align="left" width="220" style="padding-right:20px;">ประเภทห้องพัก</td>
+				<td align="left" width="150"></td>
+				<td align="center" width="250" colspan="2" style="padding-right:10px;">ขนาด</td>
+				<td align="center" colspan="2" width="250">อัตราค่าเช่า/เดือน</td>
+			</tr>
+			{% for row in item2 %}
+			<tr height="135" valign="middle">
+				<td align="left" width="220"><img src="{{asset('images/show.png')}}" class="nopad" /></td>
+				<td align="left" width="150">{{row.room_typename}}</td>
+				<td align="right" width="110" style="padding-right:10px;">{{row.room_size}}</td>
+                <td align="left" width="140">ตารางเมตร</td>
+				<td align="right" width="130">{{row.room_price}}</td>
+                <td align="left" width="120">บาท</td>
+			</tr>
+			{%endfor%}
+		</table>
+	</div>
+</div>
+
+<div id="gallery">
+	<img src="{{asset('images/gallery.png')}}" class="head" />
+        <hr class="line" style="top: 60px;" />
+        <div id="container5">
+			<div id="slides5">
+				<div class="slides_container" style="width:950px;">
+					<div class="slide" style="width:950px; margin-top:20px !important;">
+                            
+						<div class="ap3">
+							<a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}" title="test123456"><img src="{{asset('images/Apartment/ap1.png')}}" /></a><br /><br />
+                            <a class="pop" rel="group" href="{{asset('images/slider/slide-2.jpg')}}"><img src="{{asset('images/Apartment/ap1.png')}}" /></a>       
+						</div>
+                                
+						<div class="ap3">
+							<a class="pop" rel="group" href="{{asset('images/slider/slide-3.jpg')}}"><img src="{{asset('images/Apartment/ap2.png')}}" /></a><br /><br />
+                            <a class="pop" rel="group" href="{{asset('images/slider/slide-4.jpg')}}"><img src="{{asset('images/Apartment/ap2.png')}}" /></a>       
+						</div>
+                                
+						<div class="ap4">
+							<a class="pop" rel="group" href="{{asset('images/slider/slide-5.jpg')}}" title="test12345677777777777777"><img src="{{asset('images/Apartment/ap3.png')}}" /></a><br /><br />
+                            <a class="pop" rel="group" href="{{asset('images/slider/slide-6.jpg')}}"><img src="{{asset('images/Apartment/ap3.png')}}" /></a>       
+						</div>
+                                
+					</div>
+
+					<div class="slide" style="width:950px;">
+                                
+						<div class="ap3">
+							<a class="pop" rel="group" href="{{asset('images/slider/slide-7.jpg')}}"><img src="{{asset('images/Apartment/ap3.png')}}" /></a><br /><br />
+                            <a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><img src="{{asset('images/Apartment/ap3.png')}}" /></a>       
+						</div>
+                                
+						<div class="ap3">
+							<a class="pop" rel="group" href="{{asset('images/slider/slide-2.jpg')}}"><img src="{{asset('images/Apartment/ap1.png')}}" /></a><br /><br />
+                            <a class="pop" rel="group" href="{{asset('images/slider/slide-3.jpg')}}"><img src="{{asset('images/Apartment/ap1.png')}}" /></a>     
+						</div>
+                                
+						<div class="ap4">
+							<a class="pop" rel="group" href="{{asset('images/slider/slide-4.jpg')}}"><img src="{{asset('images/Apartment/ap2.png')}}" /></a><br /><br />
+                            <a class="pop" rel="group" href="{{asset('images/slider/slide-5.jpg')}}"><img src="{{asset('images/Apartment/ap2.png')}}" /></a>    
+						</div>
+                                
+					</div>
+
+					<div class="slide" style="width:950px;">
+                                
+						<div class="ap3">
+							<a class="pop" rel="group" href="{{asset('images/slider/slide-6.jpg')}}"><img src="{{asset('images/Apartment/ap2.png')}}" /></a><br /><br />
+                            <a class="pop" rel="group" href="{{asset('images/slider/slide-7.jpg')}}"><img src="{{asset('images/Apartment/ap2.png')}}" /></a>     
+						</div>
+                                
+						<div class="ap3">
+							<a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><img src="{{asset('images/Apartment/ap3.png')}}" /></a><br /><br />
+                            <a class="pop" rel="group" href="{{asset('images/slider/slide-2.jpg')}}"><img src="{{asset('images/Apartment/ap3.png')}}" /></a>         
+						</div>
+                                
+						<div class="ap4">
+							<a class="pop" rel="group" href="{{asset('images/slider/slide-3.jpg')}}"><img src="{{asset('images/Apartment/ap1.png')}}" /></a><br /><br />
+                            <a class="pop" rel="group" href="{{asset('images/slider/slide-4.jpg')}}"><img src="{{asset('images/Apartment/ap1.png')}}" /></a>  
+						</div>
+                                
+					</div>
+				</div>
+				<a href="#" class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>
+				<a href="#" class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>
+			</div>
+		</div>  
+    </div>
+</div>
+
+<div class="detail" style="height:100%; padding-bottom:10px;">
+	<img src="{{asset('images/inroom.png')}}" />
+	<hr class="line" style="top: 60px;" />
+    <div>
+		<table>{% set count = 0%}
+			{% for faclist in item3%}
+				{% if count%4 == 0%}
+					<tr height="20" valign="middle">
+				{% endif%}			
+						<td align="left" width="250">
+							{% if faclist.building_site_id == 1%}
+							<span class="right">{{faclist.facility_name}}</span>
+							{% else %}
+							<span class="noright">{{faclist.facility_name}}</span>
+							{%endif%}
+						</td>
+				{% set count = count+1%}
+				{% if count%4 == 0%}
+					</tr>
+				{% endif%}
+				
+			{%endfor%}
+		</table>
+	</div>
+</div>
+
+<div class="detail" style="height:100%; padding-bottom:10px;">
+	<img src="{{asset('images/outroom.png')}}" />
+	<hr class="line" style="top: 60px; color:#fff;" />
+    <div>
+		<table>{% set count = 0%}
+			{% for faclist in item4%}
+				{% if count%4 == 0%}
+					<tr height="20" valign="middle">
+				{% endif%}
+						<td align="left" width="250">
+							{% if faclist.building_site_id == 1%}
+							<span class="right">{{faclist.facility_name}}</span>
+							{% else %}
+							<span class="noright">{{faclist.facility_name}}</span>
+							{%endif%}
+						</td>
+				{% set count = count+1%}
+				{% if count%4 == 0%}
+					</tr>
+				{% endif%}				
+			{%endfor%}
+		</table>
+	</div>
+</div>
+{% render "FTRWebBundle:Main:recom" %}
+
+<div id="ad1">
+	<a href="#"><img src="{{asset('images/ad/ad1.gif')}}" /></a>
+    <a href="#"><img src="{{asset('images/ad/ad2.gif')}}" /></a>
+    <a href="#"><img src="{{asset('images/ad/ad3.gif')}}" /></a>
+    <a href="#" style="margin-right:0px !important"><img src="{{asset('images/ad/ad4.gif')}}" /></a>
+</div>
+
+<div id="ad2">
+	<a href="#"><img src="{{asset('images/ad/ad1.gif')}}" /></a>
+    <a href="#"><img src="{{asset('images/ad/ad2.gif')}}" /></a>
+    <a href="#"><img src="{{asset('images/ad/ad3.gif')}}" /></a>
+    <a href="#" style="margin-right:0px !important"><img src="{{asset('images/ad/ad4.gif')}}" /></a>
+</div>
+{% endblock %}

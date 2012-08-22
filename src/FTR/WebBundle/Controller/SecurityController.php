@@ -12,7 +12,6 @@ class SecurityController extends Controller
     {
     	$username = $_POST['username'];
 		$password = $_POST['password'];
-		
 		if($username !=NULL&& $password !=NULL){
 			$conn= $this->get('database_connection');
 			if(!$conn){ die("MySQL Connection error");}
@@ -23,16 +22,11 @@ class SecurityController extends Controller
 					if($rowcount == 1){
 						$session = $this->get('session');
 						$user = $objSQL1[0]['username'];
-						$session->set('user', $user);						
-						
-						if(!empty($_POST['layoutlog']))
-						{
-							return $this->redirect($this->generateUrl('userbuilding'));
-						}
-						else {
-							echo "1";
-							exit();
-						}
+						$id = $objSQL1[0]['id'];
+						$session->set('user', $user);		
+						$session->set('id', $id);
+						echo "1";
+						exit();
 					}
 					else{
 						echo "0";
@@ -51,23 +45,22 @@ class SecurityController extends Controller
 	}
 	public function logPublishAction()
     {
-		if(!empty($_COOKIE['username'])||!empty($_COOKIE['password']))
-		{
-			$cookie_user = $_COOKIE['username'];
-			$cookie_pass = $_COOKIE['password'];
-			$cookie_chbox = $_COOKIE['chbox'];
-		}
-		else
-		{
-			$cookie_user = '';
-			$cookie_pass = '';
-			$cookie_chbox = '';
-		}
-		return $this->render('FTRWebBundle:Security:login.html.twig',array(
-			'username'=>$cookie_user,
-			'password'=>$cookie_pass,
-			'chbox'=>$cookie_chbox
-			));
+    	// var_dump($_COOKIE);exit();
+    		if(empty($_COOKIE['username'])){
+				$username ="";
+			}else{
+				$username = $_COOKIE['username'];
+			}if(empty($_COOKIE['password'])){
+				$password = "";
+			}else{
+				$password = $_COOKIE['password'];
+			}if(empty($_COOKIE['chbox'])){
+				$chbox = "";
+			}else{
+				$chbox = $_COOKIE['chbox'];
+			}
+			
+			 return $this->render('FTRWebBundle:Security:login.html.twig',array('username'=>$username,'password'=>$password,'chbox'=>$chbox)); 
     }
 
 	public function logoutAction()
