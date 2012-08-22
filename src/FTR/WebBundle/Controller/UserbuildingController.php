@@ -66,57 +66,13 @@ class UserbuildingController extends Controller
         $conn= $this->get('database_connection');
 		if(!$conn){ die("MySQL Connection error");}
 			try{
-				/**
-				 * query for facility list inroom type
-				 */
-				$sql ="select * from facilitylist where facility_type = 'inroom' and display = 1";
-				$faclist_inroom = $conn->fetchAll($sql);
-				$countall_inroom = count($faclist_inroom);
-				foreach ($faclist_inroom as $key => $value) {
-					$count = $key+1;
-					$list[] = array(
-						'id'				=> $value['id'],
-						'facility_name'		=> $value['facility_name'],
-						'facility_type'		=> $value['facility_type'],
-					);
-					if($count%4==0){
-						$fac_inroomlist[] = array('loop'=>$list);
-						$list = NULL;
-					}elseif($count==$countall_inroom){
-						$fac_inroomlist[] = array('loop'=>$list);
-						$list = NULL;
-					}
-				}
 				
-				/**
-				 * query for facility list outroom type
-				 */
-				$sql ="select * from facilitylist where facility_type = 'outroom' and display = 1";
-				$faclist_outroom = $conn->fetchAll($sql);
-				$countall_outroom = count($faclist_outroom);
-				foreach ($faclist_outroom as $key => $value) {
-					$count = $key+1;
-					$list[] = array(
-						'id'				=> $value['id'],
-						'facility_name'		=> $value['facility_name'],
-						'facility_type'		=> $value['facility_type'],
-					);
-					if($count%4==0){
-						$num = 4;
-						if($count==$countall_outroom)
-						{
-							$fac_outroomlist[] = array('loop'=>$list,'stat'=>'end','count'=>$num);
-						}else{
-							$fac_outroomlist[] = array('loop'=>$list,'stat'=>'not','count'=>$num);
-						}
-						$list = NULL;
-					}elseif($count==$countall_outroom){
-						$countlist = count($list);
-						$num = 4-$countlist;
-						$fac_outroomlist[] = array('loop'=>$list,'stat'=>'end','count'=>$num);
-						$list = NULL;
-					}
-				}
+				$fac_inroomlist 	= $this->getFacility('inroom');
+				$fac_outroomlist 	= $this->getFacility('outroom');
+				$arrroom 			= $this->getImageDatas($id,NULL,'room');
+				$arrgallery 		= $this->getImageDatas($id,NULL,'gallery');
+				$imagehead 			= $this->getImageDatas($id,NULL,'head');
+				$imagemap			= $this->getImageDatas($id,NULL,'map');
 				/*echo "<pre>";
 				var_dump($fac_outroomlist);
 				echo "</pre>";
@@ -134,6 +90,94 @@ class UserbuildingController extends Controller
 			'galleries'		=> $arrgallery,
 			'gellerylines'	=> $countgallery,
 		));
+	}
+
+	public function getImageDatas($buildid=null,$roomtype2siteid=null,$type)
+	{
+		$conn= $this->get('database_connection');
+		if(!$conn){ die("MySQL Connection error");}
+			try{
+				$sql ="select * from image 
+								where building_site_id = '$buildid' 
+									or roomtype2site_id = '$roomtype2siteid' 
+									and photo_type = '$type' 
+									and deleted = 0";
+				$imagedata = $conn->fetchAll($sql);
+					
+			} catch (Exception $e) {
+			echo 'Caught exception: ',  $e->getMessage(), "\n";
+		}
+				
+		return $imagedata;
+	}
+	
+	public function getFacility($type)
+	{
+		$conn= $this->get('database_connection');
+		if(!$conn){ die("MySQL Connection error");}
+			try{
+				if($type=='inroom')
+				{
+					/**
+					 * query for facility list inroom type
+					 */
+					$sql ="select * from facilitylist where facility_type = '$type' and display = 1";
+					$faclist_inroom = $conn->fetchAll($sql);
+					$countall_inroom = count($faclist_inroom);
+					foreach ($faclist_inroom as $key => $value) {
+						$count = $key+1;
+						$list[] = array(
+							'id'				=> $value['id'],
+							'facility_name'		=> $value['facility_name'],
+							'facility_type'		=> $value['facility_type'],
+						);
+						if($count%4==0){
+							$fac_inroomlist[] = array('loop'=>$list);
+							$list = NULL;
+						}elseif($count==$countall_inroom){
+							$fac_inroomlist[] = array('loop'=>$list);
+							$list = NULL;
+						}
+					}
+					$fac_listreturn = $fac_inroomlist;
+				}
+				elseif($type == 'outroom') {
+					/**
+					 * query for facility list outroom type
+					 */
+					$sql ="select * from facilitylist where facility_type = '$type' and display = 1";
+					$faclist_outroom = $conn->fetchAll($sql);
+					$countall_outroom = count($faclist_outroom);
+					foreach ($faclist_outroom as $key => $value) {
+						$count = $key+1;
+						$list[] = array(
+							'id'				=> $value['id'],
+							'facility_name'		=> $value['facility_name'],
+							'facility_type'		=> $value['facility_type'],
+						);
+						if($count%4==0){
+							$num = 4;
+							if($count==$countall_outroom)
+							{
+								$fac_outroomlist[] = array('loop'=>$list,'stat'=>'end','count'=>$num);
+							}else{
+								$fac_outroomlist[] = array('loop'=>$list,'stat'=>'not','count'=>$num);
+							}
+							$list = NULL;
+						}elseif($count==$countall_outroom){
+							$countlist = count($list);
+							$num = 4-$countlist;
+							$fac_outroomlist[] = array('loop'=>$list,'stat'=>'end','count'=>$num);
+							$list = NULL;
+						}
+					}
+					$fac_listreturn = $fac_outroomlist;
+				}
+			} catch (Exception $e) {
+				echo 'Caught exception: ',  $e->getMessage(), "\n";
+				}
+				
+		return $fac_listreturn;
 	}
 	
 	public function saveDataAction($id=null)
