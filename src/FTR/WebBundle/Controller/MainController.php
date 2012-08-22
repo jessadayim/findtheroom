@@ -60,6 +60,10 @@ class MainController extends Controller
 		$buildingtype_day	= $this->getBuildingType(1);
 		$buildingtype_month	= $this->getBuildingType(2);
 		
+		$top_last_building	= $this->getTopLastBuilding();
+		$last_update		= date("Y-m-d H:i:s",mktime(0, 0, 0, date("m"), date("d"), date("Y")));
+		$last_update		= $this->convertThaiDate($last_update);
+		
 		
 		return $this->render('FTRWebBundle:Main:index.html.twig',array(
 			'item1'					=>$objSQL1,
@@ -69,6 +73,8 @@ class MainController extends Controller
 			'zonelist_month' 		=>$zonelist_month,
 			'buildingtype_day' 		=>$buildingtype_day,
 			'buildingtype_month' 	=>$buildingtype_month,
+			'top_last_building' 	=>$top_last_building,
+			'last_update' 			=>$last_update,
 			));
     }
 	
@@ -111,5 +117,54 @@ class MainController extends Controller
 		
 		$result = array_merge($all,$result_data);
 		return $result;
+	}
+	
+	function getTopLastBuilding(){
+		$result_data = array();
+		$em = $this->getDoctrine()->getEntityManager();
+		
+		$conn= $this->get('database_connection');
+		if(!$conn){ die("MySQL Connection error");}
+		try{ 
+			$sql = "
+				SELECT 
+					a.building_name,
+					b.type_name,
+					c.typename,
+					d.zonename,
+					FORMAT(a.start_price,0) AS start_price,
+					FORMAT(a.end_price,0) AS end_price
+				FROM
+					building_site a
+					INNER JOIN building_type b ON (a.building_type_id=b.id)
+					INNER JOIN pay_type c ON (a.pay_type_id=c.id)
+					INNER JOIN zone d ON (a.zone_id=d.id)
+				WHERE a.publish = 1
+				ORDER BY lastupdate DESC LIMIT 10
+			";
+			$result_data = $conn->fetchAll($sql);
+		} catch (Exception $e) {
+			echo 'Caught exception: ',  $e->getMessage(), "\n";
+		}
+		$result = $result_data;
+		return $result;
+	}
+	
+	public function convertThaiDate($date)
+	{
+		$month = array('','ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.');
+		$dd = date("d",strtotime($date));
+		$mn = date("m",strtotime($date));
+		$mm = $month[intval($mn)];
+		$yn = date("Y",strtotime($date));
+		$yy = intval($yn) + 543;
+		$h  = date("H",strtotime($date));
+		$m  = date("i",strtotime($date));
+		$s  = date("s",strtotime($date));
+		
+		//$yy = substr($yy,2,2);
+		
+		$newdate = intval($dd)." ".$mm." ".$yy." ".$h.":".$m;
+		return $newdate; 
 	}
 }
