@@ -133,16 +133,10 @@
 		newCell = newRow.insertCell(0)
 		newCell.id = newCell.uniqueID
 		newCell.setAttribute("className", "css-name");
-		newCell.innerHTML = "<img src=\"{{asset('images/addmore.png')}}\" class=\"nopad\" onclick=\"CreateNewRowGallery();\">"
-
-		//*** Column 2 ***//
-		newCell = newRow.insertCell(1)
-		newCell.id = newCell.uniqueID
-		newCell.setAttribute("className", "css-name");
 		newCell.innerHTML = "<img src=\"{{asset('images/show.png')}}\" style=\"margin-top: 10px;\" /> <img src=\"{{asset('images/upload.png')}}\" style=\"margin-left: 30px; margin-top: -10px; margin-bottom: 10px; display:block;\" />"		
 		
-		//*** Column 3 ***//
-		newCell = newRow.insertCell(2)
+		//*** Column 2 ***//
+		newCell = newRow.insertCell(1)
 		newCell.id = newCell.uniqueID
 		newCell.setAttribute("className", "css-name");
 		newCell.innerHTML = "<textarea id=\"galtitle"+intLine+"\" name=\"galtitle"+intLine+"\" maxlenght=\"500\" placeholder=\"กรอกข้อมูลของรูปที่นี่\" class=\"galdesc\"></textarea>"				
@@ -267,6 +261,7 @@
                 <td align="center" width="150">อัตราค่าเช่า / เดือน</td>
                 <td width="60">&nbsp;</td>
             </tr>
+            {% if rooms == null %}
             <tr valign="middle">
 			     <td align="left" style="font-size:24px;"><img src="{{asset('images/show.png')}}" style="margin-top: -10px;" /></td>
 			     <td><img src="{{asset('images/upload.png')}}" style="margin-left: -20px; margin-top: -5px; margin-bottom: 10px; display:block;" /></td>
@@ -276,9 +271,14 @@
 			     <td align="center"><input name="typeap_price" type="text" maxlength="10" placeholder="อัตราค่าเช่า" style=" padding:2px; font-size:20px; width:80px;" /></td>
 			     <td align="left">บาท</td>
 			</tr>
+			{% else %}
+			{% for roomdata in rooms %}
+			
+			{% endfor %}
+			{% endif %}
         </table>
         <img src="{{asset('images/addmore.png')}}" class="nopad" onclick="CreateNewRow();" style="margin-left: 140px;margin-top: 10px;margin-bottom: 10px;">
-        <input type="hidden" id="hdnMaxLine" name="hdnMaxLine" value="0">
+        <input type="hidden" id="hdnMaxLine" name="hdnMaxLine" value="{{roomlines}}">
     </div>
 </div>
 
@@ -287,13 +287,19 @@
 	<hr class="line" style="top: 60px;" />
     <div>
 		<table id="tbgal">
+			{% if galleries == null %}
             <tr valign="middle">
-			     <td align="left" style="font-size:24px;"><img src="{{asset('images/addmore.png')}}" class="nopad" onclick="CreateNewRowGallery();"></td>
-			     <td align="left" style="font-size:24px;" width="260"><img src="{{asset('images/show.png')}}" style="margin-top: 10px;" /> <img src="{{asset('images/upload.png')}}" style="margin-left: 30px; margin-top: -10px; margin-bottom: 10px; display:block;" /></td>
-			     <td align="left" style="font-size:24px;"><textarea id="galtitle" name="galtitle" maxlenght="500" placeholder="กรอกข้อมูลของรูปที่นี่" class="galdesc"></textarea></td>
-			  </tr>
+				<td align="left" style="font-size:24px;" width="260"><img src="{{asset('images/show.png')}}" style="margin-top: 10px;" /> <img src="{{asset('images/upload.png')}}" style="margin-left: 30px; margin-top: -10px; margin-bottom: 10px; display:block;" /></td>
+				<td align="left" style="font-size:24px;"><textarea id="galtitle" name="galtitle" maxlenght="500" placeholder="กรอกข้อมูลของรูปที่นี่" class="galdesc"></textarea></td>
+			</tr>
+			{% else %}
+			{% for gallerydata in galleries %}
+			
+			{% endfor %}
+			{% endif %}
         </table>
-        <input type="hidden" id="hdnMaxLineGal" name="hdnMaxLineGal" value="0">
+        <img src="{{asset('images/addmore.png')}}" class="nopad" onclick="CreateNewRowGallery();" style="margin-left: 140px;margin-top: 10px;margin-bottom: 10px;">
+        <input type="hidden" id="hdnMaxLineGal" name="hdnMaxLineGal" value="{{gellerylines}}">
     </div>
 </div>
 

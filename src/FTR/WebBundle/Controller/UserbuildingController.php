@@ -62,6 +62,7 @@ class UserbuildingController extends Controller
 	{
 		$fac_inroomlist = NULL;
 		$fac_outroomlist = NULL;
+		$arrroom = NULL;$arrgallery = NULL;$countroom = 0;$countgallery = 0;
         $conn= $this->get('database_connection');
 		if(!$conn){ die("MySQL Connection error");}
 			try{
@@ -128,6 +129,10 @@ class UserbuildingController extends Controller
 			'build_id'		=> $id,
 			'fac_inroom'	=> $fac_inroomlist,
 			'fac_outroom'	=> $fac_outroomlist,
+			'rooms'			=> $arrroom,
+			'roomlines'		=> $countroom,
+			'galleries'		=> $arrgallery,
+			'gellerylines'	=> $countgallery,
 		));
 	}
 	
