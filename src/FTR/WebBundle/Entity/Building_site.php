@@ -66,21 +66,21 @@ class Building_site
     /**
      * @var datetime $datetimestamp
      *
-     * @ORM\Column(name="datetimestamp", type="datetime")
+     * @ORM\Column(name="datetimestamp", type="datetime", nullable="true")
      */
     private $datetimestamp;
 
     /**
      * @var datetime $lastupdate
      *
-     * @ORM\Column(name="lastupdate", type="datetime")
+     * @ORM\Column(name="lastupdate", type="datetime", nullable="true")
      */
     private $lastupdate;
 
     /**
      * @var string $userupdate
      *
-     * @ORM\Column(name="userupdate", type="string", length=127)
+     * @ORM\Column(name="userupdate", type="string", length=127, nullable="true")
      */
     private $userupdate;
 
@@ -195,6 +195,13 @@ class Building_site
      * @ORM\Column(name="googlemap_url", type="string", length=255, nullable="true")
      */
     private $googlemap_url;
+
+    /**
+     * @var boolean $internet_ready
+     *
+     * @ORM\Column(name="internet_ready", type="boolean", nullable="true")
+     */
+    private $internet_ready;
 
     /**
      * @var boolean $deleted
@@ -712,6 +719,26 @@ class Building_site
     public function getGoogleMapUrl()
     {
         return $this->googlemap_url;
+    }
+
+    /**
+     * Set internet_ready
+     *
+     * @param boolean $internet_ready
+     */
+    public function setInternetReady($internet_ready)
+    {
+        $this->internet_ready = $internet_ready;
+    }
+
+    /**
+     * Get internet_ready
+     *
+     * @return boolean 
+     */
+    public function getInternetReady()
+    {
+        return $this->internet_ready;
     }
 
     /**

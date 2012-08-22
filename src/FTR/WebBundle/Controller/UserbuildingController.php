@@ -4,6 +4,19 @@ namespace FTR\WebBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Session\Session;
+use FTR\WebBundle\Entity\User_owner;
+use FTR\WebBundle\Entity\Building_site;
+use FTR\WebBundle\Entity\Building_type;
+use FTR\WebBundle\Entity\Facility2site;
+use FTR\WebBundle\Entity\Facilitylist;
+use FTR\WebBundle\Entity\Image;
+use FTR\WebBundle\Entity\Nearly_location;
+use FTR\WebBundle\Entity\Nearly_type;
+use FTR\WebBundle\Entity\Nearly2site;
+use FTR\WebBundle\Entity\Pay_type;
+use FTR\WebBundle\Entity\Roomtype2site;
+use FTR\WebBundle\Entity\Roomtype;
+use FTR\WebBundle\Entity\Zone;
 
 class UserbuildingController extends Controller
 {
@@ -63,9 +76,40 @@ class UserbuildingController extends Controller
 		$fac_inroomlist = NULL;
 		$fac_outroomlist = NULL;
 		$arrroom = NULL;$arrgallery = NULL;$countroom = 0;$countgallery = 0;
+		
+		$session = $this->get('session');
+		$user = $session->get('user');
+		
+		$today = date("Y-m-d H:i:s");
+		
+		$em = $this->getDoctrine()->getEntityManager();
         $conn= $this->get('database_connection');
 		if(!$conn){ die("MySQL Connection error");}
 			try{
+				$userdata = $this->getDoctrine()->getRepository('FTRWebBundle:User_owner')->findOneBy(array('username'=>$user));
+				
+				if(empty($id))
+				{
+					$building = new Building_site();
+					$building->setBuildingName('');
+					$building->setBuildingAddress('');
+					$building->setStartPrice(0);
+					$building->setEndPrice(0);
+					$building->setPhoneNumber('');
+					$building->setBuildingTypeId(0);
+					$building->setPayTypeId(0);
+					$building->setUserOwnerId($userdata->getId());
+					$building->setContactName('');
+					$building->setContactEmail('');
+					$building->setMonthStay('');
+					$building->setWaterUnit(0);
+					$building->setElectricityUnit(0);
+					$em->persist($building);
+    				$em->flush();
+					$building_id = $building->getId();
+				}else{
+					$building_id = $id;
+				}
 				
 				$fac_inroomlist 	= $this->getFacility('inroom');
 				$fac_outroomlist 	= $this->getFacility('outroom');
@@ -82,7 +126,7 @@ class UserbuildingController extends Controller
 				}
 				
 		return $this->render('FTRWebBundle:Userbuilding:add.html.twig', array(
-			'build_id'		=> $id,
+			'build_id'		=> $building_id,
 			'fac_inroom'	=> $fac_inroomlist,
 			'fac_outroom'	=> $fac_outroomlist,
 			'rooms'			=> $arrroom,
@@ -113,6 +157,8 @@ class UserbuildingController extends Controller
 	
 	public function getFacility($type)
 	{
+		$fac_inroomlist = NULL;
+		$fac_outroomlist = NULL;
 		$conn= $this->get('database_connection');
 		if(!$conn){ die("MySQL Connection error");}
 			try{
