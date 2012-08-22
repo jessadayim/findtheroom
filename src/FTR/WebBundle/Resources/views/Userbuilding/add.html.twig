@@ -147,8 +147,9 @@
 <form name="addform" id="addform" method="post" action="{{path('saveData', {'id': build_id })}}">
 
 <div id="fix">
-	<input class="upimg" type="submit" value="" />
+	<!--<input class="upimg" type="submit" value="" />-->
 	<input class="save" type="submit" value="" />
+	<input class="back" type="submit" value="" />
 </div>
 
 <div class="detail" style="height: 680px; margin-bottom: 15px;">
@@ -417,7 +418,7 @@
             		{% for number in 2..list.count %}
             		<td width="250">&nbsp;</td>
             		{% endfor %}
-            		<td width="250"><input class="save" type="submit" value="" /> <input class="canc" type="submit" value="" /></td>
+            		<td width="250"><input class="save" type="submit" value="" /> <input class="back" type="submit" value="" /></td>
             		{% endif %}
             	{% endif %}
             </tr>
@@ -427,7 +428,7 @@
             	{% for number in 2..list.count %}
             		<td width="250">&nbsp;</td>
             	{% endfor %}
-            	<td width="250"><input class="save" type="submit" value="" /> <input class="canc" type="submit" value="" /></td>
+            	<td width="250"><input class="save" type="submit" value="" /> <input class="back" type="submit" value="" /></td>
             </tr>
             	{% endif %}
             {% endif %}
