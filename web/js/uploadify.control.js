@@ -21,7 +21,28 @@ $(function() {// get more knowledge at http://www.uploadify.com/documentation/
 			// Your options here
 		});
 	});
-
+	
+$(function() {// get more knowledge at http://www.uploadify.com/documentation/
+		var ownername = document.getElementById('hdnownername').value
+		var buildid = document.getElementById('hdnbuildid').value
+		
+		$('#upload_map').uploadify({
+			'formData'      : {'ownername' : ownername, 'buildid' : buildid ,'fieldname' : 'map'},
+			//'debug'    : true,
+			'swf'      : swfpath,
+			'uploader' : uploaderpath,
+			//'uploadLimit' : 1,
+			//'queueSizeLimit' : 1,
+			'fileSizeLimit' : '200KB',
+			'fileTypeExts' : '*.gif; *.jpg; *.png',
+			'onFallback' : function() {alert('Flash was not detected.');},// detect flash compatible
+			'onUploadSuccess' : function(file, data, response) {
+            	//alert('The file ' + file.name + ' was successfully uploaded with a response of ' + response + ':' + data);
+            	document.getElementById('hdnfilemap').value = data;
+        	}
+			// Your options here
+		});
+	});
 $(function() {// get more knowledge at http://www.uploadify.com/documentation/
 		loopbutton();
 		loopbuttongallery();

@@ -88,6 +88,10 @@ class UserbuildingController extends Controller
 			try{
 				$userdata = $em->getRepository('FTRWebBundle:User_owner')->findOneBy(array('username'=>$user));
 				// เดี๋ยวเขียนเช็คถ้าไม่มีให้ redirect
+				if(empty($userdata))
+				{
+					return $this->redirect($this->generateUrl('FTRWebBundle_publish'));
+				}
 				if(empty($id))
 				{
 					$building = new Building_site();
