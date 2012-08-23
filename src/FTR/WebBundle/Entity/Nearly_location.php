@@ -38,28 +38,28 @@ class Nearly_location
     /**
      * @var text $address
      *
-     * @ORM\Column(name="address", type="text")
+     * @ORM\Column(name="address", type="text", nullable="true")
      */
     private $address;
 
     /**
      * @var string $latitude
      *
-     * @ORM\Column(name="latitude", type="string", length=127)
+     * @ORM\Column(name="latitude", type="string", length=127, nullable="true")
      */
     private $latitude;
 
     /**
      * @var string $longitude
      *
-     * @ORM\Column(name="longitude", type="string", length=127)
+     * @ORM\Column(name="longitude", type="string", length=127, nullable="true")
      */
     private $longitude;
 
     /**
      * @var boolean $deleted
      *
-     * @ORM\Column(name="deleted", type="boolean")
+     * @ORM\Column(name="deleted", type="boolean", nullable="true")
      */
     private $deleted;
 

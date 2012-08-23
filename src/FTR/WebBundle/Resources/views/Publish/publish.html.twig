@@ -48,10 +48,16 @@
 </script>
 <div class="detail" style="height: 290px; margin-bottom: 15px;">
     <div style="width:500px; display:block; position:relative; float:left; border-right:1px solid #FFF; height:250px; margin-top: 20px;">
-		<a href="#"><img src="{{asset('images/pub-bt.png')}}" style="margin-left:30px; margin-top:20px;;" /></a>
+    	{% if app.session.get('user') == NULL %}
+		<a id="login2" href="{{path('FTRWebBundle_regis')}}"><img src="{{asset('images/pub-bt.png')}}" style="margin-left:30px; margin-top:20px;;" /></a>
+		{% else %}
+		<a href="{{path('userbuilding')}}"><img src="{{asset('images/pub-bt.png')}}" style="margin-left:30px; margin-top:20px;;" /></a>
+		{% endif %}
 	</div>
     <div style="width:490px; display:block; position:relative; float:left;">
-		<a id="login" href="{{path('FTRWebBundle_login')}}"><img src="{{asset('images/login.png')}}" style="margin-left:10px; margin-top:40px;" /></a>
+    	{% if app.session.get('user') == NULL %}
+		<a id="login" href="{{path('FTRWebBundle_loginpublish')}}"><img src="{{asset('images/login.png')}}" style="margin-left:10px; margin-top:40px;" /></a>
+		{% endif %}
 	</div>
 </div>
 <div class="detail" style="margin-bottom: 15px; height: 500px">

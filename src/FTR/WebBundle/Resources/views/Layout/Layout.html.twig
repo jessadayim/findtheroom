@@ -6,67 +6,72 @@
 <link rel="stylesheet" type="text/css" href="{{asset('css/main.css')}}" />
 <link rel="stylesheet" type="text/css" href="{{asset('css/gooeymenu.css')}}" />
 <link rel="stylesheet" type="text/css" href="{{asset('css/global.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('css/paging.css')}}">
 <script src="{{asset('js/jquery.min.js')}}"></script>
 <script src="{{asset('js/html5placeholder.jquery.js')}}"></script>
 <script src="{{asset('js/jquery.easing.1.3.js')}}"></script>
 <script src="{{asset('js/slides.min.jquery.js')}}"></script>
-<script>
-		$(function(){
-			$('#slides').slides({
-				preload: true,
-				preloadImage: "{{asset('images/slider/loading.gif')}}",
-				play: 5000,
-				pause: 2500,
-				hoverPause: true,
-				effect: 'fade',
-				fadeSpeed: 350,
-				fadeEasing: "easeOutQuad",
-				crossfade: true
-			});
-			$('#slides2').slides({
-				preload: true,
-				preloadImage: "{{asset('images/slider/loading.gif')}}",
-				play: 5000,
-				pause: 5000,
-				hoverPause: true,
-				generatePagination: false
-			});
-			$('#slides3').slides({
-				preload: true,
-				preloadImage: "{{asset('images/slider/loading.gif')}}",
-				play: 5000,
-				pause: 5000,
-				hoverPause: true,
-				generatePagination: false
-			});
-			$('#slides4').slides({
-				preload: true,
-				preloadImage: "{{asset('images/slider/loading.gif')}}",
-				play: 5000,
-				pause: 5000,
-				hoverPause: true,
-				generatePagination: false
-			});
-		});
-</script>
+<script src="{{asset('js/paging/jquery.paginate.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/fancybox/jquery.fancybox-1.3.4.pack.js')}}"></script>
+<link rel="stylesheet" type="text/css" href="{{asset('css/jquery.fancybox-1.3.4.css')}}" media="screen" />
+<script type="text/javascript" src="{{asset('js/fancybox/jquery.easing-1.4.pack.js')}}"></script>
+
 <script>
     $(function(){
       $(':input[placeholder]').placeholder();
     });
 </script>
-<script language="javascript">
-		$(document).ready(function(){
+<script language="javascript">	
+	$(document).ready(function(){
 		var mybrowser=navigator.userAgent;
 		if(mybrowser.indexOf('Firefox')>0){
 		$(".login").css("marginLeft","5px");
 		$(".head hr").css("marginTop","5px");
-		//$(".or").css("marginLeft","20px");
-		//$(".link").css("marginLeft","80px");
 		}
+		
+		$("input#log2").click(function(e) {
+				//alert("working1");
+				$.ajax({
+				  url: "{{path('FTRWebBundle_login')}}",
+				  type: 'POST',
+				  data: "username="+$('input#username').val()+"&"+"password="+$('input#password').val(),
+				  success: function(data) {			  	
+					  	if(data == 0){
+					  		$.fancybox({
+					  			'content'			: "{{path('FTRWebBundle_loginpublish')}}",
+								'width'				: 700,
+								'height'			: 400,
+								'autoScale'			: false,
+								'transitionIn'		: 'elastic',
+								'transitionOut'		: 'elastic',
+								'type'				: 'iframe'
+							});
+					  	}else if(data == 1){
+					  		parent.location.href = "{{path('userbuilding')}}";
+					  		//exit();
+					  	}
+					  	else if(data == 2){
+					  		
+							$.fancybox({
+								'content'			: "{{path('FTRWebBundle_loginpublish')}}",
+								'width'				: 700,
+								'height'			: 400,
+								'autoScale'			: false,
+								'transitionIn'		: 'elastic',
+								'transitionOut'		: 'elastic',
+								'type'				: 'iframe'
+							});
+						} 
+				  	},
+				  error: function(e) {
+				  	 $("#txterror").html("กรุณาตรวจสอบ ชื่อผู้ใช้งาน และรหัสผ่าน");
+				  	}
+				});
 		});
+    });
 </script>
 <script type="text/javascript">  
-$(function(){  
+$(function(){
     $('ul#navi_containTab > li').click(function(event){  
             var menuIndex=$(this).index();  
             $('ul#detail_containTab > li:visible').hide();             
@@ -121,14 +126,15 @@ function enact(what){
     <div id="login">
     	{% if app.session.get('user') %}    	
     		<form action="{{path('FTRWebBundle_logout')}}" method="post">
-    			welcome {{ app.session.get('user') }}
-    			<input class="login" type="submit" value="" />
+    			Logged in as {{ app.session.get('user') }}
+    			<input class="logout" type="submit" value=""/>
         	</form>
-        {% else %}	
-	        <form action="{{path('FTRWebBundle_login')}}" method="post">
-	    		<input name="username" type="text" value="" maxlength="25" placeholder="Username" /> <input name="password" type="password" value="" maxlength="25" placeholder="Password" /> <input class="login" type="submit" value="" />
-	        </form>
+        {% else %}
+        		<input id="username" name="username" value="" type="text" value="" maxlength="25" placeholder="Username" /> 
+	    		<input id="password" name="password" value="" type="password" value="" maxlength="25" placeholder="Password" />
+	    		<input id="log2" class="login" type="submit" value="" />
         {% endif %}
+        
     </div>
     
 </div>
@@ -136,17 +142,30 @@ function enact(what){
 <div id="menu">
 	<hr />
     <ul id="gooeymenu1" class="gelbuttonmenu">
-    	 <li><a href="{{path('FTRWebBundle_homepage')}}" class="selected">หน้าแรก</a></li>
-         <li><a href="{{path('FTRWebBundle_search')}}">ค้นหาอย่างละเอียด</a></li>
-         <li><a href='#'>ลงโฆษณา</a></li>
-         <li><a href="{{path('FTRWebBundle_publish')}}">ลงประกาศห้องพักฟรี</a></li>
-         <li><a href='#'>กระดานพูดคุย</a></li>
-         <li><a href="{{path('FTRWebBundle_contact')}}">ติดต่อเรา</a></li>
+    	 <li><a id="mainpage" href="{{path('FTRWebBundle_homepage')}}">หน้าแรก</a></li>
+         <li><a id="searchpage" href="{{path('FTRWebBundle_search')}}">ค้นหาอย่างละเอียด</a></li>
+         <li><a id="nullpage" href='#'>ลงโฆษณา</a></li>
+         <li><a id="publishpage" href="{{path('FTRWebBundle_publish')}}">ลงประกาศห้องพักฟรี</a></li>
+         <li><a id="nullpage" href='#'>กระดานพูดคุย</a></li>
+         <li><a id="contactpage" href="{{path('FTRWebBundle_contact')}}">ติดต่อเรา</a></li>
     </ul>
     <hr />
 </div>
+<script>	
+	var url = window.location.href,check=false;
+	var urlparts = url.split("/");
+	for(i = 0; i < urlparts.length; i++){
+		if (urlparts[i]=='search'){$("#searchpage").addClass("selected");check=true}
+		else if (urlparts[i]=='special/beauty'){$("#").addClass("selected");check=true}
+		else if (urlparts[i]=='publish'){$("#publishpage").addClass("selected");check=true}
+		else if (urlparts[i]=='special/beauty'){$("#").addClass("selected");check=true}
+		else if (urlparts[i]=='contact'){$("#contactpage").addClass("selected");check=true}
+	}
+	if(check==false)	$("#mainpage").addClass("selected");
 
+</script>
 {% block body %}
+
 {% endblock %}
 
 <div id="fb-root"></div>

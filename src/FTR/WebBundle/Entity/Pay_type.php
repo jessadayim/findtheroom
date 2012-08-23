@@ -31,7 +31,7 @@ class Pay_type
     /**
      * @var boolean $deleted
      *
-     * @ORM\Column(name="deleted", type="boolean")
+     * @ORM\Column(name="deleted", type="boolean", nullable="true")
      */
     private $deleted;
 

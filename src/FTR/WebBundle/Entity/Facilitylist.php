@@ -38,14 +38,14 @@ class Facilitylist
     /**
      * @var boolean $display
      *
-     * @ORM\Column(name="display", type="boolean")
+     * @ORM\Column(name="display", type="boolean", nullable="true")
      */
     private $display;
 
     /**
      * @var boolean $deleted
      *
-     * @ORM\Column(name="deleted", type="boolean")
+     * @ORM\Column(name="deleted", type="boolean", nullable="true")
      */
     private $deleted;
 

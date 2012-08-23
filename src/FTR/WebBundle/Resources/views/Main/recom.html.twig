@@ -1,0 +1,273 @@
+<script>
+		$(function(){
+			$('#slides').slides({
+				preload: true,
+				preloadImage: "{{asset('images/slider/loading.gif')}}",
+				play: 5000,
+				pause: 2500,
+				hoverPause: true,
+				effect: 'fade',
+				fadeSpeed: 350,
+				fadeEasing: "easeOutQuad",
+				crossfade: true
+			});
+			$('#slides2').slides({
+				preload: true,
+				preloadImage: "{{asset('images/slider/loading.gif')}}",
+				play: 5000,
+				pause: 5000,
+				hoverPause: true,
+				generatePagination: false
+			});
+			$('#slides3').slides({
+				preload: true,
+				preloadImage: "{{asset('images/slider/loading.gif')}}",
+				play: 5000,
+				pause: 5000,
+				hoverPause: true,
+				generatePagination: false
+			});
+			$('#slides4').slides({
+				preload: true,
+				preloadImage: "{{asset('images/slider/loading.gif')}}",
+				play: 5000,
+				pause: 5000,
+				hoverPause: true,
+				generatePagination: false
+			});
+		});
+</script>
+
+<div id="recommend">
+	<div id="i_containTab2">
+		<ul id="navi_containTab2">
+			<li id="tabNavi4" class="active" onclick="enact(this);"></li>
+			<li id="tabNavi5" onclick="enact(this);"></li>
+			<li id="tabNavi6" onclick="enact(this);"></li>
+		</ul>
+		<hr class="line" style="top: 60px; position: inherit;" />
+		<ul id="detail_containTab2">
+			<li class="detailContent4">
+				<div id="container2">
+					{% if numrow1 != 0%}
+						<div id="slides2">
+							<div class="slides_container" style="width:950px;">
+							{% set introw1 = 0 %}
+							{% for recom1 in item1%}
+							{% if introw1%3 == 0%}
+							<div class="slide" style="width:950px;">
+								{%endif%}
+								{% set row1 = introw1+1 %}
+								{% if row1%3 == 0%}
+								<div class="ap2">
+									{% else %}
+									<div class="ap">
+										{%endif%}
+										<div class="recom"></div>
+										<img src="{{asset('images/Apartment/ap1.png')}}" />
+										<br />
+										<br />
+										<span style="color:#FFF;"> <b style="font-size:24px">{{recom1.building_name}}</b>
+											<br />
+											ประเภท : {{recom1.type_name}}
+											<br />
+											เขต : {{recom1.zonename}}
+											<br />
+											<br />
+											ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span>
+									</div>
+									{% set introw1 = introw1+1 %}
+									{% if introw1%3 == 0%}
+								</div>
+								{%endif%}
+								{% endfor %}
+							</div>
+						</div>
+						<a href='#' class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>
+						<a href='#' class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>
+					{%else%}
+					
+						<div class="slides_container" style="width:950px; display: inherit !important;">
+							{% set introw1 = 0 %}
+							{% for recom1 in item1%}
+							{% if introw1%3 == 0%}
+							<div class="slide">
+								{%endif%}
+								{% set row1 = introw1+1 %}
+								{% if row1%3 == 0%}
+								<div class="ap2">
+									{% else %}
+									<div class="ap">
+										{%endif%}
+										<div class="recom"></div>
+										<img src="{{asset('images/Apartment/ap1.png')}}" />
+										<br />
+										<br />
+										<span style="color:#FFF;"> <b style="font-size:24px">{{recom1.building_name}}</b>
+											<br />
+											ประเภท : {{recom1.type_name}}
+											<br />
+											เขต : {{recom1.zonename}}
+											<br />
+											<br />
+											ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span>
+									</div>
+									{% set introw1 = introw1+1 %}
+									{% if introw1%3 == 0%}
+								</div>
+								{%endif%}
+								{% endfor %}
+						</div>
+					{%endif%}
+				</div>
+			</li>
+			<li class="detailContent5">
+				<div id="container3">
+					{% if numrow2 != 0%}
+						<div id="slides3">
+							<div class="slides_container" style="width:950px;">
+							{% set introw2 = 0 %}
+							{% for recom1 in item2%}
+							{% if introw2%3 == 0%}
+							<div class="slide" style="width:950px;">
+								{%endif%}
+								{% set row2 = introw2+1 %}
+								{% if row2%3 == 0%}
+								<div class="ap2">
+									{% else %}
+									<div class="ap">
+										{%endif%}
+										<div class="recom"></div>
+										<img src="{{asset('images/Apartment/ap2.png')}}" />
+										<br />
+										<br />
+										<span style="color:#FFF;"> <b style="font-size:24px">{{recom1.building_name}}</b>
+											<br />
+											ประเภท : {{recom1.type_name}}
+											<br />
+											เขต : {{recom1.zonename}}
+											<br />
+											<br />
+											ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span>
+									</div>
+									{% set introw2 = introw2+1 %}
+									{% if introw2%3 == 0%}
+								</div>
+								{%endif%}
+								{% endfor %}
+							</div>
+						</div>
+						<a href='#' class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>
+						<a href='#' class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>
+					{%else%}
+						<div class="slides_container" style="width:950px; display: inherit !important;">
+							{% set introw2 = 0 %}							
+							{% for recom1 in item2%}
+							{% if introw2%3 == 0%}
+							<div class="slide" style="width:950px;">
+								{%endif%}
+								{% set row2 = introw2+1 %}
+								{% if row2%3 == 0%}
+								<div class="ap2">
+									{% else %}
+									<div class="ap">
+										{%endif%}
+										<div class="recom"></div>
+										<img src="{{asset('images/Apartment/ap2.png')}}" />
+										<br />
+										<br />
+										<span style="color:#FFF;"> <b style="font-size:24px">{{recom1.building_name}}</b>
+											<br />
+											ประเภท : {{recom1.type_name}}
+											<br />
+											เขต : {{recom1.zonename}}
+											<br />
+											<br />
+											ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span>
+									</div>
+									{% set introw2 = introw2+1 %}
+									{% if introw2%3 == 0%}
+								</div>
+								{%endif%}
+								{% endfor %}
+						</div>
+					{%endif%}
+				</div>
+			</li>
+			<li class="detailContent6">
+				<div id="container4">
+					{% if numrow3 != 0%}
+						<div id="slides4">
+							<div class="slides_container" style="width:950px;">
+							{% set introw3 = 0 %}
+							{% for recom1 in item3%}
+							{% if introw3%3 == 0%}
+							<div class="slide" style="width:950px;">
+								{%endif%}
+								{% set row3 = introw3+1 %}
+								{% if row3%3 == 0%}
+								<div class="ap2">
+									{% else %}
+									<div class="ap">
+										{%endif%}
+										<div class="recom"></div>
+										<img src="{{asset('images/Apartment/ap3.png')}}" />
+										<br />
+										<br />
+										<span style="color:#FFF;"> <b style="font-size:24px">{{recom1.building_name}}</b>
+											<br />
+											ประเภท : {{recom1.type_name}}
+											<br />
+											เขต : {{recom1.zonename}}
+											<br />
+											<br />
+											ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span>
+									</div>
+									{% set introw3 = introw3+1 %}
+									{% if introw3%3 == 0%}
+								</div>
+								{%endif%}
+								{% endfor %}
+							</div>
+						</div>
+						<a href='#' class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>
+						<a href='#' class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>
+					{%else%}
+						<div class="slides_container" style="width:950px; display: inherit !important;">
+							{% set introw3 = 0 %}
+							{% for recom1 in item3%}
+							{% if introw3%3 == 0%}
+							<div class="slide" style="width:950px;">
+								{%endif%}
+								{% set row3 = introw3+1 %}
+								{% if row3%3 == 0%}
+								<div class="ap2">
+									{% else %}
+									<div class="ap">
+										{%endif%}
+										<div class="recom"></div>
+										<img src="{{asset('images/Apartment/ap3.png')}}" />
+										<br />
+										<br />
+										<span style="color:#FFF;"> <b style="font-size:24px">{{recom1.building_name}}</b>
+											<br />
+											ประเภท : {{recom1.type_name}}
+											<br />
+											เขต : {{recom1.zonename}}
+											<br />
+											<br />
+											ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span>
+									</div>
+									{% set introw3 = introw3+1 %}
+									{% if introw3%3 == 0%}
+								</div>
+								{%endif%}
+								{% endfor %}
+							</div>
+					{%endif%}
+				</div>
+			</li>
+
+		</ul>
+	</div>
+</div>

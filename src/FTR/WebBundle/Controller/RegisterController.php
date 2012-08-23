@@ -10,34 +10,56 @@ class RegisterController extends Controller
     
     public function RegisterAction()
     {
-        return $this->render('FTRWebBundle:Register:register.html.twig', array());
+        return $this->render('FTRWebBundle:Register:register.html.twig', array('erusername'=>NULL,'eremail'=>NULL,'firstname'=>NULL,'lastname'=>NULL
+																									,'username'=>NULL,'email'=>NULL,'tel'=>NULL));
     }
 	public function RegisConfirmAction()
     {
 		if($_POST)
 		{
-			var_dump($_POST);			
+			//var_dump($_POST);			
 			$firstname = $_POST['firstname'];
 			$lastname = $_POST['lastname'];
-			$username = $_POST['username'];
+			$username = $_POST['regusername'];
 			$email = $_POST['email'];
-			$password = $_POST['password'];
-			$tel = $_POST['tel'];
-			
+			$password = $_POST['regpassword'];
+			$tel = $_POST['tele'];
+			// echo $username;
+			// echo $email;
 			$em = $this->getDoctrine()->getEntityManager();
 		
 			$conn= $this->get('database_connection');
+			
 			if(!$conn){ die("MySQL Connection error");}
 				try{
-					$sql1 ="INSERT INTO user_owner(username,password,firstname,lastname,email,phone_number,fax_number,deleted) VALUES('$username','$password','$firstname','$lastname','$email','$tel','0000000000','0')";
-					$objSQL1 = $conn->fetchAll($sql1);
-			
+					$sql1 ="SELECT * FROM user_owner WHERE username = '$username' or email = '$email'";
+					$objSQL1 = $conn -> fetchAll($sql1);
+					if(count($objSQL1)>0){
+						if($username == $objSQL1[0]['username'] && $email == $objSQL1[0]['email']){
+							return $this->render('FTRWebBundle:Register:register.html.twig', array('erusername'=>"ชื่อนี้มีการใช้งานแล้ว",'eremail'=>"อีเมลนี้ได้ลงทะเบียนเป็นสมาชิกไว้แล้วค่ะ"
+																									,'firstname'=>$firstname,'lastname'=>$lastname
+																									,'username'=>$username,'email'=>$email,'tel'=>$tel));
+						}else if($username == $objSQL1[0]['username']){
+							return $this->render('FTRWebBundle:Register:register.html.twig', array('erusername'=>"ชื่อนี้มีการใช้งานแล้ว",'eremail'=>NULL,'firstname'=>$firstname,'lastname'=>$lastname
+																									,'username'=>$username,'email'=>$email,'tel'=>$tel));
+						}else if($email == $objSQL1[0]['email']){
+							return $this->render('FTRWebBundle:Register:register.html.twig', array('erusername'=>NULL,'eremail'=>"อีเมลนี้ได้ลงทะเบียนเป็นสมาชิกไว้แล้วค่ะ",'firstname'=>$firstname,'lastname'=>$lastname
+																									,'username'=>$username,'email'=>$email,'tel'=>$tel));
+						}
+					}else{
+						try{
+							$sql1 ="INSERT INTO user_owner(username,password,firstname,lastname,email,phone_number,fax_number,deleted) VALUES('$username','$password','$firstname','$lastname','$email','$tel','0000000000','0')";
+							$conn->query($sql1);
+							return $this->render('FTRWebBundle:Publish:publish.html.twig', array());
+						
+						} catch (Exception $e) {
+							echo 'Caught exception: ',  $e->getMessage(), "\n";
+						}
+					}
 				} catch (Exception $e) {
 					echo 'Caught exception: ',  $e->getMessage(), "\n";
-				}
+				}				
 		}
-		//return $this->render('FTRWebBundle:Register:register.html.twig', array());
 		
-        
     }
 }
