@@ -164,7 +164,7 @@
 		newCell = newRow.insertCell(2)
 		newCell.id = newCell.uniqueID
 		newCell.setAttribute("className", "css-name");
-		newCell.innerHTML = "<img src=\"{{asset('images/upload.png')}}\" style=\"margin-left: -20px; margin-top: -5px; margin-bottom: 10px; display:block;\" />"				
+		newCell.innerHTML = "<input type=\"file\" name=\"room"+intLine+"\" id=\"room"+intLine+"\" /><input type=\"text\" name=\"hdnfilename"+intLine+"\" id=\"hdnfilename"+intLine+"\" />"				
 		
 		//*** Column 4 ***//
 		newCell = newRow.insertCell(3)
