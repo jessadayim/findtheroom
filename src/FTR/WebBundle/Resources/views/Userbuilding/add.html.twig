@@ -45,8 +45,114 @@
 			});
 		});
 </script>
-<form id="add_form" method="post" action="{{path('saveData', {'id': build_id })}}">
-<div class="detail" style="height: 670px; margin-bottom: 15px;">
+<script language="javascript">
+	function CreateNewRow()
+	{
+		var intLine = parseInt(document.addform.hdnMaxLine.value);
+		intLine++;
+			
+		var theTable = document.all.tbtype
+		var newRow = theTable.insertRow(theTable.rows.length)
+		newRow.id = newRow.uniqueID
+		
+		var item1 = 1
+		var newCell
+		
+		//*** Column 1 ***//
+		newCell = newRow.insertCell(0)
+		newCell.id = newCell.uniqueID
+		newCell.setAttribute("className", "css-name");
+		newCell.innerHTML = "<img src=\"{{asset('images/show.png')}}\" style=\"margin-top: 10px;\" />"
+
+		//*** Column 2 ***//
+		newCell = newRow.insertCell(1)
+		newCell.id = newCell.uniqueID
+		newCell.setAttribute("className", "css-name");
+		newCell.innerHTML = " <img src=\"{{asset('images/upload.png')}}\" style=\"margin-left: -20px; margin-top: -5px; margin-bottom: 10px; display:block;\" />"		
+		
+		//*** Column 3 ***//
+		newCell = newRow.insertCell(2)
+		newCell.id = newCell.uniqueID
+		newCell.setAttribute("className", "css-name");
+		newCell.innerHTML = "<input name=\"typeap_name"+intLine+"\" type=\"text\" maxlength=\"30\" placeholder=\"กรุณากรอกประเภทห้องพัก\" style=\" padding:2px; font-size:20px;\" />"				
+		
+		//*** Column 4 ***//
+		newCell = newRow.insertCell(3)
+		newCell.id = newCell.uniqueID
+		newCell.setAttribute('align', 'center');
+		newCell.innerHTML = "<input name=\"typeap_size"+intLine+"\" type=\"text\" maxlength=\"10\" placeholder=\"ขนาด\" style=\" padding:2px; font-size:20px; width:80px;\" />"		
+		
+		//*** Column 5 ***//
+		newCell = newRow.insertCell(4)
+		newCell.id = newCell.uniqueID
+		newCell.setAttribute("className", "css-name");
+		newCell.innerHTML = "<LABEL align=\"left\">ตารางเมตร</LABEL>"			
+		
+		//*** Column 6 ***//
+		newCell = newRow.insertCell(5)
+		newCell.id = newCell.uniqueID
+		newCell.setAttribute('align', 'center');
+		newCell.innerHTML = "<input name=\"typeap_price"+intLine+"\" type=\"text\" maxlength=\"10\" placeholder=\"อัตราค่าเช่า\" style=\" padding:2px; font-size:20px; width:80px;\" />"		
+		
+		//*** Column 7 ***//
+		newCell = newRow.insertCell(6)
+		newCell.id = newCell.uniqueID
+		newCell.setAttribute("className", "css-name");
+		newCell.innerHTML = "<LABEL align=\"left\">บาท</LABEL>"			
+		
+		document.addform.hdnMaxLine.value = intLine;
+	}
+	
+	function RemoveRow()
+	{
+		intLine = parseInt(document.addform.hdnMaxLine.value);
+		if(parseInt(intLine) > 0)
+		{
+				theTable = (document.all) ? document.all.tbtype : 
+				document.getElementById("tbtype")
+				theTableBody = theTable.tBodies[0];
+				theTableBody.deleteRow(intLine);
+				intLine--;
+				document.addform.hdnMaxLine.value = intLine;
+		}	
+	}	
+	
+	function CreateNewRowGallery()
+	{
+		var intLine = parseInt(document.addform.hdnMaxLineGal.value);
+		intLine++;
+			
+		var theTable = document.all.tbgal
+		var newRow = theTable.insertRow(theTable.rows.length)
+		newRow.id = newRow.uniqueID
+		
+		var item1 = 1
+		var newCell
+		
+		//*** Column 1 ***//
+		newCell = newRow.insertCell(0)
+		newCell.id = newCell.uniqueID
+		newCell.setAttribute("className", "css-name");
+		newCell.innerHTML = "<img src=\"{{asset('images/show.png')}}\" style=\"margin-top: 10px;\" /> <img src=\"{{asset('images/upload.png')}}\" style=\"margin-left: 30px; margin-top: -10px; margin-bottom: 10px; display:block;\" />"		
+		
+		//*** Column 2 ***//
+		newCell = newRow.insertCell(1)
+		newCell.id = newCell.uniqueID
+		newCell.setAttribute("className", "css-name");
+		newCell.innerHTML = "<textarea id=\"galtitle"+intLine+"\" name=\"galtitle"+intLine+"\" maxlenght=\"500\" placeholder=\"กรอกข้อมูลของรูปที่นี่\" class=\"galdesc\"></textarea>"				
+			
+		document.addform.hdnMaxLineGal.value = intLine;
+	}
+</script>
+<form name="addform" id="addform" method="post" action="{{path('saveData', {'id': build_id })}}">
+
+<div id="fix">
+	<!--<input class="upimg" type="submit" value="" />-->
+	<input class="save" type="submit" value="" />
+	<input class="back" type="submit" value="" />
+</div>
+
+<div class="detail" style="height: 680px; margin-bottom: 15px;">
 	<img src="{{asset('images/apdata.png')}}" style="display:block; position:relative; float:none;" />
 	<hr class="line" style="top: 60px;" />
     <div style="width:1000px; display:block; position:relative; height:250px; margin-top: 20px;">
@@ -64,33 +170,30 @@
         	<tr height="50" valign="middle">
 				<td align="right" width="210" style="font-size:24px;">ชื่อหอพัก / อพาร์ทเม้นต์ : *</td>
                 <td align="left" width="190"><input name="nameap" type="text" maxlength="30" placeholder="กรุณากรอกชื่อหอพัก" style=" padding:2px; font-size:20px;" /></td>
-                <td align="left" width="30" style="font-size:24px;">&nbsp;</td>
             </tr>
-            <tr height="50" valign="middle">
+            <tr height="50" valign="top">
 				<td align="right" width="210" style="font-size:24px;">ที่อยู่ : *</td>
                 <td align="left" width="190"><textarea name="placeap" type="text" maxlength="500" class="place" /></textarea></td>
-                <td align="left" width="30" style="font-size:24px;">&nbsp;</td>
             </tr>
             <tr height="50" valign="middle">
-				<td align="right" width="210" style="font-size:24px;">ราคา : *</td>
-                <td align="left" width="190"><input name="priceap" type="text" maxlength="10" placeholder="กรุณากรอกราคา" style=" padding:2px; font-size:20px;" /></td>
-                <td align="left" width="30" style="font-size:24px;">บาท</td>
+				<td align="right" width="240" style="font-size:24px;">รูปแผนที่ : *</td>
+                <td align="left" width="200" style="font-size:24px;"><img src="{{asset('images/upload.png')}}" class="nopad" /></td>
             </tr>
         </table>
-        <table style="margin-top: 0px; float:none;">
+        <table style="margin-top: 0px; float:left;">
         	<tr>
             	<td align="right" width="240" valign="top" style="font-size:24px;">รายละเอียดเพิ่มเติม : &nbsp;</td>
-                <td><textarea name="placedetail" type="text" maxlength="500" class="ldesc" /></textarea></td>
+                <td align="left"><textarea name="placedetail" type="text" maxlength="500" class="ldesc" /></textarea></td>
             </tr>
         </table>
     </div>
     <div style="width:1000px; display:block; position:relative; height:240px; margin-top: 20px;">
 		<table style="margin-top: 0px;">
         	<tr height="50" valign="middle">
-				<td align="right" width="240" style="font-size:24px;">แผนที่บน Google Map URL : *</td>
-                <td align="left" width="200"><input name="url" type="text" maxlength="30" placeholder="กรุณากรอก URL" style=" padding:2px; font-size:20px;" /></td>
-                <td align="right" width="210" style="font-size:24px;">รูปแผนที่ : *</td>
-                <td align="left" width="190" style="font-size:24px;"><img src="{{asset('images/upload.png')}}" class="nopad" /></td>
+				<td align="right" width="240" style="font-size:24px;">Google Map ลองติจูด : *</td>
+                <td align="left" width="200"><input name="url" type="text" maxlength="30" placeholder="กรุณากรอกตำแหน่งลองติจูด" style=" padding:2px; font-size:20px;" /></td>
+				<td align="right" width="240" style="font-size:24px;">Google Map ละติจูด : *</td>
+                <td align="left" width="200"><input name="url" type="text" maxlength="30" placeholder="กรุณากรอกตำแหน่งละติจูด" style=" padding:2px; font-size:20px;" /></td>
                 <td align="left" width="30" style="font-size:24px;">&nbsp;</td>
             </tr>
             <tr height="50" valign="middle">
@@ -151,112 +254,69 @@
 	<img src="{{asset('images/roomap.png')}}" style="display:block; position:relative; float:none;" />
 	<hr class="line" style="top: 60px;" />
     <div>
-		<table>
+		<table id="tbtype">
         	<tr height="40" valign="bottom">
-            	<td align="left" colspan="3" style="font-size:24px;" width="500">ประเภทห้องพัก</td>
+            	<td align="left" colspan="4" style="font-size:24px;" width="500">ประเภทห้องพัก</td>
                 <td align="center" width="100">ขนาด</td>
                 <td width="100">&nbsp;</td>
                 <td align="center" width="150">อัตราค่าเช่า / เดือน</td>
                 <td width="60">&nbsp;</td>
             </tr>
+            {% if rooms == null %}
             <tr valign="middle">
-            	<td align="left" style="font-size:24px;"><img src="{{asset('images/addmore.png')}}" class="nopad"></td>
-                <td align="left" style="font-size:24px;"><img src="{{asset('images/show.png')}}" style="margin-top: 10px;" /> <img src="{{asset('images/upload.png')}}" style="margin-left: 30px; margin-top: -10px; margin-bottom: 10px; display:block;" /></td>
-                <td align="left" style="font-size:24px;"><input name="typeap" type="text" maxlength="30" placeholder="กรุณากรอกประเภทห้องพัก" style=" padding:2px; font-size:20px;" /></td>
-                <td align="center">24</td>
-                <td align="left">ตารางเมตร</td>
-                <td align="center">4,500</td>
-                <td align="left">บาท</td>
-            </tr>
+				 <td><img src="{{asset('images/delete.png')}}" style="padding-left:0px; margin-left:-10px;" /></td>
+			     <td align="left" style="font-size:24px;"><img src="{{asset('images/show.png')}}" style="margin-top: -10px;" /></td>
+			     <td><img src="{{asset('images/upload.png')}}" style="margin-left: -20px; margin-top: -5px; margin-bottom: 10px; display:block;" /></td>
+			     <td align="left" style="font-size:24px;"><input name="typeap_name" type="text" maxlength="30" placeholder="กรุณากรอกชื่อห้องพัก" style=" padding:2px; font-size:20px;" /></td>
+			     <td align="center"><input name="typeap_size" type="text" maxlength="10" placeholder="ขนาด" style=" padding:2px; font-size:20px; width:80px;" /></td>
+			     <td align="left">ตารางเมตร</td>
+			     <td align="center"><input name="typeap_price" type="text" maxlength="10" placeholder="อัตราค่าเช่า" style=" padding:2px; font-size:20px; width:80px;" /></td>
+			     <td align="left">บาท</td>
+			</tr>
+			{% else %}
+			{% for roomdata in rooms %}
+			
+			{% endfor %}
+			{% endif %}
         </table>
+        <img src="{{asset('images/addmore2.png')}}" class="nopad" onclick="CreateNewRow();" style="margin-left: 130px;margin-top: 10px;margin-bottom: 10px;">
+        <input type="hidden" id="hdnMaxLine" name="hdnMaxLine" value="{{roomlines}}">
     </div>
 </div>
 
-<div id="gallery">
-	<img src="{{asset('images/gallery.png')}}" class="head" />
-        <hr class="line" style="top: 60px;" />
-        <div id="container5">
-			<div id="slides5"><div class="upload"><img src="{{asset('images/bigupload.png')}}" /></div>
-				<div class="slides_container" style="width:950px;">
-					<div class="slide" style="width:950px; margin-top:20px !important;">
-                            
-						<div class="ap3">
-							<a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><img src="{{asset('images/Apartment/ap1.png')}}" /></a><br /><br />
-                            <a class="pop" rel="group" href="{{asset('images/slider/slide-2.jpg')}}"><img src="{{asset('images/Apartment/ap1.png')}}" /></a>       
-						</div>
-                                
-						<div class="ap3">
-							<a class="pop" rel="group" href="{{asset('images/slider/slide-3.jpg')}}"><img src="{{asset('images/Apartment/ap2.png')}}" /></a><br /><br />
-                            <a class="pop" rel="group" href="{{asset('images/slider/slide-4.jpg')}}"><img src="{{asset('images/Apartment/ap2.png')}}" /></a>       
-						</div>
-                                
-						<div class="ap4">
-							<a class="pop" rel="group" href="{{asset('images/slider/slide-5.jpg')}}"><img src="{{asset('images/Apartment/ap3.png')}}" /></a><br /><br />
-                            <a class="pop" rel="group" href="{{asset('images/slider/slide-6.jpg')}}"><img src="{{asset('images/Apartment/ap3.png')}}" /></a>       
-						</div>
-                                
-					</div>
-
-					<div class="slide" style="width:950px;">
-                                
-						<div class="ap3">
-							<a class="pop" rel="group" href="{{asset('images/slider/slide-7.jpg')}}"><img src="{{asset('images/Apartment/ap3.png')}}" /></a><br /><br />
-                            <a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><img src="{{asset('images/Apartment/ap3.png')}}" /></a>       
-						</div>
-                                
-						<div class="ap3">
-							<a class="pop" rel="group" href="{{asset('images/slider/slide-2.jpg')}}"><img src="{{asset('images/Apartment/ap1.png')}}" /></a><br /><br />
-                            <a class="pop" rel="group" href="{{asset('images/slider/slide-3.jpg')}}"><img src="{{asset('images/Apartment/ap1.png')}}" /></a>     
-						</div>
-                                
-						<div class="ap4">
-							<a class="pop" rel="group" href="images/slider/slide-4.jpg')}}"><img src="{{asset('images/Apartment/ap2.png')}}" /></a><br /><br />
-                            <a class="pop" rel="group" href="images/slider/slide-5.jpg')}}"><img src="{{asset('images/Apartment/ap2.png')}}" /></a>    
-						</div>
-                                
-					</div>
-
-					<div class="slide" style="width:950px;">
-                                
-						<div class="ap3">
-							<a class="pop" rel="group" href="{{asset('images/slider/slide-6.jpg')}}"><img src="{{asset('images/Apartment/ap2.png')}}" /></a><br /><br />
-                            <a class="pop" rel="group" href="{{asset('images/slider/slide-7.jpg')}}"><img src="{{asset('images/Apartment/ap2.png')}}" /></a>     
-						</div>
-                                
-						<div class="ap3">
-							<a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><img src="{{asset('images/Apartment/ap3.png')}}" /></a><br /><br />
-                            <a class="pop" rel="group" href="{{asset('images/slider/slide-2.jpg')}}"><img src="{{asset('images/Apartment/ap3.png')}}" /></a>         
-						</div>
-                                
-						<div class="ap4">
-							<a class="pop" rel="group" href="{{asset('images/slider/slide-3.jpg')}}"><img src="{{asset('images/Apartment/ap1.png')}}" /></a><br /><br />
-                            <a class="pop" rel="group" href="{{asset('images/slider/slide-4.jpg')}}"><img src="{{asset('images/Apartment/ap1.png')}}" /></a>  
-						</div>
-                                
-					</div>
-				</div>
-				<a href="#" class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>
-				<a href="#" class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>
-			</div>
-		</div>  
+<div class="detail" style="height: 100%; margin-bottom: 15px;">
+	<img src="{{asset('images/gallery.png')}}" style="display:block; position:relative; float:none;" />
+	<hr class="line" style="top: 60px;" />
+    <div>
+		<table id="tbgal">
+			{% if galleries == null %}
+            <tr valign="middle">
+				<td><img src="{{asset('images/delete.png')}}" style="padding-left:0px; margin-left:-10px;" /></td>
+				<td align="left" style="font-size:24px;"><img src="{{asset('images/show.png')}}" style="margin-top: -10px;" /></td>
+				<td><img src="{{asset('images/upload.png')}}" style="margin-left: -20px; margin-top: -5px; margin-bottom: 10px; display:block;" /></td>
+				<td align="left" style="font-size:24px;"><textarea id="galtitle" name="galtitle" maxlenght="500" placeholder="กรอกข้อมูลของรูปที่นี่" class="galdesc"></textarea></td>
+			</tr>
+			{% else %}
+			{% for gallerydata in galleries %}
+			
+			{% endfor %}
+			{% endif %}
+        </table>
+        <img src="{{asset('images/addmore2.png')}}" class="nopad" onclick="CreateNewRowGallery();" style="margin-left: 130px;margin-top: 10px;margin-bottom: 10px;">
+        <input type="hidden" id="hdnMaxLineGal" name="hdnMaxLineGal" value="{{gellerylines}}">
     </div>
 </div>
 
-<div class="detail" style="height: 770px; margin-bottom: 15px;">
+<div class="detail" style="height: 750px; margin-bottom: 15px;">
 	<img src="{{asset('images/etc.png')}}" style="display:block; position:relative; float:none;" />
 	<hr class="line" style="top: 60px;" />
     <div>
 		<table>
-        	<tr>
-            	<td colspan="4">
-                ที่ตั้ง :
-                </td>
-            </tr>
 			<tr height="50" valign="middle">
-				<td align="left" width="165"><input id="bk" name="option31" type="checkbox" value="bangkok" /><label for="bk">เขตกรุงเทพฯ :</label></td>
+				<td align="left" width="165">จังหวัด :</td>
 				<td width="300">
-					<div class="styled-select">
-						<select class="select">
+					<div id="nearly_area" class="styled-select">
+						<select name="nearly_bk" id="nearly_location" class="select">
 							<option value="all">ทุกเขต</option>
 							<option value="banken">บางเขน</option>
 							<option value="vipawadee">วิภาวดีรังสิต</option>
@@ -264,10 +324,10 @@
 						</select>
 					</div>
 				</td>
-				<td align="left" width="145"><input id="bt" name="option32" type="checkbox" value="bts" /><label for="bt">ใกล้รถไฟฟ้า BTS :</label></td>
+				<td align="left" width="145"><input id="bts_check" name="bts_check" type="checkbox" value="bts" /><label for="bts_check">ใกล้รถไฟฟ้า BTS :</label></td>
 				<td width="300">
 					<div class="styled-select">
-						<select class="select">
+						<select name="bts" id="bts" class="select">
 							<option value="all">ทุกสถานี</option>
 							<option value="siam">สยาม</option>
 							<option value="chidlom">ชิดลม</option>
@@ -277,21 +337,21 @@
 				</td>
 			</tr>
 			<tr height="50" valign="middle">
-				<td align="left" width="165"><input id="uni" name="option33" type="checkbox" value="university" /><label for="uni">ใกล้มหาวิทยาลัย :</label></td>
+				<td align="left" width="165"><input id="bk_check" name="bk_check" type="checkbox" value="bangkok" /><label for="bk_check">โซนกรุงเทพฯ :</label></td>
 				<td width="300">
-					<div class="styled-select">
-						<select class="select">
-							<option value="all">- กรุณาระบุ -</option>
-							<option value="kmitl">สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</option>
-							<option value="jula">มหาวิทยาลับจุฬาลงกรณ์</option>
-							<option value="tammasard">มหาวิทยาลัยธรรมศาสตร์</option>
+					<div id="nearly_area" class="styled-select">
+						<select name="nearly_bk" id="nearly_location" class="select">
+							<option value="all">ทุกเขต</option>
+							<option value="banken">บางเขน</option>
+							<option value="vipawadee">วิภาวดีรังสิต</option>
+							<option value="etc">อื่นๆ</option>
 						</select>
 					</div>
 				</td>
-				<td align="left" width="145"><input id="mr" name="option34" type="checkbox" value="mrt" /><label for="mr">ใกล้รถไฟฟ้า MRT :</label></td>
+				<td align="left" width="145"><input id="mrt_check" name="mrt_check" type="checkbox" value="mrt" /><label for="mrt_check">ใกล้รถไฟฟ้า MRT :</label></td>
 				<td width="300">
 					<div class="styled-select">
-						<select class="select">
+						<select name="mrt" id="mrt" class="select">
 							<option value="all">ทุกสถานี</option>
 							<option value="banken">สยาม</option>
 							<option value="vipawadee">ชิดลม</option>
@@ -301,10 +361,21 @@
 				</td>
 			</tr>
             <tr height="50" valign="middle">
-				<td align="left" width="165"><input id="pl" name="option35" type="checkbox" value="etcp" /><label for="pl">ตามสถานที่ใกล้เคียง :</label></td>
+				<td align="left" width="165"><input id="university_check" name="university_check" type="checkbox" value="university" /><label for="university_check">ใกล้มหาวิทยาลัย :</label></td>
 				<td width="300">
 					<div class="styled-select">
-						<select class="select">
+						<select name="university" id="university" class="select">
+							<option value="all">- กรุณาระบุ -</option>
+							<option value="kmitl">สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</option>
+							<option value="jula">มหาวิทยาลับจุฬาลงกรณ์</option>
+							<option value="tammasard">มหาวิทยาลัยธรรมศาสตร์</option>
+						</select>
+					</div>
+				</td>
+				<td align="left" width="165"><input id="nearly_place_check" name="nearly_place_check" type="checkbox" value="nearly_place" /><label for="nearly_place_check">ตามสถานที่ใกล้เคียง :</label></td>
+				<td width="300">
+					<div class="styled-select">
+						<select name="nearly_place" id="nearly_place" class="select">
 							<option value="all">- กรุณาระบุ -</option>
 							<option value="suwannapum">สนามบินสุวรรณภูมิ</option>
                             <option value="donmeung">สนามบินดอนเมือง</option>
@@ -312,13 +383,11 @@
 						</select>
 					</div>
 				</td>
-				<td colspan="2">&nbsp;
-				</td>
 			</tr>
 		</table>
 	</div>
-	<hr class="line" style="top: 270px;" />
-    <div style="margin-top:40px;">
+	<hr class="line" style="top: 240px;" />
+    <div style="margin-top:30px;">
 		<table>
         	<tr>
             	<td colspan="4" style="padding-bottom:5px;">
@@ -336,7 +405,7 @@
             {% endfor %}
 		</table>
 	</div>
-    <hr class="line" style="top: 460px;" />
+    <hr class="line" style="top: 430px;" />
     <div style="margin-top:30px;">
 		<table>
         	<tr>
@@ -356,7 +425,7 @@
             		{% for number in 2..list.count %}
             		<td width="250">&nbsp;</td>
             		{% endfor %}
-            		<td width="250"><input class="save" type="submit" value="" /> <input class="canc" type="submit" value="" /></td>
+            		<td width="250"><input class="save" type="submit" value="" /> <input class="back" type="submit" value="" /></td>
             		{% endif %}
             	{% endif %}
             </tr>
@@ -366,7 +435,7 @@
             	{% for number in 2..list.count %}
             		<td width="250">&nbsp;</td>
             	{% endfor %}
-            	<td width="250"><input class="save" type="submit" value="" /> <input class="canc" type="submit" value="" /></td>
+            	<td width="250"><input class="save" type="submit" value="" /> <input class="back" type="submit" value="" /></td>
             </tr>
             	{% endif %}
             {% endif %}

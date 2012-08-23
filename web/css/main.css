@@ -30,18 +30,16 @@ hr.line {
 
 .alertmsg{
 	font-size:16px;
-	color:yellow;
+	color:#FFCC00;
 }
 /* Header*/
 #header { width:1000px; margin: 40px auto 0 auto; font-size:22px;}
 #header span { margin: 40px 0 0 0; font-size:22px;}
 #header .social { margin-top: -30px; margin-left: 110px;}
 #header #logo { margin: -45px auto 0 auto; background: url(../images/logo.png) no-repeat; width: 184px; height: 119px;}
-#header #login { text-align: left; margin-top: -105px; margin-left: 700px;}
+#header #login { text-align: left; margin-top: -105px; margin-left: 690px;}
 #header #login input { width: 120px;}
 #header #login input.login { background: url(../images/login-bt.png) no-repeat; border: 0; width: 51px; height: 51px; cursor: pointer; position:absolute; margin-top:-10px;}
-#header #login input.logout { background: url(../images/logout-bt.png) no-repeat; border: 0; width: 51px; height: 51px; cursor: pointer; position:absolute; margin-top:-10px;}
-
 
 /*Menu Bar*/
 #menu { width:100%; margin: 90px 0 0 0; font-size:20px; text-align: center;}
@@ -51,14 +49,16 @@ hr.line {
 #search1 { background-color: #423C3B; width: 1000px; height: 200px; display:block; position:relative; margin:-20px auto 0 auto;}
 #search1 ul#navi_containTab { list-style:none; padding:0; margin:0; width:100%;}
 #search1 ul#navi_containTab li { display:block; float:left; height:32px; border:0px; line-height:25px; cursor:pointer; text-align:left; padding-top:10px; color:#FFF; margin-top:15px; margin-left:20px; padding-left: 50px;} 
-#search1 a.link{ padding: 3px 5px; color: #FFF; background-color: #BF1E2D; text-decoration: none; margin-top:20px; margin-left: 585px; position:absolute; font-size:22px; display:block;} 
-#search1 span.or{color:#FFF; margin-top:25px; margin-left: 530px; position:absolute; font-size:22px; display:block;}
+#search1 a.link{ padding: 3px 5px; color: #FFF; background-color: #BF1E2D; text-decoration: none; margin-top:20px; margin-left: 640px; position:absolute; font-size:22px; display:block;} 
+#search1 span.or{color:#FFF; margin-top:25px; margin-left: 590px; position:absolute; font-size:22px; display:block;}
   
 #search1 ul#detail_containTab{ list-style:none; padding:0; margin-top:0; width:100%;}
 #search1 ul#detail_containTab li{ float:left; width:100%; height:140px; margin-top: 20px; margin-left: 25px;}
 
-#search1 #i_containTab ul#navi_containTab li#tabNavi1{ background:url(../images/m.png) no-repeat; background-position:0 0; display:block;width:105px; }
-#search1 #i_containTab ul#navi_containTab li#tabNavi2{ background:url(../images/d.png) no-repeat; background-position:0 0; display:block;width:85px; }
+/*#search1 #i_containTab ul#navi_containTab li#tabNavi1{ background:url(../images/m.png) no-repeat; background-position:0 0; display:block;width:105px; }*/
+/*#search1 #i_containTab ul#navi_containTab li#tabNavi2{ background:url(../images/d.png) no-repeat; background-position:0 0; display:block;width:85px; }*/
+#search1 #i_containTab ul#navi_containTab li#tabNavi1{ background:url(../images/bkk.png) no-repeat; background-position:0 0; display:block;width:120px; }
+#search1 #i_containTab ul#navi_containTab li#tabNavi2{ background:url(../images/country.png) no-repeat; background-position:0 0; display:block;width:130px; }
 #search1 #i_containTab ul#navi_containTab li#tabNavi3{ background:url(../images/ma.png) no-repeat; background-position:0 0; display:block;width:115px; }
 
 /* class รูปแบบของแต่ละเนื้อหา */
@@ -66,8 +66,10 @@ hr.line {
 #search1 .detailContent2{ display:none;}
 #search1 .detailContent3{ display:none;}
 
-#search1 #i_containTab ul#navi_containTab li#tabNavi1.active {background:url(../images/m.png) no-repeat; background-position:0 -43px; display:block;}
-#search1 #i_containTab ul#navi_containTab li#tabNavi2.active {background:url(../images/d.png) no-repeat; background-position:0 -43px; display:block;}
+/*#search1 #i_containTab ul#navi_containTab li#tabNavi1.active {background:url(../images/m.png) no-repeat; background-position:0 -43px; display:block;}*/
+/*#search1 #i_containTab ul#navi_containTab li#tabNavi2.active {background:url(../images/d.png) no-repeat; background-position:0 -43px; display:block;}*/
+#search1 #i_containTab ul#navi_containTab li#tabNavi1.active {background:url(../images/bkk.png) no-repeat; background-position:0 -43px; display:block;}
+#search1 #i_containTab ul#navi_containTab li#tabNavi2.active {background:url(../images/country.png) no-repeat; background-position:0 -43px; display:block;}
 #search1 #i_containTab ul#navi_containTab li#tabNavi3.active {background:url(../images/ma.png) no-repeat; background-position:0 -43px; display:block;}
 
 #search1 .detailContent1 table{ border:0px; color:#FFF;}
@@ -91,7 +93,7 @@ hr.line {
 #search1 .detailContent3 img.style { position:absolute; display:block; width:327px; height:40px; margin-top:-40px; margin-left:318px;}
 
 /*Search Block2*/
-#search2 { background-color: #423C3B; width: 1000px; height: 850px; display:block; position:relative; margin: 20px auto 0 auto;}
+#search2 { background-color: #423C3B; width: 1000px; height: /*850px*/ 825px; display:block; position:relative; margin: 20px auto 0 auto;}
 #search2 img { padding-top:15px; padding-left:20px;}
 
 #search2 table{ border:0px; color:#FFF; font-size:20px; margin-left:30px; margin-top: 20px;}
@@ -175,9 +177,15 @@ input.regis { background: url(../images/regis-bt.png) no-repeat; border: 0; widt
 .detail table .styled-select .select{border: 0px; font-family: DB Adman X; font-size: 18px; color: #423C3B; background: transparent; padding: 5px; width:210px; height: 30px; -webkit-appearance: none;}
 .detail table input.save{ background: url(../images/save.png) no-repeat; border: 0; width: 51px; height: 51px; cursor: pointer; position:absolute; margin-top:-10px; margin-left:100px;}
 .detail table input.canc{ background: url(../images/canc.png) no-repeat; border: 0; width: 51px; height: 51px; cursor: pointer; position:absolute; margin-top:-10px; margin-left:160px;}
+.detail table input.back{ background: url(../images/back.png) no-repeat; border: 0; width: 51px; height: 51px; cursor: pointer; position:absolute; margin-top:-10px; margin-left:160px;}
 .detail div table tbody tr td textarea.place { max-width:180px; max-height:80px; min-width:180px; min-height:80px; font-family: DB Adman X, Helvetica, Arial, sans-serif; color: #423C3B; font-size:16px;}
-.detail div table tbody tr td textarea.ldesc { max-width:595px; max-height:40px; min-width:595px; min-height:40px; font-family: DB Adman X, Helvetica, Arial, sans-serif; color: #423C3B; font-size:16px;}
-#gallery .upload { position:absolute; display:block; z-index: 999; margin-left: 35%; margin-top: 130px;}
+.detail div table tbody tr td textarea.ldesc { max-width:625px; max-height:40px; min-width:625px; min-height:40px; font-family: DB Adman X, Helvetica, Arial, sans-serif; color: #423C3B; font-size:16px;}
+.detail div table tbody tr td textarea.galdesc { max-width:500px; max-height:110px; min-width:500px; min-height:110px; font-family: DB Adman X, Helvetica, Arial, sans-serif; color: #423C3B; font-size:16px;}
+#gallery .upload { position:absolute; display:block; z-index: 999; margin-left: 85%; margin-top: -60px;}
+#fix {width: 1000px; margin:15px auto 0px auto;}
+#fix input.save { background: url(../images/save.png) no-repeat; border: 0; width: 51px; height: 51px; cursor: pointer; position: fixed; margin-top:0px; margin-left: 1030px;}
+#fix input.upimg { background: url(../images/uploadimg.png) no-repeat; border: 0; width: 51px; height: 51px; cursor: pointer; position: fixed; margin-top:0px; margin-left: 1030px;}
+#fix input.back { background: url(../images/back.png) no-repeat; border: 0; width: 51px; height: 51px; cursor: pointer; position: fixed; margin-top:60px; margin-left: 1030px;}
 
 /*Recommend Block*/
 #recommend { background-color: #423C3B; width: 1000px; height: 405px; margin:15px auto 0 auto;}
@@ -208,8 +216,25 @@ input.regis { background: url(../images/regis-bt.png) no-repeat; border: 0; widt
 #ad3 { width:1000px; margin: 0 auto -5px auto;}
 #ad3 a { margin-right: 17px;}
 
-/**/
-#board { background-color:#423C3B; width:1000px; height: 300px; margin:20px auto 20px auto; color: #FFF; font-size:55px; text-align:center;}
+/*#board { background-color:#423C3B; width:1000px; height: 300px; margin:20px auto 20px auto; color: #FFF; font-size:55px; text-align:center;}*/
+
+/*update table*/
+#update { background-color:#423C3B; width:1000px; height: 100%; margin:20px auto 20px auto; color: #FFF; display:block; position: relative;}
+#update img { padding-top: 15px; padding-left: 20px;}
+#update span.time { font-size: 20px; margin-top: 28px; position: absolute; margin-left: 10px;}
+#update table { padding: 20px;}
+#update table th { font-size: 25px; text-align: center; padding: 5px; background-color:#BF1E2D;}
+#update table td { font-size: 18px; text-align: center; padding: 5px;}
+#update table td.first { font-size: 18px; text-align: left; padding: 5px;}
+
+#update TR:nth-child(odd) {
+    background-color: #2e2e2e;
+}
+ 
+#update  TR:nth-child(even) {
+    background-color: #131313;
+}
+
 
 /*Footer*/
 #footer { background-color: #423C3B; width: 1000px; height: 250px; display:block; position:relative; margin:10px auto 0 auto;}

@@ -12,9 +12,6 @@ class ForgetController extends Controller
     {    	
 	    return $this->render('FTRWebBundle:Security:forget.html.twig');	
     }
-	/**
-	 * function for sendemail forget password
-	 * */
 	public function sendEmailAction()
     {
     	$email = $_POST['email'];

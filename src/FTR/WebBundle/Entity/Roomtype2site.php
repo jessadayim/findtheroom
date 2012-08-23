@@ -36,6 +36,20 @@ class Roomtype2site
     private $building_site_id;
 
     /**
+     * @var integer $room_size
+     *
+     * @ORM\Column(name="room_size", type="integer")
+     */
+    private $room_size;
+
+    /**
+     * @var integer $room_price
+     *
+     * @ORM\Column(name="room_price", type="integer")
+     */
+    private $room_price;
+
+    /**
      * @var boolean $deleted
      *
      * @ORM\Column(name="deleted", type="boolean", nullable="true")
@@ -91,6 +105,46 @@ class Roomtype2site
     public function getBuildingSiteId()
     {
         return $this->building_site_id;
+    }
+
+    /**
+     * Set room_size
+     *
+     * @param integer $room_size
+     */
+    public function setRoomsize($room_size)
+    {
+        $this->room_size = $room_size;
+    }
+
+    /**
+     * Get room_size
+     *
+     * @return integer 
+     */
+    public function getRoomsize()
+    {
+        return $this->room_size;
+    }
+
+    /**
+     * Set room_price
+     *
+     * @param integer $room_price
+     */
+    public function setRoomprice($room_price)
+    {
+        $this->room_price = $room_price;
+    }
+
+    /**
+     * Get room_price
+     *
+     * @return integer 
+     */
+    public function getRoomprice()
+    {
+        return $this->room_price;
     }
 
     /**

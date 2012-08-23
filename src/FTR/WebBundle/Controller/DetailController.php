@@ -7,9 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class DetailController extends Controller
 {
-    /**
-	 * function for query Detail page
-	 * */
+    
     public function DetailAction()
     {
     	$em = $this->getDoctrine()->getEntityManager();		

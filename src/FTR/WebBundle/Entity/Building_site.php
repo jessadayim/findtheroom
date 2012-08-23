@@ -57,30 +57,30 @@ class Building_site
     private $phone_number;
 
     /**
-     * @var boolean $publish
+     * @var integer $publish
      *
-     * @ORM\Column(name="publish", type="boolean")
+     * @ORM\Column(name="publish", type="integer", nullable="true")
      */
     private $publish;
 
     /**
      * @var datetime $datetimestamp
      *
-     * @ORM\Column(name="datetimestamp", type="datetime")
+     * @ORM\Column(name="datetimestamp", type="datetime", nullable="true")
      */
     private $datetimestamp;
 
     /**
      * @var datetime $lastupdate
      *
-     * @ORM\Column(name="lastupdate", type="datetime")
+     * @ORM\Column(name="lastupdate", type="datetime", nullable="true")
      */
     private $lastupdate;
 
     /**
      * @var string $userupdate
      *
-     * @ORM\Column(name="userupdate", type="string", length=127)
+     * @ORM\Column(name="userupdate", type="string", length=127, nullable="true")
      */
     private $userupdate;
 
@@ -115,7 +115,7 @@ class Building_site
 	/**
      * @var integer $zone_id
      *
-     * @ORM\Column(name="zone_id", type="integer")
+     * @ORM\Column(name="zone_id", type="integer", nullable="true")
      */
     private $zone_id;
 	
@@ -192,9 +192,16 @@ class Building_site
     /**
      * @var string $googlemap_url
      *
-     * @ORM\Column(name="googlemap_url", type="string", length=255)
+     * @ORM\Column(name="googlemap_url", type="string", length=255, nullable="true")
      */
     private $googlemap_url;
+
+    /**
+     * @var boolean $internet_ready
+     *
+     * @ORM\Column(name="internet_ready", type="boolean", nullable="true")
+     */
+    private $internet_ready;
 
     /**
      * @var boolean $deleted
@@ -317,7 +324,7 @@ class Building_site
     /**
      * Set publish
      *
-     * @param boolean $publish
+     * @param integer $publish
      */
     public function setPublish($publish)
     {
@@ -327,7 +334,7 @@ class Building_site
     /**
      * Get publish
      *
-     * @return boolean 
+     * @return integer 
      */
     public function getPublish()
     {
@@ -692,6 +699,46 @@ class Building_site
     public function getInternetPrice()
     {
         return $this->internet_price;
+    }
+
+    /**
+     * Set googlemap_url
+     *
+     * @param integer $googlemap_url
+     */
+    public function setGoogleMapUrl($googlemapUrl)
+    {
+        $this->googlemap_url = $googlemapUrl;
+    }
+
+    /**
+     * Get googlemap_url
+     *
+     * @return integer 
+     */
+    public function getGoogleMapUrl()
+    {
+        return $this->googlemap_url;
+    }
+
+    /**
+     * Set internet_ready
+     *
+     * @param boolean $internet_ready
+     */
+    public function setInternetReady($internet_ready)
+    {
+        $this->internet_ready = $internet_ready;
+    }
+
+    /**
+     * Get internet_ready
+     *
+     * @return boolean 
+     */
+    public function getInternetReady()
+    {
+        return $this->internet_ready;
     }
 
     /**

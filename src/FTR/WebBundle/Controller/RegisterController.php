@@ -17,15 +17,14 @@ class RegisterController extends Controller
     {
 		if($_POST)
 		{
-			//var_dump($_POST);			
+						
 			$firstname = $_POST['firstname'];
 			$lastname = $_POST['lastname'];
 			$username = $_POST['regusername'];
 			$email = $_POST['email'];
 			$password = $_POST['regpassword'];
 			$tel = $_POST['tele'];
-			// echo $username;
-			// echo $email;
+			
 			$em = $this->getDoctrine()->getEntityManager();
 		
 			$conn= $this->get('database_connection');

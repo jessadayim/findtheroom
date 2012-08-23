@@ -1,0 +1,29 @@
+<script src="{{asset('js/jquery.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/fancybox/jquery.fancybox-1.3.4.pack.js')}}"></script>
+<script src="{{asset('js/jquery.easing.1.3.js')}}"></script>
+<link rel="stylesheet" type="text/css" href="{{asset('css/jquery.fancybox-1.3.4.css')}}" media="screen" />
+<script language="JavaScript">
+$(document).ready(function() {
+		$("a#choosepic").fancybox({
+				'width'				: 700,
+				'height'			: 420,
+				'autoScale'			: false,
+				'transitionIn'		: 'elastic',
+				'transitionOut'		: 'elastic',
+				'type'				: 'iframe'
+			});
+});
+</script>
+เลือกรูปที่ต้องการ 
+<form action="{{path('choosePicture',{'id':2})}}" method="post">
+<a id="choosepic" href="{{path('FTRWebBundle_loginpublish')}}"><img id="choosepic" src="{{asset('images/upload.png')}}" class="nopad" /></a>
+<input type="submit" value="เลือก" />
+<br>
+<div style="width: 680px;">
+{% for file in picvalues %}
+<label><input type="radio" id="pic_rdo" name="pic_rdo" value="{{file.name}}" />
+<img src="{{asset(file.link)}}" style="width: 300px;height: auto;" />
+</label>
+{% endfor %}
+</div>
+</form>
