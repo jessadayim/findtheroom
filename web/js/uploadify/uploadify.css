@@ -21,7 +21,7 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 	margin-bottom: 1em;
 }
 .uploadify-queue-item {
-	background-color: #F5F5F5;
+	background-color: #423C3B;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
@@ -41,7 +41,7 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 	width: 16px;
 }
 .uploadify-queue-item.completed {
-	background-color: #E5E5E5;
+	background-color: #BF1E2D;
 }
 .uploadify-progress {
 	background-color: #E5E5E5;

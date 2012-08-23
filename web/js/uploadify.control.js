@@ -1,10 +1,14 @@
+
+
 $(function() {// get more knowledge at http://www.uploadify.com/documentation/
 		var ownername = document.getElementById('hdnownername').value
 		var buildid = document.getElementById('hdnbuildid').value
+		
 		$('#file_upload').uploadify({
 			'formData'      : {'ownername' : ownername, 'buildid' : buildid ,'fieldname' : 'head'},
-			'swf'      : 'js/uploadify/uploadify.swf',
-			'uploader' : 'js/uploadify/uploadify.php',
+			//'debug'    : true,
+			'swf'      : swfpath,
+			'uploader' : uploaderpath,
 			//'uploadLimit' : 1,
 			//'queueSizeLimit' : 1,
 			'fileSizeLimit' : '200KB',
@@ -20,7 +24,7 @@ $(function() {// get more knowledge at http://www.uploadify.com/documentation/
 
 $(function() {// get more knowledge at http://www.uploadify.com/documentation/
 		loopbutton();
-		
+		loopbuttongallery();
 		//test();
 	});
 
@@ -34,8 +38,8 @@ function uploadpicroom()
 	$(name).uploadify({
 			'formData'      : {'ownername' : ownername, 'buildid' : buildid ,'fieldname' : name ,'typefield' : 'room'},
 			//'debug'    : true,
-			'swf'      : 'js/uploadify/uploadify.swf',
-			'uploader' : 'js/uploadify/uploadify.php',
+			'swf'      : swfpath,
+			'uploader' : uploaderpath,
 			//'uploadLimit' : 1,
 			//'queueSizeLimit' : 1,
 			'fileSizeLimit' : '200KB',
@@ -59,12 +63,12 @@ function uploadpicgallery()
 	var buildid = document.getElementById('hdnbuildid').value;
 	var numberline = parseInt(document.addform.hdnMaxLine.value);
 	for(i=0;i<=numberline;i++){
-	var name = '#room'+i
+	var name = '#gallery'+i
 	$(name).uploadify({
 			'formData'      : {'ownername' : ownername, 'buildid' : buildid ,'fieldname' : name ,'typefield' : 'gallery'},
 			//'debug'    : true,
-			'swf'      : 'js/uploadify/uploadify.swf',
-			'uploader' : 'js/uploadify/uploadify.php',
+			'swf'      : swfpath,
+			'uploader' : uploaderpath,
 			//'uploadLimit' : 1,
 			//'queueSizeLimit' : 1,
 			'fileSizeLimit' : '200KB',

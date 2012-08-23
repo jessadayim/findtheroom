@@ -1,54 +1,14 @@
 {% extends 'FTRWebBundle:Layout:Layout.html.twig' %}
 {% block body %}
+
+<link rel="stylesheet" type="text/css" href="{{asset('js/uploadify/uploadify.css')}}">
 <script type="text/javascript" src="{{asset('js/uploadify/jquery.uploadify-3.1.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/uploadify.control.js')}}"></script>
 
-<script>
-		$(function(){
-			$('#slides').slides({
-				preload: true,
-				preloadImage: 'images/slider/loading.gif',
-				play: 5000,
-				pause: 2500,
-				hoverPause: true,
-				effect: 'fade',
-				fadeSpeed: 350,
-				fadeEasing: "easeOutQuad",
-				crossfade: true
-			});
-			$('#slides2').slides({
-				preload: true,
-				preloadImage: 'images/slider/loading.gif',
-				play: 5000,
-				pause: 5000,
-				hoverPause: true,
-				generatePagination: false
-			});
-			$('#slides3').slides({
-				preload: true,
-				preloadImage: 'images/slider/loading.gif',
-				play: 5000,
-				pause: 5000,
-				hoverPause: true,
-				generatePagination: false
-			});
-			$('#slides4').slides({
-				preload: true,
-				preloadImage: 'images/slider/loading.gif',
-				play: 5000,
-				pause: 5000,
-				hoverPause: true,
-				generatePagination: false
-			});
-			$('#slides5').slides({
-				preload: true,
-				preloadImage: 'images/slider/loading.gif',
-				hoverPause: true,
-				generatePagination: false
-			});
-		});
-</script>
 <script language="javascript">
+	var swfpath = "{{asset('js/uploadify/uploadify.swf')}}";
+	var uploaderpath = "{{asset('js/uploadify/uploadify.php')}}";
+	
 	function loopbutton()
 	{
 		uploadpicroom();
@@ -86,7 +46,7 @@
 		newCell = newRow.insertCell(2)
 		newCell.id = newCell.uniqueID
 		newCell.setAttribute("className", "css-name");
-		newCell.innerHTML = " <img src=\"{{asset('images/upload.png')}}\" style=\"margin-left: -20px; margin-top: -5px; margin-bottom: 10px; display:block;\" />"		
+		newCell.innerHTML = "<input type=\"file\" name=\"room"+intLine+"\" id=\"room"+intLine+"\" /><input type=\"text\" name=\"hdnfilename"+intLine+"\" id=\"hdnfilename"+intLine+"\" />"		
 		
 		//*** Column 4 ***//
 		newCell = newRow.insertCell(3)
@@ -164,7 +124,7 @@
 		newCell = newRow.insertCell(2)
 		newCell.id = newCell.uniqueID
 		newCell.setAttribute("className", "css-name");
-		newCell.innerHTML = "<input type=\"file\" name=\"room"+intLine+"\" id=\"room"+intLine+"\" /><input type=\"text\" name=\"hdnfilename"+intLine+"\" id=\"hdnfilename"+intLine+"\" />"				
+		newCell.innerHTML = "<input type=\"file\" name=\"gallery"+intLine+"\" id=\"gallery"+intLine+"\" /><input type=\"text\" name=\"hdngalleryname"+intLine+"\" id=\"hdngalleryname"+intLine+"\" />"				
 		
 		//*** Column 4 ***//
 		newCell = newRow.insertCell(3)
@@ -182,13 +142,17 @@
 	<!--<input class="upimg" type="submit" value="" />-->
 	<input class="save" type="submit" value="" />
 	<input class="back" type="submit" value="" />
-	<input class="data" type="submit" value="" />
-	<input class="room" type="submit" value="" />
-	<input class="gallery" type="submit" value="" />
-	<input class="etc" type="submit" value="" />
+	<a href="#datazone" class="data"></a>
+	<a href="#roomzone" class="room"></a>
+	<a href="#galleryzone" class="gallery"></a>
+	<a href="#etczone" class="etc"></a>
+	<!--<input class="data" type="button" value="" onclick="javascript:focusDataZone();" />
+	<input class="room" type="button" value="" onclick="document.getElementById('room').focus();" />
+	<input class="gallery" type="button" value="" onclick="document.getElementById('gallery').focus();" />
+	<input class="etc" type="button" value="" onclick="document.getElementById('etc').focus();" />-->
 </div>
 
-<div class="detail" style="height: 760px; margin-bottom: 15px;">
+<div id="datazone" class="detail" style="height: 760px; margin-bottom: 15px;">
 	<img src="{{asset('images/apdata.png')}}" style="display:block; position:relative; float:none;" />
 	<hr class="line" style="top: 60px;" />
     <div style="width:1000px; display:block; position:relative; height:250px; margin-top: 20px;">
@@ -198,8 +162,11 @@
                 <td align="left" width="230" valign="top"><input id="inter" name="option36" type="checkbox" value="internetap" /><label for="inter">มีอินเตอร์เน็ต</label></td>
             </tr>
             <tr height="50" valign="middle">
-				<td align="center" width="240" style="font-size:24px;"><img src="{{asset('images/upload.png')}}" class="nopad" /></td>
-                <td align="left" width="200">&nbsp;</td>
+				<td align="center" width="240" style="font-size:24px;"><img src="{{asset('images/upload.png')}}" class="nopad" />
+				<input type="file" name="file_upload" id="file_upload" />
+					<input type="hidden" name="hdnfilename" id="hdnfilename" />
+			</td>
+            <td align="left" width="200">&nbsp;</td>
             </tr>
         </table>
         <table style="margin-top: 0px; float:none;  margin-left: 0px;">
@@ -312,7 +279,7 @@
 	</div>
 </div>
 
-<div class="detail" style="height: 100%; margin-bottom: 15px;">
+<div id="roomzone" class="detail" style="height: 100%; margin-bottom: 15px;">
 	<img src="{{asset('images/roomap.png')}}" style="display:block; position:relative; float:none;" />
 	<hr class="line" style="top: 60px;" />
     <div>
@@ -326,13 +293,25 @@
             </tr>
             {% if rooms == null %}
             <tr valign="middle">
-				 <td><img src="{{asset('images/delete.png')}}" style="padding-left:0px; margin-left:-10px;" /></td>
-			     <td align="left" style="font-size:24px;"><img src="{{asset('images/show.png')}}" style="margin-top: -10px;" /></td>
-			     <td><img src="{{asset('images/upload.png')}}" style="margin-left: -20px; margin-top: -5px; margin-bottom: 10px; display:block;" /></td>
-			     <td align="left" style="font-size:24px;"><input name="typeap_name" type="text" maxlength="30" placeholder="กรุณากรอกชื่อห้องพัก" style=" padding:2px; font-size:20px;" /></td>
-			     <td align="center"><input name="typeap_size" type="text" maxlength="10" placeholder="ขนาด" style=" padding:2px; font-size:20px; width:80px;" /></td>
+				 <td>
+				 	<img src="{{asset('images/delete.png')}}" style="padding-left:0px; margin-left:-10px;" />
+				 </td>
+			     <td align="left" style="font-size:24px;">
+			     	<img src="{{asset('images/show.png')}}" style="margin-top: -10px;" />
+			     </td>
+			     <td>
+			     	<input type="file" name="room0" id="room0" /><input type="hidden" name="hdnfilename0" id="hdnfilename0" />
+			     </td>
+			     <td align="left" style="font-size:24px;">
+			     	<input name="typeap_name" type="text" maxlength="30" placeholder="กรุณากรอกชื่อห้องพัก" style=" padding:2px; font-size:20px;" />
+			     </td>
+			     <td align="center">
+			     	<input name="typeap_size" type="text" maxlength="10" placeholder="ขนาด" style=" padding:2px; font-size:20px; width:80px;" />
+			     </td>
 			     <td align="left">ตารางเมตร</td>
-			     <td align="center"><input name="typeap_price" type="text" maxlength="10" placeholder="อัตราค่าเช่า" style=" padding:2px; font-size:20px; width:80px;" /></td>
+			     <td align="center">
+			     	<input name="typeap_price" type="text" maxlength="10" placeholder="อัตราค่าเช่า" style=" padding:2px; font-size:20px; width:80px;" />
+			     </td>
 			     <td align="left">บาท</td>
 			</tr>
 			{% else %}
@@ -346,17 +325,25 @@
     </div>
 </div>
 
-<div class="detail" style="height: 100%; margin-bottom: 15px;">
+<div id="galleryzone" class="detail" style="height: 100%; margin-bottom: 15px;">
 	<img src="{{asset('images/gallery.png')}}" style="display:block; position:relative; float:none;" />
 	<hr class="line" style="top: 60px;" />
     <div>
 		<table id="tbgal">
 			{% if galleries == null %}
             <tr valign="middle">
-				<td><img src="{{asset('images/delete.png')}}" style="padding-left:0px; margin-left:-10px;" /></td>
-				<td align="left" style="font-size:24px;"><img src="{{asset('images/show.png')}}" style="margin-top: -10px;" /></td>
-				<td><img src="{{asset('images/upload.png')}}" style="margin-left: -20px; margin-top: -5px; margin-bottom: 10px; display:block;" /></td>
-				<td align="left" style="font-size:24px;"><textarea id="galtitle" name="galtitle" maxlenght="500" placeholder="กรอกข้อมูลของรูปที่นี่" class="galdesc"></textarea></td>
+				<td>
+					<img src="{{asset('images/delete.png')}}" style="padding-left:0px; margin-left:-10px;" />
+				</td>
+				<td align="left" style="font-size:24px;">
+					<img src="{{asset('images/show.png')}}" style="margin-top: -10px;" />
+				</td>
+				<td>
+					<input type="file" name="gallery0" id="gallery0" /><input type="hidden" name="hdngalleryname0" id="hdngalleryname0" />
+				</td>
+				<td align="left" style="font-size:24px;">
+					<textarea id="galtitle" name="galtitle" maxlenght="500" placeholder="กรอกข้อมูลของรูปที่นี่" class="galdesc"></textarea>
+				</td>
 			</tr>
 			{% else %}
 			{% for gallerydata in galleries %}
@@ -370,7 +357,7 @@
 </div>
 <input type="hidden" name="hdnownername" id="hdnownername" value="{{username}}" />
 <input type="hidden" name="hdnbuildid" id="hdnbuildid" value="{{build_id}}" />
-<div class="detail" style="height: 750px; margin-bottom: 15px;">
+<div id="etczone" class="detail" style="height: 750px; margin-bottom: 15px;">
 	<img src="{{asset('images/etc.png')}}" style="display:block; position:relative; float:none;" />
 	<hr class="line" style="top: 60px;" />
     <div>
