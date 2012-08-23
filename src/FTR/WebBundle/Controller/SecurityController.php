@@ -23,14 +23,18 @@ class SecurityController extends Controller
 						$session = $this->get('session');
 						$user = $objSQL1[0]['username'];
 						$id = $objSQL1[0]['id'];
-						$session->set('user', $user);		
+						$session->set('user', $user);
 						$session->set('id', $id);
+						$time = date("d/m/y : H:i:s", time());
+						
+						$sql2 ="UPDATE user_owner SET last_login = '$time' WHERE id= '$id'";
+						$conn->query($sql2);
+						
 						echo "1";
 						exit();
 					}
 					else{
 						echo "0";
-						//return $this->render('FTRWebBundle:Security:login.html.twig',array());
 						exit();
 					}					
 				} catch (Exception $e) {
@@ -41,7 +45,6 @@ class SecurityController extends Controller
 			echo "2";
 			exit();
 		}
-		
 	}
 	public function logPublishAction()
     {

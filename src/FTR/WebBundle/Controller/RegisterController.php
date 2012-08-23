@@ -16,7 +16,8 @@ class RegisterController extends Controller
 	public function RegisConfirmAction()
     {
 		if($_POST)
-		{			
+		{
+						
 			$firstname = $_POST['firstname'];
 			$lastname = $_POST['lastname'];
 			$username = $_POST['regusername'];

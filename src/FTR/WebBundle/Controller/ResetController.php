@@ -24,5 +24,6 @@ class ResetController extends Controller
 		$user = $em->getRepository('FTRWebBundle:User_owner')->find($id);
 		$user->setPassword($pass);
     	$em->flush();
+		exit();
     }
 }

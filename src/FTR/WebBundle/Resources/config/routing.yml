@@ -22,9 +22,7 @@ FTRWebBundle_contact:
     pattern:  /contact
     defaults: { _controller: FTRWebBundle:Contact:contact }
 
-FTRWebBundle_layout:
-    pattern:  /layout
-    defaults: { _controller: FTRWebBundle:Layout:layout }
+
 
 FTRWebBundle_regis:
     pattern:  /regis
