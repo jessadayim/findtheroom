@@ -24,7 +24,7 @@
 					success: function(data) {
 						if(data == 1){
 							// alert("sdfsd");
-							$("td#txt").html("<font style='color:#006600;'>ส่งอีเมลล์เรียบร้อยแล้ว</font>");
+							parent.location.href = "{{path('FTRWebBundle_homepage')}}";
 						}else{
 							$("td#txt").html("<font style='color:#BF1E2D;'>ไม่มีอีเมล์นี้ในระบบ</font>");
 						}
@@ -41,28 +41,6 @@
 </head>
 
 <body style=" background-color:#FFF; color:#423C3B;">
-
-	<div id="fb-root"></div>
-      <script>
-        window.fbAsyncInit = function() {
-          FB.init({
-            appId      : '414830161885886', // App ID
-            channelUrl : '//www.findtheroom.com//login.php', // Channel File ระบุไฟล์ที่จะใช้ login
-            status     : true, // check login status
-            cookie     : true, // enable cookies to allow the server to access the session
-            xfbml      : true  // parse XFBML
-          });
-        };
-        // Load the SDK Asynchronously
-        (function(d){
-           var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-           if (d.getElementById(id)) {return;}
-           js = d.createElement('script'); js.id = id; js.async = true;
-           js.src = "//connect.facebook.net/en_US/all.js";
-           ref.parentNode.insertBefore(js, ref);
-         }(document));
-      </script>
-
 	<img src="{{asset('images/forget.png')}}" style="padding-top: 20px;" />
 	<hr style=" width:98%; margin-left:-5px; margin-top:15px; margin-bottom:10px;" />
 		<table style="padding-left:10px;">

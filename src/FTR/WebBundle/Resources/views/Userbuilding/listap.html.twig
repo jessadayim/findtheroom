@@ -1,6 +1,6 @@
 {% extends 'FTRWebBundle:Layout:Layout.html.twig' %}
 {% block body %}
-<div class="detail" style="height: 420px; margin-bottom: 15px;">
+<div class="detail" style="height: 390px; margin-bottom: 15px;">
 	<img src="{{asset('images/user.png')}}" style="display:block; position:relative; float:none;" />
 	<hr class="line" style="top: 60px;" />
     <div style="width:1000px; display:block; position:relative; height:240px; margin-top: 40px;">
@@ -18,7 +18,7 @@
 	                <td align="left" width="200" style="font-size:24px;">อีเมล : </td>
 	                <td align="left" width="120"><input name="email" type="text" maxlength="30" placeholder="กรุณากรอกอีเมล" value="{{email}}" style=" padding:2px; font-size:20px;" />
 	                	<br>
-	                	<div id="passerror"><font color="yellow">{{errormsg.email}}</font></div>
+	                	<div id="passerror"><font class="alertmsg">{{errormsg.email}}</font></div>
 	                </td>
 	            </tr>
 	            <tr height="60" valign="top">
@@ -26,25 +26,25 @@
 	                <td align="left" width="300">
 	                	<input name="password" type="password" maxlength="30" placeholder="กรุณากรอกรหัสผ่าน" value="{{password}}" style=" padding:2px; font-size:20px;" />
 	                	<br>
-	                	<div id="passerror"><font color="yellow">{{errormsg.password}}</font></div>
+	                	<div id="passerror"><font class="alertmsg">{{errormsg.password}}</font></div>
 	                </td>
 	                <td align="left" width="200" style="font-size:24px;">ยืนยันรหัสผ่าน : </td>
 	                <td align="left" width="120"><input name="cpassword" type="password" maxlength="30" placeholder="ยืนยันรหัสผ่าน" value="" style=" padding:2px; font-size:20px;" />
 	                	<br>
-	                	<font color="yellow">{{errormsg.confirmpass}}</font>
+	                	<font class="alertmsg">{{errormsg.confirmpass}}</font>
 	                </td>
 	            </tr>
 	            <tr height="60" valign="top">
 					<td align="left" width="200" style="font-size:24px;">เบอร์โทรศัพท์ : </td>
 	                <td align="left" width="300"><input name="tel" type="text" maxlength="30" placeholder="กรุณากรอกเบอร์โทรศัพท์" value="{{phone_number}}" style=" padding:2px; font-size:20px;" />
 	                	<br>
-	                	<div id="passerror"><font color="yellow">{{errormsg.tel}}</font></div>
+	                	<div id="passerror"><font class="alertmsg">{{errormsg.tel}}</font></div>
 	                </td>
 	                <td align="left" width="200" style="font-size:24px;" colspan="2"></td>
 	            </tr>
 	            <tr height="50" valign="top">
 					<td align="left" style="font-size:24px;" colspan="3">&nbsp;</td>
-	                <td align="left" width="150"><input class="edit" type="submit" value="edit" /></td>
+	                <td align="left" width="150"><input class="edit" type="submit" /></td>
 	            </tr>
 	        </table>
         </form>
@@ -67,7 +67,7 @@
 				<td align="left" width="250" style="font-size:24px;">{{data.building_name}}</td>
                 <td align="center" width="250" style="font-size:24px;">{{data.publish}}</td>
                 <td align="center" width="250" style="font-size:24px;"><a href="#">ดู</a></td>
-                <td align="center" width="250" style="font-size:24px;"><a herf="{{path('addData',{'id': data.id })}}">แก้ไข</a></td>
+                <td align="center" width="250" style="font-size:24px;"><a href="{{path('addData',{'id': data.id })}}">แก้ไข</a></td>
             </tr>
             {% endfor %}
             <tr height="70" valign="middle">

@@ -1,0 +1,16 @@
+{% extends 'FTRWebBundle:Layout:Layout.html.twig' %}
+{% block body %}
+<script>   
+    $(document).ready(function(){
+    	$.fancybox({
+			'content'			: "{{path('TRWebBundle_reset')}}",
+			'width'				: 700,
+			'height'			: 400,
+			'autoScale'			: false,
+			'transitionIn'		: 'elastic',
+			'transitionOut'		: 'elastic',
+			'type'				: 'iframe'
+		});
+    });
+</script>
+{% endblock %}

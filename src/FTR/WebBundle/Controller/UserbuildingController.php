@@ -4,6 +4,19 @@ namespace FTR\WebBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Session\Session;
+use FTR\WebBundle\Entity\User_owner;
+use FTR\WebBundle\Entity\Building_site;
+use FTR\WebBundle\Entity\Building_type;
+use FTR\WebBundle\Entity\Facility2site;
+use FTR\WebBundle\Entity\Facilitylist;
+use FTR\WebBundle\Entity\Image;
+use FTR\WebBundle\Entity\Nearly_location;
+use FTR\WebBundle\Entity\Nearly_type;
+use FTR\WebBundle\Entity\Nearly2site;
+use FTR\WebBundle\Entity\Pay_type;
+use FTR\WebBundle\Entity\Roomtype2site;
+use FTR\WebBundle\Entity\Roomtype;
+use FTR\WebBundle\Entity\Zone;
 
 class UserbuildingController extends Controller
 {
@@ -62,73 +75,201 @@ class UserbuildingController extends Controller
 	{
 		$fac_inroomlist = NULL;
 		$fac_outroomlist = NULL;
+		$arrroom = NULL;$arrgallery = NULL;$countroom = 0;$countgallery = 0;
+		
+		$session = $this->get('session');
+		$user = $session->get('user');
+		
+		$today = date("Y-m-d H:i:s");
+		
+		$em = $this->getDoctrine()->getEntityManager();
         $conn= $this->get('database_connection');
 		if(!$conn){ die("MySQL Connection error");}
 			try{
-				/**
-				 * query for facility list inroom type
-				 */
-				$sql ="select * from facilitylist where facility_type = 'inroom' and display = 1";
-				$faclist_inroom = $conn->fetchAll($sql);
-				$countall_inroom = count($faclist_inroom);
-				foreach ($faclist_inroom as $key => $value) {
-					$count = $key+1;
-					$list[] = array(
-						'id'				=> $value['id'],
-						'facility_name'		=> $value['facility_name'],
-						'facility_type'		=> $value['facility_type'],
-					);
-					if($count%4==0){
-						$fac_inroomlist[] = array('loop'=>$list);
-						$list = NULL;
-					}elseif($count==$countall_inroom){
-						$fac_inroomlist[] = array('loop'=>$list);
-						$list = NULL;
+				$userdata = $em->getRepository('FTRWebBundle:User_owner')->findOneBy(array('username'=>$user));
+				// เดี๋ยวเขียนเช็คถ้าไม่มีให้ redirect
+				if(empty($id))
+				{
+					$building = new Building_site();
+					$building->setBuildingName('');
+					$building->setBuildingAddress('');
+					$building->setStartPrice(0);
+					$building->setEndPrice(0);
+					$building->setPhoneNumber('');
+					$building->setBuildingTypeId(0);
+					$building->setPayTypeId(0);
+					$building->setUserOwnerId($userdata->getId());
+					$building->setContactName('');
+					$building->setContactEmail('');
+					$building->setMonthStay('');
+					$building->setWaterUnit(0);
+					$building->setElectricityUnit(0);
+					$em->persist($building);
+    				$em->flush();
+					$building_id = $building->getId();
+				}else{
+					$building_id = $id;
+					$building_data = $this->getBuildingData($building_id);
+					//echo "<pre>";var_dump($building_data);echo "</pre>";
+					if($building_data['ibuildingtypeid']!=0)
+					{
+						$buildtype_data = $em->getRepository('FTRWebBundle:Building_type')->findOneBy(array('id'=>$building_data['ibuildingtypeid']));
+					}
+					if($building_data['izoneid']!=0)
+					{
+						$zone_data = $em->getRepository('FTRWebBundle:Zone')->findOneBy(array('id'=>$building_data['izoneid']));
+					}
+					if($building_data['ipaytypeid']!=0)
+					{
+						$paytype_data = $em->getRepository('FTRWebBundle:Pay_type')->findOneBy(array('id'=>$building_data['ipaytypeid']));
 					}
 				}
 				
-				/**
-				 * query for facility list outroom type
-				 */
-				$sql ="select * from facilitylist where facility_type = 'outroom' and display = 1";
-				$faclist_outroom = $conn->fetchAll($sql);
-				$countall_outroom = count($faclist_outroom);
-				foreach ($faclist_outroom as $key => $value) {
-					$count = $key+1;
-					$list[] = array(
-						'id'				=> $value['id'],
-						'facility_name'		=> $value['facility_name'],
-						'facility_type'		=> $value['facility_type'],
-					);
-					if($count%4==0){
-						$num = 4;
-						if($count==$countall_outroom)
-						{
-							$fac_outroomlist[] = array('loop'=>$list,'stat'=>'end','count'=>$num);
-						}else{
-							$fac_outroomlist[] = array('loop'=>$list,'stat'=>'not','count'=>$num);
-						}
-						$list = NULL;
-					}elseif($count==$countall_outroom){
-						$countlist = count($list);
-						$num = 4-$countlist;
-						$fac_outroomlist[] = array('loop'=>$list,'stat'=>'end','count'=>$num);
-						$list = NULL;
-					}
-				}
+				$fac_inroomlist 	= $this->getFacility('inroom');
+				$fac_outroomlist 	= $this->getFacility('outroom');
+				$arrroom 			= $this->getImageDatas($building_id,NULL,'room');
+				$arrgallery 		= $this->getImageDatas($building_id,NULL,'gallery');
+				$imagehead 			= $this->getImageDatas($building_id,NULL,'head');
+				$imagemap			= $this->getImageDatas($building_id,NULL,'map');
 				/*echo "<pre>";
 				var_dump($fac_outroomlist);
-				echo "</pre>";
-				exit();*/
+				echo "</pre>";*/
+				//exit();
 			} catch (Exception $e) {
 				echo 'Caught exception: ',  $e->getMessage(), "\n";
 				}
 				
 		return $this->render('FTRWebBundle:Userbuilding:add.html.twig', array(
-			'build_id'		=> $id,
+			'username'		=> $user,
+			'build_id'		=> $building_id,
 			'fac_inroom'	=> $fac_inroomlist,
 			'fac_outroom'	=> $fac_outroomlist,
+			'rooms'			=> $arrroom,
+			'roomlines'		=> $countroom,
+			'galleries'		=> $arrgallery,
+			'gellerylines'	=> $countgallery,
 		));
+	}
+
+	public function getBuildingData($id)
+	{
+		$em = $this->getDoctrine()->getEntityManager();
+		$build_data = $em->getRepository('FTRWebBundle:Building_site')->findOneBy(array('id'=>$id));
+		$arrdata = array(
+					'sbuildingname'		=> $build_data->getBuildingName(),
+					'tbuildingaddress'	=> $build_data->getBuildingAddress(),
+					'istartprice'		=> $build_data->getStartPrice(),
+					'iendprice'			=> $build_data->getEndPrice(),
+					'sphonenumber'		=> $build_data->getPhoneNumber(),
+					'slatitude'			=> $build_data->getLatitude(),
+					'slongitude'		=> $build_data->getLongitude(),
+					'brecommend'		=> $build_data->getRecommend(),
+					'ibuildingtypeid'	=> $build_data->getBuildingTypeId(),
+					'izoneid'			=> $build_data->getZoneId(),
+					'ipaytypeid'		=> $build_data->getPayTypeId(),
+					'iuserownerid'		=> $build_data->getUserOwnerId(),
+					'tdetail'			=> $build_data->getDetail(),
+					'scontactname'		=> $build_data->getContactName(),
+					'scontactemail'		=> $build_data->getContactEmail(),
+					'swebsite'			=> $build_data->getWebsite(),
+					'smonthstay'		=> $build_data->getMonthStay(),
+					'fwaterunit'		=> $build_data->getWaterUnit(),
+					'felectrictunit'	=> $build_data->getElectricityUnit(),
+					'iinternetprice'	=> $build_data->getInternetPrice(),
+					'igooglemapurl'		=> $build_data->getGoogleMapUrl(),
+					'binternetready'	=> $build_data->getInternetReady(),
+			);
+		return $arrdata;
+	}
+
+	public function getImageDatas($buildid=null,$roomtype2siteid=null,$type)
+	{
+		$conn= $this->get('database_connection');
+		if(!$conn){ die("MySQL Connection error");}
+			try{
+				$sql ="select * from image 
+								where building_site_id = '$buildid' 
+									or roomtype2site_id = '$roomtype2siteid' 
+									and photo_type = '$type' 
+									and deleted = 0";
+				$imagedata = $conn->fetchAll($sql);
+					
+			} catch (Exception $e) {
+			echo 'Caught exception: ',  $e->getMessage(), "\n";
+		}
+				
+		return $imagedata;
+	}
+	
+	public function getFacility($type)
+	{
+		$fac_inroomlist = NULL;
+		$fac_outroomlist = NULL;
+		$conn= $this->get('database_connection');
+		if(!$conn){ die("MySQL Connection error");}
+			try{
+				if($type=='inroom')
+				{
+					/**
+					 * query for facility list inroom type
+					 */
+					$sql ="select * from facilitylist where facility_type = '$type' and display = 1";
+					$faclist_inroom = $conn->fetchAll($sql);
+					$countall_inroom = count($faclist_inroom);
+					foreach ($faclist_inroom as $key => $value) {
+						$count = $key+1;
+						$list[] = array(
+							'id'				=> $value['id'],
+							'facility_name'		=> $value['facility_name'],
+							'facility_type'		=> $value['facility_type'],
+						);
+						if($count%4==0){
+							$fac_inroomlist[] = array('loop'=>$list);
+							$list = NULL;
+						}elseif($count==$countall_inroom){
+							$fac_inroomlist[] = array('loop'=>$list);
+							$list = NULL;
+						}
+					}
+					$fac_listreturn = $fac_inroomlist;
+				}
+				elseif($type == 'outroom') {
+					/**
+					 * query for facility list outroom type
+					 */
+					$sql ="select * from facilitylist where facility_type = '$type' and display = 1";
+					$faclist_outroom = $conn->fetchAll($sql);
+					$countall_outroom = count($faclist_outroom);
+					foreach ($faclist_outroom as $key => $value) {
+						$count = $key+1;
+						$list[] = array(
+							'id'				=> $value['id'],
+							'facility_name'		=> $value['facility_name'],
+							'facility_type'		=> $value['facility_type'],
+						);
+						if($count%4==0){
+							$num = 4;
+							if($count==$countall_outroom)
+							{
+								$fac_outroomlist[] = array('loop'=>$list,'stat'=>'end','count'=>$num);
+							}else{
+								$fac_outroomlist[] = array('loop'=>$list,'stat'=>'not','count'=>$num);
+							}
+							$list = NULL;
+						}elseif($count==$countall_outroom){
+							$countlist = count($list);
+							$num = 4-$countlist;
+							$fac_outroomlist[] = array('loop'=>$list,'stat'=>'end','count'=>$num);
+							$list = NULL;
+						}
+					}
+					$fac_listreturn = $fac_outroomlist;
+				}
+			} catch (Exception $e) {
+				echo 'Caught exception: ',  $e->getMessage(), "\n";
+				}
+				
+		return $fac_listreturn;
 	}
 	
 	public function saveDataAction($id=null)

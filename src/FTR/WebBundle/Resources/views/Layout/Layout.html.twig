@@ -3,10 +3,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>FindTheRoom</title>
+{% block css %}
 <link rel="stylesheet" type="text/css" href="{{asset('css/main.css')}}" />
 <link rel="stylesheet" type="text/css" href="{{asset('css/gooeymenu.css')}}" />
 <link rel="stylesheet" type="text/css" href="{{asset('css/global.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('css/paging.css')}}">
+{% endblock %}
+{% block js %}
 <script src="{{asset('js/jquery.min.js')}}"></script>
 <script src="{{asset('js/html5placeholder.jquery.js')}}"></script>
 <script src="{{asset('js/jquery.easing.1.3.js')}}"></script>
@@ -14,45 +17,8 @@
 <script src="{{asset('js/paging/jquery.paginate.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/fancybox/jquery.fancybox-1.3.4.pack.js')}}"></script>
 <link rel="stylesheet" type="text/css" href="{{asset('css/jquery.fancybox-1.3.4.css')}}" media="screen" />
-<script>
-		$(function(){
-			$('#slides').slides({
-				preload: true,
-				preloadImage: "{{asset('images/slider/loading.gif')}}",
-				play: 5000,
-				pause: 2500,
-				hoverPause: true,
-				effect: 'fade',
-				fadeSpeed: 350,
-				fadeEasing: "easeOutQuad",
-				crossfade: true
-			});
-			$('#slides2').slides({
-				preload: true,
-				preloadImage: "{{asset('images/slider/loading.gif')}}",
-				play: 5000,
-				pause: 5000,
-				hoverPause: true,
-				generatePagination: false
-			});
-			$('#slides3').slides({
-				preload: true,
-				preloadImage: "{{asset('images/slider/loading.gif')}}",
-				play: 5000,
-				pause: 5000,
-				hoverPause: true,
-				generatePagination: false
-			});
-			$('#slides4').slides({
-				preload: true,
-				preloadImage: "{{asset('images/slider/loading.gif')}}",
-				play: 5000,
-				pause: 5000,
-				hoverPause: true,
-				generatePagination: false
-			});
-		});
-</script>
+<script type="text/javascript" src="{{asset('js/fancybox/jquery.easing-1.4.pack.js')}}"></script>
+{% endblock %}
 <script>
     $(function(){
       $(':input[placeholder]').placeholder();
@@ -64,10 +30,48 @@
 		if(mybrowser.indexOf('Firefox')>0){
 		$(".login").css("marginLeft","5px");
 		$(".head hr").css("marginTop","5px");
-		//$(".or").css("marginLeft","20px");
-		//$(".link").css("marginLeft","80px");
-		}
+}
+		
+		$("input#log2").click(function(e) {
+				//alert("working1");
+				$.ajax({
+				  url: "{{path('FTRWebBundle_login')}}",
+				  type: 'POST',
+				  data: "username="+$('input#username').val()+"&"+"password="+$('input#password').val(),
+				  success: function(data) {			  	
+					  	if(data == 0){
+					  		$.fancybox({
+					  			'content'			: "{{path('FTRWebBundle_loginpublish')}}",
+								'width'				: 700,
+								'height'			: 400,
+								'autoScale'			: false,
+								'transitionIn'		: 'elastic',
+								'transitionOut'		: 'elastic',
+								'type'				: 'iframe'
+							});
+					  	}else if(data == 1){
+					  		parent.location.href = "{{path('userbuilding')}}";
+					  		//exit();
+					  	}
+					  	else if(data == 2){
+					  		
+							$.fancybox({
+								'content'			: "{{path('FTRWebBundle_loginpublish')}}",
+								'width'				: 700,
+								'height'			: 400,
+								'autoScale'			: false,
+								'transitionIn'		: 'elastic',
+								'transitionOut'		: 'elastic',
+								'type'				: 'iframe'
+							});
+						} 
+				  	},
+				  error: function(e) {
+				  	 $("#txterror").html("กรุณาตรวจสอบ ชื่อผู้ใช้งาน และรหัสผ่าน");
+				  	}
+				});
 		});
+    });
 </script>
 <script type="text/javascript">  
 $(function(){  
@@ -122,19 +126,17 @@ function enact(what){
 <div id="header">
 	<span>Follow Us On :</span><div class="social"><a href="http://www.facebook.com/FindTheRoom" target="_new"><img src="{{asset('images/fb-icon.gif')}}" /></a> <a href='http://twitter.com/FindTheRoom' target="_blank"><img src="{{asset('images/tw-icon.gif')}}" /></a></div>
 	<div id="logo"></div>
-    <div id="login">
-    	{% if app.session.get('user') %}    	
+    	{% if app.session.get('user') %}  
+			<div id="login" style="text-align:right; margin-right:60px;">  	
     		<form action="{{path('FTRWebBundle_logout')}}" method="post">
-    			welcome {{ app.session.get('user') }}
-    			<input class="login" type="submit" value="" />
+    			Logged in as {{ app.session.get('user') }}
+    			<input class="logout" type="submit" value=""/>
         	</form>
         {% else %}	
-	        <form action="{{path('FTRWebBundle_login')}}" method="post">
-	    		<input name="username" type="text" value="" maxlength="25" placeholder="กรุณากรอกชื่อผู้ใช้งาน" />
-				<input name="password" style="margin-right:5px;" type="password" value="" maxlength="25" placeholder="กรุณากรอกรหัสผ่าน" />
-				<input class="login" type="submit" value="" />
-				<input type="hidden" name="layoutlog" value="layout" />
-	        </form>
+			<div id="login">
+	        	<input id="username" name="username" value="" type="text" value="" maxlength="25" placeholder="Username" /> 
+	    		<input id="password" name="password" value="" type="password" value="" maxlength="25" placeholder="Password" />
+	    		<input id="log2" class="login" type="submit" value="" />
         {% endif %}
     </div>
     
@@ -182,7 +184,7 @@ function enact(what){
 	<ul>
         <li class="head"><img src="{{asset('images/footer1.png')}}" /><hr /><a href='#'>หน้าแรก</a> <a href='#'>ค้นหาอย่างละเอียด</a> <a href='#'>ลงโฆษณา</a> <a href='#'>ลงประกาศห้องพักฟรี</a> <a href='#'>กระดานพูดคุย</a> <a href="#">ติดต่อเรา</a></li>
         <li class="head"><img src="{{asset('images/footer2.png')}}" /><hr /><a href='#'>อพาร์ทเม้นต์</a> <a href='#'>หอพักชาย</a> <a href='#'>หอพักหญิง</a></li>
-        <li class="head"><img src="{{asset('images/footer3.png')}}" /><hr /><a href='#'>เขตกรุงเทพฯ</a> <a href='#'>ใกล้มหาวิทยาลัย</a> <a href='#'>ใกล้รถไฟฟ้า BTS</a> <a href='#'>ใกล้รถไฟฟ้า MRT</a> <a href='#'>ตามสถานที่ใกล้เคียง</a></li>
+        <li class="head"><img src="{{asset('images/footer3.png')}}" /><hr /><a href='#'>โซนในกรุงเทพฯ</a> <a href='#'>ใกล้มหาวิทยาลัย</a> <a href='#'>ใกล้รถไฟฟ้า BTS</a> <a href='#'>ใกล้รถไฟฟ้า MRT</a> <a href='#'>ตามสถานที่ใกล้เคียง</a></li>
         <li class="head"><img src="{{asset('images/footer4.png')}}" /><hr /><a href='#'>Facebook</a> <a href='#'>Twitter</a> <div class="fb-like-box" data-href="http://www.facebook.com/FindTheRoom" data-width="205" data-height="65" data-show-faces="false" data-stream="false" data-header="true" style='background-color:#FFF; margin-left: 10px; margin-top: 10px;'></div></li>
 	</ul>
 </div>
