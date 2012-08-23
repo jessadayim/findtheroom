@@ -75,13 +75,13 @@ hr.line {
 #search1 .detailContent1 table{ border:0px; color:#FFF;}
 #search1 .detailContent1 table .styled-select { background: url(../images/new_arrow.png) no-repeat right center #FFF; width:200px; height: 30px; overflow: hidden;}
 #search1 .detailContent1 table .styled-select .select{border: 0px; font-family: DB Adman X; font-size: 18px; color: #423C3B; background: transparent; padding: 5px; width:230px; height: 30px; -webkit-appearance: none;}
-#search1 .detailContent1 table .price{border: 0px; font-family: DB Adman X; font-size: 18px; color: #423C3B; background: #FFF; padding: 5px; width:200px; height: 20px;}
+#search1 .detailContent1 table .price{border: 0px; font-family: DB Adman X; font-size: 18px; color: #423C3B; background: #FFF; padding: 5px; width:80px; height: 20px;}
 #search1 .detailContent1 table input.search { background: url(../images/search-bt.png) no-repeat; border: 0; width: 51px; height: 51px; cursor: pointer; position:absolute; margin-top:-35px;}
 
 #search1 .detailContent2 table{ border:0px; color:#FFF;}
 #search1 .detailContent2 table .styled-select { background: url(../images/new_arrow.png) no-repeat right center #FFF; width:200px; height: 30px; overflow: hidden;}
 #search1 .detailContent2 table .styled-select .select{border: 0px; font-family: DB Adman X; font-size: 18px; color: #423C3B; background: transparent; padding: 5px; width:230px; height: 30px; -webkit-appearance: none;}
-#search1 .detailContent2 table .price{border: 0px; font-family: DB Adman X; font-size: 18px; color: #423C3B; background: #FFF; padding: 5px; width:200px; height: 20px;}
+#search1 .detailContent2 table .price{border: 0px; font-family: DB Adman X; font-size: 18px; color: #423C3B; background: #FFF; padding: 5px; width:80px; height: 20px;}
 #search1 .detailContent2 table input.search { background: url(../images/search-bt.png) no-repeat; border: 0; width: 51px; height: 51px; cursor: pointer; position:absolute; margin-top:-35px;}
 
 #search1 ul#detail_containTab li.detailContent3 {background-color: #423C3B; width: 970px; height: 310px; position:relative; margin:30px 0 15px 0; padding-left: 30px;}
