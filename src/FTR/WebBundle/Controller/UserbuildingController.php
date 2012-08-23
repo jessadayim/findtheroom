@@ -86,8 +86,8 @@ class UserbuildingController extends Controller
         $conn= $this->get('database_connection');
 		if(!$conn){ die("MySQL Connection error");}
 			try{
-				$userdata = $this->getDoctrine()->getRepository('FTRWebBundle:User_owner')->findOneBy(array('username'=>$user));
-				
+				$userdata = $em->getRepository('FTRWebBundle:User_owner')->findOneBy(array('username'=>$user));
+				// เดี๋ยวเขียนเช็คถ้าไม่มีให้ redirect
 				if(empty($id))
 				{
 					$building = new Building_site();
@@ -109,23 +109,38 @@ class UserbuildingController extends Controller
 					$building_id = $building->getId();
 				}else{
 					$building_id = $id;
+					$building_data = $this->getBuildingData($building_id);
+					//echo "<pre>";var_dump($building_data);echo "</pre>";
+					if($building_data['ibuildingtypeid']!=0)
+					{
+						$buildtype_data = $em->getRepository('FTRWebBundle:Building_type')->findOneBy(array('id'=>$building_data['ibuildingtypeid']));
+					}
+					if($building_data['izoneid']!=0)
+					{
+						$zone_data = $em->getRepository('FTRWebBundle:Zone')->findOneBy(array('id'=>$building_data['izoneid']));
+					}
+					if($building_data['ipaytypeid']!=0)
+					{
+						$paytype_data = $em->getRepository('FTRWebBundle:Pay_type')->findOneBy(array('id'=>$building_data['ipaytypeid']));
+					}
 				}
 				
 				$fac_inroomlist 	= $this->getFacility('inroom');
 				$fac_outroomlist 	= $this->getFacility('outroom');
-				$arrroom 			= $this->getImageDatas($id,NULL,'room');
-				$arrgallery 		= $this->getImageDatas($id,NULL,'gallery');
-				$imagehead 			= $this->getImageDatas($id,NULL,'head');
-				$imagemap			= $this->getImageDatas($id,NULL,'map');
+				$arrroom 			= $this->getImageDatas($building_id,NULL,'room');
+				$arrgallery 		= $this->getImageDatas($building_id,NULL,'gallery');
+				$imagehead 			= $this->getImageDatas($building_id,NULL,'head');
+				$imagemap			= $this->getImageDatas($building_id,NULL,'map');
 				/*echo "<pre>";
 				var_dump($fac_outroomlist);
-				echo "</pre>";
-				exit();*/
+				echo "</pre>";*/
+				//exit();
 			} catch (Exception $e) {
 				echo 'Caught exception: ',  $e->getMessage(), "\n";
 				}
 				
 		return $this->render('FTRWebBundle:Userbuilding:add.html.twig', array(
+			'username'		=> $user,
 			'build_id'		=> $building_id,
 			'fac_inroom'	=> $fac_inroomlist,
 			'fac_outroom'	=> $fac_outroomlist,
@@ -134,6 +149,37 @@ class UserbuildingController extends Controller
 			'galleries'		=> $arrgallery,
 			'gellerylines'	=> $countgallery,
 		));
+	}
+
+	public function getBuildingData($id)
+	{
+		$em = $this->getDoctrine()->getEntityManager();
+		$build_data = $em->getRepository('FTRWebBundle:Building_site')->findOneBy(array('id'=>$id));
+		$arrdata = array(
+					'sbuildingname'		=> $build_data->getBuildingName(),
+					'tbuildingaddress'	=> $build_data->getBuildingAddress(),
+					'istartprice'		=> $build_data->getStartPrice(),
+					'iendprice'			=> $build_data->getEndPrice(),
+					'sphonenumber'		=> $build_data->getPhoneNumber(),
+					'slatitude'			=> $build_data->getLatitude(),
+					'slongitude'		=> $build_data->getLongitude(),
+					'brecommend'		=> $build_data->getRecommend(),
+					'ibuildingtypeid'	=> $build_data->getBuildingTypeId(),
+					'izoneid'			=> $build_data->getZoneId(),
+					'ipaytypeid'		=> $build_data->getPayTypeId(),
+					'iuserownerid'		=> $build_data->getUserOwnerId(),
+					'tdetail'			=> $build_data->getDetail(),
+					'scontactname'		=> $build_data->getContactName(),
+					'scontactemail'		=> $build_data->getContactEmail(),
+					'swebsite'			=> $build_data->getWebsite(),
+					'smonthstay'		=> $build_data->getMonthStay(),
+					'fwaterunit'		=> $build_data->getWaterUnit(),
+					'felectrictunit'	=> $build_data->getElectricityUnit(),
+					'iinternetprice'	=> $build_data->getInternetPrice(),
+					'igooglemapurl'		=> $build_data->getGoogleMapUrl(),
+					'binternetready'	=> $build_data->getInternetReady(),
+			);
+		return $arrdata;
 	}
 
 	public function getImageDatas($buildid=null,$roomtype2siteid=null,$type)
