@@ -123,13 +123,14 @@ function enact(what){
 <div id="header">
 	<span>Follow Us On :</span><div class="social"><a href="http://www.facebook.com/FindTheRoom" target="_new"><img src="{{asset('images/fb-icon.gif')}}" /></a> <a href='http://twitter.com/FindTheRoom' target="_blank"><img src="{{asset('images/tw-icon.gif')}}" /></a></div>
 	<div id="logo"></div>
-    <div id="login">
-    	{% if app.session.get('user') %}    	
+    	{% if app.session.get('user') %}  
+			<div id="login" style="text-align:right; margin-right:60px;">  	
     		<form action="{{path('FTRWebBundle_logout')}}" method="post">
     			Logged in as {{ app.session.get('user') }}
     			<input class="logout" type="submit" value=""/>
         	</form>
         {% else %}	
+			<div id="login">
 	        	<input id="username" name="username" value="" type="text" value="" maxlength="25" placeholder="Username" /> 
 	    		<input id="password" name="password" value="" type="password" value="" maxlength="25" placeholder="Password" />
 	    		<input id="log2" class="login" type="submit" value="" />
