@@ -87,7 +87,11 @@ class UserbuildingController extends Controller
 		if(!$conn){ die("MySQL Connection error");}
 			try{
 				$userdata = $em->getRepository('FTRWebBundle:User_owner')->findOneBy(array('username'=>$user));
-				
+				// เดี๋ยวเขียนเช็คถ้าไม่มีให้ redirect
+				if(empty($userdata))
+				{
+					return $this->redirect($this->generateUrl('FTRWebBundle_publish'));
+				}
 				if(empty($id))
 				{
 					$building = new Building_site();
@@ -110,7 +114,19 @@ class UserbuildingController extends Controller
 				}else{
 					$building_id = $id;
 					$building_data = $this->getBuildingData($building_id);
-					echo "<pre>";var_dump($building_data);echo "</pre>";
+					//echo "<pre>";var_dump($building_data);echo "</pre>";
+					if($building_data['ibuildingtypeid']!=0)
+					{
+						$buildtype_data = $em->getRepository('FTRWebBundle:Building_type')->findOneBy(array('id'=>$building_data['ibuildingtypeid']));
+					}
+					if($building_data['izoneid']!=0)
+					{
+						$zone_data = $em->getRepository('FTRWebBundle:Zone')->findOneBy(array('id'=>$building_data['izoneid']));
+					}
+					if($building_data['ipaytypeid']!=0)
+					{
+						$paytype_data = $em->getRepository('FTRWebBundle:Pay_type')->findOneBy(array('id'=>$building_data['ipaytypeid']));
+					}
 				}
 				
 				$fac_inroomlist 	= $this->getFacility('inroom');
@@ -122,12 +138,13 @@ class UserbuildingController extends Controller
 				/*echo "<pre>";
 				var_dump($fac_outroomlist);
 				echo "</pre>";*/
-				exit();
+				//exit();
 			} catch (Exception $e) {
 				echo 'Caught exception: ',  $e->getMessage(), "\n";
 				}
 				
 		return $this->render('FTRWebBundle:Userbuilding:add.html.twig', array(
+			'username'		=> $user,
 			'build_id'		=> $building_id,
 			'fac_inroom'	=> $fac_inroomlist,
 			'fac_outroom'	=> $fac_outroomlist,
@@ -149,22 +166,22 @@ class UserbuildingController extends Controller
 					'iendprice'			=> $build_data->getEndPrice(),
 					'sphonenumber'		=> $build_data->getPhoneNumber(),
 					'slatitude'			=> $build_data->getLatitude(),
-					'slongitude'			=> $build_data->getLongitude(),
-					'brecommend'			=> $build_data->getRecommend(),
+					'slongitude'		=> $build_data->getLongitude(),
+					'brecommend'		=> $build_data->getRecommend(),
 					'ibuildingtypeid'	=> $build_data->getBuildingTypeId(),
 					'izoneid'			=> $build_data->getZoneId(),
-					'ipaytypeid'			=> $build_data->getPayTypeId(),
+					'ipaytypeid'		=> $build_data->getPayTypeId(),
 					'iuserownerid'		=> $build_data->getUserOwnerId(),
 					'tdetail'			=> $build_data->getDetail(),
 					'scontactname'		=> $build_data->getContactName(),
 					'scontactemail'		=> $build_data->getContactEmail(),
 					'swebsite'			=> $build_data->getWebsite(),
-					'smonthstay'			=> $build_data->getMonthStay(),
-					'fwaterunit'			=> $build_data->getWaterUnit(),
-					'felectrictunit'		=> $build_data->getElectricityUnit(),
-					'iinternetprice'		=> $build_data->getInternetPrice(),
+					'smonthstay'		=> $build_data->getMonthStay(),
+					'fwaterunit'		=> $build_data->getWaterUnit(),
+					'felectrictunit'	=> $build_data->getElectricityUnit(),
+					'iinternetprice'	=> $build_data->getInternetPrice(),
 					'igooglemapurl'		=> $build_data->getGoogleMapUrl(),
-					'binternetready'		=> $build_data->getInternetReady(),
+					'binternetready'	=> $build_data->getInternetReady(),
 			);
 		return $arrdata;
 	}

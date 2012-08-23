@@ -60,12 +60,17 @@
 									</select>
 									</div>
 								</td>
-								<td align="right" style="padding-right:15px">ราคาเริ่มต้น :</td>
+								<td align="right" style="padding-right:15px">ชนิด :</td>
 								<td width="330">
-									<input class="price" name="lessprice" type="text" maxlength="10" placeholder="กรุณากรอกราคาเริ่มต้น" />&nbsp;&nbsp;&nbsp;&nbsp;บาท
+									<div class="styled-select">
+									<select class="select" >
+										{% for zlistm in zonelist_month %}
+											<option value="{{ zlistm.id }}">{{ zlistm.zonename }}</option>
+										{% endfor %}
+									</select>
+									</div>
 								</td>
 								<td>&nbsp;
-									
 								</td>
 							</tr>
 							<tr height="50" valign="middle">
@@ -79,9 +84,9 @@
 									</select>
 									</div>
 								</td>
-								<td align="right" style="padding-right:15px">ราคาไม่เกิน :</td>
+								<td align="right" style="padding-right:15px">ราคา :</td>
 								<td>
-									<input class="price" name="mostprice" type="text" maxlength="10" placeholder="กรุณากรอกราคาไม่เกิน" />&nbsp;&nbsp;&nbsp;&nbsp;บาท
+									<input class="price" name="lessprice" type="text" maxlength="10" placeholder="ราคาเริ่มต้น" /> - <input class="price" name="mostprice" type="text" maxlength="10" placeholder="ราคาไม่เกิน" />&nbsp;&nbsp;&nbsp;&nbsp;บาท
 								</td>
 								<td>
 									<input class="search" type="submit" value="" />
@@ -107,9 +112,15 @@
 									</select>
 									</div>
 								</td>
-								<td align="right" style="padding-right:15px">ราคาเริ่มต้น :</td>
+								<td align="right" style="padding-right:15px">ชนิด :</td>
 								<td width="330">
-									<input class="price" name="lessprice" type="text" maxlength="10" placeholder="กรุณากรอกราคาเริ่มต้น" />&nbsp;&nbsp;&nbsp;&nbsp;บาท
+									<div class="styled-select">
+									<select class="select" >
+										{% for zlistm in zonelist_month %}
+											<option value="{{ zlistm.id }}">{{ zlistm.zonename }}</option>
+										{% endfor %}
+									</select>
+									</div>
 								</td>
 								<td>&nbsp;
 									
@@ -126,9 +137,9 @@
 									</select>
 									</div>
 								</td>
-								<td align="right" style="padding-right:15px">ราคาไม่เกิน :</td>
+								<td align="right" style="padding-right:15px">ราคา :</td>
 								<td>
-									<input class="price" name="mostprice" type="text" maxlength="10" placeholder="กรุณากรอกราคาไม่เกิน" />&nbsp;&nbsp;&nbsp;&nbsp;บาท
+									<input class="price" name="lessprice" type="text" maxlength="10" placeholder="ราคาเริ่มต้น" /> - <input class="price" name="mostprice" type="text" maxlength="10" placeholder="ราคาไม่เกิน" />&nbsp;&nbsp;&nbsp;&nbsp;บาท
 								</td>
 								<td>
 									<input class="search" type="submit" value="" />

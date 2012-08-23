@@ -21,7 +21,7 @@ class MainController extends Controller
 		$buildingtype_month	= $this->getBuildingType(2);
 		
 		$top_last_building	= $this->getTopLastBuilding();
-		$last_update		= date("Y-m-d H:i:s",mktime(0, 0, 0, date("m"), date("d"), date("Y")));
+		$last_update		= date("Y-m-d H:i:s",mktime(date("H"), date("i"), date("s"), date("m"), date("d"), date("Y")));
 		$last_update		= $this->convertThaiDate($last_update);
 		
 		
@@ -35,7 +35,7 @@ class MainController extends Controller
 			));
     }
 	
-	function getZone($paytype=1){
+	function getZone( $payType = 1){
 		$result_data = array();
 		
 		$em = $this->getDoctrine()->getEntityManager();
@@ -44,7 +44,7 @@ class MainController extends Controller
 		if(!$conn){ die("MySQL Connection error");}
 		try{
 			$sql = "
-				select * from zone where id in (select distinct(zone_id) from building_site where pay_type_id = $paytype)
+				select * from zone where id in (select distinct(zone_id) from building_site where pay_type_id = $payType)
 			";
 			$result_data = $conn->fetchAll($sql);
 		} catch (Exception $e) {
@@ -121,8 +121,8 @@ class MainController extends Controller
 		
 		//$yy = substr($yy,2,2);
 		
-		$newdate = intval($dd)." ".$mm." ".$yy." ".$h.":".$m;
-		return $newdate; 
+		$newDate = intval($dd)." ".$mm." ".$yy." ".$h.":".$m;
+		return $newDate;
 	}
 	
 	public function recomAction(){

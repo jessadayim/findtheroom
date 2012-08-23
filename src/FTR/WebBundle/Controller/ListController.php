@@ -10,7 +10,12 @@ class ListController extends Controller
     
     public function indexAction()
     {
-		$name = "a";
-		return $this->render('FTRWebBundle:Default:index.html.twig', array('name' => $name));
+
+		return $this->render('FTRWebBundle:List:index.html.twig', array('name' => $name));
+    }
+
+    public function listAction()
+    {
+
     }
 }
