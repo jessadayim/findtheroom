@@ -46,7 +46,7 @@
 		newCell = newRow.insertCell(2)
 		newCell.id = newCell.uniqueID
 		newCell.setAttribute("className", "css-name");
-		newCell.innerHTML = "<input type=\"file\" name=\"room"+intLine+"\" id=\"room"+intLine+"\" /><input type=\"text\" name=\"hdnfilename"+intLine+"\" id=\"hdnfilename"+intLine+"\" />"		
+		newCell.innerHTML = "<input type=\"file\" name=\"room"+intLine+"\" id=\"room"+intLine+"\" /><input type=\"hiddin\" name=\"hdnfilename"+intLine+"\" id=\"hdnfilename"+intLine+"\" />"		
 		
 		//*** Column 4 ***//
 		newCell = newRow.insertCell(3)
@@ -124,7 +124,7 @@
 		newCell = newRow.insertCell(2)
 		newCell.id = newCell.uniqueID
 		newCell.setAttribute("className", "css-name");
-		newCell.innerHTML = "<input type=\"file\" name=\"gallery"+intLine+"\" id=\"gallery"+intLine+"\" /><input type=\"text\" name=\"hdngalleryname"+intLine+"\" id=\"hdngalleryname"+intLine+"\" />"				
+		newCell.innerHTML = "<input type=\"file\" name=\"gallery"+intLine+"\" id=\"gallery"+intLine+"\" /><input type=\"hiddin\" name=\"hdngalleryname"+intLine+"\" id=\"hdngalleryname"+intLine+"\" />"				
 		
 		//*** Column 4 ***//
 		newCell = newRow.insertCell(3)
@@ -135,17 +135,22 @@
 		document.addform.hdnMaxLineGal.value = intLine;
 		loopbuttongallery();
 	}
+	
+	function moveToDiv(id) {
+		document.getElementById(id).scrollIntoView();
+	}
 </script>
 <form name="addform" id="addform" method="post" action="{{path('saveData', {'id': build_id })}}">
 
 <div id="fix">
 	<!--<input class="upimg" type="submit" value="" />-->
 	<input class="save" type="submit" value="" />
-	<input class="back" type="submit" value="" />
-	<a href="#datazone" class="data"></a>
-	<a href="#roomzone" class="room"></a>
-	<a href="#galleryzone" class="gallery"></a>
-	<a href="#etczone" class="etc"></a>
+	<!--<input class="back" type="submit" value="" />-->
+	<a class="back" href="{{path('userbuilding')}}"></a>
+	<a class="data" onclick="moveToDiv('datazone');"></a>
+	<a class="room" onclick="moveToDiv('roomzone');"></a>
+	<a class="gallery" onclick="moveToDiv('galleryzone');"></a>
+	<a class="etc" onclick="moveToDiv('etczone');"></a>
 	<!--<input class="data" type="button" value="" onclick="javascript:focusDataZone();" />
 	<input class="room" type="button" value="" onclick="document.getElementById('room').focus();" />
 	<input class="gallery" type="button" value="" onclick="document.getElementById('gallery').focus();" />
@@ -162,11 +167,11 @@
                 <td align="left" width="230" valign="top"><input id="inter" name="option36" type="checkbox" value="internetap" /><label for="inter">มีอินเตอร์เน็ต</label></td>
             </tr>
             <tr height="50" valign="middle">
-				<td align="center" width="240" style="font-size:24px;"><img src="{{asset('images/upload.png')}}" class="nopad" />
-				<input type="file" name="file_upload" id="file_upload" />
+				<td align="center" width="240" style="font-size:24px;">
+					<input style="margin-left: -20px;" type="file" name="file_upload" id="file_upload" />
 					<input type="hidden" name="hdnfilename" id="hdnfilename" />
-			</td>
-            <td align="left" width="200">&nbsp;</td>
+				</td>
+            	<td align="left" width="200">&nbsp;</td>
             </tr>
         </table>
         <table style="margin-top: 0px; float:none;  margin-left: 0px;">
@@ -299,7 +304,7 @@
 			     <td align="left" style="font-size:24px;">
 			     	<img src="{{asset('images/show.png')}}" style="margin-top: -10px;" />
 			     </td>
-			     <td>
+			     <td width="150">
 			     	<input type="file" name="room0" id="room0" /><input type="hidden" name="hdnfilename0" id="hdnfilename0" />
 			     </td>
 			     <td align="left" style="font-size:24px;">
@@ -338,7 +343,7 @@
 				<td align="left" style="font-size:24px;">
 					<img src="{{asset('images/show.png')}}" style="margin-top: -10px;" />
 				</td>
-				<td>
+				<td width="150">
 					<input type="file" name="gallery0" id="gallery0" /><input type="hidden" name="hdngalleryname0" id="hdngalleryname0" />
 				</td>
 				<td align="left" style="font-size:24px;">

@@ -77,9 +77,9 @@ function uploadpicgallery()
 			'onUploadSuccess' : function(file, data, response) {
             	//alert('The file ' + file.name + ' was successfully uploaded with a response of ' + response + ':' + data);
             	var mySplitResult = data.split("_");
-            	var textroomname = 'hdnfilename'+mySplitResult[1];
+            	var textgalleryname = 'hdngalleryname'+mySplitResult[1];
             	//alert(textroomname)
-            	document.getElementById(textroomname).value = mySplitResult[0];
+            	document.getElementById(textgalleryname).value = mySplitResult[0];
         	}
 			// Your options here
 		});
