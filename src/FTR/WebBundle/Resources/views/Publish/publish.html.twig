@@ -48,7 +48,7 @@
 </script>
 <div class="detail" style="height: 290px; margin-bottom: 15px;">
     <div style="width:500px; display:block; position:relative; float:left; border-right:1px solid #FFF; height:250px; margin-top: 20px;">
-{% if app.session.get('user') == NULL %}
+    	{% if app.session.get('user') == NULL %}
 		<a id="login2" href="{{path('FTRWebBundle_regis')}}"><img src="{{asset('images/pub-bt.png')}}" style="margin-left:30px; margin-top:20px;;" /></a>
 		{% else %}
 		<a href="{{path('userbuilding')}}"><img src="{{asset('images/pub-bt.png')}}" style="margin-left:30px; margin-top:20px;;" /></a>

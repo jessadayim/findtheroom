@@ -3,24 +3,32 @@
 <div id="container">
 	<div id="slides">
 		<div class="slides_container">
+			
 			<div class="slide">
 				<a href='#' title="" target="_new"><img src="{{asset('images/slider/slide-1.jpg')}}" width="1000" height="300"></a>
-                <div class="caption">
-                	<p>1 ห้องพักสุดหรู พร้อมชุดห้องครัวในตัว ราคาพิเศษ <span class="sale">7,000</span> บาท -> 5,000 บาท</p>
-                </div>
-            </div>
-            <div class="slide">
+				<div class="caption">
+					<p>
+						1 ห้องพักสุดหรู พร้อมชุดห้องครัวในตัว ราคาพิเศษ <span class="sale">7,000</span> บาท -> 5,000 บาท
+					</p>
+				</div>
+			</div>
+			<div class="slide">
 				<a href='#' title="" target="_new"><img src="{{asset('images/slider/slide-2.jpg')}}" width="1000" height="300"></a>
-                <div class="caption">
-                    <p>2 ห้องพักสุดหรู พร้อมชุดห้องครัวในตัว ราคาพิเศษ <span class="sale">7,000</span> บาท -> 5,000 บาท</p>
-                </div>
-            </div>
-            <div class="slide">
+				<div class="caption">
+					<p>
+						2 ห้องพักสุดหรู พร้อมชุดห้องครัวในตัว ราคาพิเศษ <span class="sale">7,000</span> บาท -> 5,000 บาท
+					</p>
+				</div>
+			</div>
+			<div class="slide">
 				<a href='#' title="" target="_new"><img src="{{asset('images/slider/slide-3.jpg')}}" width="1000" height="300"></a>
-                <div class="caption">
-                    <p>3 ห้องพักสุดหรู พร้อมชุดห้องครัวในตัว ราคาพิเศษ <span class="sale">7,000</span> บาท -> 5,000 บาท</p>
-                </div>
-            </div>
+				<div class="caption">
+					<p>
+						3 ห้องพักสุดหรู พร้อมชุดห้องครัวในตัว ราคาพิเศษ <span class="sale">7,000</span> บาท -> 5,000 บาท
+					</p>
+				</div>
+			</div>
+			
 		</div>
 		<a href='#' class="prev"><img src="{{asset('images/slider/arrow-prev.png')}}" width="29" height="57" alt="Arrow Prev"></a>
 		<a href='#' class="next"><img src="{{asset('images/slider/arrow-next.png')}}" width="29" height="57" alt="Arrow Next"></a>
@@ -147,155 +155,7 @@
     </div>
 </div>
 
-<div id="recommend">
-	<div id="i_containTab2">
-        <ul id="navi_containTab2">  
-            <li id="tabNavi4" class="active" onclick="enact(this);"></li> 
-            <li id="tabNavi5" onclick="enact(this);"></li>
-            <li id="tabNavi6" onclick="enact(this);"></li>
-        </ul>
-        <hr class="line" style="top: 60px; position: inherit;" />
-    	<ul id="detail_containTab2">  
-            <li class="detailContent4">
-                <div id="container2">
-                    <div id="slides2">
-                        <div class="slides_container" style="width:950px;">
-                        	<!-- {% for recom1 in item1%}                        	
-                        		{{recom1.building_name}}
-                        		{{recom1.name}}
-                        		{{recom1.type_name}}
-                        	{% endfor %}
-                        	{% for recom2 in item2%}
-                        		{{recom2.building_name}}
-                        		{{recom2.name}}
-                        		{{recom2.type_name}}
-                        	{% endfor %}
-                        	{% for recom3 in item3%}
-                        		{{recom3.building_name}}
-                        		{{recom3.name}}
-                        		{{recom3.type_name}}
-                        	{% endfor %} -->
-                        	<!-- {% for i in 0..1 %} -->
-                            <div class="slide" style="width:950px;">
-                            	{% for recom1 in item1%}
-                            	{% if item1|length >= 3 %}
-                            	<div class="ap2">                            		
-                            	{% else %}
-                            	<div class="ap">
-                            	{% endif %}
-                                	<div class="recom"></div>
-                                    <img src="{{asset('images/Apartment/ap1.png')}}" /><br /><br />
-                                    <span style='color:#FFF;'>
-                                    	<b style="font-size:24px">{{recom1.building_name}}</b><br />
-								                                        ประเภท : {{recom1.type_name}}<br />
-								                                        เขต : {{recom1.zonename}}<br /><br />
-								                                        ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท
-                                    </span>
-                                </div>       
-                                {% endfor %}  
-                            </div>
-                            <!-- {% endfor %}  -->
-                        </div>
-                        <a href='#' class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>
-                        <a href='#' class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>
-                    </div>
-                </div>
-            </li>
-            <li class="detailContent5">
-                <div id="container3">
-                    <div id="slides3">
-                        <div class="slides_container" style="width:950px;">
-                        	<!-- {% for recom1 in item1%}                        	
-                        		{{recom1.building_name}}
-                        		{{recom1.name}}
-                        		{{recom1.type_name}}
-                        	{% endfor %}
-                        	{% for recom2 in item2%}
-                        		{{recom2.building_name}}
-                        		{{recom2.name}}
-                        		{{recom2.type_name}}
-                        	{% endfor %}
-                        	{% for recom3 in item3%}
-                        		{{recom3.building_name}}
-                        		{{recom3.name}}
-                        		{{recom3.type_name}}
-                        	{% endfor %} -->
-                        	<!-- {% for i in 0..1 %} -->
-                            <div class="slide" style="width:950px;">                            	
-                            	{% for recom2 in item2%}
-                            	{% if item2|length >= 3 %}
-                            	<div class="ap2">                            		
-                            	{% else %}
-                            	<div class="ap">
-                            	{% endif %}
-                                	<div class="recom"></div>
-                                    <img src="{{asset('images/Apartment/ap2.png')}}" /><br /><br />
-                                    <span style='color:#FFF;'>
-                                    	<b style="font-size:24px">{{recom2.building_name}}</b><br />
-								                                        ประเภท : {{recom2.type_name}}<br />
-								                                        เขต : {{recom2.zonename}}<br /><br />
-								                                        ราคา : {{recom2.start_price}} - {{recom2.end_price}} บาท
-                                    </span>
-                                </div>       
-                                {% endfor %}
-                            </div>
-                            <!-- {% endfor %}  -->
-                        </div>
-                        <a href='#' class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>
-                        <a href='#' class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>
-                    </div>
-                </div>
-            </li>
-            <li class="detailContent6">
-                <div id="container4">
-                    <div id="slides4">
-                        <div class="slides_container" style="width:950px;">
-                        	<!-- {% for recom1 in item1%}                        	
-                        		{{recom1.building_name}}
-                        		{{recom1.name}}
-                        		{{recom1.type_name}}
-                        	{% endfor %}
-                        	{% for recom2 in item2%}
-                        		{{recom2.building_name}}
-                        		{{recom2.name}}
-                        		{{recom2.type_name}}
-                        	{% endfor %}
-                        	{% for recom3 in item3%}
-                        		{{recom3.building_name}}
-                        		{{recom3.name}}
-                        		{{recom3.type_name}}
-                        	{% endfor %} -->
-                        	<!-- {% for i in 0..1 %} -->
-                        	
-                            <div class="slide" style="width:950px;">
-                            	{% for recom3 in item3%}
-                            	{% if item3|length >= 3 %}
-                            	<div class="ap2">
-                            	{% else %}
-                            	<div class="ap">
-                            	{% endif %}
-                                	<div class="recom"></div>
-                                    <img src="{{asset('images/Apartment/ap3.png')}}" /><br /><br />
-                                    <span style='color:#FFF;'>
-                                    	<b style="font-size:24px">{{recom3.building_name}}</b><br />
-								                                        ประเภท : {{recom3.type_name}}<br />
-								                                        เขต : {{recom3.zonename}}<br /><br />
-								                                        ราคา : {{recom3.start_price}} - {{recom3.end_price}} บาท
-                                    </span>
-                                </div>       
-                                {% endfor %}  
-                            </div>
-                            <!-- {% endfor %}  -->
-                        </div>
-                        <a href='#' class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>
-                        <a href='#' class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>
-                    </div>
-                </div>
-            </li>
-            
-    	</ul>  
-    </div>
-</div>
+{% render "FTRWebBundle:Main:recom" %}
 
 <div id="ad1">
 	<a href='#'><img src="{{asset('images/ad/ad1.gif')}}" /></a>

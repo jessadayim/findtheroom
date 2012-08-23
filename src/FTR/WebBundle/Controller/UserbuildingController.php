@@ -87,7 +87,11 @@ class UserbuildingController extends Controller
 		if(!$conn){ die("MySQL Connection error");}
 			try{
 				$userdata = $em->getRepository('FTRWebBundle:User_owner')->findOneBy(array('username'=>$user));
+<<<<<<< HEAD
 				// เดี๋ยวเขียนเช็คถ้าไม่มีให้ redirect
+=======
+				
+>>>>>>> 33007b351c7e2668e48536665d7876b1bce6fec8
 				if(empty($id))
 				{
 					$building = new Building_site();
@@ -110,6 +114,7 @@ class UserbuildingController extends Controller
 				}else{
 					$building_id = $id;
 					$building_data = $this->getBuildingData($building_id);
+<<<<<<< HEAD
 					//echo "<pre>";var_dump($building_data);echo "</pre>";
 					if($building_data['ibuildingtypeid']!=0)
 					{
@@ -123,6 +128,9 @@ class UserbuildingController extends Controller
 					{
 						$paytype_data = $em->getRepository('FTRWebBundle:Pay_type')->findOneBy(array('id'=>$building_data['ipaytypeid']));
 					}
+=======
+					echo "<pre>";var_dump($building_data);echo "</pre>";
+>>>>>>> 33007b351c7e2668e48536665d7876b1bce6fec8
 				}
 				
 				$fac_inroomlist 	= $this->getFacility('inroom');
@@ -134,7 +142,11 @@ class UserbuildingController extends Controller
 				/*echo "<pre>";
 				var_dump($fac_outroomlist);
 				echo "</pre>";*/
+<<<<<<< HEAD
 				//exit();
+=======
+				exit();
+>>>>>>> 33007b351c7e2668e48536665d7876b1bce6fec8
 			} catch (Exception $e) {
 				echo 'Caught exception: ',  $e->getMessage(), "\n";
 				}
@@ -162,22 +174,39 @@ class UserbuildingController extends Controller
 					'iendprice'			=> $build_data->getEndPrice(),
 					'sphonenumber'		=> $build_data->getPhoneNumber(),
 					'slatitude'			=> $build_data->getLatitude(),
+<<<<<<< HEAD
 					'slongitude'		=> $build_data->getLongitude(),
 					'brecommend'		=> $build_data->getRecommend(),
 					'ibuildingtypeid'	=> $build_data->getBuildingTypeId(),
 					'izoneid'			=> $build_data->getZoneId(),
 					'ipaytypeid'		=> $build_data->getPayTypeId(),
+=======
+					'slongitude'			=> $build_data->getLongitude(),
+					'brecommend'			=> $build_data->getRecommend(),
+					'ibuildingtypeid'	=> $build_data->getBuildingTypeId(),
+					'izoneid'			=> $build_data->getZoneId(),
+					'ipaytypeid'			=> $build_data->getPayTypeId(),
+>>>>>>> 33007b351c7e2668e48536665d7876b1bce6fec8
 					'iuserownerid'		=> $build_data->getUserOwnerId(),
 					'tdetail'			=> $build_data->getDetail(),
 					'scontactname'		=> $build_data->getContactName(),
 					'scontactemail'		=> $build_data->getContactEmail(),
 					'swebsite'			=> $build_data->getWebsite(),
+<<<<<<< HEAD
 					'smonthstay'		=> $build_data->getMonthStay(),
 					'fwaterunit'		=> $build_data->getWaterUnit(),
 					'felectrictunit'	=> $build_data->getElectricityUnit(),
 					'iinternetprice'	=> $build_data->getInternetPrice(),
 					'igooglemapurl'		=> $build_data->getGoogleMapUrl(),
 					'binternetready'	=> $build_data->getInternetReady(),
+=======
+					'smonthstay'			=> $build_data->getMonthStay(),
+					'fwaterunit'			=> $build_data->getWaterUnit(),
+					'felectrictunit'		=> $build_data->getElectricityUnit(),
+					'iinternetprice'		=> $build_data->getInternetPrice(),
+					'igooglemapurl'		=> $build_data->getGoogleMapUrl(),
+					'binternetready'		=> $build_data->getInternetReady(),
+>>>>>>> 33007b351c7e2668e48536665d7876b1bce6fec8
 			);
 		return $arrdata;
 	}

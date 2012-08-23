@@ -162,32 +162,6 @@ $(function(){
 	</div>
 </div>
 
-<div class="detail" style="height:180px;">
-	<img src="{{asset('images/near.png')}}" />
-	<hr class="line" style="top: 60px;" />
-    <div>
-		<table>
-			<tr height="20" valign="middle">
-				<td align="right" width="150" style="padding-right:20px;">โซนในกรุงเทพฯ :</td>
-				<td width="300">{{item1.phone_number}}</td>
-				<td align="right" width="150" style="padding-right:10px;">ใกล้รถไฟฟ้า BTS :</td>
-				<td align="center" width="50">6</td>
-			</tr>
-			<tr height="20" valign="middle">
-				<td align="right" width="150" style="padding-right:20px;">ใกล้มหาวิทยาลัย :</td>
-				<td width="300">{{item1.contact_name}}</td>
-				<td align="right" width="150" style="padding-right:10px;">ใกล้รถไฟฟ้า MRT :</td>
-				<td align="center" width="50">{{item1.water_unit}}</td>
-			</tr>
-           <tr height="20" valign="middle">
-				<td align="right" width="150" style="padding-right:20px;">ตามสถานที่ใกล้เคียง :</td>
-				<td width="300"><a href="#">{{item1.contact_email}}</a></td>
-				<td colspan="2" >&nbsp;</td>
-			</tr>
-		</table>
-	</div>
-</div>
-
 <div class="detail" style="height:100%; padding-bottom:10px;">
 	<img src="{{asset('images/room.png')}}" />
 	<hr class="line" style="top: 60px;" />
@@ -219,66 +193,30 @@ $(function(){
         <div id="container5">
 			<div id="slides5">
 				<div class="slides_container" style="width:950px;">
-					<div class="slide" style="width:950px; margin-top:20px !important;">
-                            
-						<div class="ap3">
-							<a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}" title="test123456"><img src="{{asset('images/Apartment/ap1.png')}}" /></a><br /><br />
-                            <a class="pop" rel="group" href="{{asset('images/slider/slide-2.jpg')}}"><img src="{{asset('images/Apartment/ap1.png')}}" /></a>       
-						</div>
-                                
-						<div class="ap3">
-							<a class="pop" rel="group" href="{{asset('images/slider/slide-3.jpg')}}"><img src="{{asset('images/Apartment/ap2.png')}}" /></a><br /><br />
-                            <a class="pop" rel="group" href="{{asset('images/slider/slide-4.jpg')}}"><img src="{{asset('images/Apartment/ap2.png')}}" /></a>       
-						</div>
-                                
-						<div class="ap4">
-							<a class="pop" rel="group" href="{{asset('images/slider/slide-5.jpg')}}" title="test12345677777777777777"><img src="{{asset('images/Apartment/ap3.png')}}" /></a><br /><br />
-                            <a class="pop" rel="group" href="{{asset('images/slider/slide-6.jpg')}}"><img src="{{asset('images/Apartment/ap3.png')}}" /></a>       
-						</div>
-                                
-					</div>
+					{% set introw2 = 0 %}
+							{% for i in 0..5%}
+							{% if introw2%3 == 0%}
+								<div class="slide" style="width:950px;">
+							{%endif%}
+								{% set row2 = introw2+1 %}
+									{% if row2%3 == 0%}
+									<div class="ap4">
+									{% else %}
+									<div class="ap3">
+										{%endif%}
+										<a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><img src="{{asset('images/Apartment/ap3.png')}}" /></a><br /><br />
+                            			<a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><img src="{{asset('images/Apartment/ap3.png')}}" /></a>   
+									</div>
+									{% set introw2 = introw2+1 %}
+							{% if introw2%3 == 0%}
+								</div>
+							{%endif%}
+							{% endfor %}
 
-					<div class="slide" style="width:950px;">
-                                
-						<div class="ap3">
-							<a class="pop" rel="group" href="{{asset('images/slider/slide-7.jpg')}}"><img src="{{asset('images/Apartment/ap3.png')}}" /></a><br /><br />
-                            <a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><img src="{{asset('images/Apartment/ap3.png')}}" /></a>       
-						</div>
-                                
-						<div class="ap3">
-							<a class="pop" rel="group" href="{{asset('images/slider/slide-2.jpg')}}"><img src="{{asset('images/Apartment/ap1.png')}}" /></a><br /><br />
-                            <a class="pop" rel="group" href="{{asset('images/slider/slide-3.jpg')}}"><img src="{{asset('images/Apartment/ap1.png')}}" /></a>     
-						</div>
-                                
-						<div class="ap4">
-							<a class="pop" rel="group" href="{{asset('images/slider/slide-4.jpg')}}"><img src="{{asset('images/Apartment/ap2.png')}}" /></a><br /><br />
-                            <a class="pop" rel="group" href="{{asset('images/slider/slide-5.jpg')}}"><img src="{{asset('images/Apartment/ap2.png')}}" /></a>    
-						</div>
-                                
-					</div>
-
-					<div class="slide" style="width:950px;">
-                                
-						<div class="ap3">
-							<a class="pop" rel="group" href="{{asset('images/slider/slide-6.jpg')}}"><img src="{{asset('images/Apartment/ap2.png')}}" /></a><br /><br />
-                            <a class="pop" rel="group" href="{{asset('images/slider/slide-7.jpg')}}"><img src="{{asset('images/Apartment/ap2.png')}}" /></a>     
-						</div>
-                                
-						<div class="ap3">
-							<a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><img src="{{asset('images/Apartment/ap3.png')}}" /></a><br /><br />
-                            <a class="pop" rel="group" href="{{asset('images/slider/slide-2.jpg')}}"><img src="{{asset('images/Apartment/ap3.png')}}" /></a>         
-						</div>
-                                
-						<div class="ap4">
-							<a class="pop" rel="group" href="{{asset('images/slider/slide-3.jpg')}}"><img src="{{asset('images/Apartment/ap1.png')}}" /></a><br /><br />
-                            <a class="pop" rel="group" href="{{asset('images/slider/slide-4.jpg')}}"><img src="{{asset('images/Apartment/ap1.png')}}" /></a>  
-						</div>
-                                
-					</div>
-				</div>
-				<a href="#" class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>
-				<a href="#" class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>
+				</div>	<a href="#" class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>
+			<a href="#" class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>			
 			</div>
+			
 		</div>  
     </div>
 </div>
@@ -293,7 +231,7 @@ $(function(){
 					<tr height="20" valign="middle">
 				{% endif%}			
 						<td align="left" width="250">
-							{% if faclist.building_site_id == 1%}
+							{% if faclist.building_site_id == id%}
 							<span class="right">{{faclist.facility_name}}</span>
 							{% else %}
 							<span class="noright">{{faclist.facility_name}}</span>
@@ -319,7 +257,7 @@ $(function(){
 					<tr height="20" valign="middle">
 				{% endif%}
 						<td align="left" width="250">
-							{% if faclist.building_site_id == 1%}
+							{% if faclist.building_site_id == id%}
 							<span class="right">{{faclist.facility_name}}</span>
 							{% else %}
 							<span class="noright">{{faclist.facility_name}}</span>

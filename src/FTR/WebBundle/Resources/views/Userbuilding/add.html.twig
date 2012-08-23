@@ -182,16 +182,20 @@
 	<!--<input class="upimg" type="submit" value="" />-->
 	<input class="save" type="submit" value="" />
 	<input class="back" type="submit" value="" />
+	<input class="data" type="submit" value="" />
+	<input class="room" type="submit" value="" />
+	<input class="gallery" type="submit" value="" />
+	<input class="etc" type="submit" value="" />
 </div>
 
-<div class="detail" style="height: 680px; margin-bottom: 15px;">
+<div class="detail" style="height: 760px; margin-bottom: 15px;">
 	<img src="{{asset('images/apdata.png')}}" style="display:block; position:relative; float:none;" />
 	<hr class="line" style="top: 60px;" />
     <div style="width:1000px; display:block; position:relative; height:250px; margin-top: 20px;">
     	<table style="margin-top: 0px; float:left;">
         	<tr height="50" valign="middle">
 				<td align="left" width="240"><img src="{{asset('images/ex.png')}}" class="nopad" /></td>
-                <td align="left" width="200" valign="top"><input id="inter" name="option36" type="checkbox" value="internetap" /><label for="inter">มีอินเตอร์เน็ต</label></td>
+                <td align="left" width="230" valign="top"><input id="inter" name="option36" type="checkbox" value="internetap" /><label for="inter">มีอินเตอร์เน็ต</label></td>
             </tr>
             <tr height="50" valign="middle">
 				<td align="center" width="240" style="font-size:24px;"><img src="{{asset('images/upload.png')}}" class="nopad" /></td>
@@ -207,19 +211,45 @@
 				<td align="right" width="210" style="font-size:24px;">ที่อยู่ : *</td>
                 <td align="left" width="190"><textarea name="placeap" type="text" maxlength="500" class="place" /></textarea></td>
             </tr>
+			<tr height="50" valign="middle">
+				<td align="right" width="210" style="font-size:24px;">จังหวัด : *</td>
+                <td align="left" width="190">
+					<div class="styled-select">
+						<select class="select">
+							<option value="daymonth">รายวันและรายเดือน</option>
+							<option value="day">รายวัน</option>
+							<option value="month">รายเดือน</option>
+						</select>
+					</div>
+				</td>
+            </tr>
+			<tr height="40" valign="middle">
+				<td align="right" width="210" style="font-size:24px;">เขต : *</td>
+                <td align="left" width="190">
+					<div class="styled-select">
+						<select class="select">
+							<option value="daymonth">รายวันและรายเดือน</option>
+							<option value="day">รายวัน</option>
+							<option value="month">รายเดือน</option>
+						</select>
+					</div>
+				</td>
+            </tr>
             <tr height="50" valign="middle">
-				<td align="right" width="240" style="font-size:24px;">รูปแผนที่ : *</td>
-                <td align="left" width="200" style="font-size:24px;"><img src="{{asset('images/upload.png')}}" class="nopad" /></td>
+				<td align="right" width="210" style="font-size:24px;">รหัสไปรษณีย์ : *</td>
+                <td align="left" width="190"><input name="nameap" type="text" maxlength="30" placeholder="กรุณากรอกรหัสไปรษณีย์" style=" padding:2px; font-size:20px;" /></td>
             </tr>
         </table>
         <table style="margin-top: 0px; float:left;">
         	<tr>
             	<td align="right" width="240" valign="top" style="font-size:24px;">รายละเอียดเพิ่มเติม : &nbsp;</td>
-                <td align="left"><textarea name="placedetail" type="text" maxlength="500" class="ldesc" /></textarea></td>
+                <td align="left" width="200"><textarea name="placedetail" type="text" maxlength="500" class="ldesc" /></textarea></td>
+				<td align="right" width="240" style="font-size:24px;">รูปแผนที่ : *</td>
+                <td align="left" width="200" style="font-size:24px;"><img src="{{asset('images/upload.png')}}" class="nopad" /></td>
             </tr>
         </table>
     </div>
-    <div style="width:1000px; display:block; position:relative; height:240px; margin-top: 20px;">
+    <div style="width:1000px; display:block; position:relative; height:240px; margin-top: 100px;">
 		<table style="margin-top: 0px;">
         	<tr height="50" valign="middle">
 				<td align="right" width="240" style="font-size:24px;">Google Map ลองติจูด : *</td>
