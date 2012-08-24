@@ -38,6 +38,55 @@
 			});
 		});
 </script>
+<script>
+	function sendContact() {	
+		var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+		
+			if($('#name').val()=="")
+			{
+				$("#txterror").html("กรุณากรอก ชื่อ");
+	            return false;
+	        }
+	        
+	        else if($('#tel').val()=="")
+	        {
+	        	$("#txterror").html("กรุณากรอก หมายเลขโทรศัพท์");
+	            return false;
+	        }
+	        else if(document.getElementById('tel').value.length<9){
+	        	$("#txterror").html("หมายเลขโทรศัพท์ไม่ถูกต้อง");
+		        return false;
+	        }
+	        
+	        else if($('#title').val()=="")
+			{
+	           $("#txterror").html("กรุณากรอก เรื่องที่ต้องการติดต่อ");
+	           return false;
+	        }
+	        
+	        else if($('#mail').val()=="")
+	        {
+	        	$("#txterror").html("กรุณากรอกอีเมลล์");
+	            return false;
+	        }else if(reg.test($('#mail').val())==false)
+	        {
+	        	$("#txterror").html("กรุณากรอก Email ให้ถูกต้อง");
+		        return false;
+	        }
+	        else if($('#desc').val()=="")
+			{
+				$("#txterror").html("กรุณากรอก รายละเอียดที่ต้องการติดต่อ");
+	            return false;
+	        }
+	        else if($('#captcha').val() != $('#cap2').val())
+	        {
+	        	$("#txterror").html("กรุณายืนยันรหัส");
+				return false;
+			}else{
+				return true;
+			}			
+	}
+</script>
 <div class="detail" style="margin-bottom:15px; height: 470px;">
 	<img src="{{asset('images/contact.png')}}" style="display:block; position:relative; float:none;" />
 	<hr class="line" style="top: 60px;" />
@@ -57,34 +106,40 @@
 		</table>
 	</div>
     <div style="width:620px; display:block; position:relative; float:left;">
-		<table>
-			<tr valign="middle" height="40">
-				<td align="left" colspan="4">ติดต่อเรา :</td>
-			</tr>
-            <tr valign="middle" height="40">
-				<td align="left" width="100">ชื่อ : *</td>
-                <td align="left" width="180"><input name="name" type="text" maxlength="30" /></td>
-                <td align="left" width="120">เบอร์โทรศัพท์ : *</td>
-                <td align="left" width="180"><input name="tel" type="text" maxlength="10" /></td>
-			</tr>
-			<tr valign="middle" height="40">
-				<td align="left" width="100">เรื่องติดต่อ : *</td>
-                <td align="left" width="180"><input name="title" type="text" maxlength="30" /></td>
-                <td align="left" width="120">อีเมล : *</td>
-                <td align="left" width="180"><input name="mail" type="text" maxlength="30" /></td>
-			</tr>
-            <tr valign="middle" height="100">
-				<td align="left" width="100">รายะเอียด : *</td>
-                <td align="left" colspan="3"><textarea name="desc" type="text" maxlength="500" class="longdesc"></textarea></td>
-			</tr>
-            <tr valign="middle" height="40">
-				<td align="left" width="100">กรอกรหัสยืนยันตามรูปภาพ : *</td>
-                <td align="left" width="180"><br /><input name="cap2" type="hidden" value="{{char}}" id="cap2" />
-                	<img src="{{asset('captcha/test.jpg')}}" width="160" height="40" style="padding-left:0px; padding-bottom:10px;"/>
-                	<input name="captcha" type="text" maxlength="4" /></td>
-                <td align="left" colspan="2"><input class="send" type="submit" value="" /><input class="cancel" type="submit" value="" /></td>
-			</tr>
-		</table>
+    	<form action="{{path('FTRWebBundle_sendcontact')}}" method="post" onsubmit="return sendContact();">
+			<table>
+				<tr valign="middle" height="40">
+					<td align="left" colspan="4">ติดต่อเรา :</td>
+				</tr>
+	            <tr valign="middle" height="40">
+					<td align="left" width="100">ชื่อ : *</td>
+	                <td align="left" width="180"><input id="name" name="name" type="text" maxlength="30" /></td>
+	                <td align="left" width="120">เบอร์โทรศัพท์ : *</td>
+	                <td align="left" width="180"><input id="tel" name="tel" type="text" maxlength="10" /></td>
+				</tr>
+				<tr valign="middle" height="40">
+					<td align="left" width="100">เรื่องติดต่อ : *</td>
+	                <td align="left" width="180"><input id="title" name="title" type="text" maxlength="30" /></td>
+	                <td align="left" width="120">อีเมล : *</td>
+	                <td align="left" width="180"><input id="mail" name="mail" type="text" maxlength="30" /></td>
+				</tr>
+	            <tr valign="middle" height="100">
+					<td align="left" width="100">รายะเอียด : *</td>
+	                <td align="left" colspan="3"><textarea id="desc" name="desc" type="text" maxlength="500" class="longdesc"></textarea></td>
+				</tr>
+				<tr height="20">
+	                <td align="center" colspan="4"><div class="alertmsg" id="txterror"></div></td>
+				</tr>
+	            <tr valign="middle" height="40">
+					<td align="left" width="100">กรอกรหัสยืนยันตามรูปภาพ : *</td>
+	                <td align="left" width="180"><br /><input id="cap2" name="cap2" type="hidden" value="{{char}}" id="cap2" />
+	                	<img src="{{asset('captcha/test.jpg')}}" width="160" height="40" style="padding-left:0px; padding-bottom:10px;"/>
+	                	<input id="captcha" name="captcha" type="text" maxlength="4" /></td>
+	                <td align="left" colspan="2"><input class="send" type="submit" value="" /><input class="cancel" type="submit" value="" /></td>
+				</tr>
+			</table>
+		</form>
+
 	</div>
 </div>
 
