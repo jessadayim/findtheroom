@@ -55,9 +55,6 @@ class SearchController extends Controller
 
     function getZone( $payType = null){
         $result_data = array();
-
-        $em = $this->getDoctrine()->getEntityManager();
-
         $conn= $this->get('database_connection');
         if(!$conn){ die("MySQL Connection error");}
         try{
@@ -81,8 +78,6 @@ class SearchController extends Controller
 
     function getBuildingType($type=null){
         $result_data = array();
-        $em = $this->getDoctrine()->getEntityManager();
-
         $conn= $this->get('database_connection');
         if(!$conn){ die("MySQL Connection error");}
         try{
@@ -136,8 +131,6 @@ class SearchController extends Controller
 	
 	function getPayType(){
 		$result_data = array();
-		$em = $this->getDoctrine()->getEntityManager();
-		
 		$conn= $this->get('database_connection');
 		if(!$conn){ die("MySQL Connection error");}
 		try{
@@ -155,8 +148,6 @@ class SearchController extends Controller
 	
 	function getNeary($type=2){
 		$result_data = array();
-		$em = $this->getDoctrine()->getEntityManager();
-		
 		$conn= $this->get('database_connection');
 		if(!$conn){ die("MySQL Connection error");}
 		try{
