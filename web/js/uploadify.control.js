@@ -53,7 +53,7 @@ function uploadpicroom()
 {
 	var ownername = document.getElementById('hdnownername').value;
 	var buildid = document.getElementById('hdnbuildid').value;
-	var numberline = parseInt(document.addform.hdnMaxLine.value);
+	var numberline = intLine;//parseInt(document.addform.hdnMaxLine.value);
 	for(i=0;i<=numberline;i++){
 	var name = '#room'+i
 	$(name).uploadify({
