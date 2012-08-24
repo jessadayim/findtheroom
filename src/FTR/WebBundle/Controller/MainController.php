@@ -11,71 +11,20 @@ class MainController extends Controller
     
     public function indexAction()
     {
-    	
 		//var_dump($objSQL1,$objSQL2,$objSQL3); test
 		//exit();
-		
-		$zonelist_day		= $this->getZone(1);
-		$zonelist_month		= $this->getZone(2);
-		$buildingtype_day	= $this->getBuildingType(1);
-		$buildingtype_month	= $this->getBuildingType(2);
-		
+
 		$top_last_building	= $this->getTopLastBuilding();
 		$last_update		= date("Y-m-d H:i:s",mktime(date("H"), date("i"), date("s"), date("m"), date("d"), date("Y")));
 		$last_update		= $this->convertThaiDate($last_update);
-		
-		
+
 		return $this->render('FTRWebBundle:Main:index.html.twig',array(
-			'zonelist_day' 			=>$zonelist_day,
-			'zonelist_month' 		=>$zonelist_month,
-			'buildingtype_day' 		=>$buildingtype_day,
-			'buildingtype_month' 	=>$buildingtype_month,
+
 			'top_last_building' 	=>$top_last_building,
 			'last_update' 			=>$last_update,
 			));
     }
-	
-	function getZone( $payType = 1){
-		$result_data = array();
-		
-		$em = $this->getDoctrine()->getEntityManager();
-		
-		$conn= $this->get('database_connection');
-		if(!$conn){ die("MySQL Connection error");}
-		try{
-			$sql = "
-				select * from zone where id in (select distinct(zone_id) from building_site where pay_type_id = $payType)
-			";
-			$result_data = $conn->fetchAll($sql);
-		} catch (Exception $e) {
-			echo 'Caught exception: ',  $e->getMessage(), "\n";
-		}
-		$all[] = array('id'=>0,'zonename'=>'ทุกเขต');
-		
-		$result = array_merge($all,$result_data);
-		return $result;
-	}
-	
-	function getBuildingType($type=1){
-		$result_data = array();
-		$em = $this->getDoctrine()->getEntityManager();
-		
-		$conn= $this->get('database_connection');
-		if(!$conn){ die("MySQL Connection error");}
-		try{
-			$sql = "
-				select * from building_type where id in (select distinct(building_type_id) from building_site where pay_type_id = $type)
-			";
-			$result_data = $conn->fetchAll($sql);
-		} catch (Exception $e) {
-			echo 'Caught exception: ',  $e->getMessage(), "\n";
-		}
-		$all[] = array('id'=>0,'type_name'=>'ทุกประเภท');
-		
-		$result = array_merge($all,$result_data);
-		return $result;
-	}
-	
+
 	function getTopLastBuilding(){
 		$result_data = array();
 		$em = $this->getDoctrine()->getEntityManager();

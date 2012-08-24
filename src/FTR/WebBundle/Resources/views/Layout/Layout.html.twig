@@ -170,6 +170,20 @@ function enact(what){
 {% block body %}
 {% endblock %}
 
+<div id="ad1">
+    <a href='#'><img src="{{asset('images/ad/ad1.gif')}}" /></a>
+    <a href='#'><img src="{{asset('images/ad/ad2.gif')}}" /></a>
+    <a href='#'><img src="{{asset('images/ad/ad3.gif')}}" /></a>
+    <a href='#' style="margin-right:0px !important"><img src="{{asset('images/ad/ad4.gif')}}" /></a>
+</div>
+
+<div id="ad1">
+    <a href='#'><img src="{{asset('images/ad/ad1.gif')}}" /></a>
+    <a href='#'><img src="{{asset('images/ad/ad2.gif')}}" /></a>
+    <a href='#'><img src="{{asset('images/ad/ad3.gif')}}" /></a>
+    <a href='#' style="margin-right:0px !important"><img src="{{asset('images/ad/ad4.gif')}}" /></a>
+</div>
+
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
@@ -182,10 +196,31 @@ function enact(what){
 
 <div id="footer">
 	<ul>
-        <li class="head"><img src="{{asset('images/footer1.png')}}" /><hr /><a href='#'>หน้าแรก</a> <a href='#'>ค้นหาอย่างละเอียด</a> <a href='#'>ลงโฆษณา</a> <a href='#'>ลงประกาศห้องพักฟรี</a> <a href='#'>กระดานพูดคุย</a> <a href="#">ติดต่อเรา</a></li>
-        <li class="head"><img src="{{asset('images/footer2.png')}}" /><hr /><a href='#'>อพาร์ทเม้นต์</a> <a href='#'>หอพักชาย</a> <a href='#'>หอพักหญิง</a></li>
-        <li class="head"><img src="{{asset('images/footer3.png')}}" /><hr /><a href='#'>โซนในกรุงเทพฯ</a> <a href='#'>ใกล้มหาวิทยาลัย</a> <a href='#'>ใกล้รถไฟฟ้า BTS</a> <a href='#'>ใกล้รถไฟฟ้า MRT</a> <a href='#'>ตามสถานที่ใกล้เคียง</a></li>
-        <li class="head"><img src="{{asset('images/footer4.png')}}" /><hr /><a href='#'>Facebook</a> <a href='#'>Twitter</a> <div class="fb-like-box" data-href="http://www.facebook.com/FindTheRoom" data-width="205" data-height="65" data-show-faces="false" data-stream="false" data-header="true" style='background-color:#FFF; margin-left: 10px; margin-top: 10px;'></div></li>
+        <li class="head"><img src="{{asset('images/footer1.png')}}" /><hr />
+            <a href="{{path('FTRWebBundle_homepage')}}">หน้าแรก</a>
+            <a href="{{path('FTRWebBundle_search')}}">ค้นหาอย่างละเอียด</a>
+            <a href='#'>ลงโฆษณา</a>
+            <a href="{{path('FTRWebBundle_publish')}}">ลงประกาศห้องพักฟรี</a>
+            <!--<a href='#'>กระดานพูดคุย</a>-->
+            <a href="{{path('FTRWebBundle_contact')}}">ติดต่อเรา</a>
+        </li>
+        <li class="head"><img src="{{asset('images/footer2.png')}}" /><hr />
+            <a href="{{path('FTRWebBundle_list')}}">อพาร์ทเม้นต์</a>
+            <a href="{{path('FTRWebBundle_list')}}">หอพักชาย</a>
+            <a href="{{path('FTRWebBundle_list')}}">หอพักหญิง</a>
+        </li>
+        <li class="head"><img src="{{asset('images/footer3.png')}}" /><hr />
+            <a href="{{path('FTRWebBundle_list')}}">โซนในกรุงเทพฯ</a>
+            <a href="{{path('FTRWebBundle_list')}}">ใกล้มหาวิทยาลัย</a>
+            <a href="{{path('FTRWebBundle_list')}}">ใกล้รถไฟฟ้า BTS</a>
+            <a href="{{path('FTRWebBundle_list')}}">ใกล้รถไฟฟ้า MRT</a>
+            <a href="{{path('FTRWebBundle_list')}}">ตามสถานที่ใกล้เคียง</a>
+        </li>
+        <li class="head"><img src="{{asset('images/footer4.png')}}" /><hr />
+            <a href='#'>Facebook</a>
+            <a href='#'>Twitter</a>
+            <div class="fb-like-box" data-href="http://www.facebook.com/FindTheRoom" data-width="205" data-height="65" data-show-faces="false" data-stream="false" data-header="true" style='background-color:#FFF; margin-left: 10px; margin-top: 10px;'></div>
+        </li>
 	</ul>
 </div>
 

@@ -7,8 +7,28 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class SearchController extends Controller
 {
-    
     public function searchAction()
+    {
+        return $this->render('FTRWebBundle:Search:index.html.twig');
+
+    }
+
+    public function shotsearchAction()
+    {
+        $zonelist_day		= $this->getZone(1);
+        $zonelist_month		= $this->getZone(2);
+        $buildingtype_day	= $this->getBuildingType(1);
+        $buildingtype_month	= $this->getBuildingType(2);
+
+        return $this->render('FTRWebBundle:Search:shotsearch.html.twig', array(
+            'zonelist_day' 			=>$zonelist_day,
+            'zonelist_month' 		=>$zonelist_month,
+            'buildingtype_day' 		=>$buildingtype_day,
+            'buildingtype_month' 	=>$buildingtype_month,
+        ));
+    }
+
+    public function fullsearchAction()
     {
         $fac_inroomlist 	= $this->getFacility('inroom');	
         $fac_outroomlist 	= $this->getFacility('outroom');	
@@ -32,46 +52,56 @@ class SearchController extends Controller
 			'nearBy' 			=> $nearBy,
 		));
     }
-	
-	function getZone(){
-		$result_data = array();
-		$em = $this->getDoctrine()->getEntityManager();
-		
-		$conn= $this->get('database_connection');
-		if(!$conn){ die("MySQL Connection error");}
-		try{
-			$sql = "
-				select * from zone
+
+    function getZone( $payType = null){
+        $result_data = array();
+
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $conn= $this->get('database_connection');
+        if(!$conn){ die("MySQL Connection error");}
+        try{
+            $whereQuery = null;
+            if($payType != null){
+                $whereQuery = "where id in (select distinct(zone_id) from building_site where pay_type_id = $payType)";
+            }
+
+            $sql = "
+				select * from zone $whereQuery
 			";
-			$result_data = $conn->fetchAll($sql);
-		} catch (Exception $e) {
-			echo 'Caught exception: ',  $e->getMessage(), "\n";
-		}
-		$all[] = array('id'=>0,'zonename'=>'ทุกเขต');
-		
-		$result = array_merge($all,$result_data);
-		return $result;
-	}
-	
-	function getBuildingType(){
-		$result_data = array();
-		$em = $this->getDoctrine()->getEntityManager();
-		
-		$conn= $this->get('database_connection');
-		if(!$conn){ die("MySQL Connection error");}
-		try{
-			$sql = "
-				select * from building_type
+            $result_data = $conn->fetchAll($sql);
+        } catch (Exception $e) {
+            echo 'Caught exception: ',  $e->getMessage(), "\n";
+        }
+        $all[] = array('id'=>0,'zonename'=>'ทุกเขต');
+
+        $result = array_merge($all,$result_data);
+        return $result;
+    }
+
+    function getBuildingType($type=null){
+        $result_data = array();
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $conn= $this->get('database_connection');
+        if(!$conn){ die("MySQL Connection error");}
+        try{
+            $whereQuery = null;
+            if($type != null){
+                $whereQuery = " where id in (select distinct(building_type_id) from building_site where pay_type_id = $type)";
+            }
+            $sql = "
+				select * from building_type $whereQuery
 			";
-			$result_data = $conn->fetchAll($sql);
-		} catch (Exception $e) {
-			echo 'Caught exception: ',  $e->getMessage(), "\n";
-		}
-		$all[] = array('id'=>0,'type_name'=>'ทุกประเภท');
-		
-		$result = array_merge($all,$result_data);
-		return $result;
-	}
+            $result_data = $conn->fetchAll($sql);
+        } catch (Exception $e) {
+            echo 'Caught exception: ',  $e->getMessage(), "\n";
+        }
+        $all[] = array('id'=>0,'type_name'=>'ทุกประเภท');
+
+        $result = array_merge($all,$result_data);
+        return $result;
+    }
 	
 	function getFacility($type='inroom'){
 		$conn= $this->get('database_connection');
