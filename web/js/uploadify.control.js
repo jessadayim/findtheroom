@@ -82,7 +82,7 @@ function uploadpicgallery()
 {
 	var ownername = document.getElementById('hdnownername').value;
 	var buildid = document.getElementById('hdnbuildid').value;
-	var numberline = parseInt(document.addform.hdnMaxLine.value);
+	var numberline = intLineGal;//parseInt(document.addform.hdnMaxLine.value);
 	for(i=0;i<=numberline;i++){
 	var name = '#gallery'+i
 	$(name).uploadify({
@@ -99,7 +99,7 @@ function uploadpicgallery()
             	//alert('The file ' + file.name + ' was successfully uploaded with a response of ' + response + ':' + data);
             	var mySplitResult = data.split("_");
             	var textgalleryname = 'hdngalleryname'+mySplitResult[1];
-            	//alert(textroomname)
+            	alert(mySplitResult)
             	document.getElementById(textgalleryname).value = mySplitResult[0];
         	}
 			// Your options here

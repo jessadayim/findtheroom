@@ -171,18 +171,41 @@
 	var arraygalleryimage =
 			[
 				{% for gallerydata in galleries %}
-					[{{roomdata.id}}, "{{asset('roomdata.photo_name')}}", '', '', '',"{{roomdata.photo_name}}"],
+					[{{gallerydata.id}}, "{{asset('gallerydata.photo_name')}}","{{gallerydata.photo_name}}"],
 				{% endfor %}
 			];
 	
-	function CreateNewRowGallery()
+	var nullarrayGal = [-1, "{{asset('images/show.png')}}",''];
+	var pathimgdefault = "{{asset('images/')}}";
+	
+	$(document).ready(function(){
+		if(arraygalleryimage.length == 0)
+		{			
+			CreateNewRowGallery(nullarrayGal, 0);
+			arraygalleryimage = [nullarrayGal];
+		}
+		else{		
+			genrowimageGal();
+		}
+	});
+	function genrowimageGal()
 	{
-		var intLine = parseInt(document.addform.hdnMaxLineGal.value);
-		intLine++;
-			
+		for(var i=0 ; i < arraygalleryimage.length ; i++)
+		{
+			CreateNewRowGallery(arraygalleryimage[i], i);
+		}
+	}
+	
+	function CreateNewRowGallery(arraydata, num)
+	{
+		var imageid = arraydata[0];
+		var pathimage = arraydata[1];
+		var nameimage = arraydata[2];
+		
 		var theTable = document.all.tbgal
 		var newRow = theTable.insertRow(theTable.rows.length)
-		newRow.id = newRow.uniqueID
+		//newRow.id = newRow.uniqueID
+		newRow.id = 'galtrid'+num
 		
 		var item1 = 1
 		var newCell
@@ -191,7 +214,7 @@
 		newCell = newRow.insertCell(0)
 		newCell.id = newCell.uniqueID
 		newCell.setAttribute("className", "css-name");
-		newCell.innerHTML = "<img src=\"{{asset('images/delete.png')}}\" style=\"padding-left:0px; margin-left:-10px;\" />"		
+		newCell.innerHTML = "<img src=\"{{asset('images/delete.png')}}\" style=\"padding-left:0px; margin-left:-10px; cursor:pointer;\" />"		
 		
 		//*** Column 2 ***//
 		newCell = newRow.insertCell(1)
@@ -203,16 +226,17 @@
 		newCell = newRow.insertCell(2)
 		newCell.id = newCell.uniqueID
 		newCell.setAttribute("className", "css-name");
-		newCell.innerHTML = "<input type=\"file\" name=\"gallery"+intLine+"\" id=\"gallery"+intLine+"\" /><input type=\"hidden\" name=\"hdngalleryname"+intLine+"\" id=\"hdngalleryname"+intLine+"\" />"				
+		newCell.innerHTML = "<input type=\"file\" name=\"gallery"+num+"\" id=\"gallery"+num+"\" /><input type=\"hidden\" name=\"hdngalleryname"+num+"\" id=\"hdngalleryname"+num+"\" />"				
 		
 		//*** Column 4 ***//
 		newCell = newRow.insertCell(3)
 		newCell.id = newCell.uniqueID
 		newCell.setAttribute("className", "css-name");
-		newCell.innerHTML = "<textarea id=\"galtitle"+intLine+"\" name=\"galtitle"+intLine+"\" maxlenght=\"500\" placeholder=\"กรอกข้อมูลของรูปที่นี่\" class=\"galdesc\"></textarea>"				
+		newCell.innerHTML = "<textarea id=\"galtitle"+num+"\" name=\"galtitle"+num+"\" maxlenght=\"500\" placeholder=\"กรอกข้อมูลของรูปที่นี่\" class=\"galdesc\"></textarea>"				
 			
-		document.addform.hdnMaxLineGal.value = intLine;
+		//document.addform.hdnMaxLineGal.value = intLine;
 		loopbuttongallery();
+		intLineGal++;
 	}
 	
 	function readdatagallery(numGal)
@@ -236,16 +260,6 @@
 	
 	function RemoveRowGal(num, imageid)
 	{
-		//intLine = parseInt(document.addform.hdnMaxLine.value);
-		//alert(num);
-		var strdefault = '<tr height="40" valign="bottom">'+
-            	'<td align="left" colspan="4" style="font-size:24px;" width="500">ประเภทห้องพัก</td>'+
-                '<td align="center" width="100">ขนาด</td>'+
-                '<td width="100">&nbsp;</td>'+
-                '<td align="center" width="150">อัตราค่าเช่า / เดือน</td>'+
-                '<td width="60">&nbsp;</td>'+
-            '</tr>'
-
 		if(intLine > 1)
 		{
 				// theTable = (document.all) ? document.all.tbtype : 
@@ -256,8 +270,7 @@
 				// document.addform.hdnMaxLine.value = intLine;
 				// loopbutton();
 				readdataroom(num);
-				$("#tbgal").html(strdefault);
-				intLine = 0;
+				intLineGal = 0;
 				genrowimage();
 				
 		}	
@@ -272,6 +285,16 @@
 		alert(id);
 		window.location.reload()
 	}
+	$(document).ready(function(){
+		
+	});
+	
+	window.onbeforeunload = unloadPage;
+	function unloadPage()
+	{
+		alert(1);
+	}
+	
 </script>
 <form name="addform" id="addform" method="post" action="{{path('saveData', {'id': build_id })}}">
 
@@ -452,23 +475,8 @@
     <div>
 		<table id="tbgal">
 			
-            <tr valign="middle">
-				<td>
-					<img src="{{asset('images/delete.png')}}" style="padding-left:0px; margin-left:-10px;" />
-				</td>
-				<td align="left" style="font-size:24px;">
-					<img src="{{asset('images/show.png')}}" style="margin-top: -10px;" />
-				</td>
-				<td width="150">
-					<input type="file" name="gallery0" id="gallery0" /><input type="hidden" name="hdngalleryname0" id="hdngalleryname0" />
-				</td>
-				<td align="left" style="font-size:24px;">
-					<textarea id="galtitle" name="galtitle" maxlenght="500" placeholder="กรอกข้อมูลของรูปที่นี่" class="galdesc"></textarea>
-				</td>
-			</tr>
-			
         </table>
-        <img src="{{asset('images/addmore2.png')}}" class="nopad" onclick="CreateNewRowGallery();" style="margin-left: 130px;margin-top: 10px;margin-bottom: 10px; cursor: pointer;">
+        <img src="{{asset('images/addmore2.png')}}" class="nopad" onclick="CreateNewRowGallery(nullarrayGal, intLineGal);" style="margin-left: 130px;margin-top: 10px;margin-bottom: 10px; cursor: pointer;">
         <input type="hidden" id="hdnMaxLineGal" name="hdnMaxLineGal" value="{{gellerylines}}">
     </div>
 </div>

@@ -20,7 +20,7 @@ if (!empty($_FILES)) {
 	$newfieldname1 = str_replace('#', '', $fieldname);
 	if($type=='room'){
 		$newfieldname2 = str_replace('#room', '', $fieldname);
-	}elseif($type=='galler'){
+	}elseif($type=='gallery'){
 		$newfieldname2 = str_replace('#gallery', '', $fieldname);
 	}
 	$fileextension = $fileParts['extension'];

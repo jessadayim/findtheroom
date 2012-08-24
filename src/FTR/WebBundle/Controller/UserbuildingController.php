@@ -139,6 +139,7 @@ class UserbuildingController extends Controller
 				var_dump($fac_outroomlist);
 				echo "</pre>";*/
 				//exit();
+				$this->getPathUpload($building_id);
 			} catch (Exception $e) {
 				echo 'Caught exception: ',  $e->getMessage(), "\n";
 				}
@@ -436,8 +437,15 @@ class UserbuildingController extends Controller
 		return $this->render('FTRWebBundle:Userbuilding:uploadfile.html.twig');
 	}
 
-	public function getPathUpload()
+	public function getPathUpload($id)
 	{
-		
+		$path = "./images/building/".$id;
+		if(!file_exists("./images/building")){
+			mkdir("./images/building", 0777);
+		}
+		if(!file_exists($path)){
+			mkdir($path, 0777);
+		}
+		return $path;
 	}
 }
