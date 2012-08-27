@@ -15,16 +15,65 @@ class SearchController extends Controller
 
     public function shotsearchAction()
     {
+        $conn= $this->get('database_connection');
+        if(!$conn){ die("MySQL Connection error");}
+                    
         $zonelist_day		= $this->getZone(1);
         $zonelist_month		= $this->getZone(2);
         $buildingtype_day	= $this->getBuildingType(1);
         $buildingtype_month	= $this->getBuildingType(2);
+        
+        //rux
+        $sqlGetMap1 = "
+            SELECT 
+              a.*, 
+              b.`type_name`
+            FROM
+              `building_site` a
+              INNER JOIN `building_type` b 
+                ON (b.`id` = a.`building_type_id`) 
+            WHERE a.`publish` = 1 
+              AND b.`deleted` = 0 ";
+        $sqlGetMap2 = "
+            $sqlGetMap1 AND b.`type_name` = 'อพาร์ทเม้นต์'
+        ";
+        $sqlGetMap3 = "
+            $sqlGetMap1 AND b.`type_name` = 'หอพักชาย' 
+        ";
+        $sqlGetMap4 = "
+            $sqlGetMap1 AND b.`type_name` = 'หอพักหญิง' 
+        ";
+        try{                
+            $objGetMap1 = $conn->fetchAll($sqlGetMap1);
+        } catch (Exception $e) {
+            echo 'Caught exception: ',  $e->getMessage(), "\n";
+        }
+        try{                
+            $objGetMap2 = $conn->fetchAll($sqlGetMap2);
+        } catch (Exception $e) {
+            echo 'Caught exception: ',  $e->getMessage(), "\n";
+        }
+        try{                
+            $objGetMap3 = $conn->fetchAll($sqlGetMap3);
+        } catch (Exception $e) {
+            echo 'Caught exception: ',  $e->getMessage(), "\n";
+        }
+        try{                
+            $objGetMap4 = $conn->fetchAll($sqlGetMap4);
+        } catch (Exception $e) {
+            echo 'Caught exception: ',  $e->getMessage(), "\n";
+        }
+        
 
         return $this->render('FTRWebBundle:Search:shotsearch.html.twig', array(
             'zonelist_day' 			=>$zonelist_day,
             'zonelist_month' 		=>$zonelist_month,
             'buildingtype_day' 		=>$buildingtype_day,
             'buildingtype_month' 	=>$buildingtype_month,
+            'get_map1'              =>$objGetMap1,
+            'get_map2'              =>$objGetMap2,
+            'get_map3'              =>$objGetMap3,
+            'get_map4'              =>$objGetMap4,
         ));
     }
 

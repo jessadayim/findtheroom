@@ -97,7 +97,7 @@ hr.line {
 #search1 .detailContent3 img.style { position:absolute; display:block; width:327px; height:40px; margin-top:-40px; margin-left:318px;}
 
 /*Search Block2*/
-#search2 { background-color: #423C3B; width: 1000px; height: /*850px*/ 825px; display:block; position:relative; margin: 20px auto 0 auto;}
+#search2 { background-color: #423C3B; width: 1000px; height: /*850px*/ 100%; display:block; position:relative; margin: 20px auto 0 auto; padding-bottom:20px;}
 #search2 img { padding-top:15px; padding-left:20px;}
 
 #search2 table{ border:0px; color:#FFF; font-size:20px; margin-left:30px; margin-top: 20px;}
