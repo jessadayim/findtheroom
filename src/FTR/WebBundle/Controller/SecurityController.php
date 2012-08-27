@@ -25,7 +25,7 @@ class SecurityController extends Controller
 						$id = $objSQL1[0]['id'];
 						$session->set('user', $user);
 						$session->set('id', $id);
-						$time = date("d/m/y : H:i:s", time());
+						$time = date("Y-m-d : H:i:s", time());
 						
 						$sql2 ="UPDATE user_owner SET last_login = '$time' WHERE id= '$id'";
 						$conn->query($sql2);
