@@ -50,6 +50,15 @@ class RegisterController extends Controller
 							$random_token = md5(uniqid(rand(),true));
 							$sql1 ="INSERT INTO user_owner(username,password,firstname,lastname,email,phone_number,fax_number,deleted,confirm_token) VALUES('$username','$password','$firstname','$lastname','$email','$tel','0000000000','0','$random_token')";
 							$conn->query($sql1);
+							
+							$sqllogin_ss = "SELECT id,username FROM user_owner WHERE username = '$username'";
+							$userdata = $conn->fetchall($sqllogin_ss);
+							$session = $this->get('session');
+							$user = $userdata[0]['username'];
+							$id = $userdata[0]['id'];
+							$session->set('user', $user);
+							$session->set('id', $id);
+							
 							return $this->render('FTRWebBundle:Publish:publish.html.twig', array());
 						
 						} catch (Exception $e) {
