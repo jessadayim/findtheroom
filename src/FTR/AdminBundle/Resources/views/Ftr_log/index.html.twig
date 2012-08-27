@@ -1,0 +1,35 @@
+<h1>Ftr_log list</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Tablename</th>
+            <th>Username</th>
+            <th>User_type</th>
+            <th>Datetimestamp</th>
+            <th>Pk_id</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('ftr_log_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.tablename }}</td>
+            <td>{{ entity.username }}</td>
+            <td>{{ entity.usertype }}</td>
+            <td>{% if entity.datetimestamp %}{{ entity.datetimestamp|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td>{{ entity.pkid }}</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('ftr_log_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
