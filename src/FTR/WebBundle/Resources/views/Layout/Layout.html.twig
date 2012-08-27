@@ -31,6 +31,9 @@
 		$(".login").css("marginLeft","5px");
 		$(".head hr").css("marginTop","5px");
 }
+		if(mybrowser.indexOf('MSIE')>0){
+		$(".login").css("marginLeft","0px");
+}
 		
 		$("input#log2").click(function(e) {
 				//alert("working1");
@@ -139,7 +142,11 @@ function enact(what){
 	    		<input id="log2" class="login" type="submit" value="" />
         {% endif %}
     </div>
-    
+	
+	<div id="topsearch">
+		<input type="text" value="" name="s" id="s">
+		<input type="submit" id="searchsubmit" value="">
+	</div>
 </div>
 
 <div id="menu">
@@ -170,14 +177,14 @@ function enact(what){
 {% block body %}
 {% endblock %}
 
-<div id="ad1">
+<div class="ad1">
     <a href='#'><img src="{{asset('images/ad/ad1.gif')}}" /></a>
     <a href='#'><img src="{{asset('images/ad/ad2.gif')}}" /></a>
     <a href='#'><img src="{{asset('images/ad/ad3.gif')}}" /></a>
     <a href='#' style="margin-right:0px !important"><img src="{{asset('images/ad/ad4.gif')}}" /></a>
 </div>
 
-<div id="ad1">
+<div class="ad1">
     <a href='#'><img src="{{asset('images/ad/ad1.gif')}}" /></a>
     <a href='#'><img src="{{asset('images/ad/ad2.gif')}}" /></a>
     <a href='#'><img src="{{asset('images/ad/ad3.gif')}}" /></a>
@@ -217,8 +224,8 @@ function enact(what){
             <a href="{{path('FTRWebBundle_list')}}">ตามสถานที่ใกล้เคียง</a>
         </li>
         <li class="head"><img src="{{asset('images/footer4.png')}}" /><hr />
-            <a href='#'>Facebook</a>
-            <a href='#'>Twitter</a>
+            <a href="http://www.facebook.com/FindTheRoom" target="_new">Facebook</a>
+            <a href="http://twitter.com/FindTheRoom" target="_new">Twitter</a>
             <div class="fb-like-box" data-href="http://www.facebook.com/FindTheRoom" data-width="205" data-height="65" data-show-faces="false" data-stream="false" data-header="true" style='background-color:#FFF; margin-left: 10px; margin-top: 10px;'></div>
         </li>
 	</ul>

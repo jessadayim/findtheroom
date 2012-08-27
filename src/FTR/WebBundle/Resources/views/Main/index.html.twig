@@ -6,27 +6,27 @@
 			
 			<div class="slide">
 				<a href='#' title="" target="_new"><img src="{{asset('images/slider/slide-1.jpg')}}" width="1000" height="300"></a>
-				<div class="caption">
+				<!--<div class="caption">
 					<p>
 						1 ห้องพักสุดหรู พร้อมชุดห้องครัวในตัว ราคาพิเศษ <span class="sale">7,000</span> บาท -> 5,000 บาท
 					</p>
-				</div>
+				</div>-->
 			</div>
 			<div class="slide">
 				<a href='#' title="" target="_new"><img src="{{asset('images/slider/slide-2.jpg')}}" width="1000" height="300"></a>
-				<div class="caption">
+				<!--<div class="caption">
 					<p>
 						2 ห้องพักสุดหรู พร้อมชุดห้องครัวในตัว ราคาพิเศษ <span class="sale">7,000</span> บาท -> 5,000 บาท
 					</p>
-				</div>
+				</div>-->
 			</div>
 			<div class="slide">
 				<a href='#' title="" target="_new"><img src="{{asset('images/slider/slide-3.jpg')}}" width="1000" height="300"></a>
-				<div class="caption">
+				<!--<div class="caption">
 					<p>
 						3 ห้องพักสุดหรู พร้อมชุดห้องครัวในตัว ราคาพิเศษ <span class="sale">7,000</span> บาท -> 5,000 บาท
 					</p>
-				</div>
+				</div>-->
 			</div>
 			
 		</div>
@@ -40,7 +40,14 @@
 
 {% render "FTRWebBundle:Main:recom" %}
 
-<div id="ad1">
+<div class="ad1">
+	<a href='#'><img src="{{asset('images/ad/ad1.gif')}}" /></a>
+    <a href='#'><img src="{{asset('images/ad/ad2.gif')}}" /></a>
+    <a href='#'><img src="{{asset('images/ad/ad3.gif')}}" /></a>
+    <a href='#' style="margin-right:0px !important"><img src="{{asset('images/ad/ad4.gif')}}" /></a>
+</div>
+
+<div class="ad1">
 	<a href='#'><img src="{{asset('images/ad/ad1.gif')}}" /></a>
     <a href='#'><img src="{{asset('images/ad/ad2.gif')}}" /></a>
     <a href='#'><img src="{{asset('images/ad/ad3.gif')}}" /></a>
@@ -87,7 +94,7 @@
 	</table>
 </div>
 <!--
-<div id="ad1">
+<div class="ad1">
 	<a href='#'><img src="{{asset('images/ad/ad1.gif')}}" /></a>
     <a href='#'><img src="{{asset('images/ad/ad2.gif')}}" /></a>
     <a href='#'><img src="{{asset('images/ad/ad3.gif')}}" /></a>

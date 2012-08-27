@@ -35,6 +35,14 @@
 				hoverPause: true,
 				generatePagination: false
 			});
+			$('#slides6').slides({
+				preload: true,
+				preloadImage: "{{asset('images/slider/loading.gif')}}",
+				play: 5000,
+				pause: 5000,
+				hoverPause: true,
+				generatePagination: false
+			});
 		});
 </script>
 
@@ -44,6 +52,7 @@
 			<li id="tabNavi4" class="active" onclick="enact(this);"></li>
 			<li id="tabNavi5" onclick="enact(this);"></li>
 			<li id="tabNavi6" onclick="enact(this);"></li>
+			<li id="tabNavi7" onclick="enact(this);"></li>
 		</ul>
 		<hr class="line" style="top: 60px; position: inherit;" />
 		<ul id="detail_containTab2">
@@ -71,7 +80,7 @@
 											<br />
 											ประเภท : {{recom1.type_name}}
 											<br />
-											เขต : {{recom1.zonename}}
+											ใกล้ BTS สถานี : {{recom1.zonename}}
 											<br />
 											<br />
 											ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span>
@@ -107,7 +116,7 @@
 											<br />
 											ประเภท : {{recom1.type_name}}
 											<br />
-											เขต : {{recom1.zonename}}
+											ใกล้ BTS สถานี : {{recom1.zonename}}
 											<br />
 											<br />
 											ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span>
@@ -145,7 +154,7 @@
 											<br />
 											ประเภท : {{recom1.type_name}}
 											<br />
-											เขต : {{recom1.zonename}}
+											ใกล้ MRT สถานี : {{recom1.zonename}}
 											<br />
 											<br />
 											ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span>
@@ -180,7 +189,7 @@
 											<br />
 											ประเภท : {{recom1.type_name}}
 											<br />
-											เขต : {{recom1.zonename}}
+											ใกล้ MRT สถานี : {{recom1.zonename}}
 											<br />
 											<br />
 											ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span>
@@ -218,7 +227,7 @@
 											<br />
 											ประเภท : {{recom1.type_name}}
 											<br />
-											เขต : {{recom1.zonename}}
+											ใกล้มหาวิทยาลัย : {{recom1.zonename}}
 											<br />
 											<br />
 											ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span>
@@ -253,7 +262,7 @@
 											<br />
 											ประเภท : {{recom1.type_name}}
 											<br />
-											เขต : {{recom1.zonename}}
+											ใกล้มหาวิทยาลัย : {{recom1.zonename}}
 											<br />
 											<br />
 											ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span>
@@ -267,7 +276,81 @@
 					{%endif%}
 				</div>
 			</li>
-
+			
+			<li class="detailContent7">
+				<div id="container6">
+					{% if numrow3 != 0%}
+						<div id="slides6">
+							<div class="slides_container" style="width:950px;">
+							{% set introw3 = 0 %}
+							{% for recom1 in item3%}
+							{% if introw3%3 == 0%}
+							<div class="slide" style="width:950px;">
+								{%endif%}
+								{% set row3 = introw3+1 %}
+								{% if row3%3 == 0%}
+								<div class="ap2">
+									{% else %}
+									<div class="ap">
+										{%endif%}
+										<div class="recom"></div>
+										<img src="{{asset('images/Apartment/ap3.png')}}" />
+										<br />
+										<br />
+										<span style="color:#FFF;"> <b style="font-size:24px">{{recom1.building_name}}</b>
+											<br />
+											ประเภท : {{recom1.type_name}}
+											<br />
+											ใกล้มหาวิทยาลัย : {{recom1.zonename}}
+											<br />
+											<br />
+											ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span>
+									</div>
+									{% set introw3 = introw3+1 %}
+									{% if introw3%3 == 0%}
+								</div>
+								{%endif%}
+								{% endfor %}
+							</div>
+						</div>
+						<a href='#' class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>
+						<a href='#' class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>
+					{%else%}
+						<div class="slides_container" style="width:950px; display: inherit !important;">
+							{% set introw3 = 0 %}
+							{% for recom1 in item3%}
+							{% if introw3%3 == 0%}
+							<div class="slide" style="width:950px;">
+								{%endif%}
+								{% set row3 = introw3+1 %}
+								{% if row3%3 == 0%}
+								<div class="ap2">
+									{% else %}
+									<div class="ap">
+										{%endif%}
+										<div class="recom"></div>
+										<img src="{{asset('images/Apartment/ap3.png')}}" />
+										<br />
+										<br />
+										<span style="color:#FFF;"> <b style="font-size:24px">{{recom1.building_name}}</b>
+											<br />
+											ประเภท : {{recom1.type_name}}
+											<br />
+											ใกล้มหาวิทยาลัย : {{recom1.zonename}}
+											<br />
+											<br />
+											ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span>
+									</div>
+									{% set introw3 = introw3+1 %}
+									{% if introw3%3 == 0%}
+								</div>
+								{%endif%}
+								{% endfor %}
+							</div>
+					{%endif%}
+				</div>
+			</li>
+			
 		</ul>
 	</div>
 </div>

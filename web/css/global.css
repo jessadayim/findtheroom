@@ -390,6 +390,54 @@ a:hover,a:active {
 	left:975px;
 }
 
+/*Slide Recommend4*/
+
+#container6 {
+	width:950px;
+	height:340px;
+	padding:0px;
+	margin:0 auto;
+	position:relative;
+	z-index:0;
+}
+
+
+
+#frame6 {
+	position:absolute;
+	z-index:0;
+	width:950px;
+	height:300px;
+	top:-3px;
+	left:-80px;
+}
+
+/*
+	Slideshow
+*/
+
+#slides6 {
+	position:absolute;
+	top:0px;
+	left:0px;
+	z-index:100;
+}
+
+
+#slides6 .next,#slides6 .prev {
+	position:absolute;
+	top:80px;
+	left:-54px;
+	width:29px;
+	height:57px;
+	display:block;
+	z-index:101;
+}
+
+#slides6 .next {
+	left:975px;
+}
+
 /*Slide Gallery*/
 
 #container5 {

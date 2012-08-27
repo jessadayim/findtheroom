@@ -41,6 +41,10 @@ hr.line {
 #header #login input { width: 120px;}
 #header #login input.login { background: url(../images/login-bt.png) no-repeat; border: 0; width: 51px; height: 51px; cursor: pointer; position:absolute; margin-top:-10px; margin-left: 10px;}
 #header #login input.logout { background: url(../images/logout-bt.png) no-repeat; border: 0; width: 51px; height: 51px; cursor: pointer; position:absolute; margin-top:-10px; margin-left: 10px;}
+#header #topsearch { width: 250px; height:30px; background: url(../images/ss.png) no-repeat; background-color: #423C3B; position:absolute; display:block; margin-left: 691px; margin-top: 40px;}
+#header #topsearch #s { width: 205px; float: left; background: none; padding: 6px 10px 6px 36px; margin: 0; border: none; color: white; font-size:18px;}
+#header #topsearch #searchsubmit { background: url(../images/search-bt.png) no-repeat; float: left; cursor: pointer; border: none; display:block; width:51px; height:51px; position:absolute; margin-top:-10px; margin-left: 260px;}
+
 /*Menu Bar*/
 #menu { width:100%; margin: 90px 0 0 0; font-size:20px; text-align: center;}
 #menu hr { color: #D4D4D4; background-color: #D4D4D4; width:101.65%; height: 1px; border: 0 none; margin-left: -30px;}
@@ -205,20 +209,23 @@ input.regis { background: url(../images/regis-bt.png) no-repeat; border: 0; widt
 
 #recommend #i_containTab2 ul#navi_containTab2 li#tabNavi4{ background:url(../images/bts.png) no-repeat; background-position:0 0; display:block;width:150px; }
 #recommend #i_containTab2 ul#navi_containTab2 li#tabNavi5{ background:url(../images/mrt.png) no-repeat; background-position:0 0; display:block;width:155px; }
-#recommend #i_containTab2 ul#navi_containTab2 li#tabNavi6{ background:url(../images/uni.png) no-repeat; background-position:0 0; display:block;width:220px; }
+#recommend #i_containTab2 ul#navi_containTab2 li#tabNavi6{ background:url(../images/uni.png) no-repeat; background-position:0 0; display:block;width:205px; }
+#recommend #i_containTab2 ul#navi_containTab2 li#tabNavi7{ background:url(../images/pop.png) no-repeat; background-position:0 0; display:block;width:150px; }
 
 /* class รูปแบบของแต่ละเนื้อหา */
 #recommend .detailContent4{ display:block;}
 #recommend .detailContent5{ display:none;}
 #recommend .detailContent6{ display:none;}
+#recommend .detailContent7{ display:none;}
 
 #recommend #i_containTab2 ul#navi_containTab2 li#tabNavi4.active {background:url(../images/bts.png) no-repeat; background-position:0 -43px; display:block;}
 #recommend #i_containTab2 ul#navi_containTab2 li#tabNavi5.active {background:url(../images/mrt.png) no-repeat; background-position:0 -43px; display:block;}
 #recommend #i_containTab2 ul#navi_containTab2 li#tabNavi6.active {background:url(../images/uni.png) no-repeat; background-position:0 -43px; display:block;}
+#recommend #i_containTab2 ul#navi_containTab2 li#tabNavi7.active {background:url(../images/pop.png) no-repeat; background-position:0 -43px; display:block;}
 
 /*Ad*/
-#ad1 { width:1000px; margin: 0 auto 10px auto;}
-#ad1 a { margin-right: 17px;}
+.ad1 { width:1000px; margin: 0 auto 10px auto;}
+.ad1 a { margin-right: 17px;}
 #ad2 { width:1000px; margin: 0 auto 10px auto; height:115px;}
 #ad2 a { margin-right: 17px;}
 #ad3 { width:1000px; margin: 0 auto -5px auto;}
@@ -227,7 +234,7 @@ input.regis { background: url(../images/regis-bt.png) no-repeat; border: 0; widt
 /*#board { background-color:#423C3B; width:1000px; height: 300px; margin:20px auto 20px auto; color: #FFF; font-size:55px; text-align:center;}*/
 
 /*update table*/
-#update { background-color:#423C3B; width:1000px; height: 100%; margin:20px auto 20px auto; color: #FFF; display:block; position: relative;}
+#update { background-color:#423C3B; width:1000px; height: 100%; margin:15px auto 20px auto; color: #FFF; display:block; position: relative;}
 #update img { padding-top: 15px; padding-left: 20px;}
 #update span.time { font-size: 20px; margin-top: 28px; position: absolute; margin-left: 10px;}
 #update table { padding: 20px;}
@@ -245,7 +252,7 @@ input.regis { background: url(../images/regis-bt.png) no-repeat; border: 0; widt
 
 
 /*Footer*/
-#footer { background-color: #423C3B; width: 1000px; height: 250px; display:block; position:relative; margin:10px auto 0 auto;}
+#footer { background-color: #423C3B; width: 1000px; height: 250px; display:block; position:relative; margin:-5px auto 0 auto;}
 #footer ul { list-style:none; padding:0; margin-top:0; width:100%;}
 #footer ul li.head { width: 225px; height: 50px; padding-left:20px; padding-top:10px; float:left;}
 #footer ul li.head hr { color: #FFF; background-color: #FFF; width:95%; height: 1px; border: 0 none; padding:0; margin-top:10px;}
