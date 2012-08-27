@@ -32,6 +32,8 @@ hr.line {
 	font-size:16px;
 	color:#FFCC00;
 }
+
+select[disabled] { background-color: #EAEAEA !important; color:#BCBCBC !important;}
 /* Header*/
 #header { width:1000px; margin: 40px auto 0 auto; font-size:22px;}
 #header span { margin: 40px 0 0 0; font-size:22px;}
