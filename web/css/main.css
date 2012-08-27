@@ -171,7 +171,7 @@ input.forgetp { background: url(../images/forget-bt.png) no-repeat; border: 0; w
 input.resetp { background: url(../images/reset-bt.png) no-repeat; border: 0; width: 78px; height: 80px; cursor: pointer; position:absolute; margin-top:-20px;}
 
 /*Register*/
-input.regis { background: url(../images/regis-bt.png) no-repeat; border: 0; width: 78px; height: 80px; cursor: pointer; position:absolute; margin-top: 5px;}
+input.regis { background: url(../images/regis-bt.png) no-repeat; border: 0; width: 78px; height: 80px; cursor: pointer; position:absolute; margin-top: -50px;}
 /*Add Data Apartment*/
 .detail table .styled-select { background: url(../images/new_arrow.png) no-repeat right center #FFF; width:180px; height: 30px; overflow: hidden; margin-left:2px;}
 .detail table .styled-select .select{border: 0px; font-family: DB Adman X; font-size: 18px; color: #423C3B; background: transparent; padding: 5px; width:210px; height: 30px; -webkit-appearance: none;}
