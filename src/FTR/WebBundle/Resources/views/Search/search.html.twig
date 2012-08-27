@@ -2,11 +2,23 @@
 <script language=javascript>
 function fncAlert(){
 	if(document.getElementById('bk').checked) {
-	   $("#tbk").css("display","block");
-	   $("#tcou").css("display","none");
+	   //$("#tbk").css("display","block");
+	   //$("#tcou").css("display","none");
+	   document.getElementById('sbk1').disabled=false;
+	   document.getElementById('sbk2').disabled=false;
+	   document.getElementById('sbk3').disabled=false;
+	   document.getElementById('sbk4').disabled=false;
+	   document.getElementById('sbk5').disabled=false;
+	   document.getElementById('scou').disabled=true;
 	}else if(document.getElementById('cou').checked) {
-	   $("#tbk").css("display","none");
-	   $("#tcou").css("display","block");
+	   //$("#tbk").css("display","none");
+	   //$("#tcou").css("display","block");
+	   document.getElementById('sbk1').disabled=true;
+	   document.getElementById('sbk2').disabled=true;
+	   document.getElementById('sbk3').disabled=true;
+	   document.getElementById('sbk4').disabled=true;
+	   document.getElementById('sbk5').disabled=true;
+	   document.getElementById('scou').disabled=false;
 	}
 }
 </script>
@@ -56,9 +68,9 @@ function fncAlert(){
 			<tr height="50" valign="middle">
 				<td align="left" width="165">จังหวัด :</td>
 				<td width="300">
-					<input id="bk" name="bc" type="radio" value="bkk" OnClick="JavaScript:fncAlert();" /><label for="bk">กรุงเทพฯ</label>
+					<input id="bk" name="bc" type="radio" value="bkk" checked OnClick="JavaScript:fncAlert();" /><label for="bk">กรุงเทพฯ</label>
 				</td>
-				<td width="145">
+				<td width="170">
 					<input id="cou" name="bc" type="radio" value="country" OnClick="JavaScript:fncAlert();" /><label for="cou">ต่างจังหวัด</label>
 				</td>
 				<td width="200">
@@ -75,88 +87,92 @@ function fncAlert(){
 			</tr>
 		</table>
 		
-		<table id="tbk" style="margin-top:0px;display:none;">
+		<table id="tbk" style="margin-top:0px; border-right:1px solid #fff; float:left;">
 			<tr height="50" valign="middle">
-				<td align="left" width="165"><input id="bk" name="place" type="radio" value="bangkok" checked="checked" /><label for="bk">โซนในกรุงเทพฯ :</label></td>
-				<td width="300">
+				<td align="left" width="165">โซนในกรุงเทพฯ :</td>
+				<td width="250">
 					<div class="styled-select">
-                    <label for="bk">
-						<select class="select">
+                  
+						<select class="select" id="sbk1">
 							{% for zlist in zonelist %}
 								<option value="{{ zlist.id }}">{{ zlist.zonename }}</option>
 							{% endfor %}
 						</select>
-                    </label>
+                  
 					</div>
 				</td>
-				<td align="left" width="145"><input id="bt" name="place" type="radio" value="bts" /><label for="bt">ใกล้รถไฟฟ้า BTS :</label></td>
-				<td width="300">
+			</tr>
+			<tr height="50" valign="middle">
+				<td align="left" width="145">ใกล้รถไฟฟ้า BTS :</td>
+				<td width="250">
 					<div class="styled-select">
-                    <label for="bt">
-						<select class="select">
+                    
+						<select class="select" id="sbk2">
 							{% for btslist in nearBTS %}
 								<option value="{{ btslist.id }}">{{ btslist.name }}</option>
 							{% endfor %}
 						</select>
-                    </label>
+                   
 					</div>
 				</td>
 			</tr>
-            <tr height="50" valign="middle">
-				<td align="left" width="165"><input id="uni" name="place" type="radio" value="university" /><label for="uni">ใกล้มหาวิทยาลัย :</label></td>
-				<td width="300">
+			<tr height="50" valign="middle">
+				<td align="left" width="145">ใกล้รถไฟฟ้า MRT :</td>
+				<td width="250">
 					<div class="styled-select">
-                    <label for="uni">
-						<select class="select">
-							{% for ulist in nearUniversity %}
-								<option value="{{ ulist.id }}">{{ ulist.name }}</option>
-							{% endfor %}
-						</select>
-                    </label>
-					</div>
-				</td>
-				<td align="left" width="145"><input id="mr" name="place" type="radio" value="mrt" /><label for="mr">ใกล้รถไฟฟ้า MRT :</label></td>
-				<td width="300">
-					<div class="styled-select">
-                    <label for="mr">
-						<select class="select">
+                  
+						<select class="select" id="sbk3">
 							{% for mrtlist in nearMRT %}
 								<option value="{{ mrtlist.id }}">{{ mrtlist.name }}</option>
 							{% endfor %}
 						</select>
-                    </label>
+                    
+					</div>
+				</td>
+			</tr>
+            <tr height="50" valign="middle">
+				<td align="left" width="165">ใกล้มหาวิทยาลัย :</td>
+				<td width="250">
+					<div class="styled-select">
+                   
+						<select class="select" id="sbk4">
+							{% for ulist in nearUniversity %}
+								<option value="{{ ulist.id }}">{{ ulist.name }}</option>
+							{% endfor %}
+						</select>
+                   
 					</div>
 				</td>
 			</tr>
 			<tr>
-				<td align="left" width="165"><input id="pl" name="place" type="radio" value="etcp" /><label for="pl">ตามสถานที่ใกล้เคียง :</label></td>
-				<td width="300">
+				<td align="left" width="165">ตามสถานที่ใกล้เคียง :</td>
+				<td width="250">
 					<div class="styled-select">
-                    <label for="pl">
-						<select class="select">
+                   
+						<select class="select" id="sbk5">
 							{% for blist in nearBy %}
 								<option value="{{ blist.id }}">{{ blist.name }}</option>
 							{% endfor %}
 						</select>
-                    </label>
+                    
 					</div>
 				</td>
 				<td colspan="2"></td>
 			</tr>
 		</table>
 		
-		<table id="tcou" style="margin-top:0px;display:none;">
+		<table id="tcou" style="margin-top:0px; display:block; height:244px; margin-top: 10px;">
 			<tr>
-				<td align="left" width="165"><input id="pl" name="place" type="radio" value="etcp" /><label for="pl">ตามสถานที่ใกล้เคียง :</label></td>
+				<td align="left" width="165" style="padding-left:50px">ตามสถานที่ใกล้เคียง :</td>
 				<td width="300">
 					<div class="styled-select">
-                    <label for="pl">
-						<select class="select">
+                
+						<select class="select" id="scou" disabled>
 							{% for blist in nearBy %}
 								<option value="{{ blist.id }}">{{ blist.name }}</option>
 							{% endfor %}
 						</select>
-                    </label>
+                
 					</div>
 				</td>
 				<td colspan="2"></td>
