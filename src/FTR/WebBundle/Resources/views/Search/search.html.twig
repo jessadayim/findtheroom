@@ -1,4 +1,15 @@
 <!-- peung -->
+<script language=javascript>
+function fncAlert(){
+	if(document.getElementById('bk').checked) {
+	   $("#tbk").css("display","block");
+	   $("#tcou").css("display","none");
+	}else if(document.getElementById('cou').checked) {
+	   $("#tbk").css("display","none");
+	   $("#tcou").css("display","block");
+	}
+}
+</script>
 <form method="post" action="{{path('FTRWebBundle_list')}}">
 <div id="search2">
 	<img src="{{asset('images/search-i.png')}}" />
@@ -40,32 +51,31 @@
 		</table>
 	</div>
     <hr class="line" style="top: 185px;" />
-    <div>
+    <div style="display:block;padding-bottom:10px;">
 		<table>
 			<tr height="50" valign="middle">
 				<td align="left" width="165">จังหวัด :</td>
 				<td width="300">
+					<input id="bk" name="bc" type="radio" value="bkk" OnClick="JavaScript:fncAlert();" /><label for="bk">กรุงเทพฯ</label>
+				</td>
+				<td width="145">
+					<input id="cou" name="bc" type="radio" value="country" OnClick="JavaScript:fncAlert();" /><label for="cou">ต่างจังหวัด</label>
+				</td>
+				<td width="200">
 					<div class="styled-select">
+						<label for="cou">
 						<select class="select">
 							{% for zlist in zonelist %}
 								<option value="{{ zlist.id }}">{{ zlist.zonename }}</option>
 							{% endfor %}
 						</select>
-					</div>
-				</td>
-				<td align="left" width="145"><input id="bt" name="place" type="radio" value="bts" /><label for="bt">ใกล้รถไฟฟ้า BTS :</label></td>
-				<td width="300">
-					<div class="styled-select">
-                    <label for="bt">
-						<select class="select">
-							{% for btslist in nearBTS %}
-								<option value="{{ btslist.id }}">{{ btslist.name }}</option>
-							{% endfor %}
-						</select>
-                    </label>
+						</label>
 					</div>
 				</td>
 			</tr>
+		</table>
+		
+		<table id="tbk" style="margin-top:0px;display:none;">
 			<tr height="50" valign="middle">
 				<td align="left" width="165"><input id="bk" name="place" type="radio" value="bangkok" checked="checked" /><label for="bk">โซนในกรุงเทพฯ :</label></td>
 				<td width="300">
@@ -79,13 +89,13 @@
                     </label>
 					</div>
 				</td>
-				<td align="left" width="145"><input id="mr" name="place" type="radio" value="mrt" /><label for="mr">ใกล้รถไฟฟ้า MRT :</label></td>
+				<td align="left" width="145"><input id="bt" name="place" type="radio" value="bts" /><label for="bt">ใกล้รถไฟฟ้า BTS :</label></td>
 				<td width="300">
 					<div class="styled-select">
-                    <label for="mr">
+                    <label for="bt">
 						<select class="select">
-							{% for mrtlist in nearMRT %}
-								<option value="{{ mrtlist.id }}">{{ mrtlist.name }}</option>
+							{% for btslist in nearBTS %}
+								<option value="{{ btslist.id }}">{{ btslist.name }}</option>
 							{% endfor %}
 						</select>
                     </label>
@@ -105,6 +115,20 @@
                     </label>
 					</div>
 				</td>
+				<td align="left" width="145"><input id="mr" name="place" type="radio" value="mrt" /><label for="mr">ใกล้รถไฟฟ้า MRT :</label></td>
+				<td width="300">
+					<div class="styled-select">
+                    <label for="mr">
+						<select class="select">
+							{% for mrtlist in nearMRT %}
+								<option value="{{ mrtlist.id }}">{{ mrtlist.name }}</option>
+							{% endfor %}
+						</select>
+                    </label>
+					</div>
+				</td>
+			</tr>
+			<tr>
 				<td align="left" width="165"><input id="pl" name="place" type="radio" value="etcp" /><label for="pl">ตามสถานที่ใกล้เคียง :</label></td>
 				<td width="300">
 					<div class="styled-select">
@@ -117,11 +141,30 @@
                     </label>
 					</div>
 				</td>
+				<td colspan="2"></td>
+			</tr>
+		</table>
+		
+		<table id="tcou" style="margin-top:0px;display:none;">
+			<tr>
+				<td align="left" width="165"><input id="pl" name="place" type="radio" value="etcp" /><label for="pl">ตามสถานที่ใกล้เคียง :</label></td>
+				<td width="300">
+					<div class="styled-select">
+                    <label for="pl">
+						<select class="select">
+							{% for blist in nearBy %}
+								<option value="{{ blist.id }}">{{ blist.name }}</option>
+							{% endfor %}
+						</select>
+                    </label>
+					</div>
+				</td>
+				<td colspan="2"></td>
 			</tr>
 		</table>
 	</div>
-	<hr class="line" style="top: 360px;" />
-    <div>
+	<hr class="line" />
+     <div style="display:block;padding-bottom:10px;">
 		<table>
         	<tr>
             	<td colspan="4" style="padding-bottom:5px;">
@@ -139,7 +182,7 @@
             {% endfor %}
 		</table>
 	</div>
-    <hr class="line" style="top: 535px;" />
+    <hr class="line"/>
     <div>
 		<table>
         	<tr>
