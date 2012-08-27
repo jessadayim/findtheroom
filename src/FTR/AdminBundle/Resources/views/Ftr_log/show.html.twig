@@ -1,0 +1,38 @@
+<h1>Ftr_log</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Tablename</th>
+            <td>{{ entity.tablename }}</td>
+        </tr>
+        <tr>
+            <th>Username</th>
+            <td>{{ entity.username }}</td>
+        </tr>
+        <tr>
+            <th>User_type</th>
+            <td>{{ entity.usertype }}</td>
+        </tr>
+        <tr>
+            <th>Datetimestamp</th>
+            <td>{{ entity.datetimestamp|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Pk_id</th>
+            <td>{{ entity.pkid }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('ftr_log') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>

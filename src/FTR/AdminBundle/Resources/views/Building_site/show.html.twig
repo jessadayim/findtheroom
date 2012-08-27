@@ -1,0 +1,153 @@
+<h1>Building_site</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Building_name</th>
+            <td>{{ entity.buildingname }}</td>
+        </tr>
+        <tr>
+            <th>Building_address</th>
+            <td>{{ entity.buildingaddress }}</td>
+        </tr>
+        <tr>
+            <th>Start_price</th>
+            <td>{{ entity.startprice }}</td>
+        </tr>
+        <tr>
+            <th>End_price</th>
+            <td>{{ entity.endprice }}</td>
+        </tr>
+        <tr>
+            <th>Phone_number</th>
+            <td>{{ entity.phonenumber }}</td>
+        </tr>
+        <tr>
+            <th>Publish</th>
+            <td>{{ entity.publish }}</td>
+        </tr>
+        <tr>
+            <th>Datetimestamp</th>
+            <td>{{ entity.datetimestamp|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Lastupdate</th>
+            <td>{{ entity.lastupdate|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Userupdate</th>
+            <td>{{ entity.userupdate }}</td>
+        </tr>
+        <tr>
+            <th>Latitude</th>
+            <td>{{ entity.latitude }}</td>
+        </tr>
+        <tr>
+            <th>Longitude</th>
+            <td>{{ entity.longitude }}</td>
+        </tr>
+        <tr>
+            <th>Recommend</th>
+            <td>{{ entity.recommend }}</td>
+        </tr>
+        <tr>
+            <th>Building_type_id</th>
+            <td>{{ entity.buildingtypeid }}</td>
+        </tr>
+        <tr>
+            <th>Zone_id</th>
+            <td>{{ entity.zoneid }}</td>
+        </tr>
+        <tr>
+            <th>Pay_type_id</th>
+            <td>{{ entity.paytypeid }}</td>
+        </tr>
+        <tr>
+            <th>User_owner_id</th>
+            <td>{{ entity.userownerid }}</td>
+        </tr>
+        <tr>
+            <th>Detail</th>
+            <td>{{ entity.detail }}</td>
+        </tr>
+        <tr>
+            <th>Contact_name</th>
+            <td>{{ entity.contactname }}</td>
+        </tr>
+        <tr>
+            <th>Contact_email</th>
+            <td>{{ entity.contactemail }}</td>
+        </tr>
+        <tr>
+            <th>Website</th>
+            <td>{{ entity.website }}</td>
+        </tr>
+        <tr>
+            <th>Month_stay</th>
+            <td>{{ entity.monthstay }}</td>
+        </tr>
+        <tr>
+            <th>Water_unit</th>
+            <td>{{ entity.waterunit }}</td>
+        </tr>
+        <tr>
+            <th>Electricity_unit</th>
+            <td>{{ entity.electricityunit }}</td>
+        </tr>
+        <tr>
+            <th>Internet_price</th>
+            <td>{{ entity.internetprice }}</td>
+        </tr>
+        <tr>
+            <th>Googlemap_url</th>
+            <td>{{ entity.googlemapurl }}</td>
+        </tr>
+        <tr>
+            <th>Internet_ready</th>
+            <td>{{ entity.internetready }}</td>
+        </tr>
+        <tr>
+            <th>Addr_number</th>
+            <td>{{ entity.addrnumber }}</td>
+        </tr>
+        <tr>
+            <th>Addr_prefecture</th>
+            <td>{{ entity.addrprefecture }}</td>
+        </tr>
+        <tr>
+            <th>Addr_province</th>
+            <td>{{ entity.addrprovince }}</td>
+        </tr>
+        <tr>
+            <th>Addr_zipcode</th>
+            <td>{{ entity.addrzipcode }}</td>
+        </tr>
+        <tr>
+            <th>Deleted</th>
+            <td>{{ entity.deleted }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('building_site') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('building_site_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('building_site_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
