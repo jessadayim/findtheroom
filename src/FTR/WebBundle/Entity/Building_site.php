@@ -204,6 +204,34 @@ class Building_site
     private $internet_ready;
 
     /**
+     * @var string $addr_number
+     *
+     * @ORM\Column(name="addr_number", type="string", length=127, nullable="true")
+     */
+    private $addr_number;
+
+    /**
+     * @var string $addr_prefecture
+     *
+     * @ORM\Column(name="addr_prefecture", type="string", length=127, nullable="true")
+     */
+    private $addr_prefecture;
+
+    /**
+     * @var string $addr_province
+     *
+     * @ORM\Column(name="addr_province", type="string", length=127, nullable="true")
+     */
+    private $addr_province;
+
+    /**
+     * @var string $addr_zipcode
+     *
+     * @ORM\Column(name="addr_zipcode", type="string", length=10, nullable="true")
+     */
+    private $addr_zipcode;
+
+    /**
      * @var boolean $deleted
      *
      * @ORM\Column(name="deleted", type="boolean", nullable="true")
@@ -739,6 +767,86 @@ class Building_site
     public function getInternetReady()
     {
         return $this->internet_ready;
+    }
+
+    /**
+     * Set addr_number
+     *
+     * @param string $addr_number
+     */
+    public function setAddrNumber($addr_number)
+    {
+        $this->addr_number = $addr_number;
+    }
+
+    /**
+     * Get addr_number
+     *
+     * @return string 
+     */
+    public function getAddrNumber()
+    {
+        return $this->addr_number;
+    }
+
+    /**
+     * Set addr_prefecture
+     *
+     * @param string $addr_prefecture
+     */
+    public function setAddrPrefecture($addr_prefecture)
+    {
+        $this->addr_prefecture = $addr_prefecture;
+    }
+
+    /**
+     * Get addr_prefecture
+     *
+     * @return string 
+     */
+    public function getAddrPrefecture()
+    {
+        return $this->addr_prefecture;
+    }
+
+    /**
+     * Set addr_province
+     *
+     * @param string $addr_province
+     */
+    public function setAddrProvince($addr_province)
+    {
+        $this->addr_province = $addr_province;
+    }
+
+    /**
+     * Get addr_province
+     *
+     * @return string 
+     */
+    public function getAddrProvince()
+    {
+        return $this->addr_province;
+    }
+
+    /**
+     * Set addr_zipcode
+     *
+     * @param string $addr_zipcode
+     */
+    public function setAddrZipcode($addr_zipcode)
+    {
+        $this->addr_zipcode = $addr_zipcode;
+    }
+
+    /**
+     * Get addr_zipcode
+     *
+     * @return string 
+     */
+    public function getAddrZipcode()
+    {
+        return $this->addr_zipcode;
     }
 
     /**
