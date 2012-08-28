@@ -1,0 +1,221 @@
+/*
+	 CSS-Tricks Example
+	 by Chris Coyier
+	 http://css-tricks.com
+*/
+
+@charset "utf-8";
+
+* { margin: 0; padding: 0; }
+body { 
+	font-size: 14px;
+	font-family: "Century Gothic", Verdana, Arial, Sans-Serif;
+	font-size: 80%;
+	line-height: 1.5;
+	background: #eee;
+	position: relative;
+	height: 100%;
+	margin: 0;
+	padding: 0; 
+	background: url(../../images/panel/bg_header.jpg) repeat-x top;
+}
+footer{
+	display: block;
+	position:relative;
+	bottom: 0px;
+	width: 100%;
+	min-height: 100px;
+	background: url(../images/bg_header.jpg) repeat-x top;
+}
+
+article, aside, figure, footer, header, hgroup,
+menu, nav, section { display: block; }
+
+h1 {font-size: 32px; font-family: "Century Gothic", Verdana, Arial, Sans-Serif; margin: 0 0 10px 0;}
+h2 {font-size: 24px; font-family: "Century Gothic", Verdana, Arial, Sans-Serif; margin: 0 0 10px 0;}
+h3 {margin: 0 0 8px 0;}
+p {margin: 0 0 20px 0;}
+
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 480px) {
+/* Styles */
+}
+
+/* Smartphones (landscape) ----------- */
+@media only screen 
+and (min-width : 321px) {
+/* Styles */
+}
+
+/* Smartphones (portrait) ----------- */
+@media only screen 
+and (max-width : 320px) {
+/* Styles */
+}
+
+/* iPads (portrait and landscape) ----------- */
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) {
+/* Styles */
+}
+
+/* iPads (landscape) ----------- */
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : landscape) {
+/* Styles */
+}
+
+/* iPads (portrait) ----------- */
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : portrait) {
+/* Styles */
+}
+
+/* Desktops and laptops ----------- */
+@media only screen 
+and (min-width : 1224px) {
+/* Styles */
+}
+
+/* Large screens ----------- */
+@media only screen 
+and (min-width : 1824px) {
+/* Styles */
+}
+
+/* iPhone 4 ----------- */
+@media
+only screen and (-webkit-min-device-pixel-ratio : 1.5),
+only screen and (min-device-pixel-ratio : 1.5) {
+/* Styles */
+}
+
+/* Form Style */
+.widthin{width: 200px;}
+.widnormal{width: 400px;}
+.widfat{width: 600px;}
+
+fieldset{border: 1px #000 solid; padding: 10px;}
+
+form fieldset input[type=submit], form fieldset button { 
+	
+	display: inline-block;
+
+    padding: 4px 8px;
+    font-family: 'Lucida Grande', Arial, sans-serif;
+    font-size: 13px;
+
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+
+    border: 1px solid rgba(0, 0, 0, 0.6);
+
+    background: -webkit-gradient(linear, left top, left bottom, from(#fbfcfb), to(#9d9e9d));
+    background: -moz-linear-gradient(#fbfcfb, #9d9e9d);
+    background-color: #eee;
+
+    text-shadow: rgba(255, 255, 255, 0.4) 0px 1px;
+
+    -webkit-box-shadow: rgba(255, 255, 255, 0.4) 0 1px;
+    -moz-box-shadow: rgba(255, 255, 255, 0.4) 0 1px;
+    box-shadow: rgba(255, 255, 255, 0.4) 0 1px;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+	cursor:pointer;
+}
+form fieldset input:hover[type=submit], form fieldset button:hover {
+	
+	background: #B5B5B5;
+    -webkit-box-shadow: rgba(255, 255, 255, 0.4) 0 1px,
+                        black 0px 1px 3px inset,
+                        rgba(0, 0, 0, 0.4) 0px -5px 12px inset;
+
+    -moz-box-shadow: rgba(255, 255, 255, 0.4) 0 1px,
+                     black 0px 1px 3px inset,
+                     rgba(0, 0, 0, 0.4) 0px -5px 12px inset;
+
+    box-shadow: rgba(255, 255, 255, 0.4) 0 1px,
+                black 0px 1px 3px inset,
+                rgba(0, 0, 0, 0.4) 0px -5px 12px inset;
+
+    text-shadow: rgba(255, 255, 255, 0.3) 0px 1px;
+	cursor:pointer;
+}
+form input[type=text], form input[type=email], form input[type=url], form input[type=password], form input[type=number], textarea, select, form input[type=file] {
+		-moz-border-radius: 3px; 
+		-webkit-border-radius: 3px; 
+		border-radius:3px; 
+		height:30px; 
+		margin-bottom:10px; 
+		border:1px solid #ccc; 
+		padding:2px;
+		}
+textarea{
+	height: 100px;
+}		
+/* Form Style */
+
+#containerwrap{min-height: 500px;}
+#signin{margin: 50px 0 0 0;}
+#username{width: 240px;}
+#password{width: 240px;}
+/*#submit{display: block; position: relative; width: 60px; height: 20px; margin: 20px 0 0 0; float: left; background: #CCC; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius:3px; border: 1px #333 solid; font-size: 10px; }*/
+#rememberLabel{display: block; position: relative; width: auto; margin-top: 10px; float: left;}
+
+#headernav{font-size: 12px; text-align: left; padding: 20px 0 0 0; border: 0px #000 solid;}
+#userpanel{font-size: 12px; text-align: left; padding: 20px 0 0 0; border: 0px #000 solid;}
+#userpanel ul{list-style-type: none; float: left}
+#userpanel ul li{float: left; margin: 0 10px 0 0;}
+#userpanel ul li a:link, a:visited{ color: #000; text-decoration: none;}
+#userpanel ul li a:hover{ color: #000; text-decoration: underline;}
+#txtsearch{margin: 0 0 1.5em 1.5em; float: left;}
+#btnsearch{display: block; position: relative; float: left; width: 60px; height: 20px; margin: 0 0 0 10px; background: #333; border: 1px #000 solid; font-size: 10px; color: #FFF;}
+
+.dashboardColumn{min-height: 200px; margin-bottom: 20px; border-bottom: 1px #CCC solid; }
+.dashboardColumn h2{text-align: center;}
+.dashboardColumn p{text-align: left;}
+
+.createLists{margin-top: 20px;}
+.createLists h2{float: left;}
+.createLists .createPanel{width: 920px; height: auto; display: none; padding: 10px; margin: 0 0 10px 0;}
+.createLists .createPanel fieldset{border: 1px #000 solid; padding: 10px;}
+.createLists .createPanel .label{width: 200px; float: left;}
+.listsPanel{display: block; position: relative; padding-top: 4px; left: 700px; float: left}
+.tableLists{}
+.tableLists table th{width: 200px; text-transform: uppercase; text-align: left; padding: 6px; background: #DDD; border: 1px solid #333;}
+.tableLists table th.nobg{border: 1px solid #C1DAD7; background: none;}
+.tableLists table th.spec {	
+	border: 1px solid #333;
+	background: #fff ;
+}
+.tableLists table th.specalt {
+	border: 1px solid #333;
+	background: #DDD;
+	color: #000;
+}
+.tableLists td {
+	border: 1px solid #333;
+	background: #fff;
+	padding: 6px 6px 6px 12px;
+	color: #333;
+}
+
+
+.tableLists td.alt {
+	background: #F5FAFA;
+	color: #000;
+}
+
+
+
+
+
