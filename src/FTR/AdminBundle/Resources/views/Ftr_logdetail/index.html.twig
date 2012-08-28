@@ -1,0 +1,33 @@
+<h1>Ftr_logdetail list</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Ftr_log_id</th>
+            <th>Action</th>
+            <th>Fieldname</th>
+            <th>Fieldvalue</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('ftr_logdetail_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.ftrlogid }}</td>
+            <td>{{ entity.action }}</td>
+            <td>{{ entity.fieldname }}</td>
+            <td>{{ entity.fieldvalue }}</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('ftr_logdetail_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+

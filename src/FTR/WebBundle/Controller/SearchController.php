@@ -21,38 +21,39 @@ class SearchController extends Controller
         $sqlGetMap1 = "
             SELECT 
               a.*, 
-              b.`type_name`
+              b.`type_name`,
+			  b.id as bt_id
             FROM
               `building_site` a
-              INNER JOIN `building_type` b 
-                ON (b.`id` = a.`building_type_id`) 
-            WHERE a.`publish` = 1 
+              INNER JOIN `building_type` b
+                ON (b.`id` = a.`building_type_id`)
+            WHERE a.`publish` = 1
               AND b.`deleted` = 0 ";
         $sqlGetMap2 = "
-            $sqlGetMap1 AND b.`type_name` = 'อพาร์ทเม้นต์'
+            $sqlGetMap1 AND b.`id` = 1
         ";
         $sqlGetMap3 = "
-            $sqlGetMap1 AND b.`type_name` = 'หอพักชาย' 
+            $sqlGetMap1 AND b.`id` = 2
         ";
         $sqlGetMap4 = "
-            $sqlGetMap1 AND b.`type_name` = 'หอพักหญิง' 
+            $sqlGetMap1 AND b.`id` = 3
         ";
-        try{                
+        try{
             $objGetMap1 = $conn->fetchAll($sqlGetMap1);
         } catch (Exception $e) {
             echo 'Caught exception: ',  $e->getMessage(), "\n";
         }
-        try{                
+        try{
             $objGetMap2 = $conn->fetchAll($sqlGetMap2);
         } catch (Exception $e) {
             echo 'Caught exception: ',  $e->getMessage(), "\n";
         }
-        try{                
+        try{
             $objGetMap3 = $conn->fetchAll($sqlGetMap3);
         } catch (Exception $e) {
             echo 'Caught exception: ',  $e->getMessage(), "\n";
         }
-        try{                
+        try{
             $objGetMap4 = $conn->fetchAll($sqlGetMap4);
         } catch (Exception $e) {
             echo 'Caught exception: ',  $e->getMessage(), "\n";

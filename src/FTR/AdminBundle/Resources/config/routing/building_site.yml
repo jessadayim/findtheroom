@@ -1,0 +1,27 @@
+building_site:
+    pattern:  /
+    defaults: { _controller: FTRAdminBundle:Building_site:index }
+    
+building_site_show:
+    pattern:  /building_site/{id}/show
+    defaults: { _controller: FTRAdminBundle:Building_site:show }
+    
+building_site_new:
+    pattern:  /building_site/new
+    defaults: { _controller: FTRAdminBundle:Building_site:new }
+    
+building_site_create:
+    pattern:  /building_site/create
+    defaults: { _controller: FTRAdminBundle:Building_site:create }
+    
+building_site_edit:
+    pattern:  /building_site/{id}/edit
+    defaults: { _controller: FTRAdminBundle:Building_site:edit }
+    
+building_site_update:
+    pattern:  /building_site/{id}/update
+    defaults: { _controller: FTRAdminBundle:Building_site:update }
+    
+building_site_delete:
+    pattern:  /building_site/{id}/delete
+    defaults: { _controller: FTRAdminBundle:Building_site:delete }

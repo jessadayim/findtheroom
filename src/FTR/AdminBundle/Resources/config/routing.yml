@@ -1,3 +1,7 @@
 FTRAdminBundle_homepage:
     pattern:  /hello/{name}
     defaults: { _controller: FTRAdminBundle:Default:index }
+
+FTRAdminBundle_Building_site:
+    resource: "@FTRAdminBundle/Resources/config/routing/building_site.yml"
+    prefix:   /building_site

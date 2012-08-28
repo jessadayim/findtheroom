@@ -1,0 +1,97 @@
+<h1>Building_site list</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Building_name</th>
+            <th>Building_address</th>
+            <th>Start_price</th>
+            <th>End_price</th>
+            <th>Phone_number</th>
+            <th>Publish</th>
+            <th>Datetimestamp</th>
+            <th>Lastupdate</th>
+            <th>Userupdate</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+            <th>Recommend</th>
+            <th>Building_type_id</th>
+            <th>Zone_id</th>
+            <th>Pay_type_id</th>
+            <th>User_owner_id</th>
+            <th>Detail</th>
+            <th>Contact_name</th>
+            <th>Contact_email</th>
+            <th>Website</th>
+            <th>Month_stay</th>
+            <th>Water_unit</th>
+            <th>Electricity_unit</th>
+            <th>Internet_price</th>
+            <th>Googlemap_url</th>
+            <th>Internet_ready</th>
+            <th>Addr_number</th>
+            <th>Addr_prefecture</th>
+            <th>Addr_province</th>
+            <th>Addr_zipcode</th>
+            <th>Deleted</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('building_site_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.buildingname }}</td>
+            <td>{{ entity.buildingaddress }}</td>
+            <td>{{ entity.startprice }}</td>
+            <td>{{ entity.endprice }}</td>
+            <td>{{ entity.phonenumber }}</td>
+            <td>{{ entity.publish }}</td>
+            <td>{% if entity.datetimestamp %}{{ entity.datetimestamp|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td>{% if entity.lastupdate %}{{ entity.lastupdate|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td>{{ entity.userupdate }}</td>
+            <td>{{ entity.latitude }}</td>
+            <td>{{ entity.longitude }}</td>
+            <td>{{ entity.recommend }}</td>
+            <td>{{ entity.buildingtypeid }}</td>
+            <td>{{ entity.zoneid }}</td>
+            <td>{{ entity.paytypeid }}</td>
+            <td>{{ entity.userownerid }}</td>
+            <td>{{ entity.detail }}</td>
+            <td>{{ entity.contactname }}</td>
+            <td>{{ entity.contactemail }}</td>
+            <td>{{ entity.website }}</td>
+            <td>{{ entity.monthstay }}</td>
+            <td>{{ entity.waterunit }}</td>
+            <td>{{ entity.electricityunit }}</td>
+            <td>{{ entity.internetprice }}</td>
+            <td>{{ entity.googlemapurl }}</td>
+            <td>{{ entity.internetready }}</td>
+            <td>{{ entity.addrnumber }}</td>
+            <td>{{ entity.addrprefecture }}</td>
+            <td>{{ entity.addrprovince }}</td>
+            <td>{{ entity.addrzipcode }}</td>
+            <td>{{ entity.deleted }}</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('building_site_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('building_site_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<ul>
+    <li>
+        <a href="{{ path('building_site_new') }}">
+            Create a new entry
+        </a>
+    </li>
+</ul>
