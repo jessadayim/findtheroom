@@ -92,6 +92,7 @@ select[disabled] { background-color: #EAEAEA !important; color:#BCBCBC !importan
 
 #search1 ul#detail_containTab li.detailContent3 {background-color: #423C3B; width: 970px; height: 310px; position:relative; margin:30px 0 15px 0; padding-left: 30px;}
 #search1 .detailContent3 div { width:263px;}
+#search1 .detailContent3 div .gmnoprint div{ width:120px;}
 #search1 .detailContent3 input.map1 { background: url(../images/map1.png) no-repeat; border: 0; width: 263px; height: 66px; cursor: pointer; position:relative; margin-bottom:10px;}
 #search1 .detailContent3 input.map2 { background: url(../images/map2.png) no-repeat; border: 0; width: 263px; height: 66px; cursor: pointer; position:relative; margin-bottom:10px;}
 #search1 .detailContent3 input.map3 { background: url(../images/map3.png) no-repeat; border: 0; width: 263px; height: 66px; cursor: pointer; position:relative; margin-bottom:10px;}
