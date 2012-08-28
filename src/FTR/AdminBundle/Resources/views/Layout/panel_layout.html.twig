@@ -12,7 +12,8 @@
 <link rel='stylesheet' type='text/css' href='{{asset("css/panel/reset.css")}}' />
 <link rel='stylesheet' type='text/css' href='{{asset("css/panel/960_12.css")}}' />
 <link rel='stylesheet' type='text/css' href='{{asset("css/panel/style.css")}}' />
-<link rel='stylesheet' type='text/css' href='{{asset("css/general.css")}}' />
+<link rel='stylesheet' type='text/css' href='{{asset("css/panel/general.css")}}' />
+<link rel='stylesheet' type='text/css' href='{{asset("css/panel/vertical-menu.css")}}' />
 {% endblock %}
 {% block js %}
 <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js'></script>
@@ -21,13 +22,60 @@
 </head>
 
 <body>
-<header id="wrap" class="container_12" style="height: 100px;">
-	<H1>FindtheRoom-Panel</H1>
-</header>	<!-- End .container_12 -->
+{% if session == 0 %}
+	<header id="wrap" class="container_12" style="height: 100px; padding-top: 30px; text-align: center;">
+		<H1>FindtheRoom PANEL</H1>
+	</header>	<!-- End .container_12 -->
+{% else %}
+	<header id="wrap" class="container_12" style="height: 100px;">
+		<div id="headernav" class="grid_8 alpha" style="">
+			<ul id="vertical-navigation">
+			    <li class=""> <a href="dashboard.php">Dashboard</a> </li>
+			    <li class=""> <a href="">BUILDING</a>
+			      <ul>
+			      	<li class=""> <a href="zone-lists.php">Zones</a> </li>
+			      	<li class=""> <a href="building-type-lists.php">Building Types</a> </li>
+			        <li class=""> <a href="building-site-lists.php">Building Sites</a> </li>
+			        <li class=""> <a href="facility-lists.php">Facilities</a> </li>
+			        <li class=""> <a href="room-lists.php">Room Types</a> </li>
+			        <li class=""> <a href="nearly-type-lists.php">Nearly Types</a> </li>
+			        <li class=""> <a href="nearly-location-lists.php">Nearly Locations</a> </li>
+			        <li class=""> <a href="pay-type-lists.php">Pay Types</a> </li>
+			      </ul>
+			    </li>
+			    <li class=""> <a href="image-lists.php">Images</a> </li>
+			    <li class=""> <a href="#">Users</a>
+			      <ul>
+			        <li class=""> <a href="user-admin-lists.php">Admin Users</a> </li>
+			        <li class=""> <a href="user-owner-lists.php">Owner Users</a> </li>
+			      </ul>
+			    </li>
+			    <li class=""> <a href="lists.php">SITE CONTROL</a> 
+			      <ul>
+			        <li class=""> <a href="site-detail.php">Site Detail</a> </li>
+			        <li class=""> <a href="advertising-detail.php">Advertising Detail</a> </li>
+			        <li class=""> <a href="menus-detail.php">Menus Detail</a> </li>
+			      </ul>
+			    </li>
+			    <li class=""> <a href="lists.php">LOGS</a> </li>
+			    <li class=""> <a href="#">Helps</a> </li>
+			  </ul>
+		</div><!-- End #headernav -->
+		<div id="userpanel" class="grid_4 omega" style="">
+			<ul>
+				<li><a href="#">Hi ADMINISTRATOR</a></li>
+				<li><a href="#">My Setting</a></li>
+				<li><a href="signin.php"><STRONG>Log out</STRONG></a></li>
+			</ul>
+			<input type="text" name="txtsearch" id="txtsearch">
+			<input type="submit" name="btnsearch" id="btnsearch" value="SEARCH">
+		</div><!-- End #userpanel -->
+	</header><!-- End .container_12 -->	
+{% endif %}
+
 <div id="wrap" class="container_12">
 	
-{% block body %}
-{% endblock %}
+{% block body %}{% endblock %}
 
 </div><!-- End #wrap -->
 <footer class="">
