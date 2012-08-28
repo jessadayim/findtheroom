@@ -45,3 +45,23 @@ FTRAdminBundle_Nearlytypelists:
 FTRAdminBundle_Nearlylocationlists:
     pattern:  /ftr_panel/nearlylocationlists
     defaults: { _controller: FTRAdminBundle:nearlylocationlists:index } 
+    
+FTRAdminBundle_Paytypelists:
+    pattern:  /ftr_panel/paytypelists
+    defaults: { _controller: FTRAdminBundle:paytypelists:index } 
+    
+FTRAdminBundle_Useradminlists:
+    pattern:  /ftr_panel/useradminlists
+    defaults: { _controller: FTRAdminBundle:useradminlists:index } 
+    
+FTRAdminBundle_Userownerlists:
+    pattern:  /ftr_panel/userownerlists
+    defaults: { _controller: FTRAdminBundle:userownerlists:index } 
+    
+FTRAdminBundle_Sitedetail:
+    pattern:  /ftr_panel/sitedetail
+    defaults: { _controller: FTRAdminBundle:sitedetail:index } 
+    
+FTRAdminBundle_Advertisingdetail:
+    pattern:  /ftr_panel/advertisingdetail
+    defaults: { _controller: FTRAdminBundle:advertisingdetail:index } 

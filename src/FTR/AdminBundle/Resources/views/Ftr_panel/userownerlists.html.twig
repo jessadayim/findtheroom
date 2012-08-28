@@ -1,0 +1,63 @@
+{% extends 'FTRAdminBundle:Layout:panel_layout.html.twig' %}
+
+{% block body %}
+  
+  <!-- ***** Jquery Transation ***** -->
+  <script>
+  $(document).ready(function(){
+  	$("#createrecord").click(function(){
+	  $(".createPanel").animate({
+	    left: '+=50',
+	    height: 'toggle'
+	  }, 500, function(){});
+	});
+  });
+  </script>
+<div id="containerwrap">
+	
+	<div class="grid_12 createLists marginB_10 alpha" style="">
+		<H2>OWNER LISTS</H2>
+		<div class="listsPanel" style="margin-left: 0px !important;"><a href="#" id="createrecord">CREAT OWNER</a></div>
+		<div class="clear"></div>
+		<p>Welcome to Visual Admin, a slick admin template for almost any project - front or back end. It's based on the 960 grid system which means you can have almost endless layout possibiliites as well as those that come ready to use straight out the box. Please have a click around and feel free to check out the screenshots.</p>
+	    <div class="clear"></div>
+		<div class="createPanel" style="">
+			
+			<form>
+				<fieldset>
+					<legend>CREATE OWNER</legend>
+					<div class="label" style="">Username:</div> <input type="text" name="OwnerUsername" class="widfat" /><br />
+					<div class="label" style="">Password:</div> <input type="text" name="OwnerPassword" class="widfat" /><br />
+					<div class="label" style="">First Name:</div> <input type="text" name="OwnerFristName" class="widfat" /><br />
+					<div class="label" style="">Last Name:</div> <input type="text" name="OwnerLastName" class="widfat" /><br />
+					<div class="label" style="">Phone Number:</div> <input type="text" name="OwnerPhoneNumber" class="widfat" /><br />
+					<div class="label" style="">Fax Number:</div> <input type="text" name="OwnerFaxNumber" class="widfat" /><br />
+					<div class="label" style="">Email:</div> <input type="text" name="OwnerEmail" class="widfat" /><br />
+					
+					<span style="float: right;"><input type="submit"  value="CREATE"></span>
+				</fieldset>	
+			</form>
+			
+		</div>
+	</div>
+	<div class="grid_12 tableLists marginB_10 alpha" style="">
+		<table>
+			<tr>
+				<th style="width: 940px !important;">name</th>
+			</tr>
+			<tr>
+			  <td>Lumpini Park Pinklao</td>
+			</tr>
+			<tr>
+			  <td>Lumpini Park Pinklao</td>
+			</tr>
+			<tr>
+			  <td>Lumpini Park Pinklao</td>
+			</tr>
+		</table>
+		<div class="clear"></div>
+	</div>	
+	
+</div>
+
+{% endblock %}
