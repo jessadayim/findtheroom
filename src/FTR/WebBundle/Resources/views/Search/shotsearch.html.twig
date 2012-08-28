@@ -112,8 +112,8 @@
                                 <td width="350">
                                     <div class="styled-select">
                                         <select class="select" >
-                                            {% for zlistm in zonelist_month %}
-                                            <option value="{{ zlistm.id }}">{{ zlistm.zonename }}</option>
+                                            {% for zlist in bkkZone %}
+                                            <option value="{{ zlist.id }}">{{ zlist.zonename }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
@@ -122,8 +122,8 @@
                                 <td width="330">
                                     <div class="styled-select">
                                         <select class="select" >
-                                            {% for zlistm in zonelist_month %}
-                                            <option value="{{ zlistm.id }}">{{ zlistm.zonename }}</option>
+                                            {% for plist in payType %}
+                                            <option value="{{ plist.id }}">{{ plist.typename }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
@@ -136,7 +136,7 @@
                                 <td>
                                     <div class="styled-select">
                                         <select class="select">
-                                            {% for blistm in buildingtype_month %}
+                                            {% for blistm in buildingType %}
                                             <option value="{{ blistm.id }}">{{ blistm.type_name }}</option>
                                             {% endfor %}
                                         </select>
@@ -144,7 +144,8 @@
                                 </td>
                                 <td align="right" style="padding-right:15px">ราคา :</td>
                                 <td>
-                                    <input class="price" name="lessprice" type="text" maxlength="10" placeholder="ราคาเริ่มต้น" /> - <input class="price" name="mostprice" type="text" maxlength="10" placeholder="ราคาไม่เกิน" />&nbsp;&nbsp;&nbsp;&nbsp;บาท
+                                    <input class="price" name="lessprice" type="text" maxlength="10" placeholder="ราคาเริ่มต้น" /> -
+                                    <input class="price" name="mostprice" type="text" maxlength="10" placeholder="ราคาไม่เกิน" />&nbsp;&nbsp;&nbsp;&nbsp;บาท
                                 </td>
                                 <td>
                                     <input class="search" type="submit" value="" />
@@ -164,8 +165,8 @@
                                 <td width="350">
                                     <div class="styled-select">
                                         <select class="select">
-                                            {% for zlistd in zonelist_day %}
-                                            <option value="{{ zlistd.id }}">{{ zlistd.zonename }}</option>
+                                            {% for pvlist in province %}
+                                            <option value="{{ pvlist.PROVINCE_NAME }}">{{ pvlist.PROVINCE_NAME }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
@@ -174,8 +175,8 @@
                                 <td width="330">
                                     <div class="styled-select">
                                         <select class="select" >
-                                            {% for zlistm in zonelist_month %}
-                                            <option value="{{ zlistm.id }}">{{ zlistm.zonename }}</option>
+                                            {% for plist in payType %}
+                                            <option value="{{ plist.id }}">{{ plist.typename }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
@@ -189,15 +190,16 @@
                                 <td>
                                     <div class="styled-select">
                                         <select class="select">
-                                            {% for blistd in buildingtype_day %}
-                                            <option value="{{ blistd.id }}">{{ blistd.type_name }}</option>
+                                            {% for blistm in buildingType %}
+                                            <option value="{{ blistm.id }}">{{ blistm.type_name }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
                                 </td>
                                 <td align="right" style="padding-right:15px">ราคา :</td>
                                 <td>
-                                    <input class="price" name="lessprice" type="text" maxlength="10" placeholder="ราคาเริ่มต้น" /> - <input class="price" name="mostprice" type="text" maxlength="10" placeholder="ราคาไม่เกิน" />&nbsp;&nbsp;&nbsp;&nbsp;บาท
+                                    <input class="price" name="lessprice" type="text" maxlength="10" placeholder="ราคาเริ่มต้น" /> -
+                                    <input class="price" name="mostprice" type="text" maxlength="10" placeholder="ราคาไม่เกิน" />&nbsp;&nbsp;&nbsp;&nbsp;บาท
                                 </td>
                                 <td>
                                     <input class="search" type="submit" value="" />

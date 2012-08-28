@@ -17,12 +17,6 @@ class SearchController extends Controller
     {
         $conn= $this->get('database_connection');
         if(!$conn){ die("MySQL Connection error");}
-                    
-        $zonelist_day		= $this->getZone(1);
-        $zonelist_month		= $this->getZone(2);
-        $buildingtype_day	= $this->getBuildingType(1);
-        $buildingtype_month	= $this->getBuildingType(2);
-        
         //rux
         $sqlGetMap1 = "
             SELECT 
@@ -31,46 +25,57 @@ class SearchController extends Controller
 			  b.id as bt_id
             FROM
               `building_site` a
-              INNER JOIN `building_type` b 
-                ON (b.`id` = a.`building_type_id`) 
-            WHERE a.`publish` = 1 
+              INNER JOIN `building_type` b
+                ON (b.`id` = a.`building_type_id`)
+            WHERE a.`publish` = 1
               AND b.`deleted` = 0 ";
         $sqlGetMap2 = "
             $sqlGetMap1 AND b.`id` = 1
         ";
         $sqlGetMap3 = "
-            $sqlGetMap1 AND b.`id` = 2 
+            $sqlGetMap1 AND b.`id` = 2
         ";
         $sqlGetMap4 = "
-            $sqlGetMap1 AND b.`id` = 3 
+            $sqlGetMap1 AND b.`id` = 3
         ";
-        try{                
+        try{
             $objGetMap1 = $conn->fetchAll($sqlGetMap1);
         } catch (Exception $e) {
             echo 'Caught exception: ',  $e->getMessage(), "\n";
         }
-        try{                
+        try{
             $objGetMap2 = $conn->fetchAll($sqlGetMap2);
         } catch (Exception $e) {
             echo 'Caught exception: ',  $e->getMessage(), "\n";
         }
-        try{                
+        try{
             $objGetMap3 = $conn->fetchAll($sqlGetMap3);
         } catch (Exception $e) {
             echo 'Caught exception: ',  $e->getMessage(), "\n";
         }
-        try{                
+        try{
             $objGetMap4 = $conn->fetchAll($sqlGetMap4);
         } catch (Exception $e) {
             echo 'Caught exception: ',  $e->getMessage(), "\n";
         }
-        
+
+        //peung
+        //$zonelist_day		= $this->getZone();
+        //$zonelist_month		= $this->getZone(2);
+        //$buildingtype_day	= $this->getBuildingType(1);
+        //$buildingtype_month	= $this->getBuildingType(2);
+
+        $payType        = $this->getPayType();
+        $bkkZone        = $this->getBkkZone();
+        $buildingType   = $this->getBuildingType();
+        $province       = $this->getProvince();
+
 
         return $this->render('FTRWebBundle:Search:shotsearch.html.twig', array(
-            'zonelist_day' 			=>$zonelist_day,
-            'zonelist_month' 		=>$zonelist_month,
-            'buildingtype_day' 		=>$buildingtype_day,
-            'buildingtype_month' 	=>$buildingtype_month,
+            'payType' 			    =>$payType,
+            'bkkZone' 		        =>$bkkZone,
+            'buildingType' 		    =>$buildingType,
+            'province' 		        =>$province,
             'get_map1'              =>$objGetMap1,
             'get_map2'              =>$objGetMap2,
             'get_map3'              =>$objGetMap3,
@@ -82,7 +87,7 @@ class SearchController extends Controller
     {
         $fac_inroomlist 	= $this->getFacility('inroom');	
         $fac_outroomlist 	= $this->getFacility('outroom');	
-		$zonelist			= $this->getZone();
+		$zonelist			= $this->getBkkZone();
 		$buildingTypeList	= $this->getBuildingType();
 		$payType			= $this->getPayType();
 		$nearBTS			= $this->getNeary(2);
@@ -103,18 +108,15 @@ class SearchController extends Controller
 		));
     }
 
-    function getZone( $payType = null){
+    function getBkkZone()
+    {
         $result_data = array();
         $conn= $this->get('database_connection');
         if(!$conn){ die("MySQL Connection error");}
         try{
             $whereQuery = null;
-            if($payType != null){
-                $whereQuery = "where id in (select distinct(zone_id) from building_site where pay_type_id = $payType)";
-            }
-
             $sql = "
-				select * from zone $whereQuery
+				select * from zone
 			";
             $result_data = $conn->fetchAll($sql);
         } catch (Exception $e) {
@@ -126,7 +128,27 @@ class SearchController extends Controller
         return $result;
     }
 
-    function getBuildingType($type=null){
+    function getProvince()
+    {
+        $result_data = array();
+        $conn= $this->get('database_connection');
+        if(!$conn){ die("MySQL Connection error");}
+        try{
+            $sql = "
+				select * from province where PROVINCE_ID != 1
+			";
+            $result_data = $conn->fetchAll($sql);
+        } catch (Exception $e) {
+            echo 'Caught exception: ',  $e->getMessage(), "\n";
+        }
+        $all[] = array('PROVINCE_NAME'=>'ทุกประเภท');
+
+        $result = array_merge($all,$result_data);
+        return $result;
+    }
+
+    function getBuildingType($type=null)
+    {
         $result_data = array();
         $conn= $this->get('database_connection');
         if(!$conn){ die("MySQL Connection error");}
@@ -147,8 +169,9 @@ class SearchController extends Controller
         $result = array_merge($all,$result_data);
         return $result;
     }
-	
-	function getFacility($type='inroom'){
+
+	function getFacility($type='inroom')
+    {
 		$conn= $this->get('database_connection');
 		if(!$conn){ die("MySQL Connection error");}
 		try{
@@ -179,7 +202,8 @@ class SearchController extends Controller
 		return $fac_inroomlist;
 	}
 	
-	function getPayType(){
+	function getPayType()
+    {
 		$result_data = array();
 		$conn= $this->get('database_connection');
 		if(!$conn){ die("MySQL Connection error");}
@@ -196,7 +220,8 @@ class SearchController extends Controller
 		return $result;
 	}
 	
-	function getNeary($type=2){
+	function getNeary($type=2)
+    {
 		$result_data = array();
 		$conn= $this->get('database_connection');
 		if(!$conn){ die("MySQL Connection error");}
