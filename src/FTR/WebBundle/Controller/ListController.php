@@ -10,6 +10,9 @@ class ListController extends Controller
     
     public function indexAction()
     {
+        // var_dump($_POST);
+        $test = "a";
+
         $result_data = array();
         $conn= $this->get('database_connection');
         if(!$conn){ die("MySQL Connection error");}
@@ -30,11 +33,13 @@ class ListController extends Controller
         } catch (Exception $e) {
             echo 'Caught exception: ',  $e->getMessage(), "\n";
         }
-        $name=null;
+        $name="aaaa";
         $numdata = count($result);
 		return $this->render('FTRWebBundle:List:index.html.twig', array(
             'result' => $result,
             'numdata'=> $numdata,
+            'test'=> $test,
+            'name'=> $name,
         ));
     }
 }

@@ -22,7 +22,7 @@ function fncAlert(){
 	}
 }
 </script>
-<form method="post" action="{{path('FTRWebBundle_list')}}">
+<form method="post" action="{{path('FTRWebBundle_list')}}?searchtype=fullsearch">
 <div id="search2">
 	<img src="{{asset('images/search-i.png')}}" />
 	<hr class="line" style="top: 60px;" />
@@ -77,8 +77,8 @@ function fncAlert(){
 					<div class="styled-select">
 						<label for="cou">
 						<select class="select">
-							{% for zlist in zonelist %}
-								<option value="{{ zlist.id }}">{{ zlist.zonename }}</option>
+							{% for pvlist in province %}
+								<option value="{{ pvlist.PROVINCE_VALUE }}">{{ pvlist.PROVINCE_NAME }}</option>
 							{% endfor %}
 						</select>
 						</label>
@@ -168,8 +168,8 @@ function fncAlert(){
 					<div class="styled-select">
                 
 						<select class="select" id="scou" disabled>
-							{% for blist in nearBy %}
-								<option value="{{ blist.id }}">{{ blist.name }}</option>
+							{% for clist in nearInCountry %}
+								<option value="{{ clist.id }}">{{ clist.name }}</option>
 							{% endfor %}
 						</select>
                 
