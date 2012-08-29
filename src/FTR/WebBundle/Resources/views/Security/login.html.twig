@@ -9,6 +9,7 @@
 <script src="{{asset('js/jquery.easing.1.3.js')}}"></script>
 <script src="{{asset('js/jquery.cookie.js')}}"></script>
 <script src="{{asset('js/jquery.cookie.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/fancybox/jquery.fancybox-1.3.4.pack.js')}}"></script>
 
 
 <script>
@@ -70,7 +71,14 @@
 			
 		});
     });
-    
+    function closeToPublish()
+    {
+    	//alert(123);
+    	
+    	parent.$.fancybox.close();
+    	//$.fancybox.close();
+    	
+    }
 </script>
 </head>
 
@@ -136,8 +144,11 @@
 	            </tr>
 	            <tr valign="middle">
 					<td align="left" width="120" style="font-size:24px;">&nbsp;</td>
-	                <td align="left" width="120" style="font-size:22px;"><input id="log" class="loginp" type="submit" value=""/>
-	                	<input class="pubp" type="submit" value="" /></td>
+	                <td align="left" width="120" style="font-size:22px;">
+	                	<input id="log" class="loginp" type="submit" value=""/>
+	                	<!--<input id="publish" name="publish" class="pubp" type="submit" value="" onclick="javascript:closeToPublish();" />-->
+	                	<a class="pubp" href="{{path('userbuilding')}}" target="_parent"></a>
+	                </td>
 	            </tr>
 	            <tr valign="middle">
 					<td align="left" width="120" style="font-size:24px;">&nbsp;</td>
