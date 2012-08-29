@@ -170,6 +170,7 @@ select[disabled] { background-color: #EAEAEA !important; color:#BCBCBC !importan
 input.loginp { background: url(../images/login-bt2.png) no-repeat; border: 0; width: 78px; height: 80px; cursor: pointer; position:absolute;}
 input.pubp { background: url(../images/pub-bt2.png) no-repeat; border: 0; width: 78px; height: 80px; cursor: pointer; position:absolute; margin-left: 100px;}
 a.link{ padding: 3px 10px; color: #FFF; background-color: #BF1E2D; text-decoration: none; margin-top:70px; position:absolute; font-size:22px; display:block;}
+a.pubp { background: url(../images/pub-bt2.png) no-repeat; border: 0; width: 78px; height: 80px; cursor: pointer; position:absolute; margin-left: 100px;}
 
 /*Forget Password Popup*/
 input.forgetp { background: url(../images/forget-bt.png) no-repeat; border: 0; width: 78px; height: 80px; cursor: pointer; position:absolute; margin-top:-40px;}

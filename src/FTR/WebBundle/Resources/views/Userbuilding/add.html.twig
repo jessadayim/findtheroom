@@ -117,6 +117,7 @@
 		//document.addform.hdnMaxLine.value = intLine;
 		loopbutton();
 		intLine++;
+		document.addform.hdnMaxLine.value = intLine;
 	}
 	
 	function readdataroom(num)
@@ -162,6 +163,7 @@
 				readdataroom(num);
 				$("#tableroom").html(strdefault);
 				intLine = 0;
+				document.addform.hdnMaxLine.value = intLine;
 				genrowimage();
 				
 		}	
@@ -232,11 +234,12 @@
 		newCell = newRow.insertCell(3)
 		newCell.id = newCell.uniqueID
 		newCell.setAttribute("className", "css-name");
-		newCell.innerHTML = "<textarea id=\"galtitle"+num+"\" name=\"galtitle"+num+"\" maxlenght=\"500\" placeholder=\"กรอกข้อมูลของรูปที่นี่\" class=\"galdesc\"></textarea>"				
+		newCell.innerHTML = "<textarea id=\"galtitle"+num+"\" name=\"galtitle"+num+"\" maxlenght=\"500\" placeholder=\"กรอกข้อมูลของรูปที่นี่\" class=\"galdesc\"></textarea><input type=\"hidden\" name=\"imageidgal"+num+"\" id=\"imageidgal"+num+"\" value=\""+imageid+"\" />"				
 			
 		//document.addform.hdnMaxLineGal.value = intLine;
 		loopbuttongallery();
 		intLineGal++;
+		document.addform.hdnMaxLineGal.value = intLineGal;
 	}
 	
 	function readdatagallery(numGal)
@@ -246,12 +249,12 @@
 		{			
 			
 			if (num != i){
-				if ($('#hdnfilename'+i).val() == ''){
+				if ($('#hdngalleryname'+i).val() == ''){
 					var filename = pathimgdefault + 'show.png';
 				}else {
-					var filename = pathimgdefault + $('#hdnfilename'+i).val();
+					var filename = pathimgdefault + $('#hdngalleryname'+i).val();
 				}
-				var arrayadd = [$('#imageid'+i).val(), filename, $('#typeap_name'+i).val(), $('#typeap_size'+i).val(), $('#typeap_price'+i).val(), $('#hdnfilename'+i).val()];
+				var arrayadd = [$('#imageidgal'+i).val(), filename, $('#typeap_name'+i).val(), $('#typeap_size'+i).val(), $('#typeap_price'+i).val(), $('#hdngalleryname'+i).val()];
 				arrayread.push(arrayadd);
 			}
 		}
@@ -269,8 +272,9 @@
 				// intLine--;
 				// document.addform.hdnMaxLine.value = intLine;
 				// loopbutton();
-				readdataroom(num);
+				readdatagallery(num);
 				intLineGal = 0;
+				document.addform.hdnMaxLineGal.value = intLineGal;
 				genrowimage();
 				
 		}	
@@ -320,7 +324,7 @@
     	<table style="margin-top: 0px; float:left;">
         	<tr height="50" valign="middle">
 				<td align="left" width="240"><img src="{{asset('images/ex.png')}}" class="nopad" /></td>
-                <td align="left" width="230" valign="top"><input id="inter" name="option36" type="checkbox" value="internetap" /><label for="inter">มีอินเตอร์เน็ต</label></td>
+                <td align="left" width="230" valign="top"><!--<input id="inter" name="option36" type="checkbox" value="internetap" /><label for="inter">มีอินเตอร์เน็ต</label>--></td>
             </tr>
             <tr height="50" valign="middle">
 				<td align="center" width="240" style="font-size:24px;">
@@ -333,17 +337,17 @@
         <table style="margin-top: 0px; float:none;  margin-left: 0px;">
         	<tr height="50" valign="middle">
 				<td align="right" width="210" style="font-size:24px;">ชื่อหอพัก / อพาร์ทเม้นต์ : *</td>
-                <td align="left" width="190"><input name="nameap" type="text" maxlength="30" placeholder="กรุณากรอกชื่อหอพัก" style=" padding:2px; font-size:20px;" /></td>
+                <td align="left" width="190"><input name="nameap" id="nameap" type="text" maxlength="30" placeholder="กรุณากรอกชื่อหอพัก" style=" padding:2px; font-size:20px;" /></td>
             </tr>
             <tr height="50" valign="top">
 				<td align="right" width="210" style="font-size:24px;">ที่อยู่ : *</td>
-                <td align="left" width="190"><textarea name="placeap" type="text" maxlength="500" class="place" /></textarea></td>
+                <td align="left" width="190"><textarea name="placeap" id="placeap" type="text" maxlength="500" class="place" /></textarea></td>
             </tr>
 			<tr height="50" valign="middle">
 				<td align="right" width="210" style="font-size:24px;">จังหวัด : *</td>
                 <td align="left" width="190">
 					<div class="styled-select">
-						<select class="select">
+						<select id="province" name="province" class="select">
 							<option value="daymonth">รายวันและรายเดือน</option>
 							<option value="day">รายวัน</option>
 							<option value="month">รายเดือน</option>
@@ -352,10 +356,10 @@
 				</td>
             </tr>
 			<tr height="40" valign="middle">
-				<td align="right" width="210" style="font-size:24px;">เขต : *</td>
+				<td align="right" width="210" style="font-size:24px;">เขต/อำเภอ : *</td>
                 <td align="left" width="190">
 					<div class="styled-select">
-						<select class="select">
+						<select id="district" name="district" class="select">
 							<option value="daymonth">รายวันและรายเดือน</option>
 							<option value="day">รายวัน</option>
 							<option value="month">รายเดือน</option>
@@ -365,7 +369,7 @@
             </tr>
             <tr height="50" valign="middle">
 				<td align="right" width="210" style="font-size:24px;">รหัสไปรษณีย์ : *</td>
-                <td align="left" width="190"><input name="nameap" type="text" maxlength="30" placeholder="กรุณากรอกรหัสไปรษณีย์" style=" padding:2px; font-size:20px;" /></td>
+                <td align="left" width="190"><input id="zipcode" name="zipcode" type="text" maxlength="30" placeholder="กรุณากรอกรหัสไปรษณีย์" style=" padding:2px; font-size:20px;" /></td>
             </tr>
         </table>
         <table style="margin-top: 0px; float:left;">
@@ -384,16 +388,16 @@
 		<table style="margin-top: 0px;">
         	<tr height="50" valign="middle">
 				<td align="right" width="240" style="font-size:24px;">Google Map ลองติจูด : *</td>
-                <td align="left" width="200"><input name="url" type="text" maxlength="30" placeholder="กรุณากรอกตำแหน่งลองติจูด" style=" padding:2px; font-size:20px;" /></td>
+                <td align="left" width="200"><input id="longitude" name="longitude" type="text" maxlength="30" placeholder="กรุณากรอกตำแหน่งลองติจูด" style=" padding:2px; font-size:20px;" /></td>
 				<td align="right" width="240" style="font-size:24px;">Google Map ละติจูด : *</td>
-                <td align="left" width="200"><input name="url" type="text" maxlength="30" placeholder="กรุณากรอกตำแหน่งละติจูด" style=" padding:2px; font-size:20px;" /></td>
+                <td align="left" width="200"><input id="latitude" name="latitude" type="text" maxlength="30" placeholder="กรุณากรอกตำแหน่งละติจูด" style=" padding:2px; font-size:20px;" /></td>
                 <td align="left" width="30" style="font-size:24px;">&nbsp;</td>
             </tr>
             <tr height="50" valign="middle">
 				<td align="right" width="240" style="font-size:24px;">ประเภทห้องพัก : *</td>
                 <td align="left" width="200">
                 	<div class="styled-select">
-						<select class="select">
+						<select id="aptype" name="aptype" class="select">
 							<option value="all">- กรุณาระบุ -</option>
   							<option value="apartment">อพาร์ทเม้นต์</option>
                             <option value="man">หอชาย</option>
@@ -403,7 +407,7 @@
                 </td>
                 <td align="right" width="210" style="font-size:24px;">ชนิด : *</td>
                 <td align="left" width="190" style="font-size:24px;"><div class="styled-select">
-						<select class="select">
+						<select id="paytype" name="paytype" class="select">
 							<option value="daymonth">รายวันและรายเดือน</option>
 							<option value="day">รายวัน</option>
 							<option value="month">รายเดือน</option>
@@ -413,30 +417,30 @@
             </tr>
             <tr height="50" valign="middle">
 				<td align="right" width="240" style="font-size:24px;">เบอร์โทรติดต่อ : *</td>
-                <td align="left" width="200"><input name="telnumber" type="text" maxlength="10" placeholder="กรุณากรอกเบอร์โทรติดต่อ" style=" padding:2px; font-size:20px;" /></td>
+                <td align="left" width="200"><input id="telnumber" name="telnumber" type="text" maxlength="10" placeholder="กรุณากรอกเบอร์โทรติดต่อ" style=" padding:2px; font-size:20px;" /></td>
                 <td align="right" width="210" style="font-size:24px;">ระยะเวลาเช่าขั้นต่ำ : *</td>
-               <td align="left" width="190"><input name="time" type="text" maxlength="3" placeholder="กรุณากรอกระยะเวลาเช่าขั้นต่ำ" style=" padding:2px; font-size:20px;" /></td>
+               <td align="left" width="190"><input id="time" name="time" type="text" maxlength="3" placeholder="กรุณากรอกระยะเวลาเช่าขั้นต่ำ" style=" padding:2px; font-size:20px;" /></td>
                 <td align="left" width="30" style="font-size:24px;"> เดือน</td>
             </tr>
             <tr height="50" valign="middle">
 				<td align="right" width="240" style="font-size:24px;">ติดต่อคุณ : *</td>
-                <td align="left" width="200"><input name="contact_person" type="text" placeholder="กรุณากรอกชื่อผ้ติดต่อ" style=" padding:2px; font-size:20px;" /></td>
+                <td align="left" width="200"><input id="contact_person" name="contact_person" type="text" placeholder="กรุณากรอกชื่อผ้ติดต่อ" style=" padding:2px; font-size:20px;" /></td>
                 <td align="right" width="210" style="font-size:24px;">ค่าน้ำ : *</td>
-               <td align="left" width="190"><input name="water_price" type="text" maxlength="3" placeholder="กรุณากรอกค่าน้ำ" style=" padding:2px; font-size:20px;" /></td>
+               <td align="left" width="190"><input id="water_price" name="water_price" type="text" maxlength="3" placeholder="กรุณากรอกค่าน้ำ" style=" padding:2px; font-size:20px;" /></td>
                 <td align="left" width="30" style="font-size:24px;"> บาท</td>
             </tr>
             <tr height="50" valign="middle">
 				<td align="right" width="240" style="font-size:24px;">อีเมล : *</td>
-                <td align="left" width="200"><input name="contact_email" type="text" placeholder="กรุณากรอกอีเมล" style=" padding:2px; font-size:20px;" /></td>
+                <td align="left" width="200"><input id="contact_email" name="contact_email" type="text" placeholder="กรุณากรอกอีเมล" style=" padding:2px; font-size:20px;" /></td>
                 <td align="right" width="210" style="font-size:24px;">ค่าไฟ : *</td>
-               <td align="left" width="190"><input name="power_price" type="text" maxlength="3" placeholder="กรุณากรอกค่าไฟ" style=" padding:2px; font-size:20px;" /></td>
+               <td align="left" width="190"><input id="power_price" name="power_price" type="text" maxlength="3" placeholder="กรุณากรอกค่าไฟ" style=" padding:2px; font-size:20px;" /></td>
                 <td align="left" width="30" style="font-size:24px;"> บาท</td>
             </tr>
             <tr height="50" valign="middle">
 				<td align="right" width="240" style="font-size:24px;">เว็บไซต์ : &nbsp;</td>
-                <td align="left" width="200"><input name="website" type="text" maxlength="10" placeholder="กรุณากรอกเว็บไซต์" style=" padding:2px; font-size:20px;" /></td>
+                <td align="left" width="200"><input id="website" name="website" type="text" maxlength="10" placeholder="กรุณากรอกเว็บไซต์" style=" padding:2px; font-size:20px;" /></td>
                 <td align="right" width="210" style="font-size:24px;">ค่าอินเตอร์เน็ต : &nbsp;</td>
-               <td align="left" width="190"><input name="internet_price" type="text" maxlength="3" placeholder="กรุณากรอกค่าอินเตอร์เน็ต" style=" padding:2px; font-size:20px;" /></td>
+               <td align="left" width="190"><input id="internet_price" name="internet_price" type="text" maxlength="3" placeholder="กรุณากรอกค่าอินเตอร์เน็ต" style=" padding:2px; font-size:20px;" /></td>
                 <td align="left" width="30" style="font-size:24px;"> บาท</td>
             </tr>
         </table>
@@ -515,7 +519,7 @@
 				<td align="left" width="165"><input id="bk_check" name="bk_check" type="checkbox" value="bangkok" /><label for="bk_check">โซนกรุงเทพฯ :</label></td>
 				<td width="300">
 					<div id="nearly_area" class="styled-select">
-						<select name="nearly_bk" id="nearly_location" class="select">
+						<select name="nearly_location" id="nearly_location" class="select">
 							<option value="all">ทุกเขต</option>
 							<option value="banken">บางเขน</option>
 							<option value="vipawadee">วิภาวดีรังสิต</option>

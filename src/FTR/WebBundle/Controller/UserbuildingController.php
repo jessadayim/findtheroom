@@ -24,7 +24,11 @@ class UserbuildingController extends Controller
     public function indexAction($errormsg=NULL)
     {
         $session = $this->get('session');
-		$session->get('user');
+		$username = $session->get('user');
+		if(empty($username))
+		{
+			return $this->redirect($this->generateUrl('FTRWebBundle_regis'));
+		}
 		
 		if(empty($errormsg))
 		{//Default error messeges
@@ -34,7 +38,7 @@ class UserbuildingController extends Controller
 		$conn= $this->get('database_connection');
 		if(!$conn){ die("MySQL Connection error");}
 			try{
-				$sql1 ="SELECT * FROM user_owner WHERE username = '".$session->get('user')."'";
+				$sql1 ="SELECT * FROM user_owner WHERE username = '".$username."'";
 				$objSQL1 = $conn->fetchAll($sql1);
 				$objSQL1[0]['username'];
 				
@@ -289,7 +293,44 @@ class UserbuildingController extends Controller
 		$today = date("Y-m-d H:i:s");
 		if($_POST)
 		{
-			echo "<pre>";var_dump($_POST);echo "</pre>";exit();
+			$post_array = $_POST;
+			echo "<pre>";var_dump($post_array);echo "</pre>";exit();
+			/*
+			 * image section
+			 */
+			$headimage_name = $post_array['hdnfilename'];
+			$mapimage_name = $post_array['hdnfilemap'];
+			$countimage_room = $post_array['hdnMaxLine'];
+			$countimage_gallery = $post_array['hdnMaxLineGal'];
+			
+			for ($i=0; $i < $countimage_room ; $i++) { 
+				$arrayimage_room[] = array(
+					'imageid'		=> $post_array['imageid'.$i],
+					'imagename'		=> $post_array['hdnfilename'.$i],
+					'typename'		=> $post_array['typeap_name'.$i],
+					'size'			=> $post_array['typeap_size'.$i],
+					'price'			=> $post_array['typeap_price'.$i],
+				);
+			}
+			
+			for ($i=0; $i < $countimage_gallery ; $i++) { 
+				$arrayimage_room[] = array(
+					'imageid'		=> $post_array['imageid'.$i],
+					'imagename'		=> $post_array['hdnfilename'.$i],
+					'typename'		=> $post_array['typeap_name'.$i],
+					'size'			=> $post_array['typeap_size'.$i],
+					'price'			=> $post_array['typeap_price'.$i],
+				);
+			}
+			
+			echo "<pre>";var_dump($arrayimage_room);echo "</pre>";exit();
+			$apartment_name = $post_array['nameap'];
+			$apartment_addr = $post_array['placeap'];
+			/*$apartment_name = $post_array['nameap'];
+			$apartment_name = $post_array['nameap'];
+			$apartment_name = $post_array['nameap'];*/
+			
+			
 			try{
 				if($id){
 					$sql ="select * from building_site where id = $id";
