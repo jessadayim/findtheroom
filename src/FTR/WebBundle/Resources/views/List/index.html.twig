@@ -1,6 +1,7 @@
 {% extends 'FTRWebBundle:Layout:Layout.html.twig' %}
 {% block body %}
 <script type="text/javascript">
+
     $(function() {
         $("#demo5").paginate({
             count 		: 30,
@@ -17,14 +18,12 @@
 
 
 {% render "FTRWebBundle:Search:shortsearch" with {'name': name} %}
-
-
-
+{% render "FTRWebBundle:Search:fullsearch" %}
 
 <div id="show">
-<span class="big">ผลการค้นหาห้องพัก</span><br />
-<span class="normal" style="float:left">แสดงผล 55 - 60 จาก {{ numdata }}</span>
-<span class="normal" style="float:right; margin-left:20px;">ต่อหน้า</span>
+<span class="big">ผลการค้นหาห้องพัก</span><span class="normal"> เจอทั้งหมด 400 ห้องพัก</span>
+<span class="normal" style="float:right; padding-top:3px;">แสดงผล 55 - 60 จาก {{ numdata }}</span>
+<!--<span class="normal" style="float:right; margin-left:20px;">ต่อหน้า</span>
 <div class="styled-select">
     <select class="select">
         <option value="5">5</option>
@@ -33,14 +32,14 @@
         <option value="100">100</option>
     </select>
 </div>
-<span class="normal" style="float:right; margin-right:20px;">แสดงผล</span><br><br>
+<span class="normal" style="float:right; margin-right:20px;">แสดงผล</span><br>--><br>
     {% for rlist in result %}
     <div class="result">
         <div class="wifi"></div>
         <div style=" display:block; position: absolute; margin-left: 0px; margin-top: 127px; width:200px; text-align:center;">ราคา 4,500 - 9,000 บาท</div>
         <img src="{{asset('images/show.png')}}" />
         <div class="desc">
-            <table border="0" width="500" style="margin-top:-8px;">
+            <table width="600" border="0" style="margin-top:-8px; position:relative;">
                 <tr style="font-size:26px">
                     <td width="90">
                         หอพัก
@@ -65,11 +64,25 @@
                 </tr>
                 <tr>
                     <td width="90" valign="top">
-                        ที่อยู่
+                        เขต/อำเภอ
+                    </td>
+                    <td width="180">
+                        {{ rlist.addr_prefecture }}     
+                       <!--{{ rlist.addr_number }} {{ rlist.addr_prefecture }} {{ rlist.addr_province }} {{ rlist.addr_zipcode }}-->
+                    </td>
+                    <td width="90">
+                        จังหวัด
+                    </td>
+                    <td width="180">
+                        {{ rlist.addr_province }}
+                    </td>
+                </tr>
+				<tr>
+                    <td width="90" valign="top" id="tade">
+                        โซนในกรุงเทพฯ
                     </td>
                     <td colspan="3">
-                        {{ rlist.addr_number }}   {{ rlist.addr_prefecture }}     {{ rlist.addr_province }}
-                        {{ rlist.addr_zipcode }}
+					
                     </td>
                 </tr>
                 <tr>
@@ -77,9 +90,11 @@
                         รายละเอียด
                     </td>
                     <td colspan="3">
-                        <div style="height:43px; overflow:hidden;">
+					<div class="short">
+                        
                             {{ rlist.detail }}
-                        </div>
+                        
+					</div>
                     </td>
                 </tr>
             </table>

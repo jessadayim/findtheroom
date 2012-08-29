@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<!--[if IE]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<title>Fine the Room : Control Panel</title>
+{% block css %}
+<link rel='stylesheet' type='text/css' href='{{asset("css/panel/reset.css")}}' />
+<link rel='stylesheet' type='text/css' href='{{asset("css/panel/960_12.css")}}' />
+<link rel='stylesheet' type='text/css' href='{{asset("css/panel/style.css")}}' />
+<link rel='stylesheet' type='text/css' href='{{asset("css/panel/general.css")}}' />
+<link rel='stylesheet' type='text/css' href='{{asset("css/panel/vertical-menu.css")}}' />
+{% endblock %}
+{% block js %}
+<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js'></script>
+{% endblock %}
+
+</head>
+
+<body>
+{% if session == 0 %}
+	<header id="wrap" class="container_12" style="height: 100px; padding-top: 30px; text-align: center;">
+		<H1>FindtheRoom PANEL</H1>
+	</header>	<!-- End .container_12 -->
+{% else %}
+	<header id="wrap" class="container_12" style="height: 100px;">
+		<div id="headernav" class="grid_8 alpha" style="">
+			<ul id="vertical-navigation">
+			    <li class=""> <a href="{{path('FTRAdminBundle_Dashboard')}}">Dashboard</a> </li>
+			    <li class=""> <a href="#">BUILDING</a>
+			      <ul>
+			      	<li class=""> <a href="{{path('FTRAdminBundle_Zonelists')}}">Zones</a> </li>
+			      	<li class=""> <a href="{{path('FTRAdminBundle_Buildingtypelists')}}">Building Types</a> </li>
+			        <li class=""> <a href="{{path('FTRAdminBundle_Buildingsitelists')}}">Building Sites</a> </li>
+			        <li class=""> <a href="{{path('FTRAdminBundle_Facilitylists')}}">Facilities</a> </li>
+			        <li class=""> <a href="{{path('FTRAdminBundle_Roomtypelists')}}">Room Types</a> </li>
+			        <li class=""> <a href="{{path('FTRAdminBundle_Nearlytypelists')}}">Nearly Types</a> </li>
+			        <li class=""> <a href="{{path('FTRAdminBundle_Nearlylocationlists)}}">Nearly Locations</a> </li>
+			        <li class=""> <a href="{{path('FTRAdminBundle_Paytypelists')}}">Pay Types</a> </li>
+			      </ul>
+			    </li>
+			    <li class=""> <a href="#">Images</a> </li>
+			    <li class=""> <a href="#">Users</a>
+			      <ul>
+			        <li class=""> <a href="{{path('FTRAdminBundle_Useradminlists')}}">Admin Users</a> </li>
+			        <li class=""> <a href="{{path('FTRAdminBundle_Userownerlists')}}">Owner Users</a> </li>
+			      </ul>
+			    </li>
+			    <li class=""> <a href="#">SITE CONTROL</a> 
+			      <ul>
+			        <li class=""> <a href="{{path('FTRAdminBundle_Sitedetail:')}}">Site Detail</a> </li>
+			        <li class=""> <a href="{{path('FTRAdminBundle_Advertisingdetail')}}">Advertising Detail</a> </li>
+			        <li class=""> <a href="#">Menus Detail</a> </li>
+			      </ul>
+			    </li>
+			    <li class=""> <a href="#">LOGS</a> </li>
+			    <li class=""> <a href="#">Helps</a> </li>
+			  </ul>
+		</div><!-- End #headernav -->
+		<div id="userpanel" class="grid_4 omega" style="">
+			<ul>
+				<li><a href="#">Hi ADMINISTRATOR</a></li>
+				<li><a href="#">My Setting</a></li>
+				<li><a href="signin.php"><STRONG>Log out</STRONG></a></li>
+			</ul>
+			<input type="text" name="txtsearch" id="txtsearch">
+			<input type="submit" name="btnsearch" id="btnsearch" value="SEARCH">
+		</div><!-- End #userpanel -->
+	</header><!-- End .container_12 -->	
+{% endif %}
+
+<div id="wrap" class="container_12">
+	
+{% block body %}{% endblock %}
+
+</div><!-- End #wrap -->
+<footer class="">
+	<hr>
+	<div class="container_12" style="height: 100%;">Footer ...</div>
+</footer>
+    
+</body>
+</html>
