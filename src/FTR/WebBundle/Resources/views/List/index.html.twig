@@ -1,8 +1,26 @@
 {% extends 'FTRWebBundle:Layout:Layout.html.twig' %}
 {% block body %}
-<br>
-{% render "FTRWebBundle:Search:shotsearch" %}
-{% render "FTRWebBundle:Search:fullsearch" %}
+<script type="text/javascript">
+    $(function() {
+        $("#demo5").paginate({
+            count 		: 30,
+            start 		: 1,
+            display     : 20,
+            border					: false,
+            text_color  			: '#423C3B',
+            text_hover_color  		: '#423C3B',
+            images					: false,
+            mouse					: 'press'
+        });
+    });
+</script>
+
+
+{% render "FTRWebBundle:Search:shortsearch" with {'name': name} %}
+
+
+
+
 <div id="show">
 <span class="big">ผลการค้นหาห้องพัก</span><br />
 <span class="normal" style="float:left">แสดงผล 55 - 60 จาก {{ numdata }}</span>
