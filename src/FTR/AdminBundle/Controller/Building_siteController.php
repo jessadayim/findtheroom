@@ -64,7 +64,13 @@ class Building_siteController extends Controller
     {
         $entity = new Building_site();
         $form   = $this->createForm(new Building_siteType(), $entity);
-
+        // $request = $this->getRequest();
+        // if($request->getMethod() == 'POST')
+        // {
+            // var_dump($_POST['ftr_webbundle_building_sitetype[datetimestamp][date][month]']);
+//             
+            // exit();
+        // }
         return array(
             'entity' => $entity,
             'form'   => $form->createView()

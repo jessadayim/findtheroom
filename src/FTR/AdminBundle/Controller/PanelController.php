@@ -17,7 +17,7 @@ class PanelController extends Controller
 			$password = $request->get('password');
 		}
 		
-        return $this->render('FTRAdminBundle:Ftr_panel:signin.html.twig', array('name' => NULL));
+        return $this->render('FTRAdminBundle:Ftr_panel:signin.html.twig', array('session' => 0));
     }
 	
 }

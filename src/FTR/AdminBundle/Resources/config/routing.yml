@@ -1,7 +1,67 @@
 FTRAdminBundle_homepage:
     pattern:  /hello/{name}
     defaults: { _controller: FTRAdminBundle:Default:index }
-
+    
 FTRAdminBundle_Building_site:
     resource: "@FTRAdminBundle/Resources/config/routing/building_site.yml"
     prefix:   /building_site
+    
+# Routing of Backend Panel
+# Creator : MICK
+# Createtime : 2012-08-28
+# 
+FTRAdminBundle_panel:
+    pattern:  /ftr_panel/
+    defaults: { _controller: FTRAdminBundle:Panel:index } 
+    
+FTRAdminBundle_Dashboard:
+    pattern:  /ftr_panel/dashboard
+    defaults: { _controller: FTRAdminBundle:Dashboard:index } 
+    
+FTRAdminBundle_Zonelists:
+    pattern:  /ftr_panel/zonelists
+    defaults: { _controller: FTRAdminBundle:zonelists:index } 
+    
+FTRAdminBundle_Buildingtypelists:
+    pattern:  /ftr_panel/buildingtypelists
+    defaults: { _controller: FTRAdminBundle:buildingtypelists:index } 
+    
+FTRAdminBundle_Buildingsitelists:
+    pattern:  /ftr_panel/buildingsitelists
+    defaults: { _controller: FTRAdminBundle:buildingsitelists:index }
+    
+FTRAdminBundle_Facilitylists:
+    pattern:  /ftr_panel/facilitylists
+    defaults: { _controller: FTRAdminBundle:facilitylists:index } 
+    
+FTRAdminBundle_Roomtypelists:
+    pattern:  /ftr_panel/roomtypelists
+    defaults: { _controller: FTRAdminBundle:roomtypelists:index } 
+    
+FTRAdminBundle_Nearlytypelists:
+    pattern:  /ftr_panel/nearlytypelists
+    defaults: { _controller: FTRAdminBundle:nearlytypelists:index } 
+    
+FTRAdminBundle_Nearlylocationlists:
+    pattern:  /ftr_panel/nearlylocationlists
+    defaults: { _controller: FTRAdminBundle:nearlylocationlists:index } 
+    
+FTRAdminBundle_Paytypelists:
+    pattern:  /ftr_panel/paytypelists
+    defaults: { _controller: FTRAdminBundle:paytypelists:index } 
+    
+FTRAdminBundle_Useradminlists:
+    pattern:  /ftr_panel/useradminlists
+    defaults: { _controller: FTRAdminBundle:useradminlists:index } 
+    
+FTRAdminBundle_Userownerlists:
+    pattern:  /ftr_panel/userownerlists
+    defaults: { _controller: FTRAdminBundle:userownerlists:index } 
+    
+FTRAdminBundle_Sitedetail:
+    pattern:  /ftr_panel/sitedetail
+    defaults: { _controller: FTRAdminBundle:sitedetail:index } 
+    
+FTRAdminBundle_Advertisingdetail:
+    pattern:  /ftr_panel/advertisingdetail
+    defaults: { _controller: FTRAdminBundle:advertisingdetail:index } 

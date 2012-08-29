@@ -13,7 +13,7 @@ class SearchController extends Controller
 
     }
 
-    public function shotsearchAction()
+    public function shortsearchAction($name=NULL)
     {
         $conn= $this->get('database_connection');
         if(!$conn){ die("MySQL Connection error");}
@@ -80,6 +80,7 @@ class SearchController extends Controller
             'get_map2'              =>$objGetMap2,
             'get_map3'              =>$objGetMap3,
             'get_map4'              =>$objGetMap4,
+            'name'                  =>$name,
         ));
     }
 
@@ -88,23 +89,27 @@ class SearchController extends Controller
         $fac_inroomlist 	= $this->getFacility('inroom');	
         $fac_outroomlist 	= $this->getFacility('outroom');	
 		$zonelist			= $this->getBkkZone();
+		$province			= $this->getProvince();
 		$buildingTypeList	= $this->getBuildingType();
 		$payType			= $this->getPayType();
 		$nearBTS			= $this->getNeary(2);
 		$nearMRT			= $this->getNeary(3);
 		$nearUniversity		= $this->getNeary(4);
 		$nearBy				= $this->getNeary(5);
-       
+		$nearInCountry		= $this->getNeary(6);
+
         return $this->render('FTRWebBundle:Search:search.html.twig', array(
 			'fac_inroom' 		=> $fac_inroomlist,
 			'fac_outroom' 		=> $fac_outroomlist,
 			'zonelist' 			=> $zonelist,
+			'province' 			=> $province,
 			'buildingTypeList' 	=> $buildingTypeList,
 			'payType' 			=> $payType,
 			'nearBTS' 			=> $nearBTS,
 			'nearMRT' 			=> $nearMRT,
 			'nearUniversity' 	=> $nearUniversity,
 			'nearBy' 			=> $nearBy,
+			'nearInCountry' 	=> $nearInCountry,
 		));
     }
 
@@ -135,13 +140,16 @@ class SearchController extends Controller
         if(!$conn){ die("MySQL Connection error");}
         try{
             $sql = "
-				select * from province where PROVINCE_ID != 1
+				select PROVINCE_NAME as PROVINCE_VALUE , PROVINCE_NAME
+				from province
+				where PROVINCE_ID != 1
+				order by PROVINCE_NAME asc
 			";
             $result_data = $conn->fetchAll($sql);
         } catch (Exception $e) {
             echo 'Caught exception: ',  $e->getMessage(), "\n";
         }
-        $all[] = array('PROVINCE_NAME'=>'ทุกประเภท');
+        $all[] = array('PROVINCE_VALUE'=>'0','PROVINCE_NAME'=>'ทุกจังหวัด');
 
         $result = array_merge($all,$result_data);
         return $result;
@@ -241,6 +249,7 @@ class SearchController extends Controller
 				break;
 			case 4:
 			case 5:
+            case 6:
 				$all[] = array('id'=>0,'name'=>' - กรุณาระบุ - ');
 				break;
 		}

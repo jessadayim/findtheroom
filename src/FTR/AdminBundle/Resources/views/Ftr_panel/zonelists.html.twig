@@ -1,0 +1,63 @@
+{% extends 'FTRAdminBundle:Layout:panel_layout.html.twig' %}
+
+{% block body %}
+
+<!-- ***** Jquery Transation ***** -->
+  <script>
+  $(document).ready(function(){
+  	$("#createrecord").click(function(){
+	  // $(".createPanel").toggle("slow");
+	  $(".createPanel").animate({
+	    left: '+=50',
+	    height: 'toggle'
+	  }, 500, function(){});
+	});
+  });
+  </script>
+
+<div class="grid_12 createLists marginB_10 alpha" style="">
+	<H2>ZONE LISTS</H2>
+	<div class="listsPanel" style=""><a href="#" id="createrecord">CREAT ZONE</a></div>
+	<div class="clear"></div>
+	<p>Welcome to Visual Admin, a slick admin template for almost any project - front or back end. It's based on the 960 grid system which means you can have almost endless layout possibiliites as well as those that come ready to use straight out the box. Please have a click around and feel free to check out the screenshots.</p>
+    <div class="clear"></div>
+	<div class="createPanel" style="">
+		
+		<form>
+			<fieldset>
+				<legend>CREATE ZONE</legend>
+				<div class="label" style="">Name:</div> <input type="text" class="widfat" /><br />
+			    <div class="label" style="">Latitude:</div>  <input type="text" class="widfat" /><br />
+			    <div class="label" style="">Longtitude:</div>  <input type="text" class="widfat" /><br />
+			    <span style="float: right;"><input type="submit" value="CREATE"></span>
+			</fieldset>	
+		</form>
+		
+	</div>
+</div><!-- End .createLists -->
+<div class="grid_12 tableLists marginB_10 alpha" style="">
+	<table>
+		<tr>
+			<th style="width: 500px !important;">name</th>
+			<th>latitude</th>
+			<th>longtitude</th>
+		</tr>
+		<tr>
+		  <td>Lumpini Park Pinklao</td>
+		  <td>13.780707</td>
+		  <td>100.475184</td>
+		</tr>
+		<tr>
+		  <td>Lumpini Park Pinklao</td>
+		  <td>13.780707</td>
+		  <td>100.475184</td>
+		</tr>
+		<tr>
+		  <td>Lumpini Park Pinklao</td>
+		  <td>13.780707</td>
+		  <td>100.475184</td>
+		</tr>
+	</table>
+	<div class="clear"></div>
+</div><!-- End .tableLists -->
+{% endblock %}
