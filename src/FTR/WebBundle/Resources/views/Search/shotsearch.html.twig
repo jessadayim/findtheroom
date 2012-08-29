@@ -104,7 +104,8 @@
         <hr class="line" style="top: 60px" />
         <ul id="detail_containTab">
             <li class="detailContent1">
-                <form action='{{path('FTRWebBundle_list')}}' method="post">
+                <form action='{{path('FTRWebBundle_list')}}?searchtype=shotsearch' method="post">
+                    <input type="hidden" value="bkk" name="searchBkk" id="searchBkk">
                     <div>
                         <table>
                             <tr height="50" valign="middle">
@@ -158,6 +159,7 @@
 
             <li class="detailContent2">
                 <form action='{{path('FTRWebBundle_list')}}' method="post">
+                    <input type="hidden" value="country" name="searchCountry" id="searchCountry">
                     <div>
                         <table>
                             <tr height="50" valign="middle">
@@ -166,7 +168,7 @@
                                     <div class="styled-select">
                                         <select class="select">
                                             {% for pvlist in province %}
-                                            <option value="{{ pvlist.PROVINCE_NAME }}">{{ pvlist.PROVINCE_NAME }}</option>
+                                            <option value="{{ pvlist.PROVINCE_VALUE }}">{{ pvlist.PROVINCE_NAME }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
