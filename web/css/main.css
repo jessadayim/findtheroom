@@ -121,7 +121,7 @@ select[disabled] { background-color: #EAEAEA !important; color:#BCBCBC !importan
 #show .resultf .wifi, #show .result .wifi { background: url(../images/wifi.png) no-repeat; border: 0; width: 32px; height: 32px; position:absolute; margin-top:-11px; margin-left: -16px; z-index: 99}
 #show .resultf .wifi-none, #show .result .wifi-none { background: none; border: 0; width: 32px; height: 32px; position:absolute; margin-top:-11px; margin-left: -16px;}
 #show .resultf img, #show .result img { float: left;}
-#show .resultf .desc, #show .result .desc { float: left; margin-left: -20px; font-size:20px; display:block; position:relative; width:500px;}
+#show .resultf .desc, #show .result .desc { float: left; margin-left: -10px; font-size:20px; display:block; position:relative; width:500px;}
 #show .resultf .desc, #show .result .desc .short{ display:block; position:relative; width:450px;height: 43px;word-wrap:break-word; overflow:hidden}
 #show .resultf .dmap , #show .result .dmap{ float: left; margin-left: 90px;}
 #show .resultf .dmap input.view, #show .result .dmap input.view { background: url(../images/view.png) no-repeat; border: 0; width: 71px; height: 71px; position:absolute; margin-top:50px; margin-left:50px; display:block; cursor: pointer;}
