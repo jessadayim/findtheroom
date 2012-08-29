@@ -33,9 +33,10 @@
     <div class="result">
         <div class="wifi"></div>
         <div style=" display:block; position: absolute; margin-left: 0px; margin-top: 127px; width:200px; text-align:center;">ราคา 4,500 - 9,000 บาท</div>
-        <img src="{{asset('images/show.png')}}" />
+        <div class="thumbframe"><img src="{{asset('images/show.png')}}" class="thumb omega"/></div>
+		
         <div class="desc">
-            <table width="600" border="0" style="margin-top:-8px; position:relative;">
+            <table width="600" border="0" style="margin-top:-8px; position:relative; border: red 1px solid;">
                 <tr style="font-size:26px">
                     <td width="90">
                         หอพัก
@@ -95,7 +96,7 @@
                 </tr>
             </table>
         </div>
-        <div class="dmap">
+        <div class="dmap" style="border: blue 1px solid;">
             <span style="float:left; margin-right: 15px;">แผนที่</span>
             <a id="gmap" href="{{asset('images/Apartment/ap1.png')}}" style="float:left; margin-right: 10px; margin-top: -10px;"><img src="{{asset('images/gmap.png')}}" /></a>
             <a id="imap" href="{{asset('images/Apartment/ap1.png')}}" style="float:left; margin-top: -10px;"><img src="{{asset('images/imap.png')}}" /></a>
