@@ -1,0 +1,60 @@
+{% extends 'FTRAdminBundle:Layout:panel_layout.html.twig' %}
+
+{% block body %}
+
+  <!-- ***** Jquery Transation ***** -->
+  <script>
+  $(document).ready(function(){
+  	$("#createrecord").click(function(){
+	  $(".createPanel").animate({
+	    left: '+=50',
+	    height: 'toggle'
+	  }, 500, function(){});
+	});
+  });
+  </script>
+<div id="containerwrap">
+	
+	<div class="grid_12 createLists marginB_10 alpha" style="">
+		<H2>NEARLY LOCATION LISTS</H2>
+		<div class="listsPanel" style="margin-left: -200px !important;"><a href="#" id="createrecord">CREAT NEARLY LOCATION</a></div>
+		<div class="clear"></div>
+		<p>Welcome to Visual Admin, a slick admin template for almost any project - front or back end. It's based on the 960 grid system which means you can have almost endless layout possibiliites as well as those that come ready to use straight out the box. Please have a click around and feel free to check out the screenshots.</p>
+	    <div class="clear"></div>
+		<div class="createPanel" style="">
+			
+			<form>
+				<fieldset>
+					<legend>CREATE NEARLY LOCATION</legend>
+					<div class="label" style="">Type:</div> <select id="" name="NearlyLocationType" class="widfat"><option value="0">...</option><option value="1">...</option></select><br />
+					<div class="label" style="">Name:</div> <input type="text" name="NearlyLocationName" class="widfat" /><br />
+					<div class="label" style="">Address:</div> <textarea name="NearlyLocationAddress" class="widfat"></textarea><br />
+					<div class="label" style="">Latitude:</div> <input type="text" name="NearlyLocationLatitude" class="widthin"><br />
+					<div class="label" style="">Longtitude:</div> <input type="text" name="NearlyLocationLongtitude" class="widthin"><br />
+					<span style="float: right;"><input type="submit"  value="CREATE"></span>
+				</fieldset>	
+			</form>
+			
+		</div>
+	</div>
+	<div class="grid_12 tableLists marginB_10 alpha" style="">
+		<table>
+			<tr>
+				<th style="width: 940px !important;">name</th>
+			</tr>
+			<tr>
+			  <td>Lumpini Park Pinklao</td>
+			</tr>
+			<tr>
+			  <td>Lumpini Park Pinklao</td>
+			</tr>
+			<tr>
+			  <td>Lumpini Park Pinklao</td>
+			</tr>
+		</table>
+		<div class="clear"></div>
+	</div>	
+	
+</div>
+
+{% endblock %}
