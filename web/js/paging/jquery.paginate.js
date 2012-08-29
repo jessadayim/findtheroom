@@ -62,7 +62,7 @@
 			var val = i+1;
 			
 				if(val == selectedpage){
-					if(val > 0 & val < 10){
+					if(val < 10){
 					var _obj = $(document.createElement('li')).html('<span class="jPag-current">'+val+'</span>');
 					}else{
 					var _obj = $(document.createElement('li')).html('<span class="jPag-current-two">'+val+'</span>');
@@ -71,7 +71,7 @@
 					_ul.append(_obj);
 				}	
 				else{
-					if(val > 0 & val < 10){
+					if(val < 10){
 					var _obj = $(document.createElement('li')).html('<a>'+ val +'</a>');
 					}else{
 					var _obj = $(document.createElement('li')).html('<a class="two">'+ val +'</a>');	
@@ -127,7 +127,7 @@
 				function() {
 				  thumbs_scroll_interval = setInterval(
 					function() {
-					  var left = _ulwrapdiv.scrollLeft() + 1;
+					  var left = _ulwrapdiv.scrollLeft() + 3;
 					  _ulwrapdiv.scrollLeft(left);
 					},
 					20
@@ -141,7 +141,7 @@
 				function() {
 				  thumbs_scroll_interval = setInterval(
 					function() {
-					  var left = _ulwrapdiv.scrollLeft() - 1;
+					  var left = _ulwrapdiv.scrollLeft() - 3;
 					  _ulwrapdiv.scrollLeft(left);
 					},
 					20
@@ -208,28 +208,37 @@
 				_ulwrapdiv.find('li').eq(o.count - 1).click();
 		});
 		
+		//เก็บค่าเก่าเพื่อเทียบกับค่าปัจจบัน
+		var curvalsave = 0;
 		//click a page
 		_ulwrapdiv.find('li').click(function(e){
-				
-				selobj.html('<a>'+selobj.find('.jPag-current').html()+'</a>');
-				 
-				var currval = $(this).find('a').html();
-				if(currval < 10){
-					$(this).html('<span class="jPag-current">'+currval+'</span>');
+			var currval = $(this).find('a').html();
+			if (currval != null){
+				if (curvalsave < 10){
+					selobj.html('<a>'+selobj.find('.jPag-current,.jPag-current-two').html()+'</a>');
 				}else{
+					selobj.html('<a class="two">'+selobj.find('.jPag-current,.jPag-current-two').html()+'</a>');
+				}
+				if(currval < 10){
+					
+					$(this).html('<span class="jPag-current">'+currval+'</span>');
+				}else {
+										
 					$(this).html('<span class="jPag-current-two">'+currval+'</span>');
 				}
-			alert(currval);
-			selobj = $(this);
-			$.fn.applystyle(o,$(this).parent().parent().parent(),a_css,hover_css,_first,_ul,_ulwrapdiv,_divwrapright);	
-			var left = (this.offsetLeft) / 2;
-			var left2 = _ulwrapdiv.scrollLeft() + left;
-			var tmp = left - (outsidewidth / 2);
-			if(ver == 'ie7')
-				_ulwrapdiv.animate({scrollLeft: left + tmp - _first.parent().width() + 52 + 'px'});	
-			else
-				_ulwrapdiv.animate({scrollLeft: left + tmp - _first.parent().width() + 'px'});	
-			o.onChange(currval);	
+				//alert(currval);
+				selobj = $(this);
+				$.fn.applystyle(o,$(this).parent().parent().parent(),a_css,hover_css,_first,_ul,_ulwrapdiv,_divwrapright);	
+				var left = (this.offsetLeft) / 2;
+				var left2 = _ulwrapdiv.scrollLeft() + left;
+				var tmp = left - (outsidewidth / 2);
+				if(ver == 'ie7')
+					_ulwrapdiv.animate({scrollLeft: left + tmp - _first.parent().width() + 52 + 'px'});	
+				else
+					_ulwrapdiv.animate({scrollLeft: left + tmp - _first.parent().width() + 'px'});	
+				o.onChange(currval);
+				curvalsave = currval;	
+			}
 			
 		});
 		
