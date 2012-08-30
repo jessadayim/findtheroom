@@ -455,29 +455,6 @@ class UserbuildingController extends Controller
 		
 	}
 
-	public function chooseFileAction($id)
-	{
-		if($_POST)var_dump($_POST);
-		$dir = 'images/building/'.$id;
-		$files = glob($dir.'/*');
-    	foreach ($files as $file) {
-    		$spl = explode('/', $file);
-			$count = count($spl);
-			$filename = $spl[$count-1];
-        	//echo  ' '.$file . "<br>";
-			$picvalue[] = array(
-				'name'	=> $filename,
-				'link'	=> $file,
-			);
-    	}
-		return $this->render('FTRWebBundle:Userbuilding:choosefile.html.twig',array('picvalues'=>$picvalue));
-	}
-
-	public function uploadFileAction()
-	{
-		return $this->render('FTRWebBundle:Userbuilding:uploadfile.html.twig');
-	}
-
 	public function getPathUpload($id)
 	{
 		$path = "./images/building/".$id;
@@ -488,5 +465,11 @@ class UserbuildingController extends Controller
 			mkdir($path, 0777);
 		}
 		return $path;
+	}
+	
+	public function autoSaveFormAction($id)
+	{
+		echo "test";
+		exit();
 	}
 }

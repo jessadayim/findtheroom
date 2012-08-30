@@ -293,12 +293,6 @@
 		
 	});
 	
-	window.onbeforeunload = unloadPage;
-	function unloadPage()
-	{
-		alert(1);
-	}
-	
 </script>
 <form name="addform" id="addform" method="post" action="{{path('saveData', {'id': build_id })}}">
 
