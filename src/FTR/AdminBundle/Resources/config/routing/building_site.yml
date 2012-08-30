@@ -3,7 +3,7 @@ building_site:
     defaults: { _controller: FTRAdminBundle:Building_site:index }
     
 building_site_show:
-    pattern:  /{id}/show
+    pattern:  /show
     defaults: { _controller: FTRAdminBundle:Building_site:show }
     
 building_site_new:

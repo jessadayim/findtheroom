@@ -1,56 +1,152 @@
 {% extends 'FTRAdminBundle:Layout:panel_layout.html.twig' %}
 
 {% block body %}
-  
-  <!-- ***** Jquery Transation ***** -->
-  <script>
-  $(document).ready(function(){
-  	$("#createrecord").click(function(){
-	  $(".createPanel").animate({
-	    left: '+=50',
-	    height: 'toggle'
-	  }, 500, function(){});
-	});
-  });
-  </script>
+
+<!-- ***** Jquery Transation ***** -->
+<script>
+	$(document).ready(function() {
+		$("#createrecord").click(function() {
+			$(".createPanel").animate({
+				left : '+=50',
+				height : 'toggle'
+			}, 500, function() {
+			});
+		});
+	}); 
+</script>
 <div id="containerwrap">
-	
+
 	<div class="grid_12 createLists marginB_10 alpha" style="">
 		<H2>BUILDING TYPE LISTS</H2>
-		<div class="listsPanel" style="margin-left: -110px !important;"><a href="#" id="createrecord">CREAT BUILDING SITE</a></div>
+		<div class="listsPanel" style="margin-left: -110px !important;">
+			<a href="#" id="createrecord">CREAT BUILDING SITE</a>
+		</div>
 		<div class="clear"></div>
-		<p>Welcome to Visual Admin, a slick admin template for almost any project - front or back end. It's based on the 960 grid system which means you can have almost endless layout possibiliites as well as those that come ready to use straight out the box. Please have a click around and feel free to check out the screenshots.</p>
-	    <div class="clear"></div>
+		<p>
+			Welcome to Visual Admin, a slick admin template for almost any project - front or back end. It's based on the 960 grid system which means you can have almost endless layout possibiliites as well as those that come ready to use straight out the box. Please have a click around and feel free to check out the screenshots.
+		</p>
+		<div class="clear"></div>
 		<div class="createPanel" style="">
-			
+
 			<form>
 				<fieldset>
-					<legend>CREATE BUILDING TYPE</legend>
-					<div class="label" style="">Type:</div> <select id="" name="buildingTypeID" class="widfat"><option value="0">...</option><option value="1">...</option></select><br />
-					<div class="label" style="">Zone:</div> <select id="" name="ZoneID" class="widfat"><option value="0">...</option><option value="1">...</option></select><br />
-					<div class="label" style="">Pay Type:</div> <select id="" name="PayTypeID" class="widfat"><option value="0">...</option><option value="1">...</option></select><br />
-					<div class="label" style="">Owner:</div> <select id="" name="OwnerID" class="widfat"><option value="0">...</option><option value="1">...</option></select><br />
-					<div class="label" style="">Name:</div> <input type="text" name="BuildingName" class="widfat"><br />
-					<div class="label" style="">Address:</div> <textarea name="BuildingAddress" class="widfat"></textarea><br />
-					<div class="label" style="">Start Price:</div> <input type="text" name="BuildingStartPrice" class="widfat"><br />
-					<div class="label" style="">End Price:</div> <input type="text" name="BuildingEndPrice" class="widfat"><br />
-					<div class="label" style="">Phone Number:</div> <input type="text" name="BuildingEndPrice" class="widthin"><br />
-					<div class="label" style="">Latitude:</div> <input type="text" name="BuildingEndPrice" class="widthin"><br />
-					<div class="label" style="">Longtitude:</div> <input type="text" name="BuildingEndPrice" class="widthin"><br />
-					<div class="label" style="">Recommend:</div> <input type="checkbox" name="BuildingRecommend" class=""><br /><br />
-					
-					<div class="label" style="">Detail:</div> <textarea name="BuildingDetail" class="widfat"></textarea><br />
-					<div class="label" style="">Contact Name:</div> <input type="text" name="BuildingContactName" class="widfat"><br />
-					<div class="label" style="">Contact Email:</div> <input type="text" name="BuildingContactEmail" class="widfat"><br />
-					<div class="label" style="">Website:</div> <input type="text" name="BuildingWebsite" class="widfat"><br />
-					<div class="label" style="">Month Stay:</div> <input type="text" name="BuildingMonthStay" class="widthin"><br />
-					<div class="label" style="">Water Unit:</div> <input type="text" name="BuildingMonthStay" class="widthin"><br />
-					<div class="label" style="">Electricity Unit:</div> <input type="text" name="BuildingMonthStay" class="widthin"><br />
-					<div class="label" style="">Internet Price:</div> <input type="text" name="BuildingMonthStay" class="widthin"><br />
-				    <span style="float: right;"><input type="submit" value="CREATE"></span>
-				</fieldset>	
+					<legend>
+						CREATE BUILDING TYPE
+					</legend>
+					<div class="label" style="">
+						Type:
+					</div>
+					<select id="" name="buildingTypeID" class="widfat">
+						<option value="0">...</option><option value="1">...</option>
+					</select>
+					<br />
+					<div class="label" style="">
+						Zone:
+					</div>
+					<select id="" name="ZoneID" class="widfat">
+						<option value="0">...</option><option value="1">...</option>
+					</select>
+					<br />
+					<div class="label" style="">
+						Pay Type:
+					</div>
+					<select id="" name="PayTypeID" class="widfat">
+						<option value="0">...</option><option value="1">...</option>
+					</select>
+					<br />
+					<div class="label" style="">
+						Owner:
+					</div>
+					<select id="" name="OwnerID" class="widfat">
+						<option value="0">...</option><option value="1">...</option>
+					</select>
+					<br />
+					<div class="label" style="">
+						Name:
+					</div>
+					<input type="text" name="BuildingName" class="widfat">
+					<br />
+					<div class="label" style="">
+						Address:
+					</div>
+					<textarea name="BuildingAddress" class="widfat"></textarea>
+<br />					<div class="label" style="">
+						Start Price:
+					</div>
+					<input type="text" name="BuildingStartPrice" class="widfat">
+					<br />
+					<div class="label" style="">
+						End Price:
+					</div>
+					<input type="text" name="BuildingEndPrice" class="widfat">
+					<br />
+					<div class="label" style="">
+						Phone Number:
+					</div>
+					<input type="text" name="BuildingEndPrice" class="widthin">
+					<br />
+					<div class="label" style="">
+						Latitude:
+					</div>
+					<input type="text" name="BuildingEndPrice" class="widthin">
+					<br />
+					<div class="label" style="">
+						Longtitude:
+					</div>
+					<input type="text" name="BuildingEndPrice" class="widthin">
+					<br />
+					<div class="label" style="">
+						Recommend:
+					</div>
+					<input type="checkbox" name="BuildingRecommend" class="">
+					<br />
+					<br />
+
+					<div class="label" style="">
+						Detail:
+					</div>
+					<textarea name="BuildingDetail" class="widfat"></textarea>
+<br />					<div class="label" style="">
+						Contact Name:
+					</div>
+					<input type="text" name="BuildingContactName" class="widfat">
+					<br />
+					<div class="label" style="">
+						Contact Email:
+					</div>
+					<input type="text" name="BuildingContactEmail" class="widfat">
+					<br />
+					<div class="label" style="">
+						Website:
+					</div>
+					<input type="text" name="BuildingWebsite" class="widfat">
+					<br />
+					<div class="label" style="">
+						Month Stay:
+					</div>
+					<input type="text" name="BuildingMonthStay" class="widthin">
+					<br />
+					<div class="label" style="">
+						Water Unit:
+					</div>
+					<input type="text" name="BuildingMonthStay" class="widthin">
+					<br />
+					<div class="label" style="">
+						Electricity Unit:
+					</div>
+					<input type="text" name="BuildingMonthStay" class="widthin">
+					<br />
+					<div class="label" style="">
+						Internet Price:
+					</div>
+					<input type="text" name="BuildingMonthStay" class="widthin">
+					<br />
+					<span style="float: right;">
+						<input type="submit" value="CREATE">
+					</span>
+				</fieldset>
 			</form>
-			
+
 		</div>
 	</div>
 	<div class="grid_12 tableLists marginB_10 alpha" style="">
@@ -60,21 +156,21 @@
 				<th style="width: 50px !important;">config</th>
 			</tr>
 			<tr>
-			  <td>Lumpini Park Pinklao</td>
-			  <td>Edit</td>
+				<td>Lumpini Park Pinklao</td>
+				<td>Edit</td>
 			</tr>
 			<tr>
-			  <td>Lumpini Park Pinklao</td>
-			  <td>Edit</td>
+				<td>Lumpini Park Pinklao</td>
+				<td>Edit</td>
 			</tr>
 			<tr>
-			  <td>Lumpini Park Pinklao</td>
-			  <td>Edit</td>
+				<td>Lumpini Park Pinklao</td>
+				<td>Edit</td>
 			</tr>
 		</table>
 		<div class="clear"></div>
-	</div>	
-	
+	</div>
+
 </div>
 
 {% endblock %}
