@@ -10,7 +10,10 @@ class ListController extends Controller
     
     public function indexAction()
     {
-        // var_dump($_POST);
+        $searchType = "shortSearch";
+        if($_GET){
+            $searchType = $_GET['searchType'];
+        }
         $test = "a";
 
         $result_data = array();
@@ -34,12 +37,12 @@ class ListController extends Controller
             echo 'Caught exception: ',  $e->getMessage(), "\n";
         }
         $name="aaaa";
-        $numdata = count($result);
+        $numData = count($result);
 		return $this->render('FTRWebBundle:List:index.html.twig', array(
-            'result' => $result,
-            'numdata'=> $numdata,
-            'test'=> $test,
-            'name'=> $name,
+            'result'        => $result,
+            'numData'       => $numData,
+            'searchType'    => $searchType,
+            'name'          => $name,
         ));
     }
 }
