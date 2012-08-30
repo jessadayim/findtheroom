@@ -4,6 +4,10 @@
 <link rel="stylesheet" type="text/css" href="{{asset('js/uploadify/uploadify.css')}}">
 <script type="text/javascript" src="{{asset('js/uploadify/jquery.uploadify-3.1.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/uploadify.control.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/sisyphus-autosave/sisyphus.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/gritter/js/jquery.gritter.js')}}"></script>
+<link rel="stylesheet" type="text/css" href="{{asset('js/gritter/css/jquery.gritter.css')}}" />
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
 
 <script language="javascript">
 	var swfpath = "{{asset('js/uploadify/uploadify.swf')}}";
@@ -289,13 +293,38 @@
 		alert(id);
 		window.location.reload()
 	}
+	
 	$(document).ready(function(){
 		
 	});
 	
+	function showComplete()
+	{
+		$(".autocomplete").toggle("slow");
+		setTimeout('hideComplete()',3000);
+	}
+	
+	function hideComplete()
+	{
+		$(".autocomplete").toggle("slow");
+	}
+	
+	function postData()
+	{
+		$.post("{{path('autoSaveForm', {'id': build_id })}}", $("#addform").serialize(), 
+		function(data) {
+			//setTimeout('showComplete()',1500);
+			$.gritter.add({
+				// (string | mandatory) the heading of the notification
+				title: 'บันทึกข้อมูลสำเร็จ',
+				// (string | mandatory) the text inside the notification
+				text: 'ข้อมูลของท่านได้รับการบันทึกโดยอัตโนมัติ'
+			});
+	 	});
+ 	}
 </script>
 <form name="addform" id="addform" method="post" action="{{path('saveData', {'id': build_id })}}">
-
+<div class="autocomplete" style="display: none;z-index: 999" align="center"><font size="11" color="red">บันทึกเสร็จสิ้น</font></div>
 <div id="fix">
 	<!--<input class="upimg" type="submit" value="" />-->
 	<input class="save" type="submit" value="" />
@@ -323,7 +352,7 @@
             <tr height="50" valign="middle">
 				<td align="center" width="240" style="font-size:24px;">
 					<input style="margin-left: -20px;" type="file" name="file_upload" id="file_upload" />
-					<input type="hidden" name="hdnfilename" id="hdnfilename" />
+					<input type="hidden" name="hdnfilename" id="hdnfilename" onchange="postData();" />
 				</td>
             	<td align="left" width="200">&nbsp;</td>
             </tr>
@@ -331,17 +360,17 @@
         <table style="margin-top: 0px; float:none;  margin-left: 0px;">
         	<tr height="50" valign="middle">
 				<td align="right" width="210" style="font-size:24px;">ชื่อหอพัก / อพาร์ทเม้นต์ : *</td>
-                <td align="left" width="190"><input name="nameap" id="nameap" type="text" maxlength="30" placeholder="กรุณากรอกชื่อหอพัก" style=" padding:2px; font-size:20px;" /></td>
+                <td align="left" width="190"><input name="nameap" id="nameap" type="text" maxlength="30" placeholder="กรุณากรอกชื่อหอพัก" style=" padding:2px; font-size:20px;" onchange="postData();" /></td>
             </tr>
             <tr height="50" valign="top">
 				<td align="right" width="210" style="font-size:24px;">ที่อยู่ : *</td>
-                <td align="left" width="190"><textarea name="placeap" id="placeap" type="text" maxlength="500" class="place" /></textarea></td>
+                <td align="left" width="190"><textarea name="placeap" id="placeap" type="text" maxlength="500" class="place" onchange="postData();" /></textarea></td>
             </tr>
 			<tr height="50" valign="middle">
 				<td align="right" width="210" style="font-size:24px;">จังหวัด : *</td>
                 <td align="left" width="190">
 					<div class="styled-select">
-						<select id="province" name="province" class="select">
+						<select id="province" name="province" class="select" onchange="postData();">
 							<option value="daymonth">รายวันและรายเดือน</option>
 							<option value="day">รายวัน</option>
 							<option value="month">รายเดือน</option>
@@ -353,7 +382,7 @@
 				<td align="right" width="210" style="font-size:24px;">เขต/อำเภอ : *</td>
                 <td align="left" width="190">
 					<div class="styled-select">
-						<select id="district" name="district" class="select">
+						<select id="district" name="district" class="select" onchange="postData();">
 							<option value="daymonth">รายวันและรายเดือน</option>
 							<option value="day">รายวัน</option>
 							<option value="month">รายเดือน</option>
@@ -363,17 +392,17 @@
             </tr>
             <tr height="50" valign="middle">
 				<td align="right" width="210" style="font-size:24px;">รหัสไปรษณีย์ : *</td>
-                <td align="left" width="190"><input id="zipcode" name="zipcode" type="text" maxlength="30" placeholder="กรุณากรอกรหัสไปรษณีย์" style=" padding:2px; font-size:20px;" /></td>
+                <td align="left" width="190"><input id="zipcode" name="zipcode" type="text" maxlength="30" placeholder="กรุณากรอกรหัสไปรษณีย์" style=" padding:2px; font-size:20px;" onchange="postData();" /></td>
             </tr>
         </table>
         <table style="margin-top: 0px; float:left;">
         	<tr>
             	<td align="right" width="240" valign="top" style="font-size:24px;">รายละเอียดเพิ่มเติม : &nbsp;</td>
-                <td align="left" width="200"><textarea name="placedetail" type="text" maxlength="500" class="ldesc" /></textarea></td>
+                <td align="left" width="200"><textarea name="placedetail" type="text" maxlength="500" class="ldesc" onchange="postData();" /></textarea></td>
 				<td align="right" width="240" style="font-size:24px;">รูปแผนที่ : *</td>
                 <td align="left" width="200" style="font-size:24px;">
                 	<input type="file" name="upload_map" id="upload_map" />
-					<input type="hidden" name="hdnfilemap" id="hdnfilemap" />
+					<input type="hidden" name="hdnfilemap" id="hdnfilemap" onchange="postData();" />
 				</td>
             </tr>
         </table>
@@ -382,16 +411,16 @@
 		<table style="margin-top: 0px;">
         	<tr height="50" valign="middle">
 				<td align="right" width="240" style="font-size:24px;">Google Map ลองติจูด : *</td>
-                <td align="left" width="200"><input id="longitude" name="longitude" type="text" maxlength="30" placeholder="กรุณากรอกตำแหน่งลองติจูด" style=" padding:2px; font-size:20px;" /></td>
+                <td align="left" width="200"><input id="longitude" name="longitude" type="text" maxlength="30" placeholder="กรุณากรอกตำแหน่งลองติจูด" style=" padding:2px; font-size:20px;" onchange="postData();" /></td>
 				<td align="right" width="240" style="font-size:24px;">Google Map ละติจูด : *</td>
-                <td align="left" width="200"><input id="latitude" name="latitude" type="text" maxlength="30" placeholder="กรุณากรอกตำแหน่งละติจูด" style=" padding:2px; font-size:20px;" /></td>
+                <td align="left" width="200"><input id="latitude" name="latitude" type="text" maxlength="30" placeholder="กรุณากรอกตำแหน่งละติจูด" style=" padding:2px; font-size:20px;" onchange="postData();" /></td>
                 <td align="left" width="30" style="font-size:24px;">&nbsp;</td>
             </tr>
             <tr height="50" valign="middle">
 				<td align="right" width="240" style="font-size:24px;">ประเภทห้องพัก : *</td>
                 <td align="left" width="200">
                 	<div class="styled-select">
-						<select id="aptype" name="aptype" class="select">
+						<select id="aptype" name="aptype" class="select" onchange="postData();">
 							<option value="all">- กรุณาระบุ -</option>
   							<option value="apartment">อพาร์ทเม้นต์</option>
                             <option value="man">หอชาย</option>
@@ -401,7 +430,7 @@
                 </td>
                 <td align="right" width="210" style="font-size:24px;">ชนิด : *</td>
                 <td align="left" width="190" style="font-size:24px;"><div class="styled-select">
-						<select id="paytype" name="paytype" class="select">
+						<select id="paytype" name="paytype" class="select" onchange="postData();">
 							<option value="daymonth">รายวันและรายเดือน</option>
 							<option value="day">รายวัน</option>
 							<option value="month">รายเดือน</option>
@@ -411,30 +440,30 @@
             </tr>
             <tr height="50" valign="middle">
 				<td align="right" width="240" style="font-size:24px;">เบอร์โทรติดต่อ : *</td>
-                <td align="left" width="200"><input id="telnumber" name="telnumber" type="text" maxlength="10" placeholder="กรุณากรอกเบอร์โทรติดต่อ" style=" padding:2px; font-size:20px;" /></td>
+                <td align="left" width="200"><input id="telnumber" name="telnumber" type="text" maxlength="10" placeholder="กรุณากรอกเบอร์โทรติดต่อ" style=" padding:2px; font-size:20px;" onchange="postData();" /></td>
                 <td align="right" width="210" style="font-size:24px;">ระยะเวลาเช่าขั้นต่ำ : *</td>
-               <td align="left" width="190"><input id="time" name="time" type="text" maxlength="3" placeholder="กรุณากรอกระยะเวลาเช่าขั้นต่ำ" style=" padding:2px; font-size:20px;" /></td>
+               <td align="left" width="190"><input id="time" name="time" type="text" maxlength="3" placeholder="กรุณากรอกระยะเวลาเช่าขั้นต่ำ" style=" padding:2px; font-size:20px;" onchange="postData();" /></td>
                 <td align="left" width="30" style="font-size:24px;"> เดือน</td>
             </tr>
             <tr height="50" valign="middle">
 				<td align="right" width="240" style="font-size:24px;">ติดต่อคุณ : *</td>
-                <td align="left" width="200"><input id="contact_person" name="contact_person" type="text" placeholder="กรุณากรอกชื่อผ้ติดต่อ" style=" padding:2px; font-size:20px;" /></td>
+                <td align="left" width="200"><input id="contact_person" name="contact_person" type="text" placeholder="กรุณากรอกชื่อผ้ติดต่อ" style=" padding:2px; font-size:20px;" onchange="postData();" /></td>
                 <td align="right" width="210" style="font-size:24px;">ค่าน้ำ : *</td>
-               <td align="left" width="190"><input id="water_price" name="water_price" type="text" maxlength="3" placeholder="กรุณากรอกค่าน้ำ" style=" padding:2px; font-size:20px;" /></td>
+               <td align="left" width="190"><input id="water_price" name="water_price" type="text" maxlength="3" placeholder="กรุณากรอกค่าน้ำ" style=" padding:2px; font-size:20px;" onchange="postData();" /></td>
                 <td align="left" width="30" style="font-size:24px;"> บาท</td>
             </tr>
             <tr height="50" valign="middle">
 				<td align="right" width="240" style="font-size:24px;">อีเมล : *</td>
-                <td align="left" width="200"><input id="contact_email" name="contact_email" type="text" placeholder="กรุณากรอกอีเมล" style=" padding:2px; font-size:20px;" /></td>
+                <td align="left" width="200"><input id="contact_email" name="contact_email" type="text" placeholder="กรุณากรอกอีเมล" style=" padding:2px; font-size:20px;" onchange="postData();" /></td>
                 <td align="right" width="210" style="font-size:24px;">ค่าไฟ : *</td>
-               <td align="left" width="190"><input id="power_price" name="power_price" type="text" maxlength="3" placeholder="กรุณากรอกค่าไฟ" style=" padding:2px; font-size:20px;" /></td>
+               <td align="left" width="190"><input id="power_price" name="power_price" type="text" maxlength="3" placeholder="กรุณากรอกค่าไฟ" style=" padding:2px; font-size:20px;" onchange="postData();" /></td>
                 <td align="left" width="30" style="font-size:24px;"> บาท</td>
             </tr>
             <tr height="50" valign="middle">
 				<td align="right" width="240" style="font-size:24px;">เว็บไซต์ : &nbsp;</td>
-                <td align="left" width="200"><input id="website" name="website" type="text" maxlength="10" placeholder="กรุณากรอกเว็บไซต์" style=" padding:2px; font-size:20px;" /></td>
+                <td align="left" width="200"><input id="website" name="website" type="text" maxlength="10" placeholder="กรุณากรอกเว็บไซต์" style=" padding:2px; font-size:20px;" onchange="postData();" /></td>
                 <td align="right" width="210" style="font-size:24px;">ค่าอินเตอร์เน็ต : &nbsp;</td>
-               <td align="left" width="190"><input id="internet_price" name="internet_price" type="text" maxlength="3" placeholder="กรุณากรอกค่าอินเตอร์เน็ต" style=" padding:2px; font-size:20px;" /></td>
+               <td align="left" width="190"><input id="internet_price" name="internet_price" type="text" maxlength="3" placeholder="กรุณากรอกค่าอินเตอร์เน็ต" style=" padding:2px; font-size:20px;" onchange="postData();" /></td>
                 <td align="left" width="30" style="font-size:24px;"> บาท</td>
             </tr>
         </table>
@@ -489,7 +518,7 @@
 				<td align="left" width="165">จังหวัด :</td>
 				<td width="300">
 					<div id="nearly_area" class="styled-select">
-						<select name="nearly_bk" id="nearly_location" class="select">
+						<select name="nearly_bk" id="nearly_location" class="select" onchange="postData();">
 							<option value="all">ทุกเขต</option>
 							<option value="banken">บางเขน</option>
 							<option value="vipawadee">วิภาวดีรังสิต</option>
@@ -500,7 +529,7 @@
 				<td align="left" width="145"><input id="bts_check" name="bts_check" type="checkbox" value="bts" /><label for="bts_check">ใกล้รถไฟฟ้า BTS :</label></td>
 				<td width="300">
 					<div class="styled-select">
-						<select name="bts" id="bts" class="select">
+						<select name="bts" id="bts" class="select" onchange="postData();">
 							<option value="all">ทุกสถานี</option>
 							<option value="siam">สยาม</option>
 							<option value="chidlom">ชิดลม</option>
@@ -513,7 +542,7 @@
 				<td align="left" width="165"><input id="bk_check" name="bk_check" type="checkbox" value="bangkok" /><label for="bk_check">โซนกรุงเทพฯ :</label></td>
 				<td width="300">
 					<div id="nearly_area" class="styled-select">
-						<select name="nearly_location" id="nearly_location" class="select">
+						<select name="nearly_location" id="nearly_location" class="select" onchange="postData();">
 							<option value="all">ทุกเขต</option>
 							<option value="banken">บางเขน</option>
 							<option value="vipawadee">วิภาวดีรังสิต</option>
@@ -524,7 +553,7 @@
 				<td align="left" width="145"><input id="mrt_check" name="mrt_check" type="checkbox" value="mrt" /><label for="mrt_check">ใกล้รถไฟฟ้า MRT :</label></td>
 				<td width="300">
 					<div class="styled-select">
-						<select name="mrt" id="mrt" class="select">
+						<select name="mrt" id="mrt" class="select" onchange="postData();">
 							<option value="all">ทุกสถานี</option>
 							<option value="banken">สยาม</option>
 							<option value="vipawadee">ชิดลม</option>
@@ -537,7 +566,7 @@
 				<td align="left" width="165"><input id="university_check" name="university_check" type="checkbox" value="university" /><label for="university_check">ใกล้มหาวิทยาลัย :</label></td>
 				<td width="300">
 					<div class="styled-select">
-						<select name="university" id="university" class="select">
+						<select name="university" id="university" class="select" onchange="postData();">
 							<option value="all">- กรุณาระบุ -</option>
 							<option value="kmitl">สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</option>
 							<option value="jula">มหาวิทยาลับจุฬาลงกรณ์</option>
@@ -548,7 +577,7 @@
 				<td align="left" width="165"><input id="nearly_place_check" name="nearly_place_check" type="checkbox" value="nearly_place" /><label for="nearly_place_check">ตามสถานที่ใกล้เคียง :</label></td>
 				<td width="300">
 					<div class="styled-select">
-						<select name="nearly_place" id="nearly_place" class="select">
+						<select name="nearly_place" id="nearly_place" class="select" onchange="postData();">
 							<option value="all">- กรุณาระบุ -</option>
 							<option value="suwannapum">สนามบินสุวรรณภูมิ</option>
                             <option value="donmeung">สนามบินดอนเมือง</option>
@@ -571,7 +600,7 @@
             <tr height="40" valign="middle">
             	{% for loops in list.loop %}
             	<td width="250">
-            		<input id="fac{{loops.id}}" name="fac[]" type="checkbox" value="{{loops.id}}" /> <label for="fac{{loops.id}}">{{loops.facility_name}}</label>
+            		<input id="fac{{loops.id}}" name="fac[]" type="checkbox" value="{{loops.id}}" onchange="postData();" /> <label for="fac{{loops.id}}">{{loops.facility_name}}</label>
             	</td>
             	{% endfor %}
             </tr>
@@ -590,7 +619,7 @@
             <tr height="40" valign="middle">
             	{% for loops in list.loop %}
             	<td width="250">
-            		<input id="fac{{loops.id}}" name="fac[]" type="checkbox" value="{{loops.id}}" /> <label for="fac{{loops.id}}">{{loops.facility_name}}</label>
+            		<input id="fac{{loops.id}}" name="fac[]" type="checkbox" value="{{loops.id}}" onchange="postData();" /> <label for="fac{{loops.id}}">{{loops.facility_name}}</label>
             	</td>
             	{% endfor %}
             	{% if list.stat == 'end' %}

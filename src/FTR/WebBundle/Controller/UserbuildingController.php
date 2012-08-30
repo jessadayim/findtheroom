@@ -469,7 +469,11 @@ class UserbuildingController extends Controller
 	
 	public function autoSaveFormAction($id)
 	{
-		echo "test";
+		echo $id." ";
+		if($_POST)
+		{
+			echo $_POST['nameap'];
+		}
 		exit();
 	}
 }
