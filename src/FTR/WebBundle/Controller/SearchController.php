@@ -71,7 +71,7 @@ class SearchController extends Controller
         $province       = $this->getProvince();
 
 
-        return $this->render('FTRWebBundle:Search:shotsearch.html.twig', array(
+        return $this->render('FTRWebBundle:Search:shortSearch.html.twig', array(
             'payType' 			    =>$payType,
             'bkkZone' 		        =>$bkkZone,
             'buildingType' 		    =>$buildingType,

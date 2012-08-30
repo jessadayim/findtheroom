@@ -16,13 +16,15 @@
     });
 </script>
 
-
-{% render "FTRWebBundle:Search:shortsearch" with {'name': name} %}
+{% if searchType == 'shortSearch' %}
+    {% render "FTRWebBundle:Search:shortsearch" with {'name': name} %}
+{% endif %}
+{% if searchType == 'fullSearch' %}
 {% render "FTRWebBundle:Search:fullsearch" %}
-
+{% endif %}
 <div id="show">
 <span class="big">ผลการค้นหาห้องพัก</span><span class="normal"> เจอทั้งหมด 400 ห้องพัก</span>
-<span class="normal" style="float:right; padding-top:3px;">แสดงผล 55 - 60 จาก {{ numdata }}</span>
+<span class="normal" style="float:right; padding-top:3px;">แสดงผล 55 - 60 จาก {{ numData }}</span>
 <!--<span class="normal" style="float:right; margin-left:20px;">ต่อหน้า</span>
 <div class="styled-select">
     <select class="select">
