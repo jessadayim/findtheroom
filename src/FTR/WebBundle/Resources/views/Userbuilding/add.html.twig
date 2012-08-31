@@ -98,19 +98,19 @@
 		newCell = newRow.insertCell(2)
 		newCell.id = newCell.uniqueID
 		newCell.setAttribute("className", "css-name");
-		newCell.innerHTML = "<input type=\"file\" name=\"room"+num+"\" id=\"room"+num+"\" /><input type=\"hidden\" name=\"hdnfilename"+num+"\" id=\"hdnfilename"+num+"\" value=\""+nameimage+"\" />"		
+		newCell.innerHTML = "<input type=\"file\" name=\"room"+num+"\" id=\"room"+num+"\" /><input type=\"hidden\" name=\"hdnfilename"+num+"\" id=\"hdnfilename"+num+"\" value=\""+nameimage+"\" onchange=\"postData('image');\" />"		
 		
 		//*** Column 4 ***//
 		newCell = newRow.insertCell(3)
 		newCell.id = newCell.uniqueID
 		newCell.setAttribute("className", "css-name");
-		newCell.innerHTML = "<input name=\"typeap_name"+num+"\" id=\"typeap_name"+num+"\" type=\"text\" maxlength=\"30\" placeholder=\"กรุณากรอกประเภทห้องพัก\" value=\""+typename+"\" style=\" padding:2px; font-size:20px;\" />"				
+		newCell.innerHTML = "<input name=\"typeap_name"+num+"\" id=\"typeap_name"+num+"\" type=\"text\" maxlength=\"30\" placeholder=\"กรุณากรอกประเภทห้องพัก\" value=\""+typename+"\" style=\" padding:2px; font-size:20px;\" onchange=\"postData('image');\" />"				
 		
 		//*** Column 5 ***//
 		newCell = newRow.insertCell(4)
 		newCell.id = newCell.uniqueID
 		newCell.setAttribute('align', 'center');
-		newCell.innerHTML = "<input name=\"typeap_size"+num+"\" id=\"typeap_size"+num+"\" type=\"text\" maxlength=\"10\" placeholder=\"ขนาด\" value=\""+roomsize+"\" style=\" padding:2px; font-size:20px; width:80px;\" />"		
+		newCell.innerHTML = "<input name=\"typeap_size"+num+"\" id=\"typeap_size"+num+"\" type=\"text\" maxlength=\"10\" placeholder=\"ขนาด\" value=\""+roomsize+"\" style=\" padding:2px; font-size:20px; width:80px;\" onchange=\"postData('image');\" />"		
 		
 		//*** Column 6 ***//
 		newCell = newRow.insertCell(5)
@@ -122,7 +122,7 @@
 		newCell = newRow.insertCell(6)
 		newCell.id = newCell.uniqueID
 		newCell.setAttribute('align', 'center');
-		newCell.innerHTML = "<input name=\"typeap_price"+num+"\" id=\"typeap_price"+num+"\" type=\"text\" maxlength=\"10\" placeholder=\"อัตราค่าเช่า\" value=\""+roomprice+"\" style=\" padding:2px; font-size:20px; width:80px;\" />"		
+		newCell.innerHTML = "<input name=\"typeap_price"+num+"\" id=\"typeap_price"+num+"\" type=\"text\" maxlength=\"10\" placeholder=\"อัตราค่าเช่า\" value=\""+roomprice+"\" style=\" padding:2px; font-size:20px; width:80px;\" onchange=\"postData('image');\" />"		
 		
 		//*** Column 8 ***//
 		newCell = newRow.insertCell(7)
@@ -250,7 +250,7 @@
 		newCell = newRow.insertCell(3)
 		newCell.id = newCell.uniqueID
 		newCell.setAttribute("className", "css-name");
-		newCell.innerHTML = "<textarea id=\"galtitle"+num+"\" name=\"galtitle"+num+"\" maxlenght=\"500\" placeholder=\"กรอกข้อมูลของรูปที่นี่\" class=\"galdesc\"></textarea><input type=\"hidden\" name=\"imageidgal"+num+"\" id=\"imageidgal"+num+"\" value=\""+imageid+"\" />"				
+		newCell.innerHTML = "<textarea id=\"galtitle"+num+"\" name=\"galtitle"+num+"\" maxlenght=\"500\" placeholder=\"กรอกข้อมูลของรูปที่นี่\" class=\"galdesc\" onchange=\"postData('image');\"></textarea><input type=\"hidden\" name=\"imageidgal"+num+"\" id=\"imageidgal"+num+"\" value=\""+imageid+"\" />"				
 			
 		//document.addform.hdnMaxLineGal.value = intLine;
 		loopbuttongallery();
@@ -310,10 +310,13 @@
 		
 	});
 	var imagepath = "{{asset('images/building/1/2012-08-31head.jpg')}}";
-	function postData(type)
+	function postData(typesave)
 	{
-		//alert(type);
-		$.post("{{path('autoSaveForm', {'id': build_id })}}",{type : type}, $("#addform").serialize(), 
+		var type = typesave;
+		var pathtosave = "{{path('autoSaveForm', {'id': build_id})}}";
+		var addfixpath = pathtosave+'/'+type;
+		//alert(addfixpath);
+		$.post(addfixpath, $("#addform").serialize(), 
 		function(data) {
 			var completetext = data;
 			//alert(completetext);
@@ -330,21 +333,21 @@
 		if(document.getElementById('bk').checked) {
 		   //$("#tbk").css("display","block");
 		   //$("#tcou").css("display","none");
-		   document.getElementById('sbk1').disabled=false;
-		   document.getElementById('sbk2').disabled=false;
-		   document.getElementById('sbk3').disabled=false;
-		   document.getElementById('sbk4').disabled=false;
-		   document.getElementById('sbk5').disabled=false;
-		   document.getElementById('scou').disabled=true;
+		   document.getElementById('bkzone_ot').disabled=false;
+		   document.getElementById('bts_ot').disabled=false;
+		   document.getElementById('mrt_ot').disabled=false;
+		   document.getElementById('univer_ot').disabled=false;
+		   document.getElementById('near_ot').disabled=false;
+		   document.getElementById('country_ot').disabled=true;
 		}else if(document.getElementById('cou').checked) {
 		   //$("#tbk").css("display","none");
 		   //$("#tcou").css("display","block");
-		   document.getElementById('sbk1').disabled=true;
-		   document.getElementById('sbk2').disabled=true;
-		   document.getElementById('sbk3').disabled=true;
-		   document.getElementById('sbk4').disabled=true;
-		   document.getElementById('sbk5').disabled=true;
-		   document.getElementById('scou').disabled=false;
+		   document.getElementById('bkzone_ot').disabled=true;
+		   document.getElementById('bts_ot').disabled=true;
+		   document.getElementById('mrt_ot').disabled=true;
+		   document.getElementById('univer_ot').disabled=true;
+		   document.getElementById('near_ot').disabled=true;
+		   document.getElementById('country_ot').disabled=false;
 		}
 	}
 </script>
@@ -385,17 +388,17 @@
         <table style="margin-top: 0px; float:none;  margin-left: 0px;">
         	<tr height="50" valign="middle">
 				<td align="right" width="210" style="font-size:24px;">ชื่อหอพัก / อพาร์ทเม้นต์ : *</td>
-                <td align="left" width="190"><input name="nameap" id="nameap" type="text" maxlength="30" placeholder="กรุณากรอกชื่อหอพัก" style=" padding:2px; font-size:20px;" onchange="postData();" /></td>
+                <td align="left" width="190"><input name="nameap" id="nameap" type="text" maxlength="30" placeholder="กรุณากรอกชื่อหอพัก" style=" padding:2px; font-size:20px;" onchange="postData('head');" /></td>
             </tr>
             <tr height="50" valign="top">
 				<td align="right" width="210" style="font-size:24px;">ที่อยู่ : *</td>
-                <td align="left" width="190"><textarea name="placeap" id="placeap" type="text" maxlength="500" class="place" onchange="postData();" /></textarea></td>
+                <td align="left" width="190"><textarea name="placeap" id="placeap" type="text" maxlength="500" class="place" onchange="postData('head');" /></textarea></td>
             </tr>
 			<tr height="50" valign="middle">
 				<td align="right" width="210" style="font-size:24px;">จังหวัด : *</td>
                 <td align="left" width="190">
 					<div class="styled-select">
-						<select id="province" name="province" class="select" onchange="postData();">
+						<select id="province" name="province" class="select" onchange="postData('head');">
 							<option value="daymonth">รายวันและรายเดือน</option>
 							<option value="day">รายวัน</option>
 							<option value="month">รายเดือน</option>
@@ -407,7 +410,7 @@
 				<td align="right" width="210" style="font-size:24px;">เขต/อำเภอ : *</td>
                 <td align="left" width="190">
 					<div class="styled-select">
-						<select id="district" name="district" class="select" onchange="postData();">
+						<select id="district" name="district" class="select" onchange="postData('head');">
 							<option value="daymonth">รายวันและรายเดือน</option>
 							<option value="day">รายวัน</option>
 							<option value="month">รายเดือน</option>
@@ -417,22 +420,21 @@
             </tr>
             <tr height="50" valign="middle">
 				<td align="right" width="210" style="font-size:24px;">รหัสไปรษณีย์ : *</td>
-                <td align="left" width="190"><input id="zipcode" name="zipcode" type="text" maxlength="30" placeholder="กรุณากรอกรหัสไปรษณีย์" style=" padding:2px; font-size:20px;" onchange="postData();" /></td>
+                <td align="left" width="190"><input id="zipcode" name="zipcode" type="text" maxlength="30" placeholder="กรุณากรอกรหัสไปรษณีย์" style=" padding:2px; font-size:20px;" onchange="postData('head');" /></td>
             </tr>
         </table>
         <table style="margin-top: 0px; float:left;">
         	<tr>
-            	
 				<td align="right" width="240" style="font-size:24px;">
 					<div id="headimage2" class="thumbframe4add" style="margin-top:-80px;">
 						<img src="{{asset('images/exmap.png')}}" class="nopad thumb" />
 					</div></td>
             	<td align="left" width="180">
 					<input type="file" name="upload_map" id="upload_map"/>
-					<input type="hidden" name="hdnfilemap" id="hdnfilemap" onchange="postData();" />
+					<input type="hidden" name="hdnfilemap" id="hdnfilemap" onchange="postData('head');" />
 				</td>
 				<td align="right" width="240" valign="top" style="font-size:24px;">รายละเอียดเพิ่มเติม : &nbsp;</td>
-                <td align="left" width="200"><textarea name="placedetail" type="text" maxlength="500" class="ldesc" onchange="postData();" /></textarea></td>
+                <td align="left" width="200"><textarea name="placedetail" type="text" maxlength="500" class="ldesc" onchange="postData('head');" /></textarea></td>
             </tr>
         </table>
     </div>
@@ -440,16 +442,16 @@
 		<table style="margin-top: 0px;">
         	<tr height="50" valign="middle">
 				<td align="right" width="240" style="font-size:24px;">Google Map ลองติจูด : *</td>
-                <td align="left" width="200"><input id="longitude" name="longitude" type="text" maxlength="30" placeholder="กรุณากรอกตำแหน่งลองติจูด" style=" padding:2px; font-size:20px;" onchange="postData();" /></td>
+                <td align="left" width="200"><input id="longitude" name="longitude" type="text" maxlength="30" placeholder="กรุณากรอกตำแหน่งลองติจูด" style=" padding:2px; font-size:20px;" onchange="postData('head');" /></td>
 				<td align="right" width="240" style="font-size:24px;">Google Map ละติจูด : *</td>
-                <td align="left" width="200"><input id="latitude" name="latitude" type="text" maxlength="30" placeholder="กรุณากรอกตำแหน่งละติจูด" style=" padding:2px; font-size:20px;" onchange="postData();" /></td>
+                <td align="left" width="200"><input id="latitude" name="latitude" type="text" maxlength="30" placeholder="กรุณากรอกตำแหน่งละติจูด" style=" padding:2px; font-size:20px;" onchange="postData('head');" /></td>
                 <td align="left" width="30" style="font-size:24px;">&nbsp;</td>
             </tr>
             <tr height="50" valign="middle">
 				<td align="right" width="240" style="font-size:24px;">ประเภทห้องพัก : *</td>
                 <td align="left" width="200">
                 	<div class="styled-select">
-						<select id="aptype" name="aptype" class="select" onchange="postData();">
+						<select id="aptype" name="aptype" class="select" onchange="postData('head');">
 							<option value="all">- กรุณาระบุ -</option>
   							<option value="apartment">อพาร์ทเม้นต์</option>
                             <option value="man">หอชาย</option>
@@ -459,7 +461,7 @@
                 </td>
                 <td align="right" width="210" style="font-size:24px;">ชนิด : *</td>
                 <td align="left" width="190" style="font-size:24px;"><div class="styled-select">
-						<select id="paytype" name="paytype" class="select" onchange="postData();">
+						<select id="paytype" name="paytype" class="select" onchange="postData('head');">
 							<option value="daymonth">รายวันและรายเดือน</option>
 							<option value="day">รายวัน</option>
 							<option value="month">รายเดือน</option>
@@ -469,30 +471,30 @@
             </tr>
             <tr height="50" valign="middle">
 				<td align="right" width="240" style="font-size:24px;">เบอร์โทรติดต่อ : *</td>
-                <td align="left" width="200"><input id="telnumber" name="telnumber" type="text" maxlength="10" placeholder="กรุณากรอกเบอร์โทรติดต่อ" style=" padding:2px; font-size:20px;" onchange="postData();" /></td>
+                <td align="left" width="200"><input id="telnumber" name="telnumber" type="text" maxlength="10" placeholder="กรุณากรอกเบอร์โทรติดต่อ" style=" padding:2px; font-size:20px;" onchange="postData('head');" /></td>
                 <td align="right" width="210" style="font-size:24px;">ระยะเวลาเช่าขั้นต่ำ : *</td>
-               <td align="left" width="190"><input id="time" name="time" type="text" maxlength="3" placeholder="กรุณากรอกระยะเวลาเช่าขั้นต่ำ" style=" padding:2px; font-size:20px;" onchange="postData();" /></td>
+               <td align="left" width="190"><input id="time" name="time" type="text" maxlength="3" placeholder="กรุณากรอกระยะเวลาเช่าขั้นต่ำ" style=" padding:2px; font-size:20px;" onchange="postData('head');" /></td>
                 <td align="left" width="30" style="font-size:24px;"> เดือน</td>
             </tr>
             <tr height="50" valign="middle">
 				<td align="right" width="240" style="font-size:24px;">ติดต่อคุณ : *</td>
-                <td align="left" width="200"><input id="contact_person" name="contact_person" type="text" placeholder="กรุณากรอกชื่อผ้ติดต่อ" style=" padding:2px; font-size:20px;" onchange="postData();" /></td>
+                <td align="left" width="200"><input id="contact_person" name="contact_person" type="text" placeholder="กรุณากรอกชื่อผ้ติดต่อ" style=" padding:2px; font-size:20px;" onchange="postData('head');" /></td>
                 <td align="right" width="210" style="font-size:24px;">ค่าน้ำ : *</td>
-               <td align="left" width="190"><input id="water_price" name="water_price" type="text" maxlength="3" placeholder="กรุณากรอกค่าน้ำ" style=" padding:2px; font-size:20px;" onchange="postData();" /></td>
+               <td align="left" width="190"><input id="water_price" name="water_price" type="text" maxlength="3" placeholder="กรุณากรอกค่าน้ำ" style=" padding:2px; font-size:20px;" onchange="postData('head');" /></td>
                 <td align="left" width="30" style="font-size:24px;"> บาท</td>
             </tr>
             <tr height="50" valign="middle">
 				<td align="right" width="240" style="font-size:24px;">อีเมล : *</td>
-                <td align="left" width="200"><input id="contact_email" name="contact_email" type="text" placeholder="กรุณากรอกอีเมล" style=" padding:2px; font-size:20px;" onchange="postData();" /></td>
+                <td align="left" width="200"><input id="contact_email" name="contact_email" type="text" placeholder="กรุณากรอกอีเมล" style=" padding:2px; font-size:20px;" onchange="postData('head');" /></td>
                 <td align="right" width="210" style="font-size:24px;">ค่าไฟ : *</td>
-               <td align="left" width="190"><input id="power_price" name="power_price" type="text" maxlength="3" placeholder="กรุณากรอกค่าไฟ" style=" padding:2px; font-size:20px;" onchange="postData();" /></td>
+               <td align="left" width="190"><input id="power_price" name="power_price" type="text" maxlength="3" placeholder="กรุณากรอกค่าไฟ" style=" padding:2px; font-size:20px;" onchange="postData('head');" /></td>
                 <td align="left" width="30" style="font-size:24px;"> บาท</td>
             </tr>
             <tr height="50" valign="middle">
 				<td align="right" width="240" style="font-size:24px;">เว็บไซต์ : &nbsp;</td>
-                <td align="left" width="200"><input id="website" name="website" type="text" maxlength="10" placeholder="กรุณากรอกเว็บไซต์" style=" padding:2px; font-size:20px;" onchange="postData();" /></td>
+                <td align="left" width="200"><input id="website" name="website" type="text" maxlength="10" placeholder="กรุณากรอกเว็บไซต์" style=" padding:2px; font-size:20px;" onchange="postData('head');" /></td>
                 <td align="right" width="210" style="font-size:24px;">ค่าอินเตอร์เน็ต : &nbsp;</td>
-               <td align="left" width="190"><input id="internet_price" name="internet_price" type="text" maxlength="3" placeholder="กรุณากรอกค่าอินเตอร์เน็ต" style=" padding:2px; font-size:20px;" onchange="postData();" /></td>
+               <td align="left" width="190"><input id="internet_price" name="internet_price" type="text" maxlength="3" placeholder="กรุณากรอกค่าอินเตอร์เน็ต" style=" padding:2px; font-size:20px;" onchange="postData('head');" /></td>
                 <td align="left" width="30" style="font-size:24px;"> บาท</td>
             </tr>
         </table>
@@ -553,8 +555,8 @@
 				</td>
 				<td width="200">
 					<div class="styled-select">
-						<label for="cou">
-						<select class="select">
+						<label for="province_ot">
+						<select id="province_ot" name="province_ot" class="select" onchange="postData('other');">
 							{% for pvlist in province %}
 								<option value="{{ pvlist.PROVINCE_VALUE }}">{{ pvlist.PROVINCE_NAME }}</option>
 							{% endfor %}
@@ -571,7 +573,7 @@
 				<td width="250">
 					<div class="styled-select">
                   
-						<select class="select" id="sbk1">
+						<select id="bkzone_ot" name="bkzone_ot" class="select" onchange="postData('other');">
 							{% for zlist in zonelist %}
 								<option value="{{ zlist.id }}">{{ zlist.zonename }}</option>
 							{% endfor %}
@@ -585,7 +587,7 @@
 				<td width="250">
 					<div class="styled-select">
                     
-						<select class="select" id="sbk2">
+						<select id="bts_ot" name="bts_ot" class="select" onchange="postData('other');">
 							{% for btslist in nearBTS %}
 								<option value="{{ btslist.id }}">{{ btslist.name }}</option>
 							{% endfor %}
@@ -599,7 +601,7 @@
 				<td width="250">
 					<div class="styled-select">
                   
-						<select class="select" id="sbk3">
+						<select id="mrt_ot" name="mrt_ot" class="select" onchange="postData('other');">
 							{% for mrtlist in nearMRT %}
 								<option value="{{ mrtlist.id }}">{{ mrtlist.name }}</option>
 							{% endfor %}
@@ -613,7 +615,7 @@
 				<td width="250">
 					<div class="styled-select">
                    
-						<select class="select" id="sbk4">
+						<select id="univer_ot" name="univer_ot" class="select" onchange="postData('other');">
 							{% for ulist in nearUniversity %}
 								<option value="{{ ulist.id }}">{{ ulist.name }}</option>
 							{% endfor %}
@@ -627,7 +629,7 @@
 				<td width="250">
 					<div class="styled-select">
                    
-						<select class="select" id="sbk5">
+						<select id="near_ot" name="near_ot" class="select" onchange="postData('other');">
 							{% for blist in nearBy %}
 								<option value="{{ blist.id }}">{{ blist.name }}</option>
 							{% endfor %}
@@ -645,7 +647,7 @@
 				<td width="300">
 					<div class="styled-select">
                 
-						<select class="select" id="scou" disabled>
+						<select id="country_ot" name="country_ot" class="select" onchange="postData('other');" disabled>
 							{% for clist in nearInCountry %}
 								<option value="{{ clist.id }}">{{ clist.name }}</option>
 							{% endfor %}
@@ -669,7 +671,7 @@
             <tr height="40" valign="middle">
             	{% for loops in list.loop %}
             	<td width="250">
-            		<input id="fac{{loops.id}}" name="fac[]" type="checkbox" value="{{loops.id}}" onchange="postData();" /> <label for="fac{{loops.id}}">{{loops.facility_name}}</label>
+            		<input id="fac{{loops.id}}" name="fac[]" type="checkbox" value="{{loops.id}}" onchange="postData('other');" /> <label for="fac{{loops.id}}">{{loops.facility_name}}</label>
             	</td>
             	{% endfor %}
             </tr>
@@ -688,13 +690,13 @@
             <tr height="40" valign="middle">
             	{% for loops in list.loop %}
             	<td width="250">
-            		<input id="fac{{loops.id}}" name="fac[]" type="checkbox" value="{{loops.id}}" onchange="postData();" /> <label for="fac{{loops.id}}">{{loops.facility_name}}</label>
+            		<input id="fac{{loops.id}}" name="fac[]" type="checkbox" value="{{loops.id}}" onchange="postData('other');" /> <label for="fac{{loops.id}}">{{loops.facility_name}}</label>
             	</td>
             	{% endfor %}
             </tr>
             {% endfor %}
             <tr>
-            	<td colspan="3" align="right"><input class="save" type="submit" value="" /> <input class="back" type="submit" value="" /></td>
+            	<td colspan="3" align="right"><input class="save" type="submit" value="" /> <input class="back" type="button" value="" onclick="window.location='{{path('userbuilding')}}'" /></td>
             </tr>
 		</table>
 	</div>
