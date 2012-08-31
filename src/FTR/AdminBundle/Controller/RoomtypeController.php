@@ -1,11 +1,11 @@
 <?php
 
-namespace FTR\WebBundle\Controller;
+namespace FTR\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use FTR\WebBundle\Entity\Roomtype;
-use FTR\WebBundle\Form\RoomtypeType;
+use FTR\AdminBundle\Form\RoomtypeType;
 
 /**
  * Roomtype controller.

@@ -1,11 +1,11 @@
 <?php
 
-namespace FTR\WebBundle\Controller;
+namespace FTR\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use FTR\WebBundle\Entity\Nearly_location;
-use FTR\WebBundle\Form\Nearly_locationType;
+use FTR\AdminBundle\Form\Nearly_locationType;
 
 /**
  * Nearly_location controller.

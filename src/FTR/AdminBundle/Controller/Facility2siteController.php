@@ -1,11 +1,11 @@
 <?php
 
-namespace FTR\WebBundle\Controller;
+namespace FTR\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use FTR\WebBundle\Entity\Facility2site;
-use FTR\WebBundle\Form\Facility2siteType;
+use FTR\AdminBundle\Form\Facility2siteType;
 
 /**
  * Facility2site controller.

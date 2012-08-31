@@ -7,7 +7,7 @@ FTRAdminBundle_Building_site:
     prefix:   /building_site
     
 FTRWebBundle_building_type:
-    resource: "@FTRWebBundle/Resources/config/routing/building_type.yml"
+    resource: "@FTRAdminBundle/Resources/config/routing/building_type.yml"
     prefix:   /building_type
 
 FTRAdminBundle_facility2site:

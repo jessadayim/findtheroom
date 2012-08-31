@@ -1,11 +1,11 @@
 <?php
 
-namespace FTR\WebBundle\Controller;
+namespace FTR\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use FTR\WebBundle\Entity\Zone;
-use FTR\WebBundle\Form\ZoneType;
+use FTR\AdminBundle\Form\ZoneType;
 
 /**
  * Zone controller.

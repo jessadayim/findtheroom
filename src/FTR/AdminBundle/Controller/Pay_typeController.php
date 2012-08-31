@@ -1,11 +1,11 @@
 <?php
 
-namespace FTR\WebBundle\Controller;
+namespace FTR\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use FTR\WebBundle\Entity\Pay_type;
-use FTR\WebBundle\Form\Pay_typeType;
+use FTR\AdminBundle\Form\Pay_typeType;
 
 /**
  * Pay_type controller.

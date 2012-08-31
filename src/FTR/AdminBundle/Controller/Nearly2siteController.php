@@ -1,11 +1,11 @@
 <?php
 
-namespace FTR\WebBundle\Controller;
+namespace FTR\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use FTR\WebBundle\Entity\Nearly2site;
-use FTR\WebBundle\Form\Nearly2siteType;
+use FTR\AdminBundle\Form\Nearly2siteType;
 
 /**
  * Nearly2site controller.

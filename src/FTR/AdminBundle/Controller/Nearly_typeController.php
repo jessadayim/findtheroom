@@ -1,11 +1,11 @@
 <?php
 
-namespace FTR\WebBundle\Controller;
+namespace FTR\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use FTR\WebBundle\Entity\Nearly_type;
-use FTR\WebBundle\Form\Nearly_typeType;
+use FTR\AdminBundle\Form\Nearly_typeType;
 
 /**
  * Nearly_type controller.

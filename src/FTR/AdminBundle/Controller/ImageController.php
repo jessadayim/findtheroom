@@ -1,11 +1,11 @@
 <?php
 
-namespace FTR\WebBundle\Controller;
+namespace FTR\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use FTR\WebBundle\Entity\Image;
-use FTR\WebBundle\Form\ImageType;
+use FTR\AdminBundle\Form\ImageType;
 
 /**
  * Image controller.

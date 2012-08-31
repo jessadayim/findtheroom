@@ -1,11 +1,11 @@
 <?php
 
-namespace FTR\WebBundle\Controller;
+namespace FTR\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use FTR\WebBundle\Entity\Facilitylist;
-use FTR\WebBundle\Form\FacilitylistType;
+use FTR\AdminBundle\Form\FacilitylistType;
 
 /**
  * Facilitylist controller.
