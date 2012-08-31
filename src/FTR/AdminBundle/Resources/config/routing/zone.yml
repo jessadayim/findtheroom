@@ -1,0 +1,30 @@
+zone:
+    pattern:  /
+    defaults: { _controller: "FTRAdminBundle:Zone:index" }
+
+zone_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "FTRAdminBundle:Zone:show" }
+
+zone_new:
+    pattern:  /new
+    defaults: { _controller: "FTRAdminBundle:Zone:new" }
+
+zone_create:
+    pattern:  /create
+    defaults: { _controller: "FTRAdminBundle:Zone:create" }
+    requirements: { _method: post }
+
+zone_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "FTRAdminBundle:Zone:edit" }
+
+zone_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "FTRAdminBundle:Zone:update" }
+    requirements: { _method: post }
+
+zone_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "FTRAdminBundle:Zone:delete" }
+    requirements: { _method: post }

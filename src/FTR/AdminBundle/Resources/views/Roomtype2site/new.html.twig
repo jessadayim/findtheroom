@@ -1,0 +1,16 @@
+<h1>Roomtype2site creation</h1>
+
+<form action="{{ path('roomtype2site_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <p>
+        <button type="submit">Create</button>
+    </p>
+</form>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('roomtype2site') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>

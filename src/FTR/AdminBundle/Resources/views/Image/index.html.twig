@@ -1,0 +1,45 @@
+<h1>Image list</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Building_site_id</th>
+            <th>Roomtype2site_id</th>
+            <th>Photo_name</th>
+            <th>Photo_type</th>
+            <th>Deleted</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('image_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.buildingsiteid }}</td>
+            <td>{{ entity.roomtype2siteid }}</td>
+            <td>{{ entity.photoname }}</td>
+            <td>{{ entity.phototype }}</td>
+            <td>{{ entity.deleted }}</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('image_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('image_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<ul>
+    <li>
+        <a href="{{ path('image_new') }}">
+            Create a new entry
+        </a>
+    </li>
+</ul>

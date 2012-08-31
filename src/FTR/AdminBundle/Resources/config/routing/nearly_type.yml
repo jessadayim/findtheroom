@@ -1,0 +1,30 @@
+nearly_type:
+    pattern:  /
+    defaults: { _controller: "FTRAdminBundle:Nearly_type:index" }
+
+nearly_type_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "FTRAdminBundle:Nearly_type:show" }
+
+nearly_type_new:
+    pattern:  /new
+    defaults: { _controller: "FTRAdminBundle:Nearly_type:new" }
+
+nearly_type_create:
+    pattern:  /create
+    defaults: { _controller: "FTRAdminBundle:Nearly_type:create" }
+    requirements: { _method: post }
+
+nearly_type_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "FTRAdminBundle:Nearly_type:edit" }
+
+nearly_type_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "FTRAdminBundle:Nearly_type:update" }
+    requirements: { _method: post }
+
+nearly_type_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "FTRAdminBundle:Nearly_type:delete" }
+    requirements: { _method: post }

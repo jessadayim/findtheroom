@@ -17,14 +17,10 @@ $(function() {// get more knowledge at http://www.uploadify.com/documentation/
 			'onUploadSuccess' : function(file, data, response) {
             	//alert('The file ' + file.name + ' was successfully uploaded with a response of ' + response + ':' + data);
             	document.getElementById('hdnfilename').value = data;
+            	postData('image');
         	}
 			// Your options here
 		});
-	});
-	
-$(function() {// get more knowledge at http://www.uploadify.com/documentation/
-		var ownername = document.getElementById('hdnownername').value
-		var buildid = document.getElementById('hdnbuildid').value
 		
 		$('#upload_map').uploadify({
 			'formData'      : {'ownername' : ownername, 'buildid' : buildid ,'fieldname' : 'map'},
@@ -39,6 +35,7 @@ $(function() {// get more knowledge at http://www.uploadify.com/documentation/
 			'onUploadSuccess' : function(file, data, response) {
             	//alert('The file ' + file.name + ' was successfully uploaded with a response of ' + response + ':' + data);
             	document.getElementById('hdnfilemap').value = data;
+            	postData('image');
         	}
 			// Your options here
 		});
@@ -72,6 +69,7 @@ function uploadpicroom()
             	var textroomname = 'hdnfilename'+mySplitResult[1];
             	//alert(textroomname)
             	document.getElementById(textroomname).value = mySplitResult[0];
+            	postData('image');
         	}
 			// Your options here
 		});
@@ -101,6 +99,7 @@ function uploadpicgallery()
             	var textgalleryname = 'hdngalleryname'+mySplitResult[1];
             	
             	document.getElementById(textgalleryname).value = mySplitResult[0];
+            	postData('image');
         	}
 			// Your options here
 		});

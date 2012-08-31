@@ -46,6 +46,6 @@ class Building_siteType extends AbstractType
 
     public function getName()
     {
-        return 'ftr_webbundle_building_sitetype';
+        return 'ftr_adminbundle_building_sitetype';
     }
 }

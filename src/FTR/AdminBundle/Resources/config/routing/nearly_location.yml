@@ -1,0 +1,30 @@
+nearly_location:
+    pattern:  /
+    defaults: { _controller: "FTRAdminBundle:Nearly_location:index" }
+
+nearly_location_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "FTRAdminBundle:Nearly_location:show" }
+
+nearly_location_new:
+    pattern:  /new
+    defaults: { _controller: "FTRAdminBundle:Nearly_location:new" }
+
+nearly_location_create:
+    pattern:  /create
+    defaults: { _controller: "FTRAdminBundle:Nearly_location:create" }
+    requirements: { _method: post }
+
+nearly_location_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "FTRAdminBundle:Nearly_location:edit" }
+
+nearly_location_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "FTRAdminBundle:Nearly_location:update" }
+    requirements: { _method: post }
+
+nearly_location_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "FTRAdminBundle:Nearly_location:delete" }
+    requirements: { _method: post }

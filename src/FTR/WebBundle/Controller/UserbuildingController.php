@@ -17,6 +17,7 @@ use FTR\WebBundle\Entity\Pay_type;
 use FTR\WebBundle\Entity\Roomtype2site;
 use FTR\WebBundle\Entity\Roomtype;
 use FTR\WebBundle\Entity\Zone;
+use FTR\WebBundle\Controller\SearchController;
 
 class UserbuildingController extends Controller
 {
@@ -139,17 +140,37 @@ class UserbuildingController extends Controller
 				$arrgallery 		= $this->getImageDatas($building_id,NULL,'gallery');
 				$imagehead 			= $this->getImageDatas($building_id,NULL,'head');
 				$imagemap			= $this->getImageDatas($building_id,NULL,'map');
+				
+				
+				$payType        = $this->getPayType();
+		        $bkkZone        = $this->getBkkZone();
+		        $buildingType   = $this->getBuildingType();
+		        $province       = $this->getProvince();
+				$nearBTS			= $this->getNeary(2);
+				$nearMRT			= $this->getNeary(3);
+				$nearUniversity		= $this->getNeary(4);
+				$nearBy				= $this->getNeary(5);
+				$nearInCountry		= $this->getNeary(6);
 				/*echo "<pre>";
-				var_dump($fac_outroomlist);
-				echo "</pre>";*/
-				//exit();
+				var_dump($province);
+				echo "</pre>";
+				exit();*/
 				$this->getPathUpload($building_id);
 			} catch (Exception $e) {
 				echo 'Caught exception: ',  $e->getMessage(), "\n";
 				}
 				
 		return $this->render('FTRWebBundle:Userbuilding:add.html.twig', array(
-			'username'		=> $user,
+			'payType' 			    =>$payType,
+            'zonelist' 		        =>$bkkZone,
+            'buildingType' 		    =>$buildingType,
+            'province' 		        =>$province,
+			'nearBTS' 			=> $nearBTS,
+			'nearMRT' 			=> $nearMRT,
+			'nearUniversity' 	=> $nearUniversity,
+			'nearBy' 			=> $nearBy,
+			'nearInCountry' 	=> $nearInCountry,
+            'username'		=> $user,
 			'build_id'		=> $building_id,
 			'fac_inroom'	=> $fac_inroomlist,
 			'fac_outroom'	=> $fac_outroomlist,
@@ -273,6 +294,9 @@ class UserbuildingController extends Controller
 						}
 					}
 					$fac_listreturn = $fac_outroomlist;
+					/*echo "<pre>";
+					var_dump($fac_listreturn);
+					echo "</pre>";exit();*/
 				}
 			} catch (Exception $e) {
 				echo 'Caught exception: ',  $e->getMessage(), "\n";
@@ -469,11 +493,124 @@ class UserbuildingController extends Controller
 	
 	public function autoSaveFormAction($id)
 	{
-		echo $id." ";
+		//echo $id." ";
 		if($_POST)
 		{
-			echo $_POST['nameap'];
+			echo $_POST['type'];
 		}
 		exit();
+	}
+	
+	function getBkkZone()
+    {
+        $result_data = array();
+        $conn= $this->get('database_connection');
+        if(!$conn){ die("MySQL Connection error");}
+        try{
+            $whereQuery = null;
+            $sql = "
+				select * from zone
+			";
+            $result_data = $conn->fetchAll($sql);
+        } catch (Exception $e) {
+            echo 'Caught exception: ',  $e->getMessage(), "\n";
+        }
+        $all[] = array('id'=>0,'zonename'=>'ทุกเขต');
+
+        $result = array_merge($all,$result_data);
+        return $result;
+    }
+
+    function getProvince()
+    {
+        $result_data = array();
+        $conn= $this->get('database_connection');
+        if(!$conn){ die("MySQL Connection error");}
+        try{
+            $sql = "
+				select PROVINCE_NAME as PROVINCE_VALUE , PROVINCE_NAME
+				from province
+				where PROVINCE_ID != 1
+				order by PROVINCE_NAME asc
+			";
+            $result_data = $conn->fetchAll($sql);
+        } catch (Exception $e) {
+            echo 'Caught exception: ',  $e->getMessage(), "\n";
+        }
+        $all[] = array('PROVINCE_VALUE'=>'0','PROVINCE_NAME'=>'ทุกจังหวัด');
+
+        $result = array_merge($all,$result_data);
+        return $result;
+    }
+
+    function getBuildingType($type=null)
+    {
+        $result_data = array();
+        $conn= $this->get('database_connection');
+        if(!$conn){ die("MySQL Connection error");}
+        try{
+            $whereQuery = null;
+            if($type != null){
+                $whereQuery = " where id in (select distinct(building_type_id) from building_site where pay_type_id = $type)";
+            }
+            $sql = "
+				select * from building_type $whereQuery
+			";
+            $result_data = $conn->fetchAll($sql);
+        } catch (Exception $e) {
+            echo 'Caught exception: ',  $e->getMessage(), "\n";
+        }
+        $all[] = array('id'=>0,'type_name'=>'ทุกประเภท');
+
+        $result = array_merge($all,$result_data);
+        return $result;
+    }
+	
+	function getPayType()
+    {
+		$result_data = array();
+		$conn= $this->get('database_connection');
+		if(!$conn){ die("MySQL Connection error");}
+		try{
+			$sql = "
+				select  `id`,`typename` from pay_type order by id desc
+			";
+			$result_data = $conn->fetchAll($sql);
+		} catch (Exception $e) {
+			echo 'Caught exception: ',  $e->getMessage(), "\n";
+		}
+				
+		$result = $result_data;
+		return $result;
+	}
+	
+	function getNeary($type=2)
+    {
+		$result_data = array();
+		$conn= $this->get('database_connection');
+		if(!$conn){ die("MySQL Connection error");}
+		try{
+			$sql = "
+				select * from nearly_location where nearly_type_id = $type
+			";
+			$result_data = $conn->fetchAll($sql);
+		} catch (Exception $e) {
+			echo 'Caught exception: ',  $e->getMessage(), "\n";
+		}
+		
+		switch ($type) {
+			case 2:
+			case 3:
+				$all[] = array('id'=>0,'name'=>'ทุกสถานี');
+				break;
+			case 4:
+			case 5:
+            case 6:
+				$all[] = array('id'=>0,'name'=>' - กรุณาระบุ - ');
+				break;
+		}
+		
+		$result = array_merge($all,$result_data);
+		return $result;
 	}
 }

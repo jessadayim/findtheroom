@@ -298,22 +298,13 @@
 		
 	});
 	
-	function showComplete()
+	function postData(type)
 	{
-		$(".autocomplete").toggle("slow");
-		setTimeout('hideComplete()',3000);
-	}
-	
-	function hideComplete()
-	{
-		$(".autocomplete").toggle("slow");
-	}
-	
-	function postData()
-	{
+		alert(type);
 		$.post("{{path('autoSaveForm', {'id': build_id })}}", $("#addform").serialize(), 
 		function(data) {
-			//setTimeout('showComplete()',1500);
+			var completetext = data;
+			alert(completetext);
 			$.gritter.add({
 				// (string | mandatory) the heading of the notification
 				title: 'บันทึกข้อมูลสำเร็จ',
@@ -322,9 +313,30 @@
 			});
 	 	});
  	}
+ 	
+ 	function fncAlert(){
+		if(document.getElementById('bk').checked) {
+		   //$("#tbk").css("display","block");
+		   //$("#tcou").css("display","none");
+		   document.getElementById('sbk1').disabled=false;
+		   document.getElementById('sbk2').disabled=false;
+		   document.getElementById('sbk3').disabled=false;
+		   document.getElementById('sbk4').disabled=false;
+		   document.getElementById('sbk5').disabled=false;
+		   document.getElementById('scou').disabled=true;
+		}else if(document.getElementById('cou').checked) {
+		   //$("#tbk").css("display","none");
+		   //$("#tcou").css("display","block");
+		   document.getElementById('sbk1').disabled=true;
+		   document.getElementById('sbk2').disabled=true;
+		   document.getElementById('sbk3').disabled=true;
+		   document.getElementById('sbk4').disabled=true;
+		   document.getElementById('sbk5').disabled=true;
+		   document.getElementById('scou').disabled=false;
+		}
+	}
 </script>
 <form name="addform" id="addform" method="post" action="{{path('saveData', {'id': build_id })}}">
-<div class="autocomplete" style="display: none;z-index: 999" align="center"><font size="11" color="red">บันทึกเสร็จสิ้น</font></div>
 <div id="fix">
 	<!--<input class="upimg" type="submit" value="" />-->
 	<input class="save" type="submit" value="" />
@@ -347,14 +359,8 @@
     	<table style="margin-top: 0px; float:left;">
         	<tr height="50" valign="middle">
 				<td align="left" width="240"><img src="{{asset('images/ex.png')}}" class="nopad" /></td>
-                <td align="left" width="230" valign="top"><!--<input id="inter" name="option36" type="checkbox" value="internetap" /><label for="inter">มีอินเตอร์เน็ต</label>--></td>
-            </tr>
-            <tr height="50" valign="middle">
-				<td align="center" width="240" style="font-size:24px;">
-					<input style="margin-left: -20px;" type="file" name="file_upload" id="file_upload" />
-					<input type="hidden" name="hdnfilename" id="hdnfilename" onchange="postData();" />
-				</td>
-            	<td align="left" width="200">&nbsp;</td>
+                <td align="left" width="230" valign="middle"><input style="margin-left: 10px;" type="file" name="file_upload" id="file_upload" />
+					<input type="hidden" name="hdnfilename" id="hdnfilename" /></td>
             </tr>
         </table>
         <table style="margin-top: 0px; float:none;  margin-left: 0px;">
@@ -509,86 +515,126 @@
 </div>
 <input type="hidden" name="hdnownername" id="hdnownername" value="{{username}}" />
 <input type="hidden" name="hdnbuildid" id="hdnbuildid" value="{{build_id}}" />
-<div id="etczone" class="detail" style="height: 750px; margin-bottom: 15px;">
+<div id="etczone" class="detail" style="height: auto; margin-bottom: 15px;">
 	<img src="{{asset('images/etc.png')}}" style="display:block; position:relative; float:none;" />
 	<hr class="line" style="top: 60px;" />
-    <div>
+	<div style="display:block;padding-bottom:10px;">
 		<table>
 			<tr height="50" valign="middle">
 				<td align="left" width="165">จังหวัด :</td>
 				<td width="300">
-					<div id="nearly_area" class="styled-select">
-						<select name="nearly_bk" id="nearly_location" class="select" onchange="postData();">
-							<option value="all">ทุกเขต</option>
-							<option value="banken">บางเขน</option>
-							<option value="vipawadee">วิภาวดีรังสิต</option>
-							<option value="etc">อื่นๆ</option>
-						</select>
-					</div>
+					<input id="bk" name="bc" type="radio" value="bkk" checked OnClick="JavaScript:fncAlert();" /><label for="bk">กรุงเทพฯ</label>
 				</td>
-				<td align="left" width="145"><input id="bts_check" name="bts_check" type="checkbox" value="bts" /><label for="bts_check">ใกล้รถไฟฟ้า BTS :</label></td>
-				<td width="300">
+				<td width="170">
+					<input id="cou" name="bc" type="radio" value="country" OnClick="JavaScript:fncAlert();" /><label for="cou">ต่างจังหวัด</label>
+				</td>
+				<td width="200">
 					<div class="styled-select">
-						<select name="bts" id="bts" class="select" onchange="postData();">
-							<option value="all">ทุกสถานี</option>
-							<option value="siam">สยาม</option>
-							<option value="chidlom">ชิดลม</option>
-							<option value="tonglo">ทองหล่อ</option>
+						<label for="cou">
+						<select class="select">
+							{% for pvlist in province %}
+								<option value="{{ pvlist.PROVINCE_VALUE }}">{{ pvlist.PROVINCE_NAME }}</option>
+							{% endfor %}
 						</select>
-					</div>
-				</td>
-			</tr>
-			<tr height="50" valign="middle">
-				<td align="left" width="165"><input id="bk_check" name="bk_check" type="checkbox" value="bangkok" /><label for="bk_check">โซนกรุงเทพฯ :</label></td>
-				<td width="300">
-					<div id="nearly_area" class="styled-select">
-						<select name="nearly_location" id="nearly_location" class="select" onchange="postData();">
-							<option value="all">ทุกเขต</option>
-							<option value="banken">บางเขน</option>
-							<option value="vipawadee">วิภาวดีรังสิต</option>
-							<option value="etc">อื่นๆ</option>
-						</select>
-					</div>
-				</td>
-				<td align="left" width="145"><input id="mrt_check" name="mrt_check" type="checkbox" value="mrt" /><label for="mrt_check">ใกล้รถไฟฟ้า MRT :</label></td>
-				<td width="300">
-					<div class="styled-select">
-						<select name="mrt" id="mrt" class="select" onchange="postData();">
-							<option value="all">ทุกสถานี</option>
-							<option value="banken">สยาม</option>
-							<option value="vipawadee">ชิดลม</option>
-							<option value="etc">ทองหล่อ</option>
-						</select>
-					</div>
-				</td>
-			</tr>
-            <tr height="50" valign="middle">
-				<td align="left" width="165"><input id="university_check" name="university_check" type="checkbox" value="university" /><label for="university_check">ใกล้มหาวิทยาลัย :</label></td>
-				<td width="300">
-					<div class="styled-select">
-						<select name="university" id="university" class="select" onchange="postData();">
-							<option value="all">- กรุณาระบุ -</option>
-							<option value="kmitl">สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</option>
-							<option value="jula">มหาวิทยาลับจุฬาลงกรณ์</option>
-							<option value="tammasard">มหาวิทยาลัยธรรมศาสตร์</option>
-						</select>
-					</div>
-				</td>
-				<td align="left" width="165"><input id="nearly_place_check" name="nearly_place_check" type="checkbox" value="nearly_place" /><label for="nearly_place_check">ตามสถานที่ใกล้เคียง :</label></td>
-				<td width="300">
-					<div class="styled-select">
-						<select name="nearly_place" id="nearly_place" class="select" onchange="postData();">
-							<option value="all">- กรุณาระบุ -</option>
-							<option value="suwannapum">สนามบินสุวรรณภูมิ</option>
-                            <option value="donmeung">สนามบินดอนเมือง</option>
-							<option value="train">รถไฟห้วยขวาง</option>
-						</select>
+						</label>
 					</div>
 				</td>
 			</tr>
 		</table>
+		
+		<table id="tbk" style="margin-top:0px; border-right:1px solid #fff; float:left;">
+			<tr height="50" valign="middle">
+				<td align="left" width="165">โซนในกรุงเทพฯ :</td>
+				<td width="250">
+					<div class="styled-select">
+                  
+						<select class="select" id="sbk1">
+							{% for zlist in zonelist %}
+								<option value="{{ zlist.id }}">{{ zlist.zonename }}</option>
+							{% endfor %}
+						</select>
+                  
+					</div>
+				</td>
+			</tr>
+			<tr height="50" valign="middle">
+				<td align="left" width="145">ใกล้รถไฟฟ้า BTS :</td>
+				<td width="250">
+					<div class="styled-select">
+                    
+						<select class="select" id="sbk2">
+							{% for btslist in nearBTS %}
+								<option value="{{ btslist.id }}">{{ btslist.name }}</option>
+							{% endfor %}
+						</select>
+                   
+					</div>
+				</td>
+			</tr>
+			<tr height="50" valign="middle">
+				<td align="left" width="145">ใกล้รถไฟฟ้า MRT :</td>
+				<td width="250">
+					<div class="styled-select">
+                  
+						<select class="select" id="sbk3">
+							{% for mrtlist in nearMRT %}
+								<option value="{{ mrtlist.id }}">{{ mrtlist.name }}</option>
+							{% endfor %}
+						</select>
+                    
+					</div>
+				</td>
+			</tr>
+            <tr height="50" valign="middle">
+				<td align="left" width="165">ใกล้มหาวิทยาลัย :</td>
+				<td width="250">
+					<div class="styled-select">
+                   
+						<select class="select" id="sbk4">
+							{% for ulist in nearUniversity %}
+								<option value="{{ ulist.id }}">{{ ulist.name }}</option>
+							{% endfor %}
+						</select>
+                   
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td align="left" width="165">ตามสถานที่ใกล้เคียง :</td>
+				<td width="250">
+					<div class="styled-select">
+                   
+						<select class="select" id="sbk5">
+							{% for blist in nearBy %}
+								<option value="{{ blist.id }}">{{ blist.name }}</option>
+							{% endfor %}
+						</select>
+                    
+					</div>
+				</td>
+				<td colspan="2"></td>
+			</tr>
+		</table>
+		
+		<table id="tcou" style="margin-top:0px; display:block; height:244px; margin-top: 10px;">
+			<tr valign="top">
+				<td id="fie" align="left" width="165" style="padding-left:50px">ตามสถานที่ใกล้เคียง :</td>
+				<td width="300">
+					<div class="styled-select">
+                
+						<select class="select" id="scou" disabled>
+							{% for clist in nearInCountry %}
+								<option value="{{ clist.id }}">{{ clist.name }}</option>
+							{% endfor %}
+						</select>
+                
+					</div>
+				</td>
+				<td colspan="2"></td>
+			</tr>
+		</table>
 	</div>
-	<hr class="line" style="top: 240px;" />
+	<hr class="line" style="top: 400px;" />
     <div style="margin-top:30px;">
 		<table>
         	<tr>
@@ -607,7 +653,7 @@
             {% endfor %}
 		</table>
 	</div>
-    <hr class="line" style="top: 430px;" />
+    <hr class="line" style="top: 590px;" />
     <div style="margin-top:30px;">
 		<table>
         	<tr>
@@ -622,28 +668,14 @@
             		<input id="fac{{loops.id}}" name="fac[]" type="checkbox" value="{{loops.id}}" onchange="postData();" /> <label for="fac{{loops.id}}">{{loops.facility_name}}</label>
             	</td>
             	{% endfor %}
-            	{% if list.stat == 'end' %}
-            		{% if list.count != '4' %}
-            		{% for number in 2..list.count %}
-            		<td width="250">&nbsp;</td>
-            		{% endfor %}
-            		<td width="250"><input class="save" type="submit" value="" /> <input class="back" type="submit" value="" /></td>
-            		{% endif %}
-            	{% endif %}
             </tr>
-            {% if list.stat == 'end' %}
-            	{% if list.count == '4' %}
-            <tr>
-            	{% for number in 2..list.count %}
-            		<td width="250">&nbsp;</td>
-            	{% endfor %}
-            	<td width="250"><input class="save" type="submit" value="" /> <input class="back" type="submit" value="" /></td>
-            </tr>
-            	{% endif %}
-            {% endif %}
             {% endfor %}
+            <tr>
+            	<td colspan="3" align="right"><input class="save" type="submit" value="" /> <input class="back" type="submit" value="" /></td>
+            </tr>
 		</table>
 	</div>
+	<div style="height: 50px;">&nbsp;</div>
 </div>
 </form>
 {% endblock %}

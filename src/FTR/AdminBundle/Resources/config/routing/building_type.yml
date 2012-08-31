@@ -1,0 +1,30 @@
+building_type:
+    pattern:  /
+    defaults: { _controller: "FTRAdminBundle:Building_type:index" }
+
+building_type_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "FTRAdminBundle:Building_type:show" }
+
+building_type_new:
+    pattern:  /new
+    defaults: { _controller: "FTRAdminBundle:Building_type:new" }
+
+building_type_create:
+    pattern:  /create
+    defaults: { _controller: "FTRAdminBundle:Building_type:create" }
+    requirements: { _method: post }
+
+building_type_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "FTRAdminBundle:Building_type:edit" }
+
+building_type_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "FTRAdminBundle:Building_type:update" }
+    requirements: { _method: post }
+
+building_type_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "FTRAdminBundle:Building_type:delete" }
+    requirements: { _method: post }

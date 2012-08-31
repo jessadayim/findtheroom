@@ -6,6 +6,51 @@ FTRAdminBundle_Building_site:
     resource: "@FTRAdminBundle/Resources/config/routing/building_site.yml"
     prefix:   /building_site
     
+FTRWebBundle_building_type:
+    resource: "@FTRWebBundle/Resources/config/routing/building_type.yml"
+    prefix:   /building_type
+
+FTRAdminBundle_facility2site:
+    resource: "@FTRAdminBundle/Resources/config/routing/facility2site.yml"
+    prefix:   /facility2site
+
+FTRAdminBundle_facilitylist:
+    resource: "@FTRAdminBundle/Resources/config/routing/facilitylist.yml"
+    prefix:   /facilitylist
+    
+FTRAdminBundle_image:
+    resource: "@FTRAdminBundle/Resources/config/routing/image.yml"
+    prefix:   /image
+
+FTRAdminBundle_nearly_location:
+    resource: "@FTRAdminBundle/Resources/config/routing/nearly_location.yml"
+    prefix:   /nearly_location
+
+FTRAdminBundle_nearly_type:
+    resource: "@FTRAdminBundle/Resources/config/routing/nearly_type.yml"
+    prefix:   /nearly_type
+
+FTRAdminBundle_nearly2site:
+    resource: "@FTRAdminBundle/Resources/config/routing/nearly2site.yml"
+    prefix:   /nearly2site
+    
+FTRAdminBundle_pay_type:
+    resource: "@FTRAdminBundle/Resources/config/routing/pay_type.yml"
+    prefix:   /pay_type
+    
+FTRAdminBundle_roomtype2site:
+    resource: "@FTRAdminBundle/Resources/config/routing/roomtype2site.yml"
+    prefix:   /roomtype2site
+    
+FTRAdminBundle_roomtype:
+    resource: "@FTRAdminBundle/Resources/config/routing/roomtype.yml"
+    prefix:   /roomtype
+        
+FTRAdminBundle_zone:
+    resource: "@FTRAdminBundle/Resources/config/routing/zone.yml"
+    prefix:   /zone
+
+    
 # Routing of Backend Panel
 # Creator : MICK
 # Createtime : 2012-08-28
