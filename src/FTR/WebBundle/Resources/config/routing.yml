@@ -11,7 +11,7 @@ FTRWebBundle_search:
     defaults: { _controller: FTRWebBundle:Search:search }
     
 FTRWebBundle_detail:
-    pattern:  /detail
+    pattern:  /detail/{id}
     defaults: { _controller: FTRWebBundle:Detail:detail }
     
 FTRWebBundle_publish:

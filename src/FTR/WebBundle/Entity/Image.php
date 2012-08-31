@@ -50,6 +50,13 @@ class Image
     private $photo_type;
 
     /**
+     * @var string $description
+     *
+     * @ORM\Column(name="description", type="string", length=255)
+     */
+    private $description;
+
+    /**
      * @var boolean $deleted
      *
      * @ORM\Column(name="deleted", type="boolean", nullable="true")
@@ -145,6 +152,26 @@ class Image
     public function getPhotoType()
     {
         return $this->photo_type;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 
     /**

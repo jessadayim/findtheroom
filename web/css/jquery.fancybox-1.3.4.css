@@ -266,6 +266,7 @@
 	font-family: Helvetica;
 	font-size: 12px;
 	z-index: 1102;
+	word-wrap:break-word;
 }
 
 .fancybox-title-inside {
@@ -282,16 +283,16 @@
 }
 
 .fancybox-title-over {
-	position: absolute;
+/*	position: absolute;*/
 	bottom: 0;
 	left: 0;
-	color: #FFF;
+/*	color: #FFF;*/
 	text-align: left;
 }
 
 #fancybox-title-over {
 	padding: 10px;
-	background-image: url('../images/fancybox/fancy_title_over.png');
+/*	background-image: url('../images/fancybox/fancy_title_over.png');*/
 	display: block;
 }
 

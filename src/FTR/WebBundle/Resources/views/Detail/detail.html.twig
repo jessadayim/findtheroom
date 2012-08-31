@@ -74,7 +74,8 @@ $(function(){
 
 <div id="show">
     <div class="result">
-    	<div class="wifi"> </div><div style=" display:block; position: absolute; margin-left: 0px; margin-top: 127px; width:200px; text-align:center;">ราคา {{item1.start_price}} - {{item1.end_price}} บาท</div><img src="{{asset('images/show.png')}}" />
+    	<div class="wifi"> </div><div style=" display:block; position: absolute; margin-left: 0px; margin-top: 127px; width:200px; text-align:center;">ราคา {{item1.start_price}} - {{item1.end_price}} บาท</div>
+		<div class="thumbframe"><img src="{{asset('images/show.png')}}" class="thumb omega"/></div>
     	<div class="desc">
         	<table border="0" width="500" style="margin-top:-8px;">
             	<tr style="font-size:26px">
@@ -201,7 +202,7 @@ $(function(){
 			</tr>
 			{% for row in item2 %}
 			<tr height="135" valign="middle">
-				<td align="left" width="220"><img src="{{asset('images/show.png')}}" class="nopad" /></td>
+				<td align="left" width="220"><div class="thumbframe"><img src="{{asset('images/show.png')}}" class="thumb omega" style="padding:0px"/></div></td>
 				<td align="left" width="150">{{row.room_typename}}</td>
 				<td align="right" width="110" style="padding-right:10px;">{{row.room_size}}</td>
                 <td align="left" width="140">ตารางเมตร</td>
@@ -230,8 +231,8 @@ $(function(){
 									{% else %}
 									<div class="ap3">
 										{%endif%}
-										<a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><img src="{{asset('images/Apartment/ap3.png')}}" /></a><br /><br />
-                            			<a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><img src="{{asset('images/Apartment/ap3.png')}}" /></a>   
+										<a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><div class="thumbframe4gallery"><img src="{{asset('images/Apartment/ap3.png')}}" class="thumb4gallery"/></div></a><br /><br />
+                            			<a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><div class="thumbframe4gallery"><img src="{{asset('images/Apartment/ap3.png')}}" class="thumb4gallery"/></div></a>
 									</div>
 									{% set introw2 = introw2+1 %}
 							{% if introw2%3 == 0%}
@@ -299,17 +300,4 @@ $(function(){
 </div>
 {% render "FTRWebBundle:Main:recom" %}
 
-<div id="ad1">
-	<a href="#"><img src="{{asset('images/ad/ad1.gif')}}" /></a>
-    <a href="#"><img src="{{asset('images/ad/ad2.gif')}}" /></a>
-    <a href="#"><img src="{{asset('images/ad/ad3.gif')}}" /></a>
-    <a href="#" style="margin-right:0px !important"><img src="{{asset('images/ad/ad4.gif')}}" /></a>
-</div>
-
-<div id="ad2">
-	<a href="#"><img src="{{asset('images/ad/ad1.gif')}}" /></a>
-    <a href="#"><img src="{{asset('images/ad/ad2.gif')}}" /></a>
-    <a href="#"><img src="{{asset('images/ad/ad3.gif')}}" /></a>
-    <a href="#" style="margin-right:0px !important"><img src="{{asset('images/ad/ad4.gif')}}" /></a>
-</div>
 {% endblock %}

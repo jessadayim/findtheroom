@@ -110,7 +110,11 @@ FTRAdminBundle_Useradminlists:
 FTRAdminBundle_Createadminlists:
     pattern:  /createadminlists
     defaults: { _controller: FTRAdminBundle:useradminlists:create } 
-    
+
+FTRAdminBundle_Showadminlists:
+    pattern:  /ftr_panel/{id}/showdata
+    defaults: { _controller: FTRAdminBundle:useradminlists:showdata }
+  
 FTRAdminBundle_Userownerlists:
     pattern:  /userownerlists
     defaults: { _controller: FTRAdminBundle:userownerlists:index } 

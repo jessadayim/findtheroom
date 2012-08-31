@@ -57,7 +57,7 @@ class RegisterController extends Controller
 					        ->setTo($email)
 					        ->setBody("สวัสดีค่ะ คุณ $email ยินตีต้อนรับสู่ SpecialSquare.com!
 
-							ชื่อที่ใช้ในการ login เข้าบัญชีสมาชิกของคุณคือ $username<br/><a href='http://localhost:11001/findtheroom/web/app_dev.php/?token=$random_token'>http://localhost:11001/findtheroom/web/app_dev.php/?token=$random_token</a>",'text/html');
+							ชื่อที่ใช้ในการ login เข้าบัญชีสมาชิกของคุณคือ $username<br/><a href='http://localhost:11001/findtheroom/web/app_dev.php?token=$random_token'>http://localhost:11001/findtheroom/web/app_dev.php/?token=$random_token</a>",'text/html');
 					    	
 					    	$this->get('mailer')->send($message);
 							

@@ -8,15 +8,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class DetailController extends Controller
 {
     
-    public function DetailAction()
+    public function DetailAction($id)
     {
     	$em = $this->getDoctrine()->getEntityManager();		
 		$conn= $this->get('database_connection');
-		$id = 1;
+		//$id = 1;
 			/**
 			 * query Detail page general detail
 			 * */
-		try{
+		if(empty($id)){
+			return $this -> redirect($this -> generateUrl('FTRWebBundle_list'));
+		}else{
+			try{
 				$sql1 ="SELECT b.*,n.*,t.*,z.*,p.* FROM building_site b JOIN building_type t ON b.building_type_id = t.id
 									JOIN zone z ON b.zone_id = z.id
 									JOIN pay_type p ON p.id = b.pay_type_id
@@ -43,5 +46,6 @@ class DetailController extends Controller
 			}
 			
         return $this->render('FTRWebBundle:Detail:detail.html.twig', array('item1'=>$objSQL1[0],'item2'=>$objSQL2,'item3'=>$objSQL3,'item4'=>$objSQL4,'id'=>$id));
+		}		
     }
 }
