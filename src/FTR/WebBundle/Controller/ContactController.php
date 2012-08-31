@@ -7,7 +7,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class ContactController extends Controller
 {
-	
+	public  function newimg()
+	{
+		$chkChar = trim($this->random_password());
+		$this->imgCode($chkChar);
+		exit();
+	}
 	/**
 	 * function for random captcha
 	 * */
@@ -36,19 +41,18 @@ class ContactController extends Controller
 	 * function for upload image captcha
 	 **/
 	private function imgCode($code){
-		if($code!=""){
-		
-				$font = "captcha/LayijiBao.ttf";
-				$font_size = 15;
+		if($code!=""){				
+				$font = "captcha/Harabara.ttf";
+				$font_size = 10;
 				$string = $code; // String
 				
 				$im = imagecreatefromjpeg("captcha/bg.jpg"); // Path From Upload Temp
 				$color = imagecolorallocate($im, 0, 0, 0); // Text BackColor
-				$pxX = ((imagesx($im))/2)-40;
-				$pxY = 25;
+				$pxX = ((imagesx($im))/2)-20;
+				$pxY = 20;
 			
 				imagettftext($im, $font_size, 0, $pxX, $pxY, $color, $font, $string);
-				$file_path = "captcha/test.jpg";
+				$file_path = "captcha/captcha_img.jpg";
 				imageJpeg($im,$file_path);
 				ImageDestroy($im);
 		}else{
@@ -58,29 +62,33 @@ class ContactController extends Controller
 	
     public function ContactAction()
     {
-    	$chkChar = trim($this->random_password());
-		$this->imgCode($chkChar);
-		
-        return $this->render('FTRWebBundle:Contact:contact.html.twig', array('char'=>$chkChar));
+		$chkChar = trim($this->random_password());
+		$this->imgCode($chkChar);	
+		$session = $this->get('session');
+		$session->set('captcha', $chkChar);	
+		//echo $session->get('captcha');	
+		//var_dump($_SESSION);
+		//session_destroy();
+        return $this->render('FTRWebBundle:Contact:contact.html.twig', array());
     }
 	
-	public function sendContactAction(){		
+	public function sendContactAction(){
 		
 		if(!empty($_POST['mail'])||!empty($_POST['desc'])||!empty($_POST['name'])||!empty($_POST['tel'])||!empty($_POST['title'])){
-			$email = $_POST['mail'];
-			$desc = $_POST['desc'];
-			$name = $_POST['name'];
-			$tel = $_POST['tel'];
-			$title = $_POST['title'];
-			
-			$message = \Swift_Message::newInstance()
-			        ->setSubject($title)
-			        ->setFrom($email)
-			        ->setTo('suriyaj@sourcecode.co.th')
-			        ->setBody("คุณ $name<br/>$desc",'text/html');
-			    	
-			    	$this->get('mailer')->send($message);
-		}
+				$email = $_POST['mail'];
+				$desc = $_POST['desc'];
+				$name = $_POST['name'];
+				$tel = $_POST['tel'];
+				$title = $_POST['title'];
+				
+				$message = \Swift_Message::newInstance()
+				        ->setSubject($title)
+				        ->setFrom($email)
+				        ->setTo('suriyaj@sourcecode.co.th')
+				        ->setBody("คุณ $name<br/>$desc",'text/html');
+				    	
+				    	$this->get('mailer')->send($message);
+			}
 		return $this->redirect($this->generateUrl('FTRWebBundle_homepage'));
 	}
 }

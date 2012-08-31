@@ -734,3 +734,4 @@ Chart.prototype.callbacks.push(function (chart) {
 
 
 }());
+
