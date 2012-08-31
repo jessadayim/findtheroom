@@ -23,7 +23,7 @@ class ZoneController extends Controller
 
         $entities = $em->getRepository('FTRWebBundle:Zone')->findAll();
 
-        return $this->render('FTRWebBundle:Zone:index.html.twig', array(
+        return $this->render('FTRAdminBundle:Zone:index.html.twig', array(
             'entities' => $entities
         ));
     }
@@ -44,7 +44,7 @@ class ZoneController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('FTRWebBundle:Zone:show.html.twig', array(
+        return $this->render('FTRAdminBundle:Zone:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
 
@@ -60,7 +60,7 @@ class ZoneController extends Controller
         $entity = new Zone();
         $form   = $this->createForm(new ZoneType(), $entity);
 
-        return $this->render('FTRWebBundle:Zone:new.html.twig', array(
+        return $this->render('FTRAdminBundle:Zone:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView()
         ));
@@ -86,7 +86,7 @@ class ZoneController extends Controller
             
         }
 
-        return $this->render('FTRWebBundle:Zone:new.html.twig', array(
+        return $this->render('FTRAdminBundle:Zone:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView()
         ));
@@ -109,7 +109,7 @@ class ZoneController extends Controller
         $editForm = $this->createForm(new ZoneType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('FTRWebBundle:Zone:edit.html.twig', array(
+        return $this->render('FTRAdminBundle:Zone:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -144,7 +144,7 @@ class ZoneController extends Controller
             return $this->redirect($this->generateUrl('zone_edit', array('id' => $id)));
         }
 
-        return $this->render('FTRWebBundle:Zone:edit.html.twig', array(
+        return $this->render('FTRAdminBundle:Zone:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),

@@ -23,7 +23,7 @@ class FacilitylistController extends Controller
 
         $entities = $em->getRepository('FTRWebBundle:Facilitylist')->findAll();
 
-        return $this->render('FTRWebBundle:Facilitylist:index.html.twig', array(
+        return $this->render('FTRAdminBundle:Facilitylist:index.html.twig', array(
             'entities' => $entities
         ));
     }
@@ -44,7 +44,7 @@ class FacilitylistController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('FTRWebBundle:Facilitylist:show.html.twig', array(
+        return $this->render('FTRAdminBundle:Facilitylist:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
 
@@ -60,7 +60,7 @@ class FacilitylistController extends Controller
         $entity = new Facilitylist();
         $form   = $this->createForm(new FacilitylistType(), $entity);
 
-        return $this->render('FTRWebBundle:Facilitylist:new.html.twig', array(
+        return $this->render('FTRAdminBundle:Facilitylist:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView()
         ));
@@ -86,7 +86,7 @@ class FacilitylistController extends Controller
             
         }
 
-        return $this->render('FTRWebBundle:Facilitylist:new.html.twig', array(
+        return $this->render('FTRAdminBundle:Facilitylist:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView()
         ));
@@ -109,7 +109,7 @@ class FacilitylistController extends Controller
         $editForm = $this->createForm(new FacilitylistType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('FTRWebBundle:Facilitylist:edit.html.twig', array(
+        return $this->render('FTRAdminBundle:Facilitylist:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -144,7 +144,7 @@ class FacilitylistController extends Controller
             return $this->redirect($this->generateUrl('facilitylist_edit', array('id' => $id)));
         }
 
-        return $this->render('FTRWebBundle:Facilitylist:edit.html.twig', array(
+        return $this->render('FTRAdminBundle:Facilitylist:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),

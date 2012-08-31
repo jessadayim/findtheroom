@@ -23,7 +23,7 @@ class RoomtypeController extends Controller
 
         $entities = $em->getRepository('FTRWebBundle:Roomtype')->findAll();
 
-        return $this->render('FTRWebBundle:Roomtype:index.html.twig', array(
+        return $this->render('FTRAdminBundle:Roomtype:index.html.twig', array(
             'entities' => $entities
         ));
     }
@@ -44,7 +44,7 @@ class RoomtypeController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('FTRWebBundle:Roomtype:show.html.twig', array(
+        return $this->render('FTRAdminBundle:Roomtype:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
 
@@ -60,7 +60,7 @@ class RoomtypeController extends Controller
         $entity = new Roomtype();
         $form   = $this->createForm(new RoomtypeType(), $entity);
 
-        return $this->render('FTRWebBundle:Roomtype:new.html.twig', array(
+        return $this->render('FTRAdminBundle:Roomtype:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView()
         ));
@@ -86,7 +86,7 @@ class RoomtypeController extends Controller
             
         }
 
-        return $this->render('FTRWebBundle:Roomtype:new.html.twig', array(
+        return $this->render('FTRAdminBundle:Roomtype:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView()
         ));
@@ -109,7 +109,7 @@ class RoomtypeController extends Controller
         $editForm = $this->createForm(new RoomtypeType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('FTRWebBundle:Roomtype:edit.html.twig', array(
+        return $this->render('FTRAdminBundle:Roomtype:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -144,7 +144,7 @@ class RoomtypeController extends Controller
             return $this->redirect($this->generateUrl('roomtype_edit', array('id' => $id)));
         }
 
-        return $this->render('FTRWebBundle:Roomtype:edit.html.twig', array(
+        return $this->render('FTRAdminBundle:Roomtype:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),

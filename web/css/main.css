@@ -133,6 +133,8 @@ select[disabled] { background-color: #EAEAEA !important; color:#BCBCBC !importan
 
 /*Detail*/
 .detail { background-color: #423C3B; width: 1000px; height: 200px; display:block; position:relative; margin:15px auto 0px auto;}
+.detail2 { background-color: #423C3B; width: 1000px; height: 100px; display:block; position:relative; margin:15px auto 0px auto; text-align:center; padding-top:60px;}
+.detail2 span.noData { color:#FFF;font-size:30px;}
 .detail img { padding-top:15px; padding-left:20px;}
 .detail img.nopad { padding-top:0px; padding-left:0px;}
 .detail table{ border:0px; color:#FFF; font-size:20px; margin-left:30px; margin-top: 20px;}
@@ -272,6 +274,10 @@ input.regis { background: url(../images/regis-bt.png) no-repeat; border: 0; widt
 
 /*Thumbnail*/
 .thumbframe{display:block; float: left; width: 234px; height: 120px; overflow: hidden; position: relative; z-index: 9; margin: 0 21px 20px 0;}
-.thumb{float: left; position: absolute; top: 0%; left: 0%; width: 300px; height: auto;}
+.thumbframe4add{display:block; float: left; width: 240px; height: 150px; overflow: hidden; position: relative; z-index: 9; margin: 0 21px 20px 0;}
+.thumbframe4gallery{display:block; float: left; width: 300px; height: 150px; overflow: hidden; position: relative; z-index: 9; margin: 0 21px 20px 0;}
+
+.thumb{float: left; position: absolute; top: 0%; left: 0%; width: 250px; height: auto;}
+.thumb4gallery{float: left; position: absolute; top: 0%; left: 0%; width: 300px; height: auto;}
 .omega{margin-right: 0px; !important}
 .clear{clear:both}
