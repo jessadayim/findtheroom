@@ -23,7 +23,7 @@ class Pay_typeController extends Controller
 
         $entities = $em->getRepository('FTRWebBundle:Pay_type')->findAll();
 
-        return $this->render('FTRWebBundle:Pay_type:index.html.twig', array(
+        return $this->render('FTRAdminBundle:Pay_type:index.html.twig', array(
             'entities' => $entities
         ));
     }
@@ -44,7 +44,7 @@ class Pay_typeController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('FTRWebBundle:Pay_type:show.html.twig', array(
+        return $this->render('FTRAdminBundle:Pay_type:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
 
@@ -60,7 +60,7 @@ class Pay_typeController extends Controller
         $entity = new Pay_type();
         $form   = $this->createForm(new Pay_typeType(), $entity);
 
-        return $this->render('FTRWebBundle:Pay_type:new.html.twig', array(
+        return $this->render('FTRAdminBundle:Pay_type:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView()
         ));
@@ -86,7 +86,7 @@ class Pay_typeController extends Controller
             
         }
 
-        return $this->render('FTRWebBundle:Pay_type:new.html.twig', array(
+        return $this->render('FTRAdminBundle:Pay_type:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView()
         ));
@@ -109,7 +109,7 @@ class Pay_typeController extends Controller
         $editForm = $this->createForm(new Pay_typeType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('FTRWebBundle:Pay_type:edit.html.twig', array(
+        return $this->render('FTRAdminBundle:Pay_type:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -144,7 +144,7 @@ class Pay_typeController extends Controller
             return $this->redirect($this->generateUrl('pay_type_edit', array('id' => $id)));
         }
 
-        return $this->render('FTRWebBundle:Pay_type:edit.html.twig', array(
+        return $this->render('FTRAdminBundle:Pay_type:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
