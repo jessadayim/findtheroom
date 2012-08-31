@@ -1,22 +1,181 @@
-{% extends 'FTRAdminBundle:Layout:panel_layout.html.twig' %}
+<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js'></script>
+<script>
+	$(document).ready(function() {
+		$("#btnCancelCreate").click(function() {
+			toggle(".createPanel", 'hide');
+			$("#createrecordCancel").hide();
+			$("#createrecord").show('slow');
+			return false;
+		});
+		function toggle(id, toggle) {
+			$(id).animate({
+				left : '+=50',
+				height : toggle
+			}, 500, function() {
+			});
+		}
 
-{% block body %}
-<div id="wrap" class="container_12">
-	<h1>Building_site creation</h1>
+		var url = "{{ path('building_site_create') }}";
+		$("#formCreate").submit(function() {
+			$.ajax({
+				type : "POST",
+				url : 'create',
+				data : $(this).serialize(),
+				success : function(msg) {
+					if (msg == 'finish') {
+						alert('เพิ่ม BUILDING SITE สำเร็จแล้ว');
+						toggle(".createPanel", 'hide');
+						$(".createPanel").html('');
+						$("#createrecordCancel").hide();
+						$("#createrecord").show('slow');
+						$('#listBuildingSite').fadeOut('slow').load(window.location + "show").fadeIn("slow");
+					} else {
+						$("#createPanel").html(msg);
+						alert('การ CREATE ผิดพลาด\n** กรุณาตรวจสอบ **');
+					}
+				}
+			});
+			return false;
+		});
+	}); 
+</script>
+<div id="divPostCreate">
+	<form id="formCreate" action="{{ path('building_site_create') }}" method="post" {{ form_enctype(form) }}>
+		<fieldset>
+			<legend>
+				CREATE BUILDING TYPE
+			</legend>
+			<div class="label" style="">
+				{{ form_label(form.building_type_id) }}
+			</div>
+			{{ form_widget(form.building_type_id, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+			{{ form_errors(form.building_type_id) }}
+			<br />
+			<div class="label" style="">
+				{{ form_label(form.zone_id) }}
+			</div>
+			{{ form_widget(form.zone_id, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+			{{ form_errors(form.zone_id) }}
+			<br />
+			<div class="label" style="">
+				{{ form_label(form.pay_type_id) }}
+			</div>
+			{{ form_widget(form.pay_type_id, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+			{{ form_errors(form.pay_type_id) }}
+			<br />
+			<div class="label" style="">
+				{{ form_label(form.user_owner_id) }}
+			</div>
+			{{ form_widget(form.user_owner_id, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+			{{ form_errors(form.user_owner_id) }}
+			<br />
+			<div class="label" style="">
+				{{ form_label(form.building_name) }}
+			</div>
+			{{ form_widget(form.building_name, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+			{{ form_errors(form.building_name) }}
+			<br />
+			<div class="label" style="">
+				{{ form_label(form.building_address) }}
+			</div>
+			{{ form_widget(form.building_address, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+			{{ form_errors(form.building_address) }}
+			<br />
+			<div class="label" style="">
+				{{ form_label(form.start_price) }}
+			</div>
+			{{ form_widget(form.start_price, { 'attr': {'class': 'widthin'} }) }} &nbsp;
+			{{ form_errors(form.start_price) }}
+			<br />
+			<div class="label" style="">
+				{{ form_label(form.end_price) }}
+			</div>
+			{{ form_widget(form.end_price, { 'attr': {'class': 'widthin'} }) }} &nbsp;
+			{{ form_errors(form.end_price) }}
+			<br />
+			<div class="label" style="">
+				{{ form_label(form.phone_number) }}
+			</div>
+			{{ form_widget(form.phone_number, { 'attr': {'class': 'widthin'} }) }} &nbsp;
+			{{ form_errors(form.phone_number) }}
+			<br />
+			<div class="label" style="">
+				{{ form_label(form.latitude) }}
+			</div>
+			{{ form_widget(form.latitude, { 'attr': {'class': 'widthin'} }) }} &nbsp;
+			{{ form_errors(form.start_price) }}
+			<br />
+			<div class="label" style="">
+				{{ form_label(form.longitude) }}
+			</div>
+			{{ form_widget(form.longitude, { 'attr': {'class': 'widthin'} }) }} &nbsp;
+			{{ form_errors(form.longitude) }}
+			<br />
+			<div class="label" style="">
+				{{ form_label(form.recommend) }}
+			</div>
+			{{ form_widget(form.recommend) }} &nbsp;
+			{{ form_errors(form.recommend) }}
+			<br />
+			<br />
 
-	<form action="{{ path('building_site_create') }}" method="post" {{ form_enctype(form) }}>
-		{{ form_widget(form) }}
-		<p>
-			<button type="submit">
-				Create
-			</button>
-		</p>
+			<div class="label" style="">
+				{{ form_label(form.detail) }}
+			</div>
+			{{ form_widget(form.detail) }} &nbsp;
+			{{ form_errors(form.detail) }}
+			<br />
+			<div class="label" style="">
+				{{ form_label(form.contact_name) }}
+			</div>
+			{{ form_widget(form.contact_name, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+			{{ form_errors(form.contact_name) }}
+			<br />
+			<div class="label" style="">
+				{{ form_label(form.contact_email) }}
+			</div>
+			{{ form_widget(form.contact_email, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+			{{ form_errors(form.contact_email) }}
+			<br />
+			<div class="label" style="">
+				{{ form_label(form.website) }}
+			</div>
+			{{ form_widget(form.website, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+			{{ form_errors(form.website) }}
+			<br />
+			<div class="label" style="">
+				{{ form_label(form.month_stay) }}
+			</div>
+			{{ form_widget(form.month_stay, { 'attr': {'class': 'widthin'} }) }} &nbsp;
+			{{ form_errors(form.month_stay) }}
+			<br />
+			<div class="label" style="">
+				{{ form_label(form.water_unit) }}
+			</div>
+			{{ form_widget(form.water_unit, { 'attr': {'class': 'widthin'} }) }} &nbsp;
+			{{ form_errors(form.water_unit) }}
+			<br />
+			<div class="label" style="">
+				{{ form_label(form.electricity_unit) }}
+			</div>
+			{{ form_widget(form.electricity_unit, { 'attr': {'class': 'widthin'} }) }} &nbsp;
+			{{ form_errors(form.electricity_unit) }}
+			<br />
+			<div class="label" style="">
+				{{ form_label(form.internet_price) }}
+			</div>
+			{{ form_widget(form.internet_price, { 'attr': {'class': 'widthin'} }) }} &nbsp;
+			{{ form_errors(form.internet_price) }}
+
+			<br />
+						
+			{{ form_rest(form) }}
+			
+			<span style="float: right;">
+				<input type="button" id="btnCancelCreate" value="Cancel">
+				&nbsp;&nbsp;
+				<input type="submit" value="CREATE">
+			</span>
+		</fieldset>
 	</form>
-
-	<ul class="record_actions">
-		<li>
-			<a href="{{ path('building_site') }}"> Back to the list </a>
-		</li>
-	</ul>
 </div>
-{% endblock %}

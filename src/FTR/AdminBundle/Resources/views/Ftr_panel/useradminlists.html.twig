@@ -23,15 +23,15 @@
 	    <div class="clear"></div>
 		<div class="createPanel" style="">
 			
-			<form>
+			<form action="{{path('FTRAdminBundle_Createadminlists')}}" method="post">
 				<fieldset>
 					<legend>CREATE ADMIN</legend>
-					<div class="label" style="">Username:</div> <input type="text" name="AdminUsername" class="widfat" /><br />
-					<div class="label" style="">Password:</div> <input type="text" name="AdminPassword" class="widfat" /><br />
-					<div class="label" style="">First Name:</div> <input type="text" name="AdminFristName" class="widfat" /><br />
-					<div class="label" style="">Last Name:</div> <input type="text" name="AdminLastName" class="widfat" /><br />
-					<div class="label" style="">Phone Number:</div> <input type="text" name="AdminPhoneNumber" class="widfat" /><br />
-					<div class="label" style="">Level:</div> <select id="" name="AdminLevel" class="widfat"><option value="0">...</option><option value="1">...</option></select><br />
+					<div class="label" style="">Username:</div> <input type="text" id="AdminUsername" name="AdminUsername" class="widfat" /><br />
+					<div class="label" style="">Password:</div> <input type="text" id="AdminPassword" name="AdminPassword" class="widfat" /><br />
+					<div class="label" style="">First Name:</div> <input type="text" id="AdminFristName" name="AdminFristName" class="widfat" /><br />
+					<div class="label" style="">Last Name:</div> <input type="text" id="AdminLastName" name="AdminLastName" class="widfat" /><br />
+					<div class="label" style="">Phone Number:</div> <input type="text" id="AdminPhoneNumber" name="AdminPhoneNumber" class="widfat" /><br />
+					<div class="label" style="">Level:</div> <select id="AdminLevel" name="AdminLevel" class="widfat"><option value="0">...</option><option value="1">...</option></select><br />
 					<span style="float: right;"><input type="submit"  value="CREATE"></span>
 				</fieldset>	
 			</form>
@@ -43,15 +43,11 @@
 			<tr>
 				<th style="width: 940px !important;">name</th>
 			</tr>
+			{% for admin in objSQL1 %}
 			<tr>
-			  <td>Lumpini Park Pinklao</td>
+			  <td>{{admin.firstname}}  {{admin.lastname}}</td>
 			</tr>
-			<tr>
-			  <td>Lumpini Park Pinklao</td>
-			</tr>
-			<tr>
-			  <td>Lumpini Park Pinklao</td>
-			</tr>
+			{% endfor%}
 		</table>
 		<div class="clear"></div>
 	</div>	

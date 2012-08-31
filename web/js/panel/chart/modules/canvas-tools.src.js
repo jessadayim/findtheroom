@@ -3111,3 +3111,4 @@ if (CanvasRenderingContext2D) {
 		}
 	});
 }(Highcharts));
+

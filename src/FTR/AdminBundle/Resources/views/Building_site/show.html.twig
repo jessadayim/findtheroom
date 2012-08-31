@@ -1,157 +1,118 @@
-{% extends 'FTRAdminBundle:Layout:panel_layout.html.twig' %}
+<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js'></script>
+<script type='text/javascript' src='{{asset("js/paging/smartpaginator.buildingsite.js")}}'></script>
+<link rel='stylesheet' type='text/css' href='{{asset("css/paging/smartpaginator.buildingsite.css")}}' />
+<script>
+	var countValuePaging = {{entities|length}};
+	$(document).ready(function() {
 
-{% block body %}
-<h1>Building_site</h1>
+		//Click ปุ่ม Edit
+		$(".linkEditBuildingSite").click(function() {
+			$.post(this.href + '/edit', function(data) {
+				$('.editPanel').html(data);
+				toggle(".createPanel", 'hide');
+				toggle(".editPanel", 'show');
+				$("#createrecordCancel").hide();
+				$("#createrecord").show('slow');
+				document.getElementById('createrecord').scrollIntoView();
+			});
+			return false;
+		});
 
-<table class="record_properties">
-    <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ entity.id }}</td>
-        </tr>
-        <tr>
-            <th>Building_name</th>
-            <td>{{ entity.buildingname }}</td>
-        </tr>
-        <tr>
-            <th>Building_address</th>
-            <td>{{ entity.buildingaddress }}</td>
-        </tr>
-        <tr>
-            <th>Start_price</th>
-            <td>{{ entity.startprice }}</td>
-        </tr>
-        <tr>
-            <th>End_price</th>
-            <td>{{ entity.endprice }}</td>
-        </tr>
-        <tr>
-            <th>Phone_number</th>
-            <td>{{ entity.phonenumber }}</td>
-        </tr>
-        <tr>
-            <th>Publish</th>
-            <td>{{ entity.publish }}</td>
-        </tr>
-        <tr>
-            <th>Datetimestamp</th>
-            <td>{{ entity.datetimestamp|date('Y-m-d H:i:s') }}</td>
-        </tr>
-        <tr>
-            <th>Lastupdate</th>
-            <td>{{ entity.lastupdate|date('Y-m-d H:i:s') }}</td>
-        </tr>
-        <tr>
-            <th>Userupdate</th>
-            <td>{{ entity.userupdate }}</td>
-        </tr>
-        <tr>
-            <th>Latitude</th>
-            <td>{{ entity.latitude }}</td>
-        </tr>
-        <tr>
-            <th>Longitude</th>
-            <td>{{ entity.longitude }}</td>
-        </tr>
-        <tr>
-            <th>Recommend</th>
-            <td>{{ entity.recommend }}</td>
-        </tr>
-        <tr>
-            <th>Building_type_id</th>
-            <td>{{ entity.buildingtypeid }}</td>
-        </tr>
-        <tr>
-            <th>Zone_id</th>
-            <td>{{ entity.zoneid }}</td>
-        </tr>
-        <tr>
-            <th>Pay_type_id</th>
-            <td>{{ entity.paytypeid }}</td>
-        </tr>
-        <tr>
-            <th>User_owner_id</th>
-            <td>{{ entity.userownerid }}</td>
-        </tr>
-        <tr>
-            <th>Detail</th>
-            <td>{{ entity.detail }}</td>
-        </tr>
-        <tr>
-            <th>Contact_name</th>
-            <td>{{ entity.contactname }}</td>
-        </tr>
-        <tr>
-            <th>Contact_email</th>
-            <td>{{ entity.contactemail }}</td>
-        </tr>
-        <tr>
-            <th>Website</th>
-            <td>{{ entity.website }}</td>
-        </tr>
-        <tr>
-            <th>Month_stay</th>
-            <td>{{ entity.monthstay }}</td>
-        </tr>
-        <tr>
-            <th>Water_unit</th>
-            <td>{{ entity.waterunit }}</td>
-        </tr>
-        <tr>
-            <th>Electricity_unit</th>
-            <td>{{ entity.electricityunit }}</td>
-        </tr>
-        <tr>
-            <th>Internet_price</th>
-            <td>{{ entity.internetprice }}</td>
-        </tr>
-        <tr>
-            <th>Googlemap_url</th>
-            <td>{{ entity.googlemapurl }}</td>
-        </tr>
-        <tr>
-            <th>Internet_ready</th>
-            <td>{{ entity.internetready }}</td>
-        </tr>
-        <tr>
-            <th>Addr_number</th>
-            <td>{{ entity.addrnumber }}</td>
-        </tr>
-        <tr>
-            <th>Addr_prefecture</th>
-            <td>{{ entity.addrprefecture }}</td>
-        </tr>
-        <tr>
-            <th>Addr_province</th>
-            <td>{{ entity.addrprovince }}</td>
-        </tr>
-        <tr>
-            <th>Addr_zipcode</th>
-            <td>{{ entity.addrzipcode }}</td>
-        </tr>
-        <tr>
-            <th>Deleted</th>
-            <td>{{ entity.deleted }}</td>
-        </tr>
-    </tbody>
+		//Click ปุ่ม Delete
+		$(".linkDelete").click(function() {
+			if (!confirm('คุณต้องการลบข้อมูลใช่ หรือไม่')) {
+				return false;
+			}
+			$.ajax({
+				type : "POST",
+				url : this.href + "/update",
+				data : {
+					checkdelete : 'deleted'
+				},
+				success : function(msg) {
+					if (msg == 'finish') {
+						//alert('การลบสร็จเรียบร้อย');
+						$('#listBuildingSite').fadeOut('slow').load(window.location + "show").fadeIn("slow");
+					} else {
+						alert(msg);
+						alert('การลบผิดพลาด');
+					}
+				}
+			});
+			return false;
+		});
+
+		function toggle(id, toggle) {
+			$(id).animate({
+				left : '+=50',
+				height : toggle
+			}, 500, function() {
+			});
+		}
+
+		//Set Paging
+		$('#green').smartpaginator({
+			totalrecords : countValuePaging,
+			recordsperpage : 10,
+			datacontainer : 'mt',
+			dataelement : 'tr',
+			initval : 0,
+			next : 'Next',
+			prev : 'Prev',
+			first : 'First',
+			last : 'Last',
+			theme : 'green'
+		});
+	}); 
+</script>
+<table id="mt" cellpadding="0" cellspacing="0" border="0" class="table">
+	<tbody>
+		<th style="width: 480px !important;" >name</th>
+		<th style="width: 100px !important;" >facility</th>
+		<th style="width: 110px !important;" >roomtype</th>
+		<th style="width: 100px !important;" >nearly</th>
+		<th style="width: 100px !important;" >gallery</th>
+		<th style="width: 50px !important;" >config</th>
+	</tbody>
+	{% for entity in entities %}
+	<tr>
+		<td>{{ entity.building_name }}</td>
+
+		<!-- facility -->
+		{% if entity.facility_id == null %}
+		<td><a href="">Add Facility</a></td>
+		{% else %}
+		<td><a href="">Edit Facility</a></td>
+		{% endif %}
+
+		<!-- room type -->
+		{% if entity.room_type_id == null %}
+		<td><a href="">Add Roomtype</a></td>
+		{% else %}
+		<td><a href="">Edit Roomtype</a></td>
+		{% endif %}
+
+		<!-- nearly -->
+		{% if entity.nearly_id == null %}
+		<td><a href="">Add Nearly</a></td>
+		{% else %}
+		<td><a href="">Edit Nearly</a></td>
+		{% endif %}
+
+		<!-- upload gallery -->
+		{% if entity.image_id == null %}
+		<td><a href="">Add Image</a></td>
+		{% else %}
+		<td><a href="">Edit Image</a></td>
+		{% endif %}
+
+		<td><a href="{{ entity.id }}" class="linkEditBuildingSite">Edit</a>&nbsp;&nbsp;<a href="{{ entity.id }}" class="linkDelete">Delete</a></td>
+	</tr>
+	{% endfor %}
 </table>
+<br/>
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('building_site') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('building_site_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('building_site_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
-{% endblock %}
+<!-- ปุ่ม paging -->
+<div id="green" style="margin: auto;" class="pager green"></div>
+
+<div class="clear"></div>
