@@ -2,6 +2,10 @@ FTRAdminBundle:
     resource: "@FTRAdminBundle/Resources/config/routing.yml"
     prefix:   /
 
+FTRAdminBundle_panel:
+    resource: "@FTRAdminBundle/Resources/config/routing.yml"
+    prefix:   /ftr_panel
+
 FTRWebBundle:
     resource: "@FTRWebBundle/Resources/config/routing.yml"
     prefix:   /

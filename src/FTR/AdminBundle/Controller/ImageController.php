@@ -23,7 +23,7 @@ class ImageController extends Controller
 
         $entities = $em->getRepository('FTRWebBundle:Image')->findAll();
 
-        return $this->render('FTRWebBundle:Image:index.html.twig', array(
+        return $this->render('FTRAdminBundle:Image:index.html.twig', array(
             'entities' => $entities
         ));
     }
@@ -44,7 +44,7 @@ class ImageController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('FTRWebBundle:Image:show.html.twig', array(
+        return $this->render('FTRAdminBundle:Image:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
 
@@ -60,7 +60,7 @@ class ImageController extends Controller
         $entity = new Image();
         $form   = $this->createForm(new ImageType(), $entity);
 
-        return $this->render('FTRWebBundle:Image:new.html.twig', array(
+        return $this->render('FTRAdminBundle:Image:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView()
         ));
@@ -86,7 +86,7 @@ class ImageController extends Controller
             
         }
 
-        return $this->render('FTRWebBundle:Image:new.html.twig', array(
+        return $this->render('FTRAdminBundle:Image:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView()
         ));
@@ -109,7 +109,7 @@ class ImageController extends Controller
         $editForm = $this->createForm(new ImageType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('FTRWebBundle:Image:edit.html.twig', array(
+        return $this->render('FTRAdminBundle:Image:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -144,7 +144,7 @@ class ImageController extends Controller
             return $this->redirect($this->generateUrl('image_edit', array('id' => $id)));
         }
 
-        return $this->render('FTRWebBundle:Image:edit.html.twig', array(
+        return $this->render('FTRAdminBundle:Image:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),

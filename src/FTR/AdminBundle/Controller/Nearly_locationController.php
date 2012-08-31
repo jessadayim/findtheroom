@@ -23,7 +23,7 @@ class Nearly_locationController extends Controller
 
         $entities = $em->getRepository('FTRWebBundle:Nearly_location')->findAll();
 
-        return $this->render('FTRWebBundle:Nearly_location:index.html.twig', array(
+        return $this->render('FTRAdminBundle:Nearly_location:index.html.twig', array(
             'entities' => $entities
         ));
     }
@@ -44,7 +44,7 @@ class Nearly_locationController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('FTRWebBundle:Nearly_location:show.html.twig', array(
+        return $this->render('FTRAdminBundle:Nearly_location:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
 
@@ -60,7 +60,7 @@ class Nearly_locationController extends Controller
         $entity = new Nearly_location();
         $form   = $this->createForm(new Nearly_locationType(), $entity);
 
-        return $this->render('FTRWebBundle:Nearly_location:new.html.twig', array(
+        return $this->render('FTRAdminBundle:Nearly_location:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView()
         ));
@@ -86,7 +86,7 @@ class Nearly_locationController extends Controller
             
         }
 
-        return $this->render('FTRWebBundle:Nearly_location:new.html.twig', array(
+        return $this->render('FTRAdminBundle:Nearly_location:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView()
         ));
@@ -109,7 +109,7 @@ class Nearly_locationController extends Controller
         $editForm = $this->createForm(new Nearly_locationType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('FTRWebBundle:Nearly_location:edit.html.twig', array(
+        return $this->render('FTRAdminBundle:Nearly_location:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -144,7 +144,7 @@ class Nearly_locationController extends Controller
             return $this->redirect($this->generateUrl('nearly_location_edit', array('id' => $id)));
         }
 
-        return $this->render('FTRWebBundle:Nearly_location:edit.html.twig', array(
+        return $this->render('FTRAdminBundle:Nearly_location:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),

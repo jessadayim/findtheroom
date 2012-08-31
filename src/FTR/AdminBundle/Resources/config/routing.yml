@@ -56,73 +56,73 @@ FTRAdminBundle_zone:
 # Createtime : 2012-08-28
 # 
 FTRAdminBundle_panel:
-    pattern:  /ftr_panel/
+    pattern:  /
     defaults: { _controller: FTRAdminBundle:Panel:index } 
 
 FTRAdminBundle_signin:
-    pattern:  /ftr_panel/signin
+    pattern:  /signin
     defaults: { _controller: FTRAdminBundle:Panel:signin } 
 
 FTRAdminBundle_logout:
-    pattern:  /ftr_panel/logout
+    pattern:  /logout
     defaults: { _controller: FTRAdminBundle:Panel:logout } 
 
 FTRAdminBundle_Dashboard:
-    pattern:  /ftr_panel/dashboard
+    pattern:  /dashboard
     defaults: { _controller: FTRAdminBundle:Dashboard:index } 
     
 FTRAdminBundle_Zonelists:
-    pattern:  /ftr_panel/zonelists
+    pattern:  /zonelists
     defaults: { _controller: FTRAdminBundle:zonelists:index } 
     
 FTRAdminBundle_Buildingtypelists:
-    pattern:  /ftr_panel/buildingtypelists
+    pattern:  /buildingtypelists
     defaults: { _controller: FTRAdminBundle:buildingtypelists:index } 
     
 FTRAdminBundle_Buildingsitelists:
-    pattern:  /ftr_panel/buildingsitelists
+    pattern:  /buildingsitelists
     defaults: { _controller: FTRAdminBundle:buildingsitelists:index }
     
 FTRAdminBundle_Facilitylists:
-    pattern:  /ftr_panel/facilitylists
+    pattern:  /facilitylists
     defaults: { _controller: FTRAdminBundle:facilitylists:index } 
     
 FTRAdminBundle_Roomtypelists:
-    pattern:  /ftr_panel/roomtypelists
+    pattern:  /roomtypelists
     defaults: { _controller: FTRAdminBundle:roomtypelists:index } 
     
 FTRAdminBundle_Nearlytypelists:
-    pattern:  /ftr_panel/nearlytypelists
+    pattern:  /nearlytypelists
     defaults: { _controller: FTRAdminBundle:nearlytypelists:index } 
     
 FTRAdminBundle_Nearlylocationlists:
-    pattern:  /ftr_panel/nearlylocationlists
+    pattern:  /nearlylocationlists
     defaults: { _controller: FTRAdminBundle:nearlylocationlists:index } 
     
 FTRAdminBundle_Paytypelists:
-    pattern:  /ftr_panel/paytypelists
+    pattern:  /paytypelists
     defaults: { _controller: FTRAdminBundle:paytypelists:index } 
     
 FTRAdminBundle_Useradminlists:
-    pattern:  /ftr_panel/useradminlists
+    pattern:  /useradminlists
     defaults: { _controller: FTRAdminBundle:useradminlists:index } 
 
 FTRAdminBundle_Createadminlists:
-    pattern:  /ftr_panel/createadminlists
+    pattern:  /createadminlists
     defaults: { _controller: FTRAdminBundle:useradminlists:create } 
     
 FTRAdminBundle_Userownerlists:
-    pattern:  /ftr_panel/userownerlists
+    pattern:  /userownerlists
     defaults: { _controller: FTRAdminBundle:userownerlists:index } 
     
 FTRAdminBundle_Createownerlists:
-    pattern:  /ftr_panel/createownerlists
+    pattern:  /createownerlists
     defaults: { _controller: FTRAdminBundle:userownerlists:create } 
     
 FTRAdminBundle_Sitedetail:
-    pattern:  /ftr_panel/sitedetail
+    pattern:  /sitedetail
     defaults: { _controller: FTRAdminBundle:sitedetail:index } 
     
 FTRAdminBundle_Advertisingdetail:
-    pattern:  /ftr_panel/advertisingdetail
+    pattern:  /advertisingdetail
     defaults: { _controller: FTRAdminBundle:advertisingdetail:index } 

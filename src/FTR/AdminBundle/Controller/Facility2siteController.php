@@ -23,7 +23,7 @@ class Facility2siteController extends Controller
 
         $entities = $em->getRepository('FTRWebBundle:Facility2site')->findAll();
 
-        return $this->render('FTRWebBundle:Facility2site:index.html.twig', array(
+        return $this->render('FTRAdminBundle:Facility2site:index.html.twig', array(
             'entities' => $entities
         ));
     }
@@ -44,7 +44,7 @@ class Facility2siteController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('FTRWebBundle:Facility2site:show.html.twig', array(
+        return $this->render('FTRAdminBundle:Facility2site:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
 
@@ -60,7 +60,7 @@ class Facility2siteController extends Controller
         $entity = new Facility2site();
         $form   = $this->createForm(new Facility2siteType(), $entity);
 
-        return $this->render('FTRWebBundle:Facility2site:new.html.twig', array(
+        return $this->render('FTRAdminBundle:Facility2site:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView()
         ));
@@ -86,7 +86,7 @@ class Facility2siteController extends Controller
             
         }
 
-        return $this->render('FTRWebBundle:Facility2site:new.html.twig', array(
+        return $this->render('FTRAdminBundle:Facility2site:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView()
         ));
@@ -109,7 +109,7 @@ class Facility2siteController extends Controller
         $editForm = $this->createForm(new Facility2siteType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('FTRWebBundle:Facility2site:edit.html.twig', array(
+        return $this->render('FTRAdminBundle:Facility2site:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -144,7 +144,7 @@ class Facility2siteController extends Controller
             return $this->redirect($this->generateUrl('facility2site_edit', array('id' => $id)));
         }
 
-        return $this->render('FTRWebBundle:Facility2site:edit.html.twig', array(
+        return $this->render('FTRAdminBundle:Facility2site:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
