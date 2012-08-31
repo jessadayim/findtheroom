@@ -22,7 +22,7 @@
 </head>
 
 <body>
-{% if session == 0 %}
+{% if app.session.get('username') is empty %}
 	<header id="wrap" class="container_12" style="height: 100px; padding-top: 30px; text-align: center;">
 		<H1>FindtheRoom PANEL</H1>
 	</header>	<!-- End .container_12 -->
@@ -63,9 +63,9 @@
 		</div><!-- End #headernav -->
 		<div id="userpanel" class="grid_4 omega" style="">
 			<ul>
-				<li><a href="#">Hi ADMINISTRATOR</a></li>
+				<li><a href="#">Hi {{app.session.get('username')}}</a></li>
 				<li><a href="#">My Setting</a></li>
-				<li><a href="signin.php"><STRONG>Log out</STRONG></a></li>
+				<li><a href="{{path('FTRAdminBundle_logout')}}"><STRONG>Log out</STRONG></a></li>
 			</ul>
 			<input type="text" name="txtsearch" id="txtsearch">
 			<input type="submit" name="btnsearch" id="btnsearch" value="SEARCH">

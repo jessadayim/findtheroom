@@ -13,7 +13,15 @@ FTRAdminBundle_Building_site:
 FTRAdminBundle_panel:
     pattern:  /ftr_panel/
     defaults: { _controller: FTRAdminBundle:Panel:index } 
-    
+
+FTRAdminBundle_signin:
+    pattern:  /ftr_panel/signin
+    defaults: { _controller: FTRAdminBundle:Panel:signin } 
+
+FTRAdminBundle_logout:
+    pattern:  /ftr_panel/logout
+    defaults: { _controller: FTRAdminBundle:Panel:logout } 
+
 FTRAdminBundle_Dashboard:
     pattern:  /ftr_panel/dashboard
     defaults: { _controller: FTRAdminBundle:Dashboard:index } 
@@ -53,10 +61,18 @@ FTRAdminBundle_Paytypelists:
 FTRAdminBundle_Useradminlists:
     pattern:  /ftr_panel/useradminlists
     defaults: { _controller: FTRAdminBundle:useradminlists:index } 
+
+FTRAdminBundle_Createadminlists:
+    pattern:  /ftr_panel/createadminlists
+    defaults: { _controller: FTRAdminBundle:useradminlists:create } 
     
 FTRAdminBundle_Userownerlists:
     pattern:  /ftr_panel/userownerlists
     defaults: { _controller: FTRAdminBundle:userownerlists:index } 
+    
+FTRAdminBundle_Createownerlists:
+    pattern:  /ftr_panel/createownerlists
+    defaults: { _controller: FTRAdminBundle:userownerlists:create } 
     
 FTRAdminBundle_Sitedetail:
     pattern:  /ftr_panel/sitedetail

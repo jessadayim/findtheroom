@@ -11,6 +11,7 @@
 {% endblock %}
 {% block js %}
 <script src="{{asset('js/jquery.min.js')}}"></script>
+<!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script> -->
 <script src="{{asset('js/html5placeholder.jquery.js')}}"></script>
 <script src="{{asset('js/jquery.easing.1.3.js')}}"></script>
 <script src="{{asset('js/slides.min.jquery.js')}}"></script>
@@ -130,7 +131,7 @@ function enact(what){
 <div id="header">
 	<span>Follow Us On :</span><div class="social"><a href="http://www.facebook.com/FindTheRoom" target="_new"><img src="{{asset('images/fb-icon.gif')}}" /></a> <a href='http://twitter.com/FindTheRoom' target="_blank"><img src="{{asset('images/tw-icon.gif')}}" /></a></div>
 	<div id="logo"></div>
-    	{% if app.session.get('user') %}  
+    	{% if app.session.get('user')  %}  
 			<div id="login" style="text-align:right; margin-right:60px;">  	
     		<form action="{{path('FTRWebBundle_logout')}}" method="post">
     			Logged in as {{ app.session.get('user') }}

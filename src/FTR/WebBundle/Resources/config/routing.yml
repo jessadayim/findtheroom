@@ -22,6 +22,10 @@ FTRWebBundle_contact:
     pattern:  /contact
     defaults: { _controller: FTRWebBundle:Contact:contact }
 
+FTRWebBundle_newimg:
+    pattern:  /contact/newimg
+    defaults: { _controller: FTRWebBundle:Contact:newimg }
+
 FTRWebBundle_sendcontact:
     pattern:  /contact/send
     defaults: { _controller: FTRWebBundle:Contact:sendContact }
