@@ -38,29 +38,32 @@ class Building_siteController extends Controller
      */
     public function showAction()
     {
-        // $conn= $this->get('database_connection');
-        // if(!$conn){ die("MySQL Connection error");}
-        // $sqlGetEntity = "
-            // SELECT 
-                // * 
-            // FROM
-              // `building_site` 
-            // WHERE `deleted` != 1 
-        // ";
-        // try{
-            // $entities = $conn->fetchAll($sqlGetEntity);
-        // } catch (Exception $e) {
-            // echo 'Caught exception: ',  $e->getMessage(), "\n";
-        // }
-        $em = $this->getDoctrine()->getEntityManager();
-        $entities = $em->getRepository("FTRWebBundle:Building_site")  
-                    ->createQueryBuilder("a")  
-                    ->where("a.deleted != 1")  
-                    // ->setMaxResults(100)  
-                    ->getQuery()  
-                    ->getResult();
-        // $entities = $em->getRepository('FTRWebBundle:Building_site')->findBy(array('deleted' => 0));
-
+        $conn= $this->get('database_connection');
+        if(!$conn){ die("MySQL Connection error");}
+        $sqlGetEntity = "
+            SELECT 
+              b.*,
+              f.id AS facility_id,
+              t.id AS room_type_id,
+              n.id AS nearly_id,
+              i.id AS image_id 
+            FROM
+              `building_site` b 
+              LEFT JOIN `facility2site` f 
+                ON (b.`id` = f.`building_site_id`) 
+              LEFT JOIN `roomtype2site` t 
+                ON (b.`id` = t.`building_site_id`) 
+              LEFT JOIN `nearly2site` n 
+                ON (b.`id` = n.`building_site_id`) 
+              LEFT JOIN `image` i 
+                ON (b.`id` = i.`building_site_id`) 
+            WHERE b.`deleted` != 1   
+        ";
+        try{
+            $entities = $conn->fetchAll($sqlGetEntity);
+        } catch (Exception $e) {
+            echo 'Caught exception: ',  $e->getMessage(), "\n";
+        }
         return array(
             'entities'  => $entities
         );
