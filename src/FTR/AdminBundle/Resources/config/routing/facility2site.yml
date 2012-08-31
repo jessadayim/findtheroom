@@ -6,9 +6,9 @@ facility2site_show:
     pattern:  /{id}/show
     defaults: { _controller: "FTRAdminBundle:Facility2site:show" }
 
-facility2site_new:
-    pattern:  /new
-    defaults: { _controller: "FTRAdminBundle:Facility2site:new" }
+#facility2site_new:
+#    pattern:  /{buildingsiteid}/new
+#    defaults: { _controller: "FTRAdminBundle:Facility2site:new" }
 
 facility2site_create:
     pattern:  /create

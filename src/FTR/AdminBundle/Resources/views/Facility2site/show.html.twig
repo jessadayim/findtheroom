@@ -1,41 +1,91 @@
-<h1>Facility2site</h1>
+<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js'></script>
+<script>
+	$(document).ready(function() {
+		function toggle(id, toggle) {
+			$(id).animate({
+				left : '+=50',
+				height : toggle
+			}, 500, function() {
+			});
+		}
 
-<table class="record_properties">
-    <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ entity.id }}</td>
-        </tr>
-        <tr>
-            <th>Building_site_id</th>
-            <td>{{ entity.buildingsiteid }}</td>
-        </tr>
-        <tr>
-            <th>Facilitylist_id</th>
-            <td>{{ entity.facilitylistid }}</td>
-        </tr>
-        <tr>
-            <th>Deleted</th>
-            <td>{{ entity.deleted }}</td>
-        </tr>
-    </tbody>
-</table>
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('facility2site') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('facility2site_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('facility2site_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+		$("#formCreateFacility").submit(function() {
+			$('#divPostCreateFacility').slideUp(300).delay(800).fadeOut(400);
+			return false;
+		});
+
+		var url = "{{ path('facility2site_create') }}";
+		$('.checkFacility').click(function() {
+			var val = this.value;
+			var check = this.checked;
+			if (check) {
+				var checkValue = 'TRUE';
+			} else {
+				var checkValue = 'FALSE';
+			}
+			$.ajax({
+				type : "POST",
+				url : url,
+				data : {
+					building_site_id : $('#building_site_id').val(),
+					facility_list_id : val,
+					check_post : check
+				},
+				success : function(msg) {
+					if (msg == 'finish') {
+						//$('#listBuildingSite').fadeOut('slow').load(window.location + "show").fadeIn("slow");
+					} else {
+						alert(msg)
+						//alert('เกิดการผิดพลาด\n** กรุณาตรวจสอบ **');
+					}
+				}
+			});
+		});
+	}); 
+</script>
+<div id="divPostCreateFacility">
+	<form id="formCreateFacility" action="{{ path('facility2site_create') }}" method="post" >
+		<fieldset>
+			<legend>
+				CREATE FACILITY
+			</legend>
+
+			<div class="label" style="">
+				{% for building_site in buildingsite %}
+				<h2>{{ building_site.building_name }}</h2>
+				<input type="hidden" value="{{ building_site.id }}" id="building_site_id" name="building_site_id"/>
+				{% endfor %}
+			</div>
+			<br />
+			<br />
+			<table>
+				<tr>
+					{% for facility in facilityList %}
+					{% if facility.count % 3 == 0 %}
+					<td width="300"><label class="labelFacility"> {% if facility.facility2site_id != null%}
+						<input type="checkbox" checked name="facilityList[]" value="{{ facility.id }}" class="checkFacility"/>
+						{% else %}
+						<input type="checkbox" name="facilityList[]" value="{{ facility.id }}" class="checkFacility"/>
+						{% endif %}
+						{{ facility.facility_name }} </label></td>
+				</tr>
+				<tr>
+					{% else %}
+					<td width="300"><label class="labelFacility"> {% if facility.facility2site_id != null%}
+						<input type="checkbox" checked name="facilityList[]" value="{{ facility.id }}" class="checkFacility"/>
+						{% else %}
+						<input type="checkbox" name="facilityList[]" value="{{ facility.id }}" class="checkFacility"/>
+						{% endif %}
+						{{ facility.facility_name }} </label></td>
+					{% endif %}
+					{% endfor %}
+				</tr>
+			</table>
+			<br />
+			<span style="float: right;">
+				<input type="submit" value="ClOSE">
+			</span>
+		</fieldset>
+	</form>
+</div>

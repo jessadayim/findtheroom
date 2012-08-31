@@ -1,6 +1,27 @@
 <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js'></script>
-<script type='text/javascript' src='{{asset("js/paging/smartpaginator.buildingsite.js")}}'></script>
-<link rel='stylesheet' type='text/css' href='{{asset("css/paging/smartpaginator.buildingsite.css")}}' />
+<!-- <script type='text/javascript' src='{{asset("js/paging/smartpaginator.buildingsite.js")}}'></script>
+<link rel='stylesheet' type='text/css' href='{{asset("css/paging/smartpaginator.buildingsite.css")}}' /> -->
+
+<!-- jQuery data table -->
+<!-- <script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script> -->
+<script type='text/javascript' src='{{asset("js/paging/jquery.dataTables.js")}}'></script>
+<link rel="stylesheet" href='{{asset("css/paging/sytletable.css")}}' type="text/css" id="" media="print, projection, screen" />
+<script type="text/javascript">
+	jQuery.fn.dataTableExt.oSort['string-case-asc'] = function(x, y) {
+		return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+	};
+
+	jQuery.fn.dataTableExt.oSort['string-case-desc'] = function(x, y) {
+		return ((x < y) ? 1 : ((x > y) ? -1 : 0));
+	};
+
+	$(document).ready(function() {
+		$("#sortTable1").dataTable({
+			"aaSorting" : [[0, 'asc']]
+		});
+	});
+</script>
+
 <script>
 	var countValuePaging = {{entities|length}};
 	$(document).ready(function() {
@@ -8,9 +29,11 @@
 		//Click ปุ่ม Edit
 		$(".linkEditBuildingSite").click(function() {
 			$.post(this.href + '/edit', function(data) {
-				$('.editPanel').html(data);
+				$('.innerPanel').slideUp(300).fadeIn(400);
+				$('.innerPanel').html(data);
 				toggle(".createPanel", 'hide');
-				toggle(".editPanel", 'show');
+				toggle(".innerPanel", 'show');
+
 				$("#createrecordCancel").hide();
 				$("#createrecord").show('slow');
 				document.getElementById('createrecord').scrollIntoView();
@@ -34,10 +57,23 @@
 						//alert('การลบสร็จเรียบร้อย');
 						$('#listBuildingSite').fadeOut('slow').load(window.location + "show").fadeIn("slow");
 					} else {
-						alert(msg);
 						alert('การลบผิดพลาด');
 					}
 				}
+			});
+			return false;
+		});
+
+		//Click ปุ่ม สร้าง Facility
+		$(".createFacility").click(function() {
+			$.post(this.href, function(data) {
+				$('.innerPanel').slideUp(300).fadeIn(400);
+				$('.innerPanel').html(data);
+				toggle(".createPanel", 'hide');
+				toggle(".innerPanel", 'show');
+				$("#createrecordCancel").hide();
+				$("#createrecord").show('slow');
+				document.getElementById('createrecord').scrollIntoView();
 			});
 			return false;
 		});
@@ -65,46 +101,30 @@
 		});
 	}); 
 </script>
-<table id="mt" cellpadding="0" cellspacing="0" border="0" class="table">
-	<tbody>
-		<th style="width: 480px !important;" >name</th>
-		<th style="width: 100px !important;" >facility</th>
+<table id="sortTable1" class="display" >
+	<thead>
+		<th style="width: 510px !important;" >name</th>
+		<th style="width: 70px !important;" >facility</th>
 		<th style="width: 110px !important;" >roomtype</th>
 		<th style="width: 100px !important;" >nearly</th>
 		<th style="width: 100px !important;" >gallery</th>
 		<th style="width: 50px !important;" >config</th>
-	</tbody>
+	</thead>
 	{% for entity in entities %}
 	<tr>
 		<td>{{ entity.building_name }}</td>
 
 		<!-- facility -->
-		{% if entity.facility_id == null %}
-		<td><a href="">Add Facility</a></td>
-		{% else %}
-		<td><a href="">Edit Facility</a></td>
-		{% endif %}
+		<td><a href="{{ path('facility2site_show', { 'id': entity.id }) }}" class="createFacility">Edit</a></td>
 
 		<!-- room type -->
-		{% if entity.room_type_id == null %}
-		<td><a href="">Add Roomtype</a></td>
-		{% else %}
-		<td><a href="">Edit Roomtype</a></td>
-		{% endif %}
+		<td><a href="">Edit</a></td>
 
 		<!-- nearly -->
-		{% if entity.nearly_id == null %}
-		<td><a href="">Add Nearly</a></td>
-		{% else %}
-		<td><a href="">Edit Nearly</a></td>
-		{% endif %}
+		<td><a href="">Edit</a></td>
 
 		<!-- upload gallery -->
-		{% if entity.image_id == null %}
-		<td><a href="">Add Image</a></td>
-		{% else %}
-		<td><a href="">Edit Image</a></td>
-		{% endif %}
+		<td><a href="">Edit</a></td>
 
 		<td><a href="{{ entity.id }}" class="linkEditBuildingSite">Edit</a>&nbsp;&nbsp;<a href="{{ entity.id }}" class="linkDelete">Delete</a></td>
 	</tr>

@@ -2,7 +2,7 @@
 <script>
 	$(document).ready(function() {
 		$("#btnCancelEdit").click(function() {
-			toggle(".editPanel", 'hide');
+			toggle(".innerPanel", 'hide');
 			return false;
 		});
 
@@ -16,18 +16,20 @@
 
 		var url = "{{ path('building_site_update', { 'id': entity.id }) }}";
 		$("#formEdit").submit(function() {
+			if (!confirm('คุณต้องการแก้ไขข้อมูล ใช่หรือไม่')){
+				return false;
+			}
 			$.ajax({
 				type : "POST",
 				url : url,
 				data : $(this).serialize(),
 				success : function(msg) {
 					if (msg == 'finish') {
-						alert('การแก้ไขเสร็จเรียบร้อย');
 						// $('#listBuildingSite').load(window.location + "show");
-						toggle(".editPanel", 'hide');
+						toggle(".innerPanel", 'hide');
 						$('#listBuildingSite').fadeOut('slow').load(window.location + "show").fadeIn("slow");
 					} else {
-						$('.editPanel').html(msg);
+						$('.innerPanel').html(msg);
 						alert('การแก้ไขผิดพลาด');
 					}
 				}
