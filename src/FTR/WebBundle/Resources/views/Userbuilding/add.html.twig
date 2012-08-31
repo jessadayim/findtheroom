@@ -98,19 +98,19 @@
 		newCell = newRow.insertCell(2)
 		newCell.id = newCell.uniqueID
 		newCell.setAttribute("className", "css-name");
-		newCell.innerHTML = "<input type=\"file\" name=\"room"+num+"\" id=\"room"+num+"\" /><input type=\"hidden\" name=\"hdnfilename"+num+"\" id=\"hdnfilename"+num+"\" value=\""+nameimage+"\" />"		
+		newCell.innerHTML = "<input type=\"file\" name=\"room"+num+"\" id=\"room"+num+"\" /><input type=\"hidden\" name=\"hdnfilename"+num+"\" id=\"hdnfilename"+num+"\" value=\""+nameimage+"\" onchange=\"postData('image');\" />"		
 		
 		//*** Column 4 ***//
 		newCell = newRow.insertCell(3)
 		newCell.id = newCell.uniqueID
 		newCell.setAttribute("className", "css-name");
-		newCell.innerHTML = "<input name=\"typeap_name"+num+"\" id=\"typeap_name"+num+"\" type=\"text\" maxlength=\"30\" placeholder=\"กรุณากรอกประเภทห้องพัก\" value=\""+typename+"\" style=\" padding:2px; font-size:20px;\" />"				
+		newCell.innerHTML = "<input name=\"typeap_name"+num+"\" id=\"typeap_name"+num+"\" type=\"text\" maxlength=\"30\" placeholder=\"กรุณากรอกประเภทห้องพัก\" value=\""+typename+"\" style=\" padding:2px; font-size:20px;\" onchange=\"postData('image');\" />"				
 		
 		//*** Column 5 ***//
 		newCell = newRow.insertCell(4)
 		newCell.id = newCell.uniqueID
 		newCell.setAttribute('align', 'center');
-		newCell.innerHTML = "<input name=\"typeap_size"+num+"\" id=\"typeap_size"+num+"\" type=\"text\" maxlength=\"10\" placeholder=\"ขนาด\" value=\""+roomsize+"\" style=\" padding:2px; font-size:20px; width:80px;\" />"		
+		newCell.innerHTML = "<input name=\"typeap_size"+num+"\" id=\"typeap_size"+num+"\" type=\"text\" maxlength=\"10\" placeholder=\"ขนาด\" value=\""+roomsize+"\" style=\" padding:2px; font-size:20px; width:80px;\" onchange=\"postData('image');\" />"		
 		
 		//*** Column 6 ***//
 		newCell = newRow.insertCell(5)
@@ -122,7 +122,7 @@
 		newCell = newRow.insertCell(6)
 		newCell.id = newCell.uniqueID
 		newCell.setAttribute('align', 'center');
-		newCell.innerHTML = "<input name=\"typeap_price"+num+"\" id=\"typeap_price"+num+"\" type=\"text\" maxlength=\"10\" placeholder=\"อัตราค่าเช่า\" value=\""+roomprice+"\" style=\" padding:2px; font-size:20px; width:80px;\" />"		
+		newCell.innerHTML = "<input name=\"typeap_price"+num+"\" id=\"typeap_price"+num+"\" type=\"text\" maxlength=\"10\" placeholder=\"อัตราค่าเช่า\" value=\""+roomprice+"\" style=\" padding:2px; font-size:20px; width:80px;\" onchange=\"postData('image');\" />"		
 		
 		//*** Column 8 ***//
 		newCell = newRow.insertCell(7)
@@ -250,7 +250,7 @@
 		newCell = newRow.insertCell(3)
 		newCell.id = newCell.uniqueID
 		newCell.setAttribute("className", "css-name");
-		newCell.innerHTML = "<textarea id=\"galtitle"+num+"\" name=\"galtitle"+num+"\" maxlenght=\"500\" placeholder=\"กรอกข้อมูลของรูปที่นี่\" class=\"galdesc\"></textarea><input type=\"hidden\" name=\"imageidgal"+num+"\" id=\"imageidgal"+num+"\" value=\""+imageid+"\" />"				
+		newCell.innerHTML = "<textarea id=\"galtitle"+num+"\" name=\"galtitle"+num+"\" maxlenght=\"500\" placeholder=\"กรอกข้อมูลของรูปที่นี่\" class=\"galdesc\" onchange=\"postData('image');\"></textarea><input type=\"hidden\" name=\"imageidgal"+num+"\" id=\"imageidgal"+num+"\" value=\""+imageid+"\" />"				
 			
 		//document.addform.hdnMaxLineGal.value = intLine;
 		loopbuttongallery();
@@ -333,21 +333,21 @@
 		if(document.getElementById('bk').checked) {
 		   //$("#tbk").css("display","block");
 		   //$("#tcou").css("display","none");
-		   document.getElementById('sbk1').disabled=false;
-		   document.getElementById('sbk2').disabled=false;
-		   document.getElementById('sbk3').disabled=false;
-		   document.getElementById('sbk4').disabled=false;
-		   document.getElementById('sbk5').disabled=false;
-		   document.getElementById('scou').disabled=true;
+		   document.getElementById('bkzone_ot').disabled=false;
+		   document.getElementById('bts_ot').disabled=false;
+		   document.getElementById('mrt_ot').disabled=false;
+		   document.getElementById('univer_ot').disabled=false;
+		   document.getElementById('near_ot').disabled=false;
+		   document.getElementById('country_ot').disabled=true;
 		}else if(document.getElementById('cou').checked) {
 		   //$("#tbk").css("display","none");
 		   //$("#tcou").css("display","block");
-		   document.getElementById('sbk1').disabled=true;
-		   document.getElementById('sbk2').disabled=true;
-		   document.getElementById('sbk3').disabled=true;
-		   document.getElementById('sbk4').disabled=true;
-		   document.getElementById('sbk5').disabled=true;
-		   document.getElementById('scou').disabled=false;
+		   document.getElementById('bkzone_ot').disabled=true;
+		   document.getElementById('bts_ot').disabled=true;
+		   document.getElementById('mrt_ot').disabled=true;
+		   document.getElementById('univer_ot').disabled=true;
+		   document.getElementById('near_ot').disabled=true;
+		   document.getElementById('country_ot').disabled=false;
 		}
 	}
 </script>
@@ -555,7 +555,7 @@
 				</td>
 				<td width="200">
 					<div class="styled-select">
-						<label for="cou">
+						<label for="province_ot">
 						<select id="province_ot" name="province_ot" class="select" onchange="postData('other');">
 							{% for pvlist in province %}
 								<option value="{{ pvlist.PROVINCE_VALUE }}">{{ pvlist.PROVINCE_NAME }}</option>
