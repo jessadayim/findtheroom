@@ -119,7 +119,7 @@ class UserbuildingController extends Controller
 				}else{
 					$building_id = $id;
 					$building_data = $this->getBuildingData($building_id);
-					//echo "<pre>";var_dump($building_data);echo "</pre>";
+					//echo "<pre>";var_dump($building_data);echo "</pre>";exit();
 					if($building_data['ibuildingtypeid']!=0)
 					{
 						$buildtype_data = $em->getRepository('FTRWebBundle:Building_type')->findOneBy(array('id'=>$building_data['ibuildingtypeid']));
@@ -161,23 +161,23 @@ class UserbuildingController extends Controller
 				}
 				
 		return $this->render('FTRWebBundle:Userbuilding:add.html.twig', array(
-			'payType' 			    =>$payType,
-            'zonelist' 		        =>$bkkZone,
-            'buildingType' 		    =>$buildingType,
-            'province' 		        =>$province,
-			'nearBTS' 			=> $nearBTS,
-			'nearMRT' 			=> $nearMRT,
-			'nearUniversity' 	=> $nearUniversity,
-			'nearBy' 			=> $nearBy,
-			'nearInCountry' 	=> $nearInCountry,
-            'username'		=> $user,
-			'build_id'		=> $building_id,
-			'fac_inroom'	=> $fac_inroomlist,
-			'fac_outroom'	=> $fac_outroomlist,
-			'rooms'			=> $arrroom,
-			'roomlines'		=> $countroom,
-			'galleries'		=> $arrgallery,
-			'gellerylines'	=> $countgallery,
+			'payType' 			    => $payType,
+            'zonelist' 		        => $bkkZone,
+            'buildingType' 		    => $buildingType,
+            'province' 		        => $province,
+			'nearBTS' 				=> $nearBTS,
+			'nearMRT' 				=> $nearMRT,
+			'nearUniversity' 		=> $nearUniversity,
+			'nearBy' 				=> $nearBy,
+			'nearInCountry' 		=> $nearInCountry,
+            'username'				=> $user,
+			'build_id'				=> $building_id,
+			'fac_inroom'			=> $fac_inroomlist,
+			'fac_outroom'			=> $fac_outroomlist,
+			'rooms'					=> $arrroom,
+			'roomlines'				=> $countroom,
+			'galleries'				=> $arrgallery,
+			'gellerylines'			=> $countgallery,
 		));
 	}
 
@@ -491,12 +491,12 @@ class UserbuildingController extends Controller
 		return $path;
 	}
 	
-	public function autoSaveFormAction($id)
+	public function autoSaveFormAction($id,$type)
 	{
 		//echo $id." ";
 		if($_POST)
 		{
-			echo $_POST['type'];
+			echo $type;
 		}
 		exit();
 	}
