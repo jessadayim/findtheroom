@@ -1,9 +1,9 @@
-<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js'></script>
+<!-- <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js'></script> -->
 <!-- <script type='text/javascript' src='{{asset("js/paging/smartpaginator.buildingsite.js")}}'></script>
 <link rel='stylesheet' type='text/css' href='{{asset("css/paging/smartpaginator.buildingsite.css")}}' /> -->
 
 <!-- jQuery data table -->
-<!-- <script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script> -->
+<script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script>
 <script type='text/javascript' src='{{asset("js/paging/jquery.dataTables.js")}}'></script>
 <link rel="stylesheet" href='{{asset("css/paging/sytletable.css")}}' type="text/css" id="" media="print, projection, screen" />
 <script type="text/javascript">
@@ -84,21 +84,7 @@
 				height : toggle
 			}, 500, function() {
 			});
-		}
-
-		//Set Paging
-		$('#green').smartpaginator({
-			totalrecords : countValuePaging,
-			recordsperpage : 10,
-			datacontainer : 'mt',
-			dataelement : 'tr',
-			initval : 0,
-			next : 'Next',
-			prev : 'Prev',
-			first : 'First',
-			last : 'Last',
-			theme : 'green'
-		});
+		}		
 	}); 
 </script>
 <table id="sortTable1" class="display" >
