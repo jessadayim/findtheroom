@@ -8,6 +8,7 @@
 		//Click ปุ่ม Edit
 		$(".linkEditBuildingSite").click(function() {
 			$.post(this.href + '/edit', function(data) {
+				//alert(data);
 				$('.editPanel').html(data);
 				toggle(".createPanel", 'hide');
 				toggle(".editPanel", 'show');
