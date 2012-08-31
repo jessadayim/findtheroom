@@ -297,14 +297,14 @@
 	$(document).ready(function(){
 		
 	});
-	
+	var imagepath = "{{asset('images/building/1/2012-08-31head.jpg')}}";
 	function postData(type)
 	{
-		alert(type);
-		$.post("{{path('autoSaveForm', {'id': build_id })}}", $("#addform").serialize(), 
+		//alert(type);
+		$.post("{{path('autoSaveForm', {'id': build_id })}}",{type : type}, $("#addform").serialize(), 
 		function(data) {
 			var completetext = data;
-			alert(completetext);
+			//alert(completetext);
 			$.gritter.add({
 				// (string | mandatory) the heading of the notification
 				title: 'บันทึกข้อมูลสำเร็จ',
@@ -358,9 +358,16 @@
     <div style="width:1000px; display:block; position:relative; height:250px; margin-top: 20px;">
     	<table style="margin-top: 0px; float:left;">
         	<tr height="50" valign="middle">
-				<td align="left" width="240"><img src="{{asset('images/ex.png')}}" class="nopad" /></td>
-                <td align="left" width="230" valign="middle"><input style="margin-left: 10px;" type="file" name="file_upload" id="file_upload" />
+				<td align="left" width="240">
+					<div id="headimage" class="thumbframe4add">
+						<img src="{{asset('images/ex.png')}}" class="nopad thumb" />
+					</div>
+				</td>
+                <td align="left" width="230" valign="middle"><input style="margin-left: -20px;" type="file" name="file_upload" id="file_upload" />
 					<input type="hidden" name="hdnfilename" id="hdnfilename" /></td>
+            </tr>
+            <tr height="50" valign="middle">
+				&nbsp;
             </tr>
         </table>
         <table style="margin-top: 0px; float:none;  margin-left: 0px;">
@@ -403,13 +410,14 @@
         </table>
         <table style="margin-top: 0px; float:left;">
         	<tr>
-            	<td align="right" width="240" valign="top" style="font-size:24px;">รายละเอียดเพิ่มเติม : &nbsp;</td>
-                <td align="left" width="200"><textarea name="placedetail" type="text" maxlength="500" class="ldesc" onchange="postData();" /></textarea></td>
+            	
 				<td align="right" width="240" style="font-size:24px;">รูปแผนที่ : *</td>
-                <td align="left" width="200" style="font-size:24px;">
-                	<input type="file" name="upload_map" id="upload_map" />
+            	<td align="left" width="200">
+					<input type="file" name="upload_map" id="upload_map" />
 					<input type="hidden" name="hdnfilemap" id="hdnfilemap" onchange="postData();" />
 				</td>
+				<td align="right" width="240" valign="top" style="font-size:24px;">รายละเอียดเพิ่มเติม : &nbsp;</td>
+                <td align="left" width="200"><textarea name="placedetail" type="text" maxlength="500" class="ldesc" onchange="postData();" /></textarea></td>
             </tr>
         </table>
     </div>
