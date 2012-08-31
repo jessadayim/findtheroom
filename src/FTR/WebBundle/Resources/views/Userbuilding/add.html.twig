@@ -10,6 +10,18 @@
 <script type="text/javascript" src="http://www.google.com/jsapi"></script>
 
 <script language="javascript">
+	$(document).ready(function(){
+		$("div#upload_map.uploadify").css("marginTop","-80px");
+		var mybrowser=navigator.userAgent;
+		if(mybrowser.indexOf('MSIE')>0){
+		$("div#upload_map.uploadify").css("marginTop","-60px");
+		$("#headimage2").css("marginTop","-60px");
+}
+	 });
+</script>
+		
+<script language="javascript">
+	
 	var swfpath = "{{asset('js/uploadify/uploadify.swf')}}";
 	var uploaderpath = "{{asset('js/uploadify/uploadify.php')}}";
 	
@@ -355,7 +367,7 @@
 	<input class="etc" type="button" value="" onclick="document.getElementById('etc').focus();" />-->
 </div>
 
-<div id="datazone" class="detail" style="height: 760px; margin-bottom: 15px;">
+<div id="datazone" class="detail" style="height: 780px; margin-bottom: 15px;">
 	<img src="{{asset('images/apdata.png')}}" style="display:block; position:relative; float:none;" />
 	<hr class="line" style="top: 60px;" />
     <div style="width:1000px; display:block; position:relative; height:250px; margin-top: 20px;">
@@ -366,7 +378,7 @@
 						<img src="{{asset('images/ex.png')}}" class="nopad thumb" />
 					</div>
 				</td>
-                <td align="left" width="205" valign="middle"><input style="margin-left: -20px;" type="file" name="file_upload" id="file_upload" />
+                <td align="left" width="210" valign="middle"><input style="margin-left: -20px;" type="file" name="file_upload" id="file_upload" />
 					<input type="hidden" name="hdnfilename" id="hdnfilename" /></td>
             </tr>
             <tr height="50" valign="middle">
@@ -413,10 +425,12 @@
         </table>
         <table style="margin-top: 0px; float:left;">
         	<tr>
-            	
-				<td align="right" width="240" style="font-size:24px;">รูปแผนที่ : *</td>
-            	<td align="left" width="200">
-					<input type="file" name="upload_map" id="upload_map" />
+				<td align="right" width="240" style="font-size:24px;">
+					<div id="headimage2" class="thumbframe4add" style="margin-top:-80px;">
+						<img src="{{asset('images/exmap.png')}}" class="nopad thumb" />
+					</div></td>
+            	<td align="left" width="180">
+					<input type="file" name="upload_map" id="upload_map"/>
 					<input type="hidden" name="hdnfilemap" id="hdnfilemap" onchange="postData('head');" />
 				</td>
 				<td align="right" width="240" valign="top" style="font-size:24px;">รายละเอียดเพิ่มเติม : &nbsp;</td>
@@ -424,7 +438,7 @@
             </tr>
         </table>
     </div>
-    <div style="width:1000px; display:block; position:relative; height:240px; margin-top: 100px;">
+    <div style="width:1000px; display:block; position:relative; height:240px; margin-top: 115px;">
 		<table style="margin-top: 0px;">
         	<tr height="50" valign="middle">
 				<td align="right" width="240" style="font-size:24px;">Google Map ลองติจูด : *</td>
