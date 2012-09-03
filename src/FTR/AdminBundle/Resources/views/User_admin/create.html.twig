@@ -1,0 +1,42 @@
+<form action="{{path('FTRAdminBundle_Createadminlists')}}" method="post">
+	<fieldset>
+		<legend>
+			CREATE ADMIN
+		</legend>
+		<div class="label" style="">
+			Username:
+		</div>
+		<input type="text" id="AdminUsername" name="AdminUsername" class="widfat" />
+		<br />
+		<div class="label" style="">
+			Password:
+		</div>
+		<input type="text" id="AdminPassword" name="AdminPassword" class="widfat" />
+		<br />
+		<div class="label" style="">
+			First Name:
+		</div>
+		<input type="text" id="AdminFristName" name="AdminFristName" class="widfat" />
+		<br />
+		<div class="label" style="">
+			Last Name:
+		</div>
+		<input type="text" id="AdminLastName" name="AdminLastName" class="widfat" />
+		<br />
+		<div class="label" style="">
+			Phone Number:
+		</div>
+		<input type="text" id="AdminPhoneNumber" name="AdminPhoneNumber" class="widfat" />
+		<br />
+		<div class="label" style="">
+			Level:
+		</div>
+		<select id="AdminLevel" name="AdminLevel" class="widfat">
+			<option value="0">...</option><option value="1">...</option>
+		</select>
+		<br />
+		<span style="float: right;">
+			<input type="submit"  value="CREATE">
+		</span>
+	</fieldset>
+</form>

@@ -14,32 +14,35 @@ class MainController extends Controller {
 		$em = $this -> getDoctrine() -> getEntityManager();
 
 		$conn = $this -> get('database_connection');
-		if (!$conn) { die("MySQL Connection error");}
-		
+		if (!$conn) { die("MySQL Connection error");
+		}
+
 		if (!empty($_GET['token'])) {
 			$token = $_GET['token'];
 			// if(!empty($objSQL0)){
-			$sql ="UPDATE user_owner SET enabled = '1' WHERE confirm_token= '$token'";
-			$conn->query($sql);
-			
+			$sql = "UPDATE user_owner SET enabled = '1' WHERE confirm_token= '$token'";
+			$conn -> query($sql);
+
 			$sql = "SELECT enabled FROM user_owner WHERE confirm_token = '$token'";
 			$objSQL = $conn -> fetchAll($sql);
-			if(!empty($objSQL)){
-				if($objSQL[0]['enabled']==1){
+			if (!empty($objSQL)) {
+				if ($objSQL[0]['enabled'] == 1) {
 					$enable = true;
-				}else{
+				} else {
 					$enable = false;
 				}
-			}else{$enable = false;}
-			
+			} else {$enable = false;
+			}
+
 			//}
-		}else{$enable = false;}
-				
+		} else {$enable = false;
+		}
+
 		$top_last_building = $this -> getTopLastBuilding();
 		$last_update = date("Y-m-d H:i:s", mktime(date("H"), date("i"), date("s"), date("m"), date("d"), date("Y")));
 		$last_update = $this -> convertThaiDate($last_update);
 
-		return $this -> render('FTRWebBundle:Main:index.html.twig', array('top_last_building' => $top_last_building, 'last_update' => $last_update, 'enable'=>$enable));
+		return $this -> render('FTRWebBundle:Main:index.html.twig', array('top_last_building' => $top_last_building, 'last_update' => $last_update, 'enable' => $enable));
 	}
 
 	function getTopLastBuilding() {
@@ -95,8 +98,9 @@ class MainController extends Controller {
 		$em = $this -> getDoctrine() -> getEntityManager();
 
 		$conn = $this -> get('database_connection');
-		if (!$conn) { die("MySQL Connection error");}		
-				
+		if (!$conn) { die("MySQL Connection error");
+		}
+
 		try {
 			$sql1 = "SELECT b.*,n.*,t.*,z.* FROM building_site b JOIN building_type t ON b.building_type_id = t.id
 									 JOIN zone z ON b.zone_id = z.id

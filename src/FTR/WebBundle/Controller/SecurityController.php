@@ -23,8 +23,10 @@ class SecurityController extends Controller
 						$session = $this->get('session');
 						$user = $objSQL1[0]['username'];
 						$id = $objSQL1[0]['id'];
+						
 						$session->set('user', $user);
 						$session->set('id', $id);
+						
 						$time = date("Y-m-d : H:i:s", time());
 						
 						$sql2 ="UPDATE user_owner SET last_login = '$time' WHERE id= '$id'";
