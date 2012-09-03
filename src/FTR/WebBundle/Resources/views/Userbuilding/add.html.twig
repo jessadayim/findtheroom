@@ -319,7 +319,7 @@
 		$.post(addfixpath, $("#addform").serialize(), 
 		function(data) {
 			var completetext = data;
-			//alert(completetext);
+			alert(completetext);
 			$.gritter.add({
 				// (string | mandatory) the heading of the notification
 				title: 'บันทึกข้อมูลสำเร็จ',
@@ -383,7 +383,7 @@
 					</div>
 				</td>
                 <td align="left" width="210" valign="middle"><input style="margin-left: -20px;" type="file" name="file_upload" id="file_upload" />
-					<input type="hidden" name="hdnfilename" id="hdnfilename" /></td>
+					<input type="hidden" name="hdnfilename" id="hdnfilename" value="{{nameimagehead}}" /></td>
             </tr>
             <tr height="50" valign="middle">
 				&nbsp;
@@ -439,7 +439,7 @@
 					</div></td>
             	<td align="left" width="180">
 					<input type="file" name="upload_map" id="upload_map"/>
-					<input type="hidden" name="hdnfilemap" id="hdnfilemap" onchange="postData('head');" />
+					<input type="hidden" name="hdnfilemap" id="hdnfilemap" value="{{nameimagehead}}" />
 				</td>
 				<td align="right" width="240" valign="top" style="font-size:24px;">รายละเอียดเพิ่มเติม : &nbsp;</td>
                 <td align="left" width="200"><textarea name="placedetail" type="text" maxlength="500" class="ldesc" onchange="postData('head');" /></textarea></td>

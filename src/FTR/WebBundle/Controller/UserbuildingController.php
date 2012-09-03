@@ -133,8 +133,8 @@ class UserbuildingController extends Controller
 						$paytype_data = $em->getRepository('FTRWebBundle:Pay_type')->findOneBy(array('id'=>$building_data['ipaytypeid']));
 					}
 				}
-				$linkimagehead = NULL;
-				$linkimagemap = NULL;
+				$linkimagehead = NULL;$nameimagehead = NULL;
+				$linkimagemap = NULL;$nameimagemap = NULL;
 				$fac_inroomlist 	= $this->getFacility('inroom');
 				$fac_outroomlist 	= $this->getFacility('outroom');
 				$arrroom 			= $this->getImageDatas($building_id,NULL,'room');
@@ -143,9 +143,11 @@ class UserbuildingController extends Controller
 				$imagemap			= $this->getImageDatas($building_id,NULL,'map');
 				if(!empty($imagehead)){
 					$linkimagehead = "images/building/$id/".$imagehead[0]['photo_name'];
+					$nameimagehead = $imagehead[0]['photo_name'];
 				}
 				if(!empty($imagemap)){
 					$linkimagemap = "images/building/$id/".$imagemap[0]['photo_name'];
+					$nameimagemap = $imagemap[0]['photo_name'];
 				}
 				
 				$payType        = $this->getPayType();
@@ -185,7 +187,9 @@ class UserbuildingController extends Controller
 			'galleries'				=> $arrgallery,
 			'gellerylines'			=> $countgallery,
 			'linkimagehead'			=> $linkimagehead,
+			'nameimagehead'			=> $nameimagehead,
 			'linkimagemap'			=> $linkimagemap,
+			'nameimagemap'			=> $nameimagemap,
 		));
 	}
 
@@ -524,27 +528,26 @@ class UserbuildingController extends Controller
 					'photo_name'	=> $smapimagename,
 					'photo_type'	=> 'map',
 				);
-				/*
+				
 				for ($i=0; $i < $icountlineroom ; $i++) { 
 				$arrimagedata[] = array(
-						'imageid'		=> $post_array['imageid'.$i],
-						'photo_name'	=> $post_array['hdnfilename'.$i],
-						'typename'		=> $post_array['typeap_name'.$i],
-						'room_size'		=> $post_array['typeap_size'.$i],
-						'room_price'	=> $post_array['typeap_price'.$i],
+						'imageid'		=> $_POST["imageid$i"],
+						'photo_name'	=> $_POST["hdnfilename$i"],
+						'typename'		=> $_POST["typeap_name$i"],
+						'room_size'		=> $_POST["typeap_size$i"],
+						'room_price'	=> $_POST["typeap_price$i"],
 						'photo_type'	=> 'room',
 					);
 				}
-				
+				//echo $arrimagedata[1]['photo_name'];exit();
 				for ($i=0; $i < $icountlinegallery ; $i++) { 
 					$arrimagedata[] = array(
-						'imageid'		=> $post_array['imageid'.$i],
-						'photo_name'	=> $post_array['hdnfilename'.$i],
-						'description'	=> $post_array['galtitle'.$i],
+						'imageid'		=> $_POST["imageid$i"],
+						'photo_name'	=> $_POST["hdngalleryname$i"],
+						'description'	=> $_POST["galtitle$i"],
 						'photo_type'	=> 'gallery',
 					);
 				}
-				*/
 				$alert = $this->saveImageData($id,$arrimagedata);
 				echo $alert;
 			}
@@ -555,7 +558,7 @@ class UserbuildingController extends Controller
 	public function saveImageData($id,$imagedata)
 	{
 		$em = $this->getDoctrine()->getEntityManager();
-		//return $imagedata[0]['photo_name'];
+		//echo $imagedata[2]['photo_name'];exit();
 		foreach ($imagedata as $key => $value) {
 			$roomtype2siteid = NULL;$data = NULL; // set NULL value for new loop
 			if(!empty($id)||!empty($value['photo_name'])){
@@ -576,11 +579,31 @@ class UserbuildingController extends Controller
 					
 					if($value['photo_type']=='room')
 					{
+						if(!empty($value['typename'])){
+							$roomtype_name	= $value['typename'];
+						}
+						else {
+							$roomtype_name	= 'ยังไม่ระบุ';
+						}
+						if(!empty($value['room_size'])){
+							$room_size		= $value['room_size'];
+						}
+						else {
+							$room_size	= 0;
+						}
+						if(!empty($value['room_price'])){
+							$room_price		= $value['room_price'];
+						}
+						else {
+							$room_price	= 0;
+						}
+						
 						$data = array(
-							'typename'		=> $value['typename'],
-							'room_size'		=> $value['room_size'],
-							'room_price'	=> $value['room_price'],
+							'typename'		=> $roomtype_name,
+							'room_size'		=> $room_size,
+							'room_price'	=> $room_price,
 						);
+						
 						$roomtype2siteid = $this->saveRoomtypeData($id, $data, NULL);
 						$image->setRoomtype2siteId($roomtype2siteid);
 					}
@@ -590,7 +613,6 @@ class UserbuildingController extends Controller
 					
 					$em->persist($image);
 					$em->flush();
-					return 'complete';
 				}
 				else {
 					
