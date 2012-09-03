@@ -142,10 +142,10 @@ class UserbuildingController extends Controller
 				$imagehead 			= $this->getImageDatas($building_id,NULL,'head');
 				$imagemap			= $this->getImageDatas($building_id,NULL,'map');
 				if(!empty($imagehead)){
-					$linkimagehead = "image/$id/".$imagehead[0];
+					$linkimagehead = "images/building/$id/".$imagehead[0]['photo_name'];
 				}
 				if(!empty($imagemap)){
-					$linkimagehead = "image/$id/".$imagemap[0];
+					$linkimagemap = "images/building/$id/".$imagemap[0]['photo_name'];
 				}
 				
 				$payType        = $this->getPayType();
@@ -184,8 +184,8 @@ class UserbuildingController extends Controller
 			'roomlines'				=> $countroom,
 			'galleries'				=> $arrgallery,
 			'gellerylines'			=> $countgallery,
-			'imagehead'				=> $linkimagehead,
-			'imagemap'				=> $imagemap,
+			'linkimagehead'			=> $linkimagehead,
+			'linkimagemap'			=> $linkimagemap,
 		));
 	}
 
@@ -524,7 +524,7 @@ class UserbuildingController extends Controller
 					'photo_name'	=> $smapimagename,
 					'photo_type'	=> 'map',
 				);
-				
+				/*
 				for ($i=0; $i < $icountlineroom ; $i++) { 
 				$arrimagedata[] = array(
 						'imageid'		=> $post_array['imageid'.$i],
@@ -544,7 +544,7 @@ class UserbuildingController extends Controller
 						'photo_type'	=> 'gallery',
 					);
 				}
-				
+				*/
 				$alert = $this->saveImageData($id,$arrimagedata);
 				echo $alert;
 			}
@@ -592,9 +592,9 @@ class UserbuildingController extends Controller
 					$em->flush();
 					return 'complete';
 				}
-				/*else {
+				else {
 					
-				}*/
+				}
 			}
 		}
 		return 'complete';
