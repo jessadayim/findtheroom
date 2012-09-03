@@ -12,6 +12,7 @@ $build_id = $_POST['buildid'];
 $fieldname = $_POST['fieldname'];
 $type =$_POST['typefield'];
 $now = date('Y-m-d');
+$time = strtotime(date("Y-m-d H:i:s"));
 if (!empty($_FILES)) {
 	// Validate the file type
 	$fileTypes = array('jpg','jpeg','gif','png'); // File extensions
@@ -24,9 +25,9 @@ if (!empty($_FILES)) {
 		$newfieldname2 = str_replace('#gallery', '', $fieldname);
 	}
 	$fileextension = $fileParts['extension'];
-	$fixfilename = $now.$newfieldname1.'.'.$fileextension;
-	
-	$filenamecallback = $newfieldname1.'.'.$fileextension.'_'.$newfieldname2;
+	//$fixfilename = $newfieldname1.'.'.$fileextension;
+	$fixfilename = $time.'.'.$fileextension;
+	//$filenamecallback = $newfieldname1.'.'.$fileextension.'_'.$newfieldname2;
 	
 	$tempFile = $_FILES['Filedata']['tmp_name'];
 	$targetPath = $_SERVER['DOCUMENT_ROOT'] . $targetFolder . '/' .$build_id;

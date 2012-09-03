@@ -319,7 +319,7 @@
 		$.post(addfixpath, $("#addform").serialize(), 
 		function(data) {
 			var completetext = data;
-			//alert(completetext);
+			alert(completetext);
 			$.gritter.add({
 				// (string | mandatory) the heading of the notification
 				title: 'บันทึกข้อมูลสำเร็จ',
@@ -375,7 +375,11 @@
         	<tr height="50" valign="middle">
 				<td align="left" width="240">
 					<div id="headimage" class="thumbframe4add">
+						{% if imagehead != '' %}
+						<img src="{{asset(imagehead.photo_name)}}" class="nopad thumb" />
+						{% else %}
 						<img src="{{asset('images/ex.png')}}" class="nopad thumb" />
+						{% endif %}
 					</div>
 				</td>
                 <td align="left" width="210" valign="middle"><input style="margin-left: -20px;" type="file" name="file_upload" id="file_upload" />
