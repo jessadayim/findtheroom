@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <h1>User_admin list</h1>
 
 <table class="records_list">
@@ -37,3 +38,44 @@
     </tbody>
 </table>
 
+=======
+<h1>User_admin list</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Username</th>
+            <th>Password</th>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Phone_number</th>
+            <th>Userlevel</th>
+            <th>Deleted</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('user_admin_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.username }}</td>
+            <td>{{ entity.password }}</td>
+            <td>{{ entity.firstname }}</td>
+            <td>{{ entity.lastname }}</td>
+            <td>{{ entity.phonenumber }}</td>
+            <td>{{ entity.userlevel }}</td>
+            <td>{{ entity.deleted }}</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('user_admin_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+>>>>>>> 2111584b125ef558f2be4fdd8f22ca10f84c23bb

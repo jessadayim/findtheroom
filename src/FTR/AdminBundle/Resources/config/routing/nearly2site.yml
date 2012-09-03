@@ -1,0 +1,30 @@
+nearly2site:
+    pattern:  /
+    defaults: { _controller: "FTRAdminBundle:Nearly2site:index" }
+
+nearly2site_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "FTRAdminBundle:Nearly2site:show" }
+
+nearly2site_new:
+    pattern:  /new
+    defaults: { _controller: "FTRAdminBundle:Nearly2site:new" }
+
+nearly2site_create:
+    pattern:  /create
+    defaults: { _controller: "FTRAdminBundle:Nearly2site:create" }
+    requirements: { _method: post }
+
+nearly2site_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "FTRAdminBundle:Nearly2site:edit" }
+
+nearly2site_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "FTRAdminBundle:Nearly2site:update" }
+    requirements: { _method: post }
+
+nearly2site_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "FTRAdminBundle:Nearly2site:delete" }
+    requirements: { _method: post }

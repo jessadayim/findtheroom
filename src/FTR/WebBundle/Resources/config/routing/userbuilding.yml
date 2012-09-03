@@ -13,10 +13,7 @@ saveData:
 updateUserProfile:
     pattern: /check
     defaults: { _controller: FTRWebBundle:Userbuilding:updateUserProfile }
-choosePicture:
-    pattern: /choosepic/{id}
-    defaults: { _controller: FTRWebBundle:Userbuilding:chooseFile }
     
-uploadPicture:
-    pattern: /choosepic
-    defaults: { _controller: FTRWebBundle:Userbuilding:uploadFile }
+autoSaveForm:
+    pattern: /autosave/{id}/{type}
+    defaults: { _controller: FTRWebBundle:Userbuilding:autoSaveForm,'type' :null }

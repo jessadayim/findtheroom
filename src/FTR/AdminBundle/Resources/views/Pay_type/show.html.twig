@@ -1,0 +1,37 @@
+<h1>Pay_type</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Typename</th>
+            <td>{{ entity.typename }}</td>
+        </tr>
+        <tr>
+            <th>Deleted</th>
+            <td>{{ entity.deleted }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('pay_type') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('pay_type_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('pay_type_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>

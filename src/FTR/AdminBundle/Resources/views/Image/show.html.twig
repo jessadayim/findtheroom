@@ -1,0 +1,49 @@
+<h1>Image</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Building_site_id</th>
+            <td>{{ entity.buildingsiteid }}</td>
+        </tr>
+        <tr>
+            <th>Roomtype2site_id</th>
+            <td>{{ entity.roomtype2siteid }}</td>
+        </tr>
+        <tr>
+            <th>Photo_name</th>
+            <td>{{ entity.photoname }}</td>
+        </tr>
+        <tr>
+            <th>Photo_type</th>
+            <td>{{ entity.phototype }}</td>
+        </tr>
+        <tr>
+            <th>Deleted</th>
+            <td>{{ entity.deleted }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('image') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('image_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('image_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>

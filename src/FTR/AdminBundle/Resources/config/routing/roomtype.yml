@@ -1,0 +1,30 @@
+roomtype:
+    pattern:  /
+    defaults: { _controller: "FTRAdminBundle:Roomtype:index" }
+
+roomtype_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "FTRAdminBundle:Roomtype:show" }
+
+roomtype_new:
+    pattern:  /new
+    defaults: { _controller: "FTRAdminBundle:Roomtype:new" }
+
+roomtype_create:
+    pattern:  /create
+    defaults: { _controller: "FTRAdminBundle:Roomtype:create" }
+    requirements: { _method: post }
+
+roomtype_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "FTRAdminBundle:Roomtype:edit" }
+
+roomtype_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "FTRAdminBundle:Roomtype:update" }
+    requirements: { _method: post }
+
+roomtype_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "FTRAdminBundle:Roomtype:delete" }
+    requirements: { _method: post }

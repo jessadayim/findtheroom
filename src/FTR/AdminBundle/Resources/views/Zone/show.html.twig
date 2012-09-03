@@ -1,0 +1,45 @@
+<h1>Zone</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Zonename</th>
+            <td>{{ entity.zonename }}</td>
+        </tr>
+        <tr>
+            <th>Latitude</th>
+            <td>{{ entity.latitude }}</td>
+        </tr>
+        <tr>
+            <th>Longitude</th>
+            <td>{{ entity.longitude }}</td>
+        </tr>
+        <tr>
+            <th>Deleted</th>
+            <td>{{ entity.deleted }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('zone') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('zone_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('zone_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>

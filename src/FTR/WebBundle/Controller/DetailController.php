@@ -10,7 +10,9 @@ class DetailController extends Controller
     
     public function DetailAction()
     {
-    	$em = $this->getDoctrine()->getEntityManager();		
+    	$detailData  = array();
+        $countData   = 0;
+        $em = $this->getDoctrine()->getEntityManager();
 		$conn= $this->get('database_connection');
 		$id = 1;
         if($_POST['bid'])
@@ -30,7 +32,13 @@ class DetailController extends Controller
                         JOIN nearly_type nt ON nt.id = n.nearly_type_id
                     WHERE b.id = $id
             ";
+
             $objSQL1 = $conn->fetchAll($sql1);
+            $countData = count($objSQL1);
+            if($countData>0){
+                 $detailData = $objSQL1[0];
+            }
+
 
             $sql2 ="SELECT * FROM roomtype2site s JOIN roomtype t ON s.roomtype_id = t.id
                     WHERE s.building_site_id = $id";
@@ -50,6 +58,14 @@ class DetailController extends Controller
 
 
 			
-        return $this->render('FTRWebBundle:Detail:detail.html.twig', array('item1'=>$objSQL1[0],'item2'=>$objSQL2,'item3'=>$objSQL3,'item4'=>$objSQL4,'id'=>$id));
+        return $this->render('FTRWebBundle:Detail:detail.html.twig', array(
+            'item1'=>$detailData,
+            'item2'=>$objSQL2,
+            'item3'=>$objSQL3,
+            'item4'=>$objSQL4,
+            'id'    =>$id,
+            'countData'=>$countData,
+
+        ));
     }
 }

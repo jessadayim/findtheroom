@@ -1,0 +1,68 @@
+<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js'></script>
+<script>
+	$(document).ready(function() {
+		function toggle(id, toggle) {
+			$(id).animate({
+				left : '+=50',
+				height : toggle
+			}, 500, function() {
+			});
+		}
+
+
+		$("#formCreateFacility").submit(function() {
+			$('#divPostCreateFacility').slideUp(300).delay(800).fadeOut(400);
+			return false;
+		});
+
+		var url = "{{ path('facility2site_create') }}";
+		$('.checkFacility').click(function() {
+			var val = this.value;
+			var check = this.checked;
+			$.ajax({
+				type : "POST",
+				url : url,
+				data : {
+					building_site_id : $('#building_site_id').val(),
+					facility_list_id : val,
+					check_post		: check +''
+				},
+				success : function(msg) {
+					if (msg == 'finish') {
+						//$('#listBuildingSite')load(window.location + "show");
+					} else {
+						alert(msg)
+						//alert('เกิดการผิดพลาด\n** กรุณาตรวจสอบ **');
+					}
+				}
+			});
+		});
+	}); 
+</script>
+<div id="divPostCreateFacility">
+	<form id="formCreateFacility" action="{{ path('facility2site_create') }}" method="post" >
+		<fieldset>
+			<legend>
+				CREATE FACILITY
+			</legend>
+
+			<div class="label" style="">
+				{% for building_site in buildingsite %}
+				<h2>{{ building_site.building_name }}</h2>
+				<input type="hidden" value="{{ building_site.id }}" id="building_site_id" name="building_site_id"/>
+				{% endfor %}
+			</div>
+			<br />
+			{% for facility in facilityList %}
+			<label class="labelFacility">
+				<input type="checkbox" name="facilityList[]" value="{{ facility.id }}" class="checkFacility"/>
+				{{ facility.facility_name }}</label>
+			<br/>
+			{% endfor %}
+
+			<span style="float: right;">
+				<input type="submit" value="ClOSE">
+			</span>
+		</fieldset>
+	</form>
+</div>

@@ -51,14 +51,28 @@ class RegisterController extends Controller
 							$sql1 ="INSERT INTO user_owner(username,password,firstname,lastname,email,phone_number,fax_number,deleted,confirm_token) VALUES('$username','$password','$firstname','$lastname','$email','$tel','0000000000','0','$random_token')";
 							$conn->query($sql1);
 							
+							$message = \Swift_Message::newInstance()
+					        ->setSubject('findtheroom')
+					        ->setFrom('support@findtheroom.com')
+					        ->setTo($email)
+					        ->setBody("สวัสดีค่ะ คุณ $email ยินตีต้อนรับสู่ SpecialSquare.com!
+
+							ชื่อที่ใช้ในการ login เข้าบัญชีสมาชิกของคุณคือ $username<br/><a href='http://localhost:11001/findtheroom/web/app_dev.php?token=$random_token'>http://localhost:11001/findtheroom/web/app_dev.php/?token=$random_token</a>",'text/html');
+					    	
+					    	$this->get('mailer')->send($message);
+							
 							$sqllogin_ss = "SELECT id,username FROM user_owner WHERE username = '$username'";
 							$userdata = $conn->fetchall($sqllogin_ss);
 							$session = $this->get('session');
 							$user = $userdata[0]['username'];
 							$id = $userdata[0]['id'];
 							$session->set('user', $user);
-							$session->set('id', $id);
-							
+							$session->set('id', $id);	
+													
+							$time = date("Y-m-d : H:i:s", time());							
+							$sql2 ="UPDATE user_owner SET last_login = '$time' WHERE id= '$id'";
+							$conn->query($sql2);
+														
 							return $this->render('FTRWebBundle:Publish:publish.html.twig', array());
 						
 						} catch (Exception $e) {

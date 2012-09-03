@@ -23,16 +23,16 @@
 	    <div class="clear"></div>
 		<div class="createPanel" style="">
 			
-			<form>
+			<form action="{{path('FTRAdminBundle_Createownerlists')}}" method="post">
 				<fieldset>
 					<legend>CREATE OWNER</legend>
-					<div class="label" style="">Username:</div> <input type="text" name="OwnerUsername" class="widfat" /><br />
-					<div class="label" style="">Password:</div> <input type="text" name="OwnerPassword" class="widfat" /><br />
-					<div class="label" style="">First Name:</div> <input type="text" name="OwnerFristName" class="widfat" /><br />
-					<div class="label" style="">Last Name:</div> <input type="text" name="OwnerLastName" class="widfat" /><br />
-					<div class="label" style="">Phone Number:</div> <input type="text" name="OwnerPhoneNumber" class="widfat" /><br />
-					<div class="label" style="">Fax Number:</div> <input type="text" name="OwnerFaxNumber" class="widfat" /><br />
-					<div class="label" style="">Email:</div> <input type="text" name="OwnerEmail" class="widfat" /><br />
+					<div class="label" style="">Username:</div> <input type="text" id="OwnerUsername" name="OwnerUsername" class="widfat" /><br />
+					<div class="label" style="">Password:</div> <input type="text" id="OwnerPassword" name="OwnerPassword" class="widfat" /><br />
+					<div class="label" style="">First Name:</div> <input type="text" id="OwnerFristName" name="OwnerFristName" class="widfat" /><br />
+					<div class="label" style="">Last Name:</div> <input type="text" id="OwnerLastName" name="OwnerLastName" class="widfat" /><br />
+					<div class="label" style="">Phone Number:</div> <input type="text" id="OwnerPhoneNumber" name="OwnerPhoneNumber" class="widfat" /><br />
+					<div class="label" style="">Fax Number:</div> <input type="text" id="OwnerFaxNumber" name="OwnerFaxNumber" class="widfat" /><br />
+					<div class="label" style="">Email:</div> <input type="text" id="OwnerEmail" name="OwnerEmail" class="widfat" /><br />
 					
 					<span style="float: right;"><input type="submit"  value="CREATE"></span>
 				</fieldset>	
@@ -45,15 +45,11 @@
 			<tr>
 				<th style="width: 940px !important;">name</th>
 			</tr>
+			{% for admin in objSQL1 %}
 			<tr>
-			  <td>Lumpini Park Pinklao</td>
+			  <td>{{admin.firstname}}  {{admin.lastname}}</td>
 			</tr>
-			<tr>
-			  <td>Lumpini Park Pinklao</td>
-			</tr>
-			<tr>
-			  <td>Lumpini Park Pinklao</td>
-			</tr>
+			{% endfor%}
 		</table>
 		<div class="clear"></div>
 	</div>	

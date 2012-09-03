@@ -10,7 +10,7 @@ class ResetController extends Controller
 {
     public function resetAction()
     {
-		return $this->render('FTRWebBundle:Security:resetpass.html.twig',array());	
+		return $this->render('FTRWebBundle:Security:resetpass.html.twig',array('token'=>'1d0f686e6bdbac25af7396c843601b28'));	
     }
 	public function changeAction()
     {
@@ -19,9 +19,9 @@ class ResetController extends Controller
 	public function passchgAction()
     {
     	$pass = $_POST['newpass'];
-		$id = '17';
+		
 		$em = $this->getDoctrine()->getEntityManager();
-		$user = $em->getRepository('FTRWebBundle:User_owner')->find($id);
+		$user = $em->getRepository('FTRWebBundle:User_owner')->find('133');
 		$user->setPassword($pass);
     	$em->flush();
 		exit();

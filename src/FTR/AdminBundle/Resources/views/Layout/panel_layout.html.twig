@@ -9,20 +9,20 @@
 
 <title>Fine the Room : Control Panel</title>
 {% block css %}
-<link rel='stylesheet' type='text/css' href='{{asset("css/panel/reset.css")}}' />
-<link rel='stylesheet' type='text/css' href='{{asset("css/panel/960_12.css")}}' />
-<link rel='stylesheet' type='text/css' href='{{asset("css/panel/style.css")}}' />
-<link rel='stylesheet' type='text/css' href='{{asset("css/panel/general.css")}}' />
-<link rel='stylesheet' type='text/css' href='{{asset("css/panel/vertical-menu.css")}}' />
+<link rel="stylesheet" type="text/css" href="{{asset('css/panel/reset.css')}}" />
+<link rel="stylesheet" type="text/css" href="{{asset('css/panel/960_12.css')}}" />
+<link rel="stylesheet" type="text/css" href="{{asset('css/panel/style.css')}}" />
+<link rel="stylesheet" type="text/css" href="{{asset('css/panel/general.css')}}" />
+<link rel="stylesheet" type="text/css" href="{{asset('css/panel/vertical-menu.css')}}" />
 {% endblock %}
 {% block js %}
-<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js'></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
 {% endblock %}
 
 </head>
 
 <body>
-{% if session == 0 %}
+{% if app.session.get('username') is empty %}
 	<header id="wrap" class="container_12" style="height: 100px; padding-top: 30px; text-align: center;">
 		<H1>FindtheRoom PANEL</H1>
 	</header>	<!-- End .container_12 -->
@@ -39,7 +39,7 @@
 			        <li class=""> <a href="{{path('FTRAdminBundle_Facilitylists')}}">Facilities</a> </li>
 			        <li class=""> <a href="{{path('FTRAdminBundle_Roomtypelists')}}">Room Types</a> </li>
 			        <li class=""> <a href="{{path('FTRAdminBundle_Nearlytypelists')}}">Nearly Types</a> </li>
-			        <li class=""> <a href="{{path('FTRAdminBundle_Nearlylocationlists)}}">Nearly Locations</a> </li>
+			        <li class=""> <a href="{{path('FTRAdminBundle_Nearlylocationlists')}}">Nearly Locations</a> </li>
 			        <li class=""> <a href="{{path('FTRAdminBundle_Paytypelists')}}">Pay Types</a> </li>
 			      </ul>
 			    </li>
@@ -52,7 +52,7 @@
 			    </li>
 			    <li class=""> <a href="#">SITE CONTROL</a> 
 			      <ul>
-			        <li class=""> <a href="{{path('FTRAdminBundle_Sitedetail:')}}">Site Detail</a> </li>
+			        <li class=""> <a href="{{path('FTRAdminBundle_Sitedetail')}}">Site Detail</a> </li>
 			        <li class=""> <a href="{{path('FTRAdminBundle_Advertisingdetail')}}">Advertising Detail</a> </li>
 			        <li class=""> <a href="#">Menus Detail</a> </li>
 			      </ul>
@@ -63,9 +63,9 @@
 		</div><!-- End #headernav -->
 		<div id="userpanel" class="grid_4 omega" style="">
 			<ul>
-				<li><a href="#">Hi ADMINISTRATOR</a></li>
+				<li><a href="#">Hi {{app.session.get('username')}}</a></li>
 				<li><a href="#">My Setting</a></li>
-				<li><a href="signin.php"><STRONG>Log out</STRONG></a></li>
+				<li><a href="{{path('FTRAdminBundle_logout')}}"><STRONG>Log out</STRONG></a></li>
 			</ul>
 			<input type="text" name="txtsearch" id="txtsearch">
 			<input type="submit" name="btnsearch" id="btnsearch" value="SEARCH">
