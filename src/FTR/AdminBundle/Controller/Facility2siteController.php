@@ -34,20 +34,40 @@ class Facility2siteController extends Controller
      */
     public function showAction($id)
     {
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $entity = $em->getRepository('FTRWebBundle:Facility2site')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Facility2site entity.');
+        $entity = new Facility2site();
+        $entity->setBuildingSiteId($id);
+        $sqlFacility = "
+            SELECT 
+              l.*,
+              f.id AS facility2site_id 
+            FROM
+              `facilitylist` l 
+              LEFT JOIN `facility2site` f 
+                ON (
+                  f.`facilitylist_id` = l.id 
+                  AND f.`building_site_id` = $id 
+                  AND f.`deleted` != 1
+                ) 
+            WHERE l.`deleted` != 1   
+        ";
+        $sqlGetBuildingSite = "
+            SELECT 
+              * 
+            FROM
+              `building_site` 
+            WHERE `deleted` != 1 
+              AND id = $id
+        ";
+        $facilityList = $this->getDataArray($sqlFacility);         
+        foreach ($facilityList as $key => $value){
+            $facilityList[$key]['count'] = $key+1;
         }
-
-        $deleteForm = $this->createDeleteForm($id);
+        $getBuildingSite = $this->getDataArray($sqlGetBuildingSite);  
+        //$form   = $this->createForm(new Facility2siteType(), $entity);
 
         return $this->render('FTRAdminBundle:Facility2site:show.html.twig', array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
-
+            'buildingsite'    => $getBuildingSite,  
+            'facilityList'      => $facilityList
         ));
     }
 
@@ -55,15 +75,34 @@ class Facility2siteController extends Controller
      * Displays a form to create a new Facility2site entity.
      *
      */
-    public function newAction()
+    public function newAction($buildingsiteid)
     {
-        $entity = new Facility2site();
-        $form   = $this->createForm(new Facility2siteType(), $entity);
-
-        return $this->render('FTRAdminBundle:Facility2site:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView()
-        ));
+        // $entity = new Facility2site();
+        // $entity->setBuildingSiteId($buildingsiteid);
+        // $sqlFacility = "
+            // SELECT
+                // *
+            // FROM 
+                // `facilitylist`
+            // WHERE `deleted` != 1 
+        // ";
+        // $sqlGetBuildingSite = "
+            // SELECT 
+              // * 
+            // FROM
+              // `building_site` 
+            // WHERE `deleted` != 1 
+              // AND id = $buildingsiteid
+        // ";
+        // $facilityList = $this->getDataArray($sqlFacility);        
+//         
+        // $getBuildingSite = $this->getDataArray($sqlGetBuildingSite);  
+        // //$form   = $this->createForm(new Facility2siteType(), $entity);
+// 
+        // return $this->render('FTRAdminBundle:Facility2site:new.html.twig', array(
+            // 'buildingsite'    => $getBuildingSite,  
+            // 'facilityList'      => $facilityList
+        // ));
     }
 
     /**
@@ -72,24 +111,50 @@ class Facility2siteController extends Controller
      */
     public function createAction()
     {
-        $entity  = new Facility2site();
-        $request = $this->getRequest();
-        $form    = $this->createForm(new Facility2siteType(), $entity);
-        $form->bindRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('facility2site_show', array('id' => $entity->getId())));
-            
-        }
-
-        return $this->render('FTRAdminBundle:Facility2site:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView()
-        ));
+        
+        $em = $this->getDoctrine()->getEntityManager();
+        
+        $getPostFacilityListID = @$_POST['facility_list_id'];
+        $getBuildingSiteID = @$_POST['building_site_id'];
+        $getCheckPost = @$_POST['check_post'];
+        
+        $sqlGetfacility = "
+            SELECT
+                id
+            FROM 
+                `facility2site`
+            WHERE facilitylist_id = $getPostFacilityListID 
+            AND building_site_id = $getBuildingSiteID
+        ";
+        $getfacility = $this->getDataArray($sqlGetfacility);
+        
+        if (empty($getfacility)){
+            if ($getCheckPost == 'true'){
+                $entity  = new Facility2site();            
+                $entity ->setBuildingSiteId($getBuildingSiteID);
+                $entity ->setDeleted(0);
+                $entity ->setFacilitylistId($getPostFacilityListID);
+            }        
+            else {
+                echo 'finish';
+                exit();
+            }   
+        }else{
+            $entity = $em->getRepository('FTRWebBundle:Facility2site')->find($getfacility[0]['id']);
+            if ($getCheckPost == 'true'){
+                $entity ->setDeleted(0);
+            }else {
+                $entity ->setDeleted(1);
+            }
+        } 
+        $em->persist($entity);
+        $em->flush();
+        echo 'finish';
+        exit();
+        // return $this->render('FTRAdminBundle:Facility2site:new.html.twig', array(
+            // 'entity' => $entity,
+            // 'form'   => $form->createView()
+        // ));
     }
 
     /**
@@ -183,5 +248,16 @@ class Facility2siteController extends Controller
             ->add('id', 'hidden')
             ->getForm()
         ;
+    }
+    
+    private function getDataArray($sql){
+        $conn= $this->get('database_connection');
+        if(!$conn){ die("MySQL Connection error");}        
+        try{
+            return $conn->fetchAll($sql);
+        } catch (Exception $e) {
+            echo 'Caught exception: ',  $e->getMessage(), "\n";
+        }
+        return array();
     }
 }

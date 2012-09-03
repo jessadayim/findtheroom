@@ -7,9 +7,11 @@
 	$(document).ready(function() {
 		$("#createrecord").click(function() {
 			$.post('new', function(data) {
-				$('.createPanel').html(data);
-				toggle(".createPanel", 'toggle');
-				toggle(".editPanel", 'hide');
+				$('.createPanel').slideUp(600).fadeIn(600);
+				if (!$('.createPanel').html()){
+					$('.createPanel').html(data);
+				}
+				toggle(".innerPanel", 'hide');
 
 				$("#createrecord").hide();
 				$("#createrecordCancel").show('slow');
@@ -27,7 +29,7 @@
 
 		// var checkHide = {{checkhide}};
 		// if (checkHide) {
-			// toggle(".createPanel", 'show');
+		// toggle(".createPanel", 'show');
 		// }
 
 		function toggle(id, toggle) {
@@ -38,9 +40,8 @@
 			});
 		}
 
-
 		// $.post('show', function(data) {
-			// $('#listBuildingSite').html(data);
+		// $('#listBuildingSite').html(data);
 		// });
 	}); 
 </script>
@@ -56,11 +57,9 @@
 			Welcome to Visual Admin, a slick admin template for almost any project - front or back end. It's based on the 960 grid system which means you can have almost endless layout possibiliites as well as those that come ready to use straight out the box. Please have a click around and feel free to check out the screenshots.
 		</p>
 
-		<div class="editPanel" ></div>
+		<div class="innerPanel" ></div>
 
-		<div class="createPanel" style="">
-
-		</div>
+		<div class="createPanel" style=""></div>
 	</div>
 	<div id="listBuildingSite" class="grid_12 tableLists marginB_10 alpha" style="">
 

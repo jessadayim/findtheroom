@@ -58,6 +58,7 @@ class Building_siteController extends Controller
               LEFT JOIN `image` i 
                 ON (b.`id` = i.`building_site_id`) 
             WHERE b.`deleted` != 1   
+            GROUP BY b.id
         ";
         try{
             $entities = $conn->fetchAll($sqlGetEntity);

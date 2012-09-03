@@ -133,14 +133,20 @@ class UserbuildingController extends Controller
 						$paytype_data = $em->getRepository('FTRWebBundle:Pay_type')->findOneBy(array('id'=>$building_data['ipaytypeid']));
 					}
 				}
-				
+				$linkimagehead = NULL;
+				$linkimagemap = NULL;
 				$fac_inroomlist 	= $this->getFacility('inroom');
 				$fac_outroomlist 	= $this->getFacility('outroom');
 				$arrroom 			= $this->getImageDatas($building_id,NULL,'room');
 				$arrgallery 		= $this->getImageDatas($building_id,NULL,'gallery');
 				$imagehead 			= $this->getImageDatas($building_id,NULL,'head');
 				$imagemap			= $this->getImageDatas($building_id,NULL,'map');
-				
+				if(!empty($imagehead)){
+					$linkimagehead = "image/$id/".$imagehead[0];
+				}
+				if(!empty($imagemap)){
+					$linkimagehead = "image/$id/".$imagemap[0];
+				}
 				
 				$payType        = $this->getPayType();
 		        $bkkZone        = $this->getBkkZone();
@@ -178,6 +184,8 @@ class UserbuildingController extends Controller
 			'roomlines'				=> $countroom,
 			'galleries'				=> $arrgallery,
 			'gellerylines'			=> $countgallery,
+			'imagehead'				=> $linkimagehead,
+			'imagemap'				=> $imagemap,
 		));
 	}
 
@@ -219,11 +227,14 @@ class UserbuildingController extends Controller
 			try{
 				$sql ="select * from image 
 								where building_site_id = '$buildid' 
-									or roomtype2site_id = '$roomtype2siteid' 
 									and photo_type = '$type' 
+									or roomtype2site_id = '$roomtype2siteid' 
 									and deleted = 0";
 				$imagedata = $conn->fetchAll($sql);
-					
+				/*echo "<pre>";
+				var_dump($imagedata);
+				echo "</pre>";
+				exit();*/
 			} catch (Exception $e) {
 			echo 'Caught exception: ',  $e->getMessage(), "\n";
 		}
@@ -493,12 +504,137 @@ class UserbuildingController extends Controller
 	
 	public function autoSaveFormAction($id,$type)
 	{
-		//echo $id." ";
 		if($_POST)
 		{
-			echo $type;
+			$sownername 	= $_POST['hdnownername'];
+			$ibuildid		= $id;
+			$arrimagedata		= NULL;
+			if($type=='image')
+			{
+				$sheadimagename 	= $_POST['hdnfilename'];
+				$smapimagename 		= $_POST['hdnfilemap'];
+				$icountlineroom 	= $_POST['hdnMaxLine'];
+				$icountlinegallery 	= $_POST['hdnMaxLineGal'];
+				
+				$arrimagedata[]		= array(
+					'photo_name'	=> $sheadimagename,
+					'photo_type'	=> 'head',
+				);
+				$arrimagedata[]		= array(
+					'photo_name'	=> $smapimagename,
+					'photo_type'	=> 'map',
+				);
+				
+				for ($i=0; $i < $icountlineroom ; $i++) { 
+				$arrimagedata[] = array(
+						'imageid'		=> $post_array['imageid'.$i],
+						'photo_name'	=> $post_array['hdnfilename'.$i],
+						'typename'		=> $post_array['typeap_name'.$i],
+						'room_size'		=> $post_array['typeap_size'.$i],
+						'room_price'	=> $post_array['typeap_price'.$i],
+						'photo_type'	=> 'room',
+					);
+				}
+				
+				for ($i=0; $i < $icountlinegallery ; $i++) { 
+					$arrimagedata[] = array(
+						'imageid'		=> $post_array['imageid'.$i],
+						'photo_name'	=> $post_array['hdnfilename'.$i],
+						'description'	=> $post_array['galtitle'.$i],
+						'photo_type'	=> 'gallery',
+					);
+				}
+				
+				$alert = $this->saveImageData($id,$arrimagedata);
+				echo $alert;
+			}
 		}
 		exit();
+	}
+
+	public function saveImageData($id,$imagedata)
+	{
+		$em = $this->getDoctrine()->getEntityManager();
+		//return $imagedata[0]['photo_name'];
+		foreach ($imagedata as $key => $value) {
+			$roomtype2siteid = NULL;$data = NULL; // set NULL value for new loop
+			if(!empty($id)||!empty($value['photo_name'])){
+				$imagevalue = $em->getRepository('FTRWebBundle:Image')->findOneBy(array('building_site_id'=>$id,'photo_type'=>$value['photo_type']));
+				if(empty($imagevalue))
+				{
+					$image = new Image();
+					$image->setBuildingSiteId($id);
+					$image->setPhotoName($value['photo_name']);
+					$image->setPhotoType($value['photo_type']);
+					if(!empty($value['description']))
+					{
+						$image->setDescription($value['description']);
+					}
+					else {
+						$image->setDescription('');
+					}
+					
+					if($value['photo_type']=='room')
+					{
+						$data = array(
+							'typename'		=> $value['typename'],
+							'room_size'		=> $value['room_size'],
+							'room_price'	=> $value['room_price'],
+						);
+						$roomtype2siteid = $this->saveRoomtypeData($id, $data, NULL);
+						$image->setRoomtype2siteId($roomtype2siteid);
+					}
+					else {
+						$image->setRoomtype2siteId(NULL);
+					}
+					
+					$em->persist($image);
+					$em->flush();
+					return 'complete';
+				}
+				/*else {
+					
+				}*/
+			}
+		}
+		return 'complete';
+		exit();
+	}
+	
+	public function saveRoomtypeData($buildingid,$data,$roomtype2siteid)
+	{
+		$em = $this->getDoctrine()->getEntityManager();
+		$roomtype2sitedata = $em->getRepository('FTRWebBundle:Roomtype2site')->findOneBy(array('building_site_id'=>$buildingid,'id'=>$roomtype2siteid));
+		if(empty($roomtype2sitedata))
+		{
+			$roomtype = new Roomtype();
+			$roomtype->setRoomTypename($data['typename']);
+			$em->persist($roomtype);
+			$em->flush();
+			
+			$roomtypeid = $roomtype->getId();
+			
+			$roomtype2site = new Roomtype2site();
+			$roomtype2site->setRoomtypeId($roomtypeid);
+			$roomtype2site->setBuildingSiteId($buildingid);
+			$roomtype2site->setRoomsize($data['room_size']);
+			$roomtype2site->setRoomprice($data['room_price']);
+			$em->persist($roomtype2site);
+			$em->flush();
+			
+			$roomtype2siteid = $roomtype2site->getId();
+		}
+		else {
+			$roomtypeid = $roomtype2sitedata->getRoomtypeId();
+			$roomtypedata = $em->getRepository('FTRWebBundle:Roomtype')->findOneBy(array('id'=>$roomtypeid));
+			$roomtypedata->setRoomTypename($data['typename']);
+			
+			$roomtype2sitedata->setRoomsize($data['room_size']);
+			$roomtype2sitedata->setRoomprice($data['room_price']);
+			
+			$em->flush();
+		}
+		return $roomtype2siteid;
 	}
 	
 	function getBkkZone()
