@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Login</title>
+		<link rel="stylesheet" type="text/css" href="{{asset('css/main.css')}}" />
+		<script src="{{asset('js/jquery.min.js')}}"></script>
+
+		<script>
+			$(document).ready(function() {
+				$("#home").click(function(e) {
+					parent.location.href = "{{path('FTRWebBundle_homepage')}}";
+				});
+			});
+		</script>
+
+	</head>
+
+	<body style=" background-color:#FFF; color:#423C3B;">
+
+		<img src="{{asset('images/login-h.png')}}" style="padding-top: 20px;" />
+		<hr style=" width:98%; margin-left:-5px; margin-top:15px; margin-bottom:10px;" />
+		<div style="display:block; position:relative; font-size:22px; margin-top: 10px;">
+			ระบบได้ทำการส่งลิงค์ เพื่อทำการรีเซ็ตรหัสผ่าน ไปยังอีเมลล์อขงท่านเรียบร้อยแล้ว
+		</div>
+		<div style="display:block; position:relative; margin-top:15px;">
+			<a id="home" href=""><img src="{{asset('images/back_home.png')}}" /></a>
+		</div>
+	</body>
+</html>

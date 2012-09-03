@@ -1,0 +1,15 @@
+user_admin:
+    pattern:  /
+    defaults: { _controller: FTRAdminBundle:User_admin:index }
+    
+admin_create:
+    pattern:  /create
+    defaults: { _controller: FTRAdminBundle:User_admin:create }
+    
+admin_edit:
+    pattern:  /show
+    defaults: { _controller: FTRAdminBundle:User_admin:show }
+
+admin_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: FTRAdminBundle:User_admin:edit }

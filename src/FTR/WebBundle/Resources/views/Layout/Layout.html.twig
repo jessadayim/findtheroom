@@ -1,241 +1,277 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>FindTheRoom</title>
-{% block css %}
-<link rel="stylesheet" type="text/css" href="{{asset('css/main.css')}}" />
-<link rel="stylesheet" type="text/css" href="{{asset('css/gooeymenu.css')}}" />
-<link rel="stylesheet" type="text/css" href="{{asset('css/global.css')}}">
-<link rel="stylesheet" type="text/css" href="{{asset('css/paging.css')}}">
-{% endblock %}
-{% block js %}
-<script src="{{asset('js/jquery.min.js')}}"></script>
-<!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script> -->
-<script src="{{asset('js/html5placeholder.jquery.js')}}"></script>
-<script src="{{asset('js/jquery.easing.1.3.js')}}"></script>
-<script src="{{asset('js/slides.min.jquery.js')}}"></script>
-<script src="{{asset('js/paging/jquery.paginate.js')}}"></script>
-<script type="text/javascript" src="{{asset('js/fancybox/jquery.fancybox-1.3.4.pack.js')}}"></script>
-<link rel="stylesheet" type="text/css" href="{{asset('css/jquery.fancybox-1.3.4.css')}}" media="screen" />
-<script type="text/javascript" src="{{asset('js/fancybox/jquery.easing-1.4.pack.js')}}"></script>
-{% endblock %}
-<script>
-    $(function(){
-      $(':input[placeholder]').placeholder();
-    });
-</script>
-<script language="javascript">
-		$(document).ready(function(){
-		var mybrowser=navigator.userAgent;
-		if(mybrowser.indexOf('Firefox')>0){
-		$(".login").css("marginLeft","5px");
-		$(".head hr").css("marginTop","5px");
-}
-		if(mybrowser.indexOf('MSIE')>0){
-		$(".login").css("marginLeft","0px");
-		$("#fie").width("190");
-}
-		
-		$("input#log2").click(function(e) {
-				//alert("working1");
-				$.ajax({
-				  url: "{{path('FTRWebBundle_login')}}",
-				  type: 'POST',
-				  data: "username="+$('input#username').val()+"&"+"password="+$('input#password').val(),
-				  success: function(data) {			  	
-					  	if(data == 0){
-					  		$.fancybox({
-					  			'content'			: "{{path('FTRWebBundle_loginpublish')}}",
-								'width'				: 700,
-								'height'			: 400,
-								'autoScale'			: false,
-								'transitionIn'		: 'elastic',
-								'transitionOut'		: 'elastic',
-								'type'				: 'iframe'
-							});
-					  	}else if(data == 1){
-					  		parent.location.href = "{{path('userbuilding')}}";
-					  		//exit();
-					  	}
-					  	else if(data == 2){
-					  		
-							$.fancybox({
-								'content'			: "{{path('FTRWebBundle_loginpublish')}}",
-								'width'				: 700,
-								'height'			: 400,
-								'autoScale'			: false,
-								'transitionIn'		: 'elastic',
-								'transitionOut'		: 'elastic',
-								'type'				: 'iframe'
-							});
-						} 
-				  	},
-				  error: function(e) {
-				  	 $("#txterror").html("กรุณาตรวจสอบ ชื่อผู้ใช้งาน และรหัสผ่าน");
-				  	}
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>FindTheRoom</title>
+		{% block css %}
+		<link rel="stylesheet" type="text/css" href="{{asset('css/main.css')}}" />
+		<link rel="stylesheet" type="text/css" href="{{asset('css/gooeymenu.css')}}" />
+		<link rel="stylesheet" type="text/css" href="{{asset('css/global.css')}}">
+		<link rel="stylesheet" type="text/css" href="{{asset('css/paging.css')}}">
+		{% endblock %}
+		{% block js %}
+		<script src="{{asset('js/jquery.min.js')}}"></script>
+		<!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script> -->
+		<script src="{{asset('js/html5placeholder.jquery.js')}}"></script>
+		<script src="{{asset('js/jquery.easing.1.3.js')}}"></script>
+		<script src="{{asset('js/slides.min.jquery.js')}}"></script>
+		<script src="{{asset('js/paging/jquery.paginate.js')}}"></script>
+		<script type="text/javascript" src="{{asset('js/fancybox/jquery.fancybox-1.3.4.pack.js')}}"></script>
+		<link rel="stylesheet" type="text/css" href="{{asset('css/jquery.fancybox-1.3.4.css')}}" media="screen" />
+		<script type="text/javascript" src="{{asset('js/fancybox/jquery.easing-1.4.pack.js')}}"></script>
+		{% endblock %}
+		<script>
+			$(function() {
+				$(':input[placeholder]').placeholder();
+			});
+		</script>
+		<script language="javascript">
+			$(document).ready(function() {
+				var mybrowser = navigator.userAgent;
+				if (mybrowser.indexOf('Firefox') > 0) {
+					$(".login").css("marginLeft", "5px");
+					$(".head hr").css("marginTop", "5px");
+				}
+				if (mybrowser.indexOf('MSIE') > 0) {
+					$(".login").css("marginLeft", "0px");
+					$("#fie").width("190");
+				}
+
+				$("input#log2").click(function(e) {
+					//alert("working1");
+					$.ajax({
+						url : "{{path('FTRWebBundle_login')}}",
+						type : 'POST',
+						data : "username=" + $('input#username').val() + "&" + "password=" + $('input#password').val(),
+						success : function(data) {
+							if (data == 0) {
+								$.fancybox({
+									'content' : "{{path('FTRWebBundle_loginpublish')}}",
+									'width' : 700,
+									'height' : 400,
+									'autoScale' : false,
+									'transitionIn' : 'elastic',
+									'transitionOut' : 'elastic',
+									'type' : 'iframe'
+								});
+							} else if (data == 1) {
+								parent.location.href = "{{path('userbuilding')}}";
+								//exit();
+							} else if (data == 2) {
+
+								$.fancybox({
+									'content' : "{{path('FTRWebBundle_loginpublish')}}",
+									'width' : 700,
+									'height' : 400,
+									'autoScale' : false,
+									'transitionIn' : 'elastic',
+									'transitionOut' : 'elastic',
+									'type' : 'iframe'
+								});
+							}
+						},
+						error : function(e) {
+							$("#txterror").html("กรุณาตรวจสอบ ชื่อผู้ใช้งาน และรหัสผ่าน");
+						}
+					});
 				});
-		});
-    });
-</script>
-<script type="text/javascript">  
-$(function(){  
-    $('ul#navi_containTab > li').click(function(event){  
-            var menuIndex=$(this).index();  
-            $('ul#detail_containTab > li:visible').hide();             
-            $('ul#detail_containTab > li').eq(menuIndex).show(); 
-    });  
-	$('ul#navi_containTab2 > li').click(function(event){  
-            var menuIndex=$(this).index();  
-            $('ul#detail_containTab2 > li:visible').hide();             
-            $('ul#detail_containTab2 > li').eq(menuIndex).show(); 
-    });  
-    $("ul#navi_containTab3 > li").click(function(event){  
-            var menuIndex=$(this).index();  
-            $("ul#detail_containTab3 > li:visible").hide();             
-            $("ul#detail_containTab3 > li").eq(menuIndex).show(); 
-    }); 
-	$('li#tabNavi1').click(function(event){  
-            $('#recommend').css("marginTop","15px");             
-    });  
-	$('li#tabNavi2').click(function(event){  
-            $('#recommend').css("marginTop","15px");             
-    }); 
-	$('li#tabNavi3').click(function(event){  
-            $('#recommend').css("marginTop","215px");             
-    }); 
-});  
-</script>
+			});
+		</script>
+		<script type="text/javascript">
+			$(function() {
+				$('ul#navi_containTab > li').click(function(event) {
+					var menuIndex = $(this).index();
+					$('ul#detail_containTab > li:visible').hide();
+					$('ul#detail_containTab > li').eq(menuIndex).show();
+				});
+				$('ul#navi_containTab2 > li').click(function(event) {
+					var menuIndex = $(this).index();
+					$('ul#detail_containTab2 > li:visible').hide();
+					$('ul#detail_containTab2 > li').eq(menuIndex).show();
+				});
+				$("ul#navi_containTab3 > li").click(function(event) {
+					var menuIndex = $(this).index();
+					$("ul#detail_containTab3 > li:visible").hide();
+					$("ul#detail_containTab3 > li").eq(menuIndex).show();
+				});
+				$('li#tabNavi1').click(function(event) {
+					$('#recommend').css("marginTop", "15px");
+				});
+				$('li#tabNavi2').click(function(event) {
+					$('#recommend').css("marginTop", "15px");
+				});
+				$('li#tabNavi3').click(function(event) {
+					$('#recommend').css("marginTop", "215px");
+				});
+			});
+		</script>
 
-<script type="text/javascript"> 
-function enact(what){
-     var p = what.parentNode;
-     var els = p.getElementsByTagName('li');
-     for(i=0;i<els.length;i++){
-          els[i].className = '';
-     }
-     what.className = 'active';
-}
-</script>
-</head>
+		<script type="text/javascript">
+			function enact(what) {
+				var p = what.parentNode;
+				var els = p.getElementsByTagName('li');
+				for ( i = 0; i < els.length; i++) {
+					els[i].className = '';
+				}
+				what.className = 'active';
+			}
+		</script>
+	</head>
 
-<body>
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = '//connect.facebook.net/en_US/all.js#xfbml=1';
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-<div id="header">
-	<span>Follow Us On :</span><div class="social"><a href="http://www.facebook.com/FindTheRoom" target="_new"><img src="{{asset('images/fb-icon.gif')}}" /></a> <a href='http://twitter.com/FindTheRoom' target="_blank"><img src="{{asset('images/tw-icon.gif')}}" /></a></div>
-	<div id="logo"></div>
-    	{% if app.session.get('user')  %}  
-			<div id="login" style="text-align:right; margin-right:60px;">  	
-    		<form action="{{path('FTRWebBundle_logout')}}" method="post">
-    			Logged in as {{ app.session.get('user') }}
-    			<input class="logout" type="submit" value=""/>
-        	</form>
-        {% else %}	
-			<div id="login">
-	        	<input id="username" name="username" value="" type="text" value="" maxlength="25" placeholder="Username" /> 
-	    		<input id="password" name="password" value="" type="password" value="" maxlength="25" placeholder="Password" />
-	    		<input id="log2" class="login" type="submit" value="" />
-        {% endif %}
-    </div>
-	
-	<div id="topsearch">
-		<input type="text" value="" name="s" id="s">
-		<input type="submit" id="searchsubmit" value="">
-	</div>
-</div>
+	<body>
+		<div id="fb-root"></div>
+		<script>
+			( function(d, s, id) {
+					var js, fjs = d.getElementsByTagName(s)[0];
+					if (d.getElementById(id))
+						return;
+					js = d.createElement(s);
+					js.id = id;
+					js.src = '//connect.facebook.net/en_US/all.js#xfbml=1';
+					fjs.parentNode.insertBefore(js, fjs);
+				}(document, 'script', 'facebook-jssdk'));
+		</script>
+		<div id="header">
+			<span>Follow Us On :</span>
+			<div class="social">
+				<a href="http://www.facebook.com/FindTheRoom" target="_new"><img src="{{asset('images/fb-icon.gif')}}" /></a><a href='http://twitter.com/FindTheRoom' target="_blank"><img src="{{asset('images/tw-icon.gif')}}" /></a>
+			</div>
+			<div id="logo"></div>
+			{% if app.session.get('user')  %}
+			<div id="login" style="text-align:right; margin-right:60px;">
+				<form action="{{path('FTRWebBundle_logout')}}" method="post">
+					Logged in as {{ app.session.get('user') }}
+					<input class="logout" type="submit" value=""/>
+				</form>
+				{% else %}
+				<div id="login">
+					<input id="username" name="username" value="" type="text" value="" maxlength="25" placeholder="Username" />
+					<input id="password" name="password" value="" type="password" value="" maxlength="25" placeholder="Password" />
+					<input id="log2" class="login" type="submit" value="" />
+					{% endif %}
+				</div>
 
-<div id="menu">
-	<hr />
-    <ul id="gooeymenu1" class="gelbuttonmenu">
-    	 <li><a id="mainpage" href="{{path('FTRWebBundle_homepage')}}">หน้าแรก</a></li>
-         <li><a id="searchpage" href="{{path('FTRWebBundle_search')}}">ค้นหาอย่างละเอียด</a></li>
-         <li><a id="mainpage" href='#'>ลงโฆษณา</a></li>
-         <li><a id="publishpage" href="{{path('FTRWebBundle_publish')}}">ลงประกาศห้องพักฟรี</a></li>
-         <!--<li><a id="mainpage" href="{{asset('forum/upload/index.php')}}">กระดานพูดคุย</a></li>-->
-         <li><a id="contactpage" href="{{path('FTRWebBundle_contact')}}" style="margin-right:0px;">ติดต่อเรา</a></li>
-    </ul>
-    <hr />
-</div>
-<script>	
-	var url = window.location.href,check=false;
-	var urlparts = url.split("/");
-	for(i = 0; i < urlparts.length; i++){
-		if (urlparts[i]=='search'){$("#searchpage").addClass("selected");check=true}
-		else if (urlparts[i]=='special/beauty'){$("#").addClass("selected");check=true}
-		else if (urlparts[i]=='publish'){$("#publishpage").addClass("selected");check=true}
-		else if (urlparts[i]=='regis'){$("#publishpage").addClass("selected");check=true}
-		else if (urlparts[i]=='contact'){$("#contactpage").addClass("selected");check=true}
-	}
-	if(check==false)	$("#mainpage").addClass("selected");
+				<div id="topsearch">
+					<input type="text" value="" name="s" id="s">
+					<input type="submit" id="searchsubmit" value="">
+				</div>
+			</div>
 
-</script>
-{% block body %}
-{% endblock %}
+			<div id="menu">
+				<hr />
+				<ul id="gooeymenu1" class="gelbuttonmenu">
+					<li>
+						<a id="mainpage" href="{{path('FTRWebBundle_homepage')}}">หน้าแรก</a>
+					</li>
+					<li>
+						<a id="searchpage" href="{{path('FTRWebBundle_search')}}">ค้นหาอย่างละเอียด</a>
+					</li>
+					<li>
+						<a id="mainpage" href='#'>ลงโฆษณา</a>
+					</li>
+					<li>
+						<a id="publishpage" href="{{path('FTRWebBundle_publish')}}">ลงประกาศห้องพักฟรี</a>
+					</li>
+					<!--<li><a id="mainpage" href="{{asset('forum/upload/index.php')}}">กระดานพูดคุย</a></li>-->
+					<li>
+						<a id="contactpage" href="{{path('FTRWebBundle_contact')}}" style="margin-right:0px;">ติดต่อเรา</a>
+					</li>
+				</ul>
+				<hr />
+			</div>
+			<script>
+				var url = window.location.href, check = false;
+				var urlparts = url.split("/");
+				for ( i = 0; i < urlparts.length; i++) {
+					if (urlparts[i] == 'search') {
+						$("#searchpage").addClass("selected");
+						check = true
+					} else if (urlparts[i] == 'special/beauty') {
+						$("#").addClass("selected");
+						check = true
+					} else if (urlparts[i] == 'publish') {
+						$("#publishpage").addClass("selected");
+						check = true
+					} else if (urlparts[i] == 'regis') {
+						$("#publishpage").addClass("selected");
+						check = true
+					} else if (urlparts[i] == 'contact') {
+						$("#contactpage").addClass("selected");
+						check = true
+					}
+				}
+				if (check == false)
+					$("#mainpage").addClass("selected");
 
-<div class="ad1">
-    <a href='#'><img src="{{asset('images/ad/ad1.gif')}}" /></a>
-    <a href='#'><img src="{{asset('images/ad/ad2.gif')}}" /></a>
-    <a href='#'><img src="{{asset('images/ad/ad3.gif')}}" /></a>
-    <a href='#' style="margin-right:0px !important"><img src="{{asset('images/ad/ad4.gif')}}" /></a>
-</div>
+			</script>
+			{% block body %}
+			{% endblock %}
 
-<div class="ad1">
-    <a href='#'><img src="{{asset('images/ad/ad1.gif')}}" /></a>
-    <a href='#'><img src="{{asset('images/ad/ad2.gif')}}" /></a>
-    <a href='#'><img src="{{asset('images/ad/ad3.gif')}}" /></a>
-    <a href='#' style="margin-right:0px !important"><img src="{{asset('images/ad/ad4.gif')}}" /></a>
-</div>
+			<div class="ad1">
+				<a href='#'><img src="{{asset('images/ad/ad1.gif')}}" /></a>
+				<a href='#'><img src="{{asset('images/ad/ad2.gif')}}" /></a>
+				<a href='#'><img src="{{asset('images/ad/ad3.gif')}}" /></a>
+				<a href='#' style="margin-right:0px !important"><img src="{{asset('images/ad/ad4.gif')}}" /></a>
+			</div>
 
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = '//connect.facebook.net/en_US/all.js#xfbml=1';
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));
-</script>
+			<div class="ad1">
+				<a href='#'><img src="{{asset('images/ad/ad1.gif')}}" /></a>
+				<a href='#'><img src="{{asset('images/ad/ad2.gif')}}" /></a>
+				<a href='#'><img src="{{asset('images/ad/ad3.gif')}}" /></a>
+				<a href='#' style="margin-right:0px !important"><img src="{{asset('images/ad/ad4.gif')}}" /></a>
+			</div>
 
-<div id="footer">
-	<ul>
-        <li class="head"><img src="{{asset('images/footer1.png')}}" /><hr />
-            <a href="{{path('FTRWebBundle_homepage')}}">หน้าแรก</a>
-            <a href="{{path('FTRWebBundle_search')}}">ค้นหาอย่างละเอียด</a>
-            <a href='#'>ลงโฆษณา</a>
-            <a href="{{path('FTRWebBundle_publish')}}">ลงประกาศห้องพักฟรี</a>
-            <!--<a href='#'>กระดานพูดคุย</a>-->
-            <a href="{{path('FTRWebBundle_contact')}}">ติดต่อเรา</a>
-        </li>
-        <li class="head"><img src="{{asset('images/footer2.png')}}" /><hr />
-            <a href="{{path('FTRWebBundle_list')}}?searchType=shortSearch&buildingType=1">อพาร์ทเม้นต์</a>
-            <a href="{{path('FTRWebBundle_list')}}?searchType=shortSearch&buildingType=2">หอพักชาย</a>
-            <a href="{{path('FTRWebBundle_list')}}?searchType=shortSearch&buildingType=3">หอพักหญิง</a>
-        </li>
-        <li class="head"><img src="{{asset('images/footer3.png')}}" /><hr />
-            <a href="{{path('FTRWebBundle_list')}}?searchType=shortSearch&zone=bkk">โซนในกรุงเทพฯ</a>
-            <a href="{{path('FTRWebBundle_list')}}?searchType=shortSearch&nearly=4">ใกล้มหาวิทยาลัย</a>
-            <a href="{{path('FTRWebBundle_list')}}?searchType=shortSearch&nearly=2">ใกล้รถไฟฟ้า BTS</a>
-            <a href="{{path('FTRWebBundle_list')}}?searchType=shortSearch&nearly=3">ใกล้รถไฟฟ้า MRT</a>
-            <a href="{{path('FTRWebBundle_list')}}?searchType=shortSearch&nearly=5">ตามสถานที่ใกล้เคียง</a>
-        </li>
-        <li class="head"><img src="{{asset('images/footer4.png')}}" /><hr />
-            <a href="http://www.facebook.com/FindTheRoom" target="_new">Facebook</a>
-            <a href="http://twitter.com/FindTheRoom" target="_new">Twitter</a>
-            <div class="fb-like-box" data-href="http://www.facebook.com/FindTheRoom" data-width="205" data-height="65" data-show-faces="false" data-stream="false" data-header="true" style='background-color:#FFF; margin-left: 10px; margin-top: 10px;'></div>
-        </li>
-	</ul>
-</div>
+			<div id="fb-root"></div>
+			<script>
+				( function(d, s, id) {
+						var js, fjs = d.getElementsByTagName(s)[0];
+						if (d.getElementById(id))
+							return;
+						js = d.createElement(s);
+						js.id = id;
+						js.src = '//connect.facebook.net/en_US/all.js#xfbml=1';
+						fjs.parentNode.insertBefore(js, fjs);
+					}(document, 'script', 'facebook-jssdk'));
+			</script>
 
-<div id="copyr">
-<span>&copy; 2012 FindTheRoom.com</span> <span style="float:right;">ติดต่อสอบถามโทร. 02-123-4567</span>
-</div>
+			<div id="footer">
+				<ul>
+					<li class="head"><img src="{{asset('images/footer1.png')}}" />
+						<hr />
+						<a href="{{path('FTRWebBundle_homepage')}}">หน้าแรก</a>
+						<a href="{{path('FTRWebBundle_search')}}">ค้นหาอย่างละเอียด</a>
+						<a href='#'>ลงโฆษณา</a>
+						<a href="{{path('FTRWebBundle_publish')}}">ลงประกาศห้องพักฟรี</a>
+						<!--<a href='#'>กระดานพูดคุย</a>-->
+						<a href="{{path('FTRWebBundle_contact')}}">ติดต่อเรา</a>
+					</li>
+					<li class="head"><img src="{{asset('images/footer2.png')}}" />
+						<hr />
+						<a href="{{path('FTRWebBundle_list')}}?searchType=shortSearch&buildingtype=1">อพาร์ทเม้นต์</a>
+						<a href="{{path('FTRWebBundle_list')}}?searchType=shortSearch&buildingtype=2">หอพักชาย</a>
+						<a href="{{path('FTRWebBundle_list')}}?searchType=shortSearch&buildingtype=3">หอพักหญิง</a>
+					</li>
+					<li class="head"><img src="{{asset('images/footer3.png')}}" />
+						<hr />
+						<a href="{{path('FTRWebBundle_list')}}?searchType=shortSearch&zone=bkk">โซนในกรุงเทพฯ</a>
+						<a href="{{path('FTRWebBundle_list')}}?searchType=shortSearch&neary=4">ใกล้มหาวิทยาลัย</a>
+						<a href="{{path('FTRWebBundle_list')}}?searchType=shortSearch&neary=2">ใกล้รถไฟฟ้า BTS</a>
+						<a href="{{path('FTRWebBundle_list')}}?searchType=shortSearch&neary=3">ใกล้รถไฟฟ้า MRT</a>
+						<a href="{{path('FTRWebBundle_list')}}?searchType=shortSearch&neary=5">ตามสถานที่ใกล้เคียง</a>
+					</li>
+					<li class="head"><img src="{{asset('images/footer4.png')}}" />
+						<hr />
+						<a href="http://www.facebook.com/FindTheRoom" target="_new">Facebook</a>
+						<a href="http://twitter.com/FindTheRoom" target="_new">Twitter</a>
+						<div class="fb-like-box" data-href="http://www.facebook.com/FindTheRoom" data-width="205" data-height="65" data-show-faces="false" data-stream="false" data-header="true" style='background-color:#FFF; margin-left: 10px; margin-top: 10px;'></div>
+					</li>
+				</ul>
+			</div>
 
-</body>
+
+			<div id="copyr">
+				<span>&copy; 2012 FindTheRoom.com</span><span style="float:right;">ติดต่อสอบถามโทร. 02-123-4567</span>
+			</div>
+
+	</body>
 </html>

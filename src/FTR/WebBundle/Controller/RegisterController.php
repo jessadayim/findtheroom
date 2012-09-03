@@ -13,6 +13,10 @@ class RegisterController extends Controller
         return $this->render('FTRWebBundle:Register:register.html.twig', array('erusername'=>NULL,'eremail'=>NULL,'firstname'=>NULL,'lastname'=>NULL
 																									,'username'=>NULL,'email'=>NULL,'tel'=>NULL));
     }
+	public function regSuccessAction()
+    {
+        return $this->render('FTRWebBundle:Register:confirm.html.twig');
+    }
 	public function RegisConfirmAction()
     {
 		if($_POST)
@@ -51,13 +55,17 @@ class RegisterController extends Controller
 							$sql1 ="INSERT INTO user_owner(username,password,firstname,lastname,email,phone_number,fax_number,deleted,confirm_token) VALUES('$username','$password','$firstname','$lastname','$email','$tel','0000000000','0','$random_token')";
 							$conn->query($sql1);
 							
+							$link = "สวัสดีค่ะ คุณ $email ยินตีต้อนรับสู่ FindTheRoom.com!
+										ชื่อที่ใช้ในการ login เข้าบัญชีสมาชิกของคุณคือ $username
+										<a>
+						  					http://localhost:11001" . $this -> generateUrl('FTRWebBundle_homepage') ."?token=" . $random_token."
+						  				</a><br/>";
+										
 							$message = \Swift_Message::newInstance()
 					        ->setSubject('findtheroom')
 					        ->setFrom('support@findtheroom.com')
 					        ->setTo($email)
-					        ->setBody("สวัสดีค่ะ คุณ $email ยินตีต้อนรับสู่ SpecialSquare.com!
-
-							ชื่อที่ใช้ในการ login เข้าบัญชีสมาชิกของคุณคือ $username<br/><a href='http://localhost:11001/findtheroom/web/app_dev.php?token=$random_token'>http://localhost:11001/findtheroom/web/app_dev.php/?token=$random_token</a>",'text/html');
+					        ->setBody($this->renderView('FTRWebBundle:Security:emailreset.html.twig', array('name' => $link)),'text/html');
 					    	
 					    	$this->get('mailer')->send($message);
 							
@@ -67,7 +75,7 @@ class RegisterController extends Controller
 							$user = $userdata[0]['username'];
 							$id = $userdata[0]['id'];
 							$session->set('user', $user);
-							$session->set('id', $id);	
+							$session->set('id', $id);
 													
 							$time = date("Y-m-d : H:i:s", time());							
 							$sql2 ="UPDATE user_owner SET last_login = '$time' WHERE id= '$id'";
