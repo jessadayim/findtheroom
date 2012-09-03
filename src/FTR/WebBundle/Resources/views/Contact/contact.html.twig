@@ -128,16 +128,15 @@
 					<td align="center" colspan="4"><div class="alertmsg" id="txterror"></div></td>
 				</tr>
 
-				<tr valign="middle" height="40">
-					<td align="left" width="100">กรอกรหัสยืนยันตามรูปภาพ : *</td>
+				<tr valign="top" height="40">
+					<td align="left" width="100" style="padding-top:10px;">กรอกรหัสยืนยันตามรูปภาพ : *</td>
 					<td align="left" width="180">
-					<br />
 					<div id="captchaimage">
-						<img src="{{asset('captcha/captcha_img.jpg')}}" width="160" height="40" style="padding-left:0px; padding-bottom:10px;"/>
+						<img src="{{asset('captcha/captcha_img.jpg')}}" width="160" height="40" style="padding-left:0px; padding-bottom:10px; padding-top:10px;"/>
 					</div><a href='' id='refreshimg' title='Click to refresh image'>refresh</a>
 					<input id="captcha" name="captcha" type="text" maxlength="6" />
 					</td>
-					<td align="left" colspan="2">
+					<td align="left" colspan="2" style="padding-top:60px;">
 					<input class="send" type="submit" value="" />
 					<input class="cancel" type="submit" value="" />
 					</td>
