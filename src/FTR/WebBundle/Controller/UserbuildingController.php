@@ -496,7 +496,33 @@ class UserbuildingController extends Controller
 		//echo $id." ";
 		if($_POST)
 		{
-			echo $type;
+			$sownername 	= $_POST['hdnownername'];
+			$ibuildid		= $id;
+			if($type=='image')
+			{
+				$sheadimagename 	= $_POST['hdnfilename'];
+				$smapimagename 		= $_POST['hdnfilemap'];
+				$icountlineroom 	= $_POST['hdnMaxLine'];
+				$icountlinegallery 	= $_POST['hdnMaxLineGal'];
+				$sheadimagename 	= $_POST['hdnfilename'];
+				for ($i=0; $i < $icountlineroom ; $i++) { 
+				$arrayimage_room[] = array(
+						'imageid'		=> $post_array['imageid'.$i],
+						'photo_name'	=> $post_array['hdnfilename'.$i],
+						'typename'		=> $post_array['typeap_name'.$i],
+						'room_size'		=> $post_array['typeap_size'.$i],
+						'room_price'	=> $post_array['typeap_price'.$i],
+					);
+				}
+				
+				for ($i=0; $i < $icountlinegallery ; $i++) { 
+					$arrayimage_gallery[] = array(
+						'imageid'		=> $post_array['imageid'.$i],
+						'photo_name'	=> $post_array['hdnfilename'.$i],
+						'description'	=> $post_array['galtitle'.$i],
+					);
+				}
+			}
 		}
 		exit();
 	}
