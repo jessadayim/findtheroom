@@ -136,7 +136,7 @@
 			<div class="social">
 				<a href="http://www.facebook.com/FindTheRoom" target="_new"><img src="{{asset('images/fb-icon.gif')}}" /></a><a href='http://twitter.com/FindTheRoom' target="_blank"><img src="{{asset('images/tw-icon.gif')}}" /></a>
 			</div>
-			<div id="logo"></div>
+			<div id="logo"><a href="{{path('FTRWebBundle_homepage')}}"><span></span></a></div>
 			{% if app.session.get('user')  %}
 			<div id="login" style="text-align:right; margin-right:60px;">
 				<form action="{{path('FTRWebBundle_logout')}}" method="post">
