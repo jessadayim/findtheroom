@@ -25,7 +25,7 @@ class SearchController extends Controller
         $mostPrice          = null;
         $selProvince        = null;
 
-        if(!empty($parameter))
+        if($parameter!=null)
         {
             $shortSearchType  = $parameter['shortSearchType'];
             $zone             = $parameter['zone'];
@@ -35,7 +35,7 @@ class SearchController extends Controller
             $mostPrice        = $parameter['mostPrice'];
             $selProvince      = $parameter['selProvince'];
         }
-
+        //echo "shortSearchType = ".$shortSearchType;
         $conn= $this->get('database_connection');
         if(!$conn){ die("MySQL Connection error");}
         //rux
@@ -85,7 +85,6 @@ class SearchController extends Controller
         $buildingType   = $this->getBuildingType();
         $province       = $this->getProvince();
 
-
         return $this->render('FTRWebBundle:Search:shortSearch.html.twig', array(
             'payType' 			    =>$payType,
             'bkkZone' 		        =>$bkkZone,
@@ -105,7 +104,7 @@ class SearchController extends Controller
         ));
     }
 
-    public function fullsearchAction()
+    public function fullsearchAction($parameter = null)
     {
         $fac_inroomlist 	= $this->getFacility('inroom');	
         $fac_outroomlist 	= $this->getFacility('outroom');	
