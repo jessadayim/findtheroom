@@ -22,23 +22,25 @@ class User_adminController extends Controller {
 	 */
 	public function indexAction() {
 		// $em = $this -> getDoctrine() -> getEntityManager();
-// 
+		//
 		// $entities = $em -> getRepository('FTRAdminBundle:User_admin') -> findAll();
-// 
+		//
 		// return array('entities' => $entities);
-		return array(
-            'checkhide' => 'false',
-            'session'   => true
-        );
+		return array('checkhide' => 'false', 'session' => true);
 		//return $this -> render('FTRAdminBundle:User_admin:index.html.twig', array());
 	}
 
 	public function createAction() {
 		return $this -> render('FTRAdminBundle:User_admin:create.html.twig', array());
 	}
-	
-	public function editAction() {
-		return $this -> render('FTRAdminBundle:User_admin:edit.html.twig', array());
+
+	public function editAction($id) {
+		$em = $this -> getDoctrine() -> getEntityManager();
+		$entity = $em -> getRepository('FTRAdminBundle:User_admin') -> find($id);
+		//$editForm = $this -> createForm(new Building_siteType(), $entity);
+		// echo $entity->getLastname();
+		// exit();
+		return $this -> render('FTRAdminBundle:User_admin:edit.html.twig', array('entity' => $entity));
 	}
 
 	/**
