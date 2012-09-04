@@ -6,24 +6,10 @@
 <script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script>
 <script type='text/javascript' src='{{asset("js/paging/jquery.dataTables.js")}}'></script>
 <link rel="stylesheet" href='{{asset("css/paging/sytletable.css")}}' type="text/css" id="" media="print, projection, screen" />
-<script type="text/javascript">
-	jQuery.fn.dataTableExt.oSort['string-case-asc'] = function(x, y) {
-		return ((x < y) ? -1 : ((x > y) ? 1 : 0));
-	};
-
-	jQuery.fn.dataTableExt.oSort['string-case-desc'] = function(x, y) {
-		return ((x < y) ? 1 : ((x > y) ? -1 : 0));
-	};
-
-	$(document).ready(function() {
-		$("#sortTable1").dataTable({
-			"aaSorting" : [[0, 'asc']]
-		});
-	});
-</script>
 
 <script>
 	var countValuePaging = {{entities|length}};
+ var locationRoomType = '';
 	$(document).ready(function() {
 
 		//Click ปุ่ม Edit
@@ -64,17 +50,24 @@
 			return false;
 		});
 
-		//Click ปุ่ม สร้าง Facility
-		$(".createFacility").click(function() {
-			$.post(this.href, function(data) {
-				$('.innerPanel').slideUp(300).fadeIn(400);
-				$('.innerPanel').html(data);
-				toggle(".createPanel", 'hide');
-				toggle(".innerPanel", 'show');
-				$("#createrecordCancel").hide();
-				$("#createrecord").show('slow');
-				document.getElementById('createrecord').scrollIntoView();
-			});
+		//Click ปุ่ม  Edit Facility
+		$(".createFacility,.createRoomType").click(function() {
+			locationRoomType = this.href;
+			$('.innerPanel').fadeOut().load(this.href).fadeIn("slow");
+			// if (checkDoubleClickEdit){
+			// checkDoubleClickEdit = false;
+			// $.post(this.href, function(data) {
+			// $('.innerPanel').slideUp(300).fadeIn(400);
+			// $('.innerPanel').html(data);
+			// toggle(".createPanel", 'hide');
+			// toggle(".innerPanel", 'show');
+			// $("#createrecordCancel").hide();
+			// $("#createrecord").show('slow');
+			document.getElementById('createrecord').scrollIntoView();
+			// });
+			// // รอเวลาเพิ่อให้ คลิกซ้ำได้
+			// setTimeout("changeCheckClick();", 500);
+			// }
 			return false;
 		});
 
@@ -84,7 +77,28 @@
 				height : toggle
 			}, 500, function() {
 			});
-		}		
+		}
+
+	});
+
+	var checkDoubleClickEdit = true;
+	function changeCheckClick() {
+		checkDoubleClickEdit = true;
+	}
+</script>
+<script type="text/javascript">
+	jQuery.fn.dataTableExt.oSort['string-case-asc'] = function(x, y) {
+		return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+	};
+
+	jQuery.fn.dataTableExt.oSort['string-case-desc'] = function(x, y) {
+		return ((x < y) ? 1 : ((x > y) ? -1 : 0));
+	};
+
+	$(document).ready(function() {
+		$("#sortTable1").dataTable({
+			"aaSorting" : [[0, 'asc']]
+		});
 	}); 
 </script>
 <table id="sortTable1" class="display" >
@@ -104,7 +118,7 @@
 		<td><a href="{{ path('facility2site_show', { 'id': entity.id }) }}" class="createFacility">Edit</a></td>
 
 		<!-- room type -->
-		<td><a href="">Edit</a></td>
+		<td><a href="{{ path('roomtype2site_show', { 'id': entity.id }) }}" class="createRoomType">Edit</a></td>
 
 		<!-- nearly -->
 		<td><a href="">Edit</a></td>
@@ -116,9 +130,6 @@
 	</tr>
 	{% endfor %}
 </table>
-<br/>
-
-<!-- ปุ่ม paging -->
-<div id="green" style="margin: auto;" class="pager green"></div>
+<br />
 
 <div class="clear"></div>

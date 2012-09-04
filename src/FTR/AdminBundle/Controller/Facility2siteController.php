@@ -14,28 +14,11 @@ use FTR\AdminBundle\Form\Facility2siteType;
 class Facility2siteController extends Controller
 {
     /**
-     * Lists all Facility2site entities.
-     *
-     */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $entities = $em->getRepository('FTRWebBundle:Facility2site')->findAll();
-
-        return $this->render('FTRAdminBundle:Facility2site:index.html.twig', array(
-            'entities' => $entities
-        ));
-    }
-
-    /**
      * Finds and displays a Facility2site entity.
      *
      */
     public function showAction($id)
     {
-        $entity = new Facility2site();
-        $entity->setBuildingSiteId($id);
         $sqlFacility = "
             SELECT 
               l.*,
@@ -69,40 +52,6 @@ class Facility2siteController extends Controller
             'buildingsite'    => $getBuildingSite,  
             'facilityList'      => $facilityList
         ));
-    }
-
-    /**
-     * Displays a form to create a new Facility2site entity.
-     *
-     */
-    public function newAction($buildingsiteid)
-    {
-        // $entity = new Facility2site();
-        // $entity->setBuildingSiteId($buildingsiteid);
-        // $sqlFacility = "
-            // SELECT
-                // *
-            // FROM 
-                // `facilitylist`
-            // WHERE `deleted` != 1 
-        // ";
-        // $sqlGetBuildingSite = "
-            // SELECT 
-              // * 
-            // FROM
-              // `building_site` 
-            // WHERE `deleted` != 1 
-              // AND id = $buildingsiteid
-        // ";
-        // $facilityList = $this->getDataArray($sqlFacility);        
-//         
-        // $getBuildingSite = $this->getDataArray($sqlGetBuildingSite);  
-        // //$form   = $this->createForm(new Facility2siteType(), $entity);
-// 
-        // return $this->render('FTRAdminBundle:Facility2site:new.html.twig', array(
-            // 'buildingsite'    => $getBuildingSite,  
-            // 'facilityList'      => $facilityList
-        // ));
     }
 
     /**
@@ -151,103 +100,6 @@ class Facility2siteController extends Controller
         $em->flush();
         echo 'finish';
         exit();
-        // return $this->render('FTRAdminBundle:Facility2site:new.html.twig', array(
-            // 'entity' => $entity,
-            // 'form'   => $form->createView()
-        // ));
-    }
-
-    /**
-     * Displays a form to edit an existing Facility2site entity.
-     *
-     */
-    public function editAction($id)
-    {
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $entity = $em->getRepository('FTRWebBundle:Facility2site')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Facility2site entity.');
-        }
-
-        $editForm = $this->createForm(new Facility2siteType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return $this->render('FTRAdminBundle:Facility2site:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
-
-    /**
-     * Edits an existing Facility2site entity.
-     *
-     */
-    public function updateAction($id)
-    {
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $entity = $em->getRepository('FTRWebBundle:Facility2site')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Facility2site entity.');
-        }
-
-        $editForm   = $this->createForm(new Facility2siteType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        $request = $this->getRequest();
-
-        $editForm->bindRequest($request);
-
-        if ($editForm->isValid()) {
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('facility2site_edit', array('id' => $id)));
-        }
-
-        return $this->render('FTRAdminBundle:Facility2site:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
-
-    /**
-     * Deletes a Facility2site entity.
-     *
-     */
-    public function deleteAction($id)
-    {
-        $form = $this->createDeleteForm($id);
-        $request = $this->getRequest();
-
-        $form->bindRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
-            $entity = $em->getRepository('FTRWebBundle:Facility2site')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Facility2site entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
-        }
-
-        return $this->redirect($this->generateUrl('facility2site'));
-    }
-
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
-        ;
     }
     
     private function getDataArray($sql){

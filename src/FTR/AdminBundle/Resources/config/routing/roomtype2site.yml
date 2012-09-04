@@ -1,14 +1,7 @@
-roomtype2site:
-    pattern:  /
-    defaults: { _controller: "FTRAdminBundle:Roomtype2site:index" }
 
 roomtype2site_show:
     pattern:  /{id}/show
     defaults: { _controller: "FTRAdminBundle:Roomtype2site:show" }
-
-roomtype2site_new:
-    pattern:  /new
-    defaults: { _controller: "FTRAdminBundle:Roomtype2site:new" }
 
 roomtype2site_create:
     pattern:  /create
@@ -18,13 +11,3 @@ roomtype2site_create:
 roomtype2site_edit:
     pattern:  /{id}/edit
     defaults: { _controller: "FTRAdminBundle:Roomtype2site:edit" }
-
-roomtype2site_update:
-    pattern:  /{id}/update
-    defaults: { _controller: "FTRAdminBundle:Roomtype2site:update" }
-    requirements: { _method: post }
-
-roomtype2site_delete:
-    pattern:  /{id}/delete
-    defaults: { _controller: "FTRAdminBundle:Roomtype2site:delete" }
-    requirements: { _method: post }

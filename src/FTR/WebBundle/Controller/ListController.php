@@ -143,6 +143,7 @@ class ListController extends Controller
                 case "fullSearch":
                     echo $searchType;
                     var_dump(@$_POST);
+                    echo "test";
                     break;
             }
         }
