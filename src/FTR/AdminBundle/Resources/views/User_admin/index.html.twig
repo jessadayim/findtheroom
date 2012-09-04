@@ -1,81 +1,61 @@
-<<<<<<< HEAD
-<h1>User_admin list</h1>
+{% extends 'FTRAdminBundle:Layout:panel_layout.html.twig' %}
 
-<table class="records_list">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Username</th>
-            <th>Password</th>
-            <th>Firstname</th>
-            <th>Lastname</th>
-            <th>Phone_number</th>
-            <th>Userlevel</th>
-            <th>Deleted</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for entity in entities %}
-        <tr>
-            <td><a href="{{ path('user_admin_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td>{{ entity.username }}</td>
-            <td>{{ entity.password }}</td>
-            <td>{{ entity.firstname }}</td>
-            <td>{{ entity.lastname }}</td>
-            <td>{{ entity.phonenumber }}</td>
-            <td>{{ entity.userlevel }}</td>
-            <td>{{ entity.deleted }}</td>
-            <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('user_admin_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                </ul>
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+{% block body %}
 
-=======
-<h1>User_admin list</h1>
+<!-- ***** Jquery Transation ***** -->
+<script>
+	$(document).ready(function() {
+		$("#createrecord").click(function() {
+			$.post('create', function(data) {
+				//alert(data);
+				$('.createPanel').html(data);
+				toggle(".createPanel", 'toggle');
+				toggle(".editPanel", 'hide');
 
-<table class="records_list">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Username</th>
-            <th>Password</th>
-            <th>Firstname</th>
-            <th>Lastname</th>
-            <th>Phone_number</th>
-            <th>Userlevel</th>
-            <th>Deleted</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for entity in entities %}
-        <tr>
-            <td><a href="{{ path('user_admin_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td>{{ entity.username }}</td>
-            <td>{{ entity.password }}</td>
-            <td>{{ entity.firstname }}</td>
-            <td>{{ entity.lastname }}</td>
-            <td>{{ entity.phonenumber }}</td>
-            <td>{{ entity.userlevel }}</td>
-            <td>{{ entity.deleted }}</td>
-            <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('user_admin_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                </ul>
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+				$("#createrecord").hide();
+				$("#createrecordCancel").show('slow');
 
->>>>>>> 2111584b125ef558f2be4fdd8f22ca10f84c23bb
+			});
+			return false;
+		});
+
+		$("#createrecordCancel").click(function() {
+			$("#createrecordCancel").hide();
+			$("#createrecord").show('slow');
+			toggle(".createPanel", 'toggle');
+			return false;
+		});
+
+		function toggle(id, toggle) {
+			$(id).animate({
+				left : '+=50',
+				height : toggle
+			}, 500, function() {
+			});
+		}
+
+	}); 
+</script>
+<div id="containerwrap">
+
+	<div class="grid_12 createLists marginB_10 alpha" style="">
+		<H2>ADMIN LISTS</H2>
+		<div class="listsPanel" style="margin-left: 0px !important;">
+			<a href="#" id="createrecord">CREAT ADMIN</a>
+			<a href="#" id="createrecordCancel" style="display: none;">CANCLE CREAT ADMIN</a>
+		</div>
+		<div class="clear"></div>
+		<p>
+			Welcome to Visual Admin, a slick admin template for almost any project - front or back end. It's based on the 960 grid system which means you can have almost endless layout possibiliites as well as those that come ready to use straight out the box. Please have a click around and feel free to check out the screenshots.
+		</p>
+		<div class="clear"></div>
+		<div class="createPanel" style=""></div>
+		<div class="editPanel" style=""></div>
+	</div>
+	<div class="grid_12 tableLists marginB_10 alpha" style="">
+		{% render "FTRAdminBundle:User_admin:show" %}
+	</div>
+
+</div>
+
+{% endblock %}

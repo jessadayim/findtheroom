@@ -38,7 +38,8 @@ select[disabled] { background-color: #EAEAEA !important; color:#BCBCBC !importan
 #header { width:1000px; margin: 40px auto 0 auto; font-size:22px;}
 #header span { margin: 40px 0 0 0; font-size:22px;}
 #header .social { margin-top: -30px; margin-left: 110px;}
-#header #logo { margin: -45px auto 0 auto; background: url(../images/logo.png) no-repeat; width: 184px; height: 119px;}
+#header #logo { margin: -45px auto 0 auto; width: 184px; height: 119px;}
+#header #logo a span{ margin: -45px auto 0 auto; background: url(../images/logo.png) no-repeat; width: 184px; height: 119px; display: block;}
 #header #login { text-align: left; margin-top: -105px; margin-left: 690px;}
 #header #login input { width: 120px;}
 #header #login input.login { background: url(../images/login-bt.png) no-repeat; border: 0; width: 51px; height: 51px; cursor: pointer; position:absolute; margin-top:-10px; margin-left: 10px;}

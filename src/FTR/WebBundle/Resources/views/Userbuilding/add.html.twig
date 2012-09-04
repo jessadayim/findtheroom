@@ -38,7 +38,7 @@
 	var arraydataimage = 
 			[
 				{% for roomdata in rooms %}
-					[{{roomdata.id}}, "{{asset('roomdata.photo_name')}}", '', '', '',"{{roomdata.photo_name}}"],
+					[{{roomdata.id}}, "{{asset(roomdata.photo_name)}}", '{{roomdata.roomtype_name}}', '{{roomdata.room_size}}', '{{roomdata.room_price}}',"{{roomdata.photo_name}}"],
 				{% endfor %}
 			];
 	
@@ -309,7 +309,7 @@
 	$(document).ready(function(){
 		
 	});
-	var imagepath = "{{asset('images/building/1/2012-08-31head.jpg')}}";
+	var imagepath = "{{asset('images/building')}}";
 	function postData(typesave)
 	{
 		var type = typesave;
@@ -319,7 +319,7 @@
 		$.post(addfixpath, $("#addform").serialize(), 
 		function(data) {
 			var completetext = data;
-			//alert(completetext);
+			alert(completetext);
 			$.gritter.add({
 				// (string | mandatory) the heading of the notification
 				title: 'บันทึกข้อมูลสำเร็จ',
@@ -375,11 +375,15 @@
         	<tr height="50" valign="middle">
 				<td align="left" width="240">
 					<div id="headimage" class="thumbframe4add">
+						{% if linkimagehead != '' %}
+						<img src="{{asset(linkimagehead)}}" class="nopad thumb" />
+						{% else %}
 						<img src="{{asset('images/ex.png')}}" class="nopad thumb" />
+						{% endif %}
 					</div>
 				</td>
                 <td align="left" width="210" valign="middle"><input style="margin-left: -20px;" type="file" name="file_upload" id="file_upload" />
-					<input type="hidden" name="hdnfilename" id="hdnfilename" /></td>
+					<input type="hidden" name="hdnfilename" id="hdnfilename" value="{{nameimagehead}}" /></td>
             </tr>
             <tr height="50" valign="middle">
 				&nbsp;
@@ -388,11 +392,11 @@
         <table style="margin-top: 0px; float:none;  margin-left: 0px;">
         	<tr height="50" valign="middle">
 				<td align="right" width="210" style="font-size:24px;">ชื่อหอพัก / อพาร์ทเม้นต์ : *</td>
-                <td align="left" width="190"><input name="nameap" id="nameap" type="text" maxlength="30" placeholder="กรุณากรอกชื่อหอพัก" style=" padding:2px; font-size:20px;" onchange="postData('head');" /></td>
+                <td align="left" width="190"><input name="nameap" id="nameap" type="text" maxlength="30" placeholder="กรุณากรอกชื่อหอพัก" style=" padding:2px; font-size:20px;" value="{{buildingdata.sbuildingname}}" onchange="postData('head');" /></td>
             </tr>
             <tr height="50" valign="top">
 				<td align="right" width="210" style="font-size:24px;">ที่อยู่ : *</td>
-                <td align="left" width="190"><textarea name="placeap" id="placeap" type="text" maxlength="500" class="place" onchange="postData('head');" /></textarea></td>
+                <td align="left" width="190"><textarea name="placeap" id="placeap" type="text" maxlength="500" class="place" value="{{buildingdata.tbuildingaddress}}" onchange="postData('head');" /></textarea></td>
             </tr>
 			<tr height="50" valign="middle">
 				<td align="right" width="210" style="font-size:24px;">จังหวัด : *</td>
@@ -420,21 +424,25 @@
             </tr>
             <tr height="50" valign="middle">
 				<td align="right" width="210" style="font-size:24px;">รหัสไปรษณีย์ : *</td>
-                <td align="left" width="190"><input id="zipcode" name="zipcode" type="text" maxlength="30" placeholder="กรุณากรอกรหัสไปรษณีย์" style=" padding:2px; font-size:20px;" onchange="postData('head');" /></td>
+                <td align="left" width="190"><input id="zipcode" name="zipcode" type="text" maxlength="30" placeholder="กรุณากรอกรหัสไปรษณีย์" style=" padding:2px; font-size:20px;" value="{{buildingdata.saddrzipcode}}" onchange="postData('head');" /></td>
             </tr>
         </table>
         <table style="margin-top: 0px; float:left;">
         	<tr>
 				<td align="right" width="240" style="font-size:24px;">
 					<div id="headimage2" class="thumbframe4add" style="margin-top:-80px;">
+						{% if linkimagemap != '' %}
+						<img src="{{asset(linkimagemap)}}" class="nopad thumb" />
+						{% else %}
 						<img src="{{asset('images/exmap.png')}}" class="nopad thumb" />
+						{% endif %}
 					</div></td>
             	<td align="left" width="180">
 					<input type="file" name="upload_map" id="upload_map"/>
-					<input type="hidden" name="hdnfilemap" id="hdnfilemap" onchange="postData('head');" />
+					<input type="hidden" name="hdnfilemap" id="hdnfilemap" value="{{nameimagehead}}" />
 				</td>
 				<td align="right" width="240" valign="top" style="font-size:24px;">รายละเอียดเพิ่มเติม : &nbsp;</td>
-                <td align="left" width="200"><textarea name="placedetail" type="text" maxlength="500" class="ldesc" onchange="postData('head');" /></textarea></td>
+                <td align="left" width="200"><textarea name="placedetail" type="text" maxlength="500" class="ldesc" value="{{buildingdata.tdetail}}" onchange="postData('head');" /></textarea></td>
             </tr>
         </table>
     </div>
@@ -442,9 +450,9 @@
 		<table style="margin-top: 0px;">
         	<tr height="50" valign="middle">
 				<td align="right" width="240" style="font-size:24px;">Google Map ลองติจูด : *</td>
-                <td align="left" width="200"><input id="longitude" name="longitude" type="text" maxlength="30" placeholder="กรุณากรอกตำแหน่งลองติจูด" style=" padding:2px; font-size:20px;" onchange="postData('head');" /></td>
+                <td align="left" width="200"><input id="longitude" name="longitude" type="text" maxlength="30" placeholder="กรุณากรอกตำแหน่งลองติจูด" style=" padding:2px; font-size:20px;" value="{{buildingdata.slongitude}}" onchange="postData('head');" /></td>
 				<td align="right" width="240" style="font-size:24px;">Google Map ละติจูด : *</td>
-                <td align="left" width="200"><input id="latitude" name="latitude" type="text" maxlength="30" placeholder="กรุณากรอกตำแหน่งละติจูด" style=" padding:2px; font-size:20px;" onchange="postData('head');" /></td>
+                <td align="left" width="200"><input id="latitude" name="latitude" type="text" maxlength="30" placeholder="กรุณากรอกตำแหน่งละติจูด" style=" padding:2px; font-size:20px;" value="{{buildingdata.slatitude}}" onchange="postData('head');" /></td>
                 <td align="left" width="30" style="font-size:24px;">&nbsp;</td>
             </tr>
             <tr height="50" valign="middle">
@@ -452,49 +460,56 @@
                 <td align="left" width="200">
                 	<div class="styled-select">
 						<select id="aptype" name="aptype" class="select" onchange="postData('head');">
-							<option value="all">- กรุณาระบุ -</option>
-  							<option value="apartment">อพาร์ทเม้นต์</option>
-                            <option value="man">หอชาย</option>
-                            <option value="woman">หอหญิง</option>
+							{% for list in buildingType %}
+								{% if list.checked == 'no' %}
+									<option value="{{list.id}}">{{list.type_name}}</option>
+								{% else %}
+									<option value="{{list.id}}" selected="selected">{{list.type_name}}</option>
+								{% endif %}
+							{% endfor %}
 						</select>
                     </div>
                 </td>
                 <td align="right" width="210" style="font-size:24px;">ชนิด : *</td>
                 <td align="left" width="190" style="font-size:24px;"><div class="styled-select">
 						<select id="paytype" name="paytype" class="select" onchange="postData('head');">
-							<option value="daymonth">รายวันและรายเดือน</option>
-							<option value="day">รายวัน</option>
-							<option value="month">รายเดือน</option>
+							{% for list in payType %}
+								{% if list.checked == 'no' %}
+									<option value="{{list.id}}">{{list.typename}}</option>
+								{% else %}
+									<option value="{{list.id}}" selected="selected">{{list.typename}}</option>
+								{% endif %}
+							{% endfor %}
 						</select>
 					</div></td>
                 <td align="left" width="30" style="font-size:24px;">&nbsp;</td>
             </tr>
             <tr height="50" valign="middle">
 				<td align="right" width="240" style="font-size:24px;">เบอร์โทรติดต่อ : *</td>
-                <td align="left" width="200"><input id="telnumber" name="telnumber" type="text" maxlength="10" placeholder="กรุณากรอกเบอร์โทรติดต่อ" style=" padding:2px; font-size:20px;" onchange="postData('head');" /></td>
+                <td align="left" width="200"><input id="telnumber" name="telnumber" type="text" maxlength="10" placeholder="กรุณากรอกเบอร์โทรติดต่อ" style=" padding:2px; font-size:20px;" value="{{buildingdata.slatitude}}" onchange="postData('head');" /></td>
                 <td align="right" width="210" style="font-size:24px;">ระยะเวลาเช่าขั้นต่ำ : *</td>
-               <td align="left" width="190"><input id="time" name="time" type="text" maxlength="3" placeholder="กรุณากรอกระยะเวลาเช่าขั้นต่ำ" style=" padding:2px; font-size:20px;" onchange="postData('head');" /></td>
+               <td align="left" width="190"><input id="time" name="time" type="text" maxlength="3" placeholder="กรุณากรอกระยะเวลาเช่าขั้นต่ำ" style=" padding:2px; font-size:20px;" value="{{buildingdata.smonthstay}}" onchange="postData('head');" /></td>
                 <td align="left" width="30" style="font-size:24px;"> เดือน</td>
             </tr>
             <tr height="50" valign="middle">
 				<td align="right" width="240" style="font-size:24px;">ติดต่อคุณ : *</td>
-                <td align="left" width="200"><input id="contact_person" name="contact_person" type="text" placeholder="กรุณากรอกชื่อผ้ติดต่อ" style=" padding:2px; font-size:20px;" onchange="postData('head');" /></td>
+                <td align="left" width="200"><input id="contact_person" name="contact_person" type="text" placeholder="กรุณากรอกชื่อผ้ติดต่อ" style=" padding:2px; font-size:20px;" value="{{buildingdata.scontactname}}" onchange="postData('head');" /></td>
                 <td align="right" width="210" style="font-size:24px;">ค่าน้ำ : *</td>
-               <td align="left" width="190"><input id="water_price" name="water_price" type="text" maxlength="3" placeholder="กรุณากรอกค่าน้ำ" style=" padding:2px; font-size:20px;" onchange="postData('head');" /></td>
+               <td align="left" width="190"><input id="water_price" name="water_price" type="text" maxlength="3" placeholder="กรุณากรอกค่าน้ำ" style=" padding:2px; font-size:20px;" value="{{buildingdata.fwaterunit}}" onchange="postData('head');" /></td>
                 <td align="left" width="30" style="font-size:24px;"> บาท</td>
             </tr>
             <tr height="50" valign="middle">
 				<td align="right" width="240" style="font-size:24px;">อีเมล : *</td>
-                <td align="left" width="200"><input id="contact_email" name="contact_email" type="text" placeholder="กรุณากรอกอีเมล" style=" padding:2px; font-size:20px;" onchange="postData('head');" /></td>
+                <td align="left" width="200"><input id="contact_email" name="contact_email" type="text" placeholder="กรุณากรอกอีเมล" style=" padding:2px; font-size:20px;" value="{{buildingdata.scontactemail}}" onchange="postData('head');" /></td>
                 <td align="right" width="210" style="font-size:24px;">ค่าไฟ : *</td>
-               <td align="left" width="190"><input id="power_price" name="power_price" type="text" maxlength="3" placeholder="กรุณากรอกค่าไฟ" style=" padding:2px; font-size:20px;" onchange="postData('head');" /></td>
+               <td align="left" width="190"><input id="power_price" name="power_price" type="text" maxlength="3" placeholder="กรุณากรอกค่าไฟ" style=" padding:2px; font-size:20px;" value="{{buildingdata.felectrictunit}}" onchange="postData('head');" /></td>
                 <td align="left" width="30" style="font-size:24px;"> บาท</td>
             </tr>
             <tr height="50" valign="middle">
 				<td align="right" width="240" style="font-size:24px;">เว็บไซต์ : &nbsp;</td>
-                <td align="left" width="200"><input id="website" name="website" type="text" maxlength="10" placeholder="กรุณากรอกเว็บไซต์" style=" padding:2px; font-size:20px;" onchange="postData('head');" /></td>
+                <td align="left" width="200"><input id="website" name="website" type="text" maxlength="10" placeholder="กรุณากรอกเว็บไซต์" style=" padding:2px; font-size:20px;" value="{{buildingdata.swebsite}}" onchange="postData('head');" /></td>
                 <td align="right" width="210" style="font-size:24px;">ค่าอินเตอร์เน็ต : &nbsp;</td>
-               <td align="left" width="190"><input id="internet_price" name="internet_price" type="text" maxlength="3" placeholder="กรุณากรอกค่าอินเตอร์เน็ต" style=" padding:2px; font-size:20px;" onchange="postData('head');" /></td>
+               <td align="left" width="190"><input id="internet_price" name="internet_price" type="text" maxlength="3" placeholder="กรุณากรอกค่าอินเตอร์เน็ต" style=" padding:2px; font-size:20px;" value="{{buildingdata.iinternetprice}}" onchange="postData('head');" /></td>
                 <td align="left" width="30" style="font-size:24px;"> บาท</td>
             </tr>
         </table>

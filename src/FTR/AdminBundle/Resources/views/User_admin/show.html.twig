@@ -1,95 +1,42 @@
-<<<<<<< HEAD
-<h1>User_admin</h1>
+<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js'></script>
+<script type='text/javascript' src='{{asset("js/paging/smartpaginator.buildingsite.js")}}'></script>
+<link rel='stylesheet' type='text/css' href='{{asset("css/paging/smartpaginator.buildingsite.css")}}' />
+<script>
+	$(document).ready(function() {
+		$(".linkEditBuildingSite").click(function() {
+			//alert(this.href + '/edit');
+			$.post(this.href + '/edit', function(data) {
+				//alert(data);
+				$('.editPanel').html(data);
+				toggle(".createPanel", 'hide');
+				toggle(".editPanel", 'show');
+				$("#createrecordCancel").hide();
+				$("#createrecord").show('slow');
+				document.getElementById('createrecord').scrollIntoView();
+			});
+			return false;
+		});
 
-<table class="record_properties">
-    <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ entity.id }}</td>
-        </tr>
-        <tr>
-            <th>Username</th>
-            <td>{{ entity.username }}</td>
-        </tr>
-        <tr>
-            <th>Password</th>
-            <td>{{ entity.password }}</td>
-        </tr>
-        <tr>
-            <th>Firstname</th>
-            <td>{{ entity.firstname }}</td>
-        </tr>
-        <tr>
-            <th>Lastname</th>
-            <td>{{ entity.lastname }}</td>
-        </tr>
-        <tr>
-            <th>Phone_number</th>
-            <td>{{ entity.phonenumber }}</td>
-        </tr>
-        <tr>
-            <th>Userlevel</th>
-            <td>{{ entity.userlevel }}</td>
-        </tr>
-        <tr>
-            <th>Deleted</th>
-            <td>{{ entity.deleted }}</td>
-        </tr>
-    </tbody>
+		function toggle(id, toggle) {
+			$(id).animate({
+				left : '+=50',
+				height : toggle
+			}, 500, function() {
+			});
+		}
+
+	}); 
+</script>
+<table>
+	<tr>
+		<th style="width: 840px !important;">name</th>
+		<th style="width: 50px !important;">config</th>
+	</tr>
+	{% for entity in entities%}
+	<tr>
+		<td>{{entity.username}}</td>
+		<td><a href="{{entity.id}}" class="linkEditBuildingSite">Edit</a>&nbsp;&nbsp;<a href="#" >Delete</a></td>
+	</tr>
+	{% endfor%}
 </table>
-
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('user_admin') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
-=======
-<h1>User_admin</h1>
-
-<table class="record_properties">
-    <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ entity.id }}</td>
-        </tr>
-        <tr>
-            <th>Username</th>
-            <td>{{ entity.username }}</td>
-        </tr>
-        <tr>
-            <th>Password</th>
-            <td>{{ entity.password }}</td>
-        </tr>
-        <tr>
-            <th>Firstname</th>
-            <td>{{ entity.firstname }}</td>
-        </tr>
-        <tr>
-            <th>Lastname</th>
-            <td>{{ entity.lastname }}</td>
-        </tr>
-        <tr>
-            <th>Phone_number</th>
-            <td>{{ entity.phonenumber }}</td>
-        </tr>
-        <tr>
-            <th>Userlevel</th>
-            <td>{{ entity.userlevel }}</td>
-        </tr>
-        <tr>
-            <th>Deleted</th>
-            <td>{{ entity.deleted }}</td>
-        </tr>
-    </tbody>
-</table>
-
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('user_admin') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
->>>>>>> 2111584b125ef558f2be4fdd8f22ca10f84c23bb
+<div class="clear"></div>

@@ -4,33 +4,37 @@
 <link rel="stylesheet" type="text/css" href="{{asset('css/jquery.fancybox-1.3.4.css')}}" media="screen" />
 <script type="text/javascript" src="{{asset('js/fancybox/jquery.easing-1.4.pack.js')}}"></script>
 <script>
-        window.fbAsyncInit = function() {
-          FB.init({
-            appId      : '414830161885886', // App ID
-            channelUrl : '//www.findtheroom.com//login.php', // Channel File ระบุไฟล์ที่จะใช้ login
-            status     : true, // check login status
-            cookie     : true, // enable cookies to allow the server to access the session
-            xfbml      : true  // parse XFBML
-          });
-        };
-        // Load the SDK Asynchronously
-        (function(d){
-           var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-           if (d.getElementById(id)) {return;}
-           js = d.createElement('script'); js.id = id; js.async = true;
-           js.src = "//connect.facebook.net/en_US/all.js";
-           ref.parentNode.insertBefore(js, ref);
-         }(document));         
+	window.fbAsyncInit = function() {
+		FB.init({
+			appId : '414830161885886', // App ID
+			channelUrl : '//www.findtheroom.com//login.php', // Channel File ระบุไฟล์ที่จะใช้ login
+			status : true, // check login status
+			cookie : true, // enable cookies to allow the server to access the session
+			xfbml : true // parse XFBML
+		});
+	};
+	// Load the SDK Asynchronously
+	( function(d) {
+			var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+			if (d.getElementById(id)) {
+				return;
+			}
+			js = d.createElement('script');
+			js.id = id;
+			js.async = true;
+			js.src = "//connect.facebook.net/en_US/all.js";
+			ref.parentNode.insertBefore(js, ref);
+		}(document)); 
 </script>
 <script>
 	$(document).ready(function() {
 		$("a#login").fancybox({
-				'width'				: 700,
-				'height'			: 400,
-				'autoScale'			: false,
-				'transitionIn'		: 'elastic',
-				'transitionOut'		: 'elastic',
-				'type'				: 'iframe'
+			'width' : 700,
+			'height' : 400,
+			'autoScale' : false,
+			'transitionIn' : 'elastic',
+			'transitionOut' : 'elastic',
+			'type' : 'iframe'
 		});
 	});
 </script>
@@ -86,124 +90,119 @@
 </div>
 </form>
 <script>
-	function clickagree() {		
-			if($('#firstname').val()=="")
-			{
-	            $("#alert_fname").html("กรุณากรอก ชื่อ");
-				$("#alert_fname").hide();
-				$("#alert_fname").show("slow");
-	            document.getElementById('firstname').focus();
-	            return false;
-	        }else{
-	        	$("#alert_fname").hide();
-	        }
-	        if($('#lastname').val()=="")
-	        {
-	            $("#alert_lname").html("กรุณากรอก นามสกุล");
-				$("#alert_lname").hide();
-				$("#alert_lname").show("slow");
-	            document.getElementById('lastname').focus();
-	            return false;
-	        }else{
-	        	$("#alert_lname").hide();
-	        }
-	        if($('#regusername').val()=="")
-	        {
-	            $("#alert_uname").html("กรุณากรอก ชื่อผู้ใช้งาน");
+	function clickagree() {
+		if ($('#firstname').val() == "") {
+			$("#alert_fname").html("กรุณากรอก ชื่อ");
+			$("#alert_fname").hide();
+			$("#alert_fname").show("slow");
+			document.getElementById('firstname').focus();
+			return false;
+		} else {
+			$("#alert_fname").hide();
+		}
+		if ($('#lastname').val() == "") {
+			$("#alert_lname").html("กรุณากรอก นามสกุล");
+			$("#alert_lname").hide();
+			$("#alert_lname").show("slow");
+			document.getElementById('lastname').focus();
+			return false;
+		} else {
+			$("#alert_lname").hide();
+		}
+		if ($('#regusername').val() == "") {
+			$("#alert_uname").html("กรุณากรอก ชื่อผู้ใช้งาน");
+			$("#alert_uname").hide();
+			$("#alert_uname").show("slow");
+			document.getElementById('username').focus();
+			return false;
+		} else {
+			$("#alert_uname").hide();
+			var reg = /[^A-Za-z0-9]/;
+			if (reg.test($('#regusername').val()) == true) {
+				$("#alert_uname").html("ชื่อผู้ใช้งาน จะต้องเป็นอักขระอังกฤษ หรือตัวเลข");
 				$("#alert_uname").hide();
 				$("#alert_uname").show("slow");
-	            document.getElementById('username').focus();
-	            return false;
-	        } 
-	        else{
-	        	$("#alert_uname").hide();
-	        }      
-	        if($('#email').val()=="")
-	        {
-	            $("#alert_email").html("กรุณากรอก Email");
-				$("#alert_email").hide();
-				$("#alert_email").show("slow");
-	            document.getElementById('email').focus();
-	            return false;
-	        }else{
-	        	$("#alert_email").hide();
-	        	var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-				if(reg.test($('#email').val())==false){
-					$("#alert_email").html("กรุณากรอก Email ให้ถูกต้อง");
-					$("#alert_email").hide();
-					$("#alert_email").show("slow");
-		            document.getElementById('email').focus();
-		            return false;
-				}
-	        }
-	        if($('#regpassword').val()=="")
-	        {
-	            $("#alert_password").html("กรุณากรอก รหัสผ่าน");
-				$("#alert_password").hide();
-				$("#alert_password").show("slow");
-	            document.getElementById('regpassword').focus();
-	            return false;
-	        }else{
-	        	$("#alert_password").hide();
-	        	if(document.getElementById('regpassword').value.length<8 || document.getElementById('regpassword').value.length>12){
-	        		//alert(document.getElementById('regpassword').value);
-	        		$("#alert_password").html("รหัสผ่านต้องมี 8 อักษร และไม่เกิน 12 อักษร");
-					$("#alert_password").hide();
-					$("#alert_password").show("slow");
-			        document.getElementById('regpassword').focus();
-			        return false;        		
-	        	}else{
-	        		var reg2 = /[a-z][0-9]/;
-	        		if(reg2.test($('#regpassword').val())==false){
-	        			$("#alert_password").html("รหัสผ่านต้องมีตัวอักษรและตัวเลข");
-	        			$("#alert_password").hide();
-						$("#alert_password").show("slow");
-			            document.getElementById('regpassword').focus();
-			            return false; 
-	        		}	
-	        	}
-	        }
-	        if($('#confirmpass').val()=="")
-	        {
-	            $("#alert_conpassword").html("กรุณากรอก รหัสผ่าน");
-				$("#alert_conpassword").hide();
-				$("#alert_conpassword").show("slow");
-	            document.getElementById('confirmpass').focus();
-	            return false;
-	        }else{
-	        	$("#alert_conpassword").hide();
-	        	if($('#confirmpass').val()!=$('#regpassword').val()){
-	        		$("#alert_conpassword").html("รหัสผ่านไม่ตรงกัน");
-					$("#alert_conpassword").hide();
-					$("#alert_conpassword").show("slow");
-			        document.getElementById('confirmpass').focus();
-			        return false;
-	        	}
-	        }
-	        if($('#tele').val()=="")
-	        {
-	            $("#alert_tel").html("กรุณากรอก หมายเลขโทรศัพท์");
-				$("#alert_tel").hide();
-				$("#alert_tel").show("slow");
-	            document.getElementById('tele').focus();
-	            return false;
-	        }else{
-	        	$("#alert_tel").hide();
-	        	if(document.getElementById('tele').value.length<9){
-	        		$("#alert_tel").html("หมายเลขโทรศัพท์ไม่ถูกต้อง");
-					$("#alert_tel").hide();
-					$("#alert_tel").show("slow");
-		            document.getElementById('tele').focus();
-		            return false;
-	        	}
-	        }
-			if(document.getElementById('ac').checked==false){
-				document.getElementById("alert_chakgree").innerHTML = "กรุณาเช็ค ยอมรับเงื่อนไขและข้อตกลง";
-				$("#alert_chakgree").hide();
-				$("#alert_chakgree").show("slow");
+				document.getElementById('username').focus();
 				return false;
 			}
-			return true;
+		}
+		if ($('#email').val() == "") {
+			$("#alert_email").html("กรุณากรอก Email");
+			$("#alert_email").hide();
+			$("#alert_email").show("slow");
+			document.getElementById('email').focus();
+			return false;
+		} else {
+			$("#alert_email").hide();
+			var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+			if (reg.test($('#email').val()) == false) {
+				$("#alert_email").html("กรุณากรอก Email ให้ถูกต้อง");
+				$("#alert_email").hide();
+				$("#alert_email").show("slow");
+				document.getElementById('email').focus();
+				return false;
+			}
+		}
+		if ($('#regpassword').val() == "") {
+			$("#alert_password").html("กรุณากรอก รหัสผ่าน");
+			$("#alert_password").hide();
+			$("#alert_password").show("slow");
+			document.getElementById('regpassword').focus();
+			return false;
+		} else {
+			$("#alert_password").hide();
+			if (document.getElementById('regpassword').value.length < 8 || document.getElementById('regpassword').value.length > 12) {
+				//alert(document.getElementById('regpassword').value);
+				$("#alert_password").html("รหัสผ่านต้องมี 8 อักษร และไม่เกิน 12 อักษร");
+				$("#alert_password").hide();
+				$("#alert_password").show("slow");
+				document.getElementById('regpassword').focus();
+				return false;
+			} else {
+				var reg = /[a-z][0-9]/;
+				if (reg.test($('#regpassword').val()) == false) {
+					$("#alert_password").html("รหัสผ่านต้องมีตัวอักษรและตัวเลข");
+					$("#alert_password").hide();
+					$("#alert_password").show("slow");
+					document.getElementById('regpassword').focus();
+					return false;
+				}
+			}
+		}
+		if ($('#confirmpass').val() == "") {
+			$("#alert_conpassword").html("กรุณากรอก รหัสผ่าน");
+			$("#alert_conpassword").hide();
+			$("#alert_conpassword").show("slow");
+			document.getElementById('confirmpass').focus();
+			return false;
+		} else {
+			$("#alert_conpassword").hide();
+			if ($('#confirmpass').val() != $('#regpassword').val()) {
+				$("#alert_conpassword").html("รหัสผ่านไม่ตรงกัน");
+				$("#alert_conpassword").hide();
+				$("#alert_conpassword").show("slow");
+				document.getElementById('confirmpass').focus();
+				return false;
+			}
+		}
+		if ($('#tele').val() != "") {
+			$("#alert_tel").hide();
+			var reg = /[0-9]/;
+			if (document.getElementById('tele').value.length < 9 && document.getElementById('tele').value.length > 10 && reg.test($('#tele').val())) {
+				$("#alert_tel").html("หมายเลขโทรศัพท์ไม่ถูกต้อง");
+				$("#alert_tel").hide();
+				$("#alert_tel").show("slow");
+				document.getElementById('tele').focus();
+				return false;
+			}
+		}
+		if (document.getElementById('ac').checked == false) {
+			document.getElementById("alert_chakgree").innerHTML = "กรุณาเช็ค ยอมรับเงื่อนไขและข้อตกลง";
+			$("#alert_chakgree").hide();
+			$("#alert_chakgree").show("slow");
+			return false;
+		}
+		return true;
 	}
 </script>
 {% endblock %}

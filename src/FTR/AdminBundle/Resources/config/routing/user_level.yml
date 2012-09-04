@@ -1,0 +1,30 @@
+user_level:
+    pattern:  /
+    defaults: { _controller: "FTRAdminBundle:User_level:index" }
+
+user_level_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "FTRAdminBundle:User_level:show" }
+
+user_level_new:
+    pattern:  /new
+    defaults: { _controller: "FTRAdminBundle:User_level:new" }
+
+user_level_create:
+    pattern:  /create
+    defaults: { _controller: "FTRAdminBundle:User_level:create" }
+    requirements: { _method: post }
+
+user_level_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "FTRAdminBundle:User_level:edit" }
+
+user_level_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "FTRAdminBundle:User_level:update" }
+    requirements: { _method: post }
+
+user_level_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "FTRAdminBundle:User_level:delete" }
+    requirements: { _method: post }

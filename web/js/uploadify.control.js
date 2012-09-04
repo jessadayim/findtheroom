@@ -18,11 +18,7 @@ $(function() {// get more knowledge at http://www.uploadify.com/documentation/
             	//alert('The file ' + file.name + ' was successfully uploaded with a response of ' + response + ':' + data);
             	document.getElementById('hdnfilename').value = data;
             	postData('image');
-            	//alert("{{asset('images/building/1/2012-08-31head.jpg')}}");
-            	//$(document).ready(function(){
-			$('#headimage').fadeOut('slow').html('<img src="'+imagepath+'" class="nopad thumb"/>').fadeIn("slow");
-		
-	//});
+				$('#headimage').fadeOut('slow').html('<img src="'+imagepath+'/'+buildid+'/'+data+'" class="nopad thumb"/>').fadeIn("slow");
         	}
 			// Your options here
 		});
@@ -41,6 +37,7 @@ $(function() {// get more knowledge at http://www.uploadify.com/documentation/
             	//alert('The file ' + file.name + ' was successfully uploaded with a response of ' + response + ':' + data);
             	document.getElementById('hdnfilemap').value = data;
             	postData('image');
+            	$('#headimage2').fadeOut('slow').html('<img src="'+imagepath+'/'+buildid+'/'+data+'" class="nopad thumb"/>').fadeIn("slow");
         	}
 			// Your options here
 		});
@@ -75,6 +72,7 @@ function uploadpicroom()
             	//alert(textroomname)
             	document.getElementById(textroomname).value = mySplitResult[0];
             	postData('image');
+            	$('#roomtrid0').fadeOut('slow').html('<img src="'+imagepath+'/'+buildid+'/'+mySplitResult[0]+'" class="nopad thumb"/>').fadeIn("slow");
         	}
 			// Your options here
 		});

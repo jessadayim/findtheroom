@@ -1,0 +1,41 @@
+<h1>User_level list</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Level_name</th>
+            <th>Level_type</th>
+            <th>Is_enabled</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('user_level_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.levelname }}</td>
+            <td>{{ entity.leveltype }}</td>
+            <td>{{ entity.isenabled }}</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('user_level_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('user_level_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<ul>
+    <li>
+        <a href="{{ path('user_level_new') }}">
+            Create a new entry
+        </a>
+    </li>
+</ul>

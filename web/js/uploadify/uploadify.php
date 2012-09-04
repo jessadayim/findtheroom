@@ -12,6 +12,7 @@ $build_id = $_POST['buildid'];
 $fieldname = $_POST['fieldname'];
 $type =$_POST['typefield'];
 $now = date('Y-m-d');
+$time = strtotime(date("Y-m-d H:i:s"));
 if (!empty($_FILES)) {
 	// Validate the file type
 	$fileTypes = array('jpg','jpeg','gif','png'); // File extensions
@@ -24,9 +25,9 @@ if (!empty($_FILES)) {
 		$newfieldname2 = str_replace('#gallery', '', $fieldname);
 	}
 	$fileextension = $fileParts['extension'];
-	$fixfilename = $now.$newfieldname1.'.'.$fileextension;
-	
-	$filenamecallback = $newfieldname1.'.'.$fileextension.'_'.$newfieldname2;
+	//$fixfilename = $newfieldname1.'.'.$fileextension;
+	$fixfilename = $time.'.'.$fileextension;
+	$filenamecallback = $time.'.'.$fileextension.'_'.$newfieldname2;
 	
 	$tempFile = $_FILES['Filedata']['tmp_name'];
 	$targetPath = $_SERVER['DOCUMENT_ROOT'] . $targetFolder . '/' .$build_id;
@@ -35,7 +36,12 @@ if (!empty($_FILES)) {
 	if (in_array($fileParts['extension'],$fileTypes)) {
 		move_uploaded_file($tempFile,$targetFile);
 		//echo $targetFolder . '/' . $_FILES['Filedata']['name'];
-		echo $filenamecallback;
+		if($type=='room'||$type=='gallery')
+		{
+			echo $filenamecallback;
+		}else{
+			echo $fixfilename;
+		}
 		//echo '1';
 	} else {
 		echo 'Invalid file type.';
