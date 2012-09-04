@@ -29,11 +29,11 @@ class Nearly_type
     private $type_name;
 
     /**
-     * @var string $type_label
+     * @var string $label
      *
-     * @ORM\Column(name="type_label", type="string", length=255)
+     * @ORM\Column(name="label", type="string", length=255)
      */
-    private $type_label;
+    private $label;
 
     /**
      * @var boolean $deleted
@@ -74,23 +74,23 @@ class Nearly_type
     }
 
     /**
-     * Set type_label
+     * Set label
      *
-     * @param string $type_label
+     * @param string $label
      */
-    public function setTypeLabel($typeLabel)
+    public function setLabel($label)
     {
-        $this->type_label = type_label;
+        $this->label = $label;
     }
 
     /**
-     * Get type_label
+     * Get label
      *
      * @return string 
      */
-    public function getTypeLabel()
+    public function getLabel()
     {
-        return $this->type_label;
+        return $this->label;
     }
 
     /**
