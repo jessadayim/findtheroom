@@ -93,6 +93,47 @@
 		} // End วนลูปปักหมุด
 	}
 </script>
+<script type="text/javascript">
+    $(function() {
+        $('ul#navi_containTab > li').click(function(event) {
+            var menuIndex = $(this).index();
+            $('ul#detail_containTab > li:visible').hide();
+            $('ul#detail_containTab > li').eq(menuIndex).show();
+        });
+        $('ul#navi_containTab2 > li').click(function(event) {
+            var menuIndex = $(this).index();
+            $('ul#detail_containTab2 > li:visible').hide();
+            $('ul#detail_containTab2 > li').eq(menuIndex).show();
+        });
+    });
+</script>
+<script type="text/javascript">
+    function enact(what) {
+        var p = what.parentNode;
+        var els = p.getElementsByTagName('li');
+        for ( i = 0; i < els.length; i++) {
+            els[i].className = '';
+        }
+        what.className = 'active';
+    }
+</script>
+
+<script language="javascript">
+    $(document).ready(function() {
+        {% if shortSearchType == 'bkk' %}
+            $('ul#detail_containTab > li.detailContent1').show();
+            $('ul#detail_containTab > li.detailContent2').hide();
+        {% endif %}
+
+        {% if shortSearchType == 'country' %}
+            $('ul#detail_containTab > li.detailContent2').show();
+            $('ul#detail_containTab > li.detailContent1').hide();
+        {% endif %}
+    });
+</script>
+
+
+
 <div id="search1">
     <div id="i_containTab">
         <ul id="navi_containTab">
