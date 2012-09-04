@@ -16,3 +16,6 @@ app/config/parameters.ini
 .project
 .DS_Store
 web/images/building/*
+
+# Project files from php storm
+.idea
