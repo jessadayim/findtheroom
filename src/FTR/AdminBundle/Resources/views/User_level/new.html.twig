@@ -1,0 +1,16 @@
+<h1>User_level creation</h1>
+
+<form action="{{ path('user_level_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <p>
+        <button type="submit">Create</button>
+    </p>
+</form>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('user_level') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
