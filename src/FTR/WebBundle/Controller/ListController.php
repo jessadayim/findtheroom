@@ -16,6 +16,11 @@ class ListController extends Controller
         $nearly             = null;
         $textSearch         = "ห้องพัก";
         $bkkPayType         = null;
+        $selZone            = null;
+        $selProvince        = null;
+        $lessPrice          = null;
+        $mostPrice          = null;
+        $shortSearchType    = "bkk";
 
         //query value
         $whereQuery         = null;
@@ -56,7 +61,7 @@ class ListController extends Controller
         {
             //short search
 
-            var_dump(@$_POST);
+            //var_dump(@$_POST);
             if(!empty($_POST['searchBkk']))
             {
                 $shortSearchType = trim(@$_POST['searchBkk']);
@@ -101,7 +106,7 @@ class ListController extends Controller
 
 
                     break;
-                case "searchCountry":
+                case "country":
                         $selProvince    = @$_POST['selProvince'];
                         $bkkPayType     = @$_POST['bkkPayType'];
                         $buildingType   = @$_POST['bkkBuildingType'];
@@ -142,7 +147,7 @@ class ListController extends Controller
         $parameter['buildingType']      = $buildingType;
         $parameter['lessPrice']         = $lessPrice;
         $parameter['mostPrice']         = $mostPrice;
-        $parameter['selProvince']         = $selProvince;
+        $parameter['selProvince']       = $selProvince;
 
         //end get zone
 
@@ -179,7 +184,7 @@ class ListController extends Controller
                 $limitDisplay
             ";
 
-            echo "<br>".$sql = "
+            $sql = "
                 $selectField
                 $fromTable
                 WHERE 1
