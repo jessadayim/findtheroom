@@ -13,42 +13,50 @@ use FTR\AdminBundle\Entity\User_admin;
  *
  * @Route("/user_admin")
  */
-class User_adminController extends Controller
-{
-    /**
-     * Lists all User_admin entities.
-     *
-     * @Route("/", name="user_admin")
-     * @Template()
-     */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $entities = $em->getRepository('FTRAdminBundle:User_admin')->findAll();
-
-        return array('entities' => $entities);
-    }
-
-    /**
-     * Finds and displays a User_admin entity.
-     *
-     * @Route("/{id}/show", name="user_admin_show")
-     * @Template()
-     */
-    public function showAction($id)
-    {
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $entity = $em->getRepository('FTRAdminBundle:User_admin')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find User_admin entity.');
-        }
-
-        return array(
-            'entity'      => $entity,
+class User_adminController extends Controller {
+	/**
+	 * Lists all User_admin entities.
+	 *
+	 * @Route("/", name="user_admin")
+	 * @Template()
+	 */
+	public function indexAction() {
+		// $em = $this -> getDoctrine() -> getEntityManager();
+// 
+		// $entities = $em -> getRepository('FTRAdminBundle:User_admin') -> findAll();
+// 
+		// return array('entities' => $entities);
+		return array(
+            'checkhide' => 'false',
+            'session'   => true
         );
-    }
+		//return $this -> render('FTRAdminBundle:User_admin:index.html.twig', array());
+	}
+
+	public function createAction() {
+		return $this -> render('FTRAdminBundle:User_admin:create.html.twig', array());
+	}
+	
+	public function editAction() {
+		return $this -> render('FTRAdminBundle:User_admin:edit.html.twig', array());
+	}
+
+	/**
+	 * Finds and displays a User_admin entity.
+	 *
+	 * @Route("/{id}/show", name="user_admin_show")
+	 * @Template()
+	 */
+	public function showAction() {
+		$em = $this -> getDoctrine() -> getEntityManager();
+
+		$entity = $em -> getRepository('FTRAdminBundle:User_admin') -> findAll();
+
+		if (!$entity) {
+			throw $this -> createNotFoundException('Unable to find User_admin entity.');
+		}
+
+		return array('entities' => $entity, );
+	}
 
 }

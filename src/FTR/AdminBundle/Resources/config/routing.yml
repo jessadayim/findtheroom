@@ -50,6 +50,9 @@ FTRAdminBundle_zone:
     resource: "@FTRAdminBundle/Resources/config/routing/zone.yml"
     prefix:   /zone
 
+FTRAdminBundle_user_admin:
+    resource: "@FTRAdminBundle/Resources/config/routing/user_admin.yml"
+    prefix:   /user_admin
     
 # Routing of Backend Panel
 # Creator : MICK
