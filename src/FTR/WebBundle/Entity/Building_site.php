@@ -36,16 +36,16 @@ class Building_site
     private $building_address;
 
     /**
-     * @var integer $start_price
+     * @var float $start_price
      *
-     * @ORM\Column(name="start_price", type="integer")
+     * @ORM\Column(name="start_price", type="float")
      */
     private $start_price;
 
     /**
-     * @var integer $end_price
+     * @var float $end_price
      *
-     * @ORM\Column(name="end_price", type="integer")
+     * @ORM\Column(name="end_price", type="float")
      */
     private $end_price;
 
@@ -183,9 +183,9 @@ class Building_site
     private $electricity_unit;
 
     /**
-     * @var integer $internet_price
+     * @var float $internet_price
      *
-     * @ORM\Column(name="internet_price", type="integer", nullable="true")
+     * @ORM\Column(name="internet_price", type="float", nullable="true")
      */
     private $internet_price;
 
@@ -292,7 +292,7 @@ class Building_site
     /**
      * Set start_price
      *
-     * @param integer $startPrice
+     * @param float $startPrice
      */
     public function setStartPrice($startPrice)
     {
@@ -302,7 +302,7 @@ class Building_site
     /**
      * Get start_price
      *
-     * @return integer 
+     * @return float 
      */
     public function getStartPrice()
     {
@@ -312,7 +312,7 @@ class Building_site
     /**
      * Set end_price
      *
-     * @param integer $endPrice
+     * @param float $endPrice
      */
     public function setEndPrice($endPrice)
     {
@@ -322,7 +322,7 @@ class Building_site
     /**
      * Get end_price
      *
-     * @return integer 
+     * @return float 
      */
     public function getEndPrice()
     {
@@ -712,7 +712,7 @@ class Building_site
     /**
      * Set internet_price
      *
-     * @param integer $internet_price
+     * @param float $internet_price
      */
     public function setInternetPrice($internetPrice)
     {
@@ -722,7 +722,7 @@ class Building_site
     /**
      * Get internet_price
      *
-     * @return integer 
+     * @return float 
      */
     public function getInternetPrice()
     {
