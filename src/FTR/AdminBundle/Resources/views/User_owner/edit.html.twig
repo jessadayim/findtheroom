@@ -14,9 +14,9 @@
 			});
 		}
 
-		var url = "{{ path('admin_update', { 'id': entity.id }) }}";
+		var url = "{{ path('owner_update', { 'id': entity.id }) }}";
 		$("#formEdit").submit(function() {	
-			//alert($(this).serialize());		
+			// alert($(this).serialize());		
 			if (!confirm('คุณต้องการแก้ไขข้อมูล ใช่หรือไม่')) {
 				return false;
 			}
@@ -29,7 +29,7 @@
 					if (msg == 'finish') {
 						// $('#listBuildingSite').load(window.location + "show");
 						toggle(".editPanel", 'hide');
-						$('#listAdmin').fadeOut('slow').load(window.location + "show").fadeIn("slow");
+						$('#listOwner').fadeOut('slow').load(window.location + "show").fadeIn("slow");
 					} else {
 						$('.innerPanel').html(msg);
 						alert('การแก้ไขผิดพลาด');
@@ -41,47 +41,49 @@
 
 	}); 
 </script>
-<form id="formEdit" action="{{path('FTRAdminBundle_Createadminlists')}}" method="post" >
+<form id="formEdit" action="{{path('FTRAdminBundle_Createownerlists')}}" method="post">
 	<fieldset>
 		<legend>
-			EDIT ADMIN
+			EDIT OWNER
 		</legend>
 		<div class="label" style="">
 			Username:
 		</div>
-		<input type="text" id="AdminUsername" name="AdminUsername" class="widfat" value="{{entity.username}}" />
+		<input type="text" id="OwnerUsername" name="OwnerUsername" class="widfat" value="{{entity.username}}" />
 		<br />
 		<div class="label" style="">
 			Password:
 		</div>
-		<input type="text" id="AdminPassword" name="AdminPassword" class="widfat" value="{{entity.password}}" />
+		<input type="text" id="OwnerPassword" name="OwnerPassword" class="widfat" value="{{entity.password}}" />
 		<br />
 		<div class="label" style="">
 			First Name:
 		</div>
-		<input type="text" id="AdminFristName" name="AdminFristName" class="widfat" value="{{entity.firstname}}" />
+		<input type="text" id="OwnerFristName" name="OwnerFristName" class="widfat" value="{{entity.firstname}}" />
 		<br />
 		<div class="label" style="">
 			Last Name:
 		</div>
-		<input type="text" id="AdminLastName" name="AdminLastName" class="widfat" value="{{entity.lastname}}" />
+		<input type="text" id="OwnerLastName" name="OwnerLastName" class="widfat" value="{{entity.lastname}}" />
 		<br />
 		<div class="label" style="">
 			Phone Number:
 		</div>
-		<input type="text" id="AdminPhoneNumber" name="AdminPhoneNumber" class="widfat" value="{{entity.phone_number}}" />
+		<input type="text" id="OwnerPhoneNumber" name="OwnerPhoneNumber" class="widfat" value="{{entity.phone_number}}" />
 		<br />
 		<div class="label" style="">
-			Level:
+			Fax Number:
 		</div>
-		<select id="AdminLevel" name="AdminLevel" class="widfat">
-			<option value="0">...</option><option value="1">...</option>
-		</select>
+		<input type="text" id="OwnerFaxNumber" name="OwnerFaxNumber" class="widfat" value="{{entity.fax_number}}" />
 		<br />
+		<div class="label" style="">
+			Email:
+		</div>
+		<input type="text" id="OwnerEmail" name="OwnerEmail" class="widfat" value="{{entity.email}}" />
+		<br />
+
 		<span style="float: right;">
-			<input class="editCancle" type="button"  value="CANCLE">
-			&nbsp;&nbsp;
-			<input type="submit"  value="EDIT">
+			<input class="editCancle" type="button"  value="CANCLE EDIT">&nbsp;&nbsp;<input type="submit"  value="EDIT">
 		</span>
 	</fieldset>
 </form>

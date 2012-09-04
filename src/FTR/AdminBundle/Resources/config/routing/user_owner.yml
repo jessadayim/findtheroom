@@ -1,0 +1,23 @@
+user_owner:
+    pattern:  /
+    defaults: { _controller: FTRAdminBundle:User_owner:index }
+    
+owner_create:
+    pattern:  /create
+    defaults: { _controller: FTRAdminBundle:User_owner:create }
+    
+owner_show:
+    pattern:  /show
+    defaults: { _controller: FTRAdminBundle:User_owner:show }
+
+owner_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: FTRAdminBundle:User_owner:edit }
+
+owner_update:
+    pattern:  /update/{id}
+    defaults: { _controller: FTRAdminBundle:User_owner:update }
+    
+owner_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: FTRAdminBundle:User_owner:delete }

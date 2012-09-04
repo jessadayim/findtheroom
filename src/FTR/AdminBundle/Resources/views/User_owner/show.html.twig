@@ -14,8 +14,9 @@
 		$("#sortTable1").dataTable({
 			"aaSorting" : [[0, 'asc']]
 		});
-	}); 
+	});
 </script>
+
 <script>
 	$(document).ready(function() {
 		$(".linkEditBuildingSite").click(function() {
@@ -40,7 +41,6 @@
 			});
 		}
 
-
 		$(".linkDelete").click(function() {
 			//alert(this.href + "/delete");
 			if (!confirm('คุณต้องการลบข้อมูล ใช่หรือไม่')) {
@@ -54,7 +54,7 @@
 					//alert(msg);
 					if (msg == 'finish') {
 						// $('#listBuildingSite').load(window.location + "show");
-						$('#listAdmin').fadeOut('slow').load(window.location + "show").fadeIn("slow");
+						$('#listOwner').fadeOut('slow').load(window.location + "show").fadeIn("slow");
 					} else {
 						$('.innerPanel').html(msg);
 						alert('การแก้ไขผิดพลาด');
@@ -78,5 +78,6 @@
 	{% endfor%}
 </table>
 
+<!-- ปุ่ม paging -->
 <div id="green" style="margin: auto;" class="pager green"></div>
 <div class="clear"></div>

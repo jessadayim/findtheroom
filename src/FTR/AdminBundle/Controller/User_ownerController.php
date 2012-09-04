@@ -6,14 +6,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use FTR\AdminBundle\Entity\User_admin;
+use FTR\WebBundle\Entity\User_owner;
 
 /**
- * User_admin controller.
+ * User_owner controller.
  *
- * @Route("/user_admin")
+ * @Route("/user_owner")
  */
-class User_adminController extends Controller {
+class User_ownerController extends Controller {
 	/**
 	 * Lists all User_admin entities.
 	 *
@@ -21,6 +21,7 @@ class User_adminController extends Controller {
 	 * @Template()
 	 */
 	public function indexAction() {
+				
 		// $em = $this -> getDoctrine() -> getEntityManager();
 		//
 		// $entities = $em -> getRepository('FTRAdminBundle:User_admin') -> findAll();
@@ -32,13 +33,15 @@ class User_adminController extends Controller {
 
 	public function createAction() {
 		if ($_POST) {
-			$entity = new User_admin();
+			$entity = new User_owner();
 			
-			$username = $_POST['AdminUsername'];
-			$password = $_POST['AdminPassword'];
-			$firstname = $_POST['AdminFristName'];
-			$lastname = $_POST['AdminLastName'];
-			$phonenumber = $_POST['AdminPhoneNumber'];
+			$username = $_POST['OwnerUsername'];
+			$password = $_POST['OwnerPassword'];
+			$firstname = $_POST['OwnerFristName'];
+			$lastname = $_POST['OwnerLastName'];
+			$phonenumber = $_POST['OwnerPhoneNumber'];
+			$fax = $_POST['OwnerFaxNumber'];
+			$email = $_POST['OwnerEmail'];
 
 			$em = $this -> getDoctrine() -> getEntityManager();
 			
@@ -48,7 +51,8 @@ class User_adminController extends Controller {
 				$entity -> setFirstname($firstname);
 				$entity -> setLastname($lastname);
 				$entity -> setPhone_number($phonenumber);
-				$entity -> setUserlevel(0);
+				$entity -> setFax_number($fax);
+				$entity -> setEmail($email);
 				$entity -> setDeleted(0);
 				
 				$em->persist($entity);
@@ -61,26 +65,28 @@ class User_adminController extends Controller {
 
 			exit();
 		}
-		return $this -> render('FTRAdminBundle:User_admin:create.html.twig', array());
+		return $this -> render('FTRAdminBundle:User_owner:create.html.twig', array());
 	}
 
 	public function editAction($id) {
 		$em = $this -> getDoctrine() -> getEntityManager();
-		$entity = $em -> getRepository('FTRAdminBundle:User_admin') -> find($id);
-
-		return $this -> render('FTRAdminBundle:User_admin:edit.html.twig', array('entity' => $entity));
+		$entity = $em -> getRepository('FTRWebBundle:User_owner') -> find($id);
+		
+		return $this -> render('FTRAdminBundle:User_owner:edit.html.twig', array('entity' => $entity));
 	}
 
 	public function updateAction($id) {
 		if ($_POST) {
-			$username = $_POST['AdminUsername'];
-			$password = $_POST['AdminPassword'];
-			$firstname = $_POST['AdminFristName'];
-			$lastname = $_POST['AdminLastName'];
-			$phonenumber = $_POST['AdminPhoneNumber'];
+			$username = $_POST['OwnerUsername'];
+			$password = $_POST['OwnerPassword'];
+			$firstname = $_POST['OwnerFristName'];
+			$lastname = $_POST['OwnerLastName'];
+			$phonenumber = $_POST['OwnerPhoneNumber'];
+			$fax = $_POST['OwnerFaxNumber'];
+			$email = $_POST['OwnerEmail'];
 
 			$em = $this -> getDoctrine() -> getEntityManager();
-			$entity = $em -> getRepository('FTRAdminBundle:User_admin') -> find($id);
+			$entity = $em -> getRepository('FTRWebBundle:User_owner') -> find($id);
 			try {
 				if (!$entity) {
 					throw $this -> createNotFoundException('No product found for id ' . $id);
@@ -90,7 +96,9 @@ class User_adminController extends Controller {
 				$entity -> setFirstname($firstname);
 				$entity -> setLastname($lastname);
 				$entity -> setPhone_number($phonenumber);
-
+				$entity -> setFax_number($fax);
+				$entity -> setEmail($email);
+				
 				$em -> flush();
 
 				echo "finish";
@@ -106,7 +114,7 @@ class User_adminController extends Controller {
 	public function deleteAction($id) {
 		if (!empty($id)) {
 			$em = $this -> getDoctrine() -> getEntityManager();
-			$entity = $em -> getRepository('FTRAdminBundle:User_admin') -> find($id);
+			$entity = $em -> getRepository('FTRWebBundle:User_owner') -> find($id);
 			try {
 				if (!$entity) {
 					throw $this -> createNotFoundException('No product found for id ' . $id);
@@ -132,12 +140,13 @@ class User_adminController extends Controller {
 	public function showAction() {
 		$em = $this -> getDoctrine() -> getEntityManager();
 
-		$entity = $em -> getRepository('FTRAdminBundle:User_admin') -> findAll();
-
+		$entity = $em -> getRepository('FTRWebBundle:User_owner') -> findAll();
+	// $entity->getUsername();
+		// exit();
 		if (!$entity) {
 			throw $this -> createNotFoundException('Unable to find User_admin entity.');
 		}
-
+		
 		return array('entities' => $entity, );
 	}
 
