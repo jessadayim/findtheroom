@@ -106,17 +106,28 @@ class SearchController extends Controller
 
     public function fullsearchAction($parameter = null)
     {
-        $fac_inroomlist 	= $this->getFacility('inroom');	
+        $selBuildingType    = null;
+        $bkkPayType         = null;
+        $lessPrice          = null;
+        $bkkPayType         = null;
+        $mostPrice          = null;
+        $selProvince        = null;
+        $bkkZone            = null;
+        $nBts               = null;
+        $nMrt               = null;
+
+
+        $fac_inroomlist 	= $this->getFacility('inroom');
         $fac_outroomlist 	= $this->getFacility('outroom');	
 		$zonelist			= $this->getBkkZone();
 		$province			= $this->getProvince();
 		$buildingTypeList	= $this->getBuildingType();
 		$payType			= $this->getPayType();
-		$nearBTS			= $this->getNeary(2);
-		$nearMRT			= $this->getNeary(3);
-		$nearUniversity		= $this->getNeary(4);
-		$nearBy				= $this->getNeary(5);
-		$nearInCountry		= $this->getNeary(6);
+		$nearBTS			= $this->getNearly(2);
+		$nearMRT			= $this->getNearly(3);
+		$nearUniversity		= $this->getNearly(4);
+		$nearBy				= $this->getNearly(5);
+		$nearInCountry		= $this->getNearly(6);
 
         return $this->render('FTRWebBundle:Search:search.html.twig', array(
 			'fac_inroom' 		=> $fac_inroomlist,
@@ -130,6 +141,14 @@ class SearchController extends Controller
 			'nearUniversity' 	=> $nearUniversity,
 			'nearBy' 			=> $nearBy,
 			'nearInCountry' 	=> $nearInCountry,
+			'selBuildingType' 	=> $selBuildingType,
+			'bkkPayType' 	    => $bkkPayType,
+			'lessPrice' 	    => $lessPrice,
+			'mostPrice' 	    => $mostPrice,
+			'selProvince' 	    => $selProvince,
+			'bkkZone' 	        => $bkkZone,
+			'nBts' 	            => $nBts,
+			'nMrt' 	            => $nMrt,
 		));
     }
 
@@ -248,7 +267,7 @@ class SearchController extends Controller
 		return $result;
 	}
 	
-	function getNeary($type=2)
+	function getNearly($type=2)
     {
 		$result_data = array();
 		$conn= $this->get('database_connection');

@@ -32,32 +32,40 @@ function fncAlert(){
 				<td align="right" style="padding-right:15px;">ประเภทห้องพัก :</td>
 				<td width="350">
 					<div class="styled-select">
-						<select class="select">
-							{% for btype in buildingTypeList %}
-								<option value="{{ btype.id }}">{{ btype.type_name }}</option>
+						<select class="select" name="bkkBuildingType" id="bkkBuildingType">
+							{% for bType in buildingTypeList %}
+								<option value="{{ bType.id }}"
+                                    {% if selBuildingType == bType.id %}
+                                        selected="selected"
+                                    {% endif %}
+                                >{{ bType.type_name }}</option>
 							{% endfor %}
 						</select>
 					</div>
 				</td>
 				<td align="right" style="padding-right:15px;">ราคาเริ่มต้น :</td>
 				<td width="350">
-					<input class="price" name="lessprice" type="text" maxlength="10" placeholder="กรุณากรอกราคาเริ่มต้น" />&nbsp;&nbsp;&nbsp;&nbsp;บาท
+					<input class="price" value="{{ lessPrice }}" name="lessPrice" type="text" maxlength="10" placeholder="ราคาเริ่มต้น" />&nbsp;&nbsp;&nbsp;&nbsp;บาท
 				</td>
 			</tr>
 			<tr height="50" valign="middle">
 				<td align="right" style="padding-right:15px;">ชนิด :</td>
 				<td>
 					<div class="styled-select">
-						<select class="select">
-							{% for ptype in payType %}
-								<option value="{{ ptype.id }}">{{ ptype.typename }}</option>
+						<select class="select" name="bkkPayType" id="bkkPayType">
+							{% for pType in payType %}
+								<option value="{{ pType.id }}"
+                                    {% if bkkPayType == pType.id %}
+                                        selected="selected"
+                                    {% endif %}
+                                >{{ pType.typename }}</option>
 							{% endfor %}
 						</select>
 					</div>
 				</td>
 				<td align="right" style="padding-right:15px;">ราคาไม่เกิน :</td>
 				<td>
-					<input class="price" name="mostprice" type="text" maxlength="10" placeholder="กรุณากรอกราคาไม่เกิน" />&nbsp;&nbsp;&nbsp;&nbsp;บาท
+					<input class="price" value="{{ mostPrice }}" name="mostPrice" type="text" maxlength="10" placeholder="ราคาไม่เกิน" />&nbsp;&nbsp;&nbsp;&nbsp;บาท
 				</td>
 			</tr>
 		</table>
@@ -76,9 +84,13 @@ function fncAlert(){
 				<td width="200">
 					<div class="styled-select">
 						<label for="cou">
-						<select class="select">
-							{% for pvlist in province %}
-								<option value="{{ pvlist.PROVINCE_VALUE }}">{{ pvlist.PROVINCE_NAME }}</option>
+						<select class="select" name="selProvince" id="selProvince">
+							{% for pvList in province %}
+								<option value="{{ pvList.PROVINCE_VALUE }}"
+                                    {% if selProvince == pvList.PROVINCE_VALUE %}
+                                        selected="selected"
+                                    {% endif %}
+                                >{{ pvList.PROVINCE_NAME }}</option>
 							{% endfor %}
 						</select>
 						</label>
@@ -93,9 +105,13 @@ function fncAlert(){
 				<td width="250">
 					<div class="styled-select">
                   
-						<select class="select" id="sbk1">
-							{% for zlist in zonelist %}
-								<option value="{{ zlist.id }}">{{ zlist.zonename }}</option>
+						<select class="select" id="sbk1" name="bkkZone">
+							{% for zList in zonelist %}
+								<option value="{{ zList.id }}"
+                                    {% if bkkZone == zList.id %}
+                                        selected="selected"
+                                    {% endif %}
+                                >{{ zList.zonename }}</option>
 							{% endfor %}
 						</select>
                   
@@ -107,12 +123,15 @@ function fncAlert(){
 				<td width="250">
 					<div class="styled-select">
                     
-						<select class="select" id="sbk2">
-							{% for btslist in nearBTS %}
-								<option value="{{ btslist.id }}">{{ btslist.name }}</option>
+						<select class="select" id="sbk2" name="nBts">
+							{% for btsList in nearBTS %}
+								<option value="{{ btsList.id }}"
+                                    {% if nBts == btsList.id %}
+                                        selected="selected"
+                                    {% endif %}
+                                >{{ btsList.name }}</option>
 							{% endfor %}
 						</select>
-                   
 					</div>
 				</td>
 			</tr>
@@ -121,9 +140,13 @@ function fncAlert(){
 				<td width="250">
 					<div class="styled-select">
                   
-						<select class="select" id="sbk3">
-							{% for mrtlist in nearMRT %}
-								<option value="{{ mrtlist.id }}">{{ mrtlist.name }}</option>
+						<select class="select" id="sbk3"  name="nMrt">
+							{% for mrtList in nearMRT %}
+								<option value="{{ mrtList.id }}"
+                                    {% if nMrt == mrtList.id %}
+                                        selected="selected"
+                                    {% endif %}
+                                >{{ mrtList.name }}</option>
 							{% endfor %}
 						</select>
                     

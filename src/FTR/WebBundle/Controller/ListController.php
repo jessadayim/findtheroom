@@ -141,9 +141,9 @@ class ListController extends Controller
                         }//end short search
                      break;
                 case "fullSearch":
-                    echo $searchType;
-                    var_dump(@$_POST);
-                    echo "test";
+                    //echo $searchType;
+                    //var_dump(@$_POST);
+
                     break;
             }
         }
