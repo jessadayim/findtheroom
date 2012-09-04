@@ -81,7 +81,7 @@ class UserbuildingController extends Controller
 		$fac_inroomlist = NULL;
 		$fac_outroomlist = NULL;
 		$arrroom = NULL;$arrgallery = NULL;$countroom = 0;$countgallery = 0;
-		
+		$building_data = NULL;
 		$session = $this->get('session');
 		$user = $session->get('user');
 		
@@ -116,6 +116,7 @@ class UserbuildingController extends Controller
 					$em->persist($building);
     				$em->flush();
 					$building_id = $building->getId();
+					$building_data = $this->getBuildingData($building_id);
 				}else{
 					$building_id = $id;
 					$building_data = $this->getBuildingData($building_id);
@@ -132,6 +133,7 @@ class UserbuildingController extends Controller
 					{
 						$paytype_data = $em->getRepository('FTRWebBundle:Pay_type')->findOneBy(array('id'=>$building_data['ipaytypeid']));
 					}
+					var_dump($buildtype_data);exit();
 				}
 				$linkimagehead = NULL;$nameimagehead = NULL;
 				$linkimagemap = NULL;$nameimagemap = NULL;
@@ -187,6 +189,7 @@ class UserbuildingController extends Controller
 				}
 				
 		return $this->render('FTRWebBundle:Userbuilding:add.html.twig', array(
+			'buildingdata'			=> $building_data,
 			'payType' 			    => $payType,
             'zonelist' 		        => $bkkZone,
             'buildingType' 		    => $buildingType,
@@ -238,6 +241,10 @@ class UserbuildingController extends Controller
 					'iinternetprice'	=> $build_data->getInternetPrice(),
 					'igooglemapurl'		=> $build_data->getGoogleMapUrl(),
 					'binternetready'	=> $build_data->getInternetReady(),
+					'saddrnumber'		=> $build_data->getAddrNumber(),
+					'saddrprefecture'	=> $build_data->getAddrPrefecture(),
+					'saddrprovince'		=> $build_data->getAddrProvince(),
+					'saddrzipcode'		=> $build_data->getAddrZipcode(),
 			);
 		return $arrdata;
 	}
@@ -579,7 +586,47 @@ class UserbuildingController extends Controller
 			}
 			elseif($type=='head')
 			{
-				echo "head";
+				$building_name	= $_POST['nameap'];
+				$building_addr	= $_POST['placeap'];
+				$province		= $_POST['province'];
+				$district		= $_POST['district'];
+				$zipcode		= $_POST['zipcode'];
+				$detail			= $_POST['placedetail'];
+				$longitude		= $_POST['longitude'];
+				$latitude		= $_POST['latitude'];
+				$building_type	= $_POST['aptype'];
+				$pay_type		= $_POST['paytype'];
+				$phone_number	= $_POST['telnumber'];
+				$month_stay		= $_POST['time'];
+				$contact_name	= $_POST['contact_person'];
+				$water_price	= $_POST['water_price'];
+				$contact_email	= $_POST['contact_email'];
+				$electric_price	= $_POST['power_price'];
+				$website		= $_POST['website'];
+				$internet_price	= $_POST['internet_price'];
+				
+				$arrbuilding_data = array(
+					'building_name'		=> $building_name,
+					'building_addr'		=> $building_addr,
+					'province'			=> $province,
+					'district'			=> $district,
+					'zipcode'			=> $zipcode,
+					'detail'			=> $detail,
+					'longitude'			=> $longitude,
+					'latitude'			=> $latitude,
+					'building_type'		=> $building_type,
+					'pay_type'			=> $pay_type,
+					'phone_number'		=> $phone_number,
+					'month_stay'		=> $month_stay,
+					'contact_name'		=> $contact_name,
+					'water_price'		=> $water_price,
+					'contact_email'		=> $contact_email,
+					'electric_price'	=> $electric_price,
+					'website'			=> $website,
+					'internet_price'	=> $internet_price,
+				);
+				$alert = $this->saveBuildingData($id,$arrbuilding_data);
+				echo $alert;
 			}
 			elseif($type=='other')
 			{
@@ -710,8 +757,10 @@ class UserbuildingController extends Controller
 		return $roomtype2siteid;
 	}
 
-	public function saveBuildingData($id)
+	public function saveBuildingData($id,$arrdata)
 	{
+		$em = $this->getDoctrine()->getEntityManager();
+		$buildingvalue = $em->getRepository('FTRWebBundle:Building_site')->findOneBy(array('id'=>$id));
 		
 	}
 	
