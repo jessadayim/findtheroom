@@ -141,6 +141,24 @@ class UserbuildingController extends Controller
 				$arrgallery 		= $this->getImageDatas($building_id,NULL,'gallery');
 				$imagehead 			= $this->getImageDatas($building_id,NULL,'head');
 				$imagemap			= $this->getImageDatas($building_id,NULL,'map');
+				$arrroomdata = NULL;
+				foreach ($arrroom as $key => $roompicvalue) {
+					$roomtype2site_id = $roompicvalue['roomtype2site_id'];
+					$roomtype2sitedata = $em->getRepository('FTRWebBundle:Roomtype2site')->findOneBy(array('id'=>$roomtype2site_id));
+					$roomtypedata = $em->getRepository('FTRWebBundle:Roomtype')->findOneBy(array('id'=>$roomtype2sitedata->getRoomtypeId()));
+					$arrroomdata[] = array(
+						'id'			=> $roompicvalue['id'],
+						'photo_name'	=> $roompicvalue['photo_name'],
+						'link_photo'	=> "images/building/$id/".$roompicvalue['photo_name'],
+						'roomtype_name'	=> $roomtypedata->getRoomTypename(),
+						'room_size'		=> $roomtype2sitedata->getRoomsize(),
+						'room_price'	=> $roomtype2sitedata->getRoomprice(),
+					);
+				}
+				/*echo "<pre>";
+				var_dump($arrroomdata);
+				echo "</pre>";
+				exit();*/
 				if(!empty($imagehead)){
 					$linkimagehead = "images/building/$id/".$imagehead[0]['photo_name'];
 					$nameimagehead = $imagehead[0]['photo_name'];
@@ -182,7 +200,7 @@ class UserbuildingController extends Controller
 			'build_id'				=> $building_id,
 			'fac_inroom'			=> $fac_inroomlist,
 			'fac_outroom'			=> $fac_outroomlist,
-			'rooms'					=> $arrroom,
+			'rooms'					=> $arrroomdata,
 			'roomlines'				=> $countroom,
 			'galleries'				=> $arrgallery,
 			'gellerylines'			=> $countgallery,
@@ -519,37 +537,53 @@ class UserbuildingController extends Controller
 				$smapimagename 		= $_POST['hdnfilemap'];
 				$icountlineroom 	= $_POST['hdnMaxLine'];
 				$icountlinegallery 	= $_POST['hdnMaxLineGal'];
-				
-				$arrimagedata[]		= array(
-					'photo_name'	=> $sheadimagename,
-					'photo_type'	=> 'head',
-				);
-				$arrimagedata[]		= array(
-					'photo_name'	=> $smapimagename,
-					'photo_type'	=> 'map',
-				);
-				
-				for ($i=0; $i < $icountlineroom ; $i++) { 
-				$arrimagedata[] = array(
-						'imageid'		=> $_POST["imageid$i"],
-						'photo_name'	=> $_POST["hdnfilename$i"],
-						'typename'		=> $_POST["typeap_name$i"],
-						'room_size'		=> $_POST["typeap_size$i"],
-						'room_price'	=> $_POST["typeap_price$i"],
-						'photo_type'	=> 'room',
+				if(!empty($sheadimagename)){
+					$arrimagedata[]		= array(
+						'photo_name'	=> $sheadimagename,
+						'photo_type'	=> 'head',
 					);
 				}
-				//echo $arrimagedata[1]['photo_name'];exit();
-				for ($i=0; $i < $icountlinegallery ; $i++) { 
-					$arrimagedata[] = array(
-						'imageid'		=> $_POST["imageid$i"],
-						'photo_name'	=> $_POST["hdngalleryname$i"],
-						'description'	=> $_POST["galtitle$i"],
-						'photo_type'	=> 'gallery',
+				if(!empty($smapimagename)){
+					$arrimagedata[]		= array(
+						'photo_name'	=> $smapimagename,
+						'photo_type'	=> 'map',
 					);
+				}
+				for ($i=0; $i < $icountlineroom ; $i++) {
+					if(!empty($_POST["hdnfilename$i"])||!empty($_POST["typeap_name$i"])||!empty($_POST["typeap_size$i"])||!empty($_POST["typeap_price$i"])){ 
+						$arrimagedata[] = array(
+								'imageid'		=> $_POST["imageid$i"],
+								'photo_name'	=> $_POST["hdnfilename$i"],
+								'typename'		=> $_POST["typeap_name$i"],
+								'room_size'		=> $_POST["typeap_size$i"],
+								'room_price'	=> $_POST["typeap_price$i"],
+								'photo_type'	=> 'room',
+								'sequence'		=> $i,
+							);
+					}
+				}
+				
+				for ($i=0; $i < $icountlinegallery ; $i++) {
+					if(!empty($_POST["hdngalleryname$i"])||!empty($_POST["galtitle$i"])){  
+						$arrimagedata[] = array(
+							'imageid'		=> $_POST["imageid$i"],
+							'photo_name'	=> $_POST["hdngalleryname$i"],
+							'description'	=> $_POST["galtitle$i"],
+							'photo_type'	=> 'gallery',
+							'sequence'		=> $i,
+						);
+					}
 				}
 				$alert = $this->saveImageData($id,$arrimagedata);
 				echo $alert;
+			}
+			elseif($type=='head')
+			{
+				echo "head";
+			}
+			elseif($type=='other')
+			{
+				echo "other";
 			}
 		}
 		exit();
@@ -562,60 +596,77 @@ class UserbuildingController extends Controller
 		foreach ($imagedata as $key => $value) {
 			$roomtype2siteid = NULL;$data = NULL; // set NULL value for new loop
 			if(!empty($id)||!empty($value['photo_name'])){
-				$imagevalue = $em->getRepository('FTRWebBundle:Image')->findOneBy(array('building_site_id'=>$id,'photo_type'=>$value['photo_type']));
+				$imagevalue = $em->getRepository('FTRWebBundle:Image')->findOneBy(array('building_site_id'=>$id,'photo_type'=>$value['photo_type'],'sequence'=>$value['sequence']));
+				
+				$photo_name = $value['photo_name'];
+				$photo_type = $value['photo_type'];
+				$sequence = $value['sequence'];
+				if(!empty($value['description']))
+				{
+					$description = $value['description'];
+				}
+				else {
+					$description = '';
+				}
+				
+				if($value['photo_type']=='room')
+				{
+					if(!empty($value['typename'])){
+						$roomtype_name	= $value['typename'];
+					}
+					else {
+						$roomtype_name	= 'ยังไม่ระบุ';
+					}
+					if(!empty($value['room_size'])){
+						$room_size		= $value['room_size'];
+					}
+					else {
+						$room_size	= 0;
+					}
+					if(!empty($value['room_price'])){
+						$room_price		= $value['room_price'];
+					}
+					else {
+						$room_price	= 0;
+					}
+					
+					$data = array(
+						'typename'		=> $roomtype_name,
+						'room_size'		=> $room_size,
+						'room_price'	=> $room_price,
+					);
+				}
+
 				if(empty($imagevalue))
 				{
 					$image = new Image();
 					$image->setBuildingSiteId($id);
-					$image->setPhotoName($value['photo_name']);
-					$image->setPhotoType($value['photo_type']);
-					if(!empty($value['description']))
-					{
-						$image->setDescription($value['description']);
-					}
-					else {
-						$image->setDescription('');
-					}
-					
+					$image->setPhotoName($photo_name);
+					$image->setPhotoType($photo_type);
+					$image->setSequence($sequence);
+					$image->setDescription($description);
 					if($value['photo_type']=='room')
 					{
-						if(!empty($value['typename'])){
-							$roomtype_name	= $value['typename'];
-						}
-						else {
-							$roomtype_name	= 'ยังไม่ระบุ';
-						}
-						if(!empty($value['room_size'])){
-							$room_size		= $value['room_size'];
-						}
-						else {
-							$room_size	= 0;
-						}
-						if(!empty($value['room_price'])){
-							$room_price		= $value['room_price'];
-						}
-						else {
-							$room_price	= 0;
-						}
-						
-						$data = array(
-							'typename'		=> $roomtype_name,
-							'room_size'		=> $room_size,
-							'room_price'	=> $room_price,
-						);
-						
 						$roomtype2siteid = $this->saveRoomtypeData($id, $data, NULL);
-						$image->setRoomtype2siteId($roomtype2siteid);
 					}
-					else {
-						$image->setRoomtype2siteId(NULL);
-					}
+					$image->setRoomtype2siteId($roomtype2siteid);
 					
 					$em->persist($image);
 					$em->flush();
 				}
 				else {
 					
+					$imagevalue->setPhotoName($photo_name);
+					$imagevalue->setPhotoType($photo_type);
+					$imagevalue->setSequence($sequence);
+					$imagevalue->setDescription($description);
+					$roomtype2siteid = $imagevalue->getRoomtype2siteId();
+					if($value['photo_type']=='room')
+					{
+						$roomtype2siteid = $this->saveRoomtypeData($id, $data, $roomtype2siteid);
+					}
+					$imagevalue->setRoomtype2siteId($roomtype2siteid);
+					$em->flush();
 				}
 			}
 		}
@@ -657,6 +708,16 @@ class UserbuildingController extends Controller
 			$em->flush();
 		}
 		return $roomtype2siteid;
+	}
+
+	public function saveBuildingData($id)
+	{
+		
+	}
+	
+	public function saveOtherData($id)
+	{
+		
 	}
 	
 	function getBkkZone()

@@ -36,16 +36,16 @@ class Roomtype2site
     private $building_site_id;
 
     /**
-     * @var integer $room_size
+     * @var float $room_size
      *
-     * @ORM\Column(name="room_size", type="integer")
+     * @ORM\Column(name="room_size", type="float")
      */
     private $room_size;
 
     /**
-     * @var integer $room_price
+     * @var float $room_price
      *
-     * @ORM\Column(name="room_price", type="integer")
+     * @ORM\Column(name="room_price", type="float")
      */
     private $room_price;
 
@@ -130,7 +130,7 @@ class Roomtype2site
     /**
      * Set room_price
      *
-     * @param integer $room_price
+     * @param float $room_price
      */
     public function setRoomprice($room_price)
     {
@@ -140,7 +140,7 @@ class Roomtype2site
     /**
      * Get room_price
      *
-     * @return integer 
+     * @return float 
      */
     public function getRoomprice()
     {

@@ -38,7 +38,7 @@
 	var arraydataimage = 
 			[
 				{% for roomdata in rooms %}
-					[{{roomdata.id}}, "{{asset('roomdata.photo_name')}}", '', '', '',"{{roomdata.photo_name}}"],
+					[{{roomdata.id}}, "{{asset(roomdata.photo_name)}}", '{{roomdata.roomtype_name}}', '{{roomdata.room_size}}', '{{roomdata.room_price}}',"{{roomdata.photo_name}}"],
 				{% endfor %}
 			];
 	
@@ -319,7 +319,7 @@
 		$.post(addfixpath, $("#addform").serialize(), 
 		function(data) {
 			var completetext = data;
-			alert(completetext);
+			//alert(completetext);
 			$.gritter.add({
 				// (string | mandatory) the heading of the notification
 				title: 'บันทึกข้อมูลสำเร็จ',
