@@ -16,6 +16,11 @@ class ListController extends Controller
         $nearly             = null;
         $textSearch         = "ห้องพัก";
         $bkkPayType         = null;
+        $selZone            = null;
+        $selProvince        = null;
+        $lessPrice          = null;
+        $mostPrice          = null;
+        $shortSearchType    = "bkk";
 
         //query value
         $whereQuery         = null;
@@ -55,84 +60,91 @@ class ListController extends Controller
         if($_POST)
         {
             //short search
-
-            var_dump(@$_POST);
-            if(!empty($_POST['searchBkk']))
-            {
-                $shortSearchType = trim(@$_POST['searchBkk']);
-                $whereQuery .= " AND a.zone_id != 0";
-            }
-            if(!empty($_POST['searchCountry']))
-            {
-                $shortSearchType = trim(@$_POST['searchCountry']);
-                $whereQuery .= " AND a.zone_id = 0";
-            }
-
-            switch ($shortSearchType) {
-                case "bkk":
-                        $zone           = @$_POST['bkkZone'];
-                        $bkkPayType     = @$_POST['bkkPayType'];
-                        $buildingType   = @$_POST['bkkBuildingType'];
-                        $lessPrice      = @$_POST['lessPrice'];
-                        $mostPrice      = @$_POST['mostPrice'];
-
-                        if(($zone != 0)&&(!empty($zone)))
+            //echo $searchType;
+            //var_dump(@$_POST);
+            switch ($searchType) {
+                case "shortSearch":
+                        if(!empty($_POST['searchBkk']))
                         {
-                            $whereQuery .= " AND a.zone_id = $zone";
+                            $shortSearchType = trim(@$_POST['searchBkk']);
+                            $whereQuery .= " AND a.zone_id != 0";
                         }
-                        if(!empty($bkkPayType))
+                        if(!empty($_POST['searchCountry']))
                         {
-                            $whereQuery .= " AND a.pay_type_id = $bkkPayType";
-                        }
-                        if(($buildingType != 0)&&(!empty($buildingType)))
-                        {
-                            $whereQuery .= " AND a.building_type_id = $buildingType";
+                            $shortSearchType = trim(@$_POST['searchCountry']);
+                            $whereQuery .= " AND a.zone_id = 0";
                         }
 
-                        if(!empty($lessPrice)&&(!empty($mostPrice)))
-                        {
-                            $whereQuery .= "
-                                AND (
-                                    a.start_price <= $lessPrice <= end_price  or
-                                    a.start_price <= $mostPrice <= end_price
-                                )
-                            ";
-                        }
+                        switch ($shortSearchType) {
+                            case "bkk":
+                                    $zone           = @$_POST['bkkZone'];
+                                    $bkkPayType     = @$_POST['bkkPayType'];
+                                    $buildingType   = @$_POST['bkkBuildingType'];
+                                    $lessPrice      = @$_POST['lessPrice'];
+                                    $mostPrice      = @$_POST['mostPrice'];
+
+                                    if(($zone != 0)&&(!empty($zone)))
+                                    {
+                                        $whereQuery .= " AND a.zone_id = $zone";
+                                    }
+                                    if(!empty($bkkPayType))
+                                    {
+                                        $whereQuery .= " AND a.pay_type_id = $bkkPayType";
+                                    }
+                                    if(($buildingType != 0)&&(!empty($buildingType)))
+                                    {
+                                        $whereQuery .= " AND a.building_type_id = $buildingType";
+                                    }
+
+                                    if(!empty($lessPrice)&&(!empty($mostPrice)))
+                                    {
+                                        $whereQuery .= "
+                                            AND (
+                                                a.start_price <= $lessPrice <= end_price  or
+                                                a.start_price <= $mostPrice <= end_price
+                                            )
+                                        ";
+                                    }
 
 
+                                break;
+                            case "country":
+                                    $selProvince    = @$_POST['selProvince'];
+                                    $bkkPayType     = @$_POST['bkkPayType'];
+                                    $buildingType   = @$_POST['bkkBuildingType'];
+                                    $lessPrice      = @$_POST['lessPrice'];
+                                    $mostPrice      = @$_POST['mostPrice'];
+
+                                    if(($selProvince != 0)&&(!empty($selProvince)))
+                                    {
+                                        $whereQuery .= " AND a.addr_province = '$selProvince''";
+                                    }
+                                    if(!empty($bkkPayType))
+                                    {
+                                        $whereQuery .= " AND a.pay_type_id = $bkkPayType";
+                                    }
+                                    if(($buildingType != 0)&&(!empty($buildingType)))
+                                    {
+                                        $whereQuery .= " AND a.building_type_id = $buildingType";
+                                    }
+
+                                    if(!empty($lessPrice)&&(!empty($mostPrice)))
+                                    {
+                                        $whereQuery .= "
+                                                AND (
+                                                    a.start_price <= $lessPrice <= end_price  or
+                                                    a.start_price <= $mostPrice <= end_price
+                                                )
+                                            ";
+                                    }
+                                break;
+                        }//end short search
+                     break;
+                case "fullSearch":
+                    echo $searchType;
+                    var_dump(@$_POST);
                     break;
-                case "searchCountry":
-                        $selProvince    = @$_POST['selProvince'];
-                        $bkkPayType     = @$_POST['bkkPayType'];
-                        $buildingType   = @$_POST['bkkBuildingType'];
-                        $lessPrice      = @$_POST['lessPrice'];
-                        $mostPrice      = @$_POST['mostPrice'];
-
-                        if(($selProvince != 0)&&(!empty($selProvince)))
-                        {
-                            $whereQuery .= " AND a.addr_province = '$selProvince''";
-                        }
-                        if(!empty($bkkPayType))
-                        {
-                            $whereQuery .= " AND a.pay_type_id = $bkkPayType";
-                        }
-                        if(($buildingType != 0)&&(!empty($buildingType)))
-                        {
-                            $whereQuery .= " AND a.building_type_id = $buildingType";
-                        }
-
-                        if(!empty($lessPrice)&&(!empty($mostPrice)))
-                        {
-                            $whereQuery .= "
-                                    AND (
-                                        a.start_price <= $lessPrice <= end_price  or
-                                        a.start_price <= $mostPrice <= end_price
-                                    )
-                                ";
-                        }
-                    break;
             }
-            //end short search
         }
 
         //parameter for short search
@@ -142,7 +154,7 @@ class ListController extends Controller
         $parameter['buildingType']      = $buildingType;
         $parameter['lessPrice']         = $lessPrice;
         $parameter['mostPrice']         = $mostPrice;
-        $parameter['selProvince']         = $selProvince;
+        $parameter['selProvince']       = $selProvince;
 
         //end get zone
 
@@ -179,7 +191,7 @@ class ListController extends Controller
                 $limitDisplay
             ";
 
-            echo "<br>".$sql = "
+            $sql = "
                 $selectField
                 $fromTable
                 WHERE 1

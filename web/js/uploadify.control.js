@@ -72,6 +72,7 @@ function uploadpicroom()
             	//alert(textroomname)
             	document.getElementById(textroomname).value = mySplitResult[0];
             	postData('image');
+            	$('#roomtrid0').fadeOut('slow').html('<img src="'+imagepath+'/'+buildid+'/'+mySplitResult[0]+'" class="nopad thumb"/>').fadeIn("slow");
         	}
 			// Your options here
 		});

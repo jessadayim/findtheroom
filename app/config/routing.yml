@@ -1,6 +1,6 @@
-FTRAdminBundle:
-    resource: "@FTRAdminBundle/Resources/config/routing.yml"
-    prefix:   /
+#FTRAdminBundle:
+#    resource: "@FTRAdminBundle/Resources/config/routing.yml"
+#    prefix:   /
 
 FTRAdminBundle_panel:
     resource: "@FTRAdminBundle/Resources/config/routing.yml"

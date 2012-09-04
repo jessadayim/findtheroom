@@ -57,6 +57,13 @@ class Image
     private $description;
 
     /**
+     * @var integer $sequence
+     *
+     * @ORM\Column(name="sequence", type="integer", nullable="true")
+     */
+    private $sequence;
+
+    /**
      * @var boolean $deleted
      *
      * @ORM\Column(name="deleted", type="boolean", nullable="true")
@@ -172,6 +179,26 @@ class Image
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set sequence
+     *
+     * @param integer $sequence
+     */
+    public function setSequence($sequence)
+    {
+        $this->sequence = $sequence;
+    }
+
+    /**
+     * Get sequence
+     *
+     * @return integer 
+     */
+    public function getSequence()
+    {
+        return $this->sequence;
     }
 
     /**
