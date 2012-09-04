@@ -164,11 +164,11 @@ class User_admin
     /**
      * Set phone_number
      *
-     * @param string $phoneNumber
+     * @param string $phone_number
      */
-    public function setPhoneNumber($phoneNumber)
+    public function setPhone_number($phone_number)
     {
-        $this->phone_number = $phoneNumber;
+        $this->phone_number = $phone_number;
     }
 
     /**
@@ -176,7 +176,7 @@ class User_admin
      *
      * @return string 
      */
-    public function getPhoneNumber()
+    public function getPhone_number()
     {
         return $this->phone_number;
     }
