@@ -13,22 +13,43 @@ class SearchController extends Controller
 
     }
 
-    public function shortsearchAction($name=NULL)
+    public function shortsearchAction($parameter = null)
     {
+        //var_dump($parameter);
+
+        $shortSearchType    = "bkk";
+        $zone               = null;
+        $bkkPayType         = null;
+        $selBuildingType    = null;
+        $lessPrice          = null;
+        $mostPrice          = null;
+        $selProvince        = null;
+
+        if(!empty($parameter))
+        {
+            $shortSearchType  = $parameter['shortSearchType'];
+            $zone             = $parameter['zone'];
+            $bkkPayType       = $parameter['bkkPayType'];
+            $selBuildingType  = $parameter['buildingType'];
+            $lessPrice        = $parameter['lessPrice'];
+            $mostPrice        = $parameter['mostPrice'];
+            $selProvince      = $parameter['selProvince'];
+        }
+
         $conn= $this->get('database_connection');
         if(!$conn){ die("MySQL Connection error");}
         //rux
         $sqlGetMap1 = "
             SELECT 
               a.*, 
-              b.`type_name`,
+              b.type_name,
 			  b.id as bt_id
             FROM
-              `building_site` a
-              INNER JOIN `building_type` b
-                ON (b.`id` = a.`building_type_id`)
-            WHERE a.`publish` = 1
-              AND b.`deleted` = 0 ";
+              building_site a
+              INNER JOIN building_type b
+                ON (b.id = a.building_type_id)
+            WHERE a.publish = 1
+              AND b.deleted = 0 ";
         $sqlGetMap2 = "
             $sqlGetMap1 AND b.`id` = 1
         ";
@@ -59,12 +80,6 @@ class SearchController extends Controller
             echo 'Caught exception: ',  $e->getMessage(), "\n";
         }
 
-        //peung
-        //$zonelist_day		= $this->getZone();
-        //$zonelist_month		= $this->getZone(2);
-        //$buildingtype_day	= $this->getBuildingType(1);
-        //$buildingtype_month	= $this->getBuildingType(2);
-
         $payType        = $this->getPayType();
         $bkkZone        = $this->getBkkZone();
         $buildingType   = $this->getBuildingType();
@@ -80,7 +95,13 @@ class SearchController extends Controller
             'get_map2'              =>$objGetMap2,
             'get_map3'              =>$objGetMap3,
             'get_map4'              =>$objGetMap4,
-            'name'                  =>$name,
+            'shortSearchType'       =>$shortSearchType,
+            'zone'                  =>$zone,
+            'bkkPayType'            =>$bkkPayType,
+            'selBuildingType'       =>$selBuildingType,
+            'lessPrice'             =>$lessPrice,
+            'mostPrice'             =>$mostPrice,
+            'selProvince'           =>$selProvince,
         ));
     }
 
