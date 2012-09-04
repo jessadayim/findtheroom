@@ -9,15 +9,15 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use FTR\AdminBundle\Entity\User_admin;
 
 /**
- * User_admin controller.
+ * Manage_user controller.
  *
- * @Route("/user_admin")
+ * @Route("/manage_user")
  */
-class User_adminController extends Controller {
+class Manage_userController extends Controller {
 	/**
 	 * Lists all User_admin entities.
 	 *
-	 * @Route("/", name="user_admin")
+	 * @Route("/", name="manage_user")
 	 * @Template()
 	 */
 	public function indexAction() {
@@ -61,14 +61,14 @@ class User_adminController extends Controller {
 
 			exit();
 		}
-		return $this -> render('FTRAdminBundle:User_admin:create.html.twig', array());
+		return $this -> render('FTRAdminBundle:User_admin:Manage_user:create.html.twig', array());
 	}
 
 	public function editAction($id) {
 		$em = $this -> getDoctrine() -> getEntityManager();
 		$entity = $em -> getRepository('FTRAdminBundle:User_admin') -> find($id);
 
-		return $this -> render('FTRAdminBundle:User_admin:edit.html.twig', array('entity' => $entity));
+		return $this -> render('FTRAdminBundle:User_admin:Manage_user:edit.html.twig', array('entity' => $entity));
 	}
 
 	public function updateAction($id) {

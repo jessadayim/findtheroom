@@ -1,49 +1,204 @@
-<h1>Roomtype2site</h1>
+<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js'></script>
+<script>
+	var countRoomType2Site = {{roomtype2site|length}};
+	var countRoomType = {{roomtype|length}};
+	var maxRoomType = 20;
+	var url = "{{ path('roomtype2site_create') }}";
+	var checkReload = false;
+	
+	function postOnchange(){
+		$.ajax({
+			type : "POST",
+			url : url,
+			data : $("#formCreateRoomType2Site").serialize(),
+			success : function(msg) {
+				if (msg == 'finish') {
+					if (checkReload){						
+						setTimeout("reload();", 100);
+					}
+				} else {alert(msg)
+					alert('เกิดการผิดพลาด\n** กรุณาตรวจสอบ **');
+				}
+			}
+		});
+	}
+	
+	//reload
+	function reload(){
+		$('.innerPanel').load(locationRoomType);
+		checkReload = false;
+	}
+	
+	function validate(evt) {
+	  var theEvent = evt || window.event;
+	  var key = theEvent.keyCode || theEvent.which;
+	  key = String.fromCharCode( key );
+	  var regex = /[0-9]|\./;
+	  if( !regex.test(key) ) {
+	    theEvent.returnValue = false;
+	    if(theEvent.preventDefault) 
+	    	theEvent.preventDefault();
+	  }
+	}
 
-<table class="record_properties">
-    <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ entity.id }}</td>
-        </tr>
-        <tr>
-            <th>Roomtype_id</th>
-            <td>{{ entity.roomtypeid }}</td>
-        </tr>
-        <tr>
-            <th>Building_site_id</th>
-            <td>{{ entity.buildingsiteid }}</td>
-        </tr>
-        <tr>
-            <th>Room_size</th>
-            <td>{{ entity.roomsize }}</td>
-        </tr>
-        <tr>
-            <th>Room_price</th>
-            <td>{{ entity.roomprice }}</td>
-        </tr>
-        <tr>
-            <th>Deleted</th>
-            <td>{{ entity.deleted }}</td>
-        </tr>
-    </tbody>
-</table>
+	
+	$(document).ready(function() {
+		$("#formCreateRoomType2Site").submit(function() {
+			postOnchange();			
+			$('#divPostCreateRoomType2Site').slideUp(300).delay(800).fadeOut(400);			
+			return false;
+		});
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('roomtype2site') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('roomtype2site_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('roomtype2site_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+		$("#addRoomType").click(function() {
+			if (countRoomType2Site >= maxRoomType){
+				alert('จำนวน Room Type เต็มแล้ว');
+				return false;
+			}
+			if (countRoomType2Site == 0) {
+				countRoomType2Site++;
+			}
+			countRoomType2Site++;	
+			
+			var newHtmlTb = getInnerTr(countRoomType2Site, 1);
+			$("#tbRoomType2Site").append(newHtmlTb);
+			
+			checkReload = true;
+			// save
+			postOnchange();
+			
+			$("#trRoomType_" + countRoomType2Site).hide();
+			$("#trRoomType_" + countRoomType2Site).show('slow');
+			return false;	
+		});
+		$(".btnDeleteRoomType").click(function(){
+			var id = this.id.split('_');
+			id = id[1];
+			removeTr(id);		
+			return false;
+		});
+		$(".roomSize,.roomPrice,.selectRoomType").change(function(){
+			postOnchange();
+			return false;
+		});
+	}); 
+
+	$(function(){
+	});
+	
+	
+	function getInnerTr(countValue, optionValue){
+		var option = [
+			{% for room in roomtype %}
+				[{{ room.id }}, '{{ room.room_typename }}'],
+			{% endfor %}
+		];
+		var optionSelect = '';
+		for(var i=0 ; i < option.length ; i++){
+			if (option[i][0] == optionValue){
+				optionSelect += '<option selected value="' + option[i][0] + '">'+option[i][1]+'</option>';
+			}else{
+				optionSelect += '<option value="' + option[i][0] + '">'+option[i][1]+'</option>';
+			}
+		}
+		if (countValue == 1){
+			var strBtnDelete = '';
+		}else {
+			var strBtnDelete = '<input type="button" class="btnDeleteRoomType" value="  ลบ  " id="btnDeleteRoomType_'+ countValue +'" />';
+		}
+		var newHtmlTb = '<tr id="trRoomType_' + countValue + '"><td><div>' + countValue + 
+			'. Room Size: <input type="text" id="roomSize[]" onkeypress="validate(event);" class="roomSize" name="roomSize[]"' + 
+			' value="0" />' + '&nbsp;&nbsp;&nbsp;Room Price:&nbsp;<input type="text" class="roomPrice" name="roomPrice[]"' +  
+			' value="0" id="roomPrice[]" />' + '&nbsp;&nbsp;Room Type:&nbsp;&nbsp;'+
+			'<select name="selectRoomType[]" onkeypress="validate(event);" class="selectRoomType" id="selectRoomType[]">' +
+			optionSelect + '</select>&nbsp;&nbsp;&nbsp;' + strBtnDelete + '</div></td></tr>';
+		return newHtmlTb;
+	}
+	
+		
+	var setIdRemove = 0;
+	function removeTr(countValue){
+		if (!confirm('คุณต้องการลบ Room Type ที่  ' + countValue + '. ใช่หรือไม่')){
+			return false;
+		}
+		$("#trRoomType_" + countValue).hide('slow');
+		setIdRemove = countValue;
+		setTimeout("removeID();", 500);		
+	}
+	
+	function removeID(){
+		$("#trRoomType_" + setIdRemove).remove();
+		// countRoomType2Site--;
+		postOnchange();
+		setIdRemove = 0;
+		checkReload = true;		
+	}
+</script>
+<div id="divPostCreateRoomType2Site">
+	<form id="formCreateRoomType2Site" action="{{ path('roomtype2site_create') }}" method="post" >
+		<fieldset>
+			<legend>
+				CREATE ROOMTYPE
+			</legend>
+
+			<div class="label" style="">
+				{% for building_site in buildingsite %}
+				<h2>{{ building_site.building_name }}</h2>
+				<input type="hidden" value="{{ building_site.id }}" id="building_site_id" name="building_site_id"/>
+				{% endfor %}
+			</div>
+			<br />
+			<br />
+			<table id="tbRoomType2Site">
+				{% for roomType in roomtype2site %}
+				<tr id="trRoomType_{{ roomType.count }}">
+					<td>
+					<div>
+						{{ roomType.count }}. Room Size:
+						<input type="text" name="roomSize[]" onkeypress="validate(event);" class="roomSize" id="roomSize[]" value="{{ roomType.room_size }}" />
+						&nbsp;&nbsp;Room Price:
+						<input type="text" name="roomPrice[]" onkeypress="validate(event);" class="roomPrice" id="roomPrice[]" value="{{ roomType.room_price }}"/>
+						&nbsp;Room Type:&nbsp;
+						<select name="selectRoomType[]" class="selectRoomType" id="selectRoomType[]">
+							{% for room in roomtype %}
+								{% if roomType.roomtype_id == room.id %}
+									<option value="{{ room.id }}" selected>{{room.room_typename}}</option>
+								{% else %}
+									<option value="{{ room.id }}">{{room.room_typename}}</option>
+								{% endif %}
+							{% endfor %}
+						</select>
+						&nbsp;
+						{% if roomType.count > 1%}
+						<input type="button" class="btnDeleteRoomType" id="btnDeleteRoomType_{{ roomType.count }}" value="  ลบ  " />
+						{% endif %}
+					</div>
+					</td>
+				</tr>
+				{% else %}
+				<tr id="trRoomType_1">
+					<td>
+					<div>
+						1. Room Size:
+						<input type="text" name="roomSize[]" onkeypress="validate(event);" class="roomSize" id="roomSize[]" value="0" />
+						&nbsp;&nbsp;Room Price:
+						<input type="text" name="roomPrice[]" onkeypress="validate(event);" class="roomPrice" id="roomPrice[]" value="0"/>
+						&nbsp;&nbsp;Room Type:
+						<select name="selectRoomType[]" class="selectRoomType" id="selectRoomType[]">
+							{% for room in roomtype %}
+							<option value="{{ room.id }}">{{room.room_typename}}</option>
+							{% endfor %}
+						</select>
+						&nbsp;
+					</div>
+					</td>
+				</tr>
+				{% endfor %}
+			</table><br />
+			<div><a href="#" id="addRoomType">เพิ่ม ROOM TYPE</a></div>
+			<br />
+			<span style="float: right;">
+				<input type="submit" value="ClOSE">
+			</span>
+		</fieldset>
+	</form>
+</div>

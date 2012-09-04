@@ -220,10 +220,10 @@ class User_owner {
 	/**
 	 * Set phone_number
 	 *
-	 * @param string $phoneNumber
+	 * @param string $phone_number
 	 */
-	public function setPhoneNumber($phoneNumber) {
-		$this -> phone_number = $phoneNumber;
+	public function setPhone_number($phone_number) {
+		$this -> phone_number = $phone_number;
 	}
 
 	/**
@@ -231,7 +231,7 @@ class User_owner {
 	 *
 	 * @return string
 	 */
-	public function getPhoneNumber() {
+	public function getPhone_number() {
 		return $this -> phone_number;
 	}
 
@@ -240,7 +240,7 @@ class User_owner {
 	 *
 	 * @param string $faxNumber
 	 */
-	public function setFaxNumber($faxNumber) {
+	public function setFax_number($faxNumber) {
 		$this -> fax_number = $faxNumber;
 	}
 
@@ -249,7 +249,7 @@ class User_owner {
 	 *
 	 * @return string
 	 */
-	public function getFaxNumber() {
+	public function getFax_number() {
 		return $this -> fax_number;
 	}
 

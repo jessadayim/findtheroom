@@ -15,7 +15,9 @@
 		}
 
 		var url = "{{ path('building_site_update', { 'id': entity.id }) }}";
+		
 		$("#formEdit").submit(function() {
+			alert(url);
 			if (!confirm('คุณต้องการแก้ไขข้อมูล ใช่หรือไม่')){
 				return false;
 			}
