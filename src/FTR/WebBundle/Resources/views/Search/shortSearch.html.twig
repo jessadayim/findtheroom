@@ -96,8 +96,8 @@
 <div id="search1">
     <div id="i_containTab">
         <ul id="navi_containTab">
-            <li id="tabNavi1" class="active" onclick="enact(this)"></li>
-            <li id="tabNavi2" onclick="enact(this)"></li>
+            <li id="tabNavi1" {% if shortSearchType == 'bkk' %}class="active" {% endif %} onclick="enact(this)"></li>
+            <li id="tabNavi2" {% if shortSearchType == 'country' %}class="active" {% endif %}  onclick="enact(this)"></li>
             <li id="tabNavi3" onclick="enact(this)"></li>
         </ul>
         <span class="or">หรือ</span><a href='{{path('FTRWebBundle_search')}}' class="link" target="_new">ค้นหาอย่างละเอียด</a>
@@ -114,7 +114,11 @@
                                     <div class="styled-select">
                                         <select class="select" name="bkkZone" id="bkkZone">
                                             {% for zlist in bkkZone %}
-                                            <option value="{{ zlist.id }}">{{ zlist.zonename }}</option>
+                                            <option value="{{ zlist.id }}"
+                                                    {% if zone == zlist.id %}
+                                                        selected="selected"
+                                                    {% endif %}
+                                            >{{ zlist.zonename }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
@@ -124,7 +128,11 @@
                                     <div class="styled-select">
                                         <select class="select" name="bkkPayType" id="bkkPayType">
                                             {% for plist in payType %}
-                                            <option value="{{ plist.id }}">{{ plist.typename }}</option>
+                                            <option value="{{ plist.id }}"
+                                                {% if bkkPayType == plist.id %}
+                                                    selected="selected"
+                                                {% endif %}
+                                            >{{ plist.typename }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
@@ -138,15 +146,19 @@
                                     <div class="styled-select">
                                         <select class="select" name="bkkBuildingType" id="bkkBuildingType">
                                             {% for blistm in buildingType %}
-                                            <option value="{{ blistm.id }}">{{ blistm.type_name }}</option>
+                                            <option value="{{ blistm.id }}"
+                                                {% if selBuildingType == blistm.id %}
+                                                    selected="selected"
+                                                {% endif %}
+                                            >{{ blistm.type_name }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
                                 </td>
                                 <td align="right" style="padding-right:15px">ราคา :</td>
                                 <td>
-                                    <input class="price" name="lessPrice" type="text" maxlength="10" placeholder="ราคาเริ่มต้น" /> -
-                                    <input class="price" name="mostPrice" type="text" maxlength="10" placeholder="ราคาไม่เกิน" />&nbsp;&nbsp;&nbsp;&nbsp;บาท
+                                    <input class="price" value="{{ lessPrice }}" name="lessPrice" type="text" maxlength="10" placeholder="ราคาเริ่มต้น" /> -
+                                    <input class="price" value="{{ mostPrice }}" name="mostPrice" type="text" maxlength="10" placeholder="ราคาไม่เกิน" />&nbsp;&nbsp;&nbsp;&nbsp;บาท
                                 </td>
                                 <td>
                                     <input class="search" type="submit" value="" />
@@ -168,7 +180,11 @@
                                     <div class="styled-select">
                                         <select class="select" name="selProvince" id="selProvince">
                                             {% for pvlist in province %}
-                                            <option value="{{ pvlist.PROVINCE_VALUE }}">{{ pvlist.PROVINCE_NAME }}</option>
+                                            <option value="{{ pvlist.PROVINCE_VALUE }}"
+                                                {% if selProvince == pvlist.PROVINCE_VALUE %}
+                                                    selected="selected"
+                                                {% endif %}
+                                            >{{ pvlist.PROVINCE_NAME }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
@@ -176,9 +192,13 @@
                                 <td align="right" style="padding-right:15px">ชนิด :</td>
                                 <td width="330">
                                     <div class="styled-select">
-                                        <select class="select" >
+                                        <select class="select" name="bkkPayType">
                                             {% for plist in payType %}
-                                            <option value="{{ plist.id }}">{{ plist.typename }}</option>
+                                            <option value="{{ plist.id }}"
+                                                {% if bkkPayType == plist.id %}
+                                                    selected="selected"
+                                                {% endif %}
+                                            >{{ plist.typename }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
@@ -191,17 +211,21 @@
                                 <td align="right" style="padding-right:15px">ประเภทห้องพัก :</td>
                                 <td>
                                     <div class="styled-select">
-                                        <select class="select">
+                                        <select class="select" name="bkkBuildingType">
                                             {% for blistm in buildingType %}
-                                            <option value="{{ blistm.id }}">{{ blistm.type_name }}</option>
+                                            <option value="{{ blistm.id }}"
+                                                {% if selBuildingType == blistm.id %}
+                                                    selected="selected"
+                                                {% endif %}
+                                            >{{ blistm.type_name }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
                                 </td>
                                 <td align="right" style="padding-right:15px">ราคา :</td>
                                 <td>
-                                    <input class="price" name="lessprice" type="text" maxlength="10" placeholder="ราคาเริ่มต้น" /> -
-                                    <input class="price" name="mostprice" type="text" maxlength="10" placeholder="ราคาไม่เกิน" />&nbsp;&nbsp;&nbsp;&nbsp;บาท
+                                    <input class="price" value="{{ lessPrice }}" name="lessPrice" type="text" maxlength="10" placeholder="ราคาเริ่มต้น" /> -
+                                    <input class="price" value="{{ mostPrice }}" name="mostPrice" type="text" maxlength="10" placeholder="ราคาไม่เกิน" />&nbsp;&nbsp;&nbsp;&nbsp;บาท
                                 </td>
                                 <td>
                                     <input class="search" type="submit" value="" />

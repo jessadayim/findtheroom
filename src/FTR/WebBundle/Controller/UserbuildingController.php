@@ -81,7 +81,7 @@ class UserbuildingController extends Controller
 		$fac_inroomlist = NULL;
 		$fac_outroomlist = NULL;
 		$arrroom = NULL;$arrgallery = NULL;$countroom = 0;$countgallery = 0;
-		
+		$building_data = NULL;
 		$session = $this->get('session');
 		$user = $session->get('user');
 		
@@ -116,14 +116,11 @@ class UserbuildingController extends Controller
 					$em->persist($building);
     				$em->flush();
 					$building_id = $building->getId();
+					$building_data = $this->getBuildingData($building_id);
 				}else{
 					$building_id = $id;
 					$building_data = $this->getBuildingData($building_id);
 					//echo "<pre>";var_dump($building_data);echo "</pre>";exit();
-					if($building_data['ibuildingtypeid']!=0)
-					{
-						$buildtype_data = $em->getRepository('FTRWebBundle:Building_type')->findOneBy(array('id'=>$building_data['ibuildingtypeid']));
-					}
 					if($building_data['izoneid']!=0)
 					{
 						$zone_data = $em->getRepository('FTRWebBundle:Zone')->findOneBy(array('id'=>$building_data['izoneid']));
@@ -132,6 +129,7 @@ class UserbuildingController extends Controller
 					{
 						$paytype_data = $em->getRepository('FTRWebBundle:Pay_type')->findOneBy(array('id'=>$building_data['ipaytypeid']));
 					}
+					//var_dump($buildtype_data);exit();
 				}
 				$linkimagehead = NULL;$nameimagehead = NULL;
 				$linkimagemap = NULL;$nameimagemap = NULL;
@@ -168,9 +166,9 @@ class UserbuildingController extends Controller
 					$nameimagemap = $imagemap[0]['photo_name'];
 				}
 				
-				$payType        = $this->getPayType();
+				$payType        = $this->getPayType($building_data['ipaytypeid']);
 		        $bkkZone        = $this->getBkkZone();
-		        $buildingType   = $this->getBuildingType();
+		        $buildingType   = $this->getBuildingType($building_data['ibuildingtypeid']);
 		        $province       = $this->getProvince();
 				$nearBTS			= $this->getNeary(2);
 				$nearMRT			= $this->getNeary(3);
@@ -178,7 +176,7 @@ class UserbuildingController extends Controller
 				$nearBy				= $this->getNeary(5);
 				$nearInCountry		= $this->getNeary(6);
 				/*echo "<pre>";
-				var_dump($province);
+				var_dump($payType);
 				echo "</pre>";
 				exit();*/
 				$this->getPathUpload($building_id);
@@ -187,6 +185,7 @@ class UserbuildingController extends Controller
 				}
 				
 		return $this->render('FTRWebBundle:Userbuilding:add.html.twig', array(
+			'buildingdata'			=> $building_data,
 			'payType' 			    => $payType,
             'zonelist' 		        => $bkkZone,
             'buildingType' 		    => $buildingType,
@@ -238,6 +237,10 @@ class UserbuildingController extends Controller
 					'iinternetprice'	=> $build_data->getInternetPrice(),
 					'igooglemapurl'		=> $build_data->getGoogleMapUrl(),
 					'binternetready'	=> $build_data->getInternetReady(),
+					'saddrnumber'		=> $build_data->getAddrNumber(),
+					'saddrprefecture'	=> $build_data->getAddrPrefecture(),
+					'saddrprovince'		=> $build_data->getAddrProvince(),
+					'saddrzipcode'		=> $build_data->getAddrZipcode(),
 			);
 		return $arrdata;
 	}
@@ -579,7 +582,47 @@ class UserbuildingController extends Controller
 			}
 			elseif($type=='head')
 			{
-				echo "head";
+				$building_name	= $_POST['nameap'];
+				$building_addr	= $_POST['placeap'];
+				$province		= $_POST['province'];
+				$district		= $_POST['district'];
+				$zipcode		= $_POST['zipcode'];
+				$detail			= $_POST['placedetail'];
+				$longitude		= $_POST['longitude'];
+				$latitude		= $_POST['latitude'];
+				$building_type	= $_POST['aptype'];
+				$pay_type		= $_POST['paytype'];
+				$phone_number	= $_POST['telnumber'];
+				$month_stay		= $_POST['time'];
+				$contact_name	= $_POST['contact_person'];
+				$water_price	= $_POST['water_price'];
+				$contact_email	= $_POST['contact_email'];
+				$electric_price	= $_POST['power_price'];
+				$website		= $_POST['website'];
+				$internet_price	= $_POST['internet_price'];
+				
+				$arrbuilding_data = array(
+					'building_name'		=> $building_name,
+					'building_addr'		=> $building_addr,
+					'province'			=> $province,
+					'district'			=> $district,
+					'zipcode'			=> $zipcode,
+					'detail'			=> $detail,
+					'longitude'			=> $longitude,
+					'latitude'			=> $latitude,
+					'building_type'		=> $building_type,
+					'pay_type'			=> $pay_type,
+					'phone_number'		=> $phone_number,
+					'month_stay'		=> $month_stay,
+					'contact_name'		=> $contact_name,
+					'water_price'		=> $water_price,
+					'contact_email'		=> $contact_email,
+					'electric_price'	=> $electric_price,
+					'website'			=> $website,
+					'internet_price'	=> $internet_price,
+				);
+				$alert = $this->saveBuildingData($id,$arrbuilding_data);
+				echo $alert;
 			}
 			elseif($type=='other')
 			{
@@ -710,8 +753,10 @@ class UserbuildingController extends Controller
 		return $roomtype2siteid;
 	}
 
-	public function saveBuildingData($id)
+	public function saveBuildingData($id,$arrdata)
 	{
+		$em = $this->getDoctrine()->getEntityManager();
+		$buildingvalue = $em->getRepository('FTRWebBundle:Building_site')->findOneBy(array('id'=>$id));
 		
 	}
 	
@@ -762,38 +807,92 @@ class UserbuildingController extends Controller
         return $result;
     }
 
-    function getBuildingType($type=null)
+    function getBuildingType($buildingtypeid)
     {
         $result_data = array();
         $conn= $this->get('database_connection');
         if(!$conn){ die("MySQL Connection error");}
         try{
-            $whereQuery = null;
-            if($type != null){
-                $whereQuery = " where id in (select distinct(building_type_id) from building_site where pay_type_id = $type)";
-            }
             $sql = "
-				select * from building_type $whereQuery
+				(select 
+				  t.id,
+				  t.type_name,
+				  'no' as checked 
+				from
+				  building_type t 
+				where t.id not in 
+				  (select 
+				    building_type_id 
+				  from
+				    building_site 
+				  where id = $buildingtypeid)) 
+				union
+				(select 
+				  t.id,
+				  t.type_name,
+				  'yes' as checked 
+				from
+				  building_type t 
+				where t.id in 
+				  (select 
+				    building_type_id 
+				  from
+				    building_site 
+				  where id = $buildingtypeid))
 			";
             $result_data = $conn->fetchAll($sql);
         } catch (Exception $e) {
             echo 'Caught exception: ',  $e->getMessage(), "\n";
         }
-        $all[] = array('id'=>0,'type_name'=>'ทุกประเภท');
-
+		if($buildingtypeid==0){
+        	$all[] = array('id'=>0,'type_name'=>'- กรุณาระบุ -','checked'=>'yes');
+		}else{
+			$all[] = array('id'=>0,'type_name'=>'- กรุณาระบุ -','checked'=>'no');
+		}
         $result = array_merge($all,$result_data);
         return $result;
     }
 	
-	function getPayType()
+	function getPayType($paytypeid)
     {
 		$result_data = array();
 		$conn= $this->get('database_connection');
 		if(!$conn){ die("MySQL Connection error");}
 		try{
-			$sql = "
-				select  `id`,`typename` from pay_type order by id desc
-			";
+			if($paytypeid!=0)
+			{
+				$sql = "
+					(select 
+					  t.id,
+					  t.typename,
+					  'no' as checked 
+					from
+					  pay_type t 
+					where t.id not in 
+					  (select 
+					    pay_type_id 
+					  from
+					    building_site 
+					  where id = $paytypeid)) 
+					union
+					(select 
+					  t.id,
+					  t.typename,
+					  'yes' as checked 
+					from
+					  pay_type t 
+					where t.id in 
+					  (select 
+					    pay_type_id 
+					  from
+					    building_site 
+					  where id = $paytypeid))
+				";
+			}else{
+				$sql = "
+					SELECT t.id,t.typename,'no' as checked FROM pay_type t ORDER BY t.id DESC
+				";
+			}
 			$result_data = $conn->fetchAll($sql);
 		} catch (Exception $e) {
 			echo 'Caught exception: ',  $e->getMessage(), "\n";

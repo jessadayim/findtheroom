@@ -29,6 +29,13 @@ class Nearly_type
     private $type_name;
 
     /**
+     * @var string $label
+     *
+     * @ORM\Column(name="label", type="string", length=255)
+     */
+    private $label;
+
+    /**
      * @var boolean $deleted
      *
      * @ORM\Column(name="deleted", type="boolean", nullable="true")
@@ -64,6 +71,26 @@ class Nearly_type
     public function getTypeName()
     {
         return $this->type_name;
+    }
+
+    /**
+     * Set label
+     *
+     * @param string $label
+     */
+    public function setLabel($label)
+    {
+        $this->label = $label;
+    }
+
+    /**
+     * Get label
+     *
+     * @return string 
+     */
+    public function getLabel()
+    {
+        return $this->label;
     }
 
     /**
