@@ -118,6 +118,7 @@ class SearchController extends Controller
         $nUniversity        = null;
         $nNearly            = null;
         $nCountryNearly     = null;
+        $selAmpher          = null;
 
 
         $fac_inroomlist 	= $this->getFacility('inroom');
@@ -129,7 +130,7 @@ class SearchController extends Controller
 		$nearBTS			= $this->getNearly(2);
 		$nearMRT			= $this->getNearly(3);
 		$nearUniversity		= $this->getNearly(4);
-		$nearBy				= $this->getNearly(5);
+		$ampher			    = $this->getAmpher();
 		$nearInCountry		= $this->getNearly(6);
 
         return $this->render('FTRWebBundle:Search:search.html.twig', array(
@@ -142,7 +143,7 @@ class SearchController extends Controller
 			'nearBTS' 			=> $nearBTS,
 			'nearMRT' 			=> $nearMRT,
 			'nearUniversity' 	=> $nearUniversity,
-			'nearBy' 			=> $nearBy,
+			'ampher' 			=> $ampher,
 			'nearInCountry' 	=> $nearInCountry,
 			'selBuildingType' 	=> $selBuildingType,
 			'bkkPayType' 	    => $bkkPayType,
@@ -155,7 +156,39 @@ class SearchController extends Controller
 			'nUniversity' 	    => $nUniversity,
 			'nNearly' 	        => $nNearly,
 			'nCountryNearly' 	=> $nCountryNearly,
+			'selAmpher' 	    => $selAmpher,
 		));
+    }
+
+    function ampherAction()
+    {
+        $province_name = $_GET['province_name'];
+        if($province_name == '0')
+        {
+            $province_id = $province_name;
+        }
+        else{
+            $province_id = $this->getProvince("id",$province_name);
+        }
+        if( $province_id != null)
+        {
+            $ampher = $this->getAmpher($province_id);
+            echo "
+                <div class=\"styled-select\">
+                <select class=\"select\" id=\"scou\" name=\"selAmpher\">";
+                foreach($ampher as $key=>$var){
+                    echo "<option value=\"".$ampher[$key]['AMPHUR_VALUE']."\">".$ampher[$key]['AMPHUR_NAME']."</option>";
+                }
+            echo "
+                </div>
+                </select>
+            ";
+        }
+        else
+        {
+            echo "no";
+        }
+        exit();
     }
 
     function getBkkZone()
@@ -178,25 +211,76 @@ class SearchController extends Controller
         return $result;
     }
 
-    function getProvince()
+    function getProvince($type="list",$provinceName=null)
+    {
+        switch ($type) {
+            case "list":
+                    $result_data = array();
+                    $conn= $this->get('database_connection');
+                    if(!$conn){ die("MySQL Connection error");}
+                    try{
+                        $sql = "
+                            select PROVINCE_NAME as PROVINCE_VALUE , PROVINCE_NAME
+                            from province
+                            where PROVINCE_ID != 1
+                            order by PROVINCE_NAME asc
+                        ";
+                        $result_data = $conn->fetchAll($sql);
+                    } catch (Exception $e) {
+                        echo 'Caught exception: ',  $e->getMessage(), "\n";
+                    }
+                    $all[] = array('PROVINCE_VALUE'=>'0','PROVINCE_NAME'=>'ทุกจังหวัด');
+
+                    $result = array_merge($all,$result_data);
+                    return $result;
+                break;
+            case "id":
+                    $result_data = array();
+                    $result = null;
+                    $conn= $this->get('database_connection');
+                    if(!$conn){ die("MySQL Connection error");}
+                    try{
+                        $provinceName = trim($provinceName);
+                        $sql = "
+                            SELECT PROVINCE_ID
+                            FROM province
+                            where PROVINCE_NAME = '$provinceName'
+                        ";
+                        $result_data = $conn->fetchAll($sql);
+                    } catch (Exception $e) {
+                        echo 'Caught exception: ',  $e->getMessage(), "\n";
+                    }
+                    if(count($result_data)>0){
+                        $result = $result_data[0]['PROVINCE_ID'];
+                    }
+                    return $result;
+                break;
+        }
+
+    }
+
+    function getAmpher($id=null)
     {
         $result_data = array();
+        $all[]       = array('AMPHUR_VALUE'=>0,'AMPHUR_NAME'=>' - กรุณาระบุ - ');
+        $whereQuery  = NULL;
         $conn= $this->get('database_connection');
         if(!$conn){ die("MySQL Connection error");}
         try{
-            $sql = "
-				select PROVINCE_NAME as PROVINCE_VALUE , PROVINCE_NAME
-				from province
-				where PROVINCE_ID != 1
-				order by PROVINCE_NAME asc
-			";
-            $result_data = $conn->fetchAll($sql);
+            if($id!=null)
+            {
+                $whereQuery .= " AND PROVINCE_ID = '$id'";
+                $sql = "
+				  SELECT AMPHUR_NAME as AMPHUR_VALUE , AMPHUR_NAME
+				  FROM amphur
+				  WHERE 1 $whereQuery
+			    ";
+                $result_data = $conn->fetchAll($sql);
+            }
+            $result = array_merge($all,$result_data);
         } catch (Exception $e) {
             echo 'Caught exception: ',  $e->getMessage(), "\n";
         }
-        $all[] = array('PROVINCE_VALUE'=>'0','PROVINCE_NAME'=>'ทุกจังหวัด');
-
-        $result = array_merge($all,$result_data);
         return $result;
     }
 
@@ -302,4 +386,5 @@ class SearchController extends Controller
 		$result = array_merge($all,$result_data);
 		return $result;
 	}
+
 }
