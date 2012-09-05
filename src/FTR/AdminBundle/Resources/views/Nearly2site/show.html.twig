@@ -1,41 +1,90 @@
-<h1>Nearly2site</h1>
+<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js'></script>
+<script>
+    var url = "{{ path('nearly2site_create') }}";
+    function postOnchange(){
+        $.ajax({
+            type : "POST",
+            url : url,
+            data : $("#formCreateNearly").serialize(),
+            success : function(msg) {
+                if (msg == 'finish') {
+//                    return true;
+                } else {
+                    alert('เกิดการผิดพลาด\n** กรุณาตรวจสอบ **');
+//                    return false;
+                }
+            }
+        });
+    }
+    $(document).ready(function() {
+        $("#formCreateNearly").submit(function() {
+            postOnchange();
+            $('#divPostCreateNearly').slideUp(300).delay(800).fadeOut(400);
+            return false;
+        });
 
-<table class="record_properties">
-    <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ entity.id }}</td>
-        </tr>
-        <tr>
-            <th>Building_site_id</th>
-            <td>{{ entity.buildingsiteid }}</td>
-        </tr>
-        <tr>
-            <th>Nearly_location_id</th>
-            <td>{{ entity.nearlylocationid }}</td>
-        </tr>
-        <tr>
-            <th>Deleted</th>
-            <td>{{ entity.deleted }}</td>
-        </tr>
-    </tbody>
-</table>
+        $('.selectNearly').change(function() {
+            postOnchange();
+        });
+    });
+</script>
+<div id="divPostCreateNearly">
+    <form id="formCreateNearly" action="{{ path('nearly2site_create') }}" method="post" >
+        <fieldset>
+            <legend>
+                CREATE NEARLY SITE
+            </legend>
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('nearly2site') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('nearly2site_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('nearly2site_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+            <div class="label" style="">
+                {% for building_site in buildingsite %}
+                <h2>{{ building_site.building_name }}</h2>
+                <input type="hidden" value="{{ building_site.id }}" id="building_site_id" name="building_site_id"/>
+                {% endfor %}
+            </div>
+            <div class="clear"></div>
+            <div class="label"><span>ใกล้รถไฟฟ้า BTS :</span></div>
+            <select class="selectNearly widfat" name="nearlyPost[]">
+                <option value="0"></option>
+                {% for bts in nearlylocation %}
+                    {% if bts.type_name == 'bts' %}
+                        {% if bts.nearly2site_id == null %}
+                            <option value="{{ bts.id }}">{{ bts.name }}</option>
+                        {% else %}
+                            <option selected value="{{ bts.id }}">{{ bts.name }}</option>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </select>
+            <div class="label"><span>ใกล้รถไฟฟ้า MRT :</span></div>
+            <select class="selectNearly widfat" name="nearlyPost[]">
+                <option value="0"></option>
+                {% for bts in nearlylocation %}
+                    {% if bts.type_name == 'mrt' %}
+                        {% if bts.nearly2site_id == null %}
+                            <option value="{{ bts.id }}">{{ bts.name }}</option>
+                        {% else %}
+                            <option selected value="{{ bts.id }}">{{ bts.name }}</option>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </select>
+            <div class="label"><span>ใกล้มหาวิทยาลัย :</span></div>
+            <select class="selectNearly widfat"  name="nearlyPost[]">
+                <option value="0"></option>
+                {% for bts in nearlylocation %}
+                    {% if bts.type_name == 'university' %}
+                        {% if bts.nearly2site_id == null %}
+                            <option value="{{ bts.id }}">{{ bts.name }}</option>
+                        {% else %}
+                            <option selected value="{{ bts.id }}">{{ bts.name }}</option>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </select>
+            <br />
+			<span style="float: right;">
+				<input type="submit" value="ClOSE">
+			</span>
+        </fieldset>
+    </form>
+</div>

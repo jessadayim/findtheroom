@@ -22,6 +22,11 @@
 				url : 'create',
 				data : $(this).serialize(),
 				success : function(msg) {
+                    var id = msg.split('_');
+                    if (id.length == 2){
+                        id = id[1];
+                        msg = id[0];
+                    }
 					if (msg == 'finish') {
 						alert('เพิ่ม BUILDING SITE สำเร็จแล้ว');
 						toggle(".createPanel", 'hide');
@@ -29,6 +34,8 @@
 						$("#createrecordCancel").hide();
 						$("#createrecord").show('slow');
 						$('#listBuildingSite').fadeOut('slow').load(window.location + "show").fadeIn("slow");
+                        var strUrl = "facility2site/" + id + "/show";
+                        $('.innerPanel').fadeOut().load(strUrl).fadeIn("slow");
 					} else {
 						$("#createPanel").html(msg);
 						alert('การ CREATE ผิดพลาด\n** กรุณาตรวจสอบ **');
