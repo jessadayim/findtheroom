@@ -38,13 +38,14 @@
 	var arraydataimage = 
 			[
 				{% for roomdata in rooms %}
-					[{{roomdata.id}}, "{{asset(roomdata.photo_name)}}", '{{roomdata.roomtype_name}}', '{{roomdata.room_size}}', '{{roomdata.room_price}}',"{{roomdata.photo_name}}"],
+					[{{roomdata.id}}, "{{asset(roomdata.link_photo)}}", '{{roomdata.roomtype_name}}', '{{roomdata.room_size}}', '{{roomdata.room_price}}',"{{roomdata.photo_name}}"],
 				{% endfor %}
 			];
-	
+
 	var nullarray = [-1, "{{asset('images/show.png')}}",'','','',''];
 	var pathimgdefault = "{{asset('images/')}}";
-	
+    var pathimgbuilding = "{{asset('images/building')}}";
+
 	$(document).ready(function(){
 		if(arraydataimage.length == 0)
 		{			
@@ -81,7 +82,7 @@
 		newRow.id = 'roomtrid'+num
 		var item1 = 1
 		var newCell
-		
+
 		//*** Column 1 ***//
 		newCell = newRow.insertCell(0)
 		newCell.id = newCell.uniqueID
@@ -92,13 +93,13 @@
 		newCell = newRow.insertCell(1)
 		newCell.id = newCell.uniqueID
 		newCell.setAttribute("className", "css-name");
-		newCell.innerHTML = "<img src=\""+pathimage+"\" style=\"margin-top: 10px;\" />"
+		newCell.innerHTML = '<div id="roompic'+num+"\" class=\"thumbframe4add\"><img src=\""+pathimage+"\"  class=\"nopad thumb4img\" /></div>"
 
 		//*** Column 3 ***//
 		newCell = newRow.insertCell(2)
 		newCell.id = newCell.uniqueID
 		newCell.setAttribute("className", "css-name");
-		newCell.innerHTML = "<input type=\"file\" name=\"room"+num+"\" id=\"room"+num+"\" /><input type=\"hidden\" name=\"hdnfilename"+num+"\" id=\"hdnfilename"+num+"\" value=\""+nameimage+"\" onchange=\"postData('image');\" />"		
+		newCell.innerHTML = "<input type=\"file\" name=\"room"+num+"\" id=\"room"+num+"\" /><input type=\"hidden\" name=\"hdnfilename"+num+"\" id=\"hdnfilename"+num+"\" value=\""+nameimage+"\" onchange=\"postData('image');\" />"
 		
 		//*** Column 4 ***//
 		newCell = newRow.insertCell(3)
@@ -139,6 +140,7 @@
 	function readdataroom(num)
 	{
 		var arrayread = [];
+        var buildid = document.getElementById('hdnbuildid').value;
 		for(var i=0 ; i < intLine ; i++)
 		{			
 			
@@ -146,7 +148,7 @@
 				if ($('#hdnfilename'+i).val() == ''){
 					var filename = pathimgdefault + 'show.png';
 				}else {
-					var filename = pathimgdefault + $('#hdnfilename'+i).val();
+					var filename = pathimgbuilding + '/' + buildid + "/" + $('#hdnfilename'+i).val();
 				}
 				var arrayadd = [$('#imageid'+i).val(), filename, $('#typeap_name'+i).val(), $('#typeap_size'+i).val(), $('#typeap_price'+i).val(), $('#hdnfilename'+i).val()];
 				arrayread.push(arrayadd);
@@ -238,7 +240,7 @@
 		newCell = newRow.insertCell(1)
 		newCell.id = newCell.uniqueID
 		newCell.setAttribute("className", "css-name");
-		newCell.innerHTML = "<img src=\"{{asset('images/show.png')}}\" style=\"margin-top: 10px;\" />"		
+		newCell.innerHTML = '<div id="gallerypic'+num+"\" class=\"thumbframe4add\"><img src=\"{{asset('images/show.png')}}\" class=\"nopad thumb4img\" /></div>"
 		
 		//*** Column 3 ***//
 		newCell = newRow.insertCell(2)
@@ -261,6 +263,7 @@
 	function readdatagallery(numGal)
 	{
 		var arrayread = [];
+        var buildid = document.getElementById('hdnbuildid').value;
 		for(var i=0 ; i < intLineGal ; i++)
 		{			
 			
@@ -268,7 +271,7 @@
 				if ($('#hdngalleryname'+i).val() == ''){
 					var filename = pathimgdefault + 'show.png';
 				}else {
-					var filename = pathimgdefault + $('#hdngalleryname'+i).val();
+					var filename = pathimgbuilding + '/' + buildid + "/" + $('#hdngalleryname'+i).val();
 				}
 				var arrayadd = [$('#imageidgal'+i).val(), filename, $('#typeap_name'+i).val(), $('#typeap_size'+i).val(), $('#typeap_price'+i).val(), $('#hdngalleryname'+i).val()];
 				arrayread.push(arrayadd);

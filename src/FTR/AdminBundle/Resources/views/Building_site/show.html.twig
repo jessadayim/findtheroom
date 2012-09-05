@@ -51,7 +51,7 @@
 		});
 
 		//Click ปุ่ม  Edit Facility
-		$(".createFacility,.createRoomType").click(function() {
+		$(".createSite").click(function() {
 			locationRoomType = this.href;
 			$('.innerPanel').fadeOut().load(this.href).fadeIn("slow");
 			// if (checkDoubleClickEdit){
@@ -59,10 +59,10 @@
 			// $.post(this.href, function(data) {
 			// $('.innerPanel').slideUp(300).fadeIn(400);
 			// $('.innerPanel').html(data);
-			// toggle(".createPanel", 'hide');
+			toggle(".createPanel", 'hide');
 			// toggle(".innerPanel", 'show');
-			// $("#createrecordCancel").hide();
-			// $("#createrecord").show('slow');
+			$("#createrecordCancel").hide();
+			$("#createrecord").show('slow');
 			document.getElementById('createrecord').scrollIntoView();
 			// });
 			// // รอเวลาเพิ่อให้ คลิกซ้ำได้
@@ -115,13 +115,13 @@
 		<td>{{ entity.building_name }}</td>
 
 		<!-- facility -->
-		<td><a href="{{ path('facility2site_show', { 'id': entity.id }) }}" class="createFacility">Edit</a></td>
+		<td><a href="{{ path('facility2site_show', { 'id': entity.id }) }}" class="createSite">Edit</a></td>
 
 		<!-- room type -->
-		<td><a href="{{ path('roomtype2site_show', { 'id': entity.id }) }}" class="createRoomType">Edit</a></td>
+		<td><a href="{{ path('roomtype2site_show', { 'id': entity.id }) }}" class="createSite">Edit</a></td>
 
 		<!-- nearly -->
-		<td><a href="">Edit</a></td>
+        <td><a href="{{ path('nearly2site_show', { 'id': entity.id }) }}" class="createSite">Edit</a></td>
 
 		<!-- upload gallery -->
 		<td><a href="">Edit</a></td>
