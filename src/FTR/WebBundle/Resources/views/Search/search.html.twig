@@ -1,26 +1,40 @@
 <!-- peung -->
 <script language="javascript">
-function fncAlert(){
-	if(document.getElementById('bk').checked) {
-	   //$("#tbk").css("display","block");
-	   //$("#tcou").css("display","none");
-	   document.getElementById('sbk1').disabled=false;
-	   document.getElementById('sbk2').disabled=false;
-	   document.getElementById('sbk3').disabled=false;
-	   document.getElementById('sbk4').disabled=false;
-	   //document.getElementById('sbk5').disabled=false;
-	   document.getElementById('scou').disabled=true;
-	}else if(document.getElementById('cou').checked) {
-	   //$("#tbk").css("display","none");
-	   //$("#tcou").css("display","block");
-	   document.getElementById('sbk1').disabled=true;
-	   document.getElementById('sbk2').disabled=true;
-	   document.getElementById('sbk3').disabled=true;
-	   document.getElementById('sbk4').disabled=true;
-	   //document.getElementById('sbk5').disabled=true;
-	   document.getElementById('scou').disabled=false;
-	}
-}
+    function fncAlert(){
+        if(document.getElementById('bk').checked) {
+           //$("#tbk").css("display","block");
+           //$("#tcou").css("display","none");
+           document.getElementById('sbk1').disabled=false;
+           document.getElementById('sbk2').disabled=false;
+           document.getElementById('sbk3').disabled=false;
+           document.getElementById('sbk4').disabled=false;
+           //document.getElementById('sbk5').disabled=false;
+           document.getElementById('scou').disabled=true;
+        }else if(document.getElementById('cou').checked) {
+           //$("#tbk").css("display","none");
+           //$("#tcou").css("display","block");
+           document.getElementById('sbk1').disabled=true;
+           document.getElementById('sbk2').disabled=true;
+           document.getElementById('sbk3').disabled=true;
+           document.getElementById('sbk4').disabled=true;
+           //document.getElementById('sbk5').disabled=true;
+           document.getElementById('scou').disabled=false;
+        }
+    }
+
+    function getAmpher()
+    {
+        var  provincename = document.getElementById('selProvince').value;
+        //alert(provincename);
+        $.get("{{path('FTRWebBundle_search_ampher')}}", { province_name: provincename },
+            function(data) {
+                if(data != "no")
+                {
+                    document.getElementById('divAmpher').innerHTML = data;
+                }
+        });
+    }
+
 </script>
 <form method="post" action="{{path('FTRWebBundle_list')}}?searchType=fullSearch">
 <div id="search2">
@@ -84,7 +98,7 @@ function fncAlert(){
 				<td width="200">
 					<div class="styled-select">
 						<label for="cou">
-						<select class="select" name="selProvince" id="selProvince">
+						<select class="select" name="selProvince" id="selProvince" onchange="javascript:getAmpher()">
 							{% for pvList in province %}
 								<option value="{{ pvList.PROVINCE_VALUE }}"
                                     {% if selProvince == pvList.PROVINCE_VALUE %}
@@ -171,44 +185,26 @@ function fncAlert(){
 					</div>
 				</td>
 			</tr>
-			<!--<tr height="50" valign="middle">
-				<td align="left" width="165">ตามสถานที่ใกล้เคียง :</td>
-				<td width="250">
-					<div class="styled-select">
-                   
-						<select class="select" id="sbk5" name="nNearly">
-							{% for blist in nearBy %}
-								<option value="{{ blist.id }}"
-                                    {% if nNearly == blist.id %}
-                                        selected="selected"
-                                    {% endif %}
-                                >{{ blist.name }}</option>
-							{% endfor %}
-						</select>
-                    
-					</div>
-				</td>
-				<td colspan="2"></td>
-			</tr>-->
+
 		</table>
 		
 		<table id="tcou" style="margin-top:0px; display:block; height:204px; margin-top: 10px;">
 			<tr valign="top">
 				<td id="fie" align="left" width="165" style="padding-left:55px">อำเภอ :</td>
 				<td width="300">
-					<div class="styled-select">
-                
-						<select class="select" id="scou" disabled name="nCountryNearly">
-							{% for clist in nearInCountry %}
-								<option value="{{ clist.id }}"
-                                    {% if nCountryNearly == clist.id %}
-                                        selected="selected"
-                                    {% endif %}
-                                >{{ clist.name }}</option>
-							{% endfor %}
-						</select>
-                
-					</div>
+                    <span id="divAmpher">
+                       <div class="styled-select">
+                                <select class="select" id="scou" disabled name="selAmpher">
+                                    {% for aList in ampher %}
+                                        <option value="{{ aList.AMPHUR_VALUE }}"
+                                            {% if selAmpher == aList.AMPHUR_VALUE %}
+                                                selected="selected"
+                                            {% endif %}
+                                        >{{ aList.AMPHUR_NAME }}</option>
+                                    {% endfor %}
+                                </select>
+                        </div>
+                    </span>
 				</td>
 				<td colspan="2"></td>
 			</tr>
@@ -226,7 +222,8 @@ function fncAlert(){
             <tr height="40" valign="middle">
             	{% for loops in list.loop %}
             	<td width="250">
-            		<input id="{{loops.id}}" name="{{loops.id}}" type="checkbox" value="{{loops.id}}" /> <label for="{{loops.id}}">{{loops.facility_name}}</label>
+            		<input id="inroom{{loops.id}}" name="inroom{{loops.id}}" type="checkbox" value="{{loops.id}}" checked ="checked"/>
+                    <label for="{{loops.id}}">{{loops.facility_name}}</label>
             	</td>
             	{% endfor %}
             </tr>
@@ -245,7 +242,8 @@ function fncAlert(){
             <tr height="40" valign="middle">
             	{% for outloops in outlist.loop %}
             	<td width="250">
-            		<input id="{{outloops.id}}" name="{{outloops.id}}" type="checkbox" value="{{outloops.id}}" /> <label for="{{outloops.id}}">{{outloops.facility_name}}</label>
+            		<input id="outroom{{outloops.id}}" name="outroom{{outloops.id}}" type="checkbox" value="{{outloops.id}}" checked ="checked" />
+                    <label for="{{outloops.id}}">{{outloops.facility_name}}</label>
             	</td>
             	{% endfor %}
             </tr>
