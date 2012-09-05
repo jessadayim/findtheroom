@@ -14,9 +14,9 @@
 			success : function(msg) {
 				if (msg == 'finish') {
 					if (checkReload){						
-						setTimeout("reload();", 100);
+						setTimeout("reload();", 200);
 					}
-				} else {alert(msg)
+				} else {
 					alert('เกิดการผิดพลาด\n** กรุณาตรวจสอบ **');
 				}
 			}
@@ -147,6 +147,7 @@
 				{% endfor %}
 			</div>
 			<br />
+            <div class="clear"></div>
 			<br />
 			<table id="tbRoomType2Site">
 				{% for roomType in roomtype2site %}
