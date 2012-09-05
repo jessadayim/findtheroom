@@ -158,9 +158,13 @@ function fncAlert(){
 				<td width="250">
 					<div class="styled-select">
                    
-						<select class="select" id="sbk4">
+						<select class="select" id="sbk4" name="nUniversity">
 							{% for ulist in nearUniversity %}
-								<option value="{{ ulist.id }}">{{ ulist.name }}</option>
+								<option value="{{ ulist.id }}"
+                                    {% if nUniversity == ulist.id %}
+                                        selected="selected"
+                                    {% endif %}
+                                >{{ ulist.name }}</option>
 							{% endfor %}
 						</select>
                    
@@ -172,9 +176,13 @@ function fncAlert(){
 				<td width="250">
 					<div class="styled-select">
                    
-						<select class="select" id="sbk5">
+						<select class="select" id="sbk5" name="nNearly">
 							{% for blist in nearBy %}
-								<option value="{{ blist.id }}">{{ blist.name }}</option>
+								<option value="{{ blist.id }}"
+                                    {% if nNearly == blist.id %}
+                                        selected="selected"
+                                    {% endif %}
+                                >{{ blist.name }}</option>
 							{% endfor %}
 						</select>
                     
@@ -190,9 +198,13 @@ function fncAlert(){
 				<td width="300">
 					<div class="styled-select">
                 
-						<select class="select" id="scou" disabled>
+						<select class="select" id="scou" disabled name="nCountryNearly">
 							{% for clist in nearInCountry %}
-								<option value="{{ clist.id }}">{{ clist.name }}</option>
+								<option value="{{ clist.id }}"
+                                    {% if nCountryNearly == clist.id %}
+                                        selected="selected"
+                                    {% endif %}
+                                >{{ clist.name }}</option>
 							{% endfor %}
 						</select>
                 
