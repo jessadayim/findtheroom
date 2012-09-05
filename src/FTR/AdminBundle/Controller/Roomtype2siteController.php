@@ -19,7 +19,7 @@ class Roomtype2siteController extends Controller
      */
     public function showAction($id)
     {
-        $sqlGetRoomType2Stie = "
+        $sqlGetRoomType2Site = "
             SELECT 
               * 
             FROM
@@ -27,9 +27,9 @@ class Roomtype2siteController extends Controller
             WHERE `building_site_id` = $id 
               AND `deleted` != 1 
         ";
-        $ObjRoomType2Stie= $this->getDataArray($sqlGetRoomType2Stie);
-        foreach ($ObjRoomType2Stie as $key => $value){
-           $ObjRoomType2Stie[$key]['count'] = $key+1;
+        $ObjRoomType2Site= $this->getDataArray($sqlGetRoomType2Site);
+        foreach ($ObjRoomType2Site as $key => $value){
+            $ObjRoomType2Site[$key]['count'] = $key+1;
         }
         
         $sqlGetRoomType = "
@@ -54,7 +54,7 @@ class Roomtype2siteController extends Controller
         return $this->render('FTRAdminBundle:Roomtype2site:show.html.twig', array(
             'buildingsite'      => $ObjBuildingSite,
             'roomtype'          => $ObjRoomType,
-            'roomtype2site'     => $ObjRoomType2Stie,
+            'roomtype2site'     => $ObjRoomType2Site,
         ));
     }
    

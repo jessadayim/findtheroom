@@ -459,7 +459,7 @@
                 <td align="left" width="30" style="font-size:24px;">&nbsp;</td>
             </tr>
             <tr height="50" valign="middle">
-				<td align="right" width="240" style="font-size:24px;">ประเภทห้องพัก : *</td>
+				<td align="right" width="240" style="font-size:24px;">ประเภทหอพัก : *</td>
                 <td align="left" width="200">
                 	<div class="styled-select">
 						<select id="aptype" name="aptype" class="select" onchange="postData('head');">
@@ -642,16 +642,17 @@
 					</div>
 				</td>
 			</tr>
-			<tr>
+			<tr height="50" valign="middle">
 				<td align="left" width="165">ตามสถานที่ใกล้เคียง :</td>
 				<td width="250">
-					<div class="styled-select">
-                   
+					<input id="near_ot" name="near_ot" type="text" maxlength="30" placeholder="กรุณากรอกสถานที่ใกล้เคียง" style=" padding:2px; font-size:20px;" />
+					<!--<div class="styled-select">
+                   		
 						<select id="near_ot" name="near_ot" class="select" onchange="postData('other');">
 							{% for blist in nearBy %}
 								<option value="{{ blist.id }}">{{ blist.name }}</option>
 							{% endfor %}
-						</select>
+						</select>-->
                     
 					</div>
 				</td>
@@ -663,7 +664,8 @@
 			<tr valign="top">
 				<td id="fie" align="left" width="165" style="padding-left:50px">ตามสถานที่ใกล้เคียง :</td>
 				<td width="300">
-					<div class="styled-select">
+					<input id="country_ot" name="country_ot" type="text" maxlength="30" placeholder="กรุณากรอกสถานที่ใกล้เคียง" style=" padding:2px; font-size:20px;" disabled/> 
+					<!--<div class="styled-select">
                 
 						<select id="country_ot" name="country_ot" class="select" onchange="postData('other');" disabled>
 							{% for clist in nearInCountry %}
@@ -671,7 +673,7 @@
 							{% endfor %}
 						</select>
                 
-					</div>
+					</div>-->
 				</td>
 				<td colspan="2"></td>
 			</tr>

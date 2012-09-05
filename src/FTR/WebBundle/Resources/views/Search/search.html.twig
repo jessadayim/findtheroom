@@ -8,7 +8,7 @@ function fncAlert(){
 	   document.getElementById('sbk2').disabled=false;
 	   document.getElementById('sbk3').disabled=false;
 	   document.getElementById('sbk4').disabled=false;
-	   document.getElementById('sbk5').disabled=false;
+	   //document.getElementById('sbk5').disabled=false;
 	   document.getElementById('scou').disabled=true;
 	}else if(document.getElementById('cou').checked) {
 	   //$("#tbk").css("display","none");
@@ -17,7 +17,7 @@ function fncAlert(){
 	   document.getElementById('sbk2').disabled=true;
 	   document.getElementById('sbk3').disabled=true;
 	   document.getElementById('sbk4').disabled=true;
-	   document.getElementById('sbk5').disabled=true;
+	   //document.getElementById('sbk5').disabled=true;
 	   document.getElementById('scou').disabled=false;
 	}
 }
@@ -29,7 +29,7 @@ function fncAlert(){
     <div>
 		<table>
 			<tr height="50" valign="middle">
-				<td align="right" style="padding-right:15px;">ประเภทห้องพัก :</td>
+				<td align="right" style="padding-right:15px;">ประเภทหอพัก :</td>
 				<td width="350">
 					<div class="styled-select">
 						<select class="select" name="bkkBuildingType" id="bkkBuildingType">
@@ -158,41 +158,53 @@ function fncAlert(){
 				<td width="250">
 					<div class="styled-select">
                    
-						<select class="select" id="sbk4">
+						<select class="select" id="sbk4" name="nUniversity">
 							{% for ulist in nearUniversity %}
-								<option value="{{ ulist.id }}">{{ ulist.name }}</option>
+								<option value="{{ ulist.id }}"
+                                    {% if nUniversity == ulist.id %}
+                                        selected="selected"
+                                    {% endif %}
+                                >{{ ulist.name }}</option>
 							{% endfor %}
 						</select>
                    
 					</div>
 				</td>
 			</tr>
-			<tr>
+			<!--<tr height="50" valign="middle">
 				<td align="left" width="165">ตามสถานที่ใกล้เคียง :</td>
 				<td width="250">
 					<div class="styled-select">
                    
-						<select class="select" id="sbk5">
+						<select class="select" id="sbk5" name="nNearly">
 							{% for blist in nearBy %}
-								<option value="{{ blist.id }}">{{ blist.name }}</option>
+								<option value="{{ blist.id }}"
+                                    {% if nNearly == blist.id %}
+                                        selected="selected"
+                                    {% endif %}
+                                >{{ blist.name }}</option>
 							{% endfor %}
 						</select>
                     
 					</div>
 				</td>
 				<td colspan="2"></td>
-			</tr>
+			</tr>-->
 		</table>
 		
-		<table id="tcou" style="margin-top:0px; display:block; height:244px; margin-top: 10px;">
+		<table id="tcou" style="margin-top:0px; display:block; height:204px; margin-top: 10px;">
 			<tr valign="top">
-				<td id="fie" align="left" width="165" style="padding-left:50px">ตามสถานที่ใกล้เคียง :</td>
+				<td id="fie" align="left" width="165" style="padding-left:55px">อำเภอ :</td>
 				<td width="300">
 					<div class="styled-select">
                 
-						<select class="select" id="scou" disabled>
+						<select class="select" id="scou" disabled name="nCountryNearly">
 							{% for clist in nearInCountry %}
-								<option value="{{ clist.id }}">{{ clist.name }}</option>
+								<option value="{{ clist.id }}"
+                                    {% if nCountryNearly == clist.id %}
+                                        selected="selected"
+                                    {% endif %}
+                                >{{ clist.name }}</option>
 							{% endfor %}
 						</select>
                 

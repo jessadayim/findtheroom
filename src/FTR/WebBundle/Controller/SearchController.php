@@ -115,6 +115,9 @@ class SearchController extends Controller
         $bkkZone            = null;
         $nBts               = null;
         $nMrt               = null;
+        $nUniversity        = null;
+        $nNearly            = null;
+        $nCountryNearly     = null;
 
 
         $fac_inroomlist 	= $this->getFacility('inroom');
@@ -149,6 +152,9 @@ class SearchController extends Controller
 			'bkkZone' 	        => $bkkZone,
 			'nBts' 	            => $nBts,
 			'nMrt' 	            => $nMrt,
+			'nUniversity' 	    => $nUniversity,
+			'nNearly' 	        => $nNearly,
+			'nCountryNearly' 	=> $nCountryNearly,
 		));
     }
 
