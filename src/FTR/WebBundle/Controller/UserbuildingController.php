@@ -153,8 +153,17 @@ class UserbuildingController extends Controller
 						'room_price'	=> $roomtype2sitedata->getRoomprice(),
 					);
 				}
+                $arrgallerydata = NULL;
+                foreach ($arrgallery as $key => $gallerypicvalue) {
+                    $arrgallerydata[] = array(
+                        'id'			=> $gallerypicvalue['id'],
+                        'photo_name'	=> $gallerypicvalue['photo_name'],
+                        'link_photo'	=> "images/building/$id/".$gallerypicvalue['photo_name'],
+                        'description'	=> $gallerypicvalue['description'],
+                    );
+                }
 				/*echo "<pre>";
-				var_dump($arrgallery);
+				var_dump($arrgallerydata);
 				echo "</pre>";
 				exit();*/
 				if(!empty($imagehead)){
@@ -201,7 +210,7 @@ class UserbuildingController extends Controller
 			'fac_outroom'			=> $fac_outroomlist,
 			'rooms'					=> $arrroomdata,
 			'roomlines'				=> $countroom,
-			'galleries'				=> $arrgallery,
+			'galleries'				=> $arrgallerydata,
 			'gellerylines'			=> $countgallery,
 			'linkimagehead'			=> $linkimagehead,
 			'nameimagehead'			=> $nameimagehead,
@@ -569,11 +578,11 @@ class UserbuildingController extends Controller
 							);
 					}
 				}
-				
+
 				for ($i=0; $i < $icountlinegallery ; $i++) {
-					if(!empty($_POST["hdngalleryname$i"])||!empty($_POST["galtitle$i"])){  
-						$arrimagedata[] = array(
-							'imageid'		=> $_POST["imageid$i"],
+					if(!empty($_POST["hdngalleryname$i"])||!empty($_POST["galtitle$i"])){
+                        $arrimagedata[] = array(
+							'imageid'		=> $_POST["imageidgal$i"],
 							'photo_name'	=> $_POST["hdngalleryname$i"],
 							'description'	=> $_POST["galtitle$i"],
 							'photo_type'	=> 'gallery',
@@ -581,7 +590,7 @@ class UserbuildingController extends Controller
 						);
                     }
 				}
-                //echo $arrimagedata[2]['photo_name'];exit();
+
 				$alert = $this->saveImageData($id,$arrimagedata);
 				echo $alert;
 			}
