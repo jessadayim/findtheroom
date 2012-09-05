@@ -92,7 +92,7 @@ class UserbuildingController extends Controller
 		if(!$conn){ die("MySQL Connection error");}
 			try{
 				$userdata = $em->getRepository('FTRWebBundle:User_owner')->findOneBy(array('username'=>$user));
-				// เดี๋ยวเขียนเช็คถ้าไม่มีให้ redirect
+				// เช็คถ้าไม่มีให้ redirect
 				if(empty($userdata))
 				{
 					return $this->redirect($this->generateUrl('FTRWebBundle_publish'));
@@ -154,7 +154,7 @@ class UserbuildingController extends Controller
 					);
 				}
 				/*echo "<pre>";
-				var_dump($arrroomdata);
+				var_dump($arrgallery);
 				echo "</pre>";
 				exit();*/
 				if(!empty($imagehead)){
@@ -544,14 +544,18 @@ class UserbuildingController extends Controller
 					$arrimagedata[]		= array(
 						'photo_name'	=> $sheadimagename,
 						'photo_type'	=> 'head',
+                        'sequence'		=> 0,
 					);
 				}
+
 				if(!empty($smapimagename)){
 					$arrimagedata[]		= array(
 						'photo_name'	=> $smapimagename,
 						'photo_type'	=> 'map',
+                        'sequence'		=> 0,
 					);
 				}
+
 				for ($i=0; $i < $icountlineroom ; $i++) {
 					if(!empty($_POST["hdnfilename$i"])||!empty($_POST["typeap_name$i"])||!empty($_POST["typeap_size$i"])||!empty($_POST["typeap_price$i"])){ 
 						$arrimagedata[] = array(
@@ -575,8 +579,9 @@ class UserbuildingController extends Controller
 							'photo_type'	=> 'gallery',
 							'sequence'		=> $i,
 						);
-					}
+                    }
 				}
+                //echo $arrimagedata[2]['photo_name'];exit();
 				$alert = $this->saveImageData($id,$arrimagedata);
 				echo $alert;
 			}
@@ -635,12 +640,17 @@ class UserbuildingController extends Controller
 	public function saveImageData($id,$imagedata)
 	{
 		$em = $this->getDoctrine()->getEntityManager();
-		//echo $imagedata[2]['photo_name'];exit();
+        //echo $imagedata[0]['photo_name'];exit();
 		foreach ($imagedata as $key => $value) {
 			$roomtype2siteid = NULL;$data = NULL; // set NULL value for new loop
+
 			if(!empty($id)||!empty($value['photo_name'])){
-				$imagevalue = $em->getRepository('FTRWebBundle:Image')->findOneBy(array('building_site_id'=>$id,'photo_type'=>$value['photo_type'],'sequence'=>$value['sequence']));
-				
+
+				$imagevalue = $em->getRepository('FTRWebBundle:Image')->findOneBy(array(
+                    'building_site_id'=>$id,
+                    'photo_type'=>$value['photo_type'],
+                    'sequence'=>$value['sequence']));
+
 				$photo_name = $value['photo_name'];
 				$photo_type = $value['photo_type'];
 				$sequence = $value['sequence'];
@@ -693,7 +703,7 @@ class UserbuildingController extends Controller
 						$roomtype2siteid = $this->saveRoomtypeData($id, $data, NULL);
 					}
 					$image->setRoomtype2siteId($roomtype2siteid);
-					
+                    $em = $this->getDoctrine()->getEntityManager();
 					$em->persist($image);
 					$em->flush();
 				}
