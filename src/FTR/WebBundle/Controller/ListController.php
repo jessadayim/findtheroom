@@ -31,7 +31,7 @@ class ListController extends Controller
         $numEnd             = $numStart + $numShow;
         $parameter          = array();
 
-        // post zone
+        // post zone aaaaaa
         if($_GET){
             $searchType     = @$_GET['searchType'];
             $buildingType   = @$_GET['buildingType'];
