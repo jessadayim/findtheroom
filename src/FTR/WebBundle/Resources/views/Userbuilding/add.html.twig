@@ -191,11 +191,11 @@
 	var arraygalleryimage =
 			[
 				{% for gallerydata in galleries %}
-					[{{gallerydata.id}}, "{{asset('gallerydata.photo_name')}}","{{gallerydata.photo_name}}"],
+					[{{gallerydata.id}}, "{{asset(gallerydata.link_photo)}}","{{gallerydata.photo_name}}","{{gallerydata.description}}"],
 				{% endfor %}
 			];
 	
-	var nullarrayGal = [-1, "{{asset('images/show.png')}}",''];
+	var nullarrayGal = [-1, "{{asset('images/show.png')}}",'',''];
 	var pathimgdefault = "{{asset('images/')}}";
 	
 	$(document).ready(function(){
@@ -221,7 +221,8 @@
 		var imageid = arraydata[0];
 		var pathimage = arraydata[1];
 		var nameimage = arraydata[2];
-		
+        var description = arraydata[3];
+
 		var theTable = document.all.tbgal
 		var newRow = theTable.insertRow(theTable.rows.length)
 		//newRow.id = newRow.uniqueID
@@ -240,33 +241,33 @@
 		newCell = newRow.insertCell(1)
 		newCell.id = newCell.uniqueID
 		newCell.setAttribute("className", "css-name");
-		newCell.innerHTML = '<div id="gallerypic'+num+"\" class=\"thumbframe4add\"><img src=\"{{asset('images/show.png')}}\" class=\"nopad thumb4img\" /></div>"
+		newCell.innerHTML = '<div id="gallerypic'+num+"\" class=\"thumbframe4add\"><img src=\""+pathimage+"\" class=\"nopad thumb4img\" /></div>"
 		
 		//*** Column 3 ***//
 		newCell = newRow.insertCell(2)
 		newCell.id = newCell.uniqueID
 		newCell.setAttribute("className", "css-name");
-		newCell.innerHTML = "<input type=\"file\" name=\"gallery"+num+"\" id=\"gallery"+num+"\" /><input type=\"hidden\" name=\"hdngalleryname"+num+"\" id=\"hdngalleryname"+num+"\" />"				
-		
+		newCell.innerHTML = "<input type=\"file\" name=\"gallery"+num+"\" id=\"gallery"+num+"\" /><input type=\"hidden\" name=\"hdngalleryname"+num+"\" id=\"hdngalleryname"+num+"\" value=\""+nameimage+"\" />"
+
 		//*** Column 4 ***//
 		newCell = newRow.insertCell(3)
 		newCell.id = newCell.uniqueID
 		newCell.setAttribute("className", "css-name");
-		newCell.innerHTML = "<textarea id=\"galtitle"+num+"\" name=\"galtitle"+num+"\" maxlenght=\"500\" placeholder=\"กรอกข้อมูลของรูปที่นี่\" class=\"galdesc\" onchange=\"postData('image');\"></textarea><input type=\"hidden\" name=\"imageidgal"+num+"\" id=\"imageidgal"+num+"\" value=\""+imageid+"\" />"				
-			
+		newCell.innerHTML = "<textarea id=\"galtitle"+num+"\" name=\"galtitle"+num+"\" maxlenght=\"500\" placeholder=\"กรอกข้อมูลของรูปที่นี่\" class=\"galdesc\" onchange=\"postData('image');\" >"+description+"</textarea><input type=\"hidden\" name=\"imageidgal"+num+"\" id=\"imageidgal"+num+"\" value=\""+imageid+"\" />"
+
 		//document.addform.hdnMaxLineGal.value = intLine;
 		loopbuttongallery();
 		intLineGal++;
 		document.addform.hdnMaxLineGal.value = intLineGal;
 	}
-	
+
 	function readdatagallery(numGal)
 	{
 		var arrayread = [];
         var buildid = document.getElementById('hdnbuildid').value;
 		for(var i=0 ; i < intLineGal ; i++)
-		{			
-			
+		{
+
 			if (num != i){
 				if ($('#hdngalleryname'+i).val() == ''){
 					var filename = pathimgdefault + 'show.png';
@@ -322,7 +323,7 @@
 		$.post(addfixpath, $("#addform").serialize(), 
 		function(data) {
 			var completetext = data;
-			alert(completetext);
+			//alert(completetext);
 			$.gritter.add({
 				// (string | mandatory) the heading of the notification
 				title: 'บันทึกข้อมูลสำเร็จ',
@@ -399,7 +400,7 @@
             </tr>
             <tr height="50" valign="top">
 				<td align="right" width="210" style="font-size:24px;">ที่อยู่ : *</td>
-                <td align="left" width="190"><textarea name="placeap" id="placeap" type="text" maxlength="500" class="place" value="{{buildingdata.tbuildingaddress}}" onchange="postData('head');" /></textarea></td>
+                <td align="left" width="190"><textarea name="placeap" id="placeap" type="text" maxlength="500" class="place"  onchange="postData('head');" />{{buildingdata.tbuildingaddress}}</textarea></td>
             </tr>
 			<tr height="50" valign="middle">
 				<td align="right" width="210" style="font-size:24px;">จังหวัด : *</td>
@@ -445,7 +446,7 @@
 					<input type="hidden" name="hdnfilemap" id="hdnfilemap" value="{{nameimagehead}}" />
 				</td>
 				<td align="right" width="240" valign="top" style="font-size:24px;">รายละเอียดเพิ่มเติม : &nbsp;</td>
-                <td align="left" width="200"><textarea name="placedetail" type="text" maxlength="500" class="ldesc" value="{{buildingdata.tdetail}}" onchange="postData('head');" /></textarea></td>
+                <td align="left" width="200"><textarea name="placedetail" type="text" maxlength="500" class="ldesc" onchange="postData('head');" />{{buildingdata.tdetail}}</textarea></td>
             </tr>
         </table>
     </div>
@@ -510,7 +511,7 @@
             </tr>
             <tr height="50" valign="middle">
 				<td align="right" width="240" style="font-size:24px;">เว็บไซต์ : &nbsp;</td>
-                <td align="left" width="200"><input id="website" name="website" type="text" maxlength="10" placeholder="กรุณากรอกเว็บไซต์" style=" padding:2px; font-size:20px;" value="{{buildingdata.swebsite}}" onchange="postData('head');" /></td>
+                <td align="left" width="200"><input id="website" name="website" type="text" placeholder="กรุณากรอกเว็บไซต์" style=" padding:2px; font-size:20px;" value="{{buildingdata.swebsite}}" onchange="postData('head');" /></td>
                 <td align="right" width="210" style="font-size:24px;">ค่าอินเตอร์เน็ต : &nbsp;</td>
                <td align="left" width="190"><input id="internet_price" name="internet_price" type="text" maxlength="3" placeholder="กรุณากรอกค่าอินเตอร์เน็ต" style=" padding:2px; font-size:20px;" value="{{buildingdata.iinternetprice}}" onchange="postData('head');" /></td>
                 <td align="left" width="30" style="font-size:24px;"> บาท</td>

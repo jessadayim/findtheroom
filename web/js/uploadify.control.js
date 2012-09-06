@@ -87,6 +87,7 @@ function uploadpicgallery()
 	var numberline = intLineGal;//parseInt(document.addform.hdnMaxLine.value);
 	for(i=0;i<=numberline;i++){
 	var name = '#gallery'+i
+        //alert(name)
 	$(name).uploadify({
 			'formData'      : {'ownername' : ownername, 'buildid' : buildid ,'fieldname' : name ,'typefield' : 'gallery'},
 			//'debug'    : true,
