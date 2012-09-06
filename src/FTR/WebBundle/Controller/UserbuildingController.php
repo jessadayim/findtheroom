@@ -51,6 +51,9 @@ class UserbuildingController extends Controller
 					{
 						$publish = "แสดงแล้ว";
 					}
+                    elseif($value['publish']==0){
+                        $publish = "ฉบับร่าง";
+                    }
 					else {
 						$publish = "รอการยืนยัน";
 					}
@@ -600,7 +603,7 @@ class UserbuildingController extends Controller
 				$building_addr	= $_POST['placeap'];
 				$province		= $_POST['province'];
 				$district		= $_POST['district'];
-				$zipcode		= $_POST['zipcode'];
+				$zipCode		= $_POST['zipcode'];
 				$detail			= $_POST['placedetail'];
 				$longitude		= $_POST['longitude'];
 				$latitude		= $_POST['latitude'];
@@ -614,13 +617,16 @@ class UserbuildingController extends Controller
 				$electric_price	= $_POST['power_price'];
 				$website		= $_POST['website'];
 				$internet_price	= $_POST['internet_price'];
-				
+				if(empty($internet_price))
+                {
+                    $internet_price = null;
+                }
 				$arrbuilding_data = array(
 					'building_name'		=> $building_name,
 					'building_addr'		=> $building_addr,
 					'province'			=> $province,
 					'district'			=> $district,
-					'zipcode'			=> $zipcode,
+					'zipcode'			=> $zipCode,
 					'detail'			=> $detail,
 					'longitude'			=> $longitude,
 					'latitude'			=> $latitude,
@@ -634,6 +640,7 @@ class UserbuildingController extends Controller
 					'electric_price'	=> $electric_price,
 					'website'			=> $website,
 					'internet_price'	=> $internet_price,
+                    'publish'           => '0',
 				);
 				$alert = $this->saveBuildingData($id,$arrbuilding_data);
 				echo $alert;
@@ -769,14 +776,89 @@ class UserbuildingController extends Controller
 			
 			$em->flush();
 		}
+        $returnValue = $this->saveMinMaxRoomPrice($buildingid);
+        $buildingValue = $em->getRepository('FTRWebBundle:Building_site')->findOneBy(array('id'=>$buildingid));
+        $buildingValue->setStartPrice($returnValue['startPrice']);
+        $buildingValue->setEndPrice($returnValue['endPrice']);
+        $em->flush();
 		return $roomtype2siteid;
 	}
 
-	public function saveBuildingData($id,$arrdata)
+    public function saveMinMaxRoomPrice($id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $roomTypeData = $em->getRepository('FTRWebBundle:Roomtype2site')->findBy(array('building_site_id'=>$id));
+        $minPrice = 0; $maxPrice = 0;
+        if(!empty($roomTypeData))
+        {
+            foreach($roomTypeData as $key => $data)
+            {
+                $roomPrice = $data->getRoomprice();
+                if($roomPrice<$minPrice)
+                {
+                    if($roomPrice!=0)
+                    {
+                        $minPrice=$roomPrice;
+                    }
+                }elseif($minPrice==0)
+                {
+                    $minPrice=$roomPrice;
+                }
+                if($roomPrice>$maxPrice)
+                {
+                    if($roomPrice!=0)
+                    {
+                        $maxPrice=$roomPrice;
+                    }
+                }
+            }
+            $arrPrice = array(
+                'startPrice'       => $minPrice,
+                'endPrice'         => $maxPrice,
+            );
+
+        }
+        return $arrPrice;
+    }
+
+	public function saveBuildingData($id,$arrData)
 	{
+        $session = $this->get('session');
+        $username = $session->get('user');
+        $today = new \DateTime('now');
+        //$now = $today->format('Y-m-d H:i:s');
+        //echo $now->format('Y-m-d H:i:s');exit();
 		$em = $this->getDoctrine()->getEntityManager();
-		$buildingvalue = $em->getRepository('FTRWebBundle:Building_site')->findOneBy(array('id'=>$id));
-		
+		$buildingValue = $em->getRepository('FTRWebBundle:Building_site')->findOneBy(array('id'=>$id));
+        $buildingValue->setBuildingName($arrData['building_name']);
+        $buildingValue->setBuildingAddress($arrData['building_addr']);
+
+        $returnValue = $this->saveMinMaxRoomPrice($id);
+        $buildingValue->setStartPrice($returnValue['startPrice']);
+        $buildingValue->setEndPrice($returnValue['endPrice']);
+        $buildingValue->setPhoneNumber($arrData['phone_number']);
+        $buildingValue->setPublish(intval($arrData['publish']));
+        $buildingValue->setLastupdate($today);
+        $buildingValue->setUserupdate($username);
+        $buildingValue->setLatitude($arrData['latitude']);
+        $buildingValue->setLongitude($arrData['longitude']);
+        /*$buildingValue->setBuildingTypeId($arrData['building_type']); เดี๋ยวแปลงค่ามาก่อนที่จะบันทึก
+        $buildingValue->setZoneId($arrData['']);*/
+        //$buildingValue->setPayTypeId($arrData['pay_type']);
+        $buildingValue->setDetail($arrData['detail']);
+        $buildingValue->setContactName($arrData['contact_name']);
+        $buildingValue->setContactEmail($arrData['contact_email']);
+        $buildingValue->setWebsite($arrData['website']);
+        $buildingValue->setMonthStay($arrData['month_stay']);
+        $buildingValue->setWaterUnit($arrData['water_price']);
+        $buildingValue->setElectricityUnit($arrData['electric_price']);
+        $buildingValue->setInternetPrice($arrData['internet_price']);
+        $buildingValue->setAddrPrefecture($arrData['district']);
+        $buildingValue->setAddrProvince($arrData['province']);
+        $buildingValue->setAddrZipcode($arrData['zipcode']);
+
+        $em->flush();
+        return "complete";
 	}
 	
 	public function saveOtherData($id)
