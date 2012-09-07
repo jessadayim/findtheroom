@@ -1,23 +1,30 @@
 user_owner:
     pattern:  /
-    defaults: { _controller: FTRAdminBundle:User_owner:index }
-    
-owner_create:
-    pattern:  /create
-    defaults: { _controller: FTRAdminBundle:User_owner:create }
-    
-owner_show:
+    defaults: { _controller: "FTRAdminBundle:User_owner:index" }
+
+user_owner_show:
     pattern:  /show
-    defaults: { _controller: FTRAdminBundle:User_owner:show }
+    defaults: { _controller: "FTRAdminBundle:User_owner:show" }
 
-owner_edit:
+user_owner_new:
+    pattern:  /new
+    defaults: { _controller: "FTRAdminBundle:User_owner:new" }
+
+user_owner_create:
+    pattern:  /create
+    defaults: { _controller: "FTRAdminBundle:User_owner:create" }
+    requirements: { _method: post }
+
+user_owner_edit:
     pattern:  /{id}/edit
-    defaults: { _controller: FTRAdminBundle:User_owner:edit }
+    defaults: { _controller: "FTRAdminBundle:User_owner:edit" }
 
-owner_update:
-    pattern:  /update/{id}
-    defaults: { _controller: FTRAdminBundle:User_owner:update }
-    
-owner_delete:
+user_owner_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "FTRAdminBundle:User_owner:update" }
+    requirements: { _method: post }
+
+user_owner_delete:
     pattern:  /{id}/delete
-    defaults: { _controller: FTRAdminBundle:User_owner:delete }
+    defaults: { _controller: "FTRAdminBundle:User_owner:delete" }
+    requirements: { _method: post }

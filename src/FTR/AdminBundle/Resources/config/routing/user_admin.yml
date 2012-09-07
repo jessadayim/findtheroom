@@ -1,23 +1,30 @@
 user_admin:
     pattern:  /
-    defaults: { _controller: FTRAdminBundle:User_admin:index }
-    
-admin_create:
-    pattern:  /create
-    defaults: { _controller: FTRAdminBundle:User_admin:create }
-    
-admin_show:
+    defaults: { _controller: "FTRAdminBundle:User_admin:index" }
+
+user_admin_show:
     pattern:  /show
-    defaults: { _controller: FTRAdminBundle:User_admin:show }
+    defaults: { _controller: "FTRAdminBundle:User_admin:show" }
 
-admin_edit:
+user_admin_new:
+    pattern:  /new
+    defaults: { _controller: "FTRAdminBundle:User_admin:new" }
+
+user_admin_create:
+    pattern:  /create
+    defaults: { _controller: "FTRAdminBundle:User_admin:create" }
+    requirements: { _method: post }
+
+user_admin_edit:
     pattern:  /{id}/edit
-    defaults: { _controller: FTRAdminBundle:User_admin:edit }
+    defaults: { _controller: "FTRAdminBundle:User_admin:edit" }
 
-admin_update:
-    pattern:  /update/{id}
-    defaults: { _controller: FTRAdminBundle:User_admin:update }
-    
-admin_delete:
+user_admin_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "FTRAdminBundle:User_admin:update" }
+    requirements: { _method: post }
+
+user_admin_delete:
     pattern:  /{id}/delete
-    defaults: { _controller: FTRAdminBundle:User_admin:delete }
+    defaults: { _controller: "FTRAdminBundle:User_admin:delete" }
+    requirements: { _method: post }

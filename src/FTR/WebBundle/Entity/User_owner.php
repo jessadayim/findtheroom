@@ -220,10 +220,10 @@ class User_owner {
 	/**
 	 * Set phone_number
 	 *
-	 * @param string $phone_number
+	 * @param string $phoneNumber
 	 */
-	public function setPhone_number($phone_number) {
-		$this -> phone_number = $phone_number;
+	public function setPhoneNumber($phoneNumber) {
+		$this -> phone_number = $phoneNumber;
 	}
 
 	/**
@@ -231,7 +231,7 @@ class User_owner {
 	 *
 	 * @return string
 	 */
-	public function getPhone_number() {
+	public function getPhoneNumber() {
 		return $this -> phone_number;
 	}
 
@@ -240,7 +240,7 @@ class User_owner {
 	 *
 	 * @param string $faxNumber
 	 */
-	public function setFax_number($faxNumber) {
+	public function setFaxNumber($faxNumber) {
 		$this -> fax_number = $faxNumber;
 	}
 
@@ -249,116 +249,26 @@ class User_owner {
 	 *
 	 * @return string
 	 */
-	public function getFax_number() {
+	public function getFaxNumber() {
 		return $this -> fax_number;
 	}
 
-/**
+	/**
 	 * Set user_level
 	 *
-	 * @param string $user_level
+	 * @param string $userLevel
 	 */
-	public function setUserLevel($user_level) {
-		$this -> user_level = $user_level;
+	public function setUserLevel($userLevel) {
+		$this -> user_level = $userLevel;
 	}
 
 	/**
-	 * Get user_level
+	 * Get fax_number
 	 *
 	 * @return string
 	 */
 	public function getUserLevel() {
 		return $this -> user_level;
-	}
-
-	/**
-	 * Set last_login
-	 *
-	 * @param date_time $last_login
-	 */
-	public function setLastLogin($last_login) {
-		$this -> last_login = $last_login;
-	}
-
-	/**
-	 * Get last_login
-	 *
-	 * @return date_time
-	 */
-	public function getLastLogin() {
-		return $this -> last_login;
-	}
-
-	/**
-	 * Set password_requested
-	 *
-	 * @param date_time $password_requested
-	 */
-	public function setPasswordRequested($password_requested) {
-		$this -> password_requested = $password_requested;
-	}
-
-	/**
-	 * Get password_requested
-	 *
-	 * @return date_time
-	 */
-	public function getPasswordRequested() {
-		return $this -> password_requested;
-	}
-
-	/**
-	 * Set confirm_token
-	 *
-	 * @param boolean $confirm_token
-	 */
-	public function setConfirmToken($confirm_token) {
-		$this -> confirm_token = $confirm_token;
-	}
-
-	/**
-	 * Get confirm_token
-	 *
-	 * @return boolean
-	 */
-	public function getConfirmToken() {
-		return $this -> confirm_token;
-	}
-
-	/**
-	 * Set enabled
-	 *
-	 * @param boolean $enabled
-	 */
-	public function setEnabled($enabled) {
-		$this -> enabled = $enabled;
-	}
-
-	/**
-	 * Get enabled
-	 *
-	 * @return boolean
-	 */
-	public function getEnabled() {
-		return $this -> enabled;
-	}
-
-	/**
-	 * Set facebook_id
-	 *
-	 * @param string $facebook_id
-	 */
-	public function setFacebookId($facebook_id) {
-		$this -> facebook_id = $facebook_id;
-	}
-
-	/**
-	 * Get facebook_id
-	 *
-	 * @return string
-	 */
-	public function getFacebookId() {
-		return $this -> facebook_id;
 	}
 
 	/**
@@ -379,4 +289,104 @@ class User_owner {
 		return $this -> deleted;
 	}
 
+
+    /**
+     * Set last_login
+     *
+     * @param datetime $lastLogin
+     */
+    public function setLastLogin($lastLogin)
+    {
+        $this->last_login = $lastLogin;
+    }
+
+    /**
+     * Get last_login
+     *
+     * @return datetime 
+     */
+    public function getLastLogin()
+    {
+        return $this->last_login;
+    }
+
+    /**
+     * Set password_requested
+     *
+     * @param datetime $passwordRequested
+     */
+    public function setPasswordRequested($passwordRequested)
+    {
+        $this->password_requested = $passwordRequested;
+    }
+
+    /**
+     * Get password_requested
+     *
+     * @return datetime 
+     */
+    public function getPasswordRequested()
+    {
+        return $this->password_requested;
+    }
+
+    /**
+     * Set confirm_token
+     *
+     * @param string $confirmToken
+     */
+    public function setConfirmToken($confirmToken)
+    {
+        $this->confirm_token = $confirmToken;
+    }
+
+    /**
+     * Get confirm_token
+     *
+     * @return string 
+     */
+    public function getConfirmToken()
+    {
+        return $this->confirm_token;
+    }
+
+    /**
+     * Set enabled
+     *
+     * @param boolean $enabled
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+    }
+
+    /**
+     * Get enabled
+     *
+     * @return boolean 
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * Set facebook_id
+     *
+     * @param string $facebookId
+     */
+    public function setFacebookId($facebookId)
+    {
+        $this->facebook_id = $facebookId;
+    }
+
+    /**
+     * Get facebook_id
+     *
+     * @return string 
+     */
+    public function getFacebookId()
+    {
+        return $this->facebook_id;
+    }
 }

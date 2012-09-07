@@ -166,7 +166,7 @@ class User_admin
      *
      * @param string $phone_number
      */
-    public function setPhone_number($phone_number)
+    public function setPhoneNumber($phone_number)
     {
         $this->phone_number = $phone_number;
     }
@@ -176,7 +176,7 @@ class User_admin
      *
      * @return string 
      */
-    public function getPhone_number()
+    public function getPhoneNumber()
     {
         return $this->phone_number;
     }

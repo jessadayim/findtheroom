@@ -106,23 +106,75 @@ class SearchController extends Controller
 
     public function fullsearchAction($parameter = null)
     {
-        $selBuildingType    = null;
+        $shortSearchType    = null;
+        $zone               = null;
         $bkkPayType         = null;
+        $buildingType       = null;
         $lessPrice          = null;
-        $bkkPayType         = null;
         $mostPrice          = null;
-        $selProvince        = null;
-        $bkkZone            = null;
+        $selProvince        = 0;
+        $bc                 = "bkk";
         $nBts               = null;
         $nMrt               = null;
         $nUniversity        = null;
-        $nNearly            = null;
-        $nCountryNearly     = null;
+        $inRoom[]           = null;
+        $outRoom[]          = null;
         $selAmpher          = null;
 
+        //$shortSearchType    = $parameter['shortSearchType'];
+        $zone               = $parameter['zone'];
+        $bkkPayType         = $parameter['bkkPayType'];
+        $selBuildingType    = $parameter['buildingType'];
+        $lessPrice          = $parameter['lessPrice'];
+        $mostPrice          = $parameter['mostPrice'];
+        $selProvince        = $parameter['selProvince'];
+        $bc                 = $parameter['bc'];
+        $nBts               = $parameter['nBts'];
+        $nMrt               = $parameter['nMrt'];
+        $nUniversity        = $parameter['nUniversity'];
+        $inRoom             = $parameter['inRoom'];
+        $outRoom            = $parameter['outRoom'];
+        $selAmpher          = $parameter['selAmpher'];
 
         $fac_inroomlist 	= $this->getFacility('inroom');
-        $fac_outroomlist 	= $this->getFacility('outroom');	
+        $fac_outroomlist 	= $this->getFacility('outroom');
+
+        foreach($fac_inroomlist as $key=>$var){
+            $row = $fac_inroomlist[$key]['loop'];
+            foreach($row as $keys=>$vars){
+                $fId = $row[$keys]['id'];
+                if(is_array($inRoom)==true)
+                {
+                    if (in_array("$fId",$inRoom)==true)
+                    {
+                        $fac_inroomlist[$key]['loop'][$keys]['checked'] = "yes";
+                    }
+                    else
+                    {
+                        $fac_inroomlist[$key]['loop'][$keys]['checked'] = "no";
+                    }
+                }
+            }
+        }
+
+        foreach($fac_outroomlist as $key=>$var){
+            $row = $fac_outroomlist[$key]['loop'];
+            foreach($row as $keys=>$vars){
+                $fId = $row[$keys]['id'];
+                if(is_array($outRoom)==true)
+                {
+                    if (in_array("$fId",$outRoom)==true)
+                    {
+                        $fac_outroomlist[$key]['loop'][$keys]['checked'] = "yes";
+                    }
+                    else
+                    {
+                        $fac_outroomlist[$key]['loop'][$keys]['checked'] = "no";
+                    }
+                }
+            }
+        }
+
 		$zonelist			= $this->getBkkZone();
 		$province			= $this->getProvince();
 		$buildingTypeList	= $this->getBuildingType();
@@ -130,8 +182,18 @@ class SearchController extends Controller
 		$nearBTS			= $this->getNearly(2);
 		$nearMRT			= $this->getNearly(3);
 		$nearUniversity		= $this->getNearly(4);
-		$ampher			    = $this->getAmpher();
-		$nearInCountry		= $this->getNearly(6);
+
+        if($selProvince == '0')
+        {
+            $province_id = $selProvince;
+        }
+        else{
+            $province_id = $this->getProvince("id",$selProvince);
+        }
+		$ampher			    = $this->getAmpher($province_id);
+		//$nearInCountry		= $this->getNearly(6);
+
+        //var_dump($ampher);
 
         return $this->render('FTRWebBundle:Search:search.html.twig', array(
 			'fac_inroom' 		=> $fac_inroomlist,
@@ -144,18 +206,18 @@ class SearchController extends Controller
 			'nearMRT' 			=> $nearMRT,
 			'nearUniversity' 	=> $nearUniversity,
 			'ampher' 			=> $ampher,
-			'nearInCountry' 	=> $nearInCountry,
+			'bc' 	            => $bc,
 			'selBuildingType' 	=> $selBuildingType,
 			'bkkPayType' 	    => $bkkPayType,
 			'lessPrice' 	    => $lessPrice,
 			'mostPrice' 	    => $mostPrice,
 			'selProvince' 	    => $selProvince,
-			'bkkZone' 	        => $bkkZone,
+			'bkkZone' 	        => $zone,
 			'nBts' 	            => $nBts,
 			'nMrt' 	            => $nMrt,
 			'nUniversity' 	    => $nUniversity,
-			'nNearly' 	        => $nNearly,
-			'nCountryNearly' 	=> $nCountryNearly,
+			'inRoom' 	        => $inRoom,
+			'outRoom' 	        => $outRoom,
 			'selAmpher' 	    => $selAmpher,
 		));
     }
@@ -324,6 +386,7 @@ class SearchController extends Controller
 					'id'				=> $value['id'],
 					'facility_name'		=> $value['facility_name'],
 					'facility_type'		=> $value['facility_type'],
+					'checked'		    => 'no',
 				);
 				if($count%4==0){
 					$fac_inroomlist[] = array('loop'=>$list);

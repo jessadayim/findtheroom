@@ -20,7 +20,7 @@
     {% render "FTRWebBundle:Search:shortsearch" with {'parameter': parameter} %}
 {% endif %}
 {% if searchType == 'fullSearch' %}
-{% render "FTRWebBundle:Search:fullsearch" %}
+{% render "FTRWebBundle:Search:fullsearch" with {'parameter': parameter} %}
 {% endif %}
 <div id="show">
 <span class="big">ผลการค้นหา{{ textSearch }}</span><span class="normal"> เจอทั้งหมด {{ numData }} ห้องพัก</span>
