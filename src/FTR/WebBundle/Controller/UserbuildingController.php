@@ -87,9 +87,7 @@ class UserbuildingController extends Controller
 		$building_data = NULL;
 		$session = $this->get('session');
 		$user = $session->get('user');
-		
-		$today = date("Y-m-d H:i:s");
-		
+
 		$em = $this->getDoctrine()->getEntityManager();
         $conn= $this->get('database_connection');
 		if(!$conn){ die("MySQL Connection error");}
@@ -181,9 +179,10 @@ class UserbuildingController extends Controller
 				$payType        = $this->getPayType($building_data['ipaytypeid']);
 		        $bkkZone        = $this->getBkkZone();
 		        $buildingType   = $this->getBuildingType($building_data['ibuildingtypeid']);
-		        $province       = $this->getProvince($building_data['saddrprovince']);
+		        $province       = $this->getProvince($building_data['saddrprovince'],null);
                 $district       = $this->getDistrictAction($building_data['saddrprovince'],$building_data['saddrprefecture']);
-				$nearBTS			= $this->getNearly(2);
+                $provinceOther       = $this->getProvince($building_data['saddrprovince'],'other');
+                $nearBTS			= $this->getNearly(2);
 				$nearMRT			= $this->getNearly(3);
 				$nearUniversity		= $this->getNearly(4);
 				$nearBy				= $this->getNearly(5);
@@ -204,6 +203,7 @@ class UserbuildingController extends Controller
             'buildingType' 		    => $buildingType,
             'province' 		        => $province,
             'district'              => $district,
+            'provinceOther'         => $provinceOther,
 			'nearBTS' 				=> $nearBTS,
 			'nearMRT' 				=> $nearMRT,
 			'nearUniversity' 		=> $nearUniversity,
@@ -888,34 +888,49 @@ class UserbuildingController extends Controller
         return $result;
     }
 
-    function getProvince($provinceName)
+    function getProvince($provinceName,$type=null)
     {
         $result_data = array();
+        $all[] = array('PROVINCE_VALUE'=>'0','PROVINCE_NAME'=>'- กรุณาระบุ -');
+        $sqlPlus = null;$sqlPlus2 = null;
         $conn= $this->get('database_connection');
         if(!$conn){ die("MySQL Connection error");}
         try{
+            switch ($type)
+            {
+                case 'other':
+
+                    $sqlPlus = " AND PROVINCE_NAME NOT LIKE '%กรุงเทพมหานคร%'";
+                    $sqlPlus2 = "AND PROVINCE_NAME NOT LIKE '%กรุงเทพมหานคร%'";
+                    break;
+                default:
+
+
+                    break;
+
+            }
             if(!empty($provinceName))
             {
                 $sql = "
-                    (SELECT
+                    SELECT
                       PROVINCE_NAME AS PROVINCE_VALUE,
-                      PROVINCE_NAME_ENG AS PROVINCE_NAME,
+                      PROVINCE_NAME AS PROVINCE_NAME,
                       PROVINCE_NAME AS OrderBy,
                       'yes' AS checked
                     FROM
                       province
                     WHERE PROVINCE_NAME LIKE '%$provinceName%'
-                    )
+                          $sqlPlus
                     UNION
-                    (SELECT
+                    SELECT
                       PROVINCE_NAME AS PROVINCE_VALUE,
-                      PROVINCE_NAME_ENG AS PROVINCE_NAME,
+                      PROVINCE_NAME AS PROVINCE_NAME,
                       PROVINCE_NAME AS OrderBy,
                       'no' AS checked
                     FROM
                       province
                     WHERE PROVINCE_NAME NOT LIKE '%$provinceName%'
-                    )
+                          $sqlPlus
                     ORDER BY OrderBy ASC
                 ";
             }else{
@@ -925,7 +940,7 @@ class UserbuildingController extends Controller
                       PROVINCE_NAME_ENG AS PROVINCE_NAME,
                       PROVINCE_NAME AS OrderBy
                     FROM
-                      province
+                      province $sqlPlus2
                     ORDER BY OrderBy ASC
                 ";
             }
@@ -935,8 +950,6 @@ class UserbuildingController extends Controller
         }
         if(empty($provinceName))
         {
-            $all[] = array('PROVINCE_VALUE'=>'0','PROVINCE_NAME'=>'- กรุณาระบุ -');
-
             $result = array_merge($all,$result_data);
         }
         else{
@@ -964,7 +977,7 @@ class UserbuildingController extends Controller
                 $sql = "
                     (SELECT
                       AMPHUR_NAME AS AMPHUR_VALUE,
-                      AMPHUR_NAME_ENG AS AMPHUR_NAME,
+                      AMPHUR_NAME AS AMPHUR_NAME,
                       'no' AS checked,
                       AMPHUR_NAME AS OrderBy
                     FROM
@@ -978,7 +991,7 @@ class UserbuildingController extends Controller
                     UNION
                     (SELECT
                       AMPHUR_NAME AS AMPHUR_VALUE,
-                      AMPHUR_NAME_ENG AS AMPHUR_NAME,
+                      AMPHUR_NAME AS AMPHUR_NAME,
                       'yes' AS checked,
                       AMPHUR_NAME AS OrderBy
                     FROM

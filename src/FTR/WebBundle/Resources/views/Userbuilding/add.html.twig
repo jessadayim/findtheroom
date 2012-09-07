@@ -411,9 +411,9 @@
 						<select id="province" name="province" class="select" onchange="postData('head');">
                             {% for list in province %}
                             {% if list.checked == 'no' %}
-                            <option value="{{list.PROVINCE_VALUE}}">{{list.PROVINCE_VALUE}}</option>
+                            <option value="{{list.PROVINCE_VALUE}}">{{list.PROVINCE_NAME}}</option>
                             {% else %}
-                            <option value="{{list.PROVINCE_VALUE}}" selected="selected">{{list.PROVINCE_VALUE}}</option>
+                            <option value="{{list.PROVINCE_VALUE}}" selected="selected">{{list.PROVINCE_NAME}}</option>
                             {% endif %}
                             {% endfor %}
 						</select>
@@ -427,9 +427,9 @@
 						<select id="district" name="district" class="select" onchange="postData('head');">
                             {% for list in district %}
                             {% if list.checked == 'no' %}
-                            <option value="{{list.AMPHUR_VALUE}}">{{list.AMPHUR_VALUE}}</option>
+                            <option value="{{list.AMPHUR_VALUE}}">{{list.AMPHUR_NAME}}</option>
                             {% else %}
-                            <option value="{{list.AMPHUR_VALUE}}" selected="selected">{{list.AMPHUR_VALUE}}</option>
+                            <option value="{{list.AMPHUR_VALUE}}" selected="selected">{{list.AMPHUR_NAME}}</option>
                             {% endif %}
                             {% endfor %}
 						</select>
@@ -576,23 +576,10 @@
 		<table>
 			<tr height="50" valign="middle">
 				<td align="left" width="165">จังหวัด :</td>
-				<td width="300">
-					<input id="bk" name="bc" type="radio" value="bkk" checked OnClick="JavaScript:fncAlert();" /><label for="bk">กรุงเทพฯ</label>
+				<td>
+					กรุงเทพฯ
 				</td>
-				<td width="170">
-					<input id="cou" name="bc" type="radio" value="country" OnClick="JavaScript:fncAlert();" /><label for="cou">ต่างจังหวัด</label>
-				</td>
-				<td width="200">
-					<div class="styled-select">
-						<label for="province_ot">
-						<select id="province_ot" name="province_ot" class="select" onchange="postData('other');">
-							{% for pvlist in province %}
-								<option value="{{ pvlist.PROVINCE_VALUE }}">{{ pvlist.PROVINCE_NAME }}</option>
-							{% endfor %}
-						</select>
-						</label>
-					</div>
-				</td>
+
 			</tr>
 		</table>
 		
