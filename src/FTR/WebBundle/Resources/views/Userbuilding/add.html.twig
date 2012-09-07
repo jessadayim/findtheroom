@@ -354,6 +354,8 @@
 		   document.getElementById('country_ot').disabled=false;
 		}
 	}
+
+
 </script>
 <form name="addform" id="addform" method="post" action="{{path('saveData', {'id': build_id })}}">
 <div id="fix">
@@ -407,9 +409,13 @@
                 <td align="left" width="190">
 					<div class="styled-select">
 						<select id="province" name="province" class="select" onchange="postData('head');">
-							<option value="daymonth">รายวันและรายเดือน</option>
-							<option value="day">รายวัน</option>
-							<option value="month">รายเดือน</option>
+                            {% for list in province %}
+                            {% if list.checked == 'no' %}
+                            <option value="{{list.PROVINCE_VALUE}}">{{list.PROVINCE_VALUE}}</option>
+                            {% else %}
+                            <option value="{{list.PROVINCE_VALUE}}" selected="selected">{{list.PROVINCE_VALUE}}</option>
+                            {% endif %}
+                            {% endfor %}
 						</select>
 					</div>
 				</td>
@@ -419,9 +425,13 @@
                 <td align="left" width="190">
 					<div class="styled-select">
 						<select id="district" name="district" class="select" onchange="postData('head');">
-							<option value="daymonth">รายวันและรายเดือน</option>
-							<option value="day">รายวัน</option>
-							<option value="month">รายเดือน</option>
+                            {% for list in district %}
+                            {% if list.checked == 'no' %}
+                            <option value="{{list.AMPHUR_VALUE}}">{{list.AMPHUR_VALUE}}</option>
+                            {% else %}
+                            <option value="{{list.AMPHUR_VALUE}}" selected="selected">{{list.AMPHUR_VALUE}}</option>
+                            {% endif %}
+                            {% endfor %}
 						</select>
 					</div>
 				</td>
