@@ -1,10 +1,10 @@
 <?php
 
-namespace FTR\AdminBundle\Tests\Controller;
+namespace FTR\WebBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class User_adminControllerTest extends WebTestCase
+class User_ownerControllerTest extends WebTestCase
 {
     /*
     public function testCompleteScenario()
@@ -13,13 +13,13 @@ class User_adminControllerTest extends WebTestCase
         $client = static::createClient();
 
         // Create a new entry in the database
-        $crawler = $client->request('GET', '/user_admin/');
+        $crawler = $client->request('GET', '/user_owner/');
         $this->assertTrue(200 === $client->getResponse()->getStatusCode());
         $crawler = $client->click($crawler->selectLink('Create a new entry')->link());
 
         // Fill in the form and submit it
         $form = $crawler->selectButton('Create')->form(array(
-            'user_admin[field_name]'  => 'Test',
+            'user_owner[field_name]'  => 'Test',
             // ... other fields to fill
         ));
 
@@ -33,7 +33,7 @@ class User_adminControllerTest extends WebTestCase
         $crawler = $client->click($crawler->selectLink('Edit')->link());
 
         $form = $crawler->selectButton('Edit')->form(array(
-            'user_admin[field_name]'  => 'Foo',
+            'user_owner[field_name]'  => 'Foo',
             // ... other fields to fill
         ));
 

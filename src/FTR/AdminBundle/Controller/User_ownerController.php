@@ -7,147 +7,211 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use FTR\WebBundle\Entity\User_owner;
+use FTR\AdminBundle\Form\User_ownerType;
 
 /**
  * User_owner controller.
  *
- * @Route("/user_owner")
  */
 class User_ownerController extends Controller {
 	/**
-	 * Lists all User_admin entities.
+	 * Lists all User_owner entities.
 	 *
-	 * @Route("/", name="user_admin")
-	 * @Template()
 	 */
 	public function indexAction() {
-				
-		// $em = $this -> getDoctrine() -> getEntityManager();
-		//
-		// $entities = $em -> getRepository('FTRAdminBundle:User_admin') -> findAll();
-		//
-		// return array('entities' => $entities);
-		return array('checkhide' => 'false', 'session' => true);
-		//return $this -> render('FTRAdminBundle:User_admin:index.html.twig', array());
-	}
-
-	public function createAction() {
-		if ($_POST) {
-			$entity = new User_owner();
-			
-			$username = $_POST['OwnerUsername'];
-			$password = $_POST['OwnerPassword'];
-			$firstname = $_POST['OwnerFristName'];
-			$lastname = $_POST['OwnerLastName'];
-			$phonenumber = $_POST['OwnerPhoneNumber'];
-			$fax = $_POST['OwnerFaxNumber'];
-			$email = $_POST['OwnerEmail'];
-
-			$em = $this -> getDoctrine() -> getEntityManager();
-			
-			try {
-				$entity -> setUsername($username);
-				$entity -> setPassword($password);
-				$entity -> setFirstname($firstname);
-				$entity -> setLastname($lastname);
-				$entity -> setPhone_number($phonenumber);
-				$entity -> setFax_number($fax);
-				$entity -> setEmail($email);
-				$entity -> setDeleted(0);
-				
-				$em->persist($entity);
-				$em -> flush();
-
-				echo "finish";
-			} catch (Exception $e) {
-				echo "error";
-			}
-
-			exit();
-		}
-		return $this -> render('FTRAdminBundle:User_owner:create.html.twig', array());
-	}
-
-	public function editAction($id) {
 		$em = $this -> getDoctrine() -> getEntityManager();
-		$entity = $em -> getRepository('FTRWebBundle:User_owner') -> find($id);
-		
-		return $this -> render('FTRAdminBundle:User_owner:edit.html.twig', array('entity' => $entity));
-	}
 
-	public function updateAction($id) {
-		if ($_POST) {
-			$username = $_POST['OwnerUsername'];
-			$password = $_POST['OwnerPassword'];
-			$firstname = $_POST['OwnerFristName'];
-			$lastname = $_POST['OwnerLastName'];
-			$phonenumber = $_POST['OwnerPhoneNumber'];
-			$fax = $_POST['OwnerFaxNumber'];
-			$email = $_POST['OwnerEmail'];
+		$entities = $em -> getRepository('FTRWebBundle:User_owner') -> findAll();
 
-			$em = $this -> getDoctrine() -> getEntityManager();
-			$entity = $em -> getRepository('FTRWebBundle:User_owner') -> find($id);
-			try {
-				if (!$entity) {
-					throw $this -> createNotFoundException('No product found for id ' . $id);
-				}
-				$entity -> setUsername($username);
-				$entity -> setPassword($password);
-				$entity -> setFirstname($firstname);
-				$entity -> setLastname($lastname);
-				$entity -> setPhone_number($phonenumber);
-				$entity -> setFax_number($fax);
-				$entity -> setEmail($email);
-				
-				$em -> flush();
-
-				echo "finish";
-			} catch (Exception $e) {
-				echo "error";
-			}
-
-			exit();
-		}
-
-	}
-
-	public function deleteAction($id) {
-		if (!empty($id)) {
-			$em = $this -> getDoctrine() -> getEntityManager();
-			$entity = $em -> getRepository('FTRWebBundle:User_owner') -> find($id);
-			try {
-				if (!$entity) {
-					throw $this -> createNotFoundException('No product found for id ' . $id);
-				}
-
-				$em -> remove($entity);
-				$em -> flush();
-
-				echo "finish";
-			} catch (Exception $e) {
-				echo "error";
-			}
-			exit();
-		}
+		return $this -> render('FTRAdminBundle:User_owner:index.html.twig', array('entities' => $entities));
 	}
 
 	/**
-	 * Finds and displays a User_admin entity.
+	 * Finds and displays a User_owner entity.
 	 *
-	 * @Route("/{id}/show", name="user_admin_show")
-	 * @Template()
 	 */
 	public function showAction() {
 		$em = $this -> getDoctrine() -> getEntityManager();
+		$conn = $this -> get('database_connection');
 
-		$entity = $em -> getRepository('FTRWebBundle:User_owner') -> findAll();
-	// $entity->getUsername();
-		// exit();
-		if (!$entity) {
-			throw $this -> createNotFoundException('Unable to find User_admin entity.');
+		$sqlGetEntity = "
+						SELECT 
+							username 
+							,id
+						FROM 
+							user_owner 
+						WHERE deleted != 1";
+		try {
+			$entities = $conn -> fetchAll($sqlGetEntity);
+		} catch (Exception $e) {
+			echo 'Caught exception: ', $e -> getMessage(), "\n";
 		}
-		
-		return array('entities' => $entity, );
+		//$deleteForm = $this->createDeleteForm();
+
+		return $this -> render('FTRAdminBundle:User_owner:show.html.twig', array('entities' => $entities
+		//'delete_form' => $deleteForm->createView(),
+
+		));
+	}
+
+	/**
+	 * Displays a form to create a new User_owner entity.
+	 *
+	 */
+	public function newAction() {
+		$entity = new User_owner();
+		$entity = $this -> getNewEntity($entity);
+		$form = $this -> createForm(new User_ownerType(), $entity);
+
+		return $this -> render('FTRAdminBundle:User_owner:new.html.twig', array('entity' => $entity, 'form' => $form -> createView()));
+	}
+
+	/**
+	 * Creates a new User_owner entity.
+	 *
+	 */
+	public function createAction() {
+		$entity = new User_owner();
+		$entity = $this -> getNewEntity($entity);
+
+		$request = $this -> getRequest();
+		$form = $this -> createForm(new User_ownerType(), $entity);
+		$form -> bindRequest($request);
+
+		if ($form -> isValid()) {
+			$em = $this -> getDoctrine() -> getEntityManager();
+
+			$entity -> setDeleted(0);
+
+			$em -> persist($entity);
+			$em -> flush();
+
+			//Create เสร็จแล้ว
+			echo 'finish';
+			exit();
+			//return $this->redirect($this->generateUrl('user_owner_show', array('id' => $entity->getId())));
+
+		}
+		return $this -> render('FTRAdminBundle:User_owner:new.html.twig', array('entity' => $entity, 'form' => $form -> createView()));
+	}
+
+	/**
+	 * Displays a form to edit an existing User_owner entity.
+	 *
+	 */
+	public function editAction($id) {
+		$em = $this -> getDoctrine() -> getEntityManager();
+
+		$entity = $em -> getRepository('FTRWebBundle:User_owner') -> find($id);
+		$entity = $this -> getNewEntity($entity);
+
+		if (!$entity) {
+			throw $this -> createNotFoundException('Unable to find User_owner entity.');
+		}
+
+		$editForm = $this -> createForm(new User_ownerType(), $entity);
+		// $deleteForm = $this->createDeleteForm($id);
+		// var_dump($entity);
+		// exit();
+		return $this -> render('FTRAdminBundle:User_owner:edit.html.twig', array('entity' => $entity, 'edit_form' => $editForm -> createView()
+		//,'delete_form' => $deleteForm->createView()
+		));
+		// echo "working";
+		// exit();
+	}
+
+	/**
+	 * Edits an existing User_owner entity.
+	 *
+	 */
+	public function updateAction($id) {
+		$em = $this -> getDoctrine() -> getEntityManager();
+
+		$entity = $em -> getRepository('FTRWebBundle:User_owner') -> find($id);
+		$getCheckUpdateDeleted = @$_POST['checkdelete'];
+		if ($getCheckUpdateDeleted == 'deleted') {
+			$entity -> setDeleted(1);
+			$em -> persist($entity);
+			$em -> flush();
+			echo 'finish';
+			exit();
+		}
+
+		$entity = $this -> getNewEntity($entity);
+
+		if (!$entity) {
+			throw $this -> createNotFoundException('Unable to find User_owner entity.');
+		}
+
+		$editForm = $this -> createForm(new User_ownerType(), $entity);
+		$deleteForm = $this -> createDeleteForm($id);
+
+		$request = $this -> getRequest();
+
+		$editForm -> bindRequest($request);
+
+		if ($editForm -> isValid()) {
+			$em -> persist($entity);
+			$em -> flush();
+
+			echo "finish";
+			exit();
+			//return $this->redirect($this->generateUrl('user_owner_edit', array('id' => $id)));
+		}
+
+		return $this -> render('FTRAdminBundle:User_owner:edit.html.twig', array('entity' => $entity, 'edit_form' => $editForm -> createView(), 'delete_form' => $deleteForm -> createView(), ));
+	}
+
+	/**
+	 * Deletes a User_owner entity.
+	 *
+	 */
+	public function deleteAction($id) {
+		$form = $this -> createDeleteForm($id);
+		$request = $this -> getRequest();
+
+		$form -> bindRequest($request);
+
+		if ($form -> isValid()) {
+			$em = $this -> getDoctrine() -> getEntityManager();
+			$entity = $em -> getRepository('FTRWebBundle:User_owner') -> find($id);
+
+			if (!$entity) {
+				throw $this -> createNotFoundException('Unable to find User_owner entity.');
+			}
+
+			$em -> remove($entity);
+			$em -> flush();
+			echo "finish";
+			exit();
+		}
+
+		return $this -> redirect($this -> generateUrl('user_owner'));
+	}
+
+	private function createDeleteForm($id) {
+		return $this -> createFormBuilder(array('id' => $id)) -> add('id', 'hidden') -> getForm();
+	}
+
+	private function getNewEntity($Entity) {
+
+		$conn = $this -> get('database_connection');
+		if (!$conn) { die("MySQL Connection error");
+		}
+		$sqlGetUserlevel = "
+            SELECT 
+              `id`,
+              `level_name` 
+            FROM
+              `user_level` 
+            WHERE `is_enabled` != 1 
+        ";
+		try {
+			$Entity -> userlevel = $conn -> fetchAll($sqlGetUserlevel);
+		} catch (Exception $e) {
+			echo 'Caught exception: ', $e -> getMessage(), "\n";
+		}
+		return $Entity;
 	}
 
 }

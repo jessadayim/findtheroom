@@ -14,16 +14,17 @@
 		$("#sortTable1").dataTable({
 			"aaSorting" : [[0, 'asc']]
 		});
-	});
+	}); 
 </script>
-
 <script>
 	$(document).ready(function() {
-		$(".linkEditBuildingSite").click(function() {
+		$(".linkEditUseradmin").click(function() {
 			//alert(this.href + '/edit');
 			$.post(this.href + '/edit', function(data) {
 				//alert(data);
+				$('.editPanel').slideUp(300).fadeIn(400);
 				$('.editPanel').html(data);
+				
 				toggle(".createPanel", 'hide');
 				toggle(".editPanel", 'show');
 				$("#createrecordCancel").hide();
@@ -41,20 +42,24 @@
 			});
 		}
 
-		$(".linkDelete").click(function() {
+		$(".linkDeleteUseradmin").click(function() {
 			//alert(this.href + "/delete");
 			if (!confirm('คุณต้องการลบข้อมูล ใช่หรือไม่')) {
 				return false;
 			}
 			$.ajax({
 				type : "POST",
-				url : this.href + "/delete",
-				data : $(this).serialize(),
+				url : this.href + "/update",
+				data : {
+					checkdelete : 'deleted'
+				},
 				success : function(msg) {
 					//alert(msg);
-					if (msg == 'finish') {
-						// $('#listBuildingSite').load(window.location + "show");
-						$('#listOwner').fadeOut('slow').load(window.location + "show").fadeIn("slow");
+					if (msg == 'finish') {						
+						toggle(".createPanel", 'hide');
+						toggle(".editPanel", 'hide');
+						
+						$('#listAdmin').fadeOut('slow').load(window.location + "show").fadeIn("slow");
 					} else {
 						$('.innerPanel').html(msg);
 						alert('การแก้ไขผิดพลาด');
@@ -73,11 +78,10 @@
 	{% for entity in entities%}
 	<tr>
 		<td>{{entity.username}}</td>
-		<td><a href="{{entity.id}}" class="linkEditBuildingSite">Edit</a>&nbsp;&nbsp;<a href="{{entity.id}}" class="linkDelete" >Delete</a></td>
+		<td><a href="{{entity.id}}" class="linkEditUseradmin">Edit</a>&nbsp;&nbsp;<a href="{{entity.id}}" class="linkDeleteUseradmin" >Delete</a></td>
 	</tr>
 	{% endfor%}
 </table>
 
-<!-- ปุ่ม paging -->
 <div id="green" style="margin: auto;" class="pager green"></div>
 <div class="clear"></div>
