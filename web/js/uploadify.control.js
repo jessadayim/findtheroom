@@ -18,7 +18,7 @@ $(function() {// get more knowledge at http://www.uploadify.com/documentation/
             	//alert('The file ' + file.name + ' was successfully uploaded with a response of ' + response + ':' + data);
             	document.getElementById('hdnfilename').value = data;
             	postData('image');
-				$('#headimage').fadeOut('slow').html('<img src="'+imagepath+'/'+buildid+'/'+data+'" class="nopad thumb"/>').fadeIn("slow");
+				$('#headimage').fadeOut().html('<img src="'+imagepath+'/'+buildid+'/'+data+'" class="nopad thumb"/>').fadeIn("slow");
         	}
 			// Your options here
 		});
@@ -37,7 +37,7 @@ $(function() {// get more knowledge at http://www.uploadify.com/documentation/
             	//alert('The file ' + file.name + ' was successfully uploaded with a response of ' + response + ':' + data);
             	document.getElementById('hdnfilemap').value = data;
             	postData('image');
-            	$('#headimage2').fadeOut('slow').html('<img src="'+imagepath+'/'+buildid+'/'+data+'" class="nopad thumb"/>').fadeIn("slow");
+            	$('#headimage2').fadeOut().html('<img src="'+imagepath+'/'+buildid+'/'+data+'" class="nopad thumb"/>').fadeIn("slow");
         	}
 			// Your options here
 		});
@@ -68,11 +68,12 @@ function uploadpicroom()
 			'onUploadSuccess' : function(file, data, response) {
             	//alert('The file ' + file.name + ' was successfully uploaded with a response of ' + response + ':' + data);
             	var mySplitResult = data.split("_");
-            	var textroomname = 'hdnfilename'+mySplitResult[1];
-            	//alert(textroomname)
-            	document.getElementById(textroomname).value = mySplitResult[0];
+            	var textRoomName = 'hdnfilename'+mySplitResult[1];
+            	var trId = mySplitResult[1];
+            	document.getElementById(textRoomName).value = mySplitResult[0];
             	postData('image');
-            	$('#roomtrid0').fadeOut('slow').html('<img src="'+imagepath+'/'+buildid+'/'+mySplitResult[0]+'" class="nopad thumb"/>').fadeIn("slow");
+            	//$('#roomtrid'+trId).fadeOut('slow').html('<img src="'+imagepath+'/'+buildid+'/'+mySplitResult[0]+'" class="nopad thumb"/>').fadeIn("slow");
+                $('#roompic'+trId).fadeOut('slow').html('<img src="'+imagepath+'/'+buildid+'/'+mySplitResult[0]+'" class="nopad thumb4img"/>').fadeIn("slow");
         	}
 			// Your options here
 		});
@@ -86,6 +87,7 @@ function uploadpicgallery()
 	var numberline = intLineGal;//parseInt(document.addform.hdnMaxLine.value);
 	for(i=0;i<=numberline;i++){
 	var name = '#gallery'+i
+        //alert(name)
 	$(name).uploadify({
 			'formData'      : {'ownername' : ownername, 'buildid' : buildid ,'fieldname' : name ,'typefield' : 'gallery'},
 			//'debug'    : true,
@@ -99,10 +101,12 @@ function uploadpicgallery()
 			'onUploadSuccess' : function(file, data, response) {
             	//alert('The file ' + file.name + ' was successfully uploaded with a response of ' + response + ':' + data);
             	var mySplitResult = data.split("_");
-            	var textgalleryname = 'hdngalleryname'+mySplitResult[1];
-            	
-            	document.getElementById(textgalleryname).value = mySplitResult[0];
+            	var textGalleryName = 'hdngalleryname'+mySplitResult[1];
+                var trId = mySplitResult[1];
+            	document.getElementById(textGalleryName).value = mySplitResult[0];
+                //alert(imagepath);
             	postData('image');
+                $('#gallerypic'+trId).fadeOut('slow').html('<img src="'+imagepath+'/'+buildid+'/'+mySplitResult[0]+'" class="nopad thumb4img"/>').fadeIn("slow");
         	}
 			// Your options here
 		});

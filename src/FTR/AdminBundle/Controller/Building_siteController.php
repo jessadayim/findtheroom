@@ -117,9 +117,11 @@ class Building_siteController extends Controller
             
             $em->persist($entity);
             $em->flush();
-            
+
+            $getNewID = $entity->getId();
+
             //Create เสร็จแล้ว            
-            echo 'finish';
+            echo "finish_$getNewID";
             exit();
             
             //return $this->redirect($this->generateUrl('building_site_show', array('id' => $entity->getId())));

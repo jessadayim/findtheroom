@@ -20,6 +20,7 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 	color: #808080;
 }
 .uploadify-queue {
+    width: 100px;
 	margin-bottom: 1em;
 }
 .uploadify-queue-item {
@@ -29,7 +30,7 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 	border-radius: 3px;
 	font: 11px Verdana, Geneva, sans-serif;
 	margin-top: 5px;
-	max-width: 350px;
+	width: 100px;
 	padding: 10px;
 }
 .uploadify-error {
