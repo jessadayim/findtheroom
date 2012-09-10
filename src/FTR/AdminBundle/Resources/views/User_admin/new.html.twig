@@ -1,0 +1,90 @@
+<script>
+	$(document).ready(function() {
+		var url = "{{ path('user_admin_create') }}";
+		$("#formCreate").submit(function() {
+			//alert(url);
+			if (!confirm('คุณต้องการเพิ่มข้อมูล ใช่หรือไม่')) {
+				return false;
+			}
+			//alert($(this).serialize());
+			$.ajax({
+				type : "POST",
+				url : url,
+				data : $(this).serialize(),
+				success : function(msg) {
+					//alert(msg);
+					if (msg == 'finish') {
+						// $('#listBuildingSite').load(window.location + "show");
+						$("#createrecordCancel").hide();
+						$("#createrecord").show('slow');
+						toggle(".createPanel", 'hide');
+						$('#listAdmin').fadeOut('slow').load(window.location + "show").fadeIn("slow");
+					} else {
+						$('.innerPanel').html(msg);
+						alert('การแก้ไขผิดพลาด');
+					}
+				}
+			});
+			return false;
+		});
+
+		function toggle(id, toggle) {
+			$(id).animate({
+				left : '+=50',
+				height : toggle
+			}, 500, function() {
+			});
+		}
+
+	});
+</script>
+
+<h1>User_admin creation</h1>
+
+<form id="formCreate" action="{{ path('user_admin_create') }}" method="post" {{ form_enctype(form) }}>
+	<fieldset>
+		<legend>
+			CREATE ADMIN
+		</legend>
+		<div class="label" style="">
+			{{ form_label(form.username) }}
+		</div>
+		{{ form_widget(form.username, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+		{{ form_errors(form.username) }}
+		<br />
+		<div class="label" style="">
+			{{ form_label(form.password) }}
+		</div>
+		{{ form_widget(form.password, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+		{{ form_errors(form.password) }}
+		<br />
+		<div class="label" style="">
+			{{ form_label(form.firstname) }}
+		</div>
+		{{ form_widget(form.firstname, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+		{{ form_errors(form.firstname) }}
+		<br />
+		<div class="label" style="">
+			{{ form_label(form.lastname) }}
+		</div>
+		{{ form_widget(form.lastname, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+		{{ form_errors(form.lastname) }}
+		<br />
+		<div class="label" style="">
+			{{ form_label(form.phone_number) }}
+		</div>
+		{{ form_widget(form.phone_number, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+		{{ form_errors(form.phone_number) }}
+		<br />
+		<div class="label" style="">
+			{{ form_label(form.userlevel) }}
+		</div>
+		{{ form_widget(form.userlevel, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+		{{ form_errors(form.userlevel) }}
+		{{ form_widget(form) }}
+		<br />
+		<span style="float: right;">
+			<input type="submit"  value="CREATE">
+		</span>
+	</fieldset>
+</form>

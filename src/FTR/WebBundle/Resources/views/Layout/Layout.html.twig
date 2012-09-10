@@ -3,6 +3,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>FindTheRoom</title>
+		<LINK REL="SHORTCUT ICON" HREF="{{ asset('favicon.ico') }}"/>
 		{% block css %}
 		<link rel="stylesheet" type="text/css" href="{{asset('css/main.css')}}" />
 		<link rel="stylesheet" type="text/css" href="{{asset('css/gooeymenu.css')}}" />
@@ -150,11 +151,12 @@
 					<input id="log2" class="login" type="submit" value="" />
 					{% endif %}
 				</div>
-
-				<div id="topsearch">
-					<input type="text" value="" name="s" id="s">
-					<input type="submit" id="searchsubmit" value="">
-				</div>
+                <form action="{{path('FTRWebBundle_list')}}?searchType=txtSearch" method="post">
+                    <div id="topsearch">
+                        <input type="text" value="{{ app.session.get('txtSearch') }}" name="txtSearch" id="s">
+                        <input type="submit" id="searchsubmit" value="">
+                    </div>
+                </form>
 			</div>
 
 			<div id="menu">

@@ -53,11 +53,11 @@ FTRAdminBundle_zone:
 FTRAdminBundle_user_admin:
     resource: "@FTRAdminBundle/Resources/config/routing/user_admin.yml"
     prefix:   /user_admin
-
+    
 FTRAdminBundle_user_owner:
     resource: "@FTRAdminBundle/Resources/config/routing/user_owner.yml"
     prefix:   /user_owner
-    
+
 FTRAdminBundle_user_level:
     resource: "@FTRAdminBundle/Resources/config/routing/user_level.yml"
     prefix:   /user_level

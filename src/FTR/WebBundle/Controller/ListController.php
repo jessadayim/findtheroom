@@ -3,7 +3,7 @@
 namespace FTR\WebBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class ListController extends Controller
 {
@@ -21,6 +21,17 @@ class ListController extends Controller
         $lessPrice          = null;
         $mostPrice          = null;
         $shortSearchType    = "bkk";
+        $bc                 = null;
+        $nBts               = null;
+        $nMrt               = null;
+        $nUniversity        = null;
+        $inRoom             = null;
+        $outRoom            = null;
+        $inRoomQuery        = null;
+        $outRoomQuery       = null;
+        $selAmpher          = null;
+        $txtSearch          = "";
+        $result             = null;
 
         //query value
         $whereQuery         = null;
@@ -143,7 +154,139 @@ class ListController extends Controller
                 case "fullSearch":
                     //echo $searchType;
                     //var_dump(@$_POST);
+                    $buildingType       = @$_POST['selBuildingType'];
+                    $lessPrice          = @$_POST['lessPrice'];
+                    $mostPrice          = @$_POST['mostPrice'];
+                    $bkkPayType         = @$_POST['bkkPayType'];
+                    $bc                 = @$_POST['bc'];
+                    $selProvince        = @$_POST['selProvince'];
+                    $zone               = @$_POST['bkkZone'];
+                    $nBts               = @$_POST['nBts'];
+                    $nMrt               = @$_POST['nMrt'];
+                    $nUniversity        = @$_POST['nUniversity'];
+                    $inRoom             = @$_POST['inRoom'];
+                    $outRoom            = @$_POST['outRoom'];
+                    $selAmpher          = @$_POST['selAmpher'];
 
+                    if(($buildingType != 0)&&(!empty($buildingType)))
+                    {
+                        $whereQuery .= " AND a.building_type_id = $buildingType";
+                    }
+
+                    if(!empty($lessPrice)&&(!empty($mostPrice)))
+                    {
+                        $whereQuery .= "
+                            AND (
+                                a.start_price <= $lessPrice <= end_price  or
+                                a.start_price <= $mostPrice <= end_price
+                            )
+                        ";
+                    }
+
+                    if(!empty($bkkPayType))
+                    {
+                        $whereQuery .= " AND a.pay_type_id = $bkkPayType";
+                    }
+
+                    if($bc=="bkk")
+                    {
+                        if(($zone==0)&&($nBts==0)&&($nMrt==0)&&($nUniversity==0))
+                        {
+                            $nearlyZone = null;
+                            $whereQuery .= " AND a.zone_id != 0 ";
+                        }
+                        else
+                        {
+                            $nearlyZone = "(";
+                            if($zone!=0){
+                                $nearlyZone .= "'".$zone."',";
+                            }
+
+                            if($nBts!=0)
+                            {
+                                $nearlyZone .= "'".$nBts."',";
+                            }
+
+                            if($nMrt!=0)
+                            {
+                                $nearlyZone .= "'".$nMrt."',";
+                            }
+
+                            if($nUniversity!=0)
+                            {
+                                $nearlyZone .= "'".$nUniversity."',";
+                            }
+                            $nearlyZone .= "'')";
+                            $whereQuery .= " AND f.id in $nearlyZone";
+                            $whereQuery .= " AND a.zone_id = $zone";
+                        }
+                    }
+                    elseif($bc=="country"){
+                        $whereQuery .= "
+                            AND a.zone_id = 0
+                            AND a.addr_province = '$selProvince'
+                        ";
+                        if( $selAmpher != 0 && $selAmpher!= null){
+                             $whereQuery .= " a.addr_prefecture = '$selAmpher'";
+                        }
+                    }
+
+                    if(is_array($inRoom)==true){
+                        $inRoomQuery = " d.facilitylist_id in (";
+                        foreach($inRoom as $key => $var){
+                            if($key==0){
+                                $inRoomQuery .="'".$inRoom[$key]."'";
+                            }
+                            else
+                            {
+                                $inRoomQuery .=",'".$inRoom[$key]."'";
+                            }
+                        }
+                        $inRoomQuery .= ")";
+                    }
+                    if(is_array($outRoom)==true){
+                        $outRoomQuery = " d.facilitylist_id in (";
+                        foreach($outRoom as $key => $var){
+                            if($key==0){
+                                $outRoomQuery .="'".$outRoom[$key]."'";
+                            }
+                            else
+                            {
+                                $outRoomQuery .=",'".$outRoom[$key]."'";
+                            }
+                        }
+                        $outRoomQuery .= ")";
+                    }
+                    if((is_array($inRoom)==true) && (is_array($outRoom)==true))
+                    {
+                        $whereQuery .= " AND ($inRoomQuery OR $outRoomQuery)";
+                    }
+                    elseif((is_array($inRoom)==true) && (is_array($outRoom)==false))
+                    {
+                         $whereQuery .= " AND ($inRoomQuery)";
+                    }
+                    elseif((is_array($inRoom)==false) && (is_array($outRoom)==true))
+                    {
+                         $whereQuery .= " AND ($outRoomQuery)";
+                    }
+                    break;
+                case"txtSearch":
+                         $txtSearch  =  trim(@$_POST['txtSearch']);
+                         $session = $this->get('session');
+                         $session->set('txtSearch', $txtSearch);
+                         if(!empty($txtSearch)&&$txtSearch!=null&&$txtSearch!=''){
+                             $whereQuery .= "
+                                AND (
+                                     a.building_name like '%$txtSearch%' OR
+                                     a.contact_name like '%$txtSearch%' OR
+                                     a.addr_prefecture like '%$txtSearch%' OR
+                                     a.addr_province like '%$txtSearch%' OR
+                                     b.type_name like '%$txtSearch%' OR
+                                     c.typename like '%$txtSearch%' OR
+                                     f.name like '%$txtSearch%'
+                                )
+                             ";
+                         }
                     break;
             }
         }
@@ -156,6 +299,13 @@ class ListController extends Controller
         $parameter['lessPrice']         = $lessPrice;
         $parameter['mostPrice']         = $mostPrice;
         $parameter['selProvince']       = $selProvince;
+        $parameter['bc']                = $bc;
+        $parameter['nBts']              = $nBts;
+        $parameter['nMrt']              = $nMrt;
+        $parameter['nUniversity']       = $nUniversity;
+        $parameter['inRoom']            = $inRoom;
+        $parameter['outRoom']           = $outRoom;
+        $parameter['selAmpher']         = $selAmpher;
 
         //end get zone
 
@@ -220,6 +370,7 @@ class ListController extends Controller
             'parameter'         => $parameter,
             'pageNumber'        => $pageNumber,
             'textSearch'        => $textSearch,
+            'txtSearch'         => $txtSearch,
         ));
     }
 

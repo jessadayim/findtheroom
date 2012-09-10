@@ -14,9 +14,9 @@
 			});
 		}
 
-		var url = "{{ path('admin_update', { 'id': entity.id }) }}";
-		$("#formEdit").submit(function() {	
-			//alert($(this).serialize());		
+		var url = "{{ path('user_admin_update', { 'id': entity.id }) }}";
+		$("#formEdit").submit(function() {
+			//alert($(this).serialize());
 			if (!confirm('คุณต้องการแก้ไขข้อมูล ใช่หรือไม่')) {
 				return false;
 			}
@@ -41,47 +41,51 @@
 
 	}); 
 </script>
-<form id="formEdit" action="{{path('FTRAdminBundle_Createadminlists')}}" method="post" >
+<form id="formEdit" action="{{ path('user_admin_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
 	<fieldset>
 		<legend>
-			EDIT ADMIN
+			CREATE ADMIN
 		</legend>
 		<div class="label" style="">
-			Username:
+			{{ form_label(edit_form.username) }}
 		</div>
-		<input type="text" id="AdminUsername" name="AdminUsername" class="widfat" value="{{entity.username}}" />
+		{{ form_widget(edit_form.username, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+		{{ form_errors(edit_form.username) }}
 		<br />
 		<div class="label" style="">
-			Password:
+			{{ form_label(edit_form.password) }}
 		</div>
-		<input type="text" id="AdminPassword" name="AdminPassword" class="widfat" value="{{entity.password}}" />
+		{{ form_widget(edit_form.password, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+		{{ form_errors(edit_form.password) }}
 		<br />
 		<div class="label" style="">
-			First Name:
+			{{ form_label(edit_form.firstname) }}
 		</div>
-		<input type="text" id="AdminFristName" name="AdminFristName" class="widfat" value="{{entity.firstname}}" />
+		{{ form_widget(edit_form.firstname, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+		{{ form_errors(edit_form.firstname) }}
 		<br />
 		<div class="label" style="">
-			Last Name:
+			{{ form_label(edit_form.lastname) }}
 		</div>
-		<input type="text" id="AdminLastName" name="AdminLastName" class="widfat" value="{{entity.lastname}}" />
+		{{ form_widget(edit_form.lastname, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+		{{ form_errors(edit_form.lastname) }}
 		<br />
 		<div class="label" style="">
-			Phone Number:
+			{{ form_label(edit_form.phone_number) }}
 		</div>
-		<input type="text" id="AdminPhoneNumber" name="AdminPhoneNumber" class="widfat" value="{{entity.phone_number}}" />
+		{{ form_widget(edit_form.phone_number, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+		{{ form_errors(edit_form.phone_number) }}
 		<br />
 		<div class="label" style="">
-			Level:
+			{{ form_label(edit_form.userlevel) }}
 		</div>
-		<select id="AdminLevel" name="AdminLevel" class="widfat">
-			<option value="0">...</option><option value="1">...</option>
-		</select>
+		{{ form_widget(edit_form.userlevel, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+		{{ form_errors(edit_form.userlevel) }}
+
+		{{ form_rest(edit_form) }}
 		<br />
 		<span style="float: right;">
-			<input class="editCancle" type="button"  value="CANCLE">
-			&nbsp;&nbsp;
-			<input type="submit"  value="EDIT">
+			<input type="submit"  value="CREATE">
 		</span>
 	</fieldset>
 </form>
