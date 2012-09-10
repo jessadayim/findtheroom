@@ -1,6 +1,6 @@
 FTRWebBundle_homepage:
     pattern:  /
-    defaults: { _controller: FTRWebBundle:Main:index }
+    defaults: { _controller: FTRWebBundle:Default:index }
 
 FTRWebBundle_recom:
     pattern:  /slide
