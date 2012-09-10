@@ -3,7 +3,7 @@
 namespace FTR\WebBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class ListController extends Controller
 {
@@ -30,6 +30,8 @@ class ListController extends Controller
         $inRoomQuery        = null;
         $outRoomQuery       = null;
         $selAmpher          = null;
+        $txtSearch          = "";
+        $result             = null;
 
         //query value
         $whereQuery         = null;
@@ -268,6 +270,24 @@ class ListController extends Controller
                          $whereQuery .= " AND ($outRoomQuery)";
                     }
                     break;
+                case"txtSearch":
+                         $txtSearch  =  trim(@$_POST['txtSearch']);
+                         $session = $this->get('session');
+                         $session->set('txtSearch', $txtSearch);
+                         if(!empty($txtSearch)&&$txtSearch!=null&&$txtSearch!=''){
+                             $whereQuery .= "
+                                AND (
+                                     a.building_name like '%$txtSearch%' OR
+                                     a.contact_name like '%$txtSearch%' OR
+                                     a.addr_prefecture like '%$txtSearch%' OR
+                                     a.addr_province like '%$txtSearch%' OR
+                                     b.type_name like '%$txtSearch%' OR
+                                     c.typename like '%$txtSearch%' OR
+                                     f.name like '%$txtSearch%'
+                                )
+                             ";
+                         }
+                    break;
             }
         }
 
@@ -350,6 +370,7 @@ class ListController extends Controller
             'parameter'         => $parameter,
             'pageNumber'        => $pageNumber,
             'textSearch'        => $textSearch,
+            'txtSearch'         => $txtSearch,
         ));
     }
 
