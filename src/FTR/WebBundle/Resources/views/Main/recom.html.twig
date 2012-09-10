@@ -62,7 +62,7 @@
 						<div id="slides2">
 							<div class="slides_container" style="width:950px;">
 							{% set introw1 = 0 %}
-							{% for recom1 in item1%}
+							{% for recom1 in roomBts%}
 							{% if introw1%3 == 0%}
 							<div class="slide" style="width:950px;">
 								{%endif%}
@@ -80,7 +80,7 @@
 											<br />
 											ประเภท : {{recom1.type_name}}
 											<br />
-											ใกล้ BTS สถานี : {{recom1.zonename}}
+											ใกล้ BTS สถานี : {{recom1.name}}
 											<br />
 											<br />
 											ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span>
@@ -95,10 +95,10 @@
 						<a href='#' class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>
 						<a href='#' class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>
 					{%else%}
-					
+
 						<div class="slides_container" style="width:950px; display: inherit !important;">
 							{% set introw1 = 0 %}
-							{% for recom1 in item1%}
+							{% for recom1 in roomBts%}
 							{% if introw1%3 == 0%}
 							<div class="slide">
 								{%endif%}
@@ -116,7 +116,7 @@
 											<br />
 											ประเภท : {{recom1.type_name}}
 											<br />
-											ใกล้ BTS สถานี : {{recom1.zonename}}
+											ใกล้ BTS สถานี : {{recom1.name}}
 											<br />
 											<br />
 											ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span>
@@ -136,7 +136,7 @@
 						<div id="slides3">
 							<div class="slides_container" style="width:950px;">
 							{% set introw2 = 0 %}
-							{% for recom1 in item2%}
+							{% for recom1 in roomMrt%}
 							{% if introw2%3 == 0%}
 							<div class="slide" style="width:950px;">
 								{%endif%}
@@ -154,7 +154,7 @@
 											<br />
 											ประเภท : {{recom1.type_name}}
 											<br />
-											ใกล้ MRT สถานี : {{recom1.zonename}}
+											ใกล้ MRT สถานี : {{recom1.name}}
 											<br />
 											<br />
 											ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span>
@@ -170,8 +170,8 @@
 						<a href='#' class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>
 					{%else%}
 						<div class="slides_container" style="width:950px; display: inherit !important;">
-							{% set introw2 = 0 %}							
-							{% for recom1 in item2%}
+							{% set introw2 = 0 %}
+							{% for recom1 in roomMrt%}
 							{% if introw2%3 == 0%}
 							<div class="slide" style="width:950px;">
 								{%endif%}
@@ -189,7 +189,7 @@
 											<br />
 											ประเภท : {{recom1.type_name}}
 											<br />
-											ใกล้ MRT สถานี : {{recom1.zonename}}
+											ใกล้ MRT สถานี : {{recom1.name}}
 											<br />
 											<br />
 											ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span>
@@ -209,7 +209,7 @@
 						<div id="slides4">
 							<div class="slides_container" style="width:950px;">
 							{% set introw3 = 0 %}
-							{% for recom1 in item3%}
+							{% for recom1 in roomCollege%}
 							{% if introw3%3 == 0%}
 							<div class="slide" style="width:950px;">
 								{%endif%}
@@ -227,7 +227,7 @@
 											<br />
 											ประเภท : {{recom1.type_name}}
 											<br />
-											ใกล้มหาวิทยาลัย : {{recom1.zonename}}
+											ใกล้มหาวิทยาลัย : {{recom1.name}}
 											<br />
 											<br />
 											ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span>
@@ -244,7 +244,7 @@
 					{%else%}
 						<div class="slides_container" style="width:950px; display: inherit !important;">
 							{% set introw3 = 0 %}
-							{% for recom1 in item3%}
+							{% for recom1 in roomCollege%}
 							{% if introw3%3 == 0%}
 							<div class="slide" style="width:950px;">
 								{%endif%}
@@ -262,7 +262,7 @@
 											<br />
 											ประเภท : {{recom1.type_name}}
 											<br />
-											ใกล้มหาวิทยาลัย : {{recom1.zonename}}
+											ใกล้มหาวิทยาลัย : {{recom1.name}}
 											<br />
 											<br />
 											ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span>
@@ -276,19 +276,19 @@
 					{%endif%}
 				</div>
 			</li>
-			
+
 			<li class="detailContent7">
 				<div id="container6">
-					{% if numrow3 != 0%}
+					{% if numrow4 != 0%}
 						<div id="slides6">
 							<div class="slides_container" style="width:950px;">
-							{% set introw3 = 0 %}
-							{% for recom1 in item3%}
-							{% if introw3%3 == 0%}
+							{% set introw4 = 0 %}
+							{% for recom1 in countView%}
+							{% if introw4%3 == 0%}
 							<div class="slide" style="width:950px;">
 								{%endif%}
-								{% set row3 = introw3+1 %}
-								{% if row3%3 == 0%}
+								{% set row4 = introw4+1 %}
+								{% if row4%3 == 0%}
 								<div class="ap2">
 									{% else %}
 									<div class="ap">
@@ -301,13 +301,13 @@
 											<br />
 											ประเภท : {{recom1.type_name}}
 											<br />
-											ใกล้มหาวิทยาลัย : {{recom1.zonename}}
+											ใกล้ {{recom1.nearlyType}} : {{recom1.name}}
 											<br />
 											<br />
 											ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span>
 									</div>
-									{% set introw3 = introw3+1 %}
-									{% if introw3%3 == 0%}
+									{% set introw4 = introw4+1 %}
+									{% if introw4%3 == 0%}
 								</div>
 								{%endif%}
 								{% endfor %}
@@ -317,13 +317,13 @@
 						<a href='#' class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>
 					{%else%}
 						<div class="slides_container" style="width:950px; display: inherit !important;">
-							{% set introw3 = 0 %}
-							{% for recom1 in item3%}
-							{% if introw3%3 == 0%}
+							{% set introw4 = 0 %}
+							{% for recom1 in countView%}
+							{% if introw4%3 == 0%}
 							<div class="slide" style="width:950px;">
 								{%endif%}
-								{% set row3 = introw3+1 %}
-								{% if row3%3 == 0%}
+								{% set row4 = introw4+1 %}
+								{% if row4%3 == 0%}
 								<div class="ap2">
 									{% else %}
 									<div class="ap">
@@ -336,13 +336,13 @@
 											<br />
 											ประเภท : {{recom1.type_name}}
 											<br />
-											ใกล้มหาวิทยาลัย : {{recom1.zonename}}
+											ใกล้ {{recom1.nearlyType}} : {{recom1.name}}
 											<br />
 											<br />
 											ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span>
 									</div>
-									{% set introw3 = introw3+1 %}
-									{% if introw3%3 == 0%}
+									{% set introw4 = introw4+1 %}
+									{% if introw4%3 == 0%}
 								</div>
 								{%endif%}
 								{% endfor %}
@@ -350,7 +350,7 @@
 					{%endif%}
 				</div>
 			</li>
-			
+
 		</ul>
 	</div>
 </div>
