@@ -106,22 +106,75 @@ class SearchController extends Controller
 
     public function fullsearchAction($parameter = null)
     {
-        $selBuildingType    = null;
+        $shortSearchType    = null;
+        $zone               = null;
         $bkkPayType         = null;
+        $buildingType       = null;
         $lessPrice          = null;
-        $bkkPayType         = null;
         $mostPrice          = null;
-        $selProvince        = null;
-        $bkkZone            = null;
+        $selProvince        = 0;
+        $bc                 = "bkk";
         $nBts               = null;
         $nMrt               = null;
         $nUniversity        = null;
-        $nNearly            = null;
-        $nCountryNearly     = null;
+        $inRoom[]           = null;
+        $outRoom[]          = null;
+        $selAmpher          = null;
 
+        //$shortSearchType    = $parameter['shortSearchType'];
+        $zone               = $parameter['zone'];
+        $bkkPayType         = $parameter['bkkPayType'];
+        $selBuildingType    = $parameter['buildingType'];
+        $lessPrice          = $parameter['lessPrice'];
+        $mostPrice          = $parameter['mostPrice'];
+        $selProvince        = $parameter['selProvince'];
+        $bc                 = $parameter['bc'];
+        $nBts               = $parameter['nBts'];
+        $nMrt               = $parameter['nMrt'];
+        $nUniversity        = $parameter['nUniversity'];
+        $inRoom             = $parameter['inRoom'];
+        $outRoom            = $parameter['outRoom'];
+        $selAmpher          = $parameter['selAmpher'];
 
         $fac_inroomlist 	= $this->getFacility('inroom');
-        $fac_outroomlist 	= $this->getFacility('outroom');	
+        $fac_outroomlist 	= $this->getFacility('outroom');
+
+        foreach($fac_inroomlist as $key=>$var){
+            $row = $fac_inroomlist[$key]['loop'];
+            foreach($row as $keys=>$vars){
+                $fId = $row[$keys]['id'];
+                if(is_array($inRoom)==true)
+                {
+                    if (in_array("$fId",$inRoom)==true)
+                    {
+                        $fac_inroomlist[$key]['loop'][$keys]['checked'] = "yes";
+                    }
+                    else
+                    {
+                        $fac_inroomlist[$key]['loop'][$keys]['checked'] = "no";
+                    }
+                }
+            }
+        }
+
+        foreach($fac_outroomlist as $key=>$var){
+            $row = $fac_outroomlist[$key]['loop'];
+            foreach($row as $keys=>$vars){
+                $fId = $row[$keys]['id'];
+                if(is_array($outRoom)==true)
+                {
+                    if (in_array("$fId",$outRoom)==true)
+                    {
+                        $fac_outroomlist[$key]['loop'][$keys]['checked'] = "yes";
+                    }
+                    else
+                    {
+                        $fac_outroomlist[$key]['loop'][$keys]['checked'] = "no";
+                    }
+                }
+            }
+        }
+
 		$zonelist			= $this->getBkkZone();
 		$province			= $this->getProvince();
 		$buildingTypeList	= $this->getBuildingType();
@@ -129,8 +182,18 @@ class SearchController extends Controller
 		$nearBTS			= $this->getNearly(2);
 		$nearMRT			= $this->getNearly(3);
 		$nearUniversity		= $this->getNearly(4);
-		$nearBy				= $this->getNearly(5);
-		$nearInCountry		= $this->getNearly(6);
+
+        if($selProvince == '0')
+        {
+            $province_id = $selProvince;
+        }
+        else{
+            $province_id = $this->getProvince("id",$selProvince);
+        }
+		$ampher			    = $this->getAmpher($province_id);
+		//$nearInCountry		= $this->getNearly(6);
+
+        //var_dump($ampher);
 
         return $this->render('FTRWebBundle:Search:search.html.twig', array(
 			'fac_inroom' 		=> $fac_inroomlist,
@@ -142,20 +205,52 @@ class SearchController extends Controller
 			'nearBTS' 			=> $nearBTS,
 			'nearMRT' 			=> $nearMRT,
 			'nearUniversity' 	=> $nearUniversity,
-			'nearBy' 			=> $nearBy,
-			'nearInCountry' 	=> $nearInCountry,
+			'ampher' 			=> $ampher,
+			'bc' 	            => $bc,
 			'selBuildingType' 	=> $selBuildingType,
 			'bkkPayType' 	    => $bkkPayType,
 			'lessPrice' 	    => $lessPrice,
 			'mostPrice' 	    => $mostPrice,
 			'selProvince' 	    => $selProvince,
-			'bkkZone' 	        => $bkkZone,
+			'bkkZone' 	        => $zone,
 			'nBts' 	            => $nBts,
 			'nMrt' 	            => $nMrt,
 			'nUniversity' 	    => $nUniversity,
-			'nNearly' 	        => $nNearly,
-			'nCountryNearly' 	=> $nCountryNearly,
+			'inRoom' 	        => $inRoom,
+			'outRoom' 	        => $outRoom,
+			'selAmpher' 	    => $selAmpher,
 		));
+    }
+
+    function ampherAction()
+    {
+        $province_name = $_GET['province_name'];
+        if($province_name == '0')
+        {
+            $province_id = $province_name;
+        }
+        else{
+            $province_id = $this->getProvince("id",$province_name);
+        }
+        if( $province_id != null)
+        {
+            $ampher = $this->getAmpher($province_id);
+            echo "
+                <div class=\"styled-select\">
+                <select class=\"select\" id=\"scou\" name=\"selAmpher\">";
+                foreach($ampher as $key=>$var){
+                    echo "<option value=\"".$ampher[$key]['AMPHUR_VALUE']."\">".$ampher[$key]['AMPHUR_NAME']."</option>";
+                }
+            echo "
+                </div>
+                </select>
+            ";
+        }
+        else
+        {
+            echo "no";
+        }
+        exit();
     }
 
     function getBkkZone()
@@ -178,25 +273,76 @@ class SearchController extends Controller
         return $result;
     }
 
-    function getProvince()
+    function getProvince($type="list",$provinceName=null)
+    {
+        switch ($type) {
+            case "list":
+                    $result_data = array();
+                    $conn= $this->get('database_connection');
+                    if(!$conn){ die("MySQL Connection error");}
+                    try{
+                        $sql = "
+                            select PROVINCE_NAME as PROVINCE_VALUE , PROVINCE_NAME
+                            from province
+                            where PROVINCE_ID != 1
+                            order by PROVINCE_NAME asc
+                        ";
+                        $result_data = $conn->fetchAll($sql);
+                    } catch (Exception $e) {
+                        echo 'Caught exception: ',  $e->getMessage(), "\n";
+                    }
+                    $all[] = array('PROVINCE_VALUE'=>'0','PROVINCE_NAME'=>'ทุกจังหวัด');
+
+                    $result = array_merge($all,$result_data);
+                    return $result;
+                break;
+            case "id":
+                    $result_data = array();
+                    $result = null;
+                    $conn= $this->get('database_connection');
+                    if(!$conn){ die("MySQL Connection error");}
+                    try{
+                        $provinceName = trim($provinceName);
+                        $sql = "
+                            SELECT PROVINCE_ID
+                            FROM province
+                            where PROVINCE_NAME = '$provinceName'
+                        ";
+                        $result_data = $conn->fetchAll($sql);
+                    } catch (Exception $e) {
+                        echo 'Caught exception: ',  $e->getMessage(), "\n";
+                    }
+                    if(count($result_data)>0){
+                        $result = $result_data[0]['PROVINCE_ID'];
+                    }
+                    return $result;
+                break;
+        }
+
+    }
+
+    function getAmpher($id=null)
     {
         $result_data = array();
+        $all[]       = array('AMPHUR_VALUE'=>0,'AMPHUR_NAME'=>' - กรุณาระบุ - ');
+        $whereQuery  = NULL;
         $conn= $this->get('database_connection');
         if(!$conn){ die("MySQL Connection error");}
         try{
-            $sql = "
-				select PROVINCE_NAME as PROVINCE_VALUE , PROVINCE_NAME
-				from province
-				where PROVINCE_ID != 1
-				order by PROVINCE_NAME asc
-			";
-            $result_data = $conn->fetchAll($sql);
+            if($id!=null)
+            {
+                $whereQuery .= " AND PROVINCE_ID = '$id'";
+                $sql = "
+				  SELECT AMPHUR_NAME as AMPHUR_VALUE , AMPHUR_NAME
+				  FROM amphur
+				  WHERE 1 $whereQuery
+			    ";
+                $result_data = $conn->fetchAll($sql);
+            }
+            $result = array_merge($all,$result_data);
         } catch (Exception $e) {
             echo 'Caught exception: ',  $e->getMessage(), "\n";
         }
-        $all[] = array('PROVINCE_VALUE'=>'0','PROVINCE_NAME'=>'ทุกจังหวัด');
-
-        $result = array_merge($all,$result_data);
         return $result;
     }
 
@@ -240,6 +386,7 @@ class SearchController extends Controller
 					'id'				=> $value['id'],
 					'facility_name'		=> $value['facility_name'],
 					'facility_type'		=> $value['facility_type'],
+					'checked'		    => 'no',
 				);
 				if($count%4==0){
 					$fac_inroomlist[] = array('loop'=>$list);
@@ -302,4 +449,5 @@ class SearchController extends Controller
 		$result = array_merge($all,$result_data);
 		return $result;
 	}
+
 }

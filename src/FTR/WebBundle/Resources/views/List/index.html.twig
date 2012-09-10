@@ -16,11 +16,11 @@
     });
 </script>
 
-{% if searchType == 'shortSearch' %}
+{% if searchType == 'shortSearch' or searchType == 'txtSearch' %}
     {% render "FTRWebBundle:Search:shortsearch" with {'parameter': parameter} %}
 {% endif %}
 {% if searchType == 'fullSearch' %}
-{% render "FTRWebBundle:Search:fullsearch" %}
+{% render "FTRWebBundle:Search:fullsearch" with {'parameter': parameter} %}
 {% endif %}
 <div id="show">
 <span class="big">ผลการค้นหา{{ textSearch }}</span><span class="normal"> เจอทั้งหมด {{ numData }} ห้องพัก</span>
@@ -37,7 +37,7 @@
         <option value="50">50</option>
         <option value="100">100</option>
     </select>
-</div>
+</div>          {{txtSearch}}
 <span class="normal" style="float:right; margin-right:20px;">แสดงผล</span><br>--><br>
     {% if numData > 0 %}
         {% for rlist in result %}

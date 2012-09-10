@@ -6,7 +6,7 @@
 <script>
 	$(document).ready(function() {
 		$("#createrecord").click(function() {
-			$.post('create', function(data) {
+			$.post('new', function(data) {
 				//alert(data);
 				$('.createPanel').html(data);
 				toggle(".createPanel", 'toggle');
@@ -44,13 +44,13 @@
 			<a href="#" id="createrecord">CREAT ADMIN</a>
 			<a href="#" id="createrecordCancel" style="display: none;">CANCLE CREAT ADMIN</a>
 		</div>
-		<div class="clear"></div>
+		<div class="clear"> </div>
 		<p>
 			Welcome to Visual Admin, a slick admin template for almost any project - front or back end. It's based on the 960 grid system which means you can have almost endless layout possibiliites as well as those that come ready to use straight out the box. Please have a click around and feel free to check out the screenshots.
 		</p>
-		<div class="clear"></div>
-		<div class="createPanel" style=""></div>
-		<div class="editPanel" style=""></div>
+		<div class="clear"> </div>
+		<div class="createPanel" style=""> </div>
+		<div class="editPanel" style=""> </div>
 	</div>
 	<div id="listAdmin" class="grid_12 tableLists marginB_10 alpha" style="">
 		{% render "FTRAdminBundle:User_admin:show" %}

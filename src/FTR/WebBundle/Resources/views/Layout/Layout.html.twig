@@ -151,11 +151,12 @@
 					<input id="log2" class="login" type="submit" value="" />
 					{% endif %}
 				</div>
-
-				<div id="topsearch">
-					<input type="text" value="" name="s" id="s">
-					<input type="submit" id="searchsubmit" value="">
-				</div>
+                <form action="{{path('FTRWebBundle_list')}}?searchType=txtSearch" method="post">
+                    <div id="topsearch">
+                        <input type="text" value="{{ app.session.get('txtSearch') }}" name="txtSearch" id="s">
+                        <input type="submit" id="searchsubmit" value="">
+                    </div>
+                </form>
 			</div>
 
 			<div id="menu">

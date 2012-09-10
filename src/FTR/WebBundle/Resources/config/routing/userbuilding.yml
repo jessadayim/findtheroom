@@ -17,3 +17,7 @@ updateUserProfile:
 autoSaveForm:
     pattern: /autosave/{id}/{type}
     defaults: { _controller: FTRWebBundle:Userbuilding:autoSaveForm,'type' :null }
+
+getDistrict:
+    pattern: /getdistrice/{province}/{district}
+    defaults: { _controller: FTRWebBundle:Userbuilding:getDistrict, 'district' :null }

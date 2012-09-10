@@ -868,4 +868,5 @@ class Building_site
     {
         return $this->deleted;
     }
+
 }
