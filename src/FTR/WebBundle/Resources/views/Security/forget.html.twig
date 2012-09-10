@@ -14,21 +14,33 @@
 			$(document).ready(function() {
 				$("#send").click(function(e) {
 					if ($('input#email').val() == "") {
-						$("#txt").html("<font style='color:#BF1E2D;'>กรุณากรอก ชื่อผู้ใช้งาน หรืออีแมล</font>");
+						$("#txterror").html("กรุณากรอก ชื่อผู้ใช้งาน หรืออีเมล");
+                        $("#txterror").hide();
+                        $("#txterror").show("slow");
+                        document.getElementById('txterror').focus();
 					} else {
 						$.ajax({
 							url : "{{path('FTRWebBundle_sendemail')}}",
 							type : 'POST',
 							data : "email=" + $('input#email').val(),
 							success : function(data) {
+                                //alert(data);
 								if (data == 1) {
 									// alert("sdfsd");
 									location = "{{path('FTRWebBundle_forget_confirm')}}";
 									//parent.location.href = "{{path('FTRWebBundle_homepage')}}";
-								}
+								}else if(data == 0){
+                                    $("#txterror").html("กรุณาตรวจสอบ ชื่อผู้ใช้งาน หรืออีเมล");
+                                    $("#txterror").hide();
+                                    $("#txterror").show("slow");
+                                    document.getElementById('txterror').focus();
+                                }
 							},
 							error : function(e) {
-								$("#txt").html("<font style='color:#BF1E2D;'>กรุณาตรวจสอบ ชื่อผู้ใช้งาน หรืออีเมล</font>");
+                                $("#txterror").html("กรุณาตรวจสอบ ชื่อผู้ใช้งาน หรืออีเมล");
+                                $("#txterror").hide();
+                                $("#txterror").show("slow");
+                                document.getElementById('txterror').focus();
 							}
 						});
 					}
@@ -55,8 +67,8 @@
 				</td>
 			</tr>
 			<tr height="50" valign="middle">
-				<td align="left" width="180" style="font-size:24px;">&nbsp;</td>
-				<td id="txt" align="left" class="alertmsg" colspan="2">&nbsp;</td>
+				<td align="left" width="180" style="font-size:16px;"></td>
+				<td  align="left" class="alertmsg" colspan="2"><label id="txterror" style="font-size: 16px;color: red;"></label></td>
 			</tr>
 		</table>
 	</body>

@@ -20,7 +20,7 @@ class DetailController extends Controller
             $id = trim($_POST['bid']);
         }
 			/**
-			 * query Detail page general detail  123
+			 * query Detail page general detail
 			 * */
 		try{
             $sql1 ="SELECT b.*,n.*,t.*,z.*,p.*
