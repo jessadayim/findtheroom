@@ -92,7 +92,7 @@ class Banner_count
      *
      * @param integer $building_site_id
      */
-    public function setRefname($buildingSiteId)
+    public function setBuildingSiteId($buildingSiteId)
     {
         $this->building_site_id = $buildingSiteId;
     }
@@ -102,7 +102,7 @@ class Banner_count
      *
      * @return integer
      */
-    public function getRefname()
+    public function getBuildingSiteId()
     {
         return $this->building_site_id;
     }
