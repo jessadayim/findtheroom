@@ -16,9 +16,10 @@
 				$(':input[placeholder]').placeholder();
 			});
 			$(document).ready(function() {
-				$("#log").click(function(e) {
-					if ($("input#username").val() != "" || $("input#password").val() != "") {
-
+				$("#formlogin").submit(function(e) {
+                   //alert($(this).serialize());
+					if ($("#username").val() != "" && $("#password").val() != "") {
+                        //alert('working1');
 						var options = {
 							path : '/',
 							expires : 10
@@ -31,6 +32,9 @@
 								success : function(data) {
 									if (data == 0) {
 										$("#txterror").html("กรุณาตรวจสอบ ชื่อผู้ใช้งาน และรหัสผ่าน");
+                                        $("#txterror").hide();
+                                        $("#txterror").show("slow");
+                                        document.getElementById('txterror').focus();
 									} else if (data == 1) {
 										// parent.location.reload();
 										$.cookie('username', $('input#username').val(), options);
@@ -41,16 +45,22 @@
 								},
 								error : function(e) {
 									$("#txterror").html("กรุณาตรวจสอบ ชื่อผู้ใช้งาน และรหัสผ่าน");
+                                    $("#txterror").hide();
+                                    $("#txterror").show("slow");
+                                    document.getElementById('txterror').focus();
 								}
 							});
 						} else {
 							$.ajax({
 								url : "{{path('FTRWebBundle_login')}}",
 								type : 'POST',
-								data : "username=" + $('input#username').val() + "&" + "password=" + $('input#password').val(),
+								data : $(this).serialize(),
 								success : function(data) {
 									if (data == 0) {
 										$("#txterror").html("กรุณาตรวจสอบ ชื่อผู้ใช้งาน และรหัสผ่าน");
+                                        $("#txterror").hide();
+                                        $("#txterror").show("slow");
+                                        document.getElementById('txterror').focus();
 									} else if (data == 1) {
 										// parent.location.reload();
 										$.cookie('username', "false", options);
@@ -61,14 +71,20 @@
 								},
 								error : function(e) {
 									$("#txterror").html("กรุณาตรวจสอบ ชื่อผู้ใช้งาน และรหัสผ่าน");
+                                    $("#txterror").hide();
+                                    $("#txterror").show("slow");
+                                    document.getElementById('txterror').focus();
 								}
 							});
 						}
 
 					} else {
-						$("#txterror").html("กรุณาใส่ข้อมูลให้ครบ");
+                        $("#txterror").html("กรุณาใส่ข้อมูลให้ครบ");
+                        $("#txterror").hide();
+                        $("#txterror").show("slow");
+                        document.getElementById('txterror').focus();
 					}
-
+                    return false;
 				});
 			});
 			function closeToPublish() {
@@ -110,7 +126,7 @@
 		<img src="{{asset('images/login-h.png')}}" style="padding-top: 20px;" />
 		<hr style=" width:98%; margin-left:-5px; margin-top:15px; margin-bottom:10px;" />
 		<div style="width:350px; display:block; position:relative; float:left; border-right:1px solid; height:320px;">
-
+            <form id="formlogin">
 			<table style="padding-left:10px;">
 
 				<tr height="50" valign="middle">
@@ -152,8 +168,8 @@
 					<td align="left" width="120" style="font-size:24px;">&nbsp;</td>
 					<td align="left" width="120" style="font-size:22px;"><a href="{{path('FTRWebBundle_forget')}}" class="link">ลืมรหัสผ่าน?</a></td>
 				</tr>
-
 			</table>
+            </form>
 		</div>
 		<div style="width:300px; display:block; position:relative; float:left;">
 			<table style="padding-left:10px;">

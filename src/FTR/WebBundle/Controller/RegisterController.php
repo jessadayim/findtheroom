@@ -54,13 +54,16 @@ class RegisterController extends Controller
 							$random_token = md5(uniqid(rand(),true));
 							$sql1 ="INSERT INTO user_owner(username,password,firstname,lastname,email,phone_number,fax_number,deleted,confirm_token) VALUES('$username','$password','$firstname','$lastname','$email','$tel','0000000000','0','$random_token')";
 							$conn->query($sql1);
+                            $url = $_SERVER['SERVER_NAME'];
+                            $url .= $this->get('router')->generate('FTRWebBundle_homepage', array());
+                           // $url .= $this->get('router')->generate('TRWebBundle_change', array());
 							
 							$link = "สวัสดีค่ะ คุณ $email ยินตีต้อนรับสู่ FindTheRoom.com!
 										ชื่อที่ใช้ในการ login เข้าบัญชีสมาชิกของคุณคือ $username
-										<a>
-						  					http://localhost:11001" . $this -> generateUrl('FTRWebBundle_homepage') ."?token=" . $random_token."
-						  				</a><br/>";
-										
+										<a href = $url?token=" . $random_token . ">
+  					                        ".$url."?token=". $random_token . "
+  				                        </a><br/>";
+
 							$message = \Swift_Message::newInstance()
 					        ->setSubject('findtheroom')
 					        ->setFrom('support@findtheroom.com')

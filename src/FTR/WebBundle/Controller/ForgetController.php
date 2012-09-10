@@ -30,30 +30,37 @@ class ForgetController extends Controller {
 		if (!$conn) { die("MySQL Connection error");
 		}
 		try {
-			$sql1 = "SELECT email,confirm_token FROM user_owner
+			$sql1 = "SELECT email,confirm_token,deleted FROM user_owner
 						WHERE email = '$email' or username = '$email'";
 			$objSQL1 = $conn -> fetchAll($sql1);
+            if($objSQL1[0][deleted] != 1){
+                $url = $_SERVER['SERVER_NAME'];
+                $url .= $this->get('router')->generate('TRWebBundle_change', array());
+                //$url  = "{{path('FTRWebBundle_contact')}}";
 
-			$link = "สวัสดี !<br/>
+                $link = "สวัสดี !<br/>
 				กรุณาคลิกลิงค์ต่อไปนี้เพื่อตั้งรหัสผ่านของคุณใหม่<br/>
-  				<a href = http://localhost:11001/findtheroom/web/app_dev.php/reset/change?token=" . $objSQL1[0]['confirm_token'] . ">
-  					http://localhost:11001/findtheroom/web/app_dev.php/reset/change?token=" . $objSQL1[0]['confirm_token'] . "
+  				<a href = $url?token=" . $objSQL1[0]['confirm_token'] . ">
+  					".$url."?token=".$objSQL1[0]['confirm_token'] . "
   				</a><br/>
  				ขอบคุณค่ะ<br/>
 				ทีมงาน FindTheRoom<br/><br/>
 				© 2012 FindTheRoom.com";
-			if (count($objSQL1) == 1) {
-				$message = \Swift_Message::newInstance() 
-				-> setSubject('คุณได้ลืมรหัสผ่าน และขอตั้งรหัสผ่านใหม่ FindTheRoom.com‏') 
-				-> setFrom('suriya257_@hotmail.com') -> setTo($objSQL1[0]['email']) 
-				-> setBody($this -> renderView('FTRWebBundle:Security:emailreset.html.twig', array('name' => $link)), 'text/html');
+                if (count($objSQL1) == 1) {
+                    $message = \Swift_Message::newInstance()
+                        -> setSubject('คุณได้ลืมรหัสผ่าน และขอตั้งรหัสผ่านใหม่ FindTheRoom.com‏')
+                        -> setFrom('support@findtheroom.com') -> setTo($objSQL1[0]['email'])
+                        -> setBody($this -> renderView('FTRWebBundle:Security:emailreset.html.twig', array('name' => $link)), 'text/html');
 
-				$this -> get('mailer') -> send($message);
+                    $this -> get('mailer') -> send($message);
 
-				echo "1";
-			} else {
-				echo "0";
-			}
+                    echo "1";
+                } else {
+                    echo "0";
+                }
+            }   else{
+                    echo "0";
+            }
 
 		} catch (Exception $e) {
 			echo "0";
