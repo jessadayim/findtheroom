@@ -2,19 +2,23 @@
 #    resource: "@FTRAdminBundle/Resources/config/routing.yml"
 #    prefix:   /
 
-FTRAdminBundle_panel:
-    resource: "@FTRAdminBundle/Resources/config/routing.yml"
-    prefix:   /ftr_panel
+#FTRAdminBundle_panel:
+#    resource: "@FTRAdminBundle/Resources/config/routing.yml"
+#    prefix:   /ftr_panel
 
-FTRWebBundle:
-    resource: "@FTRWebBundle/Resources/config/routing.yml"
-    prefix:   /
+#FTRWebBundle:
+#    resource: "@FTRWebBundle/Resources/config/routing.yml"
+#    prefix:   /
 
-FTRWebBundle_UserBuilding:
-    resource: "@FTRWebBundle/Resources/config/routing/userbuilding.yml"
-    prefix:   /publish
+#FTRWebBundle_UserBuilding:
+#    resource: "@FTRWebBundle/Resources/config/routing/userbuilding.yml"
+#    prefix:   /publish
 
 # Internal routing configuration to handle ESI
 #_internal:
 #   resource: "@FrameworkBundle/Resources/config/routing/internal.xml"
 #   prefix:   /_internal
+
+FTRWebBundle_prelaunch:
+    pattern:  /
+    defaults: { _controller: FTRWebBundle:Default:index }

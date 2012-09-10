@@ -1,6 +1,6 @@
 FTRWebBundle_homepage:
     pattern:  /
-    defaults: { _controller: FTRWebBundle:Default:index }
+    defaults: { _controller: FTRWebBundle:Main:index }
 
 FTRWebBundle_recom:
     pattern:  /slide
@@ -9,7 +9,7 @@ FTRWebBundle_recom:
 FTRWebBundle_search:
     pattern:  /search
     defaults: { _controller: FTRWebBundle:Search:search }
-    
+
 FTRWebBundle_detail:
     pattern:  /detail
     defaults: { _controller: FTRWebBundle:Detail:detail }
