@@ -1,1 +1,31 @@
-Hello {{ name }}!
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>FindTheRoom</title>
+		<LINK REL="SHORTCUT ICON" HREF="{{ asset('favicon.ico') }}"/>
+		<style>
+			body {
+				background: #F6F6F6;
+				margin:0;
+				font-family:Tahoma, Geneva, sans-serif;
+			}
+			#coming{
+				width: 1000px;
+				margin: 40px auto 0 auto;
+				font-size: 22px;
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="coming">
+    	<img src="{{asset('images/logo.png')}}" /><br />
+        <span>FindTheRoom.com</span><br /><br />
+        <span>พบกับเว็บไซต์เกี่ยวกับ</span><br />
+        <span>การค้นหา ห้องพัก หอพัก อพาร์ทเม้นต์ ที่ทันสมัยที่สุด</span><br /><br />
+        <span style="font-size:36px">เร็วๆนี้</span>
+    </div>
+	</body>
+</html>
+
