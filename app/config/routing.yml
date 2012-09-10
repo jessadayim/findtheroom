@@ -18,3 +18,7 @@ FTRWebBundle_UserBuilding:
 #_internal:
 #   resource: "@FrameworkBundle/Resources/config/routing/internal.xml"
 #   prefix:   /_internal
+
+#FTRWebBundle_prelaunch:
+#    pattern:  /
+#    defaults: { _controller: FTRWebBundle:Default:index }

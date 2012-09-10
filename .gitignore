@@ -23,3 +23,6 @@ web/images/building/*
 # image files not push
 .captcha_img.jpg
 .test.jpg
+
+# google analytic
+.googlee7dcccd096dd3e33*
