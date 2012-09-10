@@ -120,6 +120,9 @@ class Building_siteController extends Controller
 
             $getNewID = $entity->getId();
 
+            //สร้าง folder building/$id
+            $this->createFolderBuildingId($getNewID);
+
             //Create เสร็จแล้ว            
             echo "finish_$getNewID";
             exit();
@@ -248,7 +251,20 @@ class Building_siteController extends Controller
             ->getForm()
         ;
     }
-    
+
+    /*
+     * สร้าง folder building/id
+     */
+    private function createFolderBuildingId($id){
+        $path = "./images/building/$id";
+        if(!file_exists("./images/building")){
+            mkdir("./images/building", 0777);
+        }
+        if(!file_exists($path)){
+            mkdir($path, 0777);
+        }
+    }
+
     /*
      * Get list id ที่ใช้ผูกกับตาราง building_site
      * 
