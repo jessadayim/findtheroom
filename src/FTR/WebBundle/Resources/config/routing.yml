@@ -37,7 +37,11 @@ FTRWebBundle_regis:
 FTRWebBundle_confirm:
     pattern:  /regis/confirm
     defaults: { _controller: FTRWebBundle:Register:RegisConfirm}
-    
+
+FTRWebBundle_terms:
+    pattern:  /term
+    defaults: { _controller: FTRWebBundle:Register:terms}
+
 FTRWebBundle_regis_success:
     pattern:  /regis/success
     defaults: { _controller: FTRWebBundle:Register:regsuccess }

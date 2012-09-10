@@ -107,7 +107,7 @@ class MainController extends Controller {
 									 JOIN nearly2site n2 ON n2.building_site_id = b.id
 									 JOIN nearly_location n ON n.id = n2.nearly_location_id
 									 JOIN nearly_type nt ON nt.id = n.nearly_type_id
-						WHERE b.recommend = 1 and nt.id = 1";
+						WHERE b.recommend = 1 and nt.id = 1 and b.deleted != '1'";
 			$objSQL1 = $conn -> fetchAll($sql1);
 			if (count($objSQL1) <= 3) {
 				$numrow1 = 0;
@@ -124,7 +124,7 @@ class MainController extends Controller {
 									 JOIN nearly2site n2 ON n2.building_site_id = b.id
 									 JOIN nearly_location n ON n.id = n2.nearly_location_id
 									 JOIN nearly_type nt ON nt.id = n.nearly_type_id
-						WHERE b.recommend = 1 and nt.id = 2";
+						WHERE b.recommend = 1 and nt.id = 2 and b.deleted != '1'";
 			$objSQL2 = $conn -> fetchAll($sql2);
 			if (count($objSQL2) <= 3) {
 				$numrow2 = 0;
@@ -141,7 +141,7 @@ class MainController extends Controller {
 									 JOIN nearly2site n2 ON n2.building_site_id = b.id
 									 JOIN nearly_location n ON n.id = n2.nearly_location_id
 									 JOIN nearly_type nt ON nt.id = n.nearly_type_id
-						WHERE b.recommend = 1 and nt.id =3";
+						WHERE b.recommend = 1 and nt.id =3 and b.deleted != '1'";
 			$objSQL3 = $conn -> fetchAll($sql3);
 			if (count($objSQL3) <= 3) {
 				$numrow3 = 0;

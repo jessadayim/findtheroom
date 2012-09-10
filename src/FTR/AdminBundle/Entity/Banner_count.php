@@ -22,6 +22,13 @@ class Banner_count
     private $id;
 
     /**
+     * @var string $building_site_id
+     *
+     * @ORM\Column(name="building_site_id", type="integer")
+     */
+    private $building_site_id;
+
+    /**
      * @var string $refname
      *
      * @ORM\Column(name="refname", type="string", length=64)
@@ -78,6 +85,26 @@ class Banner_count
     public function getRefname()
     {
         return $this->refname;
+    }
+
+    /**
+     * Set building_site_id
+     *
+     * @param integer $building_site_id
+     */
+    public function setBuildingSiteId($buildingSiteId)
+    {
+        $this->building_site_id = $buildingSiteId;
+    }
+
+    /**
+     * Get building_site_id
+     *
+     * @return integer
+     */
+    public function getBuildingSiteId()
+    {
+        return $this->building_site_id;
     }
 
     /**

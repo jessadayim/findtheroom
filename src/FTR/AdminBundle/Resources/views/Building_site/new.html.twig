@@ -23,11 +23,11 @@
 				data : $(this).serialize(),
 				success : function(msg) {
                     var id = msg.split('_');
-                    if (id.length == 2){
+                    if (id.length > 1){
                         id = id[1];
-                        msg = id[0];
                     }
-					if (msg == 'finish') {
+                    var str = msg;
+					if (str.search('finish') > -1) {
 						alert('เพิ่ม BUILDING SITE สำเร็จแล้ว');
 						toggle(".createPanel", 'hide');
 						$(".createPanel").html('');

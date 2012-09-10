@@ -51,9 +51,9 @@
 		});
 
 		//Click ปุ่ม  Edit Facility
-		$(".createSite").click(function() {
+		$(".createSite").live('click', function() {
 			locationRoomType = this.href;
-			$('.innerPanel').fadeOut().load(this.href).fadeIn("slow");
+			$('.innerPanel').fadeOut("slow").load(locationRoomType).fadeIn("slow");
 			// if (checkDoubleClickEdit){
 			// checkDoubleClickEdit = false;
 			// $.post(this.href, function(data) {
@@ -111,23 +111,23 @@
 		<th style="width: 50px !important;" >config</th>
 	</thead>
 	{% for entity in entities %}
-	<tr>
-		<td>{{ entity.building_name }}</td>
+        <tr>
+            <td>{{ entity.building_name }}</td>
 
-		<!-- facility -->
-		<td><a href="{{ path('facility2site_show', { 'id': entity.id }) }}" class="createSite">Edit</a></td>
+            <!-- facility -->
+            <td><a href="{{ path('facility2site_show', { 'id': entity.id }) }}" class="createSite">Edit</a></td>
 
-		<!-- room type -->
-		<td><a href="{{ path('roomtype2site_show', { 'id': entity.id }) }}" class="createSite">Edit</a></td>
+            <!-- room type -->
+            <td><a href="{{ path('roomtype2site_show', { 'id': entity.id }) }}" class="createSite">Edit</a></td>
 
-		<!-- nearly -->
-        <td><a href="{{ path('nearly2site_show', { 'id': entity.id }) }}" class="createSite">Edit</a></td>
+            <!-- nearly -->
+            <td><a href="{{ path('nearly2site_show', { 'id': entity.id }) }}" class="createSite">Edit</a></td>
 
-		<!-- upload gallery -->
-		<td><a href="">Edit</a></td>
+            <!-- upload gallery -->
+            <td><a href="{{ path('image_show', { 'id': entity.id }) }}" class="createSite">Edit</a></td>
 
-		<td><a href="{{ entity.id }}" class="linkEditBuildingSite">Edit</a>&nbsp;&nbsp;<a href="{{ entity.id }}" class="linkDelete">Delete</a></td>
-	</tr>
+            <td><a href="{{ entity.id }}" class="linkEditBuildingSite">Edit</a>&nbsp;&nbsp;<a href="{{ entity.id }}" class="linkDelete">Delete</a></td>
+        </tr>
 	{% endfor %}
 </table>
 <br />
