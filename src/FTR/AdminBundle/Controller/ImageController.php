@@ -79,7 +79,7 @@ class ImageController extends Controller
         foreach ($ObjGetGallery as $key => $value) {
             if (empty($value['photo_name'])){
                 $ObjGetGallery[$key]['photo_name'] = 'show.png';
-                $ObjGetGallery[$key]['id'] = 0;
+//                $ObjGetGallery[$key]['id'] = 0;
             }else{
                 $ObjGetGallery[$key]['photo_name'] = "building/$id/".$value['photo_name'];
             }
@@ -178,6 +178,7 @@ class ImageController extends Controller
         $getTypePost = @$_POST['typePost'];
         $getIdImage = @$_POST['idImage'];
         $getNameImage = @$_POST['nameImage'];
+        $getDescription = @$_POST['description'];
         $sqlGetImage = "
             SELECT
               `id`,
@@ -278,7 +279,23 @@ class ImageController extends Controller
                     $em->persist($entity);
                 }
             }break;
-            case "gallery":break;
+            case "gallery":{
+                if ($getIdImage == '0'){
+                    $entity = new Image();
+                    $entity -> setDeleted(0);
+                    $entity -> setBuildingSiteId($getBuildingSiteId);
+                    $entity -> setDescription($getDescription);
+                    $entity -> setPhotoName($getNameImage);
+                    $entity -> setPhotoType('gallery');
+                    $entity -> setSequence(0);
+                }else{
+                    $ObjGetImage = $this->getDataArray($sqlGetImage);
+                    $getNameImageOld = $ObjGetImage[0]['photo_name'];
+                    $this->deleteFileByBuildingId($getBuildingSiteId, $getNameImageOld);
+                    $entity = $em->getRepository('FTRWebBundle:Image')->find($getIdImage);
+                    $entity -> setPhotoName($getNameImage);
+                }
+            }break;
             case "recommend":{
                 if ($getIdImage == '0'){
                     $entity = new Image();
