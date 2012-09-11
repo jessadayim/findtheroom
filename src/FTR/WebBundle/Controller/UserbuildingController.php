@@ -141,9 +141,61 @@ class UserbuildingController extends Controller
 				$imagehead 			= $this->getImageDatas($building_id,NULL,'head');
 				$imagemap			= $this->getImageDatas($building_id,NULL,'map');
 
-                $sqlFacilityList ="select * from facility2site where building_site_id = $id and deleted = 0";
-                $facArray = $conn->fetchAll($sqlFacilityList);
-                var_dump($facArray);
+                $sqlFacilityList ="select facilitylist_id from facility2site where building_site_id = $id and deleted = 0";
+                $facFetch = $conn->fetchAll($sqlFacilityList);
+                $facArray = NULL;
+                foreach($facFetch as $key => $value)
+                {
+                    $facArray[] = $value['facilitylist_id'];
+                }
+
+                foreach($fac_inroomlist as $key=>$value)
+                {
+                    $row = $fac_inroomlist[$key]['loop'];
+                    foreach($row as $keyRow => $valueRow)
+                    {
+                        $fId = $row[$keyRow]['id'];
+                        if(is_array($facArray)==true)
+                        {
+                            if(in_array($fId,$facArray)==true)
+                            {
+                                $fac_inroomlist[$key]['loop'][$keyRow]['checked']="yes";
+                            }
+                            else
+                            {
+                                $fac_inroomlist[$key]['loop'][$keyRow]['checked']="no";
+                            }
+                        }
+                        else
+                        {
+                            $fac_inroomlist[$key]['loop'][$keyRow]['checked']="no";
+                        }
+                    }
+                }
+
+                foreach($fac_outroomlist as $key=>$value)
+                {
+                    $row = $fac_outroomlist[$key]['loop'];
+                    foreach($row as $keyRow => $valueRow)
+                    {
+                        $fId = $row[$keyRow]['id'];
+                        if(is_array($facArray)==true)
+                        {
+                            if(in_array($fId,$facArray)==true)
+                            {
+                                $fac_outroomlist[$key]['loop'][$keyRow]['checked']="yes";
+                            }
+                            else
+                            {
+                                $fac_outroomlist[$key]['loop'][$keyRow]['checked']="no";
+                            }
+                        }
+                        else
+                        {
+                            $fac_outroomlist[$key]['loop'][$keyRow]['checked']="no";
+                        }
+                    }
+                }
 
 				$arrroomdata = NULL;
 				foreach ($arrroom as $key => $roompicvalue) {
@@ -180,13 +232,15 @@ class UserbuildingController extends Controller
 					$linkimagemap = "images/building/$id/".$imagemap[0]['photo_name'];
 					$nameimagemap = $imagemap[0]['photo_name'];
 				}
-				
+
+                $provinceName = $building_data['saddrprovince'];
+
 				$payType        = $this->getPayType($building_data['ipaytypeid']);
 		        $bkkZone        = $this->getBkkZone();
 		        $buildingType   = $this->getBuildingType($building_data['ibuildingtypeid']);
 		        $province       = $this->getProvince($building_data['saddrprovince'],null);
-                $district       = $this->getDistrictAction($building_data['saddrprovince'],$building_data['saddrprefecture']);
-                $provinceOther       = $this->getProvince($building_data['saddrprovince'],'other');
+                $district       = $this->getDistrictAction($provinceName,$building_data['saddrprefecture'],'call');
+                $provinceOther       = $this->getProvince($provinceName,'other');
                 $nearBTS			= $this->getNearly(2);
 				$nearMRT			= $this->getNearly(3);
 				$nearUniversity		= $this->getNearly(4);
@@ -207,6 +261,7 @@ class UserbuildingController extends Controller
             'zonelist' 		        => $bkkZone,
             'buildingType' 		    => $buildingType,
             'province' 		        => $province,
+            'provinceName'          => $provinceName,
             'district'              => $district,
             'provinceOther'         => $provinceOther,
 			'nearBTS' 				=> $nearBTS,
@@ -913,11 +968,12 @@ class UserbuildingController extends Controller
                 $facility = new Facility2site();
                 $facility->setBuildingSiteId($buildingSiteId);
                 $facility->setFacilitylistId($value);
+                $facility->setDeleted(0);
                 $em->persist($facility);
                 $em->flush();
             }
             else{
-                $facilityValue->setDeleted(NULL);
+                $facilityValue->setDeleted(0);
                 $em->flush();
             }
         }
@@ -1017,8 +1073,40 @@ class UserbuildingController extends Controller
         return $result;
     }
 
-    public function getDistrictAction($province,$district=null)
+    public function getDistrictAction($province,$district=null,$call=null)
     {
+        //echo $province;exit();
+        if( $province != null)
+        {
+            $amphur = $this->getAmphur($province,$district);
+            //var_dump($district);exit();
+            if(!empty($call))
+            {
+                return $amphur;
+            }
+            echo "
+                <div class=\"styled-select\">
+                <select id=\"district\" name=\"district\" class=\"select\" onchange=\"postData('head');\">";
+            foreach($amphur as $key=>$var){
+                echo "<option value=\"".$amphur[$key]['AMPHUR_VALUE']."\">".$amphur[$key]['AMPHUR_NAME']."</option>";
+            }
+            echo "
+                </div>
+                </select>
+            ";
+        }
+        else
+        {
+            echo "no";
+        }
+        exit();
+    }
+
+    function getAmphur($province=null,$district=null)
+    {
+        $result_data = array();
+        $all[]       = array('AMPHUR_VALUE'=>0,'AMPHUR_NAME'=>' - กรุณาระบุ - ','checked'=>'no');
+        $whereQuery  = NULL;
         $conn= $this->get('database_connection');
         if(!$conn){ die("MySQL Connection error");}
         try{
@@ -1030,80 +1118,65 @@ class UserbuildingController extends Controller
                 $sqlPlus2 = "AMPHUR_NAME LIKE '%$district%'
                       AND";
             }
-            $result_data = null;
             if(!empty($province))
             {
-                $sql = "
-                    (SELECT
-                      AMPHUR_NAME AS AMPHUR_VALUE,
-                      AMPHUR_NAME AS AMPHUR_NAME,
-                      'no' AS checked,
-                      AMPHUR_NAME AS OrderBy
-                    FROM
-                      amphur
-                    WHERE $sqlPlus province_id IN
-                      (SELECT
-                        province_id
-                      FROM
-                        province
-                      WHERE province_name LIKE '%$province%'))
-                    UNION
-                    (SELECT
-                      AMPHUR_NAME AS AMPHUR_VALUE,
-                      AMPHUR_NAME AS AMPHUR_NAME,
-                      'yes' AS checked,
-                      AMPHUR_NAME AS OrderBy
-                    FROM
-                      amphur
-                    WHERE $sqlPlus2 province_id IN
-                      (SELECT
-                        province_id
-                      FROM
-                        province
-                      WHERE province_name LIKE '%$province%'))
-                    ORDER BY OrderBy ASC
-                ";
-                $result_data = $conn->fetchAll($sql);
-            }
-
-        } catch (Exception $e) {
-            echo 'Caught exception: ',  $e->getMessage(), "\n";
-        }
-
-        if(!empty($province))
-        {
-            $all[] = array('AMPHUR_VALUE'=>'0','AMPHUR_NAME'=>'- กรุณาระบุ -','checked'=>'yes');
-            $result = array_merge($all,$result_data);
-        }
-        elseif(empty($province)&&empty($district)){
-            $all[] = array('AMPHUR_VALUE'=>'0','AMPHUR_NAME'=>'- กรุณาระบุ -','checked'=>'yes');
-            $result = $all;
-        }else{
-
-        }
-        //var_dump($result);exit();
-        return $result;
-    }
-
-    function getAmpher($id=null)
-    {
-        $result_data = array();
-        $all[]       = array('AMPHUR_VALUE'=>0,'AMPHUR_NAME'=>' - กรุณาระบุ - ');
-        $whereQuery  = NULL;
-        $conn= $this->get('database_connection');
-        if(!$conn){ die("MySQL Connection error");}
-        try{
-            if($id!=null)
-            {
-                $whereQuery .= " AND PROVINCE_ID = '$id'";
-                $sql = "
-				  SELECT AMPHUR_NAME as AMPHUR_VALUE , AMPHUR_NAME
-				  FROM amphur
-				  WHERE 1 $whereQuery
-			    ";
+                if(!empty($district))
+                {
+                    $sql = "
+                        (SELECT
+                          AMPHUR_NAME AS AMPHUR_VALUE,
+                          AMPHUR_NAME AS AMPHUR_NAME,
+                          'no' AS checked,
+                          AMPHUR_NAME AS OrderBy
+                        FROM
+                          amphur
+                        WHERE $sqlPlus province_id IN
+                          (SELECT
+                            province_id
+                          FROM
+                            province
+                          WHERE province_name LIKE '%$province%'))
+                        UNION
+                        (SELECT
+                          AMPHUR_NAME AS AMPHUR_VALUE,
+                          AMPHUR_NAME AS AMPHUR_NAME,
+                          'yes' AS checked,
+                          AMPHUR_NAME AS OrderBy
+                        FROM
+                          amphur
+                        WHERE $sqlPlus2 province_id IN
+                          (SELECT
+                            province_id
+                          FROM
+                            province
+                          WHERE province_name LIKE '%$province%'))
+                        ORDER BY OrderBy ASC
+                    ";
+                }
+                else
+                {
+                    $sql = "
+                        SELECT
+                          AMPHUR_NAME AS AMPHUR_VALUE,
+                          AMPHUR_NAME AS AMPHUR_NAME,
+                          'no' AS checked,
+                          AMPHUR_NAME AS OrderBy
+                        FROM
+                          amphur
+                        WHERE province_id IN
+                          (SELECT
+                            province_id
+                          FROM
+                            province
+                          WHERE province_name LIKE '%$province%')
+                    ";
+                }
                 $result_data = $conn->fetchAll($sql);
             }
             $result = array_merge($all,$result_data);
+            /*echo "<pre>";
+            var_dump($result);
+            echo "</pre>";*/
         } catch (Exception $e) {
             echo 'Caught exception: ',  $e->getMessage(), "\n";
         }
