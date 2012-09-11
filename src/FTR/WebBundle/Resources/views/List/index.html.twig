@@ -1,10 +1,9 @@
 {% extends 'FTRWebBundle:Layout:Layout.html.twig' %}
 {% block body %}
 <script type="text/javascript">
-
     $(function() {
         $("#demo5").paginate({
-            count 		: 30,
+            count 		: 4,
             start 		: 1,
             display     : 20,
             border					: false,
@@ -14,127 +13,20 @@
             mouse					: 'press'
         });
     });
-</script>
 
+    function switchDisplay(pageName){
+        alert(pageName);
+        document.getElementById("show").innerHTML = "pageName = "+pageName;
+    }
+</script>
 {% if searchType == 'shortSearch' or searchType == 'txtSearch' %}
     {% render "FTRWebBundle:Search:shortsearch" with {'parameter': parameter} %}
 {% endif %}
 {% if searchType == 'fullSearch' %}
 {% render "FTRWebBundle:Search:fullsearch" with {'parameter': parameter} %}
 {% endif %}
-<div id="show">
-<span class="big">ผลการค้นหา{{ textSearch }}</span><span class="normal"> เจอทั้งหมด {{ numData }} ห้องพัก</span>
-<span class="normal" style="float:right; padding-top:3px;">
-    {% if numData > 0 %}
-    แสดงผล {{ numStartDisplay }} - {{ numEnd }} จาก {{ numData }}
-    {% endif %}
-</span>
-<!--<span class="normal" style="float:right; margin-left:20px;">ต่อหน้า</span>
-<div class="styled-select">
-    <select class="select">
-        <option value="5">5</option>
-        <option value="10">10</option>
-        <option value="50">50</option>
-        <option value="100">100</option>
-    </select>
-</div>          {{txtSearch}}
-<span class="normal" style="float:right; margin-right:20px;">แสดงผล</span><br>--><br>
-    {% if numData > 0 %}
-        {% for rlist in result %}
-        <form action="{{path('FTRWebBundle_detail')}}" method="post">
-            <input type="hidden" value="{{ rlist.id }}" name ="bid" id="bid">
-        <div class="result">
-            {% if rlist.facilitylist_id==1 or rlist.facilitylist_id==2 %}
-            <div class="wifi"></div>
-            {% endif %}
 
-            <div style=" display:block; position: absolute; margin-left: 0px; margin-top: 127px; width:200px; text-align:center;">ราคา {{ rlist.start_price }} - {{ rlist.end_price }} บาท</div>
-            <div class="thumbframe">
-
-                <img src="{{asset('images/show.png')}}" class="thumb omega"/></div>
-
-            <div class="desc">
-                <table width="600" border="0" style="margin-top:-8px; position:relative;">
-                    <tr style="font-size:26px">
-                        <td width="90">
-                            หอพัก
-                        </td>
-                        <td colspan="3">
-                            {{ rlist.building_name }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width="90">
-                            ประเภท
-                        </td>
-                        <td width="180">
-                            {{ rlist.type_name }}
-                        </td>
-                        <td width="90">
-                            ชนิด
-                        </td>
-                        <td width="180">
-                            {{ rlist.typename }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width="90" valign="top">
-                            {% if rlist.addr_province == 'กรุงเทพ' %}
-                                โซนในกรุงเทพฯ
-                            {% else %}
-                                อำเภอ
-                            {% endif %}
-
-                        </td>
-                        <td width="180">
-                            {{ rlist.addr_prefecture }}
-                           <!--{{ rlist.addr_number }} {{ rlist.addr_prefecture }} {{ rlist.addr_province }} {{ rlist.addr_zipcode }}-->
-                        </td>
-                        <td width="90">
-                            จังหวัด
-                        </td>
-                        <td width="180">
-                            {{ rlist.addr_province }}
-                        </td>
-                    </tr>
-                    <!--
-                    <tr>
-                        <td width="90" valign="top" id="tade">
-                            โซนในกรุงเทพฯ
-                        </td>
-                        <td colspan="3">
-
-                        </td>
-                    </tr>
-                    -->
-                    <tr>
-                        <td width="90" valign="top" id="tade">
-                            รายละเอียด
-                        </td>
-                        <td colspan="3">
-                        <div class="short">
-
-                                {{ rlist.detail }}
-
-                        </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div class="dmap">
-                <span style="float:left; margin-right: 15px;">แผนที่</span>
-                <a id="gmap" href="{{asset('images/Apartment/ap1.png')}}" style="float:left; margin-right: 10px; margin-top: -10px;"><img src="{{asset('images/gmap.png')}}" /></a>
-                <a id="imap" href="{{asset('images/Apartment/ap1.png')}}" style="float:left; margin-top: -10px;"><img src="{{asset('images/imap.png')}}" /></a>
-                <input class="view" type="submit" value="" />
-            </div>
-        </div>
-        </form>
-        {% endfor %}
-    {% else %}
-        <div class="detail2"><span class="noData">ไม่พบข้อมูลที่ต้องการค้นหา</span></div>
-    {% endif %}
-</div>
-
+{% render "FTRWebBundle:List:showList" with {'dataSet': dataSet } %}
 
 {% if numData > 10 %}
 <div id="paging" style="padding-top: 10px;">
