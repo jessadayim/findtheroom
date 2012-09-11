@@ -140,6 +140,11 @@ class UserbuildingController extends Controller
 				$arrgallery 		= $this->getImageDatas($building_id,NULL,'gallery');
 				$imagehead 			= $this->getImageDatas($building_id,NULL,'head');
 				$imagemap			= $this->getImageDatas($building_id,NULL,'map');
+
+                $sqlFacilityList ="select * from facility2site where building_site_id = $id and deleted = 0";
+                $facArray = $conn->fetchAll($sqlFacilityList);
+                var_dump($facArray);
+
 				$arrroomdata = NULL;
 				foreach ($arrroom as $key => $roompicvalue) {
 					$roomtype2site_id = $roompicvalue['roomtype2site_id'];
@@ -550,10 +555,10 @@ class UserbuildingController extends Controller
 			$arrimagedata		= NULL;
 			if($type=='image')
 			{
-				$sheadimagename 	= trim($_POST['hdnfilename']);
-				$smapimagename 		= trim($_POST['hdnfilemap']);
-				$icountlineroom 	= trim($_POST['hdnMaxLine']);
-				$icountlinegallery 	= trim($_POST['hdnMaxLineGal']);
+				$sheadimagename 	= trim(@$_POST['hdnfilename']);
+				$smapimagename 		= trim(@$_POST['hdnfilemap']);
+				$icountlineroom 	= trim(@$_POST['hdnMaxLine']);
+				$icountlinegallery 	= trim(@$_POST['hdnMaxLineGal']);
 				if(!empty($sheadimagename)){
 					$arrimagedata[]		= array(
 						'photo_name'	=> $sheadimagename,
@@ -573,11 +578,11 @@ class UserbuildingController extends Controller
 				for ($i=0; $i < $icountlineroom ; $i++) {
 					if(!empty($_POST["hdnfilename$i"])||!empty($_POST["typeap_name$i"])||!empty($_POST["typeap_size$i"])||!empty($_POST["typeap_price$i"])){ 
 						$arrimagedata[] = array(
-								'imageid'		=> trim($_POST["imageid$i"]),
-								'photo_name'	=> trim($_POST["hdnfilename$i"]),
-								'typename'		=> trim($_POST["typeap_name$i"]),
-								'room_size'		=> trim($_POST["typeap_size$i"]),
-								'room_price'	=> trim($_POST["typeap_price$i"]),
+								'imageid'		=> trim(@$_POST["imageid$i"]),
+								'photo_name'	=> trim(@$_POST["hdnfilename$i"]),
+								'typename'		=> trim(@$_POST["typeap_name$i"]),
+								'room_size'		=> trim(@$_POST["typeap_size$i"]),
+								'room_price'	=> trim(@$_POST["typeap_price$i"]),
 								'photo_type'	=> 'room',
 								'sequence'		=> $i,
 							);
@@ -587,9 +592,9 @@ class UserbuildingController extends Controller
 				for ($i=0; $i < $icountlinegallery ; $i++) {
 					if(!empty($_POST["hdngalleryname$i"])||!empty($_POST["galtitle$i"])){
                         $arrimagedata[] = array(
-							'imageid'		=> trim($_POST["imageidgal$i"]),
-							'photo_name'	=> trim($_POST["hdngalleryname$i"]),
-							'description'	=> trim($_POST["galtitle$i"]),
+							'imageid'		=> trim(@$_POST["imageidgal$i"]),
+							'photo_name'	=> trim(@$_POST["hdngalleryname$i"]),
+							'description'	=> trim(@$_POST["galtitle$i"]),
 							'photo_type'	=> 'gallery',
 							'sequence'		=> $i,
 						);
@@ -601,24 +606,24 @@ class UserbuildingController extends Controller
 			}
 			elseif($type=='head')
 			{
-				$building_name	= trim($_POST['nameap']);
-				$building_addr	= trim($_POST['placeap']);
-				$province		= trim($_POST['province']);
-				$district		= trim($_POST['district']);
-				$zipCode		= trim($_POST['zipcode']);
-				$detail			= trim($_POST['placedetail']);
-				$longitude		= trim($_POST['longitude']);
-				$latitude		= trim($_POST['latitude']);
-				$building_type	= trim($_POST['aptype']);
-				$pay_type		= trim($_POST['paytype']);
-				$phone_number	= trim($_POST['telnumber']);
-				$month_stay		= trim($_POST['time']);
-				$contact_name	= trim($_POST['contact_person']);
-				$water_price	= trim($_POST['water_price']);
-				$contact_email	= trim($_POST['contact_email']);
-				$electric_price	= trim($_POST['power_price']);
-				$website		= trim($_POST['website']);
-				$internet_price	= trim($_POST['internet_price']);
+				$building_name	= trim(@$_POST['nameap']);
+				$building_addr	= trim(@$_POST['placeap']);
+				$province		= trim(@$_POST['province']);
+				$district		= trim(@$_POST['district']);
+				$zipCode		= trim(@$_POST['zipcode']);
+				$detail			= trim(@$_POST['placedetail']);
+				$longitude		= trim(@$_POST['longitude']);
+				$latitude		= trim(@$_POST['latitude']);
+				$building_type	= trim(@$_POST['aptype']);
+				$pay_type		= trim(@$_POST['paytype']);
+				$phone_number	= trim(@$_POST['telnumber']);
+				$month_stay		= trim(@$_POST['time']);
+				$contact_name	= trim(@$_POST['contact_person']);
+				$water_price	= trim(@$_POST['water_price']);
+				$contact_email	= trim(@$_POST['contact_email']);
+				$electric_price	= trim(@$_POST['power_price']);
+				$website		= trim(@$_POST['website']);
+				$internet_price	= trim(@$_POST['internet_price']);
 				if(empty($internet_price))
                 {
                     $internet_price = null;
@@ -649,7 +654,10 @@ class UserbuildingController extends Controller
 			}
 			elseif($type=='other')
 			{
-				echo "other";
+                $facilityList = @$_POST['fac'];
+                $alert = $this->saveFacilityData($id,$facilityList);
+                $alert = $alert.'fac';
+                echo $alert;
 			}
 		}
 		exit();
@@ -664,7 +672,7 @@ class UserbuildingController extends Controller
 
 			if(!empty($id)||!empty($value['photo_name'])){
 
-				$imagevalue = $em->getRepository('FTRWebBundle:Image')->findOneBy(array(
+				$imageValue = $em->getRepository('FTRWebBundle:Image')->findOneBy(array(
                     'building_site_id'=>$id,
                     'photo_type'=>$value['photo_type'],
                     'sequence'=>$value['sequence']));
@@ -708,7 +716,7 @@ class UserbuildingController extends Controller
 					);
 				}
 
-				if(empty($imagevalue))
+				if(empty($imageValue))
 				{
 					$image = new Image();
 					$image->setBuildingSiteId($id);
@@ -726,17 +734,28 @@ class UserbuildingController extends Controller
 					$em->flush();
 				}
 				else {
-					
-					$imagevalue->setPhotoName($photo_name);
-					$imagevalue->setPhotoType($photo_type);
-					$imagevalue->setSequence($sequence);
-					$imagevalue->setDescription($description);
-					$roomtype2siteid = $imagevalue->getRoomtype2siteId();
+                    $oldImageName = $imageValue->getPhotoName();
+					$pathImage = $this->getPathUpload($id);
+                    $path = $pathImage."/".$oldImageName;
+
+                    if(file_exists($path))
+                    {
+                        if($photo_name!=$oldImageName)
+                        {
+                            unlink($path);
+                        }
+                    }
+
+                    $imageValue->setPhotoName($photo_name);
+                    $imageValue->setPhotoType($photo_type);
+                    $imageValue->setSequence($sequence);
+                    $imageValue->setDescription($description);
+					$roomtype2siteid = $imageValue->getRoomtype2siteId();
 					if($value['photo_type']=='room')
 					{
 						$roomtype2siteid = $this->saveRoomtypeData($id, $data, $roomtype2siteid);
 					}
-					$imagevalue->setRoomtype2siteId($roomtype2siteid);
+                    $imageValue->setRoomtype2siteId($roomtype2siteid);
 					$em->flush();
 				}
 			}
@@ -863,10 +882,48 @@ class UserbuildingController extends Controller
         return "complete";
 	}
 	
-	public function saveOtherData($id)
+	public function saveOtherData($id,$arrData)
 	{
-		
+		return "complete";
 	}
+
+
+    public function saveFacilityData($buildingSiteId,$arrData)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $conn= $this->get('database_connection');
+        if(!$conn){ die("MySQL Connection error");}
+        try{
+            $sql = "
+				UPDATE facility2site
+				SET deleted=1
+				WHERE building_site_id=$buildingSiteId
+			";
+            $conn->query($sql);
+        } catch (Exception $e) {
+            echo 'Caught exception: ',  $e->getMessage(), "\n";
+        }
+
+        foreach($arrData as $key => $value)
+        {
+            $facilityValue = $em->getRepository('FTRWebBundle:Facility2site')->findOneBy(array('facilitylist_id'=>intval($value),'building_site_id'=>$buildingSiteId));
+            if(empty($facilityValue))
+            {
+                $facility = new Facility2site();
+                $facility->setBuildingSiteId($buildingSiteId);
+                $facility->setFacilitylistId($value);
+                $em->persist($facility);
+                $em->flush();
+            }
+            else{
+                $facilityValue->setDeleted(NULL);
+                $em->flush();
+            }
+        }
+
+        return "complete";
+    }
 	
 	function getBkkZone()
     {
@@ -891,7 +948,7 @@ class UserbuildingController extends Controller
     function getProvince($provinceName,$type=null)
     {
         $result_data = array();
-        $all[] = array('PROVINCE_VALUE'=>'0','PROVINCE_NAME'=>'- กรุณาระบุ -');
+        $all[] = array('PROVINCE_VALUE'=>'0','PROVINCE_NAME'=>'- กรุณาระบุ -','checked'=>'no');
         $sqlPlus = null;$sqlPlus2 = null;
         $conn= $this->get('database_connection');
         if(!$conn){ die("MySQL Connection error");}
@@ -901,7 +958,7 @@ class UserbuildingController extends Controller
                 case 'other':
 
                     $sqlPlus = " AND PROVINCE_NAME NOT LIKE '%กรุงเทพมหานคร%'";
-                    $sqlPlus2 = "AND PROVINCE_NAME NOT LIKE '%กรุงเทพมหานคร%'";
+                    $sqlPlus2 = "WHERE PROVINCE_NAME NOT LIKE '%กรุงเทพมหานคร%'";
                     break;
                 default:
 
@@ -937,13 +994,14 @@ class UserbuildingController extends Controller
                 $sql = "
                     SELECT
                       PROVINCE_NAME AS PROVINCE_VALUE,
-                      PROVINCE_NAME_ENG AS PROVINCE_NAME,
-                      PROVINCE_NAME AS OrderBy
+                      PROVINCE_NAME AS PROVINCE_NAME,
+                      'no' AS checked
                     FROM
                       province $sqlPlus2
-                    ORDER BY OrderBy ASC
+                    ORDER BY PROVINCE_NAME ASC
                 ";
             }
+            //var_dump($sql);exit();
             $result_data = $conn->fetchAll($sql);
         } catch (Exception $e) {
             echo 'Caught exception: ',  $e->getMessage(), "\n";
@@ -955,6 +1013,7 @@ class UserbuildingController extends Controller
         else{
             $result = $result_data;
         }
+        //var_dump($result);
         return $result;
     }
 
