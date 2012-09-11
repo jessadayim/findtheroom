@@ -36,7 +36,8 @@ class ImageController extends Controller
               r.*,
               i.`photo_name`,
               i.`photo_type`,
-              i.`sequence`
+              i.`sequence`,
+              i.id AS image_id
             FROM
               `roomtype2site` r
               LEFT JOIN `image` i
@@ -51,7 +52,7 @@ class ImageController extends Controller
         foreach ($ObjRoomType2SiteImage as $key => $value) {
             if (empty($value['photo_name'])){
                 $ObjRoomType2SiteImage[$key]['photo_name'] = 'show.png';
-                $ObjRoomType2SiteImage[0]['id'] = 0;
+                $ObjRoomType2SiteImage[$key]['image_id'] = 0;
             }else{
                 $ObjRoomType2SiteImage[$key]['photo_name'] = "building/$id/".$value['photo_name'];
             }
@@ -78,7 +79,7 @@ class ImageController extends Controller
         foreach ($ObjGetGallery as $key => $value) {
             if (empty($value['photo_name'])){
                 $ObjGetGallery[$key]['photo_name'] = 'show.png';
-                $ObjGetGallery[0]['id'] = 0;
+                $ObjGetGallery[$key]['id'] = 0;
             }else{
                 $ObjGetGallery[$key]['photo_name'] = "building/$id/".$value['photo_name'];
             }
@@ -106,7 +107,6 @@ class ImageController extends Controller
             $ObjGetHead[0]['id'] = 0;
         }else{
             $ObjGetHead[0]['photo_name'] = "building/$id/" . $ObjGetHead[0]['photo_name'];
-
         }
         $sqlGetMap = "
             SELECT
@@ -178,6 +178,21 @@ class ImageController extends Controller
         $getTypePost = @$_POST['typePost'];
         $getIdImage = @$_POST['idImage'];
         $getNameImage = @$_POST['nameImage'];
+        $sqlGetImage = "
+            SELECT
+              `id`,
+              `building_site_id`,
+              `roomtype2site_id`,
+              `photo_name`,
+              `photo_type`,
+              `deleted`,
+              `description`,
+              `sequence`
+            FROM
+              `image`
+            WHERE `id` = $getIdImage
+              AND `deleted` != 1
+        ";
         switch ($getTypePost){
             case "head":{
                 if ($getIdImage == '0'){
@@ -187,6 +202,56 @@ class ImageController extends Controller
                     $entity -> setDescription('');
                     $entity -> setPhotoName($getNameImage);
                     $entity -> setPhotoType('head');
+                    $entity -> setSequence(0);
+                }else{
+                    $ObjGetImage = $this->getDataArray($sqlGetImage);
+                    $getNameImageOld = $ObjGetImage[0]['photo_name'];
+                    $this->deleteFileByBuildingId($getBuildingSiteId, $getNameImageOld);
+                    $entity = $em->getRepository('FTRWebBundle:Image')->find($getIdImage);
+                    $entity -> setPhotoName($getNameImage);
+                }
+            }break;
+            case "map":{
+                if ($getIdImage == '0'){
+                    $entity = new Image();
+                    $entity -> setDeleted(0);
+                    $entity -> setBuildingSiteId($getBuildingSiteId);
+                    $entity -> setDescription('');
+                    $entity -> setPhotoName($getNameImage);
+                    $entity -> setPhotoType('map');
+                    $entity -> setSequence(0);
+                }else{
+                    $ObjGetImage = $this->getDataArray($sqlGetImage);
+                    $getNameImageOld = $ObjGetImage[0]['photo_name'];
+                    $this->deleteFileByBuildingId($getBuildingSiteId, $getNameImageOld);
+                    $entity = $em->getRepository('FTRWebBundle:Image')->find($getIdImage);
+                    $entity -> setPhotoName($getNameImage);
+                }
+            }break;
+            case "room":{
+                $sqlGetImageByRoomType = "
+                    SELECT
+                      `id`,
+                      `building_site_id`,
+                      `roomtype2site_id`,
+                      `photo_name`,
+                      `photo_type`,
+                      `deleted`,
+                      `description`,
+                      `sequence`
+                    FROM
+                      `image`
+                    WHERE `roomtype2site_id` = $getIdImage
+                ";
+                $ObjGetImageByRoomType = $this->getDataArray($sqlGetImageByRoomType);
+                if (empty($ObjGetImageByRoomType)){
+                    $entity = new Image();
+                    $entity -> setDeleted(0);
+                    $entity -> setBuildingSiteId($getBuildingSiteId);
+                    $entity -> setRoomtype2siteId($getIdImage);
+                    $entity -> setDescription('');
+                    $entity -> setPhotoName($getNameImage);
+                    $entity -> setPhotoType('room');
                     $entity -> setSequence(0);
                 }else{
                     $sqlGetImage = "
@@ -201,20 +266,36 @@ class ImageController extends Controller
                           `sequence`
                         FROM
                           `image`
-                        WHERE `id` =
+                        WHERE `roomtype2site_id` = $getIdImage
                           AND `deleted` != 1
                     ";
                     $ObjGetImage = $this->getDataArray($sqlGetImage);
-                    $this->deleteFileByBuildingId($ObjGetImage[0][id], $ObjGetImage[0]['photo_name']);
-                    $entity = $em->getRepository('FTRWebBundle:Image')->find($getNameImage);
-//                    var_dump($entity);exit();
+                    $getNameImageOld = $ObjGetImage[0]['photo_name'];
+                    $this->deleteFileByBuildingId($getBuildingSiteId, $getNameImageOld);
+                    $getIdImageOld = $ObjGetImage[0]['id'];
+                    $entity = $em->getRepository('FTRWebBundle:Image')->find($getIdImageOld);
+                    $entity -> setPhotoName($getNameImage);
+                    $em->persist($entity);
+                }
+            }break;
+            case "gallery":break;
+            case "recommend":{
+                if ($getIdImage == '0'){
+                    $entity = new Image();
+                    $entity -> setDeleted(0);
+                    $entity -> setBuildingSiteId($getBuildingSiteId);
+                    $entity -> setDescription('');
+                    $entity -> setPhotoName($getNameImage);
+                    $entity -> setPhotoType('recommend');
+                    $entity -> setSequence(0);
+                }else{
+                    $ObjGetImage = $this->getDataArray($sqlGetImage);
+                    $getNameImageOld = $ObjGetImage[0]['photo_name'];
+                    $this->deleteFileByBuildingId($getBuildingSiteId, $getNameImageOld);
+                    $entity = $em->getRepository('FTRWebBundle:Image')->find($getIdImage);
                     $entity -> setPhotoName($getNameImage);
                 }
             }break;
-            case "map":break;
-            case "room":break;
-            case "gallery":break;
-            case "recommend":break;
             default :{
                 echo "error";
                 exit();
@@ -341,8 +422,13 @@ class ImageController extends Controller
      * ลบไฟล์รูปภาพ เมื่อมีคำสั่งลบรูปมา
      */
     private function deleteFileByBuildingId($id, $nameImage){
-        echo $path = "./images/building/$id/$nameImage";exit();
-        unlink($path);
+        $path = "./images/building/".$id."/".$nameImage;
+        if(!file_exists($path)){
+            echo "No File is path : '$path'";
+            exit();
+        }else{
+            unlink($path);
+        }
     }
 
     /*
