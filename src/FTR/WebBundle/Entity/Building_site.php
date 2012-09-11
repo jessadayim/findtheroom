@@ -197,7 +197,7 @@ class Building_site
     private $googlemap_url;
 
     /**
-     * @var boolean $nearly_place
+     * @var string $nearly_place
      *
      * @ORM\Column(name="nearly_place", type="string", length=255, nullable="true")
      */
@@ -754,7 +754,7 @@ class Building_site
      *
      * @param string $nearly_place
      */
-    public function setInternetReady($nearlyPlace)
+    public function setNearlyPlace($nearlyPlace)
     {
         $this->nearly_place = $nearlyPlace;
     }
@@ -764,7 +764,7 @@ class Building_site
      *
      * @return string
      */
-    public function getInternetReady()
+    public function getNearlyPlace()
     {
         return $this->nearly_place;
     }
