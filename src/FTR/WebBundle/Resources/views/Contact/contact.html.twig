@@ -32,48 +32,90 @@
 			'transitionIn' : 'elastic',
 			'transitionOut' : 'elastic'
 		});
+        // refresh captcha
+        $('img#refresh').click(function() {
+            change_captcha();
+        });
+
+        function change_captcha() {
+            document.getElementById('captcha').src = "{{asset('captcha/get_captcha.php?rnd=" + Math.random() + "')}}";
+        }
+        $('#btnsubmit').click(function() {
+            if( chValidate() ){
+                chkCaptcha();
+            }
+        });
 	}); 
 </script>
 <script>
-	function chValidate() {
-		var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-		var cap = "{{app.session.get('captcha')}}";
-		if ($('#name').val() == "") {
-			$("#txterror").html("กรุณากรอก ชื่อ");
-			return false;
-		} else if ($('#tel').val() == "") {
-			$("#txterror").html("กรุณากรอก หมายเลขโทรศัพท์");
-			return false;
-		} else if (document.getElementById('tel').value.length < 9) {
-			$("#txterror").html("หมายเลขโทรศัพท์ไม่ถูกต้อง");
-			return false;
-		} else if ($('#title').val() == "") {
-			$("#txterror").html("กรุณากรอก เรื่องที่ต้องการติดต่อ");
-			return false;
-		} else if ($('#mail').val() == "") {
-			$("#txterror").html("กรุณากรอกอีเมลล์");
-			return false;
-		} else if (reg.test($('#mail').val()) == false) {
-			$("#txterror").html("กรุณากรอก Email ให้ถูกต้อง");
-			return false;
-		} else if ($('#desc').val() == "") {
-			$("#txterror").html("กรุณากรอก รายละเอียดที่ต้องการติดต่อ");
-			return false;
-		} else if ($('#captcha').val() != cap) {
-			$("#txterror").html("กรุณากรอก รหัสให้ถูกต้อง");
-			return false;
-		} else {
-			return true;
-		}
-	}
+    function chkCaptcha() {
+        $.post("{{asset('captcha/post.php')}}", {
+            name : $('#code').val()
+        }, function(data) {
+            if (data == 1) {
+                $('#formContact').submit();
+            } else if (data == 0) {
+                $("#txterror").html("กรุณากรอก รหัสให้ตรง");
+                $("#txterror").hide();
+                $("#txterror").show("slow");
+                document.getElementById('txterror').focus();
+            }return false;
+        });
+    }
+
+    function chValidate() {
+        var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+
+        if ($('#name').val() == "") {
+            $("#txterror").html("กรุณากรอก ชื่อ");
+            $("#txterror").hide();
+            $("#txterror").show("slow");
+            document.getElementById('txterror').focus();
+            return false;
+        } else if ($('#tel').val() == "") {
+            $("#txterror").html("กรุณากรอก หมายเลขโทรศัพท์");
+            $("#txterror").hide();
+            $("#txterror").show("slow");
+            document.getElementById('txterror').focus();
+            return false;
+        } else if (document.getElementById('tel').value.length < 9) {
+            $("#txterror").html("หมายเลขโทรศัพท์ไม่ถูกต้อง");
+            $("#txterror").hide();
+            $("#txterror").show("slow");
+            document.getElementById('txterror').focus();
+            return false;
+        } else if ($('#title').val() == "") {
+            $("#txterror").html("กรุณากรอก เรื่องที่ต้องการติดต่อ");
+            $("#txterror").hide();
+            $("#txterror").show("slow");
+            document.getElementById('txterror').focus();
+            return false;
+        } else if ($('#mail').val() == "") {
+            $("#txterror").html("กรุณากรอกอีเมลล์");
+            return false;
+        } else if (reg.test($('#mail').val()) == false) {
+            $("#txterror").html("กรุณากรอก Email ให้ถูกต้อง");
+            $("#txterror").hide();
+            $("#txterror").show("slow");
+            document.getElementById('txterror').focus();
+            return false;
+        } else if ($('#desc').val() == "") {
+            $("#txterror").html("กรุณากรอก รายละเอียดที่ต้องการติดต่อ");
+            $("#txterror").hide();
+            $("#txterror").show("slow");
+            document.getElementById('txterror').focus();
+            return false;
+        } else if ($('#code').val() == "") {
+            $("#txterror").html("กรุณากรอก ยืนยันรหัส");
+            $("#txterror").hide();
+            $("#txterror").show("slow");
+            document.getElementById('txterror').focus();
+            return false;
+        } else {
+            return true;
+        }
+    }
 </script>
-<script>$("#refreshimg").live('click', function() {
-		$.post("{{path('FTRWebBundle_newimg')}}", function(data) {
-			$("#captchaimage").html("<img src='{{asset('captcha/captcha_img.jpg')}}' width='160' height='40' style='padding-left:0px; padding-bottom:10px;'/>");
-			//$("#captchaimage").load("{{asset('captcha/php/image_req.php')}}");
-		});
-		return false;
-	});</script>
 <div class="detail" style="margin-bottom:15px; height: 470px;">
 	<img src="{{asset('images/contact.png')}}" style="display:block; position:relative; float:none;" />
 	<hr class="line" style="top: 60px;" />
@@ -95,7 +137,7 @@
 		</table>
 	</div>
 	<div style="width:620px; display:block; position:relative; float:left;">
-		<form action="{{path('FTRWebBundle_sendcontact')}}" method="post" onsubmit="return chValidate();">
+        <form id="formContact" action="{{path('FTRWebBundle_sendcontact')}}" method="post" >
 			<table>
 				<tr valign="middle" height="40">
 					<td align="left" colspan="4">ติดต่อเรา :</td>
@@ -125,19 +167,20 @@
 					<td align="left" colspan="3">					<textarea id="desc" name="desc" type="text" maxlength="500" class="longdesc"></textarea></td>
 				</tr>
 				<tr height="20">
-					<td align="center" colspan="4"><div class="alertmsg" id="txterror"></div></td>
+					<td align="center" colspan="4"><div class="alertmsg"><label id="txterror"></label></div></td>
 				</tr>
 
 				<tr valign="top" height="40">
 					<td align="left" width="100" style="padding-top:10px;">กรอกรหัสยืนยันตามรูปภาพ : *</td>
 					<td align="left" width="180">
 					<div id="captchaimage">
-						<img src="{{asset('captcha/captcha_img.jpg')}}" width="160" height="40" style="padding-left:0px; padding-bottom:10px; padding-top:10px;"/>
-					</div><a href='' id='refreshimg' title='Click to refresh image'>refresh</a>
-					<input id="captcha" name="captcha" type="text" maxlength="6" />
+                        <img id="captcha" src="{{asset('captcha/get_captcha.php')}}" width="160" height="40" style="padding-left:0px; padding-bottom:10px; padding-top:10px;"/>
+
+                    </div><a><img src="{{asset('captcha/refresh.png')}}"  alt="" id="refresh" /></a>
+                    <input id="code" name="code" type="text" maxlength="5" />
 					</td>
 					<td align="left" colspan="2" style="padding-top:60px;">
-					<input class="send" type="submit" value="" />
+                    <input class="send" type="button" id="btnsubmit" value="" />
 					<input class="cancel" type="submit" value="" />
 					</td>
 				</tr>

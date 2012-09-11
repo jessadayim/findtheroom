@@ -19,5 +19,5 @@ autoSaveForm:
     defaults: { _controller: FTRWebBundle:Userbuilding:autoSaveForm,'type' :null }
 
 getDistrict:
-    pattern: /getdistrice/{province}/{district}
-    defaults: { _controller: FTRWebBundle:Userbuilding:getDistrict, 'district' :null }
+    pattern: /getdistrict/{province}
+    defaults: { _controller: FTRWebBundle:Userbuilding:getDistrict, 'province' :null }
