@@ -22,14 +22,20 @@
 
     var arrGalleryImage = [
         {% for ga in gallery %}
-            [{{ ga.count }}, {{ ga.id }} ],
+            [
+                {{ ga.count }},
+                {{ ga.id }},
+                "{{ asset('images/')}}{{ ga.photo_name }}",
+                "{{ ga.description }}"
+            ],
         {% else %}
-            [1, 0],
+            [1, 0, "{{ asset('images/show.png')}}", ''],
         {% endfor %}
     ];
     var idImageHead = {{ headImage[0].id }};
     var idImageMap = {{ mapImage[0].id }};
     var idImageRecommend = {{ recommendImage[0].id }};
+
     function loopGenUploadRoomImage(){
         for(var i=0 ; i < arrRoomImage.length ; i++){
             var id = arrRoomImage[i][0];
@@ -38,6 +44,80 @@
         }
     }
 
+    function deleteImage(idDelete){
+        if (!confirm("คุณต้องการลบรูปภาพที่ " + idDelete + ". ใช่หรือไม่")){
+            return false;
+        }
+        readDataGallery(idDelete - 1);
+        genTBGallery();
+    }
+
+    function genTBGallery(){
+        var strInner = '';
+        for(var i=0 ; i < arrGalleryImage.length ; i++){
+            strInner += innerTBGallery(arrGalleryImage[i][0], arrGalleryImage[i][2], arrGalleryImage[i][3]);
+        }
+        var saveHeight = $("#tbGallery").height();
+        $("#tbGallery").html(strInner);
+        loopGenUploadGalleryImage();
+        var newHeigth = $("#tbGallery").height();
+        newHeigth = newHeigth - saveHeight;
+        $("#divPostCreateImage").height($("#divPostCreateImage").height() + newHeigth);
+        $("#example-one").height($("#example-one").height() + newHeigth);
+//        $("#divPostCreateImage").css('height', 'auto');
+//        $("#example-one").css('height', 'auto');
+//        $("#divPostCreateImage").fadeIn('slow');
+    }
+
+    function readDataGallery(id){
+        var newArray = [];
+        var countDelete = 0;
+        for(var i=0 ; i < arrGalleryImage.length ; i++){
+            var count = i+1;
+            if (id == undefined){
+                newArray.push(
+                    [
+                        count,
+                        arrGalleryImage[i][1],
+                        arrGalleryImage[i][2],
+                        $("#galleryDesc_" + count).val()
+                    ]
+                );
+            }else if (id != i){
+                countDelete ++;
+                newArray.push(
+                    [
+                        countDelete,
+                        arrGalleryImage[i][1],
+                        arrGalleryImage[i][2],
+                        $("#galleryDesc_" + countDelete).val()
+                    ]
+                );
+            }
+        }
+        arrGalleryImage = newArray;
+    }
+
+    function innerTBGallery(id, path, description){
+        var strBtnDeleteImage = '<img class="deleteImage" onclick="deleteImage(' + id +
+                ')" src="{{asset('images/delete.png')}}" width="35" height="35" title="ลบรูปภาพนี้" />';
+        if (id == 1){
+            strBtnDeleteImage = "&nbsp;";
+        }
+        var strInner =
+            '<tr>'+
+                '<td width="30"><strong>' + id + '.</strong></td>'+
+                '<td width="220" id="galleryImgInner_' + id + '">'+
+                    '<img src="' + path + '" class="nopad thumb"/>'+
+                   '</td>'+
+                    '<td width="150" align="center"><input type="file" class="inputFile" id="galleryImgInput_' + id + '"/></td>'+
+                    '<td><textarea class="galleryDesc" rows="5" cols="50" id="galleryDesc_' + id +
+                    '" style="margin: 0px 0px 10px; width: 317px; height: 135px; " >' + description + '</textarea></td>' +
+                    '<td width="60" align="center">'+ strBtnDeleteImage +
+                '</td>'+
+            '</tr>';
+        return strInner;
+    }
     function loopGenUploadGalleryImage(){
         if (arrGalleryImage.length > 0){
             for(var i=0 ; i < arrGalleryImage.length ; i++){
@@ -88,13 +168,19 @@
 
     function postData(typePost, idImage, nameImage, arrayId)
     {
+        var desc = '';
+        if (typePost == 'gallery'){
+            var i = arrayId + 1;
+            desc = $("#galleryDesc_" + i).val();
+        }
         $.post(
             url,
             {
                 typePost : typePost,
                 idImage  : idImage,
                 nameImage: nameImage,
-                building_site_id : $("#building_site_id").val()
+                building_site_id : $("#building_site_id").val(),
+                description : desc
             },
             function(data) {
                 var id = data.split('_');
@@ -127,25 +213,37 @@
                     // (string | mandatory) the heading of the notification
                     title: 'บันทึกข้อมูลสำเร็จ',
                     // (string | mandatory) the text inside the notification
-                    text: 'ข้อมูลของท่านได้รับการบันทึกโดยอัตโนมัติ'
+                    text: 'ข้อมูลของท่านได้รับการบันทึกแล้ว'
                 });
         });
     }
 
     $(document).ready(function() {
-        $("#formCreateImage").submit(function() {
-            $('#divPostCreateImage').slideUp(300).delay(800).fadeOut(400);
+        $("#addGallery").click(function(){
+            var pathDefault = "{{ asset('images/show.png') }}";
+            readDataGallery();
+            var countGallery = arrGalleryImage.length + 1;
+            arrGalleryImage.push([countGallery, 0, pathDefault, '']);
+            genTBGallery();
             return false;
         });
 
-//        $(".uploadify").live('click',function(){
-//            alert(4);
-//        });
+
+        $("#btnCancel").click(function(){
+            $('#divPostCreateImage').slideUp(300).delay(800).fadeOut(400);
+        });
     });
 </script>
 
 <style type="text/css" >
+
+
+    .deleteImage { cursor: pointer;}
+
+    /*กำหนดขนาดรูป*/
     .nopad { width: 250px; heigth: 275px; }
+
+    /*ทำให้แท็บที่ไม่ได้ใช้ซ้อน*/
     .hide-img { position: absolute; top: -9999px; left: -9999px; }
 
         /* Specific to example one */
@@ -230,7 +328,7 @@
                                         <img src="{{ asset('images/')}}{{ room.photo_name }}" class="nopad thumb"/>
                                         <input type="hidden" value="{{ room.id }}"/>
                                     </td>
-                                    <td width="150" align="right"><input type="file" class="inputFile" id="roomImgInput_{{ room.count }}" onclick="alert(5)"/></td>
+                                    <td width="150" align="right"><input type="file" class="inputFile" id="roomImgInput_{{ room.count }}" /></td>
                                 </tr>
                                 <tr><td>&nbsp;</td></tr>
                             {% else %}
@@ -240,7 +338,6 @@
                                         <a class="createSite" href="{{ path('roomtype2site_show', { 'id': buildingSite[0].id }) }}">เพิ่ม ROOM TYPE</a>
                                     </strong>
                                 </td>
-
                             </tr>
                             {% endfor %}
                             </table>
@@ -250,56 +347,58 @@
                     <ul id="jquerytuts" class="hide-img">
                         <li>
                             <h4>GALLERY</h4>
-                            <table>
+                            <table id="tbGallery">
                             {% for gar in gallery %}
                                 <tr>
                                     <td width="30"><strong>{{ gar.count }}.</strong></td>
                                     <td width="220" id="galleryImgInner_{{ gar.count }}">
-                                        <img src="{{ asset('images/')}}{{ gar.photo_name }}" class="nopad thumb"/>
+                                        <img class="deleteImage" id="btnDeleteImage_{{ gar.count }}" src="{{ asset('images/')}}{{ gar.photo_name }}" class="nopad thumb"/>
                                     </td>
                                     <td width="150"><input type="file" class="inputFile" id="galleryImgInput_{{ gar.count }}"/></td>
-                                </tr>
-                                <tr>
+                                    <td><textarea class="galleryDesc" rows="5" cols="50"  id="galleryDesc_{{ gar.count }}" style="margin: 0px 0px 10px; width: 317px; height: 135px; " >{{ gar.description }}</textarea></td>
                                     <td>
                                         {% if gar.count > 1 %}
-                                            <img src="{{asset('images/delete.png')}}" title="ลบรูปภาพนี้" />
+                                        <img src="{{asset('images/delete.png')}}" width="35" height="35" title="ลบรูปภาพนี้" />
                                         {% else %}
-                                            &nbsp;
-                                       {% endif %}
+                                        &nbsp;
+                                        {% endif %}
                                     </td>
                                 </tr>
                             {% else %}
                                 <tr>
                                     <td width="30"><strong>1.</strong></td>
                                     <td width="220" id="galleryImgInner_1">
-                                        <img src="{{ asset('images/show.png')}}" class="nopad thumb"/>
+                                        <img class="deleteImage" id="btnDeleteImage_1" src="{{ asset('images/show.png')}}" class="nopad thumb"/>
                                     </td>
-                                    <td width="150"><input type="file" class="inputFile" id="galleryImgInput_1"/></td>
-                                </tr>
-                                <tr>
+                                    <td width="150" align="right"><input type="file" class="inputFile" id="galleryImgInput_1"/></td>
+                                    <td><textarea class="galleryDesc" title="รายละเอียด" rows="5" cols="50" id="galleryDesc_1" style="margin: 0px 0px 10px; width: 317px; height: 135px; " /></td>
                                     <td>&nbsp;</td>
                                 </tr>
                             {% endfor %}
                             </table>
+                            <div><a href="#" id="addGallery"><img src="{{ asset('images/addmore2.png')}}"/></a></div>
                         </li>
                     </ul>
 
                     <ul id="classics" class="hide-img">
                         <li>
-                            <h4>RECOMMEND</h4>
-                            <div id="recommendImgInner">
-                                <img src="{{ asset('images/')}}{{ recommendImage[0].photo_name }}" class="nopad thumb" />
-                            </div>
-                            <input type="file" class="inputFile" id="recommendImgInput" />
+                            <table>
+                                <tr>
+                                    <td width="150" align="left"><h4>RECOMMEND</h4></td>
+                                    <td width="250"><div id="recommendImgInner">
+                                        <img src="{{ asset('images/')}}{{ recommendImage[0].photo_name }}" class="nopad thumb" />
+                                    </div></td>
+                                    <td width="150" align="right" valign="bottom"><input type="file" class="inputFile" id="recommendImgInput" /></td>
+                                </tr>
+                            </table>
                         </li>
                     </ul>
 
                 </div> <!-- END List Wrap -->
 
             </div> <!-- END Organic Tabs (Example One) -->
-            <br />
 			<span style="float: right;">
-				<input type="submit" name="upload" value="ClOSE">
+				<img src="{{ asset('images/cancel.png')}}" id="btnCancel" width="50" height="50" style="cursor:pointer;" />
 			</span>
         </form>
     </fieldset>
