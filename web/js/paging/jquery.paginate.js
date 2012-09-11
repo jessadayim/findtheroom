@@ -15,16 +15,17 @@
 	if(bVer.indexOf('MSIE 7.0') > 0)
 		var ver = "ie7";
 	$.fn.paginate.defaults = {
-		count 		: 5,
-		start 		: 12,
-		display  	: 5,
-		border					: false,
-		text_color  			: '#8cc59d',
-		border_hover_color		: '#fff',
-		text_hover_color  		: '#fff', 
+        //count 		: 30,
+        //start 		: 1,
+        //display     : 20,
+        //border					: false,
+        //text_color  			: '#423C3B',
+        //text_hover_color  		: '#423C3B',
+        //images					: false,
+        //mouse					: 'press',
 		rotate      			: true,
-		images					: true,
-		mouse					: 'slide',
+		//images					: true,
+		//mouse					: 'slide',
 		onChange				: function(){return false;}
 	};
 	$.fn.draw = function(o,obj,selectedpage){
@@ -237,8 +238,14 @@
 				else
 					_ulwrapdiv.animate({scrollLeft: left + tmp - _first.parent().width() + 'px'});	
 				o.onChange(currval);
-				curvalsave = currval;	
+				curvalsave = currval;
+
+                // link ไปเรียกข้อมูล ตามเลขเพจที่กด
+                //peung>>>>
+                switchDisplay(currval);
+                //end peung<<<<
 			}
+
 			
 		});
 		
