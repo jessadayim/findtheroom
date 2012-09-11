@@ -197,11 +197,11 @@ class Building_site
     private $googlemap_url;
 
     /**
-     * @var boolean $internet_ready
+     * @var boolean $nearly_place
      *
-     * @ORM\Column(name="internet_ready", type="boolean", nullable="true")
+     * @ORM\Column(name="nearly_place", type="string", length=255, nullable="true")
      */
-    private $internet_ready;
+    private $nearly_place;
 
     /**
      * @var string $addr_number
@@ -750,23 +750,23 @@ class Building_site
     }
 
     /**
-     * Set internet_ready
+     * Set nearly_place
      *
-     * @param boolean $internet_ready
+     * @param string $nearly_place
      */
-    public function setInternetReady($internet_ready)
+    public function setInternetReady($nearlyPlace)
     {
-        $this->internet_ready = $internet_ready;
+        $this->nearly_place = $nearlyPlace;
     }
 
     /**
-     * Get internet_ready
+     * Get nearly_place
      *
-     * @return boolean 
+     * @return string
      */
     public function getInternetReady()
     {
-        return $this->internet_ready;
+        return $this->nearly_place;
     }
 
     /**
