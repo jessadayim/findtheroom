@@ -38,7 +38,10 @@
         });
 
         function change_captcha() {
-            document.getElementById('captcha').src = document.getElementById('captcha').src + "?rnd=" + Math.random();
+            var src = document.getElementById('captcha').src;
+            var subStr = src.split('?');
+
+            document.getElementById('captcha').src = subStr[0] + "?rnd=" + Math.random();
         }
         $('#btnsubmit').click(function() {
             if( chValidate() ){
