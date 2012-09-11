@@ -102,14 +102,17 @@ class MainController extends Controller {
 		}
 
 		try {
-			$sql1 = "SELECT b.*,n.*,t.*,z.* FROM building_site b JOIN building_type t ON b.building_type_id = t.id
-									 JOIN zone z ON b.zone_id = z.id
-									 JOIN nearly2site n2 ON n2.building_site_id = b.id
-									 JOIN nearly_location n ON n.id = n2.nearly_location_id
-									 JOIN nearly_type nt ON nt.id = n.nearly_type_id
-						WHERE b.recommend = 1 and nt.id = 1";
-			$objSQL1 = $conn -> fetchAll($sql1);
-			if (count($objSQL1) <= 3) {
+			$sql1Bts = "SELECT b.id, b.building_name, n.name, t.type_name, b.start_price, b.end_price
+                        FROM building_site b
+                        JOIN building_type t ON b.building_type_id = t.id
+                        JOIN nearly2site n2 ON n2.building_site_id = b.id
+                        JOIN nearly_location n ON n.id = n2.nearly_location_id
+                        JOIN nearly_type nt ON nt.id = n.nearly_type_id
+                        WHERE b.recommend =1
+                        AND nt.id =1
+                        AND b.deleted !=  '1'";
+			$objBts = $conn -> fetchAll($sql1Bts);
+			if (count($objBts) <= 3) {
 				$numrow1 = 0;
 			} else {
 				$numrow1 = 1;
@@ -119,14 +122,17 @@ class MainController extends Controller {
 			echo 'Caught exception: ', $e -> getMessage(), "\n";
 		}
 		try {
-			$sql2 = "SELECT b.*,n.*,t.*,z.* FROM building_site b JOIN building_type t ON b.building_type_id = t.id
-									 JOIN zone z ON b.zone_id = z.id
-									 JOIN nearly2site n2 ON n2.building_site_id = b.id
-									 JOIN nearly_location n ON n.id = n2.nearly_location_id
-									 JOIN nearly_type nt ON nt.id = n.nearly_type_id
-						WHERE b.recommend = 1 and nt.id = 2";
-			$objSQL2 = $conn -> fetchAll($sql2);
-			if (count($objSQL2) <= 3) {
+			$sqlMrt = "SELECT b.id, b.building_name, n.name, t.type_name, b.start_price, b.end_price
+                        FROM building_site b
+                        JOIN building_type t ON b.building_type_id = t.id
+                        JOIN nearly2site n2 ON n2.building_site_id = b.id
+                        JOIN nearly_location n ON n.id = n2.nearly_location_id
+                        JOIN nearly_type nt ON nt.id = n.nearly_type_id
+                        WHERE b.recommend =1
+                        AND nt.id =2
+                        AND b.deleted !=  '1'";
+			$objMrt = $conn -> fetchAll($sqlMrt);
+			if (count($objMrt) <= 3) {
 				$numrow2 = 0;
 			} else {
 				$numrow2 = 1;
@@ -136,14 +142,17 @@ class MainController extends Controller {
 			echo 'Caught exception: ', $e -> getMessage(), "\n";
 		}
 		try {
-			$sql3 = "SELECT b.*,n.*,t.*,z.* FROM building_site b JOIN building_type t ON b.building_type_id = t.id
-									 JOIN zone z ON b.zone_id = z.id
-									 JOIN nearly2site n2 ON n2.building_site_id = b.id
-									 JOIN nearly_location n ON n.id = n2.nearly_location_id
-									 JOIN nearly_type nt ON nt.id = n.nearly_type_id
-						WHERE b.recommend = 1 and nt.id =3";
-			$objSQL3 = $conn -> fetchAll($sql3);
-			if (count($objSQL3) <= 3) {
+			$sqlCollege = "SELECT b.id, b.building_name, n.name, t.type_name, b.start_price, b.end_price
+                        FROM building_site b
+                        JOIN building_type t ON b.building_type_id = t.id
+                        JOIN nearly2site n2 ON n2.building_site_id = b.id
+                        JOIN nearly_location n ON n.id = n2.nearly_location_id
+                        JOIN nearly_type nt ON nt.id = n.nearly_type_id
+                        WHERE b.recommend =1
+                        AND nt.id =3
+                        AND b.deleted !=  '1'";
+			$objCollege = $conn -> fetchAll($sqlCollege);
+			if (count($objCollege) <= 3) {
 				$numrow3 = 0;
 			} else {
 				$numrow3 = 1;
@@ -151,7 +160,31 @@ class MainController extends Controller {
 		} catch (Exception $e) {
 			echo 'Caught exception: ', $e -> getMessage(), "\n";
 		}
-		return $this -> render('FTRWebBundle:Main:recom.html.twig', array('item1' => $objSQL1, 'numrow1' => $numrow1, 'item2' => $objSQL2, 'numrow2' => $numrow2, 'item3' => $objSQL3, 'numrow3' => $numrow3));
+        try {
+            $sqlCountView = "SELECT b.id,b.building_name,n.name,t.type_name, b.start_price, b.end_price, nt.type_name AS nearlyType
+                                FROM banner_count ban
+                                INNER JOIN building_site b ON ban.building_site_id = b.id
+                                INNER JOIN building_type t ON b.building_type_id = t.id
+                                INNER JOIN zone z ON b.zone_id = z.id
+                                INNER JOIN nearly2site n2 ON n2.building_site_id = b.id
+                                INNER JOIN nearly_location n ON n.id = n2.nearly_location_id
+                                INNER JOIN nearly_type nt ON nt.id = n.nearly_type_id
+                                WHERE b.recommend =1 AND b.deleted !=  '1'
+                                GROUP BY ban.building_site_id
+                                ORDER BY COUNT(ban.building_site_id) DESC";
+            $objCountView = $conn -> fetchAll($sqlCountView);
+            if (count($objCountView) <= 3) {
+                $numrow4 = 0;
+            } else {
+                $numrow4 = 1;
+            }
+        } catch (Exception $e) {
+            echo 'Caught exception: ', $e -> getMessage(), "\n";
+        }
+		return $this -> render('FTRWebBundle:Main:recom.html.twig', array(
+            'roomBts' => $objBts, 'numrow1' => $numrow1
+            , 'roomMrt' => $objMrt, 'numrow2' => $numrow2
+            , 'roomCollege' => $objCollege, 'numrow3' => $numrow3
+            , 'countView' => $objCountView,'numrow4' => $numrow4 ));
 	}
-
 }

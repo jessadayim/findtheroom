@@ -1,49 +1,306 @@
-<h1>Image</h1>
+<script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script>
 
-<table class="record_properties">
-    <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ entity.id }}</td>
-        </tr>
-        <tr>
-            <th>Building_site_id</th>
-            <td>{{ entity.buildingsiteid }}</td>
-        </tr>
-        <tr>
-            <th>Roomtype2site_id</th>
-            <td>{{ entity.roomtype2siteid }}</td>
-        </tr>
-        <tr>
-            <th>Photo_name</th>
-            <td>{{ entity.photoname }}</td>
-        </tr>
-        <tr>
-            <th>Photo_type</th>
-            <td>{{ entity.phototype }}</td>
-        </tr>
-        <tr>
-            <th>Deleted</th>
-            <td>{{ entity.deleted }}</td>
-        </tr>
-    </tbody>
-</table>
+<link rel="stylesheet" type="text/css" href="{{asset('js/uploadify/uploadify.css')}}">
+<script src="{{asset('js/paging/organic_tab/organictabs.jquery.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/uploadify/jquery.uploadify-3.1.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/gritter/js/jquery.gritter.js')}}"></script>
+<link rel="stylesheet" type="text/css" href="{{asset('js/gritter/css/jquery.gritter.css')}}" />
+<script>
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('image') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('image_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('image_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
+    var swfpath = "{{asset('js/uploadify/uploadify.swf')}}";
+    var pathUploadify = "{{asset('js/uploadify/uploadify.php')}}";
+    var pathImgUpload = "{{asset('images/building/')}}";
+    var url = "{{ path('image_create') }}";
+    var idClickUpload = '';
+    var arrRoomImage = [
+        {% for room in roomtype2siteimage %}
+            [{{ room.count }}, {{ room.id }}],
+        {% else %}
+            [1, 0]
+        {% endfor %}
+    ];
+
+    var arrGalleryImage = [
+        {% for ga in gallery %}
+            [{{ ga.count }}, {{ ga.id }} ],
+        {% else %}
+            [1, 0],
+        {% endfor %}
+    ];
+    var idImageHead = {{ headImage[0].id }};
+    var idImageMap = {{ mapImage[0].id }};
+    var idImageRecommend = {{ recommendImage[0].id }};
+    function loopGenUploadRoomImage(){
+        for(var i=0 ; i < arrRoomImage.length ; i++){
+            var id = arrRoomImage[i][0];
+            var idImage = arrRoomImage[i][1];
+            genUpload('#roomImgInput_' + id, '#roomImgInner_' + id, 'room', idImage, i);
+        }
+    }
+
+    function loopGenUploadGalleryImage(){
+        if (arrGalleryImage.length > 0){
+            for(var i=0 ; i < arrGalleryImage.length ; i++){
+                var id = arrGalleryImage[i][0];
+                var idImage = arrGalleryImage[i][1];
+                genUpload('#galleryImgInput_' + id, '#galleryImgInner_' + id, 'gallery', idImage, i);
+            }
+        }else{
+            genUpload('#galleryImgInput_1', '#galleryImgInner_1', 'gallery', 0);
+        }
+    }
+
+    function genUpload(btnUpload, idReload, typeImage, idImage, arrayId){
+        $(btnUpload).uploadify({
+            'formData'      : {
+                'ownername' : 'ownername',
+                'buildid'   : $("#building_site_id").val(),
+                'fieldname' : 'name',
+                'typefield' : 'room'
+            },
+            'swf'      : swfpath,
+            'uploader' : pathUploadify,
+            'fileSizeLimit' : '120KB',
+            'fileTypeExts' : '*.gif; *.jpg; *.png',
+            'onFallback' : function() {
+                alert('Flash was not detected.');// detect flash compatible
+            },'onUploadSuccess' : function(file, data, response) {
+                var imgName = data.split('_');
+                postData(typeImage, idImage, imgName[0], arrayId);
+                reloadImgae(idReload , imgName[0]);
+            }
+        });
+    }
+    $(function() {
+        $("#example-one").organicTabs();
+
+        genUpload("#headImgInput", '#headImgInner', 'head', idImageHead);
+        genUpload("#mapImgInput", '#mapImgInner', 'map', idImageMap);
+        genUpload('#recommendImgInput', "#recommendImgInner", 'recommend', idImageRecommend);
+        loopGenUploadRoomImage();
+        loopGenUploadGalleryImage();
+    });
+
+    function reloadImgae(id, img){
+        var path = pathImgUpload + $("#building_site_id").val()+"/" + img;
+        $(id).fadeOut().html('<img src="' + path + '" style="" class="nopad thumb"/>').fadeIn("slow");
+    }
+
+    function postData(typePost, idImage, nameImage, arrayId)
+    {
+        $.post(
+            url,
+            {
+                typePost : typePost,
+                idImage  : idImage,
+                nameImage: nameImage,
+                building_site_id : $("#building_site_id").val()
+            },
+            function(data) {
+                var id = data.split('_');
+                if (id.length > 1){
+                    id = id[1];
+                }
+                var str = data;
+                if (str.search('finish') > -1) {
+                    switch (typePost){
+                        case "head":
+                            idImageHead = id;
+                            genUpload("#headImgInput", '#headImgInner', 'head', idImageHead);
+                            break;
+                        case "map":
+                            idImageMap = id;
+                            genUpload("#mapImgInput", '#mapImgInner', 'map', idImageMap);
+                            break;
+                        case "recommend":
+                            idImageRecommend = id;
+                            genUpload('#recommendImgInput', "#recommendImgInner", 'recommend', idImageRecommend);
+                            break;
+                        case "room": break;
+                        case "gallery": break;
+                    }
+                }else{
+                    alert(data);
+                    return;
+                }
+                $.gritter.add({
+                    // (string | mandatory) the heading of the notification
+                    title: 'บันทึกข้อมูลสำเร็จ',
+                    // (string | mandatory) the text inside the notification
+                    text: 'ข้อมูลของท่านได้รับการบันทึกโดยอัตโนมัติ'
+                });
+        });
+    }
+
+    $(document).ready(function() {
+        $("#formCreateImage").submit(function() {
+            $('#divPostCreateImage').slideUp(300).delay(800).fadeOut(400);
+            return false;
+        });
+
+//        $(".uploadify").live('click',function(){
+//            alert(4);
+//        });
+    });
+</script>
+
+<style type="text/css" >
+    .nopad { width: 250px; heigth: 275px; }
+    .hide-img { position: absolute; top: -9999px; left: -9999px; }
+
+        /* Specific to example one */
+
+    #example-one { background: #eee; padding: 10px; margin: 0 0 20px 0; -moz-box-shadow: 0 0 5px #666; -webkit-box-shadow: 0 0 5px #666; }
+
+    #example-one .nav { overflow: hidden; margin: 0 0 10px 0; }
+    #example-one .nav li { width: 97px; float: left; margin: 0 10px 0 0; }
+    #example-one .nav li.last { margin-right: 0; }
+    #example-one .nav li a { display: block; padding: 5px; background: #959290; color: white; font-size: 10px; text-align: center; border: 0; }
+    #example-one .nav li a:hover { background-color: #111; }
+
+    #example-one ul { list-style: none; }
+    #example-one ul li a { display: block; border-bottom: 1px solid #666; padding: 4px; color: #666; }
+    #example-one ul li a:hover { background: #fe4902; color: white; }
+    #example-one ul li:last-child a { border: none; }
+
+    #example-one ul li.nav-one a.current, #example-one ul.featured li a:hover { background-color: #0575f4; color: white; }
+    #example-one ul li.nav-two a.current, #example-one ul.core li a:hover { background-color: #d30000; color: white; }
+    #example-one ul li.nav-three a.current, #example-one ul.jquerytuts li a:hover { background-color: #8d01b0; color: white; }
+    #example-one ul li.nav-four a.current, #example-one ul.classics li a:hover { background-color: #FE4902; color: white; }
+</style>
+
+
+<div id="divPostCreateImage">
+    <fieldset>
+        <legend>
+            CREATE GALLERY
+        </legend>
+        <form id="formCreateImage" action="{{ path('image_create') }}" method="post" enctype='multipart/form-data'>
+            <div class="label" style="">
+                {% for building_site in buildingSite %}
+                <h2>{{ building_site.building_name }}</h2>
+                <input type="hidden" value="{{ building_site.id }}" id="building_site_id" name="building_site_id"/>
+                {% endfor %}
+            </div>
+            <div class="clear"></div>
+            <div id="example-one">
+                <ul class="nav">
+                    <li class="nav-one"><a href="#featured" class="current">HEAD & MAP</a></li>
+                    <li class="nav-two"><a href="#core">ROOM</a></li>
+                    <li class="nav-three"><a href="#jquerytuts">GALLERY</a></li>
+                    <li class="nav-four last"><a href="#classics">RECOMMEND</a></li>
+                </ul>
+
+                <div class="list-wrap">
+                    <ul><li></li></ul>
+                    <ul id="featured">
+                        <li>
+                            <table>
+                                <tr>
+                                    <td width="100"><h4>HEAD</h4></td>
+                                    <td width="220" align="left"><div class="test" id="headImgInner">
+                                        <img src="{{ asset('images/')}}{{ headImage[0].photo_name }}" class="nopad thumb" />
+                                    </div></td>
+                                    <td width="150" align="center">
+                                        <input type="file" class="inputFile" id="headImgInput" name="headImgInput"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td width="100"><h4>MAP</h4></td>
+                                    <td width="220" align="left"><div id="mapImgInner">
+                                        <img src="{{ asset('images/')}}{{ mapImage[0].photo_name }}" class="nopad thumb" />
+                                    </div></td>
+                                    <td width="150" align="center">
+                                        <input type="file" class="inputFile" id="mapImgInput" name="mapImgInput"/>
+                                    </td>
+                                </tr>
+                        </table>
+                        </li>
+                    </ul>
+
+                    <ul id="core" class="hide-img">
+                        <li>
+                            <h4>ROOM</h4>
+                            <table>
+                            {% for room in roomtype2siteimage %}
+                                <tr>
+                                    <td width="30"><strong>{{ room.count }}.</strong></td>
+                                    <td width="220" id="roomImgInner_{{ room.count }}">
+                                        <img src="{{ asset('images/')}}{{ room.photo_name }}" class="nopad thumb"/>
+                                        <input type="hidden" value="{{ room.id }}"/>
+                                    </td>
+                                    <td width="150" align="right"><input type="file" class="inputFile" id="roomImgInput_{{ room.count }}" onclick="alert(5)"/></td>
+                                </tr>
+                                <tr><td>&nbsp;</td></tr>
+                            {% else %}
+                            <tr>
+                                <td width="200">
+                                    <strong>
+                                        <a class="createSite" href="{{ path('roomtype2site_show', { 'id': buildingSite[0].id }) }}">เพิ่ม ROOM TYPE</a>
+                                    </strong>
+                                </td>
+
+                            </tr>
+                            {% endfor %}
+                            </table>
+                        </li>
+                    </ul>
+
+                    <ul id="jquerytuts" class="hide-img">
+                        <li>
+                            <h4>GALLERY</h4>
+                            <table>
+                            {% for gar in gallery %}
+                                <tr>
+                                    <td width="30"><strong>{{ gar.count }}.</strong></td>
+                                    <td width="220" id="galleryImgInner_{{ gar.count }}">
+                                        <img src="{{ asset('images/')}}{{ gar.photo_name }}" class="nopad thumb"/>
+                                    </td>
+                                    <td width="150"><input type="file" class="inputFile" id="galleryImgInput_{{ gar.count }}"/></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        {% if gar.count > 1 %}
+                                            <img src="{{asset('images/delete.png')}}" title="ลบรูปภาพนี้" />
+                                        {% else %}
+                                            &nbsp;
+                                       {% endif %}
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td width="30"><strong>1.</strong></td>
+                                    <td width="220" id="galleryImgInner_1">
+                                        <img src="{{ asset('images/show.png')}}" class="nopad thumb"/>
+                                    </td>
+                                    <td width="150"><input type="file" class="inputFile" id="galleryImgInput_1"/></td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                </tr>
+                            {% endfor %}
+                            </table>
+                        </li>
+                    </ul>
+
+                    <ul id="classics" class="hide-img">
+                        <li>
+                            <h4>RECOMMEND</h4>
+                            <div id="recommendImgInner">
+                                <img src="{{ asset('images/')}}{{ recommendImage[0].photo_name }}" class="nopad thumb" />
+                            </div>
+                            <input type="file" class="inputFile" id="recommendImgInput" />
+                        </li>
+                    </ul>
+
+                </div> <!-- END List Wrap -->
+
+            </div> <!-- END Organic Tabs (Example One) -->
+            <br />
+			<span style="float: right;">
+				<input type="submit" name="upload" value="ClOSE">
+			</span>
         </form>
-    </li>
-</ul>
+    </fieldset>
+</div>
