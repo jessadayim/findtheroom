@@ -304,12 +304,6 @@
 		document.getElementById(id).scrollIntoView();
 	}
 	
-	function clicktodelete(id)
-	{
-		alert(id);
-		window.location.reload()
-	}
-	
 	$(document).ready(function(){
 		
 	});
@@ -333,8 +327,8 @@
 	 	});
  	}
  	
- 	function fncAlert(){
-		if(document.getElementById('bk').checked) {
+ 	function fncAlert(type){
+		if(type==0) {
 		   //$("#tbk").css("display","block");
 		   //$("#tcou").css("display","none");
 		   document.getElementById('bkzone_ot').disabled=false;
@@ -343,7 +337,7 @@
 		   document.getElementById('univer_ot').disabled=false;
 		   document.getElementById('near_ot').disabled=false;
 		   document.getElementById('country_ot').disabled=true;
-		}else if(document.getElementById('cou').checked) {
+		}else if(type==1) {
 		   //$("#tbk").css("display","none");
 		   //$("#tcou").css("display","block");
 		   document.getElementById('bkzone_ot').disabled=true;
@@ -355,6 +349,44 @@
 		}
 	}
 
+    function getAmphur()
+    {
+        postData('head');
+
+        var provinceName = document.getElementById('province').value;
+        var pathtochange = "{{path('getDistrict')}}";
+        var addfixpath = pathtochange+'/'+provinceName;
+        document.getElementById('provinceChange').innerHTML = provinceName;
+
+        if(Trim(provinceName)=='กรุงเทพมหานคร')
+        {
+            var type = 0;
+        }
+        else
+        {
+            var type = 1;
+        }
+        fncAlert(type);
+        $.get(addfixpath,
+            function(data) {
+                if(data != "no")
+                {
+                    document.getElementById('divAmpher').innerHTML = data;
+                }
+        });
+    }
+
+    function LTrim(str){
+        if (str==null){return null;}
+        for(var i=0;str.charAt(i)==" ";i++);
+        return str.substring(i,str.length);
+    }
+    function RTrim(str){
+        if (str==null){return null;}
+        for(var i=str.length-1;str.charAt(i)==" ";i--);
+        return str.substring(0,i+1);
+    }
+    function Trim(str){return LTrim(RTrim(str));}
 
 </script>
 <form name="addform" id="addform" method="post" action="{{path('saveData', {'id': build_id })}}">
@@ -397,7 +429,7 @@
         </table>
         <table style="margin-top: 0px; float:none;  margin-left: 0px;">
         	<tr height="50" valign="middle">
-				<td align="right" width="210" style="font-size:24px;">ชื่อหอพัก / อพาร์ทเม้นต์ : *</td>
+				<td align="right" width="210" style="font-size:24px;">ชื่อหอพัก / อพาร์ทเม้นท์ : *</td>
                 <td align="left" width="190"><input name="nameap" id="nameap" type="text" maxlength="30" placeholder="กรุณากรอกชื่อหอพัก" style=" padding:2px; font-size:20px;" value="{{buildingdata.sbuildingname}}" onchange="postData('head');" /></td>
             </tr>
             <tr height="50" valign="top">
@@ -408,7 +440,7 @@
 				<td align="right" width="210" style="font-size:24px;">จังหวัด : *</td>
                 <td align="left" width="190">
 					<div class="styled-select">
-						<select id="province" name="province" class="select" onchange="postData('head');">
+						<select id="province" name="province" class="select" onchange="getAmphur();">
                             {% for list in province %}
                             {% if list.checked == 'no' %}
                             <option value="{{list.PROVINCE_VALUE}}">{{list.PROVINCE_NAME}}</option>
@@ -423,17 +455,19 @@
 			<tr height="40" valign="middle">
 				<td align="right" width="210" style="font-size:24px;">เขต/อำเภอ : *</td>
                 <td align="left" width="190">
-					<div class="styled-select">
-						<select id="district" name="district" class="select" onchange="postData('head');">
-                            {% for list in district %}
-                            {% if list.checked == 'no' %}
-                            <option value="{{list.AMPHUR_VALUE}}">{{list.AMPHUR_NAME}}</option>
-                            {% else %}
-                            <option value="{{list.AMPHUR_VALUE}}" selected="selected">{{list.AMPHUR_NAME}}</option>
-                            {% endif %}
-                            {% endfor %}
-						</select>
-					</div>
+                    <span id="divAmpher">
+                        <div class="styled-select">
+                            <select id="district" name="district" class="select" onchange="postData('head');">
+                                {% for list in district %}
+                                {% if list.checked == 'no' %}
+                                <option value="{{list.AMPHUR_VALUE}}">{{list.AMPHUR_NAME}}</option>
+                                {% else %}
+                                <option value="{{list.AMPHUR_VALUE}}" selected="selected">{{list.AMPHUR_NAME}}</option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </span>
 				</td>
             </tr>
             <tr height="50" valign="middle">
@@ -485,7 +519,8 @@
                     </div>
                 </td>
                 <td align="right" width="210" style="font-size:24px;">ชนิด : *</td>
-                <td align="left" width="190" style="font-size:24px;"><div class="styled-select">
+                <td align="left" width="190" style="font-size:24px;">
+                    <div class="styled-select">
 						<select id="paytype" name="paytype" class="select" onchange="postData('head');">
 							{% for list in payType %}
 								{% if list.checked == 'no' %}
@@ -500,7 +535,7 @@
             </tr>
             <tr height="50" valign="middle">
 				<td align="right" width="240" style="font-size:24px;">เบอร์โทรติดต่อ : *</td>
-                <td align="left" width="200"><input id="telnumber" name="telnumber" type="text" maxlength="10" placeholder="กรุณากรอกเบอร์โทรติดต่อ" style=" padding:2px; font-size:20px;" value="{{buildingdata.slatitude}}" onchange="postData('head');" /></td>
+                <td align="left" width="200"><input id="telnumber" name="telnumber" type="text" maxlength="10" placeholder="กรุณากรอกเบอร์โทรติดต่อ" style=" padding:2px; font-size:20px;" value="{{buildingdata.sphonenumber}}" onchange="postData('head');" /></td>
                 <td align="right" width="210" style="font-size:24px;">ระยะเวลาเช่าขั้นต่ำ : *</td>
                <td align="left" width="190"><input id="time" name="time" type="text" maxlength="3" placeholder="กรุณากรอกระยะเวลาเช่าขั้นต่ำ" style=" padding:2px; font-size:20px;" value="{{buildingdata.smonthstay}}" onchange="postData('head');" /></td>
                 <td align="left" width="30" style="font-size:24px;"> เดือน</td>
@@ -542,14 +577,6 @@
                 <td align="center" width="150">อัตราค่าเช่า / เดือน</td>
                 <td width="60">&nbsp;</td>
             </tr>
-            
-            <!-- {% if rooms == null %}
-            
-			{% else %}
-			{% for roomdata in rooms %}
-			
-			{% endfor %}
-			{% endif %} -->
         </table>
         <img src="{{asset('images/addmore2.png')}}" class="nopad" onclick="CreateNewRow(nullarray, intLine);" style="margin-left: 130px;margin-top: 10px;margin-bottom: 10px; cursor: pointer;">
         <input type="hidden" id="hdnMaxLine" name="hdnMaxLine" value="{{roomlines}}">
@@ -577,7 +604,13 @@
 			<tr height="50" valign="middle">
 				<td align="left" width="165">จังหวัด :</td>
 				<td>
-					กรุงเทพฯ
+					<div id="provinceChange">
+                        {% if provinceName != NULL %}
+                        {{ provinceName }}
+                        {% else %}
+                        กรุงเทพมหานคร
+                        {% endif %}
+					</div>
 				</td>
 
 			</tr>
@@ -689,7 +722,12 @@
             <tr height="40" valign="middle">
             	{% for loops in list.loop %}
             	<td width="250">
-            		<input id="fac{{loops.id}}" name="fac[]" type="checkbox" value="{{loops.id}}" onchange="postData('other');" /> <label for="fac{{loops.id}}">{{loops.facility_name}}</label>
+            		<input id="fac{{loops.id}}" name="fac[]" type="checkbox"
+                        {% if loops.checked == 'yes' %}
+                           checked ="checked"
+                        {% endif %}
+                           value="{{loops.id}}" onchange="postData('other');"
+                    /> <label for="fac{{loops.id}}">{{loops.facility_name}}</label>
             	</td>
             	{% endfor %}
             </tr>
@@ -708,7 +746,12 @@
             <tr height="40" valign="middle">
             	{% for loops in list.loop %}
             	<td width="250">
-            		<input id="fac{{loops.id}}" name="fac[]" type="checkbox" value="{{loops.id}}" onchange="postData('other');" /> <label for="fac{{loops.id}}">{{loops.facility_name}}</label>
+            		<input id="fac{{loops.id}}" name="fac[]" type="checkbox"
+                        {% if loops.checked == 'yes' %}
+                            checked ="checked"
+                        {% endif %}
+                            value="{{loops.id}}" onchange="postData('other');"
+                    /> <label for="fac{{loops.id}}">{{loops.facility_name}}</label>
             	</td>
             	{% endfor %}
             </tr>
