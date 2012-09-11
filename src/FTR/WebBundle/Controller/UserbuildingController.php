@@ -310,7 +310,7 @@ class UserbuildingController extends Controller
 					'felectrictunit'	=> $build_data->getElectricityUnit(),
 					'iinternetprice'	=> $build_data->getInternetPrice(),
 					'igooglemapurl'		=> $build_data->getGoogleMapUrl(),
-					'binternetready'	=> $build_data->getInternetReady(),
+					'snearlyplace'	    => $build_data->getNearlyPlace(),
 					'saddrnumber'		=> $build_data->getAddrNumber(),
 					'saddrprefecture'	=> $build_data->getAddrPrefecture(),
 					'saddrprovince'		=> $build_data->getAddrProvince(),

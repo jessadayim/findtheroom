@@ -305,7 +305,16 @@
 	}
 	
 	$(document).ready(function(){
-		
+        var provinceName = document.getElementById('hdnProvinceName').value;
+        if(Trim(provinceName)=='กรุงเทพมหานคร')
+        {
+            var type = 0;
+        }
+        else
+        {
+            var type = 1;
+        }
+        fncAlert(type);
 	});
 	var imagepath = "{{asset('images/building')}}";
 	function postData(typesave)
@@ -335,8 +344,8 @@
 		   document.getElementById('bts_ot').disabled=false;
 		   document.getElementById('mrt_ot').disabled=false;
 		   document.getElementById('univer_ot').disabled=false;
-		   document.getElementById('near_ot').disabled=false;
-		   document.getElementById('country_ot').disabled=true;
+		   //document.getElementById('near_ot').disabled=false;
+		   //document.getElementById('country_ot').disabled=true;
 		}else if(type==1) {
 		   //$("#tbk").css("display","none");
 		   //$("#tcou").css("display","block");
@@ -344,8 +353,8 @@
 		   document.getElementById('bts_ot').disabled=true;
 		   document.getElementById('mrt_ot').disabled=true;
 		   document.getElementById('univer_ot').disabled=true;
-		   document.getElementById('near_ot').disabled=true;
-		   document.getElementById('country_ot').disabled=false;
+		   //document.getElementById('near_ot').disabled=true;
+		   //document.getElementById('country_ot').disabled=false;
 		}
 	}
 
@@ -612,7 +621,7 @@
                         {% endif %}
 					</div>
 				</td>
-
+                <input id="hdnProvinceName" name="hdnProvinceName" type="hidden" value="{{provinceName}}" />
 			</tr>
 		</table>
 		
@@ -673,38 +682,13 @@
 					</div>
 				</td>
 			</tr>
-			<tr height="50" valign="middle">
-				<td align="left" width="165">ตามสถานที่ใกล้เคียง :</td>
-				<td width="250">
-					<input id="near_ot" name="near_ot" type="text" maxlength="30" placeholder="กรุณากรอกสถานที่ใกล้เคียง" style=" padding:2px; font-size:20px;" />
-					<!--<div class="styled-select">
-                   		
-						<select id="near_ot" name="near_ot" class="select" onchange="postData('other');">
-							{% for blist in nearBy %}
-								<option value="{{ blist.id }}">{{ blist.name }}</option>
-							{% endfor %}
-						</select>-->
-                    
-					</div>
-				</td>
-				<td colspan="2"></td>
-			</tr>
 		</table>
 		
 		<table id="tcou" style="margin-top:0px; display:block; height:244px; margin-top: 10px;">
 			<tr valign="top">
 				<td id="fie" align="left" width="165" style="padding-left:50px">ตามสถานที่ใกล้เคียง :</td>
 				<td width="300">
-					<input id="country_ot" name="country_ot" type="text" maxlength="30" placeholder="กรุณากรอกสถานที่ใกล้เคียง" style=" padding:2px; font-size:20px;" disabled/> 
-					<!--<div class="styled-select">
-                
-						<select id="country_ot" name="country_ot" class="select" onchange="postData('other');" disabled>
-							{% for clist in nearInCountry %}
-								<option value="{{ clist.id }}">{{ clist.name }}</option>
-							{% endfor %}
-						</select>
-                
-					</div>-->
+					<input id="near_ot" name="near_ot" type="text" maxlength="30" placeholder="กรุณากรอกสถานที่ใกล้เคียง" style=" padding:2px; font-size:20px;"/>
 				</td>
 				<td colspan="2"></td>
 			</tr>
