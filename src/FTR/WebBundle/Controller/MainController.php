@@ -187,5 +187,4 @@ class MainController extends Controller {
             , 'roomCollege' => $objCollege, 'numrow3' => $numrow3
             , 'countView' => $objCountView,'numrow4' => $numrow4 ));
 	}
-
 }
