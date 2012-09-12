@@ -248,7 +248,7 @@
                 '<td><img src="{{asset('images/delete.png')}}" style="padding-left:0px; margin-left:-10px; cursor:pointer;" onclick="RemoveRow('+num+','+imageid+');" /></td>' +
                 '<td><div id="gallerypic'+num+'" class="thumbframe4add"><img src="'+pathimage+'" class="nopad thumb4img"</div></td>' +
                 '<td><input type="file" name="gallery'+num+'" id="gallery'+num+'" /><input type="hidden" name="hdngalleryname'+num+'" id="hdngalleryname'+num+'" value="'+nameimage+'" /></td>' +
-                '<td><textarea id="galtitle'+num+'" name="galtitle'+num+'" maxlenght="500" placeholder="กรอกข้อมูลของรูปที่นี่" class="galdesc" onchange='+"'"+"postData('image');"+"'"+' >"+description+"</textarea><input type="hidden" name="imageidgal'+num+'" id="imageidgal'+num+'" value="'+imageid+'" /></td>' +
+                '<td><textarea id="galtitle'+num+'" name="galtitle'+num+'" maxlenght="500" placeholder="กรอกข้อมูลของรูปที่นี่" class="galdesc" onchange="postData('+"'"+"image"+"'"+');" >'+description+'</textarea><input type="hidden" name="imageidgal'+num+'" id="imageidgal'+num+'" value="'+imageid+'" /></td>' +
                 '</tr>';
         $("#tbgal").append(strInner);
 
