@@ -19,12 +19,12 @@
 }
 	 });
 </script>
-		
+
 <script language="javascript">
-	
+
 	var swfpath = "{{asset('js/uploadify/uploadify.swf')}}";
 	var uploaderpath = "{{asset('js/uploadify/uploadify.php')}}";
-	
+
 	function loopbutton()
 	{
 		uploadpicroom();
@@ -33,9 +33,9 @@
 	{
 		uploadpicgallery();
 	}
-	
+
 	var intLine = {{roomlines}};
-	var arraydataimage = 
+	var arraydataimage =
 			[
 				{% for roomdata in rooms %}
 					[{{roomdata.id}}, "{{asset(roomdata.link_photo)}}", '{{roomdata.roomtype_name}}', '{{roomdata.room_size}}', '{{roomdata.room_price}}',"{{roomdata.photo_name}}"],
@@ -48,11 +48,11 @@
 
 	$(document).ready(function(){
 		if(arraydataimage.length == 0)
-		{			
+		{
 			CreateNewRow(nullarray, 0);
 			arraydataimage = [nullarray];
 		}
-		else{		
+		else{
 			genrowimage();
 		}
 	});
@@ -73,11 +73,11 @@
 		var roomsize = arraydata[3];
 		var roomprice = arraydata[4];
 		var nameimage = arraydata[5];
-		
+
 		var theTable = document.all.tableroom;
 		var newRow = theTable.insertRow(theTable.rows.length)
-		
-		
+
+
 		// newRow.id = newRow.uniqueID
 		newRow.id = 'roomtrid'+num
 		var item1 = 1
@@ -88,7 +88,7 @@
 		newCell.id = newCell.uniqueID
 		newCell.setAttribute("className", "css-name");
 		newCell.innerHTML = "<img src=\"{{asset('images/delete.png')}}\" style=\"padding-left:0px; margin-left:-10px; cursor:pointer;\" onclick=\"RemoveRow("+num+","+imageid+");\" />"
-		
+
 		//*** Column 2 ***//
 		newCell = newRow.insertCell(1)
 		newCell.id = newCell.uniqueID
@@ -100,50 +100,50 @@
 		newCell.id = newCell.uniqueID
 		newCell.setAttribute("className", "css-name");
 		newCell.innerHTML = "<input type=\"file\" name=\"room"+num+"\" id=\"room"+num+"\" /><input type=\"hidden\" name=\"hdnfilename"+num+"\" id=\"hdnfilename"+num+"\" value=\""+nameimage+"\" onchange=\"postData('image');\" />"
-		
+
 		//*** Column 4 ***//
 		newCell = newRow.insertCell(3)
 		newCell.id = newCell.uniqueID
 		newCell.setAttribute("className", "css-name");
-		newCell.innerHTML = "<input name=\"typeap_name"+num+"\" id=\"typeap_name"+num+"\" type=\"text\" maxlength=\"30\" placeholder=\"กรุณากรอกประเภทห้องพัก\" value=\""+typename+"\" style=\" padding:2px; font-size:20px;\" onchange=\"postData('image');\" />"				
-		
+		newCell.innerHTML = "<input name=\"typeap_name"+num+"\" id=\"typeap_name"+num+"\" type=\"text\" maxlength=\"30\" placeholder=\"กรุณากรอกประเภทห้องพัก\" value=\""+typename+"\" style=\" padding:2px; font-size:20px;\" onchange=\"postData('image');\" />"
+
 		//*** Column 5 ***//
 		newCell = newRow.insertCell(4)
 		newCell.id = newCell.uniqueID
 		newCell.setAttribute('align', 'center');
-		newCell.innerHTML = "<input name=\"typeap_size"+num+"\" id=\"typeap_size"+num+"\" type=\"text\" maxlength=\"10\" placeholder=\"ขนาด\" value=\""+roomsize+"\" style=\" padding:2px; font-size:20px; width:80px;\" onchange=\"postData('image');\" />"		
-		
+		newCell.innerHTML = "<input name=\"typeap_size"+num+"\" id=\"typeap_size"+num+"\" type=\"text\" maxlength=\"10\" placeholder=\"ขนาด\" value=\""+roomsize+"\" style=\" padding:2px; font-size:20px; width:80px;\" onchange=\"postData('image');\" />"
+
 		//*** Column 6 ***//
 		newCell = newRow.insertCell(5)
 		newCell.id = newCell.uniqueID
 		newCell.setAttribute("className", "css-name");
-		newCell.innerHTML = "<LABEL align=\"left\">ตารางเมตร</LABEL>"			
-		
+		newCell.innerHTML = "<LABEL align=\"left\">ตารางเมตร</LABEL>"
+
 		//*** Column 7 ***//
 		newCell = newRow.insertCell(6)
 		newCell.id = newCell.uniqueID
 		newCell.setAttribute('align', 'center');
-		newCell.innerHTML = "<input name=\"typeap_price"+num+"\" id=\"typeap_price"+num+"\" type=\"text\" maxlength=\"10\" placeholder=\"อัตราค่าเช่า\" value=\""+roomprice+"\" style=\" padding:2px; font-size:20px; width:80px;\" onchange=\"postData('image');\" />"		
-		
+		newCell.innerHTML = "<input name=\"typeap_price"+num+"\" id=\"typeap_price"+num+"\" type=\"text\" maxlength=\"10\" placeholder=\"อัตราค่าเช่า\" value=\""+roomprice+"\" style=\" padding:2px; font-size:20px; width:80px;\" onchange=\"postData('image');\" />"
+
 		//*** Column 8 ***//
 		newCell = newRow.insertCell(7)
 		newCell.id = newCell.uniqueID
 		newCell.setAttribute("className", "css-name");
-		newCell.innerHTML = "<LABEL align=\"left\">บาท</LABEL><input type=\"hidden\" name=\"imageid"+num+"\" id=\"imageid"+num+"\" value=\""+imageid+"\" />"			
-		
+		newCell.innerHTML = "<LABEL align=\"left\">บาท</LABEL><input type=\"hidden\" name=\"imageid"+num+"\" id=\"imageid"+num+"\" value=\""+imageid+"\" />"
+
 		//document.addform.hdnMaxLine.value = intLine;
 		loopbutton();
 		intLine++;
 		document.addform.hdnMaxLine.value = intLine;
 	}
-	
+
 	function readdataroom(num)
 	{
 		var arrayread = [];
         var buildid = document.getElementById('hdnbuildid').value;
 		for(var i=0 ; i < intLine ; i++)
-		{			
-			
+		{
+
 			if (num != i){
 				if ($('#hdnfilename'+i).val() == ''){
 					var filename = pathimgdefault + 'show.png';
@@ -154,9 +154,9 @@
 				arrayread.push(arrayadd);
 			}
 		}
-		arraydataimage = arrayread;		
+		arraydataimage = arrayread;
 	}
-	
+
 	function RemoveRow(num, imageid)
 	{
 		//intLine = parseInt(document.addform.hdnMaxLine.value);
@@ -171,7 +171,7 @@
 
 		if(intLine > 1)
 		{
-				// theTable = (document.all) ? document.all.tbtype : 
+				// theTable = (document.all) ? document.all.tbtype :
 				// document.getElementById("tableroom")
 				// theTableBody = theTable.tBodies[0];
 				// theTableBody.deleteRow(num);
@@ -183,28 +183,28 @@
 				intLine = 0;
 				document.addform.hdnMaxLine.value = intLine;
 				genrowimage();
-				
-		}	
-	}	
-	
-	var intLineGal = {{gellerylines}};	
+
+		}
+	}
+
+	var intLineGal = {{gellerylines}};
 	var arraygalleryimage =
 			[
 				{% for gallerydata in galleries %}
 					[{{gallerydata.id}}, "{{asset(gallerydata.link_photo)}}","{{gallerydata.photo_name}}","{{gallerydata.description}}"],
 				{% endfor %}
 			];
-	
+
 	var nullarrayGal = [-1, "{{asset('images/show.png')}}",'',''];
 	var pathimgdefault = "{{asset('images/')}}";
-	
+
 	$(document).ready(function(){
 		if(arraygalleryimage.length == 0)
-		{			
+		{
 			CreateNewRowGallery(nullarrayGal, 0);
 			arraygalleryimage = [nullarrayGal];
 		}
-		else{		
+		else{
 			genrowimageGal();
 		}
 	});
@@ -215,7 +215,7 @@
 			CreateNewRowGallery(arraygalleryimage[i], i);
 		}
 	}
-	
+
 	function CreateNewRowGallery(arraydata, num)
 	{
 		var imageid = arraydata[0];
@@ -227,22 +227,22 @@
 		var newRow = theTable.insertRow(theTable.rows.length)
 		//newRow.id = newRow.uniqueID
 		newRow.id = 'galtrid'+num
-		
+
 		var item1 = 1
 		var newCell
-		
+
 		//*** Column 1 ***//
 		newCell = newRow.insertCell(0)
 		newCell.id = newCell.uniqueID
 		newCell.setAttribute("className", "css-name");
-		newCell.innerHTML = "<img src=\"{{asset('images/delete.png')}}\" style=\"padding-left:0px; margin-left:-10px; cursor:pointer;\" />"		
-		
+		newCell.innerHTML = "<img src=\"{{asset('images/delete.png')}}\" style=\"padding-left:0px; margin-left:-10px; cursor:pointer;\" />"
+
 		//*** Column 2 ***//
 		newCell = newRow.insertCell(1)
 		newCell.id = newCell.uniqueID
 		newCell.setAttribute("className", "css-name");
 		newCell.innerHTML = '<div id="gallerypic'+num+"\" class=\"thumbframe4add\"><img src=\""+pathimage+"\" class=\"nopad thumb4img\" /></div>"
-		
+
 		//*** Column 3 ***//
 		newCell = newRow.insertCell(2)
 		newCell.id = newCell.uniqueID
@@ -278,14 +278,14 @@
 				arrayread.push(arrayadd);
 			}
 		}
-		arraydataimage = arrayread;		
+		arraydataimage = arrayread;
 	}
-	
+
 	function RemoveRowGal(num, imageid)
 	{
 		if(intLine > 1)
 		{
-				// theTable = (document.all) ? document.all.tbtype : 
+				// theTable = (document.all) ? document.all.tbtype :
 				// document.getElementById("tableroom")
 				// theTableBody = theTable.tBodies[0];
 				// theTableBody.deleteRow(num);
@@ -296,14 +296,14 @@
 				intLineGal = 0;
 				document.addform.hdnMaxLineGal.value = intLineGal;
 				genrowimage();
-				
-		}	
-	}	
-	
+
+		}
+	}
+
 	function moveToDiv(id) {
 		document.getElementById(id).scrollIntoView();
 	}
-	
+
 	$(document).ready(function(){
         var provinceName = document.getElementById('hdnProvinceName').value;
         if(Trim(provinceName)=='กรุงเทพมหานคร')
@@ -323,7 +323,7 @@
 		var pathtosave = "{{path('autoSaveForm', {'id': build_id})}}";
 		var addfixpath = pathtosave+'/'+type;
 		//alert(addfixpath);
-		$.post(addfixpath, $("#addform").serialize(), 
+		$.post(addfixpath, $("#addform").serialize(),
 		function(data) {
 			var completetext = data;
 			//alert(completetext);
@@ -335,7 +335,7 @@
 			});
 	 	});
  	}
- 	
+
  	function fncAlert(type){
 		if(type==0) {
 		   //$("#tbk").css("display","block");
@@ -417,7 +417,7 @@
 <div id="datazone" class="detail" style="height: 780px; margin-bottom: 15px;">
 	<img src="{{asset('images/apdata.png')}}" style="display:block; position:relative; float:none;" />
 	<hr class="line" style="top: 60px;" />
-    <div style="width:1000px; display:block; position:relative; height:250px; margin-top: 20px;">
+    <div style="width:1000px; display:block; position:relative; height:245px; margin-top: 20px;">
     	<table style="margin-top: 0px; float:left;">
         	<tr height="50" valign="middle">
 				<td align="left" width="240">
@@ -436,7 +436,7 @@
 				&nbsp;
             </tr>
         </table>
-        <table style="margin-top: 0px; float:none;  margin-left: 0px;">
+        <table style="margin-top: -15px; float:none;  margin-left: 0px;">
         	<tr height="50" valign="middle">
 				<td align="right" width="210" style="font-size:24px;">ชื่อหอพัก / อพาร์ทเม้นท์ : *</td>
                 <td align="left" width="190"><input name="nameap" id="nameap" type="text" maxlength="30" placeholder="กรุณากรอกชื่อหอพัก" style=" padding:2px; font-size:20px;" value="{{buildingdata.sbuildingname}}" onchange="postData('head');" /></td>
@@ -587,7 +587,7 @@
                 <td width="60">&nbsp;</td>
             </tr>
         </table>
-        <img src="{{asset('images/addmore2.png')}}" class="nopad" onclick="CreateNewRow(nullarray, intLine);" style="margin-left: 130px;margin-top: 10px;margin-bottom: 10px; cursor: pointer;">
+        <img src="{{asset('images/addmore2.png')}}" class="nopad" onclick="CreateNewRow(nullarray, intLine);" style="margin-left: 130px;margin-bottom: 20px; cursor: pointer;">
         <input type="hidden" id="hdnMaxLine" name="hdnMaxLine" value="{{roomlines}}">
     </div>
 </div>
@@ -597,9 +597,9 @@
 	<hr class="line" style="top: 60px;" />
     <div>
 		<table id="tbgal">
-			
+
         </table>
-        <img src="{{asset('images/addmore2.png')}}" class="nopad" onclick="CreateNewRowGallery(nullarrayGal, intLineGal);" style="margin-left: 130px;margin-top: 10px;margin-bottom: 10px; cursor: pointer;">
+        <img src="{{asset('images/addmore2.png')}}" class="nopad" onclick="CreateNewRowGallery(nullarrayGal, intLineGal);" style="margin-left: 130px;margin-bottom: 20px; cursor: pointer;">
         <input type="hidden" id="hdnMaxLineGal" name="hdnMaxLineGal" value="{{gellerylines}}">
     </div>
 </div>
@@ -624,19 +624,19 @@
                 <input id="hdnProvinceName" name="hdnProvinceName" type="hidden" value="{{provinceName}}" />
 			</tr>
 		</table>
-		
+
 		<table id="tbk" style="margin-top:0px; border-right:1px solid #fff; float:left;">
 			<tr height="50" valign="middle">
 				<td align="left" width="165">โซนในกรุงเทพฯ :</td>
 				<td width="250">
 					<div class="styled-select">
-                  
+
 						<select id="bkzone_ot" name="bkzone_ot" class="select" onchange="postData('other');">
 							{% for zlist in zonelist %}
 								<option value="{{ zlist.id }}">{{ zlist.zonename }}</option>
 							{% endfor %}
 						</select>
-                  
+
 					</div>
 				</td>
 			</tr>
@@ -644,13 +644,13 @@
 				<td align="left" width="145">ใกล้รถไฟฟ้า BTS :</td>
 				<td width="250">
 					<div class="styled-select">
-                    
+
 						<select id="bts_ot" name="bts_ot" class="select" onchange="postData('other');">
 							{% for btslist in nearBTS %}
 								<option value="{{ btslist.id }}">{{ btslist.name }}</option>
 							{% endfor %}
 						</select>
-                   
+
 					</div>
 				</td>
 			</tr>
@@ -658,13 +658,13 @@
 				<td align="left" width="145">ใกล้รถไฟฟ้า MRT :</td>
 				<td width="250">
 					<div class="styled-select">
-                  
+
 						<select id="mrt_ot" name="mrt_ot" class="select" onchange="postData('other');">
 							{% for mrtlist in nearMRT %}
 								<option value="{{ mrtlist.id }}">{{ mrtlist.name }}</option>
 							{% endfor %}
 						</select>
-                    
+
 					</div>
 				</td>
 			</tr>
@@ -672,29 +672,29 @@
 				<td align="left" width="165">ใกล้มหาวิทยาลัย :</td>
 				<td width="250">
 					<div class="styled-select">
-                   
+
 						<select id="univer_ot" name="univer_ot" class="select" onchange="postData('other');">
 							{% for ulist in nearUniversity %}
 								<option value="{{ ulist.id }}">{{ ulist.name }}</option>
 							{% endfor %}
 						</select>
-                   
+
 					</div>
 				</td>
 			</tr>
 		</table>
-		
-		<table id="tcou" style="margin-top:0px; display:block; height:244px; margin-top: 10px;">
+
+		<table id="tcou" style="margin-top:0px; display:block; height:200px; margin-top: 15px;">
 			<tr valign="top">
 				<td id="fie" align="left" width="165" style="padding-left:50px">ตามสถานที่ใกล้เคียง :</td>
 				<td width="300">
-					<input id="near_ot" name="near_ot" type="text" maxlength="30" placeholder="กรุณากรอกสถานที่ใกล้เคียง" style=" padding:2px; font-size:20px;"/>
+					<input id="near_ot" name="near_ot" type="text" maxlength="30" placeholder="กรุณากรอกสถานที่ใกล้เคียง" style=" padding:2px; font-size:20px; margin-top:-4px;"/>
 				</td>
 				<td colspan="2"></td>
 			</tr>
 		</table>
 	</div>
-	<hr class="line" style="top: 400px;" />
+	<hr class="line" />
     <div style="margin-top:30px;">
 		<table>
         	<tr>
@@ -718,7 +718,7 @@
             {% endfor %}
 		</table>
 	</div>
-    <hr class="line" style="top: 590px;" />
+    <hr class="line" />
     <div style="margin-top:30px;">
 		<table>
         	<tr>
@@ -741,7 +741,8 @@
             </tr>
             {% endfor %}
             <tr>
-            	<td colspan="3" align="right"><input class="save" type="submit" value="" /> <input class="back" type="button" value="" onclick="window.location='{{path('userbuilding')}}'" /></td>
+                <td colspan="3"></td>
+            	<td><input class="save" type="submit" value="" /> <input class="back" type="button" value="" onclick="window.location='{{path('userbuilding')}}'" /></td>
             </tr>
 		</table>
 	</div>

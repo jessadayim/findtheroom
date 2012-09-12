@@ -41,32 +41,28 @@ class UserbuildingController extends Controller
 			try{
 				$sql1 ="SELECT * FROM user_owner WHERE username = '".$username."'";
 				$objSQL1 = $conn->fetchAll($sql1);
-                if(count($objSQL1) == 1){
-                    $objSQL1[0]['username'];
-
-                    $sql2 = "SELECT * FROM building_site WHERE user_owner_id = '".$objSQL1[0]['id']."'";
-                    $objSQL2 = $conn->fetchAll($sql2);
-                    $arrdata = NULL;
-                    foreach ($objSQL2 as $key => $value) {
-                        if($value['publish']==1)
-                        {
-                            $publish = "แสดงแล้ว";
-                        }
-                        elseif($value['publish']==0){
-                            $publish = "ฉบับร่าง";
-                        }
-                        else {
-                            $publish = "รอการยืนยัน";
-                        }
-                        $arrdata[] = array(
-                            'id'				=> $value['id'],
-                            'building_name'		=> $value['building_name'],
-                            'publish'			=> $publish,
-                        );
+				$objSQL1[0]['username'];
+				
+				$sql2 = "SELECT * FROM building_site WHERE user_owner_id = '".$objSQL1[0]['id']."'";
+				$objSQL2 = $conn->fetchAll($sql2);
+				$arrdata = NULL;
+				foreach ($objSQL2 as $key => $value) {
+					if($value['publish']==1)
+					{
+						$publish = "แสดงแล้ว";
+					}
+                    elseif($value['publish']==0){
+                        $publish = "ฉบับร่าง";
                     }
-                }else{
-                    return $this->redirect($this->generateUrl('FTRWebBundle_logout'));
-                }
+					else {
+						$publish = "รอการยืนยัน";
+					}
+					$arrdata[] = array(
+						'id'				=> $value['id'],
+						'building_name'		=> $value['building_name'],
+						'publish'			=> $publish,
+					);
+				}
 			} catch (Exception $e) {
 				echo 'Caught exception: ',  $e->getMessage(), "\n";
 			}
