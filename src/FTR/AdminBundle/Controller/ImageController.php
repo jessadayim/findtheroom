@@ -74,8 +74,22 @@ class ImageController extends Controller
             WHERE `deleted` != 1
               AND `photo_type` = 'gallery'
               AND `building_site_id` = $id
+            ORDER BY `sequence`
         ";
         $ObjGetGallery = $this->getDataArray($sqlGetGallery);
+        if (empty($ObjGetGallery)){
+            $em = $this->getDoctrine()->getEntityManager();
+            $entity = new Image();
+            $entity -> setDeleted(0);
+            $entity -> setBuildingSiteId($id);
+            $entity -> setDescription('');
+            $entity -> setPhotoName('');
+            $entity -> setPhotoType('gallery');
+            $entity -> setSequence(0);
+            $em->persist($entity);
+            $em->flush();
+        }
+
         foreach ($ObjGetGallery as $key => $value) {
             if (empty($value['photo_name'])){
                 $ObjGetGallery[$key]['photo_name'] = 'show.png';
@@ -179,6 +193,8 @@ class ImageController extends Controller
         $getIdImage = @$_POST['idImage'];
         $getNameImage = @$_POST['nameImage'];
         $getDescription = @$_POST['description'];
+        $getNewImageGallery = @$_POST['newImageGallery'];
+        $getSequence = @$_POST['sequence'];
         $sqlGetImage = "
             SELECT
               `id`,
@@ -280,19 +296,59 @@ class ImageController extends Controller
                 }
             }break;
             case "gallery":{
-                if ($getIdImage == '0'){
+                if ($getIdImage == '0' || $getNewImageGallery == 'new'){
                     $entity = new Image();
                     $entity -> setDeleted(0);
                     $entity -> setBuildingSiteId($getBuildingSiteId);
                     $entity -> setDescription($getDescription);
                     $entity -> setPhotoName($getNameImage);
                     $entity -> setPhotoType('gallery');
-                    $entity -> setSequence(0);
+                    $entity -> setSequence($getSequence);
+                }else if ($getNewImageGallery == 'delete'){
+                    $sqlGetGallery = "
+                        SELECT
+                          `id`,
+                          `building_site_id`,
+                          `roomtype2site_id`,
+                          `photo_name`,
+                          `photo_type`,
+                          `deleted`,
+                          `description`,
+                          `sequence`
+                        FROM
+                          `image`
+                        WHERE `deleted` != 1
+                          AND `photo_type` = 'gallery'
+                          AND `building_site_id` = $getBuildingSiteId
+                        ORDER BY `sequence`
+                    ";
+                    $ObjGetImage = $this->getDataArray($sqlGetGallery);
+                    foreach ($ObjGetImage as $key => $value) {
+                        if (intval($value['sequence']) > intval($getSequence)){
+                            $entity = $em->getRepository('FTRWebBundle:Image')->find($value['id']);
+                            $entity -> setSequence(intval($value['sequence'])-1);
+                            $em->persist($entity);
+                        }
+                        if ($value['id'] == $getIdImage){
+                            if (!empty($value['photo_name'])){
+                                $this->deleteFileByBuildingId($getBuildingSiteId, $value['photo_name']);
+                            }
+                            //delete
+                            $entity = $em->getRepository('FTRWebBundle:Image')->find($value['id']);
+                            $em->remove($entity);
+                        }
+                    }
+                    $em->flush();
+                    echo 'finish';
+                    exit();
                 }else{
                     $ObjGetImage = $this->getDataArray($sqlGetImage);
                     $getNameImageOld = $ObjGetImage[0]['photo_name'];
-                    $this->deleteFileByBuildingId($getBuildingSiteId, $getNameImageOld);
+                    if (!empty($getNameImageOld)){
+                        $this->deleteFileByBuildingId($getBuildingSiteId, $getNameImageOld);
+                    }
                     $entity = $em->getRepository('FTRWebBundle:Image')->find($getIdImage);
+                    $entity -> setDescription($getDescription);
                     $entity -> setPhotoName($getNameImage);
                 }
             }break;
