@@ -69,26 +69,26 @@
                         genTBGallery();
                         showAutoSave();
                     }else{
-                        alert('ลบข้อมูลผิดพลาด');
+                        alert('ลบข้อมูลผิดพลาด' + data);
                     }
                 }
         );
     }
 
-    function autoSaveImageGallery(idSave){
-        var id = idDelete - 1;
-        var idImage = arrGalleryImage[id][1];
-        var nameImage = arrGalleryImage[id][2];
+    function autoSaveImageGallery(idSave, descValue){
+        var id = idSave - 1;
+        var idImage = arrGalleryImage[id][1];//alert(idImage);return;
+//        var nameImage = arrGalleryImage[id][2];
         $.post(
                 url,
                 {
                     typePost : 'gallery',
                     idImage  : idImage,
-                    nameImage: nameImage,
+                    nameImage: '',
                     building_site_id : $("#building_site_id").val(),
-                    description : '',
+                    description : descValue,
                     sequence : id,
-                    newImageGallery : ''
+                    newImageGallery : 'edit'
                 },
                 function(data) {
                     var str = data;
@@ -109,9 +109,9 @@
         var saveHeight = $("#tbGallery").height();
         $("#tbGallery").html(strInner);
         loopGenUploadGalleryImage();
-        var newHeigth = $("#tbGallery").height();
-        newHeigth = newHeigth - saveHeight;
-        $(".list-wrap").height($(".list-wrap").height() + newHeigth);
+        var newHeight = $("#tbGallery").height();
+        newHeight = newHeight - saveHeight;
+        $(".list-wrap").height($(".list-wrap").height() + newHeight);
     }
 
     function readDataGallery(id){
@@ -157,11 +157,11 @@
         if (id == 1){
             strBtnDeleteImage = "&nbsp;";
         }
+        var getImageHtml = getTypeImage(path, id);
         var strInner =
             '<tr>'+
                 '<td width="30"><strong>' + id + '.</strong></td>'+
-                '<td width="220" id="galleryImgInner_' + id + '">'+
-                    '<img src="' + path + '" class="nopad thumb" id="imageId_' + id + '"/>'+
+                '<td width="220" id="galleryImgInner_' + id + '">' + getImageHtml +
                    '</td>'+
                     '<td width="150" align="center"><input type="file" class="inputFile" id="galleryImgInput_' + id + '"/></td>'+
                     '<td><textarea class="galleryDesc" rows="5" cols="50" id="galleryDesc_' + id +
@@ -214,9 +214,14 @@
         loopGenUploadGalleryImage();
     });
 
+    function getTypeImage(src, id){
+        return '<img id="imageId_' + id + '" src="' + src + '" style="width: 250px; height: 190px;" class="nopad thumb"/>';
+    }
+
     function reloadImgae(id, img){
         var path = pathImgUpload + $("#building_site_id").val()+"/" + img;
-        $(id).fadeOut().html('<img src="' + path + '" style="" class="nopad thumb"/>').fadeIn("slow");
+        var idImg = id.split('_');
+        $(id).fadeOut().html(getTypeImage(path, idImg[1])).fadeIn("slow");
     }
 
     function postData(typePost, idImage, nameImage, arrayId)
@@ -261,6 +266,7 @@
                         case "gallery": break;
                     }
                     showAutoSave();
+                    readDataGallery();
                 }else{
                     alert(data);
 
@@ -316,10 +322,9 @@
         });
 
         $("textarea.galleryDesc").live('change', function(){
-            alert(this.id)
             var id = this.id;
             id = id.split('_');
-            autoSaveImageGallery(id[1]);
+            autoSaveImageGallery(id[1], this.value);
         });
 
         $("#btnCancel").click(function(){
@@ -338,7 +343,7 @@
     .deleteImage { cursor: pointer;}
 
     /*กำหนดขนาดรูป*/
-    .nopad { width: 250px; heigth: 275px; }
+    .nopad { width: 250px; height: 190px; }
 
     /*ทำให้แท็บที่ไม่ได้ใช้ซ้อน*/
     .hide-img {  top: -9999px; left: -9999px; }

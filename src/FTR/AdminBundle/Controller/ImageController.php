@@ -89,6 +89,7 @@ class ImageController extends Controller
             $em->persist($entity);
             $em->flush();
         }
+        $ObjGetGallery = $this->getDataArray($sqlGetGallery);
 
         foreach ($ObjGetGallery as $key => $value) {
             if (empty($value['photo_name'])){
@@ -342,14 +343,17 @@ class ImageController extends Controller
                     echo 'finish';
                     exit();
                 }else{
-                    $ObjGetImage = $this->getDataArray($sqlGetImage);
-                    $getNameImageOld = $ObjGetImage[0]['photo_name'];
-                    if (!empty($getNameImageOld)){
-                        $this->deleteFileByBuildingId($getBuildingSiteId, $getNameImageOld);
-                    }
+
                     $entity = $em->getRepository('FTRWebBundle:Image')->find($getIdImage);
                     $entity -> setDescription($getDescription);
-                    $entity -> setPhotoName($getNameImage);
+                    if ($getNewImageGallery != 'edit'){
+                        $ObjGetImage = $this->getDataArray($sqlGetImage);
+                        $getNameImageOld = $ObjGetImage[0]['photo_name'];
+                        if (!empty($getNameImageOld)){
+                            $this->deleteFileByBuildingId($getBuildingSiteId, $getNameImageOld);
+                        }
+                        $entity -> setPhotoName($getNameImage);
+                    }
                 }
             }break;
             case "recommend":{

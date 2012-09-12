@@ -51,7 +51,7 @@
 		});
 
 		//Click ปุ่ม  Edit Facility
-		$(".createSite").live('click', function() {
+		$(".createSite").click(function() {
 			locationRoomType = this.href;
 			$('.innerPanel').fadeOut("slow").load(locationRoomType).fadeIn("slow");
             // if (checkDoubleClickEdit){
