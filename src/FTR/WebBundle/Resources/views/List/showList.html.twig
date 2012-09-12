@@ -6,16 +6,7 @@
         แสดงผล {{ numStartDisplay }} - {{ numEnd }} จาก {{ numData }}
         {% endif %}
     </span>
-        <!--<span class="normal" style="float:right; margin-left:20px;">ต่อหน้า</span>
-    <div class="styled-select">
-        <select class="select">
-            <option value="5">5</option>
-            <option value="10">10</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
-        </select>
-    </div>          {{txtSearch}}
-    <span class="normal" style="float:right; margin-right:20px;">แสดงผล</span><br>--><br>
+     <br>
         {% if numData > 0 %}
         {% for rlist in result %}
         <form action="{{path('FTRWebBundle_detail')}}" method="post">
@@ -74,16 +65,6 @@
                                 {{ rlist.addr_province }}
                             </td>
                         </tr>
-                        <!--
-                        <tr>
-                            <td width="90" valign="top" id="tade">
-                                โซนในกรุงเทพฯ
-                            </td>
-                            <td colspan="3">
-
-                            </td>
-                        </tr>
-                        -->
                         <tr>
                             <td width="90" valign="top" id="tade">
                                 รายละเอียด
