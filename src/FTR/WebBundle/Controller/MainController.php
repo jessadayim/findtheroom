@@ -9,9 +9,7 @@ use Acme\WebBundle\Repository\Building_siteRepository;
 class MainController extends Controller {
 
 	public function indexAction() {
-		//var_dump($objSQL1,$objSQL2,$objSQL3); test
-		//exit();
-		$em = $this -> getDoctrine() -> getEntityManager();
+        $em = $this -> getDoctrine() -> getEntityManager();
 
 		$conn = $this -> get('database_connection');
 		if (!$conn) { die("MySQL Connection error");
