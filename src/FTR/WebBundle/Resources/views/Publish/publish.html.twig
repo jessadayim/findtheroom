@@ -46,19 +46,33 @@
 			});
 		});
 </script>
-<div class="detail" style="height: 290px; margin-bottom: 15px;">
+<!--<div class="detail" style="height: 290px; margin-bottom: 15px;">
     <div style="width:500px; display:block; position:relative; float:left; border-right:1px solid #FFF; height:250px; margin-top: 20px;">
     	{% if app.session.get('user') == NULL %}
-		<a id="login2" href="{{path('FTRWebBundle_regis')}}"><img src="{{asset('images/pub-bt.png')}}" style="margin-left:30px; margin-top:20px;;" /></a>
+		<a id="login2" href="{{path('FTRWebBundle_regis')}}"><img src="{{asset('images/pub-bt.png')}}" style="margin-left:10px; margin-top:10px;" /></a>
 		{% else %}
-		<a href="{{path('userbuilding')}}"><img src="{{asset('images/pub-bt.png')}}" style="margin-left:30px; margin-top:20px;;" /></a>
+		<a href="{{path('userbuilding')}}"><img src="{{asset('images/pub-bt.png')}}" style="margin-left:10px; margin-top:10px;" /></a>
 		{% endif %}
 	</div>
     <div style="width:490px; display:block; position:relative; float:left;">
     	{% if app.session.get('user') == NULL %}
-		<a id="login" href="{{path('FTRWebBundle_loginpublish')}}"><img src="{{asset('images/login.png')}}" style="margin-left:10px; margin-top:40px;" /></a>
+		<a id="login" href="{{path('FTRWebBundle_loginpublish')}}"><img src="{{asset('images/login.png')}}" style="margin-left:10px; margin-top:27px;" /></a>
 		{% endif %}
 	</div>
+</div>-->
+<div class="detail" style="height: 290px; margin-bottom: 15px;">
+	{% if app.session.get('user') == NULL %}
+    <div style="width:500px; display:block; position:relative; float:left; border-right:1px solid #FFF; height:250px; margin-top: 20px;">
+		<a id="login2" href="{{path('FTRWebBundle_regis')}}"><img src="{{asset('images/pub-bt.png')}}" style="margin-left:10px; margin-top:10px;" /></a>
+	</div>
+    <div style="width:490px; display:block; position:relative; float:left;">
+		<a id="login" href="{{path('FTRWebBundle_loginpublish')}}"><img src="{{asset('images/login.png')}}" style="margin-left:10px; margin-top:27px;" /></a>
+	</div>
+	{% else %}
+	<div style="width:900px; display:block; position:relative; height:250px; margin-top: 20px;">
+		<a href="{{path('userbuilding')}}"><img src="{{asset('images/free-pub.png')}}" style="margin-left:30px; margin-top:40px;" /></a>
+	</div>
+	{% endif %}
 </div>
 <div class="detail" style="margin-bottom: 15px; height: 500px">
     <div id="i_containTab3">
