@@ -89,6 +89,7 @@ class ImageController extends Controller
             $em->persist($entity);
             $em->flush();
         }
+        $ObjGetGallery = $this->getDataArray($sqlGetGallery);
 
         foreach ($ObjGetGallery as $key => $value) {
             if (empty($value['photo_name'])){
@@ -342,14 +343,17 @@ class ImageController extends Controller
                     echo 'finish';
                     exit();
                 }else{
-                    $ObjGetImage = $this->getDataArray($sqlGetImage);
-                    $getNameImageOld = $ObjGetImage[0]['photo_name'];
-                    if (!empty($getNameImageOld)){
-                        $this->deleteFileByBuildingId($getBuildingSiteId, $getNameImageOld);
-                    }
+
                     $entity = $em->getRepository('FTRWebBundle:Image')->find($getIdImage);
                     $entity -> setDescription($getDescription);
-                    $entity -> setPhotoName($getNameImage);
+                    if ($getNewImageGallery != 'edit'){
+                        $ObjGetImage = $this->getDataArray($sqlGetImage);
+                        $getNameImageOld = $ObjGetImage[0]['photo_name'];
+                        if (!empty($getNameImageOld)){
+                            $this->deleteFileByBuildingId($getBuildingSiteId, $getNameImageOld);
+                        }
+                        $entity -> setPhotoName($getNameImage);
+                    }
                 }
             }break;
             case "recommend":{
@@ -378,117 +382,6 @@ class ImageController extends Controller
         $em->flush();
         echo 'finish_' . $entity->getId();
         exit();
-//        $entity  = new Image();
-//        $request = $this->getRequest();
-//        $form    = $this->createForm(new ImageType(), $entity);
-//        $form->bindRequest($request);
-//
-//        if ($form->isValid()) {
-//            $em = $this->getDoctrine()->getEntityManager();
-//            $em->persist($entity);
-//            $em->flush();
-//
-//            return $this->redirect($this->generateUrl('image_show', array('id' => $entity->getId())));
-//
-//        }
-//
-//        return $this->render('FTRAdminBundle:Image:new.html.twig', array(
-//            'entity' => $entity,
-//            'form'   => $form->createView()
-//        ));
-    }
-
-    /**
-     * Displays a form to edit an existing Image entity.
-     *
-     */
-    public function editAction($id)
-    {
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $entity = $em->getRepository('FTRWebBundle:Image')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Image entity.');
-        }
-
-        $editForm = $this->createForm(new ImageType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return $this->render('FTRAdminBundle:Image:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
-
-    /**
-     * Edits an existing Image entity.
-     *
-     */
-    public function updateAction($id)
-    {
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $entity = $em->getRepository('FTRWebBundle:Image')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Image entity.');
-        }
-
-        $editForm   = $this->createForm(new ImageType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        $request = $this->getRequest();
-
-        $editForm->bindRequest($request);
-
-        if ($editForm->isValid()) {
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('image_edit', array('id' => $id)));
-        }
-
-        return $this->render('FTRAdminBundle:Image:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
-
-    /**
-     * Deletes a Image entity.
-     *
-     */
-    public function deleteAction($id)
-    {
-        $form = $this->createDeleteForm($id);
-        $request = $this->getRequest();
-
-        $form->bindRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
-            $entity = $em->getRepository('FTRWebBundle:Image')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Image entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
-        }
-
-        return $this->redirect($this->generateUrl('image'));
-    }
-
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
-        ;
     }
 
     /*
