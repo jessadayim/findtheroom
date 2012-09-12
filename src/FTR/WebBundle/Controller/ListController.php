@@ -32,6 +32,7 @@ class ListController extends Controller
         $selAmpher          = null;
         $txtSearch          = "";
         $result             = null;
+        $isAjax             = "no";
 
         //query value
         $whereQuery         = null;
@@ -48,6 +49,7 @@ class ListController extends Controller
             $buildingType   = @$_GET['buildingType'];
             $zone           = @$_GET['zone'];
             $nearly         = @$_GET['nearly'];
+            $isAjax         = @$_GET['isAjax'];
         }
 
         //display textSearch
@@ -374,18 +376,36 @@ class ListController extends Controller
             'txtSearch'         => $txtSearch,
         );
 
-		return $this->render('FTRWebBundle:List:index.html.twig', array(
-            'result'            => $result,
-            'numData'           => $numData,
-            'searchType'        => $searchType,
-            'numStartDisplay'   => $numStartDisplay,
-            'numEnd'            => $numEnd,
-            'parameter'         => $parameter,
-            'pageNumber'        => $pageNumber,
-            'textSearch'        => $textSearch,
-            'txtSearch'         => $txtSearch,
-            'dataSet'           => $dataSet,
-        ));
+        if($isAjax=="yes")
+        {
+            return $this->render('FTRWebBundle:List:showList.html.twig',array(
+                'result'            => $result,
+                'numData'           => $numData,
+                'searchType'        => $searchType,
+                'numStartDisplay'   => $numStartDisplay,
+                'numEnd'            => $numEnd,
+                'parameter'         => $parameter,
+                'pageNumber'        => $pageNumber,
+                'textSearch'        => $textSearch,
+                'txtSearch'         => $txtSearch,
+            ));
+        }
+        else
+        {
+            return $this->render('FTRWebBundle:List:index.html.twig', array(
+                'result'            => $result,
+                'numData'           => $numData,
+                'searchType'        => $searchType,
+                'numStartDisplay'   => $numStartDisplay,
+                'numEnd'            => $numEnd,
+                'parameter'         => $parameter,
+                'pageNumber'        => $pageNumber,
+                'textSearch'        => $textSearch,
+                'txtSearch'         => $txtSearch,
+                'dataSet'           => $dataSet,
+            ));
+
+        }
     }
 
     function getBuildingTypeSearch($id)

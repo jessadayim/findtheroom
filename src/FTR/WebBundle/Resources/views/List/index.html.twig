@@ -3,7 +3,7 @@
 <script type="text/javascript">
     $(function() {
         $("#demo5").paginate({
-            count 		: 4,
+            count 		: 30,
             start 		: 1,
             display     : 20,
             border					: false,
@@ -16,7 +16,12 @@
 
     function switchDisplay(pageName){
         alert(pageName);
-        document.getElementById("show").innerHTML = "pageName = "+pageName;
+        alert({{ numData }});
+
+        $.ajax({type:'POST', url: "{{path('FTRWebBundle_list')}}", data:$('#frmSearch').serialize(),
+            success: function(response) {
+                document.getElementById("show").innerHTML = response;
+        }});
     }
 </script>
 {% if searchType == 'shortSearch' or searchType == 'txtSearch' %}
