@@ -22,11 +22,11 @@ class Roomtype2site
     private $id;
 
     /**
-     * @var integer $roomtype_id
+     * @var string $room_typename
      *
-     * @ORM\Column(name="roomtype_id", type="integer")
+     * @ORM\Column(name="room_typename", type="string", length=255)
      */
-    private $roomtype_id;
+    private $room_typename;
 
     /**
      * @var integer $building_site_id
@@ -68,23 +68,23 @@ class Roomtype2site
     }
 
     /**
-     * Set roomtype_id
+     * Set room_typename
      *
-     * @param integer $roomtypeId
+     * @param string $roomTypename
      */
-    public function setRoomtypeId($roomtypeId)
+    public function setRoomTypename($roomTypename)
     {
-        $this->roomtype_id = $roomtypeId;
+        $this->room_typename = $roomTypename;
     }
 
     /**
-     * Get roomtype_id
+     * Get room_typename
      *
-     * @return integer 
+     * @return string
      */
-    public function getRoomtypeId()
+    public function getRoomTypename()
     {
-        return $this->roomtype_id;
+        return $this->room_typename;
     }
 
     /**
