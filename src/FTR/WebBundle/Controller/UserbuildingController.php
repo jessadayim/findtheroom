@@ -200,12 +200,11 @@ class UserbuildingController extends Controller
 				foreach ($arrroom as $key => $roompicvalue) {
 					$roomtype2site_id = $roompicvalue['roomtype2site_id'];
 					$roomtype2sitedata = $em->getRepository('FTRWebBundle:Roomtype2site')->findOneBy(array('id'=>$roomtype2site_id));
-					$roomtypedata = $em->getRepository('FTRWebBundle:Roomtype')->findOneBy(array('id'=>$roomtype2sitedata->getRoomtypeId()));
 					$arrroomdata[] = array(
 						'id'			=> $roompicvalue['id'],
 						'photo_name'	=> $roompicvalue['photo_name'],
 						'link_photo'	=> "images/building/$id/".$roompicvalue['photo_name'],
-						'roomtype_name'	=> $roomtypedata->getRoomTypename(),
+						'roomtype_name'	=> $roomtype2sitedata->getRoomTypename(),
 						'room_size'		=> $roomtype2sitedata->getRoomsize(),
 						'room_price'	=> $roomtype2sitedata->getRoomprice(),
 					);
