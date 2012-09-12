@@ -1,7 +1,6 @@
 <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js'></script>
 <script>
 	var countRoomType2Site = {{roomtype2site|length}};
-	var countRoomType = {{roomtype|length}};
 	var maxRoomType = 20;
 	var url = "{{ path('roomtype2site_create') }}";
 	var checkReload = false;
@@ -91,19 +90,6 @@
 	
 	
 	function getInnerTr(countValue, optionValue){
-		var option = [
-			{% for room in roomtype %}
-				[{{ room.id }}, '{{ room.room_typename }}'],
-			{% endfor %}
-		];
-		var optionSelect = '';
-		for(var i=0 ; i < option.length ; i++){
-			if (option[i][0] == optionValue){
-				optionSelect += '<option selected value="' + option[i][0] + '">'+option[i][1]+'</option>';
-			}else{
-				optionSelect += '<option value="' + option[i][0] + '">'+option[i][1]+'</option>';
-			}
-		}
 		if (countValue == 1){
 			var strBtnDelete = '';
 		}else {
@@ -113,8 +99,8 @@
 			'. Room Size: <input type="text" id="roomSize[]" onkeypress="validate(event);" class="roomSize" name="roomSize[]"' + 
 			' value="0" />' + '&nbsp;&nbsp;&nbsp;Room Price:&nbsp;<input type="text" class="roomPrice" name="roomPrice[]"' +  
 			' value="0" id="roomPrice[]" />' + '&nbsp;&nbsp;Room Type:&nbsp;&nbsp;'+
-			'<select name="selectRoomType[]" onkeypress="validate(event);" class="selectRoomType" id="selectRoomType[]">' +
-			optionSelect + '</select>&nbsp;&nbsp;&nbsp;' + strBtnDelete + '</div></td></tr>';
+			'<input type="text" name="selectRoomType[]" class="selectRoomType" id="selectRoomType[]"/>' +
+			'&nbsp;&nbsp;&nbsp;' + strBtnDelete + '</div></td></tr>';
 		return newHtmlTb;
 	}
 	
@@ -163,15 +149,7 @@
 						&nbsp;&nbsp;Room Price:
 						<input type="text" name="roomPrice[]" onkeypress="validate(event);" class="roomPrice" id="roomPrice[]" value="{{ roomType.room_price }}"/>
 						&nbsp;Room Type:&nbsp;
-						<select name="selectRoomType[]" class="selectRoomType" id="selectRoomType[]">
-							{% for room in roomtype %}
-								{% if roomType.roomtype_id == room.id %}
-									<option value="{{ room.id }}" selected>{{room.room_typename}}</option>
-								{% else %}
-									<option value="{{ room.id }}">{{room.room_typename}}</option>
-								{% endif %}
-							{% endfor %}
-						</select>
+                        <input type="text" name="selectRoomType[]" class="selectRoomType" id="selectRoomType[]" value="{{ roomType.room_typename }}"/>
 						&nbsp;
 						{% if roomType.count > 1%}
 						<input type="button" class="btnDeleteRoomType" id="btnDeleteRoomType_{{ roomType.count }}" value="  ลบ  " />
@@ -188,11 +166,7 @@
 						&nbsp;&nbsp;Room Price:
 						<input type="text" name="roomPrice[]" onkeypress="validate(event);" class="roomPrice" id="roomPrice[]" value="0"/>
 						&nbsp;&nbsp;Room Type:
-						<select name="selectRoomType[]" class="selectRoomType" id="selectRoomType[]">
-							{% for room in roomtype %}
-							<option value="{{ room.id }}">{{room.room_typename}}</option>
-							{% endfor %}
-						</select>
+                        <input type="text" name="selectRoomType[]" class="selectRoomType" id="selectRoomType[]"/>
 						&nbsp;
 					</div>
 					</td>
