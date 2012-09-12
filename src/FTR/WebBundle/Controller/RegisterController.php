@@ -17,6 +17,10 @@ class RegisterController extends Controller
     {
         return $this->render('FTRWebBundle:Register:confirm.html.twig');
     }
+    public function termsAction()
+    {
+        return $this->render('FTRWebBundle:Register:terms.html.twig');
+    }
 	public function RegisConfirmAction()
     {
 		if($_POST)
