@@ -15,9 +15,9 @@
 	if(bVer.indexOf('MSIE 7.0') > 0)
 		var ver = "ie7";
 	$.fn.paginate.defaults = {
-        //count 		: 30,
-        //start 		: 1,
-        //display     : 20,
+//        count 		: 30,
+//        start 		: 1,
+//        display     : 20,
         //border					: false,
         //text_color  			: '#423C3B',
         //text_hover_color  		: '#423C3B',
@@ -29,8 +29,9 @@
 		onChange				: function(){return false;}
 	};
 	$.fn.draw = function(o,obj,selectedpage){
-		if(o.display > o.count)
+		if(o.display > o.count){
 			o.display = o.count;
+        }
 		$this.empty();
 		if(o.images){
 			var spreviousclass 	= 'jPag-sprevious-img';
@@ -61,25 +62,24 @@
 		var selobj;
 		for(var i = 0; i < o.count; i++){
 			var val = i+1;
-			
-				if(val == selectedpage){
-					if(val < 10){
-					var _obj = $(document.createElement('li')).html('<span class="jPag-current">'+val+'</span>');
-					}else{
-					var _obj = $(document.createElement('li')).html('<span class="jPag-current-two">'+val+'</span>');
-					}
-					selobj = _obj;
-					_ul.append(_obj);
-				}	
-				else{
-					if(val < 10){
-					var _obj = $(document.createElement('li')).html('<a>'+ val +'</a>');
-					}else{
-					var _obj = $(document.createElement('li')).html('<a class="two">'+ val +'</a>');	
-					}
-					_ul.append(_obj);
-				}
-			
+            if(val == selectedpage){
+                if(val < 10){
+                    var _obj = $(document.createElement('li')).html('<span class="jPag-current">'+val+'</span>');
+                }else{
+                    var _obj = $(document.createElement('li')).html('<span class="jPag-current-two">'+val+'</span>');
+                }
+                selobj = _obj;
+                _ul.append(_obj);
+            }
+            else{
+                if(val < 10){
+                    var _obj = $(document.createElement('li')).html('<a>'+ val +'</a>');
+                }else{
+                    var _obj = $(document.createElement('li')).html('<a class="two">'+ val +'</a>');
+                }
+                _ul.append(_obj);
+            }
+
 		}		
 		_ulwrapdiv.append(_ul);
 		
@@ -221,7 +221,7 @@
 					selobj.html('<a class="two">'+selobj.find('.jPag-current,.jPag-current-two').html()+'</a>');
 				}
 				if(currval < 10){
-					
+
 					$(this).html('<span class="jPag-current">'+currval+'</span>');
 				}else {
 										
@@ -259,32 +259,39 @@
 	}
 	
 	$.fn.applystyle = function(o,obj,a_css,hover_css,_first,_ul,_ulwrapdiv,_divwrapright){
-					obj.find('a').css(a_css);
-					obj.find('span.jPag-current').css(hover_css);
-					obj.find('a').hover(
-					function(){
-						$(this).css(hover_css);
-					},
-					function(){
-						$(this).css(a_css);
-					}
-					);
-					
-					//var mybrowser=navigator.userAgent;
-					//if(mybrowser.indexOf('Firefox')>0){
-						//obj.css('padding-left',_first.parent().width() + -3 +'px');
-					//}else{
-						//obj.css('padding-left',_first.parent().width() + 5 +'px');
-					//}
-					
-					insidewidth = 0;
-					
-					obj.find('li').each(function(i,n){
-						if(i == (o.display-1)){
-							outsidewidth_tmp = this.offsetLeft + this.offsetWidth ;
-						}
-						insidewidth += this.offsetWidth;
-					})
-					_ul.css('width',insidewidth+'px');
+        obj.find('a').css(a_css);
+        obj.find('span.jPag-current').css(hover_css);
+        obj.find('a').hover(
+            function(){
+                $(this).css(hover_css);
+            },
+            function(){
+                $(this).css(a_css);
+            }
+        );
+
+        //var mybrowser=navigator.userAgent;
+        //if(mybrowser.indexOf('Firefox')>0){
+            //obj.css('padding-left',_first.parent().width() + -3 +'px');
+        //}else{
+            //obj.css('padding-left',_first.parent().width() + 5 +'px');
+        //}
+
+        insidewidth = 0;
+        var saveWidth = 0;
+        obj.find('li').each(function(i, n){
+//                outsidewidth_tmp = this.offsetLeft + (this.offsetWidth * 2);
+            if (o.display <= o.count){
+                if (i < o.display){
+                    outsidewidth_tmp += this.offsetWidth;
+                }
+            }else{
+                outsidewidth_tmp += this.offsetWidth;
+            }
+            saveWidth = this.offsetWidth;
+            insidewidth += this.offsetWidth;
+        });
+        outsidewidth_tmp = (saveWidth * 3) + outsidewidth_tmp;
+        _ul.css('width', insidewidth + 'px');
 	}
 })(jQuery);

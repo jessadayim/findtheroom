@@ -361,6 +361,19 @@ class ListController extends Controller
         {
              $numEnd = $numStart + $numData;
         }
+
+        $dataSet = array(
+            'result'            => $result,
+            'numData'           => $numData,
+            'searchType'        => $searchType,
+            'numStartDisplay'   => $numStartDisplay,
+            'numEnd'            => $numEnd,
+            'parameter'         => $parameter,
+            'pageNumber'        => $pageNumber,
+            'textSearch'        => $textSearch,
+            'txtSearch'         => $txtSearch,
+        );
+
 		return $this->render('FTRWebBundle:List:index.html.twig', array(
             'result'            => $result,
             'numData'           => $numData,
@@ -371,6 +384,7 @@ class ListController extends Controller
             'pageNumber'        => $pageNumber,
             'textSearch'        => $textSearch,
             'txtSearch'         => $txtSearch,
+            'dataSet'           => $dataSet,
         ));
     }
 
@@ -418,5 +432,30 @@ class ListController extends Controller
             echo 'Caught exception: ',  $e->getMessage(), "\n";
         }
         return $resultData;
+    }
+
+    function showListAction($dataSet)
+    {
+        $result             = $dataSet['result'];
+        $numData            = $dataSet['numData'];
+        $searchType         = $dataSet['searchType'];
+        $numStartDisplay    = $dataSet['numStartDisplay'];
+        $numEnd             = $dataSet['numEnd' ];
+        $parameter          = $dataSet['parameter'];
+        $pageNumber         = $dataSet['pageNumber'];
+        $textSearch         = $dataSet['textSearch'];
+        $txtSearch          = $dataSet['txtSearch'];
+
+        return $this->render('FTRWebBundle:List:showList.html.twig',array(
+            'result'            => $result,
+            'numData'           => $numData,
+            'searchType'        => $searchType,
+            'numStartDisplay'   => $numStartDisplay,
+            'numEnd'            => $numEnd,
+            'parameter'         => $parameter,
+            'pageNumber'        => $pageNumber,
+            'textSearch'        => $textSearch,
+            'txtSearch'         => $txtSearch,
+        ));
     }
 }
