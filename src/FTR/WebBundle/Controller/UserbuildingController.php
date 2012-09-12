@@ -21,464 +21,454 @@ use FTR\WebBundle\Controller\SearchController;
 
 class UserbuildingController extends Controller
 {
-    
-    public function indexAction($errormsg=NULL)
+
+    public function indexAction($errormsg = NULL)
     {
         $session = $this->get('session');
-		$username = $session->get('user');
-		if(empty($username))
-		{
-			return $this->redirect($this->generateUrl('FTRWebBundle_regis'));
-		}
-		
-		if(empty($errormsg))
-		{//Default error messeges
-			$errormsg = array('email'=>NULL,'password'=>NULL,'tel'=>NULL,'confirmpass'=>'ต้องใส่ยืนยันรหัสก่อนบันทึก');
-		}
-		$em = $this->getDoctrine()->getEntityManager();
-		$conn= $this->get('database_connection');
-		if(!$conn){ die("MySQL Connection error");}
-			try{
-				$sql1 ="SELECT * FROM user_owner WHERE username = '".$username."'";
-				$objSQL1 = $conn->fetchAll($sql1);
-				$objSQL1[0]['username'];
-				
-				$sql2 = "SELECT * FROM building_site WHERE user_owner_id = '".$objSQL1[0]['id']."'";
-				$objSQL2 = $conn->fetchAll($sql2);
-				$arrdata = NULL;
-				foreach ($objSQL2 as $key => $value) {
-					if($value['publish']==1)
-					{
-						$publish = "แสดงแล้ว";
-					}
-                    elseif($value['publish']==0){
-                        $publish = "ฉบับร่าง";
-                    }
-					else {
-						$publish = "รอการยืนยัน";
-					}
-					$arrdata[] = array(
-						'id'				=> $value['id'],
-						'building_name'		=> $value['building_name'],
-						'publish'			=> $publish,
-					);
-				}
-			} catch (Exception $e) {
-				echo 'Caught exception: ',  $e->getMessage(), "\n";
-			}
-			
+        $username = $session->get('user');
+        if (empty($username)) {
+            return $this->redirect($this->generateUrl('FTRWebBundle_regis'));
+        }
+
+        if (empty($errormsg)) { //Default error messeges
+            $errormsg = array('email' => NULL, 'password' => NULL, 'tel' => NULL, 'confirmpass' => 'ต้องใส่ยืนยันรหัสก่อนบันทึก');
+        }
+        $em = $this->getDoctrine()->getEntityManager();
+        $conn = $this->get('database_connection');
+        if (!$conn) {
+            die("MySQL Connection error");
+        }
+        try {
+            $sql1 = "SELECT * FROM user_owner WHERE username = '" . $username . "'";
+            $objSQL1 = $conn->fetchAll($sql1);
+            $objSQL1[0]['username'];
+
+            $sql2 = "SELECT * FROM building_site WHERE user_owner_id = '" . $objSQL1[0]['id'] . "'";
+            $objSQL2 = $conn->fetchAll($sql2);
+            $arrdata = NULL;
+            foreach ($objSQL2 as $key => $value) {
+                if ($value['publish'] == 1) {
+                    $publish = "แสดงแล้ว";
+                } elseif ($value['publish'] == 0) {
+                    $publish = "ฉบับร่าง";
+                }
+                else {
+                    $publish = "รอการยืนยัน";
+                }
+                $arrdata[] = array(
+                    'id' => $value['id'],
+                    'building_name' => $value['building_name'],
+                    'publish' => $publish,
+                );
+            }
+        } catch (Exception $e) {
+            echo 'Caught exception: ', $e->getMessage(), "\n";
+        }
+
         return $this->render('FTRWebBundle:Userbuilding:listap.html.twig', array(
-        	'firstname'		=> $objSQL1[0]['firstname'],
-        	'lastname'		=> $objSQL1[0]['lastname'],
-        	'username'		=> $objSQL1[0]['username'],
-        	'email'			=> $objSQL1[0]['email'],
-        	'password'		=> $objSQL1[0]['password'],
-        	'phone_number'	=> $objSQL1[0]['phone_number'],
-        	'errormsg'		=> $errormsg,
-        	'build_data'	=> $arrdata,
-		));
+            'firstname' => $objSQL1[0]['firstname'],
+            'lastname' => $objSQL1[0]['lastname'],
+            'username' => $objSQL1[0]['username'],
+            'email' => $objSQL1[0]['email'],
+            'password' => $objSQL1[0]['password'],
+            'phone_number' => $objSQL1[0]['phone_number'],
+            'errormsg' => $errormsg,
+            'build_data' => $arrdata,
+        ));
     }
-	
-	public function addDataAction($id=null)
-	{
-		$fac_inroomlist = NULL;
-		$fac_outroomlist = NULL;
-		$arrroom = NULL;$arrgallery = NULL;$countroom = 0;$countgallery = 0;
-		$building_data = NULL;
-		$session = $this->get('session');
-		$user = $session->get('user');
 
-		$em = $this->getDoctrine()->getEntityManager();
-        $conn= $this->get('database_connection');
-		if(!$conn){ die("MySQL Connection error");}
-			try{
-				$userdata = $em->getRepository('FTRWebBundle:User_owner')->findOneBy(array('username'=>$user));
-				// เช็คถ้าไม่มีให้ redirect
-				if(empty($userdata))
-				{
-					return $this->redirect($this->generateUrl('FTRWebBundle_publish'));
-				}
-				if(empty($id))
-				{
-					$building = new Building_site();
-					$building->setBuildingName('');
-					$building->setBuildingAddress('');
-					$building->setStartPrice(0);
-					$building->setEndPrice(0);
-					$building->setPhoneNumber('');
-					$building->setBuildingTypeId(0);
-					$building->setPayTypeId(0);
-					$building->setUserOwnerId($userdata->getId());
-					$building->setContactName('');
-					$building->setContactEmail('');
-					$building->setMonthStay('');
-					$building->setWaterUnit(0);
-					$building->setElectricityUnit(0);
-					$em->persist($building);
-    				$em->flush();
-					$building_id = $building->getId();
-					$building_data = $this->getBuildingData($building_id);
-				}else{
-					$building_id = $id;
-					$building_data = $this->getBuildingData($building_id);
-					//echo "<pre>";var_dump($building_data);echo "</pre>";exit();
-					if($building_data['izoneid']!=0)
-					{
-						$zone_data = $em->getRepository('FTRWebBundle:Zone')->findOneBy(array('id'=>$building_data['izoneid']));
-					}
-					if($building_data['ipaytypeid']!=0)
-					{
-						$paytype_data = $em->getRepository('FTRWebBundle:Pay_type')->findOneBy(array('id'=>$building_data['ipaytypeid']));
-					}
-					//var_dump($buildtype_data);exit();
-				}
-				$linkimagehead = NULL;$nameimagehead = NULL;
-				$linkimagemap = NULL;$nameimagemap = NULL;
-				$fac_inroomlist 	= $this->getFacility('inroom');
-				$fac_outroomlist 	= $this->getFacility('outroom');
-				$arrroom 			= $this->getImageDatas($building_id,NULL,'room');
-				$arrgallery 		= $this->getImageDatas($building_id,NULL,'gallery');
-				$imagehead 			= $this->getImageDatas($building_id,NULL,'head');
-				$imagemap			= $this->getImageDatas($building_id,NULL,'map');
+    public function addDataAction($id = null)
+    {
+        $fac_inroomlist = NULL;
+        $fac_outroomlist = NULL;
+        $arrroom = NULL;
+        $arrgallery = NULL;
+        $countroom = 0;
+        $countgallery = 0;
+        $building_data = NULL;
+        $session = $this->get('session');
+        $user = $session->get('user');
 
-                $sqlFacilityList ="select facilitylist_id from facility2site where building_site_id = $id and deleted = 0";
-                $facFetch = $conn->fetchAll($sqlFacilityList);
-                $facArray = NULL;
-                foreach($facFetch as $key => $value)
-                {
-                    $facArray[] = $value['facilitylist_id'];
+        $em = $this->getDoctrine()->getEntityManager();
+        $conn = $this->get('database_connection');
+        if (!$conn) {
+            die("MySQL Connection error");
+        }
+        try {
+            $userdata = $em->getRepository('FTRWebBundle:User_owner')->findOneBy(array('username' => $user));
+            // เช็คถ้าไม่มีให้ redirect
+            if (empty($userdata)) {
+                return $this->redirect($this->generateUrl('FTRWebBundle_publish'));
+            }
+            if (empty($id)) {
+                $building = new Building_site();
+                $building->setBuildingName('');
+                $building->setBuildingAddress('');
+                $building->setStartPrice(0);
+                $building->setEndPrice(0);
+                $building->setPhoneNumber('');
+                $building->setBuildingTypeId(0);
+                $building->setPayTypeId(0);
+                $building->setUserOwnerId($userdata->getId());
+                $building->setContactName('');
+                $building->setContactEmail('');
+                $building->setMonthStay('');
+                $building->setWaterUnit(0);
+                $building->setElectricityUnit(0);
+                $em->persist($building);
+                $em->flush();
+                $building_id = $building->getId();
+                $building_data = $this->getBuildingData($building_id);
+            } else {
+                $building_id = $id;
+                $building_data = $this->getBuildingData($building_id);
+                //echo "<pre>";var_dump($building_data);echo "</pre>";exit();
+                if ($building_data['izoneid'] != 0) {
+                    $zone_data = $em->getRepository('FTRWebBundle:Zone')->findOneBy(array('id' => $building_data['izoneid']));
                 }
+                if ($building_data['ipaytypeid'] != 0) {
+                    $paytype_data = $em->getRepository('FTRWebBundle:Pay_type')->findOneBy(array('id' => $building_data['ipaytypeid']));
+                }
+                //var_dump($buildtype_data);exit();
+            }
+            $linkimagehead = NULL;
+            $nameimagehead = NULL;
+            $linkimagemap = NULL;
+            $nameimagemap = NULL;
+            $fac_inroomlist = $this->getFacility('inroom');
+            $fac_outroomlist = $this->getFacility('outroom');
+            $arrroom = $this->getImageDatas($building_id, NULL, 'room');
+            $arrgallery = $this->getImageDatas($building_id, NULL, 'gallery');
+            $imagehead = $this->getImageDatas($building_id, NULL, 'head');
+            $imagemap = $this->getImageDatas($building_id, NULL, 'map');
 
-                foreach($fac_inroomlist as $key=>$value)
-                {
-                    $row = $fac_inroomlist[$key]['loop'];
-                    foreach($row as $keyRow => $valueRow)
-                    {
-                        $fId = $row[$keyRow]['id'];
-                        if(is_array($facArray)==true)
-                        {
-                            if(in_array($fId,$facArray)==true)
-                            {
-                                $fac_inroomlist[$key]['loop'][$keyRow]['checked']="yes";
-                            }
-                            else
-                            {
-                                $fac_inroomlist[$key]['loop'][$keyRow]['checked']="no";
-                            }
+            $sqlFacilityList = "select facilitylist_id from facility2site where building_site_id = $id and deleted = 0";
+            $facFetch = $conn->fetchAll($sqlFacilityList);
+            $facArray = NULL;
+            foreach ($facFetch as $key => $value) {
+                $facArray[] = $value['facilitylist_id'];
+            }
+
+            foreach ($fac_inroomlist as $key => $value) {
+                $row = $fac_inroomlist[$key]['loop'];
+                foreach ($row as $keyRow => $valueRow) {
+                    $fId = $row[$keyRow]['id'];
+                    if (is_array($facArray) == true) {
+                        if (in_array($fId, $facArray) == true) {
+                            $fac_inroomlist[$key]['loop'][$keyRow]['checked'] = "yes";
+                        } else {
+                            $fac_inroomlist[$key]['loop'][$keyRow]['checked'] = "no";
                         }
-                        else
-                        {
-                            $fac_inroomlist[$key]['loop'][$keyRow]['checked']="no";
-                        }
+                    } else {
+                        $fac_inroomlist[$key]['loop'][$keyRow]['checked'] = "no";
                     }
                 }
+            }
 
-                foreach($fac_outroomlist as $key=>$value)
-                {
-                    $row = $fac_outroomlist[$key]['loop'];
-                    foreach($row as $keyRow => $valueRow)
-                    {
-                        $fId = $row[$keyRow]['id'];
-                        if(is_array($facArray)==true)
-                        {
-                            if(in_array($fId,$facArray)==true)
-                            {
-                                $fac_outroomlist[$key]['loop'][$keyRow]['checked']="yes";
-                            }
-                            else
-                            {
-                                $fac_outroomlist[$key]['loop'][$keyRow]['checked']="no";
-                            }
+            foreach ($fac_outroomlist as $key => $value) {
+                $row = $fac_outroomlist[$key]['loop'];
+                foreach ($row as $keyRow => $valueRow) {
+                    $fId = $row[$keyRow]['id'];
+                    if (is_array($facArray) == true) {
+                        if (in_array($fId, $facArray) == true) {
+                            $fac_outroomlist[$key]['loop'][$keyRow]['checked'] = "yes";
+                        } else {
+                            $fac_outroomlist[$key]['loop'][$keyRow]['checked'] = "no";
                         }
-                        else
-                        {
-                            $fac_outroomlist[$key]['loop'][$keyRow]['checked']="no";
-                        }
+                    } else {
+                        $fac_outroomlist[$key]['loop'][$keyRow]['checked'] = "no";
                     }
                 }
+            }
 
-				$arrroomdata = NULL;
-				foreach ($arrroom as $key => $roompicvalue) {
-					$roomtype2site_id = $roompicvalue['roomtype2site_id'];
-					$roomtype2sitedata = $em->getRepository('FTRWebBundle:Roomtype2site')->findOneBy(array('id'=>$roomtype2site_id));
-					$roomtypedata = $em->getRepository('FTRWebBundle:Roomtype')->findOneBy(array('id'=>$roomtype2sitedata->getRoomtypeId()));
-					$arrroomdata[] = array(
-						'id'			=> $roompicvalue['id'],
-						'photo_name'	=> $roompicvalue['photo_name'],
-						'link_photo'	=> "images/building/$id/".$roompicvalue['photo_name'],
-						'roomtype_name'	=> $roomtypedata->getRoomTypename(),
-						'room_size'		=> $roomtype2sitedata->getRoomsize(),
-						'room_price'	=> $roomtype2sitedata->getRoomprice(),
-					);
-				}
-                $arrgallerydata = NULL;
-                foreach ($arrgallery as $key => $gallerypicvalue) {
-                    $arrgallerydata[] = array(
-                        'id'			=> $gallerypicvalue['id'],
-                        'photo_name'	=> $gallerypicvalue['photo_name'],
-                        'link_photo'	=> "images/building/$id/".$gallerypicvalue['photo_name'],
-                        'description'	=> $gallerypicvalue['description'],
-                    );
-                }
-				/*echo "<pre>";
-				var_dump($arrgallerydata);
-				echo "</pre>";
-				exit();*/
-				if(!empty($imagehead)){
-					$linkimagehead = "images/building/$id/".$imagehead[0]['photo_name'];
-					$nameimagehead = $imagehead[0]['photo_name'];
-				}
-				if(!empty($imagemap)){
-					$linkimagemap = "images/building/$id/".$imagemap[0]['photo_name'];
-					$nameimagemap = $imagemap[0]['photo_name'];
-				}
+            $arrroomdata = NULL;
+            foreach ($arrroom as $key => $roompicvalue) {
+                $roomtype2site_id = $roompicvalue['roomtype2site_id'];
+                $roomtype2sitedata = $em->getRepository('FTRWebBundle:Roomtype2site')->findOneBy(array('id' => $roomtype2site_id));
+                $roomtypedata = $em->getRepository('FTRWebBundle:Roomtype')->findOneBy(array('id' => $roomtype2sitedata->getRoomtypeId()));
+                $arrroomdata[] = array(
+                    'id' => $roompicvalue['id'],
+                    'photo_name' => $roompicvalue['photo_name'],
+                    'link_photo' => "images/building/$id/" . $roompicvalue['photo_name'],
+                    'roomtype_name' => $roomtypedata->getRoomTypename(),
+                    'room_size' => $roomtype2sitedata->getRoomsize(),
+                    'room_price' => $roomtype2sitedata->getRoomprice(),
+                );
+            }
+            $arrgallerydata = NULL;
+            foreach ($arrgallery as $key => $gallerypicvalue) {
+                $arrgallerydata[] = array(
+                    'id' => $gallerypicvalue['id'],
+                    'photo_name' => $gallerypicvalue['photo_name'],
+                    'link_photo' => "images/building/$id/" . $gallerypicvalue['photo_name'],
+                    'description' => $gallerypicvalue['description'],
+                );
+            }
+            /*echo "<pre>";
+                   var_dump($arrgallerydata);
+                   echo "</pre>";
+                   exit();*/
+            if (!empty($imagehead)) {
+                $linkimagehead = "images/building/$id/" . $imagehead[0]['photo_name'];
+                $nameimagehead = $imagehead[0]['photo_name'];
+            }
+            if (!empty($imagemap)) {
+                $linkimagemap = "images/building/$id/" . $imagemap[0]['photo_name'];
+                $nameimagemap = $imagemap[0]['photo_name'];
+            }
 
-                $provinceName = $building_data['saddrprovince'];
+            $provinceName = $building_data['saddrprovince'];
 
-				$payType        = $this->getPayType($building_data['ipaytypeid']);
-		        $bkkZone        = $this->getBkkZone();
-		        $buildingType   = $this->getBuildingType($building_data['ibuildingtypeid']);
-		        $province       = $this->getProvince($building_data['saddrprovince'],null);
-                $district       = $this->getDistrictAction($provinceName,$building_data['saddrprefecture'],'call');
-                $provinceOther       = $this->getProvince($provinceName,'other');
-                $nearBTS			= $this->getNearly(2);
-				$nearMRT			= $this->getNearly(3);
-				$nearUniversity		= $this->getNearly(4);
-				$nearBy				= $this->getNearly(5);
-				$nearInCountry		= $this->getNearly(6);
-				/*echo "<pre>";
-				var_dump($province);
-				echo "</pre>";
-				exit();*/
-				$this->getPathUpload($building_id);
-			} catch (Exception $e) {
-				echo 'Caught exception: ',  $e->getMessage(), "\n";
-				}
-				
-		return $this->render('FTRWebBundle:Userbuilding:add.html.twig', array(
-			'buildingdata'			=> $building_data,
-			'payType' 			    => $payType,
-            'zonelist' 		        => $bkkZone,
-            'buildingType' 		    => $buildingType,
-            'province' 		        => $province,
-            'provinceName'          => $provinceName,
-            'district'              => $district,
-            'provinceOther'         => $provinceOther,
-			'nearBTS' 				=> $nearBTS,
-			'nearMRT' 				=> $nearMRT,
-			'nearUniversity' 		=> $nearUniversity,
-			'nearBy' 				=> $nearBy,
-			'nearInCountry' 		=> $nearInCountry,
-            'username'				=> $user,
-			'build_id'				=> $building_id,
-			'fac_inroom'			=> $fac_inroomlist,
-			'fac_outroom'			=> $fac_outroomlist,
-			'rooms'					=> $arrroomdata,
-			'roomlines'				=> $countroom,
-			'galleries'				=> $arrgallerydata,
-			'gellerylines'			=> $countgallery,
-			'linkimagehead'			=> $linkimagehead,
-			'nameimagehead'			=> $nameimagehead,
-			'linkimagemap'			=> $linkimagemap,
-			'nameimagemap'			=> $nameimagemap,
-		));
-	}
+            $payType = $this->getPayType($building_data['ipaytypeid']);
+            $bkkZone = $this->getBkkZone();
+            $buildingType = $this->getBuildingType($building_data['ibuildingtypeid']);
+            $province = $this->getProvince($building_data['saddrprovince'], null);
+            $district = $this->getDistrictAction($provinceName, $building_data['saddrprefecture'], 'call');
+            $provinceOther = $this->getProvince($provinceName, 'other');
+            $nearBTS = $this->getNearly(2);
+            $nearMRT = $this->getNearly(3);
+            $nearUniversity = $this->getNearly(4);
+            $nearBy = $this->getNearly(5);
+            $nearInCountry = $this->getNearly(6);
+            /*echo "<pre>";
+                   var_dump($province);
+                   echo "</pre>";
+                   exit();*/
+            $this->getPathUpload($building_id);
+        } catch (Exception $e) {
+            echo 'Caught exception: ', $e->getMessage(), "\n";
+        }
 
-	public function getBuildingData($id)
-	{
-		$em = $this->getDoctrine()->getEntityManager();
-		$build_data = $em->getRepository('FTRWebBundle:Building_site')->findOneBy(array('id'=>$id));
-		$arrdata = array(
-					'sbuildingname'		=> $build_data->getBuildingName(),
-					'tbuildingaddress'	=> $build_data->getBuildingAddress(),
-					'istartprice'		=> $build_data->getStartPrice(),
-					'iendprice'			=> $build_data->getEndPrice(),
-					'sphonenumber'		=> $build_data->getPhoneNumber(),
-					'slatitude'			=> $build_data->getLatitude(),
-					'slongitude'		=> $build_data->getLongitude(),
-					'brecommend'		=> $build_data->getRecommend(),
-					'ibuildingtypeid'	=> $build_data->getBuildingTypeId(),
-					'izoneid'			=> $build_data->getZoneId(),
-					'ipaytypeid'		=> $build_data->getPayTypeId(),
-					'iuserownerid'		=> $build_data->getUserOwnerId(),
-					'tdetail'			=> $build_data->getDetail(),
-					'scontactname'		=> $build_data->getContactName(),
-					'scontactemail'		=> $build_data->getContactEmail(),
-					'swebsite'			=> $build_data->getWebsite(),
-					'smonthstay'		=> $build_data->getMonthStay(),
-					'fwaterunit'		=> $build_data->getWaterUnit(),
-					'felectrictunit'	=> $build_data->getElectricityUnit(),
-					'iinternetprice'	=> $build_data->getInternetPrice(),
-					'igooglemapurl'		=> $build_data->getGoogleMapUrl(),
-					'snearlyplace'	    => $build_data->getNearlyPlace(),
-					'saddrnumber'		=> $build_data->getAddrNumber(),
-					'saddrprefecture'	=> $build_data->getAddrPrefecture(),
-					'saddrprovince'		=> $build_data->getAddrProvince(),
-					'saddrzipcode'		=> $build_data->getAddrZipcode(),
-			);
-		return $arrdata;
-	}
+        return $this->render('FTRWebBundle:Userbuilding:add.html.twig', array(
+            'buildingdata' => $building_data,
+            'payType' => $payType,
+            'zonelist' => $bkkZone,
+            'buildingType' => $buildingType,
+            'province' => $province,
+            'provinceName' => $provinceName,
+            'district' => $district,
+            'provinceOther' => $provinceOther,
+            'nearBTS' => $nearBTS,
+            'nearMRT' => $nearMRT,
+            'nearUniversity' => $nearUniversity,
+            'nearBy' => $nearBy,
+            'nearInCountry' => $nearInCountry,
+            'username' => $user,
+            'build_id' => $building_id,
+            'fac_inroom' => $fac_inroomlist,
+            'fac_outroom' => $fac_outroomlist,
+            'rooms' => $arrroomdata,
+            'roomlines' => $countroom,
+            'galleries' => $arrgallerydata,
+            'gellerylines' => $countgallery,
+            'linkimagehead' => $linkimagehead,
+            'nameimagehead' => $nameimagehead,
+            'linkimagemap' => $linkimagemap,
+            'nameimagemap' => $nameimagemap,
+        ));
+    }
 
-	public function getImageDatas($buildid=null,$roomtype2siteid=null,$type)
-	{
-		$conn= $this->get('database_connection');
-		if(!$conn){ die("MySQL Connection error");}
-			try{
-				$sql ="select * from image 
+    public function getBuildingData($id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $build_data = $em->getRepository('FTRWebBundle:Building_site')->findOneBy(array('id' => $id));
+        $arrdata = array(
+            'sbuildingname' => $build_data->getBuildingName(),
+            'tbuildingaddress' => $build_data->getBuildingAddress(),
+            'istartprice' => $build_data->getStartPrice(),
+            'iendprice' => $build_data->getEndPrice(),
+            'sphonenumber' => $build_data->getPhoneNumber(),
+            'slatitude' => $build_data->getLatitude(),
+            'slongitude' => $build_data->getLongitude(),
+            'brecommend' => $build_data->getRecommend(),
+            'ibuildingtypeid' => $build_data->getBuildingTypeId(),
+            'izoneid' => $build_data->getZoneId(),
+            'ipaytypeid' => $build_data->getPayTypeId(),
+            'iuserownerid' => $build_data->getUserOwnerId(),
+            'tdetail' => $build_data->getDetail(),
+            'scontactname' => $build_data->getContactName(),
+            'scontactemail' => $build_data->getContactEmail(),
+            'swebsite' => $build_data->getWebsite(),
+            'smonthstay' => $build_data->getMonthStay(),
+            'fwaterunit' => $build_data->getWaterUnit(),
+            'felectrictunit' => $build_data->getElectricityUnit(),
+            'iinternetprice' => $build_data->getInternetPrice(),
+            'igooglemapurl' => $build_data->getGoogleMapUrl(),
+            'snearlyplace' => $build_data->getNearlyPlace(),
+            'saddrnumber' => $build_data->getAddrNumber(),
+            'saddrprefecture' => $build_data->getAddrPrefecture(),
+            'saddrprovince' => $build_data->getAddrProvince(),
+            'saddrzipcode' => $build_data->getAddrZipcode(),
+        );
+        return $arrdata;
+    }
+
+    public function getImageDatas($buildid = null, $roomtype2siteid = null, $type)
+    {
+        $conn = $this->get('database_connection');
+        if (!$conn) {
+            die("MySQL Connection error");
+        }
+        try {
+            $sql = "select * from image
 								where building_site_id = '$buildid' 
 									and photo_type = '$type' 
 									or roomtype2site_id = '$roomtype2siteid' 
 									and deleted = 0";
-				$imagedata = $conn->fetchAll($sql);
-				/*echo "<pre>";
-				var_dump($imagedata);
-				echo "</pre>";
-				exit();*/
-			} catch (Exception $e) {
-			echo 'Caught exception: ',  $e->getMessage(), "\n";
-		}
-				
-		return $imagedata;
-	}
-	
-	public function getFacility($type)
-	{
-		$fac_inroomlist = NULL;
-		$fac_outroomlist = NULL;
-		$conn= $this->get('database_connection');
-		if(!$conn){ die("MySQL Connection error");}
-			try{
-				if($type=='inroom')
-				{
-					/**
-					 * query for facility list inroom type
-					 */
-					$sql ="select * from facilitylist where facility_type = '$type' and display = 1";
-					$faclist_inroom = $conn->fetchAll($sql);
-					$countall_inroom = count($faclist_inroom);
-					foreach ($faclist_inroom as $key => $value) {
-						$count = $key+1;
-						$list[] = array(
-							'id'				=> $value['id'],
-							'facility_name'		=> $value['facility_name'],
-							'facility_type'		=> $value['facility_type'],
-						);
-						if($count%4==0){
-							$fac_inroomlist[] = array('loop'=>$list);
-							$list = NULL;
-						}elseif($count==$countall_inroom){
-							$fac_inroomlist[] = array('loop'=>$list);
-							$list = NULL;
-						}
-					}
-					$fac_listreturn = $fac_inroomlist;
-				}
-				elseif($type == 'outroom') {
-					/**
-					 * query for facility list outroom type
-					 */
-					$sql ="select * from facilitylist where facility_type = '$type' and display = 1";
-					$faclist_outroom = $conn->fetchAll($sql);
-					$countall_outroom = count($faclist_outroom);
-					foreach ($faclist_outroom as $key => $value) {
-						$count = $key+1;
-						$list[] = array(
-							'id'				=> $value['id'],
-							'facility_name'		=> $value['facility_name'],
-							'facility_type'		=> $value['facility_type'],
-						);
-						if($count%4==0){
-							$num = 4;
-							if($count==$countall_outroom)
-							{
-								$fac_outroomlist[] = array('loop'=>$list,'stat'=>'end','count'=>$num);
-							}else{
-								$fac_outroomlist[] = array('loop'=>$list,'stat'=>'not','count'=>$num);
-							}
-							$list = NULL;
-						}elseif($count==$countall_outroom){
-							$countlist = count($list);
-							$num = 4-$countlist;
-							$fac_outroomlist[] = array('loop'=>$list,'stat'=>'end','count'=>$num);
-							$list = NULL;
-						}
-					}
-					$fac_listreturn = $fac_outroomlist;
-					/*echo "<pre>";
-					var_dump($fac_listreturn);
-					echo "</pre>";exit();*/
-				}
-			} catch (Exception $e) {
-				echo 'Caught exception: ',  $e->getMessage(), "\n";
-				}
-				
-		return $fac_listreturn;
-	}
-	
-	public function saveDataAction($id=null)
-	{
-		$conn= $this->get('database_connection');
-		if(!$conn){ die("MySQL Connection error");}
-		$check = NULL;
-		
-		$session = $this->get('session');
-		$user = $session->get('user');
-		
-		$today = date("Y-m-d H:i:s");
-		if($_POST)
-		{
-			$post_array = $_POST;
-			echo "<pre>";var_dump($post_array);echo "</pre>";exit();
-			/*
-			 * image section
-			 */
-			$headimage_name = $post_array['hdnfilename'];
-			$mapimage_name = $post_array['hdnfilemap'];
-			$countimage_room = $post_array['hdnMaxLine'];
-			$countimage_gallery = $post_array['hdnMaxLineGal'];
-			
-			for ($i=0; $i < $countimage_room ; $i++) { 
-				$arrayimage_room[] = array(
-					'imageid'		=> $post_array['imageid'.$i],
-					'imagename'		=> $post_array['hdnfilename'.$i],
-					'typename'		=> $post_array['typeap_name'.$i],
-					'size'			=> $post_array['typeap_size'.$i],
-					'price'			=> $post_array['typeap_price'.$i],
-				);
-			}
-			
-			for ($i=0; $i < $countimage_gallery ; $i++) { 
-				$arrayimage_room[] = array(
-					'imageid'		=> $post_array['imageid'.$i],
-					'imagename'		=> $post_array['hdnfilename'.$i],
-					'typename'		=> $post_array['typeap_name'.$i],
-					'size'			=> $post_array['typeap_size'.$i],
-					'price'			=> $post_array['typeap_price'.$i],
-				);
-			}
-			
-			echo "<pre>";var_dump($arrayimage_room);echo "</pre>";exit();
-			$apartment_name = $post_array['nameap'];
-			$apartment_addr = $post_array['placeap'];
-			/*$apartment_name = $post_array['nameap'];
-			$apartment_name = $post_array['nameap'];
-			$apartment_name = $post_array['nameap'];*/
-			
-			
-			try{
-				if($id){
-					$sql ="select * from building_site where id = $id";
-					$check = $conn->fetchAll($sql);
-				}
-				//เช็คข้อมูลก่อน เพื่อทราบว่าจะ Insert หรือ Update
-				if(!empty($check))
-				{//ส่วนนี้ พบข้อมูล ทำการอัพเดต
-				
-					
-				}
-				else {//ส่วนนี้ ไม่พบข้อมูล ทำการ insert
-				
-					$sqlinsert ="INSERT INTO `building_site` (
+            $imagedata = $conn->fetchAll($sql);
+            /*echo "<pre>";
+                   var_dump($imagedata);
+                   echo "</pre>";
+                   exit();*/
+        } catch (Exception $e) {
+            echo 'Caught exception: ', $e->getMessage(), "\n";
+        }
+
+        return $imagedata;
+    }
+
+    public function getFacility($type)
+    {
+        $fac_inroomlist = NULL;
+        $fac_outroomlist = NULL;
+        $conn = $this->get('database_connection');
+        if (!$conn) {
+            die("MySQL Connection error");
+        }
+        try {
+            if ($type == 'inroom') {
+                /**
+                 * query for facility list inroom type
+                 */
+                $sql = "select * from facilitylist where facility_type = '$type' and display = 1";
+                $faclist_inroom = $conn->fetchAll($sql);
+                $countall_inroom = count($faclist_inroom);
+                foreach ($faclist_inroom as $key => $value) {
+                    $count = $key + 1;
+                    $list[] = array(
+                        'id' => $value['id'],
+                        'facility_name' => $value['facility_name'],
+                        'facility_type' => $value['facility_type'],
+                    );
+                    if ($count % 4 == 0) {
+                        $fac_inroomlist[] = array('loop' => $list);
+                        $list = NULL;
+                    } elseif ($count == $countall_inroom) {
+                        $fac_inroomlist[] = array('loop' => $list);
+                        $list = NULL;
+                    }
+                }
+                $fac_listreturn = $fac_inroomlist;
+            } elseif ($type == 'outroom') {
+                /**
+                 * query for facility list outroom type
+                 */
+                $sql = "select * from facilitylist where facility_type = '$type' and display = 1";
+                $faclist_outroom = $conn->fetchAll($sql);
+                $countall_outroom = count($faclist_outroom);
+                foreach ($faclist_outroom as $key => $value) {
+                    $count = $key + 1;
+                    $list[] = array(
+                        'id' => $value['id'],
+                        'facility_name' => $value['facility_name'],
+                        'facility_type' => $value['facility_type'],
+                    );
+                    if ($count % 4 == 0) {
+                        $num = 4;
+                        if ($count == $countall_outroom) {
+                            $fac_outroomlist[] = array('loop' => $list, 'stat' => 'end', 'count' => $num);
+                        } else {
+                            $fac_outroomlist[] = array('loop' => $list, 'stat' => 'not', 'count' => $num);
+                        }
+                        $list = NULL;
+                    } elseif ($count == $countall_outroom) {
+                        $countlist = count($list);
+                        $num = 4 - $countlist;
+                        $fac_outroomlist[] = array('loop' => $list, 'stat' => 'end', 'count' => $num);
+                        $list = NULL;
+                    }
+                }
+                $fac_listreturn = $fac_outroomlist;
+                /*echo "<pre>";
+                        var_dump($fac_listreturn);
+                        echo "</pre>";exit();*/
+            }
+        } catch (Exception $e) {
+            echo 'Caught exception: ', $e->getMessage(), "\n";
+        }
+
+        return $fac_listreturn;
+    }
+
+    public function saveDataAction($id = null)
+    {
+        $conn = $this->get('database_connection');
+        if (!$conn) {
+            die("MySQL Connection error");
+        }
+        $check = NULL;
+
+        $session = $this->get('session');
+        $user = $session->get('user');
+
+        $today = date("Y-m-d H:i:s");
+        if ($_POST) {
+            $post_array = $_POST;
+            echo "<pre>";
+            var_dump($post_array);
+            echo "</pre>";
+            exit();
+            /*
+                * image section
+                */
+            $headimage_name = $post_array['hdnfilename'];
+            $mapimage_name = $post_array['hdnfilemap'];
+            $countimage_room = $post_array['hdnMaxLine'];
+            $countimage_gallery = $post_array['hdnMaxLineGal'];
+
+            for ($i = 0; $i < $countimage_room; $i++) {
+                $arrayimage_room[] = array(
+                    'imageid' => $post_array['imageid' . $i],
+                    'imagename' => $post_array['hdnfilename' . $i],
+                    'typename' => $post_array['typeap_name' . $i],
+                    'size' => $post_array['typeap_size' . $i],
+                    'price' => $post_array['typeap_price' . $i],
+                );
+            }
+
+            for ($i = 0; $i < $countimage_gallery; $i++) {
+                $arrayimage_room[] = array(
+                    'imageid' => $post_array['imageid' . $i],
+                    'imagename' => $post_array['hdnfilename' . $i],
+                    'typename' => $post_array['typeap_name' . $i],
+                    'size' => $post_array['typeap_size' . $i],
+                    'price' => $post_array['typeap_price' . $i],
+                );
+            }
+
+            echo "<pre>";
+            var_dump($arrayimage_room);
+            echo "</pre>";
+            exit();
+            $apartment_name = $post_array['nameap'];
+            $apartment_addr = $post_array['placeap'];
+            /*$apartment_name = $post_array['nameap'];
+               $apartment_name = $post_array['nameap'];
+               $apartment_name = $post_array['nameap'];*/
+
+
+            try {
+                if ($id) {
+                    $sql = "select * from building_site where id = $id";
+                    $check = $conn->fetchAll($sql);
+                }
+                //เช็คข้อมูลก่อน เพื่อทราบว่าจะ Insert หรือ Update
+                if (!empty($check)) { //ส่วนนี้ พบข้อมูล ทำการอัพเดต
+
+
+                } else { //ส่วนนี้ ไม่พบข้อมูล ทำการ insert
+
+                    $sqlinsert = "INSERT INTO `building_site` (
 									`building_name`,`building_address`,`start_price`,`end_price`,`phone_number`,
 									`datetimestamp`,`lastupdate`,`userupdate`,`latitude`,`longitude`,
 									`building_type_id`,`pay_type_id`,`user_owner_id`,`detail`,`contact_name`,
@@ -489,314 +479,290 @@ class UserbuildingController extends Controller
 									'1','1','1','ทดสอบดีเทลล์','เจษฎา ยิ้มวิลัย',
 									'exodist@gmail.com','','6','4','8',
 									'799')";
-					//echo "<pre>";var_dump($sqlinsert);echo "</pre>";exit();
-					$conn->query($sqlinsert);
-					
-				}
-			} catch (Exception $e) {
-				echo 'Caught exception: ',  $e->getMessage(), "\n";
-				}
-		}
-		exit();
-		return $this->redirect($this->generateUrl('userbuilding'));
-	}
-	
-	public function sendemailAction()
-	{
-		$name = "extest";
-		$message = \Swift_Message::newInstance()
-        ->setSubject('Hello Email')
-        ->setFrom('jessaday@sourcecode.co.th')
-        ->setTo('exodist@gmail.com')
-        ->setBody($this->renderView('FTRWebBundle:Userbuilding:email.html.twig', array('name' => $name)),'text/html');
-    	
-    	$this->get('mailer')->send($message);
+                    //echo "<pre>";var_dump($sqlinsert);echo "</pre>";exit();
+                    $conn->query($sqlinsert);
 
-    	return $this->render('FTRWebBundle:Userbuilding:email.html.twig', array('name' => $name));
-	}
-	
-	public function updateUserProfileAction()
-	{
-		$em = $this->getDoctrine()->getEntityManager();
-		
-		if($_POST)
-		{
-			$firstname	= $_POST['fname'];
-			$lastname	= $_POST['lname'];
-			$username	= $_POST['username'];
-			$email		= $_POST['email'];
-			$password	= $_POST['password'];
-			$confirmpass= $_POST['cpassword'];
-			$tel_number = $_POST['tel'];
-		}
-		$errmsg = NULL;$errmsg['tel'] = NULL;$errmsg['password'] = NULL;$errmsg['email'] = NULL;$errmsg['confirmpass'] = NULL;
-		if(!empty($confirmpass)){
-			if(strlen($password)<8||strlen($confirmpass)<8||strlen($password)>12||strlen($confirmpass)>12)
-			{
-				$errpass = 'รหัสผ่านต้องมี 8 อักษร และไม่เกิน 12 อักษร';
-			}
-			if(!preg_match("#[a-z]+#", $password)||!preg_match("#[a-z]+#", $confirmpass))
-			{
-				$errpass = 'รหัสผ่านต้องมีอักษรอย่างน้อย 1 ตัว';
-			}
-			if($password!=$confirmpass)
-			{
-				$errpass = 'รหัสผ่านยืนยันไม่ตรงกัน';
-			}
-			if(!empty($errpass))
-			{
-				$errmsg['password'] = 'ผิดพลาด!:'.$errpass;
-			}
-			
-			$toemail = trim($email);
-			$fixmail = str_replace(' ', '', $toemail);
-			if(!filter_var($fixmail,FILTER_VALIDATE_EMAIL))
-			{
-				$errmsg['email'] = 'ผิดพลาด!:email ไม่ถูกต้อง';
-			}
-			
-			if(strlen($tel_number)<9)
-			{
-				$errmsg['tel'] = 'ผิดพลาด!:หมายเลขโทรศัพท์ไม่ถูกต้อง';
-			}
-			
-			if(!empty($errmsg['password'])||!empty($errmsg['email'])||!empty($errmsg['tel']))
-			{
-				return $this->indexAction($errmsg);
-			}
-			else
-			{
-				$session = $this->get('session');
-				$user = $session->get('user');
-				$userowner = $em->getRepository('FTRWebBundle:User_owner')->findOneBy(array('username'=>$user));
-				$userowner->setUsername($username);
-				$userowner->setPassword($password);
-				$userowner->setFirstname($firstname);
-				$userowner->setLastname($lastname);
-				$userowner->setEmail($email);
-				$userowner->setPhoneNumber($tel_number);
-	    		$em->flush();
-				
-				$session->set('user', $username);
-				return $this->redirect($this->generateUrl('userbuilding'));
-			}
-		}
-		else
-		{
-			$errmsg['confirmpass'] = 'ไม่ได้กรอกยืนยันรหัสผ่าน';
-			return $this->indexAction($errmsg);
-		}
-		
-	}
+                }
+            } catch (Exception $e) {
+                echo 'Caught exception: ', $e->getMessage(), "\n";
+            }
+        }
+        exit();
+        return $this->redirect($this->generateUrl('userbuilding'));
+    }
 
-	public function getPathUpload($id)
-	{
-		$path = "./images/building/".$id;
-		if(!file_exists("./images/building")){
-			mkdir("./images/building", 0777);
-		}
-		if(!file_exists($path)){
-			mkdir($path, 0777);
-		}
-		return $path;
-	}
-	
-	public function autoSaveFormAction($id,$type)
-	{
-		if($_POST)
-		{
-			$sownername 	= $_POST['hdnownername'];
-			$ibuildid		= $id;
-			$arrimagedata		= NULL;
-			if($type=='image')
-			{
-				$sheadimagename 	= trim(@$_POST['hdnfilename']);
-				$smapimagename 		= trim(@$_POST['hdnfilemap']);
-				$icountlineroom 	= trim(@$_POST['hdnMaxLine']);
-				$icountlinegallery 	= trim(@$_POST['hdnMaxLineGal']);
-				if(!empty($sheadimagename)){
-					$arrimagedata[]		= array(
-						'photo_name'	=> $sheadimagename,
-						'photo_type'	=> 'head',
-                        'sequence'		=> 0,
-					);
-				}
+    public function sendemailAction()
+    {
+        $name = "extest";
+        $message = \Swift_Message::newInstance()
+            ->setSubject('Hello Email')
+            ->setFrom('jessaday@sourcecode.co.th')
+            ->setTo('exodist@gmail.com')
+            ->setBody($this->renderView('FTRWebBundle:Userbuilding:email.html.twig', array('name' => $name)), 'text/html');
 
-				if(!empty($smapimagename)){
-					$arrimagedata[]		= array(
-						'photo_name'	=> $smapimagename,
-						'photo_type'	=> 'map',
-                        'sequence'		=> 0,
-					);
-				}
+        $this->get('mailer')->send($message);
 
-				for ($i=0; $i < $icountlineroom ; $i++) {
-					if(!empty($_POST["hdnfilename$i"])||!empty($_POST["typeap_name$i"])||!empty($_POST["typeap_size$i"])||!empty($_POST["typeap_price$i"])){ 
-						$arrimagedata[] = array(
-								'imageid'		=> trim(@$_POST["imageid$i"]),
-								'photo_name'	=> trim(@$_POST["hdnfilename$i"]),
-								'typename'		=> trim(@$_POST["typeap_name$i"]),
-								'room_size'		=> trim(@$_POST["typeap_size$i"]),
-								'room_price'	=> trim(@$_POST["typeap_price$i"]),
-								'photo_type'	=> 'room',
-								'sequence'		=> $i,
-							);
-					}
-				}
+        return $this->render('FTRWebBundle:Userbuilding:email.html.twig', array('name' => $name));
+    }
 
-				for ($i=0; $i < $icountlinegallery ; $i++) {
-					if(!empty($_POST["hdngalleryname$i"])||!empty($_POST["galtitle$i"])){
+    public function updateUserProfileAction()
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        if ($_POST) {
+            $firstname = $_POST['fname'];
+            $lastname = $_POST['lname'];
+            $username = $_POST['username'];
+            $email = $_POST['email'];
+            $password = $_POST['password'];
+            $confirmpass = $_POST['cpassword'];
+            $tel_number = $_POST['tel'];
+        }
+        $errmsg = NULL;
+        $errmsg['tel'] = NULL;
+        $errmsg['password'] = NULL;
+        $errmsg['email'] = NULL;
+        $errmsg['confirmpass'] = NULL;
+        if (!empty($confirmpass)) {
+            if (strlen($password) < 8 || strlen($confirmpass) < 8 || strlen($password) > 12 || strlen($confirmpass) > 12) {
+                $errpass = 'รหัสผ่านต้องมี 8 อักษร และไม่เกิน 12 อักษร';
+            }
+            if (!preg_match("#[a-z]+#", $password) || !preg_match("#[a-z]+#", $confirmpass)) {
+                $errpass = 'รหัสผ่านต้องมีอักษรอย่างน้อย 1 ตัว';
+            }
+            if ($password != $confirmpass) {
+                $errpass = 'รหัสผ่านยืนยันไม่ตรงกัน';
+            }
+            if (!empty($errpass)) {
+                $errmsg['password'] = 'ผิดพลาด!:' . $errpass;
+            }
+
+            $toemail = trim($email);
+            $fixmail = str_replace(' ', '', $toemail);
+            if (!filter_var($fixmail, FILTER_VALIDATE_EMAIL)) {
+                $errmsg['email'] = 'ผิดพลาด!:email ไม่ถูกต้อง';
+            }
+
+            if (strlen($tel_number) < 9) {
+                $errmsg['tel'] = 'ผิดพลาด!:หมายเลขโทรศัพท์ไม่ถูกต้อง';
+            }
+
+            if (!empty($errmsg['password']) || !empty($errmsg['email']) || !empty($errmsg['tel'])) {
+                return $this->indexAction($errmsg);
+            } else {
+                $session = $this->get('session');
+                $user = $session->get('user');
+                $userowner = $em->getRepository('FTRWebBundle:User_owner')->findOneBy(array('username' => $user));
+                $userowner->setUsername($username);
+                $userowner->setPassword($password);
+                $userowner->setFirstname($firstname);
+                $userowner->setLastname($lastname);
+                $userowner->setEmail($email);
+                $userowner->setPhoneNumber($tel_number);
+                $em->flush();
+
+                $session->set('user', $username);
+                return $this->redirect($this->generateUrl('userbuilding'));
+            }
+        } else {
+            $errmsg['confirmpass'] = 'ไม่ได้กรอกยืนยันรหัสผ่าน';
+            return $this->indexAction($errmsg);
+        }
+
+    }
+
+    public function getPathUpload($id)
+    {
+        $path = "./images/building/" . $id;
+        if (!file_exists("./images/building")) {
+            mkdir("./images/building", 0777);
+        }
+        if (!file_exists($path)) {
+            mkdir($path, 0777);
+        }
+        return $path;
+    }
+
+    public function autoSaveFormAction($id, $type)
+    {
+        if ($_POST) {
+            $sownername = $_POST['hdnownername'];
+            $ibuildid = $id;
+            $arrimagedata = NULL;
+            if ($type == 'image') {
+                $sheadimagename = trim(@$_POST['hdnfilename']);
+                $smapimagename = trim(@$_POST['hdnfilemap']);
+                $icountlineroom = trim(@$_POST['hdnMaxLine']);
+                $icountlinegallery = trim(@$_POST['hdnMaxLineGal']);
+                if (!empty($sheadimagename)) {
+                    $arrimagedata[] = array(
+                        'photo_name' => $sheadimagename,
+                        'photo_type' => 'head',
+                        'sequence' => 0,
+                    );
+                }
+
+                if (!empty($smapimagename)) {
+                    $arrimagedata[] = array(
+                        'photo_name' => $smapimagename,
+                        'photo_type' => 'map',
+                        'sequence' => 0,
+                    );
+                }
+
+                for ($i = 0; $i < $icountlineroom; $i++) {
+                    if (!empty($_POST["hdnfilename$i"]) || !empty($_POST["typeap_name$i"]) || !empty($_POST["typeap_size$i"]) || !empty($_POST["typeap_price$i"])) {
                         $arrimagedata[] = array(
-							'imageid'		=> trim(@$_POST["imageidgal$i"]),
-							'photo_name'	=> trim(@$_POST["hdngalleryname$i"]),
-							'description'	=> trim(@$_POST["galtitle$i"]),
-							'photo_type'	=> 'gallery',
-							'sequence'		=> $i,
-						);
+                            'imageid' => trim(@$_POST["imageid$i"]),
+                            'photo_name' => trim(@$_POST["hdnfilename$i"]),
+                            'typename' => trim(@$_POST["typeap_name$i"]),
+                            'room_size' => trim(@$_POST["typeap_size$i"]),
+                            'room_price' => trim(@$_POST["typeap_price$i"]),
+                            'photo_type' => 'room',
+                            'sequence' => $i,
+                        );
                     }
-				}
+                }
 
-				$alert = $this->saveImageData($id,$arrimagedata);
-				echo $alert;
-			}
-			elseif($type=='head')
-			{
-				$building_name	= trim(@$_POST['nameap']);
-				$building_addr	= trim(@$_POST['placeap']);
-				$province		= trim(@$_POST['province']);
-				$district		= trim(@$_POST['district']);
-				$zipCode		= trim(@$_POST['zipcode']);
-				$detail			= trim(@$_POST['placedetail']);
-				$longitude		= trim(@$_POST['longitude']);
-				$latitude		= trim(@$_POST['latitude']);
-				$building_type	= trim(@$_POST['aptype']);
-				$pay_type		= trim(@$_POST['paytype']);
-				$phone_number	= trim(@$_POST['telnumber']);
-				$month_stay		= trim(@$_POST['time']);
-				$contact_name	= trim(@$_POST['contact_person']);
-				$water_price	= trim(@$_POST['water_price']);
-				$contact_email	= trim(@$_POST['contact_email']);
-				$electric_price	= trim(@$_POST['power_price']);
-				$website		= trim(@$_POST['website']);
-				$internet_price	= trim(@$_POST['internet_price']);
-				if(empty($internet_price))
-                {
+                for ($i = 0; $i < $icountlinegallery; $i++) {
+                    if (!empty($_POST["hdngalleryname$i"]) || !empty($_POST["galtitle$i"])) {
+                        $arrimagedata[] = array(
+                            'imageid' => trim(@$_POST["imageidgal$i"]),
+                            'photo_name' => trim(@$_POST["hdngalleryname$i"]),
+                            'description' => trim(@$_POST["galtitle$i"]),
+                            'photo_type' => 'gallery',
+                            'sequence' => $i,
+                        );
+                    }
+                }
+
+                $alert = $this->saveImageData($id, $arrimagedata);
+                echo $alert;
+            } elseif ($type == 'head') {
+                $building_name = trim(@$_POST['nameap']);
+                $building_addr = trim(@$_POST['placeap']);
+                $province = trim(@$_POST['province']);
+                $district = trim(@$_POST['district']);
+                $zipCode = trim(@$_POST['zipcode']);
+                $detail = trim(@$_POST['placedetail']);
+                $longitude = trim(@$_POST['longitude']);
+                $latitude = trim(@$_POST['latitude']);
+                $building_type = trim(@$_POST['aptype']);
+                $pay_type = trim(@$_POST['paytype']);
+                $phone_number = trim(@$_POST['telnumber']);
+                $month_stay = trim(@$_POST['time']);
+                $contact_name = trim(@$_POST['contact_person']);
+                $water_price = trim(@$_POST['water_price']);
+                $contact_email = trim(@$_POST['contact_email']);
+                $electric_price = trim(@$_POST['power_price']);
+                $website = trim(@$_POST['website']);
+                $internet_price = trim(@$_POST['internet_price']);
+                if (empty($internet_price)) {
                     $internet_price = null;
                 }
-				$arrbuilding_data = array(
-					'building_name'		=> $building_name,
-					'building_addr'		=> $building_addr,
-					'province'			=> $province,
-					'district'			=> $district,
-					'zipcode'			=> $zipCode,
-					'detail'			=> $detail,
-					'longitude'			=> $longitude,
-					'latitude'			=> $latitude,
-					'building_type'		=> $building_type,
-					'pay_type'			=> $pay_type,
-					'phone_number'		=> $phone_number,
-					'month_stay'		=> $month_stay,
-					'contact_name'		=> $contact_name,
-					'water_price'		=> $water_price,
-					'contact_email'		=> $contact_email,
-					'electric_price'	=> $electric_price,
-					'website'			=> $website,
-					'internet_price'	=> $internet_price,
-                    'publish'           => '0',
-				);
-				$alert = $this->saveBuildingData($id,$arrbuilding_data);
-				echo $alert;
-			}
-			elseif($type=='other')
-			{
-                $facilityList = @$_POST['fac'];
-                $alert = $this->saveFacilityData($id,$facilityList);
-                $alert = $alert.'fac';
+                $arrbuilding_data = array(
+                    'building_name' => $building_name,
+                    'building_addr' => $building_addr,
+                    'province' => $province,
+                    'district' => $district,
+                    'zipcode' => $zipCode,
+                    'detail' => $detail,
+                    'longitude' => $longitude,
+                    'latitude' => $latitude,
+                    'building_type' => $building_type,
+                    'pay_type' => $pay_type,
+                    'phone_number' => $phone_number,
+                    'month_stay' => $month_stay,
+                    'contact_name' => $contact_name,
+                    'water_price' => $water_price,
+                    'contact_email' => $contact_email,
+                    'electric_price' => $electric_price,
+                    'website' => $website,
+                    'internet_price' => $internet_price,
+                    'publish' => '0',
+                );
+                $alert = $this->saveBuildingData($id, $arrbuilding_data);
                 echo $alert;
-			}
-		}
-		exit();
-	}
+            }
+            elseif ($type == 'other') {
+                $facilityList = @$_POST['fac'];
+                $alert = $this->saveFacilityData($id, $facilityList);
+                $alert = $alert . 'fac';
+                echo $alert;
+            }
+        }
+        exit();
+    }
 
-	public function saveImageData($id,$imagedata)
-	{
-		$em = $this->getDoctrine()->getEntityManager();
+    public function saveImageData($id, $imagedata)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
         //echo $imagedata[0]['photo_name'];exit();
-		foreach ($imagedata as $key => $value) {
-			$roomtype2siteid = NULL;$data = NULL; // set NULL value for new loop
+        foreach ($imagedata as $key => $value) {
+            $roomtype2siteid = NULL;
+            $data = NULL; // set NULL value for new loop
 
-			if(!empty($id)||!empty($value['photo_name'])){
+            if (!empty($id) || !empty($value['photo_name'])) {
 
-				$imageValue = $em->getRepository('FTRWebBundle:Image')->findOneBy(array(
-                    'building_site_id'=>$id,
-                    'photo_type'=>$value['photo_type'],
-                    'sequence'=>$value['sequence']));
+                $imageValue = $em->getRepository('FTRWebBundle:Image')->findOneBy(array(
+                    'building_site_id' => $id,
+                    'photo_type' => $value['photo_type'],
+                    'sequence' => $value['sequence']));
 
-				$photo_name = $value['photo_name'];
-				$photo_type = $value['photo_type'];
-				$sequence = $value['sequence'];
-				if(!empty($value['description']))
-				{
-					$description = $value['description'];
-				}
-				else {
-					$description = '';
-				}
-				
-				if($value['photo_type']=='room')
-				{
-					if(!empty($value['typename'])){
-						$roomtype_name	= $value['typename'];
-					}
-					else {
-						$roomtype_name	= 'ยังไม่ระบุ';
-					}
-					if(!empty($value['room_size'])){
-						$room_size		= $value['room_size'];
-					}
-					else {
-						$room_size	= 0;
-					}
-					if(!empty($value['room_price'])){
-						$room_price		= $value['room_price'];
-					}
-					else {
-						$room_price	= 0;
-					}
-					
-					$data = array(
-						'typename'		=> $roomtype_name,
-						'room_size'		=> $room_size,
-						'room_price'	=> $room_price,
-					);
-				}
+                $photo_name = $value['photo_name'];
+                $photo_type = $value['photo_type'];
+                $sequence = $value['sequence'];
+                if (!empty($value['description'])) {
+                    $description = $value['description'];
+                } else {
+                    $description = '';
+                }
 
-				if(empty($imageValue))
-				{
-					$image = new Image();
-					$image->setBuildingSiteId($id);
-					$image->setPhotoName($photo_name);
-					$image->setPhotoType($photo_type);
-					$image->setSequence($sequence);
-					$image->setDescription($description);
-					if($value['photo_type']=='room')
-					{
-						$roomtype2siteid = $this->saveRoomtypeData($id, $data, NULL);
-					}
-					$image->setRoomtype2siteId($roomtype2siteid);
+                if ($value['photo_type'] == 'room') {
+                    if (!empty($value['typename'])) {
+                        $roomtype_name = $value['typename'];
+                    } else {
+                        $roomtype_name = 'ยังไม่ระบุ';
+                    }
+                    if (!empty($value['room_size'])) {
+                        $room_size = $value['room_size'];
+                    } else {
+                        $room_size = 0;
+                    }
+                    if (!empty($value['room_price'])) {
+                        $room_price = $value['room_price'];
+                    } else {
+                        $room_price = 0;
+                    }
+
+                    $data = array(
+                        'typename' => $roomtype_name,
+                        'room_size' => $room_size,
+                        'room_price' => $room_price,
+                    );
+                }
+
+                if (empty($imageValue)) {
+                    $image = new Image();
+                    $image->setBuildingSiteId($id);
+                    $image->setPhotoName($photo_name);
+                    $image->setPhotoType($photo_type);
+                    $image->setSequence($sequence);
+                    $image->setDescription($description);
+                    if ($value['photo_type'] == 'room') {
+                        $roomtype2siteid = $this->saveRoomtypeData($id, $data, NULL);
+                    }
+                    $image->setRoomtype2siteId($roomtype2siteid);
                     $em = $this->getDoctrine()->getEntityManager();
-					$em->persist($image);
-					$em->flush();
-				}
-				else {
+                    $em->persist($image);
+                    $em->flush();
+                } else {
                     $oldImageName = $imageValue->getPhotoName();
-					$pathImage = $this->getPathUpload($id);
-                    $path = $pathImage."/".$oldImageName;
+                    $pathImage = $this->getPathUpload($id);
+                    $path = $pathImage . "/" . $oldImageName;
 
-                    if(file_exists($path))
-                    {
-                        if($photo_name!=$oldImageName)
-                        {
+                    if (file_exists($path)) {
+                        if ($photo_name != $oldImageName) {
                             unlink($path);
                         }
                     }
@@ -805,107 +771,98 @@ class UserbuildingController extends Controller
                     $imageValue->setPhotoType($photo_type);
                     $imageValue->setSequence($sequence);
                     $imageValue->setDescription($description);
-					$roomtype2siteid = $imageValue->getRoomtype2siteId();
-					if($value['photo_type']=='room')
-					{
-						$roomtype2siteid = $this->saveRoomtypeData($id, $data, $roomtype2siteid);
-					}
+                    $roomtype2siteid = $imageValue->getRoomtype2siteId();
+                    if ($value['photo_type'] == 'room') {
+                        $roomtype2siteid = $this->saveRoomtypeData($id, $data, $roomtype2siteid);
+                    }
                     $imageValue->setRoomtype2siteId($roomtype2siteid);
-					$em->flush();
-				}
-			}
-		}
-		return 'complete';
-		exit();
-	}
-	
-	public function saveRoomtypeData($buildingid,$data,$roomtype2siteid)
-	{
-		$em = $this->getDoctrine()->getEntityManager();
-		$roomtype2sitedata = $em->getRepository('FTRWebBundle:Roomtype2site')->findOneBy(array('building_site_id'=>$buildingid,'id'=>$roomtype2siteid));
-		if(empty($roomtype2sitedata))
-		{
-			$roomtype = new Roomtype();
-			$roomtype->setRoomTypename($data['typename']);
-			$em->persist($roomtype);
-			$em->flush();
-			
-			$roomtypeid = $roomtype->getId();
-			
-			$roomtype2site = new Roomtype2site();
-			$roomtype2site->setRoomtypeId($roomtypeid);
-			$roomtype2site->setBuildingSiteId($buildingid);
-			$roomtype2site->setRoomsize(trim($data['room_size']));
-			$roomtype2site->setRoomprice(trim($data['room_price']));
-			$em->persist($roomtype2site);
-			$em->flush();
-			
-			$roomtype2siteid = $roomtype2site->getId();
-		}
-		else {
-			$roomtypeid = $roomtype2sitedata->getRoomtypeId();
-			$roomtypedata = $em->getRepository('FTRWebBundle:Roomtype')->findOneBy(array('id'=>$roomtypeid));
-			$roomtypedata->setRoomTypename(trim($data['typename']));
+                    $em->flush();
+                }
+            }
+        }
+        return 'complete';
+        exit();
+    }
 
-			$roomtype2sitedata->setRoomsize(trim($data['room_size']));
-			$roomtype2sitedata->setRoomprice(trim($data['room_price']));
-			
-			$em->flush();
-		}
+    public function saveRoomtypeData($buildingid, $data, $roomtype2siteid)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $roomtype2sitedata = $em->getRepository('FTRWebBundle:Roomtype2site')->findOneBy(array('building_site_id' => $buildingid, 'id' => $roomtype2siteid));
+        if (empty($roomtype2sitedata)) {
+            $roomtype = new Roomtype();
+            $roomtype->setRoomTypename($data['typename']);
+            $em->persist($roomtype);
+            $em->flush();
+
+            $roomtypeid = $roomtype->getId();
+
+            $roomtype2site = new Roomtype2site();
+            $roomtype2site->setRoomtypeId($roomtypeid);
+            $roomtype2site->setBuildingSiteId($buildingid);
+            $roomtype2site->setRoomsize(trim($data['room_size']));
+            $roomtype2site->setRoomprice(trim($data['room_price']));
+            $em->persist($roomtype2site);
+            $em->flush();
+
+            $roomtype2siteid = $roomtype2site->getId();
+        } else {
+            $roomtypeid = $roomtype2sitedata->getRoomtypeId();
+            $roomtypedata = $em->getRepository('FTRWebBundle:Roomtype')->findOneBy(array('id' => $roomtypeid));
+            $roomtypedata->setRoomTypename(trim($data['typename']));
+
+            $roomtype2sitedata->setRoomsize(trim($data['room_size']));
+            $roomtype2sitedata->setRoomprice(trim($data['room_price']));
+
+            $em->flush();
+        }
         $returnValue = $this->saveMinMaxRoomPrice($buildingid);
-        $buildingValue = $em->getRepository('FTRWebBundle:Building_site')->findOneBy(array('id'=>$buildingid));
+        $buildingValue = $em->getRepository('FTRWebBundle:Building_site')->findOneBy(array('id' => $buildingid));
         $buildingValue->setStartPrice($returnValue['startPrice']);
         $buildingValue->setEndPrice($returnValue['endPrice']);
         $em->flush();
-		return $roomtype2siteid;
-	}
+        return $roomtype2siteid;
+    }
 
     public function saveMinMaxRoomPrice($id)
     {
         $em = $this->getDoctrine()->getEntityManager();
-        $roomTypeData = $em->getRepository('FTRWebBundle:Roomtype2site')->findBy(array('building_site_id'=>$id));
-        $minPrice = 0; $maxPrice = 0;
-        if(!empty($roomTypeData))
-        {
-            foreach($roomTypeData as $key => $data)
-            {
+        $roomTypeData = $em->getRepository('FTRWebBundle:Roomtype2site')->findBy(array('building_site_id' => $id));
+        $minPrice = 0;
+        $maxPrice = 0;
+        if (!empty($roomTypeData)) {
+            foreach ($roomTypeData as $key => $data) {
                 $roomPrice = $data->getRoomprice();
-                if($roomPrice<$minPrice)
-                {
-                    if($roomPrice!=0)
-                    {
-                        $minPrice=$roomPrice;
+                if ($roomPrice < $minPrice) {
+                    if ($roomPrice != 0) {
+                        $minPrice = $roomPrice;
                     }
-                }elseif($minPrice==0)
-                {
-                    $minPrice=$roomPrice;
+                } elseif ($minPrice == 0) {
+                    $minPrice = $roomPrice;
                 }
-                if($roomPrice>$maxPrice)
-                {
-                    if($roomPrice!=0)
-                    {
-                        $maxPrice=$roomPrice;
+                if ($roomPrice > $maxPrice) {
+                    if ($roomPrice != 0) {
+                        $maxPrice = $roomPrice;
                     }
                 }
             }
             $arrPrice = array(
-                'startPrice'       => $minPrice,
-                'endPrice'         => $maxPrice,
+                'startPrice' => $minPrice,
+                'endPrice' => $maxPrice,
             );
 
         }
         return $arrPrice;
     }
 
-	public function saveBuildingData($id,$arrData)
-	{
+    public function saveBuildingData($id, $arrData)
+    {
         $session = $this->get('session');
         $username = $session->get('user');
         $today = new \DateTime('now');
         //$now = $today->format('Y-m-d H:i:s');
         //echo $now->format('Y-m-d H:i:s');exit();
-		$em = $this->getDoctrine()->getEntityManager();
-		$buildingValue = $em->getRepository('FTRWebBundle:Building_site')->findOneBy(array('id'=>$id));
+        $em = $this->getDoctrine()->getEntityManager();
+        $buildingValue = $em->getRepository('FTRWebBundle:Building_site')->findOneBy(array('id' => $id));
         $buildingValue->setBuildingName($arrData['building_name']);
         $buildingValue->setBuildingAddress($arrData['building_addr']);
 
@@ -935,21 +892,23 @@ class UserbuildingController extends Controller
 
         $em->flush();
         return "complete";
-	}
-	
-	public function saveOtherData($id,$arrData)
-	{
-		return "complete";
-	}
+    }
+
+    public function saveOtherData($id, $arrData)
+    {
+        return "complete";
+    }
 
 
-    public function saveFacilityData($buildingSiteId,$arrData)
+    public function saveFacilityData($buildingSiteId, $arrData)
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $conn= $this->get('database_connection');
-        if(!$conn){ die("MySQL Connection error");}
-        try{
+        $conn = $this->get('database_connection');
+        if (!$conn) {
+            die("MySQL Connection error");
+        }
+        try {
             $sql = "
 				UPDATE facility2site
 				SET deleted=1
@@ -957,22 +916,19 @@ class UserbuildingController extends Controller
 			";
             $conn->query($sql);
         } catch (Exception $e) {
-            echo 'Caught exception: ',  $e->getMessage(), "\n";
+            echo 'Caught exception: ', $e->getMessage(), "\n";
         }
 
-        foreach($arrData as $key => $value)
-        {
-            $facilityValue = $em->getRepository('FTRWebBundle:Facility2site')->findOneBy(array('facilitylist_id'=>intval($value),'building_site_id'=>$buildingSiteId));
-            if(empty($facilityValue))
-            {
+        foreach ($arrData as $key => $value) {
+            $facilityValue = $em->getRepository('FTRWebBundle:Facility2site')->findOneBy(array('facilitylist_id' => intval($value), 'building_site_id' => $buildingSiteId));
+            if (empty($facilityValue)) {
                 $facility = new Facility2site();
                 $facility->setBuildingSiteId($buildingSiteId);
                 $facility->setFacilitylistId($value);
                 $facility->setDeleted(0);
                 $em->persist($facility);
                 $em->flush();
-            }
-            else{
+            } else {
                 $facilityValue->setDeleted(0);
                 $em->flush();
             }
@@ -980,37 +936,41 @@ class UserbuildingController extends Controller
 
         return "complete";
     }
-	
-	function getBkkZone()
+
+    function getBkkZone()
     {
         $result_data = array();
-        $conn= $this->get('database_connection');
-        if(!$conn){ die("MySQL Connection error");}
-        try{
+        $conn = $this->get('database_connection');
+        if (!$conn) {
+            die("MySQL Connection error");
+        }
+        try {
             $whereQuery = null;
             $sql = "
 				select * from zone
 			";
             $result_data = $conn->fetchAll($sql);
         } catch (Exception $e) {
-            echo 'Caught exception: ',  $e->getMessage(), "\n";
+            echo 'Caught exception: ', $e->getMessage(), "\n";
         }
-        $all[] = array('id'=>0,'zonename'=>'ทุกเขต');
+        $all[] = array('id' => 0, 'zonename' => 'ทุกเขต');
 
-        $result = array_merge($all,$result_data);
+        $result = array_merge($all, $result_data);
         return $result;
     }
 
-    function getProvince($provinceName,$type=null)
+    function getProvince($provinceName, $type = null)
     {
         $result_data = array();
-        $all[] = array('PROVINCE_VALUE'=>'0','PROVINCE_NAME'=>'- กรุณาระบุ -','checked'=>'no');
-        $sqlPlus = null;$sqlPlus2 = null;
-        $conn= $this->get('database_connection');
-        if(!$conn){ die("MySQL Connection error");}
-        try{
-            switch ($type)
-            {
+        $all[] = array('PROVINCE_VALUE' => '0', 'PROVINCE_NAME' => '- กรุณาระบุ -', 'checked' => 'no');
+        $sqlPlus = null;
+        $sqlPlus2 = null;
+        $conn = $this->get('database_connection');
+        if (!$conn) {
+            die("MySQL Connection error");
+        }
+        try {
+            switch ($type) {
                 case 'other':
 
                     $sqlPlus = " AND PROVINCE_NAME NOT LIKE '%กรุงเทพมหานคร%'";
@@ -1022,8 +982,7 @@ class UserbuildingController extends Controller
                     break;
 
             }
-            if(!empty($provinceName))
-            {
+            if (!empty($provinceName)) {
                 $sql = "
                     SELECT
                       PROVINCE_NAME AS PROVINCE_VALUE,
@@ -1046,7 +1005,7 @@ class UserbuildingController extends Controller
                           $sqlPlus
                     ORDER BY OrderBy ASC
                 ";
-            }else{
+            } else {
                 $sql = "
                     SELECT
                       PROVINCE_NAME AS PROVINCE_VALUE,
@@ -1060,68 +1019,63 @@ class UserbuildingController extends Controller
             //var_dump($sql);exit();
             $result_data = $conn->fetchAll($sql);
         } catch (Exception $e) {
-            echo 'Caught exception: ',  $e->getMessage(), "\n";
+            echo 'Caught exception: ', $e->getMessage(), "\n";
         }
-        if(empty($provinceName))
-        {
-            $result = array_merge($all,$result_data);
-        }
-        else{
+        if (empty($provinceName)) {
+            $result = array_merge($all, $result_data);
+        } else {
             $result = $result_data;
         }
         //var_dump($result);
         return $result;
     }
 
-    public function getDistrictAction($province,$district=null,$call=null)
+    public function getDistrictAction($province, $district = null, $call = null)
     {
         //echo $province;exit();
-        if( $province != null)
-        {
-            $amphur = $this->getAmphur($province,$district);
-            //var_dump($district);exit();
-            if(!empty($call))
-            {
-                return $amphur;
-            }
+        $amphur = $this->getAmphur($province, $district);
+        //var_dump($district);exit();
+        if (!empty($call)) {
+            return $amphur;
+        }
+        if ($province != null) {
+
             echo "
                 <div class=\"styled-select\">
                 <select id=\"district\" name=\"district\" class=\"select\" onchange=\"postData('head');\">";
-            foreach($amphur as $key=>$var){
-                echo "<option value=\"".$amphur[$key]['AMPHUR_VALUE']."\">".$amphur[$key]['AMPHUR_NAME']."</option>";
+            foreach ($amphur as $key => $var) {
+                echo "<option value=\"" . $amphur[$key]['AMPHUR_VALUE'] . "\">" . $amphur[$key]['AMPHUR_NAME'] . "</option>";
             }
             echo "
                 </div>
                 </select>
             ";
-        }
-        else
-        {
+        } else {
             echo "no";
         }
         exit();
     }
 
-    function getAmphur($province=null,$district=null)
+    function getAmphur($province = null, $district = null)
     {
         $result_data = array();
-        $all[]       = array('AMPHUR_VALUE'=>0,'AMPHUR_NAME'=>' - กรุณาระบุ - ','checked'=>'no');
-        $whereQuery  = NULL;
-        $conn= $this->get('database_connection');
-        if(!$conn){ die("MySQL Connection error");}
-        try{
-            $sqlPlus = null; $sqlPlus2 = null;
-            if(!empty($district))
-            {
+        $all[] = array('AMPHUR_VALUE' => 0, 'AMPHUR_NAME' => ' - กรุณาระบุ - ', 'checked' => 'no');
+        $whereQuery = NULL;
+        $conn = $this->get('database_connection');
+        if (!$conn) {
+            die("MySQL Connection error");
+        }
+        try {
+            $sqlPlus = null;
+            $sqlPlus2 = null;
+            if (!empty($district)) {
                 $sqlPlus = "AMPHUR_NAME NOT LIKE '%$district%'
                       AND";
                 $sqlPlus2 = "AMPHUR_NAME LIKE '%$district%'
                       AND";
             }
-            if(!empty($province))
-            {
-                if(!empty($district))
-                {
+            if (!empty($province)) {
+                if (!empty($district)) {
                     $sql = "
                         (SELECT
                           AMPHUR_NAME AS AMPHUR_VALUE,
@@ -1152,9 +1106,7 @@ class UserbuildingController extends Controller
                           WHERE province_name LIKE '%$province%'))
                         ORDER BY OrderBy ASC
                     ";
-                }
-                else
-                {
+                } else {
                     $sql = "
                         SELECT
                           AMPHUR_NAME AS AMPHUR_VALUE,
@@ -1173,12 +1125,12 @@ class UserbuildingController extends Controller
                 }
                 $result_data = $conn->fetchAll($sql);
             }
-            $result = array_merge($all,$result_data);
+            $result = array_merge($all, $result_data);
             /*echo "<pre>";
             var_dump($result);
             echo "</pre>";*/
         } catch (Exception $e) {
-            echo 'Caught exception: ',  $e->getMessage(), "\n";
+            echo 'Caught exception: ', $e->getMessage(), "\n";
         }
         return $result;
     }
@@ -1186,9 +1138,11 @@ class UserbuildingController extends Controller
     function getBuildingType($buildingTypeId)
     {
         $result_data = array();
-        $conn= $this->get('database_connection');
-        if(!$conn){ die("MySQL Connection error");}
-        try{
+        $conn = $this->get('database_connection');
+        if (!$conn) {
+            die("MySQL Connection error");
+        }
+        try {
             $sql = "
 				(select
 				  t.id,
@@ -1218,26 +1172,27 @@ class UserbuildingController extends Controller
 			";
             $result_data = $conn->fetchAll($sql);
         } catch (Exception $e) {
-            echo 'Caught exception: ',  $e->getMessage(), "\n";
+            echo 'Caught exception: ', $e->getMessage(), "\n";
         }
-		if($buildingTypeId==0){
-        	$all[] = array('id'=>0,'type_name'=>'- กรุณาระบุ -','checked'=>'yes');
-		}else{
-			$all[] = array('id'=>0,'type_name'=>'- กรุณาระบุ -','checked'=>'no');
-		}
-        $result = array_merge($all,$result_data);
+        if ($buildingTypeId == 0) {
+            $all[] = array('id' => 0, 'type_name' => '- กรุณาระบุ -', 'checked' => 'yes');
+        } else {
+            $all[] = array('id' => 0, 'type_name' => '- กรุณาระบุ -', 'checked' => 'no');
+        }
+        $result = array_merge($all, $result_data);
         return $result;
     }
-	
-	function getPayType($paytypeid)
+
+    function getPayType($paytypeid)
     {
-		$result_data = array();
-		$conn= $this->get('database_connection');
-		if(!$conn){ die("MySQL Connection error");}
-		try{
-			if($paytypeid!=0)
-			{
-				$sql = "
+        $result_data = array();
+        $conn = $this->get('database_connection');
+        if (!$conn) {
+            die("MySQL Connection error");
+        }
+        try {
+            if ($paytypeid != 0) {
+                $sql = "
 					(select 
 					  t.id,
 					  t.typename,
@@ -1264,47 +1219,49 @@ class UserbuildingController extends Controller
 					    building_site 
 					  where id = $paytypeid))
 				";
-			}else{
-				$sql = "
+            } else {
+                $sql = "
 					SELECT t.id,t.typename,'no' as checked FROM pay_type t ORDER BY t.id DESC
 				";
-			}
-			$result_data = $conn->fetchAll($sql);
-		} catch (Exception $e) {
-			echo 'Caught exception: ',  $e->getMessage(), "\n";
-		}
-				
-		$result = $result_data;
-		return $result;
-	}
-	
-	function getNearly($type=2)
+            }
+            $result_data = $conn->fetchAll($sql);
+        } catch (Exception $e) {
+            echo 'Caught exception: ', $e->getMessage(), "\n";
+        }
+
+        $result = $result_data;
+        return $result;
+    }
+
+    function getNearly($type = 2)
     {
-		$result_data = array();
-		$conn= $this->get('database_connection');
-		if(!$conn){ die("MySQL Connection error");}
-		try{
-			$sql = "
+        $result_data = array();
+        $conn = $this->get('database_connection');
+        if (!$conn) {
+            die("MySQL Connection error");
+        }
+        try {
+            $sql = "
 				select * from nearly_location where nearly_type_id = $type
 			";
-			$result_data = $conn->fetchAll($sql);
-		} catch (Exception $e) {
-			echo 'Caught exception: ',  $e->getMessage(), "\n";
-		}
-		
-		switch ($type) {
-			case 2:
-			case 3:
-				$all[] = array('id'=>0,'name'=>'ทุกสถานี');
-				break;
-			case 4:
-			case 5:
+            $result_data = $conn->fetchAll($sql);
+        } catch (Exception $e) {
+            echo 'Caught exception: ', $e->getMessage(), "\n";
+        }
+
+        switch ($type) {
+            case 2:
+            case 3:
+                $all[] = array('id' => 0, 'name' => 'ทุกสถานี');
+                break;
+            case 4:
+            case 5:
             case 6:
-				$all[] = array('id'=>0,'name'=>' - กรุณาระบุ - ');
-				break;
-		}
-		
-		$result = array_merge($all,$result_data);
-		return $result;
-	}
+                $all[] = array('id' => 0, 'name' => ' - กรุณาระบุ - ');
+                break;
+        }
+
+        $result = array_merge($all, $result_data);
+        return $result;
+    }
 }
