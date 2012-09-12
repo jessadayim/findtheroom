@@ -17,10 +17,14 @@
         });
     }
     $(document).ready(function() {
-        $("#formCreateNearly").submit(function() {
+//        $("#formCreateNearly").submit(function() {
+//            postOnchange();
+//            $('#divPostCreateNearly').slideUp(300).delay(800).fadeOut(400);
+//            return false;
+//        });
+        $("#btnCancel").click(function(){
             postOnchange();
             $('#divPostCreateNearly').slideUp(300).delay(800).fadeOut(400);
-            return false;
         });
 
         $('.selectNearly').change(function() {
@@ -42,6 +46,7 @@
                 {% endfor %}
             </div>
             <div class="clear"></div>
+            <fieldset>
             <div class="label"><span>ใกล้รถไฟฟ้า BTS :</span></div>
             <select class="selectNearly widfat" name="nearlyPost[]">
                 <option value="0"></option>
@@ -81,9 +86,11 @@
                     {% endif %}
                 {% endfor %}
             </select>
+            </fieldset>
             <br />
 			<span style="float: right;">
-				<input type="submit" value="ClOSE">
+				{#<input type="submit" value="ClOSE">#}
+				<img src="{{ asset('images/cancel.png')}}" id="btnCancel" width="50" height="50" style="cursor:pointer;" />
 			</span>
         </fieldset>
     </form>

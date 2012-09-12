@@ -43,11 +43,15 @@
 
 	
 	$(document).ready(function() {
-		$("#formCreateRoomType2Site").submit(function() {
-			postOnchange();			
-			$('#divPostCreateRoomType2Site').slideUp(300).delay(800).fadeOut(400);			
-			return false;
-		});
+//		$("#formCreateRoomType2Site").submit(function() {
+//			postOnchange();
+//			$('#divPostCreateRoomType2Site').slideUp(300).delay(800).fadeOut(400);
+//			return false;
+//		});
+        $("#btnCancel").click(function(){
+            postOnchange();
+            $('#divPostCreateRoomType2Site').slideUp(300).delay(800).fadeOut(400);
+        });
 
 		$("#addRoomType").click(function() {
 			if (countRoomType2Site >= maxRoomType){
@@ -148,7 +152,7 @@
 			</div>
 			<br />
             <div class="clear"></div>
-			<br />
+            <fieldset>
 			<table id="tbRoomType2Site">
 				{% for roomType in roomtype2site %}
 				<tr id="trRoomType_{{ roomType.count }}">
@@ -194,11 +198,15 @@
 					</td>
 				</tr>
 				{% endfor %}
-			</table><br />
+			</table>
+
+            <br />
 			<div><a href="#" id="addRoomType">เพิ่ม ROOM TYPE</a></div>
+            </fieldset>
 			<br />
 			<span style="float: right;">
-				<input type="submit" value="ClOSE">
+				{#<input type="submit" value="ClOSE">#}
+				<img src="{{ asset('images/cancel.png')}}" id="btnCancel" width="50" height="50" style="cursor:pointer;" />
 			</span>
 		</fieldset>
 	</form>

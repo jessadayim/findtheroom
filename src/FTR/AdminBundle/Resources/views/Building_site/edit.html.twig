@@ -1,43 +1,46 @@
 <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js'></script>
 <script>
+    var url = "{{ path('building_site_update', { 'id': entity.id }) }}";
+
 	$(document).ready(function() {
-		$("#btnCancelEdit").click(function() {
-			toggle(".innerPanel", 'hide');
-			return false;
-		});
+//		$("#btnCancelEdit").click(function() {
+//			toggle(".innerPanel", 'hide');
+//			return false;
+//		});
 
-		function toggle(id, toggle) {
-			$(id).animate({
-				left : '+=50',
-				height : toggle
-			}, 500, function() {
-			});
-		}
+//		function toggle(id, toggle) {
+//			$(id).animate({
+//				left : '+=50',
+//				height : toggle
+//			}, 500, function() {
+//			});
+//		}
+        $("#btnCancel").click(function(){
+            $('.innerPanel').slideUp(300).delay(800).fadeOut(400);
+        });
 
-		var url = "{{ path('building_site_update', { 'id': entity.id }) }}";
-		
-		$("#formEdit").submit(function() {
-			alert(url);
-			if (!confirm('คุณต้องการแก้ไขข้อมูล ใช่หรือไม่')){
-				return false;
-			}
-			$.ajax({
-				type : "POST",
-				url : url,
-				data : $(this).serialize(),
-				success : function(msg) {
-					if (msg == 'finish') {
-						// $('#listBuildingSite').load(window.location + "show");
-						toggle(".innerPanel", 'hide');
-						$('#listBuildingSite').fadeOut('slow').load(window.location + "show").fadeIn("slow");
-					} else {
-						$('.innerPanel').html(msg);
-						alert('การแก้ไขผิดพลาด');
-					}
-				}
-			});
-			return false;
-		});
+        $("#formEdit").submit(function(){
+            if (!confirm('คุณต้องการแก้ไขข้อมูล ใช่หรือไม่')){
+                return false;
+            }
+            $.ajax({
+                type : "POST",
+                url : url,
+                data : $(this).serialize(),
+                success : function(msg) {
+                    if (msg == 'finish') {
+                        $('.innerPanel').slideUp(300).delay(800).fadeOut(400);
+                        // $('#listBuildingSite').load(window.location + "show");
+//                        toggle(".innerPanel", 'hide');
+//                        $('#listBuildingSite').fadeOut('slow').load(window.location + "show").fadeIn("slow");
+                    } else {
+                        $('.innerPanel').html(msg);
+                        alert('การแก้ไขผิดพลาด');
+                    }
+                }
+            });
+            return false;
+        });
 	}); 
 </script>
 <form id="formEdit" action="{{ path('building_site_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
@@ -170,9 +173,11 @@
 		{{ form_rest(edit_form) }}
 		<br />
 		<span style="float: right;">
-			<input type="button" id="btnCancelEdit" value="Cancel">
+			{#<input type="button" id="btnCancelEdit" value="Cancel">#}
+			<img src="{{ asset('images/cancel.png')}}" id="btnCancel" width="50" height="50" style="cursor:pointer;" />
 			&nbsp;&nbsp;
 			<input type="submit" value="Edit">
+            {#<img src="{{ asset('images/edit.png')}}" id="btnEdit" width="50" height="50" style="cursor:pointer;" />#}
 		</span>
 	</fieldset>
 </form>

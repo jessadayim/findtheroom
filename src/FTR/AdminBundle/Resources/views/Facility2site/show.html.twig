@@ -9,11 +9,14 @@
             });
         }
 
-
-        $("#formCreateFacility").submit(function() {
+        $("#btnCancel").click(function(){
             $('#divPostCreateFacility').slideUp(300).delay(800).fadeOut(400);
-            return false;
         });
+
+//        $("#formCreateFacility").submit(function() {
+//            $('#divPostCreateFacility').slideUp(300).delay(800).fadeOut(400);
+//            return false;
+//        });
 
         var url = "{{ path('facility2site_create') }}";
         $('.checkFacility').click(function() {
@@ -59,6 +62,7 @@
             </div>
             <br />
             <br />
+            <fieldset>
             <table>
                 <tr>
                     {% for facility in facilityList %}
@@ -82,9 +86,11 @@
                     {% endfor %}
                 </tr>
             </table>
+            </fieldset>
             <br />
 			<span style="float: right;">
-				<input type="submit" value="ClOSE">
+				{#<input type="submit" value="ClOSE">#}
+                <img src="{{ asset('images/cancel.png')}}" id="btnCancel" width="50" height="50" style="cursor:pointer;" />
 			</span>
         </fieldset>
     </form>
