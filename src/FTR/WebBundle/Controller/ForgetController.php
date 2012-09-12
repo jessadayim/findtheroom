@@ -20,37 +20,40 @@ class ForgetController extends Controller {
 		//echo $email;
 		$em = $this -> getDoctrine() -> getEntityManager();
 		$conn = $this -> get('database_connection');
-		
+
 		// $sql1 = "SELECT email,confirm_token FROM user_owner
 						// WHERE email = '$email' or username = '$email'";
 		// $objSQL1 = $conn -> fetchAll($sql1);
 		// echo $objSQL1[0]['confirm_token'];
 
-		
+
 		if (!$conn) { die("MySQL Connection error");
 		}
 		try {
-			$sql1 = "SELECT email,confirm_token,deleted FROM user_owner
+			$sql1 = "SELECT email,confirm_token,deleted,firstname,lastname FROM user_owner
 						WHERE email = '$email' or username = '$email'";
 			$objSQL1 = $conn -> fetchAll($sql1);
-            if($objSQL1[0][deleted] != 1){
-                $url = $_SERVER['SERVER_NAME'];
-                $url .= $this->get('router')->generate('TRWebBundle_change', array());
-                //$url  = "{{path('FTRWebBundle_contact')}}";
+            if($objSQL1[0]['deleted'] != 1){
 
-                $link = "สวัสดี !<br/>
-				กรุณาคลิกลิงค์ต่อไปนี้เพื่อตั้งรหัสผ่านของคุณใหม่<br/>
-  				<a href = $url?token=" . $objSQL1[0]['confirm_token'] . ">
-  					".$url."?token=".$objSQL1[0]['confirm_token'] . "
-  				</a><br/>
- 				ขอบคุณค่ะ<br/>
-				ทีมงาน FindTheRoom<br/><br/>
-				© 2012 FindTheRoom.com";
+                $url = $this->get('router')->generate('TRWebBundle_change', array());
+                $url .= "?token=".$objSQL1[0]['confirm_token'];
+
+//                $link = "สวัสดี !<br/>
+//				กรุณาคลิกลิงค์ต่อไปนี้เพื่อตั้งรหัสผ่านของคุณใหม่<br/>
+//  				<a href = $url?token=" . $objSQL1[0]['confirm_token'] . ">
+//  					".$url."?token=".$objSQL1[0]['confirm_token'] . "
+//  				</a><br/>
+// 				ขอบคุณค่ะ<br/>
+//				ทีมงาน FindTheRoom<br/><br/>
+//				© 2012 FindTheRoom.com";
                 if (count($objSQL1) == 1) {
                     $message = \Swift_Message::newInstance()
                         -> setSubject('คุณได้ลืมรหัสผ่าน และขอตั้งรหัสผ่านใหม่ FindTheRoom.com‏')
                         -> setFrom('support@findtheroom.com') -> setTo($objSQL1[0]['email'])
-                        -> setBody($this -> renderView('FTRWebBundle:Security:emailreset.html.twig', array('name' => $link)), 'text/html');
+                        -> setBody($this -> renderView('FTRWebBundle:Security:emailreset.html.twig', array(
+                                    'url' => $url
+                                    ,'firstName'=>$objSQL1[0]['firstname']
+                                    ,'lastName'=>$objSQL1[0]['lastname'])), 'text/html');
 
                     $this -> get('mailer') -> send($message);
 
