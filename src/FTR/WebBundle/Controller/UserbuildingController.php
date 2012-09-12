@@ -610,11 +610,10 @@ class UserbuildingController extends Controller
 			$arrimagedata		= NULL;
 			if($type=='image')
 			{
-				$sheadimagename 	= trim(@$_POST['hdnfilename']);
-				$smapimagename 		= trim(@$_POST['hdnfilemap']);
-				$icountlineroom 	= trim(@$_POST['hdnMaxLine']);
+                $icountlineroom 	= trim(@$_POST['hdnMaxLine']);
 				$icountlinegallery 	= trim(@$_POST['hdnMaxLineGal']);
-				if(!empty($sheadimagename)){
+				if(!empty($_POST['hdnfilename'])){
+                    $sheadimagename 	= trim(@$_POST['hdnfilename']);
 					$arrimagedata[]		= array(
 						'photo_name'	=> $sheadimagename,
 						'photo_type'	=> 'head',
@@ -622,7 +621,8 @@ class UserbuildingController extends Controller
 					);
 				}
 
-				if(!empty($smapimagename)){
+				if(!empty($_POST['hdnfilemap'])){
+                    $smapimagename 		= trim(@$_POST['hdnfilemap']);
 					$arrimagedata[]		= array(
 						'photo_name'	=> $smapimagename,
 						'photo_type'	=> 'map',
@@ -661,6 +661,7 @@ class UserbuildingController extends Controller
 			}
 			elseif($type=='head')
 			{
+
 				$building_name	= trim(@$_POST['nameap']);
 				$building_addr	= trim(@$_POST['placeap']);
 				$province		= trim(@$_POST['province']);
@@ -679,10 +680,12 @@ class UserbuildingController extends Controller
 				$electric_price	= trim(@$_POST['power_price']);
 				$website		= trim(@$_POST['website']);
 				$internet_price	= trim(@$_POST['internet_price']);
+
 				if(empty($internet_price))
                 {
                     $internet_price = null;
                 }
+
 				$arrbuilding_data = array(
 					'building_name'		=> $building_name,
 					'building_addr'		=> $building_addr,
@@ -704,6 +707,7 @@ class UserbuildingController extends Controller
 					'internet_price'	=> $internet_price,
                     'publish'           => '0',
 				);
+
 				$alert = $this->saveBuildingData($id,$arrbuilding_data);
 				echo $alert;
 			}
@@ -888,12 +892,11 @@ class UserbuildingController extends Controller
                     }
                 }
             }
-            $arrPrice = array(
-                'startPrice'       => $minPrice,
-                'endPrice'         => $maxPrice,
-            );
-
         }
+        $arrPrice = array(
+            'startPrice'       => $minPrice,
+            'endPrice'         => $maxPrice,
+        );
         return $arrPrice;
     }
 
@@ -902,6 +905,7 @@ class UserbuildingController extends Controller
         $session = $this->get('session');
         $username = $session->get('user');
         $today = new \DateTime('now');
+
         //$now = $today->format('Y-m-d H:i:s');
         //echo $now->format('Y-m-d H:i:s');exit();
 		$em = $this->getDoctrine()->getEntityManager();
@@ -1097,6 +1101,10 @@ class UserbuildingController extends Controller
         }
         else
         {
+            if(!empty($call))
+            {
+                return $amphur = $this->getAmphur($province,$district);
+            }
             echo "no";
         }
         exit();
