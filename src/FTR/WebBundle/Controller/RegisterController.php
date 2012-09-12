@@ -17,6 +17,10 @@ class RegisterController extends Controller
     {
         return $this->render('FTRWebBundle:Register:confirm.html.twig');
     }
+    public function termsAction()
+    {
+        return $this->render('FTRWebBundle:Register:terms.html.twig');
+    }
 	public function RegisConfirmAction()
     {
 		if($_POST)
@@ -52,23 +56,23 @@ class RegisterController extends Controller
 					}else{
 						try{
 							$random_token = md5(uniqid(rand(),true));
-							$sql1 ="INSERT INTO user_owner(username,password,firstname,lastname,email,phone_number,fax_number,deleted,confirm_token) VALUES('$username','$password','$firstname','$lastname','$email','$tel','0000000000','0','$random_token')";
-							$conn->query($sql1);
-                            $url = $_SERVER['SERVER_NAME'];
-                            $url .= $this->get('router')->generate('FTRWebBundle_homepage', array());
-                           // $url .= $this->get('router')->generate('TRWebBundle_change', array());
-							
-							$link = "สวัสดีค่ะ คุณ $email ยินตีต้อนรับสู่ FindTheRoom.com!
-										ชื่อที่ใช้ในการ login เข้าบัญชีสมาชิกของคุณคือ $username
-										<a href = $url?token=" . $random_token . ">
-  					                        ".$url."?token=". $random_token . "
-  				                        </a><br/>";
+							$sqlRegis ="INSERT INTO user_owner(username,password,firstname,lastname,email,phone_number,fax_number,deleted,confirm_token) VALUES('$username','$password','$firstname','$lastname','$email','$tel','0000000000','0','$random_token')";
+							$conn->query($sqlRegis);
+                           // $url = $_SERVER['HTTP_HOST'];
+
+                            $sqlNewUser = "SELECT confirm_token,firstname,lastname FROM user_owner WHERE confirm_token = '$random_token'";
+                            $objNewUser = $conn -> fetchAll($sqlNewUser);
+
+                            $url = $this->get('router')->generate('FTRWebBundle_homepage', array());
+                            $url .= "?token=".$objNewUser[0]['confirm_token'];
 
 							$message = \Swift_Message::newInstance()
 					        ->setSubject('findtheroom')
 					        ->setFrom('support@findtheroom.com')
 					        ->setTo($email)
-					        ->setBody($this->renderView('FTRWebBundle:Security:emailreset.html.twig', array('name' => $link)),'text/html');
+					        ->setBody($this->renderView('FTRWebBundle:Register:email.html.twig', array('url' => $url
+                                                    ,'firstName'=>$objNewUser[0]['firstname']
+                                                    ,'lastName'=>$objNewUser[0]['lastname'])),'text/html');
 					    	
 					    	$this->get('mailer')->send($message);
 							
