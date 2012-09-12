@@ -15,7 +15,6 @@ use FTR\WebBundle\Entity\Nearly_type;
 use FTR\WebBundle\Entity\Nearly2site;
 use FTR\WebBundle\Entity\Pay_type;
 use FTR\WebBundle\Entity\Roomtype2site;
-use FTR\WebBundle\Entity\Roomtype;
 use FTR\WebBundle\Entity\Zone;
 use FTR\WebBundle\Controller\SearchController;
 
@@ -829,15 +828,8 @@ class UserbuildingController extends Controller
 		$roomtype2sitedata = $em->getRepository('FTRWebBundle:Roomtype2site')->findOneBy(array('building_site_id'=>$buildingid,'id'=>$roomtype2siteid));
 		if(empty($roomtype2sitedata))
 		{
-			$roomtype = new Roomtype();
-			$roomtype->setRoomTypename($data['typename']);
-			$em->persist($roomtype);
-			$em->flush();
-			
-			$roomtypeid = $roomtype->getId();
-			
 			$roomtype2site = new Roomtype2site();
-			$roomtype2site->setRoomtypeId($roomtypeid);
+			$roomtype2site->setRoomTypename($data['typename']);
 			$roomtype2site->setBuildingSiteId($buildingid);
 			$roomtype2site->setRoomsize(trim($data['room_size']));
 			$roomtype2site->setRoomprice(trim($data['room_price']));
@@ -847,10 +839,7 @@ class UserbuildingController extends Controller
 			$roomtype2siteid = $roomtype2site->getId();
 		}
 		else {
-			$roomtypeid = $roomtype2sitedata->getRoomtypeId();
-			$roomtypedata = $em->getRepository('FTRWebBundle:Roomtype')->findOneBy(array('id'=>$roomtypeid));
-			$roomtypedata->setRoomTypename(trim($data['typename']));
-
+			$roomtype2sitedata->setRoomTypename(trim($data['typename']));
 			$roomtype2sitedata->setRoomsize(trim($data['room_size']));
 			$roomtype2sitedata->setRoomprice(trim($data['room_price']));
 			
