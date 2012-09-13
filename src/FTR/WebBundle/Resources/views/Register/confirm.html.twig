@@ -41,7 +41,7 @@
 			คุณได้ทำการยืนยันชื่อผู้ใช้งานเรียบร้อยแล้ว
 		</div>
 		<div style="display:block; position:relative; margin-top:15px;">
-			{% if app.session.get('username') %}
+			{% if app.session.get('user') != NULL %}
 			<a id="home" href=""><img src="{{asset('images/back_home.png')}}" /></a>
 			{% else %}
 			<a id="login" href="{{path('FTRWebBundle_loginpublish')}}" style="margin-right:20px;"><img src="{{asset('images/login-bt2.png')}}" /></a>

@@ -114,6 +114,8 @@ class Building_siteController extends Controller
             //ตั่งค่าพื้นฐาน
             $entity->setDeleted(0);
             $entity->setDatetimestamp(new \DateTime());
+            $entity->setStartPrice(0);
+            $entity->setEndPrice(0);
             
             $em->persist($entity);
             $em->flush();

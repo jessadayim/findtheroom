@@ -48,8 +48,57 @@
         if (!confirm("คุณต้องการลบรูปภาพที่ " + idDelete + ". ใช่หรือไม่")){
             return false;
         }
-        readDataGallery(idDelete - 1);
-        genTBGallery();
+        var id = idDelete - 1;
+        var idImage = arrGalleryImage[id][1];
+        var nameImage = arrGalleryImage[id][2];
+        $.post(
+                url,
+                {
+                    typePost : 'gallery',
+                    idImage  : idImage,
+                    nameImage: nameImage,
+                    building_site_id : $("#building_site_id").val(),
+                    description : '',
+                    sequence : id,
+                    newImageGallery : 'delete'
+                },
+                function(data) {
+                    var str = data;
+                    if (str.search('finish') > -1) {
+                        readDataGallery(id);
+                        genTBGallery();
+                        showAutoSave();
+                    }else{
+                        alert('ลบข้อมูลผิดพลาด' + data);
+                    }
+                }
+        );
+    }
+
+    function autoSaveImageGallery(idSave, descValue){
+        var id = idSave - 1;
+        var idImage = arrGalleryImage[id][1];//alert(idImage);return;
+//        var nameImage = arrGalleryImage[id][2];
+        $.post(
+                url,
+                {
+                    typePost : 'gallery',
+                    idImage  : idImage,
+                    nameImage: '',
+                    building_site_id : $("#building_site_id").val(),
+                    description : descValue,
+                    sequence : id,
+                    newImageGallery : 'edit'
+                },
+                function(data) {
+                    var str = data;
+                    if (str.search('finish') > -1) {
+                        showAutoSave()
+                    }else{
+                        alert('บันทึกข้อมูลผิดพลาด');
+                    }
+                }
+        );
     }
 
     function genTBGallery(){
@@ -60,13 +109,9 @@
         var saveHeight = $("#tbGallery").height();
         $("#tbGallery").html(strInner);
         loopGenUploadGalleryImage();
-        var newHeigth = $("#tbGallery").height();
-        newHeigth = newHeigth - saveHeight;
-        $("#divPostCreateImage").height($("#divPostCreateImage").height() + newHeigth);
-        $("#example-one").height($("#example-one").height() + newHeigth);
-//        $("#divPostCreateImage").css('height', 'auto');
-//        $("#example-one").css('height', 'auto');
-//        $("#divPostCreateImage").fadeIn('slow');
+        var newHeight = $("#tbGallery").height();
+        newHeight = newHeight - saveHeight;
+        $(".list-wrap").height($(".list-wrap").height() + newHeight);
     }
 
     function readDataGallery(id){
@@ -74,12 +119,20 @@
         var countDelete = 0;
         for(var i=0 ; i < arrGalleryImage.length ; i++){
             var count = i+1;
+            var imgSrc = document.getElementById("imageId_" + count).src;
+            if (imgSrc.search('show') == -1){
+                var arrImgSrc = imgSrc.split('/');
+                imgSrc = "{{ asset('images/building/')}}{{ buildingSite[0].id }}/" + arrImgSrc[arrImgSrc.length - 1];
+            }else{
+                var imgSrc = "{{ asset('images/show.png') }}";
+            }
             if (id == undefined){
+
                 newArray.push(
                     [
                         count,
                         arrGalleryImage[i][1],
-                        arrGalleryImage[i][2],
+                        imgSrc,//arrGalleryImage[i][2],//imageId_
                         $("#galleryDesc_" + count).val()
                     ]
                 );
@@ -89,7 +142,7 @@
                     [
                         countDelete,
                         arrGalleryImage[i][1],
-                        arrGalleryImage[i][2],
+                        imgSrc,
                         $("#galleryDesc_" + countDelete).val()
                     ]
                 );
@@ -104,11 +157,11 @@
         if (id == 1){
             strBtnDeleteImage = "&nbsp;";
         }
+        var getImageHtml = getTypeImage(path, id);
         var strInner =
             '<tr>'+
                 '<td width="30"><strong>' + id + '.</strong></td>'+
-                '<td width="220" id="galleryImgInner_' + id + '">'+
-                    '<img src="' + path + '" class="nopad thumb"/>'+
+                '<td width="220" id="galleryImgInner_' + id + '">' + getImageHtml +
                    '</td>'+
                     '<td width="150" align="center"><input type="file" class="inputFile" id="galleryImgInput_' + id + '"/></td>'+
                     '<td><textarea class="galleryDesc" rows="5" cols="50" id="galleryDesc_' + id +
@@ -161,14 +214,20 @@
         loopGenUploadGalleryImage();
     });
 
+    function getTypeImage(src, id){
+        return '<img id="imageId_' + id + '" src="' + src + '" style="width: 250px; height: 190px;" class="nopad thumb"/>';
+    }
+
     function reloadImgae(id, img){
         var path = pathImgUpload + $("#building_site_id").val()+"/" + img;
-        $(id).fadeOut().html('<img src="' + path + '" style="" class="nopad thumb"/>').fadeIn("slow");
+        var idImg = id.split('_');
+        $(id).fadeOut().html(getTypeImage(path, idImg[1])).fadeIn("slow");
     }
 
     function postData(typePost, idImage, nameImage, arrayId)
     {
         var desc = '';
+        var sequence = 0;
         if (typePost == 'gallery'){
             var i = arrayId + 1;
             desc = $("#galleryDesc_" + i).val();
@@ -180,7 +239,8 @@
                 idImage  : idImage,
                 nameImage: nameImage,
                 building_site_id : $("#building_site_id").val(),
-                description : desc
+                description : desc,
+                sequence : arrayId
             },
             function(data) {
                 var id = data.split('_');
@@ -205,46 +265,88 @@
                         case "room": break;
                         case "gallery": break;
                     }
+                    showAutoSave();
+                    readDataGallery();
                 }else{
                     alert(data);
-                    return;
+
                 }
-                $.gritter.add({
-                    // (string | mandatory) the heading of the notification
-                    title: 'บันทึกข้อมูลสำเร็จ',
-                    // (string | mandatory) the text inside the notification
-                    text: 'ข้อมูลของท่านได้รับการบันทึกแล้ว'
-                });
+            }
+        );
+    }
+
+    function createImageGallery(){
+        var countGallery = arrGalleryImage.length;
+        $.post(
+            url,
+            {
+                typePost : 'gallery',
+                idImage  : countGallery,
+                nameImage: '',
+                building_site_id : $("#building_site_id").val(),
+                description : '',
+                sequence : countGallery,
+                newImageGallery : 'new'
+            },
+            function(data) {
+                var id = data.split('_');
+                if (id.length > 1){
+                    id = id[1];
+                }
+                var str = data;
+                if (str.search('finish') > -1) {
+                    var pathDefault = "{{ asset('images/show.png') }}";
+                    arrGalleryImage.push([countGallery + 1, id, pathDefault, '']);
+                    genTBGallery();
+                }else{
+                    alert('เพิ่มข้อมูลผิดพลาด');
+                }
+            }
+        );
+    }
+
+    function showAutoSave(){
+        $.gritter.add({
+            // (string | mandatory) the heading of the notification
+            title: 'บันทึกข้อมูลสำเร็จ',
+            // (string | mandatory) the text inside the notification
+            text: 'ข้อมูลของท่านได้รับการบันทึกแล้ว'
         });
     }
 
     $(document).ready(function() {
         $("#addGallery").click(function(){
-            var pathDefault = "{{ asset('images/show.png') }}";
             readDataGallery();
-            var countGallery = arrGalleryImage.length + 1;
-            arrGalleryImage.push([countGallery, 0, pathDefault, '']);
-            genTBGallery();
+            createImageGallery();
             return false;
         });
 
+        $("textarea.galleryDesc").live('change', function(){
+            var id = this.id;
+            id = id.split('_');
+            autoSaveImageGallery(id[1], this.value);
+        });
 
         $("#btnCancel").click(function(){
             $('#divPostCreateImage').slideUp(300).delay(800).fadeOut(400);
         });
     });
+
+
 </script>
 
 <style type="text/css" >
-
+    /*#divPostCreateImage{height: 100%;}*/
+    /*.nav{height: 100%;}*/
+    .list-wrap{height: auto;}
 
     .deleteImage { cursor: pointer;}
 
     /*กำหนดขนาดรูป*/
-    .nopad { width: 250px; heigth: 275px; }
+    .nopad { width: 250px; height: 190px; }
 
     /*ทำให้แท็บที่ไม่ได้ใช้ซ้อน*/
-    .hide-img { position: absolute; top: -9999px; left: -9999px; }
+    .hide-img {  top: -9999px; left: -9999px; }
 
         /* Specific to example one */
 
@@ -352,15 +454,15 @@
                                 <tr>
                                     <td width="30"><strong>{{ gar.count }}.</strong></td>
                                     <td width="220" id="galleryImgInner_{{ gar.count }}">
-                                        <img class="deleteImage" id="btnDeleteImage_{{ gar.count }}" src="{{ asset('images/')}}{{ gar.photo_name }}" class="nopad thumb"/>
+                                        <img id="imageId_{{ gar.count }}" src="{{ asset('images/')}}{{ gar.photo_name }}" class="nopad thumb"/>
                                     </td>
-                                    <td width="150"><input type="file" class="inputFile" id="galleryImgInput_{{ gar.count }}"/></td>
+                                    <td width="150" align="center"><input type="file" class="inputFile" id="galleryImgInput_{{ gar.count }}"/></td>
                                     <td><textarea class="galleryDesc" rows="5" cols="50"  id="galleryDesc_{{ gar.count }}" style="margin: 0px 0px 10px; width: 317px; height: 135px; " >{{ gar.description }}</textarea></td>
                                     <td>
                                         {% if gar.count > 1 %}
-                                        <img src="{{asset('images/delete.png')}}" width="35" height="35" title="ลบรูปภาพนี้" />
+                                            <img src="{{asset('images/delete.png')}}" class="deleteImage" width="35" height="35" onclick="deleteImage({{ gar.count }})" title="ลบรูปภาพนี้" />
                                         {% else %}
-                                        &nbsp;
+                                            &nbsp;
                                         {% endif %}
                                     </td>
                                 </tr>
@@ -368,7 +470,7 @@
                                 <tr>
                                     <td width="30"><strong>1.</strong></td>
                                     <td width="220" id="galleryImgInner_1">
-                                        <img class="deleteImage" id="btnDeleteImage_1" src="{{ asset('images/show.png')}}" class="nopad thumb"/>
+                                        <img id="imageId_1" src="{{ asset('images/show.png')}}" class="nopad thumb"/>
                                     </td>
                                     <td width="150" align="right"><input type="file" class="inputFile" id="galleryImgInput_1"/></td>
                                     <td><textarea class="galleryDesc" title="รายละเอียด" rows="5" cols="50" id="galleryDesc_1" style="margin: 0px 0px 10px; width: 317px; height: 135px; " /></td>

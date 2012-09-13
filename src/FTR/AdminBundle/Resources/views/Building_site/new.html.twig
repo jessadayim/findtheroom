@@ -44,7 +44,20 @@
 			});
 			return false;
 		});
-	}); 
+	});
+
+    //ตรวจสอบค่าที่เป็น Double
+    function validate(evt) {
+        var theEvent = evt || window.event;
+        var key = theEvent.keyCode || theEvent.which;
+        key = String.fromCharCode( key );
+        var regex = /[0-9]|\./;
+        if( !regex.test(key) ) {
+            theEvent.returnValue = false;
+            if(theEvent.preventDefault)
+                theEvent.preventDefault();
+        }
+    }
 </script>
 <div id="divPostCreate">
 	<form id="formCreate" action="{{ path('building_site_create') }}" method="post" {{ form_enctype(form) }}>
@@ -88,18 +101,7 @@
 			{{ form_widget(form.building_address, { 'attr': {'class': 'widfat'} }) }} &nbsp;
 			{{ form_errors(form.building_address) }}
 			<br />
-			<div class="label" style="">
-				{{ form_label(form.start_price) }}
-			</div>
-			{{ form_widget(form.start_price, { 'attr': {'class': 'widthin'} }) }} &nbsp;
-			{{ form_errors(form.start_price) }}
-			<br />
-			<div class="label" style="">
-				{{ form_label(form.end_price) }}
-			</div>
-			{{ form_widget(form.end_price, { 'attr': {'class': 'widthin'} }) }} &nbsp;
-			{{ form_errors(form.end_price) }}
-			<br />
+
 			<div class="label" style="">
 				{{ form_label(form.phone_number) }}
 			</div>
@@ -109,13 +111,13 @@
 			<div class="label" style="">
 				{{ form_label(form.latitude) }}
 			</div>
-			{{ form_widget(form.latitude, { 'attr': {'class': 'widthin'} }) }} &nbsp;
-			{{ form_errors(form.start_price) }}
+			{{ form_widget(form.latitude, { 'attr': {'class': 'widthin', 'onkeypress' : 'validate(event)'} }) }} &nbsp;
+			{{ form_errors(form.latitude) }}
 			<br />
 			<div class="label" style="">
 				{{ form_label(form.longitude) }}
 			</div>
-			{{ form_widget(form.longitude, { 'attr': {'class': 'widthin'} }) }} &nbsp;
+			{{ form_widget(form.longitude, { 'attr': {'class': 'widthin', 'onkeypress' : 'validate(event)'} }) }} &nbsp;
 			{{ form_errors(form.longitude) }}
 			<br />
 			<div class="label" style="">
@@ -159,19 +161,19 @@
 			<div class="label" style="">
 				{{ form_label(form.water_unit) }}
 			</div>
-			{{ form_widget(form.water_unit, { 'attr': {'class': 'widthin'} }) }} &nbsp;
+			{{ form_widget(form.water_unit, { 'attr': {'class': 'widthin', 'onkeypress' : 'validate(event)'} }) }} &nbsp;
 			{{ form_errors(form.water_unit) }}
 			<br />
 			<div class="label" style="">
 				{{ form_label(form.electricity_unit) }}
 			</div>
-			{{ form_widget(form.electricity_unit, { 'attr': {'class': 'widthin'} }) }} &nbsp;
+			{{ form_widget(form.electricity_unit, { 'attr': {'class': 'widthin', 'onkeypress' : 'validate(event)'} }) }} &nbsp;
 			{{ form_errors(form.electricity_unit) }}
 			<br />
 			<div class="label" style="">
 				{{ form_label(form.internet_price) }}
 			</div>
-			{{ form_widget(form.internet_price, { 'attr': {'class': 'widthin'} }) }} &nbsp;
+			{{ form_widget(form.internet_price, { 'attr': {'class': 'widthin', 'onkeypress' : 'validate(event)'} }) }} &nbsp;
 			{{ form_errors(form.internet_price) }}
 
 			<br />
@@ -179,7 +181,7 @@
 			{{ form_rest(form) }}
 			
 			<span style="float: right;">
-				<input type="button" id="btnCancelCreate" value="Cancel">
+				<img src="{{ asset('images/cancel.png')}}" id="btnCancelCreate" width="50" height="50" style="cursor:pointer;" />
 				&nbsp;&nbsp;
 				<input type="submit" value="CREATE">
 			</span>
