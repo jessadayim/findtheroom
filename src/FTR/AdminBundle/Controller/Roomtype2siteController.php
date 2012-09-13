@@ -28,6 +28,7 @@ class Roomtype2siteController extends Controller
               AND `deleted` != 1 
         ";
         $ObjRoomType2Site= $this->getDataArray($sqlGetRoomType2Site);
+
         foreach ($ObjRoomType2Site as $key => $value){
             $ObjRoomType2Site[$key]['count'] = $key+1;
         }
@@ -134,6 +135,7 @@ class Roomtype2siteController extends Controller
                 $em->persist($entity);
             }
         }
+        $em->flush();
 
         //Update Table Building_site
         $sqlGetMinMaxPrice = "
@@ -153,8 +155,9 @@ class Roomtype2siteController extends Controller
             $entity->setStartPrice($startPrice);
             $entity->setEndPrice($endPrice);
             $em->persist($entity);
+            $em->flush();
         }
-        $em->flush();
+
         echo 'finish';
         exit();        
     }

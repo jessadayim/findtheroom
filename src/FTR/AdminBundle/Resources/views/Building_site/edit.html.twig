@@ -28,7 +28,15 @@
                 url : url,
                 data : $(this).serialize(),
                 success : function(msg) {
-                    if (msg == 'finish') {
+                    var arrMsg = msg.split('_');
+                    if (arrMsg.length > 1){
+                        var id = arrMsg[1];
+                    }
+                    var str = msg;
+                    if (str.search('error') > -1 && arrMsg.length == 2){
+                        alert('ชื่อ "'+id+'" นี้มีข้อมูลอยู่แล้ว \nกรุณาตั้งชื่ออื่น');
+                        $("#ftr_adminbundle_building_sitetype_building_name").focus();
+                    }else if (msg == 'finish') {
                         $('.innerPanel').slideUp(300).delay(800).fadeOut(400);
                         // $('#listBuildingSite').load(window.location + "show");
 //                        toggle(".innerPanel", 'hide');
@@ -56,6 +64,27 @@
         }
     }
 </script>
+<style type="text/css">
+    #btnEdit {
+        background: url("{{ asset('images/save.png')}}") no-repeat;
+        display: block;
+        float: none;
+        height: 50px;
+        position: absolute;
+        margin-left: 70px;
+        margin-top: -55px;
+    }
+
+    #btnInputEdit {
+        background: url("{{ asset('images/save.png')}}") no-repeat;
+        opacity: 0;
+        -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+        filter: alpha(opacity=0);
+        cursor: pointer;
+        height: 50px;
+        width: 50px;
+    }
+</style>
 <form id="formEdit" action="{{ path('building_site_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
 	<fieldset>
 		<legend>
@@ -96,18 +125,7 @@
 		</div>
 		{{ form_widget(edit_form.building_address, { 'attr': {'class': 'widfat'} }) }} &nbsp;
 		{{ form_errors(edit_form.building_address) }}
-		<br />
-		<div class="label" style="">
-			{{ form_label(edit_form.start_price) }}
-		</div>
-		{{ form_widget(edit_form.start_price, { 'attr': {'class': 'widthin'} }) }} &nbsp;
-		{{ form_errors(edit_form.start_price) }}
-		<br />
-		<div class="label" style="">
-			{{ form_label(edit_form.end_price) }}
-		</div>
-		{{ form_widget(edit_form.end_price, { 'attr': {'class': 'widthin'} }) }} &nbsp;
-		{{ form_errors(edit_form.end_price) }}
+
 		<br />
 		<div class="label" style="">
 			{{ form_label(edit_form.phone_number) }}
@@ -187,9 +205,11 @@
 		<br />
 		<span style="float: right;">
 			{#<input type="button" id="btnCancelEdit" value="Cancel">#}
-			<img src="{{ asset('images/cancel.png')}}" id="btnCancel" width="50" height="50" style="cursor:pointer;" />
+			<img src="{{ asset('images/cancel.png')}}" id="btnCancel" width="50" height="50" style="cursor:pointer;margin-right: 70px" />
 			&nbsp;&nbsp;
-			<input type="submit" value="Edit">
+            <div id="btnEdit">
+			<input type="submit" id="btnInputEdit" value="Edit">
+            </div>
             {#<img src="{{ asset('images/edit.png')}}" id="btnEdit" width="50" height="50" style="cursor:pointer;" />#}
 		</span>
 	</fieldset>
