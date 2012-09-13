@@ -644,9 +644,9 @@
 				<td>
 					<div id="provinceChange">
                         {% if provinceName != NULL %}
-                        {{ provinceName }}
+                            {{ provinceName }}
                         {% else %}
-                        โปรดเลือกจังหวัดที่ส่วนข้อมูลหอพักก่อน
+                            โปรดเลือกจังหวัดที่ส่วนข้อมูลหอพักก่อน
                         {% endif %}
 					</div>
 				</td>
@@ -662,7 +662,7 @@
 
 						<select id="bkzone_ot" name="bkzone_ot" class="select" onchange="postData('other');">
 							{% for zlist in zonelist %}
-								<option value="{{ zlist.id }}">{{ zlist.zonename }}</option>
+								<option value="{{ zlist.id }}" >{{ zlist.zonename }}</option>
 							{% endfor %}
 						</select>
 
@@ -676,7 +676,7 @@
 
 						<select id="bts_ot" name="bts_ot" class="select" onchange="postData('other');">
 							{% for btslist in nearBTS %}
-								<option value="{{ btslist.id }}">{{ btslist.name }}</option>
+								<option value="{{ btslist.id }}" {% if btslist.checked =='yes'%}  selected="selected"{% endif %}>{{ btslist.name }}</option>
 							{% endfor %}
 						</select>
 
@@ -690,7 +690,7 @@
 
 						<select id="mrt_ot" name="mrt_ot" class="select" onchange="postData('other');">
 							{% for mrtlist in nearMRT %}
-								<option value="{{ mrtlist.id }}">{{ mrtlist.name }}</option>
+								<option value="{{ mrtlist.id }}" {% if mrtlist.checked =='yes'%}  selected="selected"{% endif %}>{{ mrtlist.name }}</option>
 							{% endfor %}
 						</select>
 
@@ -704,7 +704,7 @@
 
 						<select id="univer_ot" name="univer_ot" class="select" onchange="postData('other');">
 							{% for ulist in nearUniversity %}
-								<option value="{{ ulist.id }}">{{ ulist.name }}</option>
+								<option value="{{ ulist.id }}" {% if ulist.checked =='yes'%}  selected="selected"{% endif %}>{{ ulist.name }}</option>
 							{% endfor %}
 						</select>
 

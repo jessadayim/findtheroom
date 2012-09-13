@@ -124,6 +124,15 @@ class UserbuildingController extends Controller
                 //echo "<pre>";var_dump($building_data);echo "</pre>";exit();
                 if ($building_data['izoneid'] != 0) {
                     $zone_data = $em->getRepository('FTRWebBundle:Zone')->findOneBy(array('id' => $building_data['izoneid']));
+                    //var_dump($zone_data);exit();
+                    $arrZone[] = array(
+                        'id'        => $zone_data->getId(),
+                        'zonename'  => $zone_data->getZonename(),
+                        'latitude'  => $zone_data->getLatitude(),
+                        'longitude' => $zone_data->getLongitude(),
+                        'deleted'   => $zone_data->getDeleted(),
+                        'checked'   => 'yes',
+                    );
                 }
                 if ($building_data['ipaytypeid'] != 0) {
                     $paytype_data = $em->getRepository('FTRWebBundle:Pay_type')->findOneBy(array('id' => $building_data['ipaytypeid']));
@@ -218,18 +227,20 @@ class UserbuildingController extends Controller
             $provinceName = $building_data['saddrprovince'];
 
             $payType = $this->getPayType($building_data['ipaytypeid']);
-            $bkkZone = $this->getBkkZone();
+            $bkkZone = $this->getBkkZone($zone_data->getId());
+            $bkkZone = array_merge($arrZone, $bkkZone); // รวม array ของโซนในกรุงเทพ
+
             $buildingType = $this->getBuildingType($building_data['ibuildingtypeid']);
             $province = $this->getProvince($building_data['saddrprovince'], null);
             $district = $this->getDistrictAction($provinceName, $building_data['saddrprefecture'], 'call');
             $provinceOther = $this->getProvince($provinceName, 'other');
-            $nearBTS = $this->getNearly(2);
-            $nearMRT = $this->getNearly(3);
-            $nearUniversity = $this->getNearly(4);
-            $nearBy = $this->getNearly(5);
-            $nearInCountry = $this->getNearly(6);
+            $nearBTS = $this->getNearly(2,$id);
+            $nearMRT = $this->getNearly(3,$id);
+            $nearUniversity = $this->getNearly(4,$id);
+            $nearBy = $this->getNearly(5,$id);
+            $nearInCountry = $this->getNearly(6,$id);
             /*echo "<pre>";
-                   var_dump($province);
+                   var_dump($nearBTS);
                    echo "</pre>";
                    exit();*/
             $this->getPathUpload($building_id);
@@ -972,7 +983,7 @@ class UserbuildingController extends Controller
         return "complete";
     }
 
-    function getBkkZone()
+    function getBkkZone($id=null)
     {
         $result_data = array();
         $conn = $this->get('database_connection');
@@ -982,15 +993,19 @@ class UserbuildingController extends Controller
         try {
             $whereQuery = null;
             $sql = "
-				select * from zone
+				SELECT *,'no' as checked FROM zone WHERE id not in ($id)
 			";
             $result_data = $conn->fetchAll($sql);
         } catch (Exception $e) {
             echo 'Caught exception: ', $e->getMessage(), "\n";
         }
-        $all[] = array('id' => 0, 'zonename' => 'ทุกเขต');
-
-        $result = array_merge($all, $result_data);
+        if(empty($id))
+        {
+            $all[] = array('id' => 0, 'zonename' => '- กรุณาระบุ -', 'checked'=>'no');
+            $result = array_merge($all, $result_data);
+        }else{
+            $result = $result_data;
+        }
         return $result;
     }
 
@@ -1270,7 +1285,7 @@ class UserbuildingController extends Controller
         return $result;
     }
 
-    function getNearly($type = 2)
+    function getNearly($type = 2,$buildingId)
     {
         $result_data = array();
         $conn = $this->get('database_connection');
@@ -1279,7 +1294,34 @@ class UserbuildingController extends Controller
         }
         try {
             $sql = "
-				select * from nearly_location where nearly_type_id = $type
+				select
+                  id,
+                  name,
+                  'yes' as checked
+                from
+                  nearly_location
+                where nearly_type_id = $type
+                  and id in
+                  (select
+                    nearly_location_id
+                  from
+                    nearly2site
+                  where building_site_id = $buildingId)
+                  union
+                  select
+                    id,
+                    name,
+                    'no' as checked
+                  from
+                    nearly_location
+                  where nearly_type_id = $type
+                    and id not in
+                    (select
+                      nearly_location_id
+                    from
+                      nearly2site
+                    where building_site_id = $buildingId)
+                  order by id
 			";
             $result_data = $conn->fetchAll($sql);
         } catch (Exception $e) {
