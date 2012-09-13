@@ -7,7 +7,3 @@ roomtype2site_create:
     pattern:  /create
     defaults: { _controller: "FTRAdminBundle:Roomtype2site:create" }
     requirements: { _method: post }
-
-roomtype2site_edit:
-    pattern:  /{id}/edit
-    defaults: { _controller: "FTRAdminBundle:Roomtype2site:edit" }
