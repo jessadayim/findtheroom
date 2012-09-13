@@ -355,7 +355,7 @@
 		$.post(addfixpath, $("#addform").serialize(),
 		function(data) {
 			var completetext = data;
-			alert(completetext);
+			//alert(completetext);
 			$.gritter.add({
 				// (string | mandatory) the heading of the notification
 				title: 'บันทึกข้อมูลสำเร็จ',
@@ -441,6 +441,12 @@
 	<input class="room" type="button" value="" onclick="document.getElementById('room').focus();" />
 	<input class="gallery" type="button" value="" onclick="document.getElementById('gallery').focus();" />
 	<input class="etc" type="button" value="" onclick="document.getElementById('etc').focus();" />-->
+</div>
+<div id="device" style="height: 200px; margin-bottom: 15px;">
+    <div style="display: block; position: relative; width:1000px; color:#FFF; font-size:36px; text-align: center; padding-top:50px;">
+        ข้อความ
+        <a class="back" href="{{path('userbuilding')}}"></a> <a class="data" href="{{path('userbuilding')}}"></a>
+    </div>
 </div>
 
 <div id="datazone" class="detail" style="height: 780px; margin-bottom: 15px;">
@@ -644,9 +650,9 @@
 				<td>
 					<div id="provinceChange">
                         {% if provinceName != NULL %}
-                        {{ provinceName }}
+                            {{ provinceName }}
                         {% else %}
-                        โปรดเลือกจังหวัดที่ส่วนข้อมูลหอพักก่อน
+                            โปรดเลือกจังหวัดที่ส่วนข้อมูลหอพักก่อน
                         {% endif %}
 					</div>
 				</td>
@@ -662,7 +668,7 @@
 
 						<select id="bkzone_ot" name="bkzone_ot" class="select" onchange="postData('other');">
 							{% for zlist in zonelist %}
-								<option value="{{ zlist.id }}">{{ zlist.zonename }}</option>
+								<option value="{{ zlist.id }}" >{{ zlist.zonename }}</option>
 							{% endfor %}
 						</select>
 
@@ -676,7 +682,7 @@
 
 						<select id="bts_ot" name="bts_ot" class="select" onchange="postData('other');">
 							{% for btslist in nearBTS %}
-								<option value="{{ btslist.id }}">{{ btslist.name }}</option>
+								<option value="{{ btslist.id }}" {% if btslist.checked =='yes'%}  selected="selected"{% endif %}>{{ btslist.name }}</option>
 							{% endfor %}
 						</select>
 
@@ -690,7 +696,7 @@
 
 						<select id="mrt_ot" name="mrt_ot" class="select" onchange="postData('other');">
 							{% for mrtlist in nearMRT %}
-								<option value="{{ mrtlist.id }}">{{ mrtlist.name }}</option>
+								<option value="{{ mrtlist.id }}" {% if mrtlist.checked =='yes'%}  selected="selected"{% endif %}>{{ mrtlist.name }}</option>
 							{% endfor %}
 						</select>
 
@@ -704,7 +710,7 @@
 
 						<select id="univer_ot" name="univer_ot" class="select" onchange="postData('other');">
 							{% for ulist in nearUniversity %}
-								<option value="{{ ulist.id }}">{{ ulist.name }}</option>
+								<option value="{{ ulist.id }}" {% if ulist.checked =='yes'%}  selected="selected"{% endif %}>{{ ulist.name }}</option>
 							{% endfor %}
 						</select>
 
@@ -717,7 +723,7 @@
 			<tr valign="top">
 				<td id="fie" align="left" width="165" style="padding-left:50px">ตามสถานที่ใกล้เคียง :</td>
 				<td width="300">
-					<input id="near_ot" name="near_ot" type="text" maxlength="30" placeholder="กรุณากรอกสถานที่ใกล้เคียง" style=" padding:2px; font-size:20px; margin-top:-4px;"/>
+					<input id="near_ot" name="near_ot" type="text" value="{{buildingdata.snearlyplace}}" onchange="postData('other');" placeholder="กรุณากรอกสถานที่ใกล้เคียง" style=" padding:2px; font-size:20px; margin-top:-4px;"/>
 				</td>
 				<td colspan="2"></td>
 			</tr>
