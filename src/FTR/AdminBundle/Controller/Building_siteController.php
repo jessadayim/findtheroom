@@ -101,10 +101,10 @@ class Building_siteController extends Controller
     public function createAction()
     {
         $entity  = new Building_site();
-        
+
         // เพิ่มชุด array ใช้ในการค้นหา
         $entity = $this->getNewEntity($entity);
-        
+
         $request = $this->getRequest();
         $form    = $this->createForm(new Building_siteType(), $entity);
         $form->bindRequest($request);

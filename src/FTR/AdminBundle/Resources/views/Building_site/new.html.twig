@@ -22,22 +22,24 @@
 				url : 'create',
 				data : $(this).serialize(),
 				success : function(msg) {
-                    var id = msg.split('_');
-                    if (id.length > 1){
-                        id = id[1];
+                    var arrMsg = msg.split('_');
+                    if (arrMsg.length > 1){
+                        var id = arrMsg[1];
                     }
                     var str = msg;
-					if (str.search('finish') > -1) {
+					if (str.search('finish') > -1 && arrMsg.length == 2) {
 						alert('เพิ่ม BUILDING SITE สำเร็จแล้ว');
 						toggle(".createPanel", 'hide');
 						$(".createPanel").html('');
 						$("#createrecordCancel").hide();
 						$("#createrecord").show('slow');
 						$('#listBuildingSite').fadeOut('slow').load(window.location + "show").fadeIn("slow");
-                        var strUrl = "facility2site/" + id + "/show";
+                        saveIdBuildingSite = id;
+                        var strUrl = "{{ path('facility2site_show', { 'id': '--' }) }}";
+                        strUrl = strUrl.replace('--', id);
                         $('.innerPanel').fadeOut().load(strUrl).fadeIn("slow");
 					} else {
-						$("#createPanel").html(msg);
+                        $('#createPanel').fadeOut('slow').load(msg).fadeIn("slow");
 						alert('การ CREATE ผิดพลาด\n** กรุณาตรวจสอบ **');
 					}
 				}
@@ -179,7 +181,7 @@
 			<br />
 
             {#ต้องแปะไว้ตรงท้ายเสมอ	#}
-			{#{{ form_rest(form) }}#}
+			{{ form_rest(form) }}
 			
 			<span style="float: right;">
 				<img src="{{ asset('images/cancel.png')}}" id="btnCancelCreate" width="50" height="50" style="cursor:pointer;" />
