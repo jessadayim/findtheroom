@@ -69,6 +69,8 @@ class Building_siteType extends AbstractType
             ->add('water_unit', 'text', array('label' => 'Water Unit:'))
             ->add('electricity_unit', 'text', array('label' => 'Electricity Unit:'))
             ->add('internet_price', 'text', array('label' => 'Internet Price:'))
+            ->add('nearly_place', 'text', array('label' => 'Nearly Place:', 'required'  => false))
+
             // ->add('googlemap_url')
             // ->add('internet_ready')
             // ->add('addr_number')
