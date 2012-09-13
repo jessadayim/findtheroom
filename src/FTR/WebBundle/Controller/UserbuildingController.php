@@ -1289,12 +1289,12 @@ class UserbuildingController extends Controller
         switch ($type) {
             case 2:
             case 3:
-                $all[] = array('id' => 0, 'name' => 'ทุกสถานี');
+                $all[] = array('id' => 0, 'name' => ' - กรุณาระบุ - ', 'checked' => 'no');
                 break;
             case 4:
             case 5:
             case 6:
-                $all[] = array('id' => 0, 'name' => ' - กรุณาระบุ - ');
+                $all[] = array('id' => 0, 'name' => ' - กรุณาระบุ - ', 'checked' => 'no');
                 break;
         }
 

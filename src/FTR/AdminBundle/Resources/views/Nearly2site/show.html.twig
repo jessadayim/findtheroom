@@ -27,10 +27,19 @@
             $('#divPostCreateNearly').slideUp(300).delay(800).fadeOut(400);
         });
 
+        $("#btnNext").click(function(){
+            var strUrl = "{{ path('image_show', { 'id': '--' }) }}";
+            strUrl = strUrl.replace('--', saveIdBuildingSite);
+            $('.innerPanel').fadeOut().load(strUrl).fadeIn("slow");
+        });
+
         $('.selectNearly').change(function() {
             postOnchange();
         });
     });
+    if (saveIdBuildingSite != null){
+        $("#btnNext").show();
+    }
 </script>
 <div id="divPostCreateNearly">
     <form id="formCreateNearly" action="{{ path('nearly2site_create') }}" method="post" >
@@ -90,6 +99,8 @@
             <br />
 			<span style="float: right;">
 				{#<input type="submit" value="ClOSE">#}
+				<img src="{{ asset('images/next.png')}}" id="btnNext" width="50" height="50" style="cursor:pointer;display: none;" />
+                &nbsp;&nbsp;
 				<img src="{{ asset('images/cancel.png')}}" id="btnCancel" width="50" height="50" style="cursor:pointer;" />
 			</span>
         </fieldset>

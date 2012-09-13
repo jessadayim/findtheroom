@@ -35,8 +35,8 @@ class Building_siteType extends AbstractType
         $builder            
             ->add('building_name', 'text', array('label' => 'Name:'))
             ->add('building_address', 'textarea', array('label' => 'Address:'))
-            ->add('start_price', 'text', array('label' => 'Start Price:', 'required'  => false, 'read_only' => true))
-            ->add('end_price', 'text', array('label' => 'End Price:', 'required'  => false, 'read_only' => true))
+//            ->add('start_price', 'text', array('label' => 'Start Price:', 'required'  => false, 'read_only' => true))
+//            ->add('end_price', 'text', array('label' => 'End Price:', 'required'  => false, 'read_only' => true))
             ->add('phone_number', 'text', array('label' => 'Phone Number:'))
             //->add('publish', 'checkbox',array('label' => 'Member use(bool)'))
             // ->add('datetimestamp', 'date')
