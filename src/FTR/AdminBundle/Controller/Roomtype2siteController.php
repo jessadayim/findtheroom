@@ -31,16 +31,7 @@ class Roomtype2siteController extends Controller
         foreach ($ObjRoomType2Site as $key => $value){
             $ObjRoomType2Site[$key]['count'] = $key+1;
         }
-        
-        $sqlGetRoomType = "
-            SELECT 
-              * 
-            FROM
-              `roomtype` 
-            WHERE `deleted` != 1 
-        ";
-        $ObjRoomType = $this->getDataArray($sqlGetRoomType);
-        
+
         $sqlGetBuildingSite = "
             SELECT 
               * 
@@ -53,7 +44,6 @@ class Roomtype2siteController extends Controller
 
         return $this->render('FTRAdminBundle:Roomtype2site:show.html.twig', array(
             'buildingsite'      => $ObjBuildingSite,
-            'roomtype'          => $ObjRoomType,
             'roomtype2site'     => $ObjRoomType2Site,
         ));
     }
@@ -85,11 +75,11 @@ class Roomtype2siteController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
         $getBuildingSiteId = @$_POST['building_site_id'];
-        $getRoomTypeId = @$_POST['selectRoomType'];
+        $getRoomType = @$_POST['selectRoomType'];
         $getRoomSize = @$_POST['roomSize'];
         $getRoomPrice = @$_POST['roomPrice'];
         
-        $countRoomTypeId = count($getRoomTypeId);
+        $countRoomTypeId = count($getRoomType);
         if ($countRoomTypeId <= 0){
             exit();
         }
@@ -107,13 +97,13 @@ class Roomtype2siteController extends Controller
                 $entity = $em->getRepository('FTRWebBundle:Roomtype2site')->find($value['id']);
                 if ($key < $countRoomTypeId){ 
                     $entity ->setBuildingSiteId($getBuildingSiteId);
-                    $entity ->setRoomtypeId($this->checkEmptyValue($getRoomTypeId[$key]));
+                    $entity ->setRoomTypename($getRoomType[$key]);
                     $entity ->setRoomsize($this->checkEmptyValue($getRoomSize[$key]));
                     $entity ->setRoomprice($this->checkEmptyValue($getRoomPrice[$key]));
                     $entity ->setDeleted(0);  
                 }else{
                     $entity ->setBuildingSiteId($getBuildingSiteId);
-                    $entity ->setRoomtypeId(0);
+                    $entity ->setRoomTypename('');
                     $entity ->setRoomsize(0);
                     $entity ->setRoomprice(0);
                     $entity ->setDeleted(1);
@@ -121,11 +111,11 @@ class Roomtype2siteController extends Controller
                 $em->persist($entity);
             }            
             if (count($objGetRoomType2Site) < $countRoomTypeId){
-                foreach($getRoomTypeId as $key => $value){
+                foreach($getRoomType as $key => $value){
                     if ($key >= count($objGetRoomType2Site)){
                         $entity  = new Roomtype2site();            
                         $entity ->setBuildingSiteId($getBuildingSiteId);
-                        $entity ->setRoomtypeId($this->checkEmptyValue($value));
+                        $entity ->setRoomTypename($value);
                         $entity ->setRoomsize($this->checkEmptyValue($getRoomSize[$key]));
                         $entity ->setRoomprice($this->checkEmptyValue($getRoomPrice[$key]));
                         $entity ->setDeleted(0);
@@ -134,10 +124,10 @@ class Roomtype2siteController extends Controller
                 }
             }
         }else{
-            foreach($getRoomTypeId as $key => $value){
+            foreach($getRoomType as $key => $value){
                 $entity  = new Roomtype2site();            
                 $entity ->setBuildingSiteId($getBuildingSiteId);
-                $entity ->setRoomtypeId($value);
+                $entity ->setRoomTypename($value);
                 $entity ->setRoomsize($this->checkEmptyValue($getRoomSize[$key]));
                 $entity ->setRoomprice($this->checkEmptyValue($getRoomPrice[$key]));
                 $entity ->setDeleted(0);
