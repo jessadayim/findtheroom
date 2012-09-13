@@ -227,8 +227,13 @@ class UserbuildingController extends Controller
             $provinceName = $building_data['saddrprovince'];
 
             $payType = $this->getPayType($building_data['ipaytypeid']);
-            $bkkZone = $this->getBkkZone($zone_data->getId());
-            $bkkZone = array_merge($arrZone, $bkkZone); // รวม array ของโซนในกรุงเทพ
+            if(!empty($zone_data)){
+                $bkkZone = $this->getBkkZone($zone_data->getId());
+                $bkkZone = array_merge($arrZone, $bkkZone); // รวม array ของโซนในกรุงเทพ
+            }
+            else{
+                $bkkZone = $this->getBkkZone();
+            }
 
             $buildingType = $this->getBuildingType($building_data['ibuildingtypeid']);
             $province = $this->getProvince($building_data['saddrprovince'], null);
@@ -983,7 +988,7 @@ class UserbuildingController extends Controller
         return "complete";
     }
 
-    function getBkkZone($id=null)
+    function getBkkZone($id=0)
     {
         $result_data = array();
         $conn = $this->get('database_connection');
