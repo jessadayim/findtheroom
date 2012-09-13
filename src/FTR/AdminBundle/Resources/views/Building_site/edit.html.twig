@@ -41,7 +41,20 @@
             });
             return false;
         });
-	}); 
+	});
+
+    //ตรวจสอบค่าที่เป็น Double
+    function validate(evt) {
+        var theEvent = evt || window.event;
+        var key = theEvent.keyCode || theEvent.which;
+        key = String.fromCharCode( key );
+        var regex = /[0-9]|\./;
+        if( !regex.test(key) ) {
+            theEvent.returnValue = false;
+            if(theEvent.preventDefault)
+                theEvent.preventDefault();
+        }
+    }
 </script>
 <form id="formEdit" action="{{ path('building_site_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
 	<fieldset>
@@ -94,31 +107,31 @@
 			{{ form_label(edit_form.end_price) }}
 		</div>
 		{{ form_widget(edit_form.end_price, { 'attr': {'class': 'widthin'} }) }} &nbsp;
-		{{ form_errors(edit_form.start_price) }}
+		{{ form_errors(edit_form.end_price) }}
 		<br />
 		<div class="label" style="">
 			{{ form_label(edit_form.phone_number) }}
 		</div>
 		{{ form_widget(edit_form.phone_number, { 'attr': {'class': 'widthin'} }) }} &nbsp;
-		{{ form_errors(edit_form.start_price) }}
+		{{ form_errors(edit_form.phone_number) }}
 		<br />
 		<div class="label" style="">
 			{{ form_label(edit_form.latitude) }}
 		</div>
-		{{ form_widget(edit_form.latitude, { 'attr': {'class': 'widthin'} }) }} &nbsp;
-		{{ form_errors(edit_form.start_price) }}
+		{{ form_widget(edit_form.latitude, { 'attr': {'class': 'widthin', 'onkeypress' : 'validate(event)'} }) }} &nbsp;
+		{{ form_errors(edit_form.latitude) }}
 		<br />
 		<div class="label" style="">
 			{{ form_label(edit_form.longitude) }}
 		</div>
-		{{ form_widget(edit_form.longitude, { 'attr': {'class': 'widthin'} }) }} &nbsp;
-		{{ form_errors(edit_form.start_price) }}
+		{{ form_widget(edit_form.longitude, { 'attr': {'class': 'widthin', 'onkeypress' : 'validate(event)'} }) }} &nbsp;
+		{{ form_errors(edit_form.longitude) }}
 		<br />
 		<div class="label" style="">
 			{{ form_label(edit_form.recommend) }}
 		</div>
 		{{ form_widget(edit_form.recommend) }} &nbsp;
-		{{ form_errors(edit_form.start_price) }}
+		{{ form_errors(edit_form.recommend) }}
 		<br />
 		<br />
 
@@ -155,19 +168,19 @@
 		<div class="label" style="">
 			{{ form_label(edit_form.water_unit) }}
 		</div>
-		{{ form_widget(edit_form.water_unit, { 'attr': {'class': 'widthin'} }) }} &nbsp;
+		{{ form_widget(edit_form.water_unit, { 'attr': {'class': 'widthin', 'onkeypress' : 'validate(event)'} }) }} &nbsp;
 		{{ form_errors(edit_form.water_unit) }}
 		<br />
 		<div class="label" style="">
 			{{ form_label(edit_form.electricity_unit) }}
 		</div>
-		{{ form_widget(edit_form.electricity_unit, { 'attr': {'class': 'widthin'} }) }} &nbsp;
+		{{ form_widget(edit_form.electricity_unit, { 'attr': {'class': 'widthin', 'onkeypress' : 'validate(event)'} }) }} &nbsp;
 		{{ form_errors(edit_form.electricity_unit) }}
 		<br />
 		<div class="label" style="">
 			{{ form_label(edit_form.internet_price) }}
 		</div>
-		{{ form_widget(edit_form.internet_price, { 'attr': {'class': 'widthin'} }) }} &nbsp;
+		{{ form_widget(edit_form.internet_price, { 'attr': {'class': 'widthin', 'onkeypress' : 'validate(event)'} }) }} &nbsp;
 		{{ form_errors(edit_form.internet_price) }}
 
 		{{ form_rest(edit_form) }}
