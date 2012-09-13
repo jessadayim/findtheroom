@@ -9,24 +9,24 @@ class Building_siteType extends AbstractType
 {
     public function buildForm(FormBuilder $builder, array $options)
     {
-        $buildingtype[''] = '';
+        $buildingType[''] = '';
         foreach ($options['data']->buildingtype as $key => $value){
-            $buildingtype[$value['id']] = $value['type_name'];
+            $buildingType[$value['id']] = $value['type_name'];
         }
         
         $zone[''] = '';
         foreach ($options['data']->zone as $key => $value){
             $zone[$value['id']] = $value['zonename'];
         }
-        
-        $paytype[''] = '';
+
+        $payType[''] = '';
         foreach ($options['data']->paytype as $key => $value){
-            $paytype[$value['id']] = $value['typename'];
+            $payType[$value['id']] = $value['typename'];
         }
         
-        $userowner[''] = '';
+        $userOwner[''] = '';
         foreach ($options['data']->userowner as $key => $value){
-            $userowner[$value['id']] = $value['username'];
+            $userOwner[$value['id']] = $value['username'];
         }
         
         // echo '<pre>';
@@ -35,8 +35,8 @@ class Building_siteType extends AbstractType
         $builder            
             ->add('building_name', 'text', array('label' => 'Name:'))
             ->add('building_address', 'textarea', array('label' => 'Address:'))
-            ->add('start_price', 'text', array('label' => 'Start Price:'))
-            ->add('end_price', 'text', array('label' => 'End Price:'))
+            ->add('start_price', 'text', array('label' => 'Start Price:', 'required'  => false, 'read_only' => true))
+            ->add('end_price', 'text', array('label' => 'End Price:', 'required'  => false, 'read_only' => true))
             ->add('phone_number', 'text', array('label' => 'Phone Number:'))
             //->add('publish', 'checkbox',array('label' => 'Member use(bool)'))
             // ->add('datetimestamp', 'date')
@@ -46,7 +46,7 @@ class Building_siteType extends AbstractType
             ->add('longitude', 'text', array('label' => 'Longtitude:'))
             ->add('recommend', 'checkbox', array('label' => 'Recommend:', 'required'  => false))
             ->add('building_type_id', 'choice', array(
-                    'choices'   => $buildingtype,
+                    'choices'   => $buildingType,
                     'label'     => 'Type:'
             ))
             ->add('zone_id', 'choice', array(
@@ -54,11 +54,11 @@ class Building_siteType extends AbstractType
                     'label'     => 'Zone:'
             ))
             ->add('pay_type_id', 'choice', array(
-                    'choices'   => $paytype,
+                    'choices'   => $payType,
                     'label'     => 'Pay Type:'
             ))
             ->add('user_owner_id', 'choice', array(
-                    'choices'   => $userowner,
+                    'choices'   => $userOwner,
                     'label'     => 'Owner:'
             ))
             ->add('detail', 'textarea', array('label' => 'Detail:'))
