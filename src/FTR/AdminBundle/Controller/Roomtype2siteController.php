@@ -134,6 +134,26 @@ class Roomtype2siteController extends Controller
                 $em->persist($entity);
             }
         }
+
+        //Update Table Building_site
+        $sqlGetMinMaxPrice = "
+            SELECT
+              MIN(room_price) AS start_price,
+              MAX(room_price) AS end_price
+            FROM
+              `roomtype2site`
+            WHERE `building_site_id` = $getBuildingSiteId
+              AND `deleted` = 0
+        ";
+        $objGetMinMaxPrice = $this->getDataArray($sqlGetMinMaxPrice);
+        if (!empty($objGetMinMaxPrice)){
+            $startPrice = $objGetMinMaxPrice[0]['start_price'];
+            $endPrice = $objGetMinMaxPrice[0]['end_price'];
+            $entity = $em->getRepository('FTRWebBundle:Building_site')->find($getBuildingSiteId);
+            $entity->setStartPrice($startPrice);
+            $entity->setEndPrice($endPrice);
+            $em->persist($entity);
+        }
         $em->flush();
         echo 'finish';
         exit();        
