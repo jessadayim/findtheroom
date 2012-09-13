@@ -3,6 +3,7 @@
 	var countRoomType2Site = {{roomtype2site|length}};
 	var maxRoomType = 20;
 	var url = "{{ path('roomtype2site_create') }}";
+    var locationRoomType = "{{ path('roomtype2site_create') }}"
 	var checkReload = false;
 	
 	function postOnchange(){
@@ -125,8 +126,11 @@
 		setIdRemove = 0;
 		checkReload = true;		
 	}
+
     if (saveIdBuildingSite != null){
-        $("#btnNext").show('slow');
+        $("#btnNext").show();
+        var strUrl = "{{ path('roomtype2site_show', { 'id': '--' }) }}";
+        locationRoomType = strUrl.replace('--', saveIdBuildingSite);
     }
 </script>
 <div id="divPostCreateRoomType2Site">
@@ -186,7 +190,7 @@
 			<br />
 			<span style="float: right;">
 				{#<input type="submit" value="ClOSE">#}
-				<img src="{{ asset('images/cancel.png')}}" id="btnNext" width="50" height="50" style="cursor:pointer;display: none;" />
+				<img src="{{ asset('images/next.png')}}" id="btnNext" width="50" height="50" style="cursor:pointer;display: none;" />
                 &nbsp;&nbsp;
 				<img src="{{ asset('images/cancel.png')}}" id="btnCancel" width="50" height="50" style="cursor:pointer;" />
 			</span>

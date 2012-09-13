@@ -28,7 +28,15 @@
                 url : url,
                 data : $(this).serialize(),
                 success : function(msg) {
-                    if (msg == 'finish') {
+                    var arrMsg = msg.split('_');
+                    if (arrMsg.length > 1){
+                        var id = arrMsg[1];
+                    }
+                    var str = msg;
+                    if (str.search('error') > -1 && arrMsg.length == 2){
+                        alert('ชื่อ "'+id+'" นี้มีข้อมูลอยู่แล้ว \nกรุณาตั้งชื่ออื่น');
+                        $("#ftr_adminbundle_building_sitetype_building_name").focus();
+                    }else if (msg == 'finish') {
                         $('.innerPanel').slideUp(300).delay(800).fadeOut(400);
                         // $('#listBuildingSite').load(window.location + "show");
 //                        toggle(".innerPanel", 'hide');
