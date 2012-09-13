@@ -64,6 +64,27 @@
         }
     }
 </script>
+<style type="text/css">
+    #btnCreate {
+        background: url("{{ asset('images/add-bt.png')}}") no-repeat;
+        display: block;
+        float: none;
+        height: 50px;
+        position: absolute;
+        margin-left: 70px;
+        margin-top: -55px;
+    }
+
+    #btnInputCreate {
+        background: url("{{ asset('images/add-bt.png')}}") no-repeat;
+        opacity: 0;
+        -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+        filter: alpha(opacity=0);
+        cursor: pointer;
+        height: 50px;
+        width: 50px;
+    }
+</style>
 <div id="divPostCreate">
 	<form id="formCreate" action="{{ path('building_site_create') }}" method="post" {{ form_enctype(form) }}>
 		<fieldset>
@@ -187,9 +208,11 @@
 			{{ form_rest(form) }}
 			
 			<span style="float: right;">
-				<img src="{{ asset('images/cancel.png')}}" id="btnCancelCreate" width="50" height="50" style="cursor:pointer;" />
+				<img src="{{ asset('images/cancel.png')}}" id="btnCancelCreate" width="50" height="50" style="cursor:pointer;margin-right: 70px" />
 				&nbsp;&nbsp;
-				<input type="submit" value="CREATE">
+                <div id="btnCreate">
+                    <input type="submit" id="btnInputCreate" value="CREATE">
+                </div>
 			</span>
 		</fieldset>
 	</form>

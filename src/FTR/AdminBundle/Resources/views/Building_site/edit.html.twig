@@ -64,6 +64,27 @@
         }
     }
 </script>
+<style type="text/css">
+    #btnEdit {
+        background: url("{{ asset('images/save.png')}}") no-repeat;
+        display: block;
+        float: none;
+        height: 50px;
+        position: absolute;
+        margin-left: 70px;
+        margin-top: -55px;
+    }
+
+    #btnInputEdit {
+        background: url("{{ asset('images/save.png')}}") no-repeat;
+        opacity: 0;
+        -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+        filter: alpha(opacity=0);
+        cursor: pointer;
+        height: 50px;
+        width: 50px;
+    }
+</style>
 <form id="formEdit" action="{{ path('building_site_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
 	<fieldset>
 		<legend>
@@ -184,9 +205,11 @@
 		<br />
 		<span style="float: right;">
 			{#<input type="button" id="btnCancelEdit" value="Cancel">#}
-			<img src="{{ asset('images/cancel.png')}}" id="btnCancel" width="50" height="50" style="cursor:pointer;" />
+			<img src="{{ asset('images/cancel.png')}}" id="btnCancel" width="50" height="50" style="cursor:pointer;margin-right: 70px" />
 			&nbsp;&nbsp;
-			<input type="submit" value="Edit">
+            <div id="btnEdit">
+			<input type="submit" id="btnInputEdit" value="Edit">
+            </div>
             {#<img src="{{ asset('images/edit.png')}}" id="btnEdit" width="50" height="50" style="cursor:pointer;" />#}
 		</span>
 	</fieldset>
