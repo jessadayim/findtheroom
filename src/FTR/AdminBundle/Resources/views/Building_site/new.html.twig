@@ -201,8 +201,13 @@
 			</div>
 			{{ form_widget(form.internet_price, { 'attr': {'class': 'widthin', 'onkeypress' : 'validate(event)'} }) }} &nbsp;
 			{{ form_errors(form.internet_price) }}
-
 			<br />
+            <div class="label" style="">
+                {{ form_label(form.nearly_place) }}
+            </div>
+            {{ form_widget(form.nearly_place, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+            {{ form_errors(form.nearly_place) }}
+            <br />
 
             {#ต้องแปะไว้ตรงท้ายเสมอ	#}
 			{{ form_rest(form) }}

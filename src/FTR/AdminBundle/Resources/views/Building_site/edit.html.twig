@@ -37,7 +37,8 @@
                         alert('ชื่อ "'+id+'" นี้มีข้อมูลอยู่แล้ว \nกรุณาตั้งชื่ออื่น');
                         $("#ftr_adminbundle_building_sitetype_building_name").focus();
                     }else if (msg == 'finish') {
-                        $('.innerPanel').slideUp(300).delay(800).fadeOut(400);
+//                        $('.innerPanel').slideUp(300).delay(800).fadeOut(400);
+                        alert('บันทึกข้อมูล เสร็จแล้ว');
                         // $('#listBuildingSite').load(window.location + "show");
 //                        toggle(".innerPanel", 'hide');
 //                        $('#listBuildingSite').fadeOut('slow').load(window.location + "show").fadeIn("slow");
@@ -200,9 +201,16 @@
 		</div>
 		{{ form_widget(edit_form.internet_price, { 'attr': {'class': 'widthin', 'onkeypress' : 'validate(event)'} }) }} &nbsp;
 		{{ form_errors(edit_form.internet_price) }}
-
+        <br />
+        <div class="label" style="">
+            {{ form_label(edit_form.nearly_place) }}
+        </div>
+        {{ form_widget(edit_form.nearly_place, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+        {{ form_errors(edit_form.nearly_place) }}
+        <br />
 		{{ form_rest(edit_form) }}
 		<br />
+
 		<span style="float: right;">
 			{#<input type="button" id="btnCancelEdit" value="Cancel">#}
 			<img src="{{ asset('images/cancel.png')}}" id="btnCancel" width="50" height="50" style="cursor:pointer;margin-right: 70px" />

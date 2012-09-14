@@ -21,7 +21,7 @@ class ZoneController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entities = $em->getRepository('FTRWebBundle:Zone')->findAll();
+        $entities = $em->getRepository('FTRWebBundle:Zone')->findBy(array('deleted' => 0));
 
         return $this->render('FTRAdminBundle:Zone:index.html.twig', array(
             'entities' => $entities
@@ -74,16 +74,33 @@ class ZoneController extends Controller
     {
         $entity  = new Zone();
         $request = $this->getRequest();
+
+        //Set ค่า deleted = 0
+        $entity->setDeleted(0);
         $form    = $this->createForm(new ZoneType(), $entity);
         $form->bindRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();
+            $getZoneName = $entity->getZonename();
+            $sqlGetZone = "
+                SELECT
+                  *
+                FROM
+                  `zone`
+                WHERE `zonename` = '$getZoneName'
+                  AND `deleted` = 0
+            ";
+            $objGetZone = $this->getDataArray($sqlGetZone);
+            if (!empty($objGetZone)){
+                echo "finish_comp";
+                exit();
+            }
             $em->persist($entity);
             $em->flush();
-
-            return $this->redirect($this->generateUrl('zone_show', array('id' => $entity->getId())));
-            
+            echo 'finish';
+            exit();
+//            return $this->redirect($this->generateUrl('zone_show', array('id' => $entity->getId())));
         }
 
         return $this->render('FTRAdminBundle:Zone:new.html.twig', array(
@@ -101,7 +118,27 @@ class ZoneController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('FTRWebBundle:Zone')->find($id);
-
+        $getCheckPost = @$_POST['checkPost'];
+        if ($getCheckPost == "delete"){
+            $sqlCheck = "
+                SELECT
+                  *
+                FROM
+                  `building_site`
+                WHERE `zone_id` = $id
+                  AND `deleted` = 0
+            ";
+            $objCheckZone = $this->getDataArray($sqlCheck);
+            if (!empty($objCheckZone)){
+                echo "finish_math";
+                exit();
+            }
+            $entity->setDeleted(1);
+            $em->persist($entity);
+            $em->flush();
+            echo 'finish';
+            exit();
+        }
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Zone entity.');
         }
@@ -122,6 +159,7 @@ class ZoneController extends Controller
      */
     public function updateAction($id)
     {
+
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('FTRWebBundle:Zone')->find($id);
@@ -141,9 +179,9 @@ class ZoneController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('zone_edit', array('id' => $id)));
+            echo 'finish';exit();
+//            return $this->redirect($this->generateUrl('zone_edit', array('id' => $id)));
         }
-
         return $this->render('FTRAdminBundle:Zone:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
@@ -183,5 +221,20 @@ class ZoneController extends Controller
             ->add('id', 'hidden')
             ->getForm()
         ;
+    }
+
+    /*
+    * Run คำสั่ง Sql
+    * return array
+    */
+    private function getDataArray($sql){
+        $conn= $this->get('database_connection');
+        if(!$conn){ die("MySQL Connection error");}
+        try{
+            return $conn->fetchAll($sql);
+        } catch (Exception $e) {
+            echo 'Caught exception: ',  $e->getMessage(), "\n";
+        }
+        return array();
     }
 }
