@@ -1,22 +1,116 @@
-<h1>Zone edit</h1>
+<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js'></script>
+<script>
+    function postData(checkAlert){
+        var url = "{{ path('zone_update', { 'id': entity.id }) }}";
+        $.ajax({
+            type : "POST",
+            url : url,
+            data : $("#formEditZone").serialize(),
+            success : function(msg) {
+                if (msg == 'finish') {
+                    if (checkAlert == 'yes'){
+                        $("#zoneSH").show("slow");
+                        $('#innerPanel').fadeOut(100).load("{{ path('zone') }}").fadeIn("slow");
+                        $("#editZone").slideUp(300).delay(800).fadeOut(400);
+                        alert('√ ทำการแก้ไข Zone เรียบร้อยแล้ว');
+                    }
+                } else {
+                    $('#editZone').fadeOut().load(msg).fadeIn("slow");
+                    alert('เกิดการผิดพลาด\n** กรุณาตรวจสอบ **');
+                }
+            }
+        });
+    }
+    $(document).ready(function() {
+        $("#formEditZone").submit(function(){
+            postData('yes');
+            return false;
+        });
 
-<form action="{{ path('zone_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
-    {{ form_widget(edit_form) }}
-    <p>
-        <button type="submit">Edit</button>
-    </p>
-</form>
+        $("#btnCancelEdit").click(function(){
+            $("#zoneSH").show("slow");
+            $("#editZone").slideUp(300).delay(800).fadeOut(400);
+            return false;
+        });
+    });
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('zone') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('zone_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+    //ตรวจสอบค่าที่เป็น Double
+    function validate(evt) {
+        var theEvent = evt || window.event;
+        var key = theEvent.keyCode || theEvent.which;
+        key = String.fromCharCode( key );
+        var regex = /[0-9]|\./;
+        if( !regex.test(key) ) {
+            theEvent.returnValue = false;
+            if(theEvent.preventDefault)
+                theEvent.preventDefault();
+        }
+    }
+</script>
+<style type="text/css">
+    #btnEditZone {
+        background: url("{{ asset('images/save.png')}}") no-repeat;
+        display: block;
+        float: none;
+        height: 50px;
+        position: absolute;
+        margin-left: 70px;
+        margin-top: -55px;
+    }
+
+    #btnInputEditZone {
+        background: url("{{ asset('images/save.png')}}") no-repeat;
+        opacity: 0;
+        -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+        filter: alpha(opacity=0);
+        cursor: pointer;
+        height: 50px;
+        width: 50px;
+    }
+</style>
+<fieldset id="editZoneField">
+    <form id="formEditZone" action="{{ path('zone_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }} >
+        <div class="label" style="">
+            {{ form_label(edit_form.zonename) }}
+        </div>
+        {{ form_widget(edit_form.zonename, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+        {{ form_errors(edit_form.zonename) }}
+        <br />
+        <div class="label" style="">
+            {{ form_label(edit_form.latitude) }}
+        </div>
+        {{ form_widget(edit_form.latitude, { 'attr': {'class': 'widthin', 'onkeypress' : 'validate(event)'} }) }} &nbsp;
+        {{ form_errors(edit_form.latitude) }}
+        <br />
+        <div class="label" style="">
+            {{ form_label(edit_form.longitude) }}
+        </div>
+        {{ form_widget(edit_form.longitude, { 'attr': {'class': 'widthin', 'onkeypress' : 'validate(event)'} }) }} &nbsp;
+        {{ form_errors(edit_form.longitude) }}
+        <br />
+
+        {{ form_widget(edit_form) }}
+
+
+        {#<ul class="record_actions">#}
+            {#<li>#}
+                {#<a href="{{ path('zone') }}">#}
+                    {#Back to the list#}
+                {#</a>#}
+            {#</li>#}
+            {#<li>#}
+                {#<form action="{{ path('zone_delete', { 'id': entity.id }) }}" method="post">#}
+                    {#{{ form_widget(delete_form) }}#}
+                    {#<button type="submit">Delete</button>#}
+                {#</form>#}
+            {#</li>#}
+        {#</ul>#}
+        <span style="float: right;">
+            <img src="{{ asset('images/cancel.png')}}" id="btnCancelEdit" width="50" height="50" style="cursor:pointer;margin-right: 70px" />
+                &nbsp;&nbsp;
+            <div id="btnEditZone">
+                <input type="submit" id="btnInputEditZone" value="Edit">
+            </div>
+        </span>
+    </form>
+</fieldset>

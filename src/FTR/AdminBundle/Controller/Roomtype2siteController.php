@@ -161,7 +161,11 @@ class Roomtype2siteController extends Controller
         echo 'finish';
         exit();        
     }
-    
+
+    /*
+     * Run คำสั่ง Sql
+     * return array
+     */
     private function getDataArray($sql){
         $conn= $this->get('database_connection');
         if(!$conn){ die("MySQL Connection error");}        
