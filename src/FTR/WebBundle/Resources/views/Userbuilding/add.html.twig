@@ -16,7 +16,19 @@
 		if(mybrowser.indexOf('MSIE')>0){
 		$("div#upload_map.uploadify").css("marginTop","-60px");
 		$("#headimage2").css("marginTop","-60px");
-}
+        }
+        if((navigator.userAgent.match(/Android/i)) ||
+                (navigator.userAgent.match(/iPhone/i)) ||
+                (navigator.userAgent.match(/iPod/i)) ||
+                (navigator.userAgent.match(/iPad/i)))
+        {
+            document.getElementById('device').style.display='block';
+            document.getElementById('fix').style.display='none';
+            document.getElementById('datazone').style.display='none';
+            document.getElementById('roomzone').style.display='none';
+            document.getElementById('galleryzone').style.display='none';
+            document.getElementById('etczone').style.display='none';
+        }
 	 });
 </script>
 
@@ -219,6 +231,7 @@
 	var pathimgdefault = "{{asset('images/')}}";
 
 	$(document).ready(function(){
+
 		if(arraygalleryimage.length == 0)
 		{
 			CreateNewRowGallery(nullarrayGal, 0);
@@ -428,6 +441,12 @@
 
 </script>
 <form name="addform" id="addform" method="post" action="{{path('saveData', {'id': build_id })}}">
+<div id="device" style="height: 200px; margin-bottom: 15px;display: none;">
+    <div style="display: block; position: relative; width:1000px; color:#FFF; font-size:36px; text-align: center; padding-top:50px;">
+        ข้อความ
+        <a class="back" href="{{path('userbuilding')}}"></a> <a class="data" href="{{path('userbuilding')}}"></a>
+    </div>
+</div>
 <div id="fix">
 	<!--<input class="upimg" type="submit" value="" />-->
 	<input class="save" type="submit" value="" />
@@ -442,12 +461,7 @@
 	<input class="gallery" type="button" value="" onclick="document.getElementById('gallery').focus();" />
 	<input class="etc" type="button" value="" onclick="document.getElementById('etc').focus();" />-->
 </div>
-<div id="device" style="height: 200px; margin-bottom: 15px;">
-    <div style="display: block; position: relative; width:1000px; color:#FFF; font-size:36px; text-align: center; padding-top:50px;">
-        ข้อความ
-        <a class="back" href="{{path('userbuilding')}}"></a> <a class="data" href="{{path('userbuilding')}}"></a>
-    </div>
-</div>
+
 
 <div id="datazone" class="detail" style="height: 780px; margin-bottom: 15px;">
 	<img src="{{asset('images/apdata.png')}}" style="display:block; position:relative; float:none;" />

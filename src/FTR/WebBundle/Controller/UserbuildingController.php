@@ -954,6 +954,7 @@ class UserbuildingController extends Controller
 
     public function saveFacilityData($buildingSiteId, $arrData)
     {
+        //echo "test";exit();
         $em = $this->getDoctrine()->getEntityManager();
         $conn = $this->get('database_connection');
         if (!$conn) {
@@ -972,6 +973,7 @@ class UserbuildingController extends Controller
 
         foreach ($arrData as $key => $value) {
             $facilityValue = $em->getRepository('FTRWebBundle:Facility2site')->findOneBy(array('facilitylist_id' => intval($value), 'building_site_id' => $buildingSiteId));
+            //echo "test";exit();
             if (empty($facilityValue)) {
                 $facility = new Facility2site();
                 $facility->setBuildingSiteId($buildingSiteId);

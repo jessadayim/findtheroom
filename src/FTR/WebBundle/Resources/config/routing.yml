@@ -11,8 +11,8 @@ FTRWebBundle_search:
     defaults: { _controller: FTRWebBundle:Search:search }
 
 FTRWebBundle_detail:
-    pattern:  /detail
-    defaults: { _controller: FTRWebBundle:Detail:detail }
+    pattern:  /detail/{buildId}
+    defaults: { _controller: FTRWebBundle:Detail:detail, 'buildId' :null }
     
 FTRWebBundle_publish:
     pattern:  /publish

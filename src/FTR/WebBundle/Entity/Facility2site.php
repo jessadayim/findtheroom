@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * FTR\WebBundle\Entity\Facility2site
  *
- * @ORM\Table(name="Facility2site")
+ * @ORM\Table(name="facility2site")
  * @ORM\Entity(repositoryClass="FTR\WebBundle\Repository\Facility2siteRepository")
  */
 class Facility2site

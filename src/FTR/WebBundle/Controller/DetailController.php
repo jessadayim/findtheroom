@@ -8,15 +8,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class DetailController extends Controller
 {
 
-    public function DetailAction()
+    public function DetailAction($buildId=null)
     {
         $detailData = array();
         $countData = 0;
         $em = $this->getDoctrine()->getEntityManager();
         $conn = $this->get('database_connection');
-//		$id = 1;
-        if (!empty($_POST['bid'])) {
+		$id = null;
+        if(!empty($_POST['bid'])){
             $id = trim($_POST['bid']);
+        }elseif(!empty($buildId)){
+            $id = $buildId;
+        }
+
+        if (!empty($id)) {
 
             try {
                 /**

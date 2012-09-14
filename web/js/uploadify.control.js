@@ -13,7 +13,7 @@ $(function() {// get more knowledge at http://www.uploadify.com/documentation/
 			//'queueSizeLimit' : 1,
 			'fileSizeLimit' : '120KB',
 			'fileTypeExts' : '*.gif; *.jpg; *.png',
-			'onFallback' : function() {alert('Flash was not detected.');},// detect flash compatible
+			'onFallback' : function() {/*alert('Flash was not detected.');*/},// detect flash compatible
 			'onUploadSuccess' : function(file, data, response) {
             	//alert('The file ' + file.name + ' was successfully uploaded with a response of ' + response + ':' + data);
             	document.getElementById('hdnfilename').value = data;
@@ -32,7 +32,7 @@ $(function() {// get more knowledge at http://www.uploadify.com/documentation/
 			//'queueSizeLimit' : 1,
 			'fileSizeLimit' : '120KB',
 			'fileTypeExts' : '*.gif; *.jpg; *.png',
-			'onFallback' : function() {alert('Flash was not detected.');},// detect flash compatible
+			'onFallback' : function() {/*alert('Flash was not detected.');*/},// detect flash compatible
 			'onUploadSuccess' : function(file, data, response) {
             	//alert('The file ' + file.name + ' was successfully uploaded with a response of ' + response + ':' + data);
             	document.getElementById('hdnfilemap').value = data;
@@ -64,7 +64,7 @@ function uploadpicroom()
 			//'queueSizeLimit' : 1,
 			'fileSizeLimit' : '120KB',
 			'fileTypeExts' : '*.gif; *.jpg; *.png',
-			'onFallback' : function() {alert('Flash was not detected.');},// detect flash compatible
+			'onFallback' : function() {/*alert('Flash was not detected.');*/},// detect flash compatible
 			'onUploadSuccess' : function(file, data, response) {
             	//alert('The file ' + file.name + ' was successfully uploaded with a response of ' + response + ':' + data);
             	var mySplitResult = data.split("_");
@@ -97,7 +97,7 @@ function uploadpicgallery()
 			//'queueSizeLimit' : 1,
 			'fileSizeLimit' : '120KB',
 			'fileTypeExts' : '*.gif; *.jpg; *.png',
-			'onFallback' : function() {alert('Flash was not detected.');},// detect flash compatible
+			'onFallback' : function() {/*alert('Flash was not detected.');*/},// detect flash compatible
 			'onUploadSuccess' : function(file, data, response) {
             	//alert('The file ' + file.name + ' was successfully uploaded with a response of ' + response + ':' + data);
             	var mySplitResult = data.split("_");
