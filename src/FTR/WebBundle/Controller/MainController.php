@@ -167,7 +167,8 @@ class MainController extends Controller {
                                 INNER JOIN nearly2site n2 ON n2.building_site_id = b.id
                                 INNER JOIN nearly_location n ON n.id = n2.nearly_location_id
                                 INNER JOIN nearly_type nt ON nt.id = n.nearly_type_id
-                                WHERE b.recommend =1 AND b.deleted !=  '1'
+                                WHERE b.recommend =1
+                                  AND b.deleted !=  '1'
                                 GROUP BY ban.building_site_id
                                 ORDER BY COUNT(ban.building_site_id) DESC";
             $objCountView = $conn -> fetchAll($sqlCountView);

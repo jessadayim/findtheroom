@@ -140,4 +140,12 @@ FTRAdminBundle_Sitedetail:
     
 FTRAdminBundle_Advertisingdetail:
     pattern:  /advertisingdetail
-    defaults: { _controller: FTRAdminBundle:advertisingdetail:index } 
+    defaults: { _controller: FTRAdminBundle:advertisingdetail:index }
+
+FTRAdminBundle_EditProfile:
+    pattern:  /edit
+    defaults: { _controller: FTRAdminBundle:Adminprofile:edit }
+
+FTRAdminBundle_UpdateProfile:
+    pattern:  /update/{id}
+    defaults: { _controller: FTRAdminBundle:Adminprofile:update }
