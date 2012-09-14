@@ -73,9 +73,8 @@ class RegisterController extends Controller
 					        ->setFrom('support@findtheroom.com')
 					        ->setTo($email)
 					        ->setBody($this->renderView('FTRWebBundle:Security:emailreset.html.twig', array('name' => $link)),'text/html');
-
-                            //peung comment เพื่อทดสอบการทำงานใน local แต่เมื่อทดสอบใน server ต้อง ให้บรรทัดข้างล่างนี้ทำงานด้วย
-					    	//$this->get('mailer')->send($message);
+					    	
+					    	$this->get('mailer')->send($message);
 							
 							$sqllogin_ss = "SELECT id,username FROM user_owner WHERE username = '$username'";
 							$userdata = $conn->fetchall($sqllogin_ss);
