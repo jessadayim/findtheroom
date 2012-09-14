@@ -60,11 +60,7 @@ class Building_siteController extends Controller
             WHERE b.`deleted` != 1   
             GROUP BY b.id
         ";
-        try{
-            $entities = $conn->fetchAll($sqlGetEntity);
-        } catch (Exception $e) {
-            echo 'Caught exception: ',  $e->getMessage(), "\n";
-        }
+        $entities = $this->getDataArray($sqlGetEntity);
         return array(
             'entities'  => $entities
         );
@@ -101,19 +97,37 @@ class Building_siteController extends Controller
     public function createAction()
     {
         $entity  = new Building_site();
-        
+
         // เพิ่มชุด array ใช้ในการค้นหา
         $entity = $this->getNewEntity($entity);
-        
+
         $request = $this->getRequest();
         $form    = $this->createForm(new Building_siteType(), $entity);
         $form->bindRequest($request);
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();
-            
+
+            //Check ว่ามี ขื่อนี้หรือไม่
+            $gtBuildingName = $entity->getBuildingName();
+            $sqlGetNameBuildingSite = "
+                SELECT
+                 *
+                FROM
+                  `building_site`
+                WHERE `deleted` != 1
+                AND `building_name` = '$gtBuildingName'
+            ";
+            $objGetNameBuildingSite = $this->getDataArray($sqlGetNameBuildingSite);
+            if(!empty($objGetNameBuildingSite)){
+                echo "error_$gtBuildingName";
+                exit();
+            }
+
             //ตั่งค่าพื้นฐาน
             $entity->setDeleted(0);
             $entity->setDatetimestamp(new \DateTime());
+            $entity->setStartPrice(0);
+            $entity->setEndPrice(0);
             
             $em->persist($entity);
             $em->flush();
@@ -201,7 +215,22 @@ class Building_siteController extends Controller
         
         $editForm->bindRequest($request);
         
-        if ($editForm->isValid()) {            
+        if ($editForm->isValid()) {
+            //Check ว่ามี ขื่อนี้หรือไม่
+            $gtBuildingName = $entity->getBuildingName();
+            $sqlGetNameBuildingSite = "
+                SELECT
+                 *
+                FROM
+                  `building_site`
+                WHERE `deleted` != 1
+                AND `building_name` = '$gtBuildingName'
+            ";
+            $objGetNameBuildingSite = $this->getDataArray($sqlGetNameBuildingSite);
+            if(!empty($objGetNameBuildingSite)){
+                echo "error_$gtBuildingName";
+                exit();
+            }
             $em->persist($entity);
             $em->flush();
             echo 'finish';
@@ -266,6 +295,20 @@ class Building_siteController extends Controller
     }
 
     /*
+     * Function return result data from database
+     */
+    private function getDataArray($sql){
+        $conn= $this->get('database_connection');
+        if(!$conn){ die("MySQL Connection error");}
+        try{
+            return $conn->fetchAll($sql);
+        } catch (Exception $e) {
+            echo 'Caught exception: ',  $e->getMessage(), "\n";
+        }
+        return array();
+    }
+
+    /*
      * Get list id ที่ใช้ผูกกับตาราง building_site
      * 
      * 
@@ -305,14 +348,10 @@ class Building_siteController extends Controller
               `user_owner` 
             WHERE `deleted` != 1  
         ";
-        try{
-            $Entity->buildingtype = $conn->fetchAll($sqlGetBuildingType);
-            $Entity->zone = $conn->fetchAll($sqlGetZone);
-            $Entity->paytype = $conn->fetchAll($sqlGetPayType);
-            $Entity->userowner = $conn->fetchAll($sqlGetUserOwner);
-        } catch (Exception $e) {
-            echo 'Caught exception: ',  $e->getMessage(), "\n";
-        }
+        $Entity->buildingtype = $this->getDataArray($sqlGetBuildingType);
+        $Entity->zone = $this->getDataArray($sqlGetZone);
+        $Entity->paytype = $this->getDataArray($sqlGetPayType);
+        $Entity->userowner = $this->getDataArray($sqlGetUserOwner);
         return $Entity;
     }
 }

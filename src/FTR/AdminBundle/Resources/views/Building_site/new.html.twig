@@ -22,30 +22,69 @@
 				url : 'create',
 				data : $(this).serialize(),
 				success : function(msg) {
-                    var id = msg.split('_');
-                    if (id.length > 1){
-                        id = id[1];
+                    var arrMsg = msg.split('_');
+                    if (arrMsg.length > 1){
+                        var id = arrMsg[1];
                     }
                     var str = msg;
-					if (str.search('finish') > -1) {
-						alert('เพิ่ม BUILDING SITE สำเร็จแล้ว');
+                    if (str.search('error') > -1 && arrMsg.length == 2){
+                        alert('ชื่อ "'+id+'" นี้มีข้อมูลอยู่แล้ว \nกรุณาตั้งชื่ออื่น');
+                        $("#ftr_adminbundle_building_sitetype_building_name").focus();
+                    }else if (str.search('finish') > -1 && arrMsg.length == 2) {
 						toggle(".createPanel", 'hide');
 						$(".createPanel").html('');
 						$("#createrecordCancel").hide();
 						$("#createrecord").show('slow');
 						$('#listBuildingSite').fadeOut('slow').load(window.location + "show").fadeIn("slow");
-                        var strUrl = "facility2site/" + id + "/show";
+                        saveIdBuildingSite = id;
+                        var strUrl = "{{ path('facility2site_show', { 'id': '--' }) }}";
+                        strUrl = strUrl.replace('--', id);
                         $('.innerPanel').fadeOut().load(strUrl).fadeIn("slow");
-					} else {
-						$("#createPanel").html(msg);
+                        alert('เพิ่ม BUILDING SITE สำเร็จแล้ว');
+					} else {alert(msg);
+                        $('.createPanel').fadeOut('slow').load(msg).fadeIn("slow");
 						alert('การ CREATE ผิดพลาด\n** กรุณาตรวจสอบ **');
 					}
 				}
 			});
 			return false;
 		});
-	}); 
+	});
+
+    //ตรวจสอบค่าที่เป็น Double
+    function validate(evt) {
+        var theEvent = evt || window.event;
+        var key = theEvent.keyCode || theEvent.which;
+        key = String.fromCharCode( key );
+        var regex = /[0-9]|\./;
+        if( !regex.test(key) ) {
+            theEvent.returnValue = false;
+            if(theEvent.preventDefault)
+                theEvent.preventDefault();
+        }
+    }
 </script>
+<style type="text/css">
+    #btnCreate {
+        background: url("{{ asset('images/add-bt.png')}}") no-repeat;
+        display: block;
+        float: none;
+        height: 50px;
+        position: absolute;
+        margin-left: 70px;
+        margin-top: -55px;
+    }
+
+    #btnInputCreate {
+        background: url("{{ asset('images/add-bt.png')}}") no-repeat;
+        opacity: 0;
+        -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+        filter: alpha(opacity=0);
+        cursor: pointer;
+        height: 50px;
+        width: 50px;
+    }
+</style>
 <div id="divPostCreate">
 	<form id="formCreate" action="{{ path('building_site_create') }}" method="post" {{ form_enctype(form) }}>
 		<fieldset>
@@ -88,18 +127,7 @@
 			{{ form_widget(form.building_address, { 'attr': {'class': 'widfat'} }) }} &nbsp;
 			{{ form_errors(form.building_address) }}
 			<br />
-			<div class="label" style="">
-				{{ form_label(form.start_price) }}
-			</div>
-			{{ form_widget(form.start_price, { 'attr': {'class': 'widthin'} }) }} &nbsp;
-			{{ form_errors(form.start_price) }}
-			<br />
-			<div class="label" style="">
-				{{ form_label(form.end_price) }}
-			</div>
-			{{ form_widget(form.end_price, { 'attr': {'class': 'widthin'} }) }} &nbsp;
-			{{ form_errors(form.end_price) }}
-			<br />
+
 			<div class="label" style="">
 				{{ form_label(form.phone_number) }}
 			</div>
@@ -109,13 +137,13 @@
 			<div class="label" style="">
 				{{ form_label(form.latitude) }}
 			</div>
-			{{ form_widget(form.latitude, { 'attr': {'class': 'widthin'} }) }} &nbsp;
-			{{ form_errors(form.start_price) }}
+			{{ form_widget(form.latitude, { 'attr': {'class': 'widthin', 'onkeypress' : 'validate(event)'} }) }} &nbsp;
+			{{ form_errors(form.latitude) }}
 			<br />
 			<div class="label" style="">
 				{{ form_label(form.longitude) }}
 			</div>
-			{{ form_widget(form.longitude, { 'attr': {'class': 'widthin'} }) }} &nbsp;
+			{{ form_widget(form.longitude, { 'attr': {'class': 'widthin', 'onkeypress' : 'validate(event)'} }) }} &nbsp;
 			{{ form_errors(form.longitude) }}
 			<br />
 			<div class="label" style="">
@@ -129,7 +157,7 @@
 			<div class="label" style="">
 				{{ form_label(form.detail) }}
 			</div>
-			{{ form_widget(form.detail) }} &nbsp;
+            {{ form_widget(form.detail, { 'attr': {'class': 'widfat'} }) }} &nbsp;
 			{{ form_errors(form.detail) }}
 			<br />
 			<div class="label" style="">
@@ -159,29 +187,37 @@
 			<div class="label" style="">
 				{{ form_label(form.water_unit) }}
 			</div>
-			{{ form_widget(form.water_unit, { 'attr': {'class': 'widthin'} }) }} &nbsp;
+			{{ form_widget(form.water_unit, { 'attr': {'class': 'widthin', 'onkeypress' : 'validate(event)'} }) }} &nbsp;
 			{{ form_errors(form.water_unit) }}
 			<br />
 			<div class="label" style="">
 				{{ form_label(form.electricity_unit) }}
 			</div>
-			{{ form_widget(form.electricity_unit, { 'attr': {'class': 'widthin'} }) }} &nbsp;
+			{{ form_widget(form.electricity_unit, { 'attr': {'class': 'widthin', 'onkeypress' : 'validate(event)'} }) }} &nbsp;
 			{{ form_errors(form.electricity_unit) }}
 			<br />
 			<div class="label" style="">
 				{{ form_label(form.internet_price) }}
 			</div>
-			{{ form_widget(form.internet_price, { 'attr': {'class': 'widthin'} }) }} &nbsp;
+			{{ form_widget(form.internet_price, { 'attr': {'class': 'widthin', 'onkeypress' : 'validate(event)'} }) }} &nbsp;
 			{{ form_errors(form.internet_price) }}
-
 			<br />
-						
+            <div class="label" style="">
+                {{ form_label(form.nearly_place) }}
+            </div>
+            {{ form_widget(form.nearly_place, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+            {{ form_errors(form.nearly_place) }}
+            <br />
+
+            {#ต้องแปะไว้ตรงท้ายเสมอ	#}
 			{{ form_rest(form) }}
 			
 			<span style="float: right;">
-				<input type="button" id="btnCancelCreate" value="Cancel">
+				<img src="{{ asset('images/cancel.png')}}" id="btnCancelCreate" width="50" height="50" style="cursor:pointer;margin-right: 70px" />
 				&nbsp;&nbsp;
-				<input type="submit" value="CREATE">
+                <div id="btnCreate">
+                    <input type="submit" id="btnInputCreate" value="CREATE">
+                </div>
 			</span>
 		</fieldset>
 	</form>

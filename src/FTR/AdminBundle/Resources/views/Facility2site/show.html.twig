@@ -9,11 +9,19 @@
             });
         }
 
-
-        $("#formCreateFacility").submit(function() {
+        $("#btnCancel").click(function(){
             $('#divPostCreateFacility').slideUp(300).delay(800).fadeOut(400);
-            return false;
         });
+
+        $("#btnNext").click(function(){
+            var strUrl = "{{ path('roomtype2site_show', { 'id': '--' }) }}";
+            strUrl = strUrl.replace('--', saveIdBuildingSite);
+            $('.innerPanel').fadeOut().load(strUrl).fadeIn("slow");
+        });
+//        $("#formCreateFacility").submit(function() {
+//            $('#divPostCreateFacility').slideUp(300).delay(800).fadeOut(400);
+//            return false;
+//        });
 
         var url = "{{ path('facility2site_create') }}";
         $('.checkFacility').click(function() {
@@ -43,6 +51,9 @@
             });
         });
     });
+    if (saveIdBuildingSite != null){
+        $("#btnNext").show();
+    }
 </script>
 <div id="divPostCreateFacility">
     <form id="formCreateFacility" action="{{ path('facility2site_create') }}" method="post" >
@@ -58,7 +69,8 @@
                 {% endfor %}
             </div>
             <br />
-            <br />
+            <div class="clear"></div>
+            <fieldset>
             <table>
                 <tr>
                     {% for facility in facilityList %}
@@ -82,9 +94,13 @@
                     {% endfor %}
                 </tr>
             </table>
+            </fieldset>
             <br />
 			<span style="float: right;">
-				<input type="submit" value="ClOSE">
+				{#<input type="submit" value="ClOSE">#}
+				<img src="{{ asset('images/next.png')}}" id="btnNext" width="50" height="50" style="cursor:pointer;display: none;" />
+                &nbsp;&nbsp;
+                <img src="{{ asset('images/cancel.png')}}" id="btnCancel" width="50" height="50" style="cursor:pointer;" />
 			</span>
         </fieldset>
     </form>

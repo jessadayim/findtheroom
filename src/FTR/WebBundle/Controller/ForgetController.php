@@ -30,10 +30,15 @@ class ForgetController extends Controller {
 		if (!$conn) { die("MySQL Connection error");
 		}
 		try {
-			$sql1 = "SELECT email,confirm_token,deleted,firstname,lastname FROM user_owner
+			$sql1 = "SELECT id,email,confirm_token,deleted,firstname,lastname FROM user_owner
 						WHERE email = '$email' or username = '$email'";
 			$objSQL1 = $conn -> fetchAll($sql1);
             if($objSQL1[0]['deleted'] != 1){
+                $id = $objSQL1[0]['id'];
+
+                $time = date("Y-m-d : H:i:s", time());
+                $sqlLastRequest ="UPDATE user_owner SET password_requested = '$time' WHERE id= '$id'";
+                $conn->query($sqlLastRequest);
 
                 $url = $this->get('router')->generate('TRWebBundle_change', array());
                 $url .= "?token=".$objSQL1[0]['confirm_token'];

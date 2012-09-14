@@ -1,30 +1,8 @@
-image:
-    pattern:  /
-    defaults: { _controller: "FTRAdminBundle:Image:index" }
-
 image_show:
     pattern:  /{id}/show
     defaults: { _controller: "FTRAdminBundle:Image:show" }
 
-image_new:
-    pattern:  /new
-    defaults: { _controller: "FTRAdminBundle:Image:new" }
-
 image_create:
     pattern:  /create
     defaults: { _controller: "FTRAdminBundle:Image:create" }
-    requirements: { _method: post }
-
-image_edit:
-    pattern:  /{id}/edit
-    defaults: { _controller: "FTRAdminBundle:Image:edit" }
-
-image_update:
-    pattern:  /{id}/update
-    defaults: { _controller: "FTRAdminBundle:Image:update" }
-    requirements: { _method: post }
-
-image_delete:
-    pattern:  /{id}/delete
-    defaults: { _controller: "FTRAdminBundle:Image:delete" }
     requirements: { _method: post }

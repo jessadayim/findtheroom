@@ -1,7 +1,6 @@
 <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js'></script>
 <script>
 	var countRoomType2Site = {{roomtype2site|length}};
-	var countRoomType = {{roomtype|length}};
 	var maxRoomType = 20;
 	var url = "{{ path('roomtype2site_create') }}";
 	var checkReload = false;
@@ -28,7 +27,8 @@
 		$('.innerPanel').load(locationRoomType);
 		checkReload = false;
 	}
-	
+
+    //ตรวจสอบค่าที่เป็น Double
 	function validate(evt) {
 	  var theEvent = evt || window.event;
 	  var key = theEvent.keyCode || theEvent.which;
@@ -43,11 +43,21 @@
 
 	
 	$(document).ready(function() {
-		$("#formCreateRoomType2Site").submit(function() {
-			postOnchange();			
-			$('#divPostCreateRoomType2Site').slideUp(300).delay(800).fadeOut(400);			
-			return false;
-		});
+//		$("#formCreateRoomType2Site").submit(function() {
+//			postOnchange();
+//			$('#divPostCreateRoomType2Site').slideUp(300).delay(800).fadeOut(400);
+//			return false;
+//		});
+        $("#btnCancel").click(function(){
+            postOnchange();
+            $('#divPostCreateRoomType2Site').slideUp(300).delay(800).fadeOut(400);
+        });
+
+        $("#btnNext").click(function(){
+            var strUrl = "{{ path('nearly2site_show', { 'id': '--' }) }}";
+            strUrl = strUrl.replace('--', saveIdBuildingSite);
+            $('.innerPanel').fadeOut().load(strUrl).fadeIn("slow");
+        });
 
 		$("#addRoomType").click(function() {
 			if (countRoomType2Site >= maxRoomType){
@@ -80,26 +90,9 @@
 			postOnchange();
 			return false;
 		});
-	}); 
-
-	$(function(){
 	});
 	
-	
 	function getInnerTr(countValue, optionValue){
-		var option = [
-			{% for room in roomtype %}
-				[{{ room.id }}, '{{ room.room_typename }}'],
-			{% endfor %}
-		];
-		var optionSelect = '';
-		for(var i=0 ; i < option.length ; i++){
-			if (option[i][0] == optionValue){
-				optionSelect += '<option selected value="' + option[i][0] + '">'+option[i][1]+'</option>';
-			}else{
-				optionSelect += '<option value="' + option[i][0] + '">'+option[i][1]+'</option>';
-			}
-		}
 		if (countValue == 1){
 			var strBtnDelete = '';
 		}else {
@@ -109,8 +102,8 @@
 			'. Room Size: <input type="text" id="roomSize[]" onkeypress="validate(event);" class="roomSize" name="roomSize[]"' + 
 			' value="0" />' + '&nbsp;&nbsp;&nbsp;Room Price:&nbsp;<input type="text" class="roomPrice" name="roomPrice[]"' +  
 			' value="0" id="roomPrice[]" />' + '&nbsp;&nbsp;Room Type:&nbsp;&nbsp;'+
-			'<select name="selectRoomType[]" onkeypress="validate(event);" class="selectRoomType" id="selectRoomType[]">' +
-			optionSelect + '</select>&nbsp;&nbsp;&nbsp;' + strBtnDelete + '</div></td></tr>';
+			'<input type="text" name="selectRoomType[]" class="selectRoomType" id="selectRoomType[]"/>' +
+			'&nbsp;&nbsp;&nbsp;' + strBtnDelete + '</div></td></tr>';
 		return newHtmlTb;
 	}
 	
@@ -132,6 +125,12 @@
 		setIdRemove = 0;
 		checkReload = true;		
 	}
+
+    if (saveIdBuildingSite != null){
+        $("#btnNext").show();
+        var strUrl = "{{ path('roomtype2site_show', { 'id': '--' }) }}";
+        locationRoomType = strUrl.replace('--', saveIdBuildingSite);
+    }
 </script>
 <div id="divPostCreateRoomType2Site">
 	<form id="formCreateRoomType2Site" action="{{ path('roomtype2site_create') }}" method="post" >
@@ -148,7 +147,7 @@
 			</div>
 			<br />
             <div class="clear"></div>
-			<br />
+            <fieldset>
 			<table id="tbRoomType2Site">
 				{% for roomType in roomtype2site %}
 				<tr id="trRoomType_{{ roomType.count }}">
@@ -159,15 +158,7 @@
 						&nbsp;&nbsp;Room Price:
 						<input type="text" name="roomPrice[]" onkeypress="validate(event);" class="roomPrice" id="roomPrice[]" value="{{ roomType.room_price }}"/>
 						&nbsp;Room Type:&nbsp;
-						<select name="selectRoomType[]" class="selectRoomType" id="selectRoomType[]">
-							{% for room in roomtype %}
-								{% if roomType.roomtype_id == room.id %}
-									<option value="{{ room.id }}" selected>{{room.room_typename}}</option>
-								{% else %}
-									<option value="{{ room.id }}">{{room.room_typename}}</option>
-								{% endif %}
-							{% endfor %}
-						</select>
+                        <input type="text" name="selectRoomType[]" class="selectRoomType" id="selectRoomType[]" value="{{ roomType.room_typename }}"/>
 						&nbsp;
 						{% if roomType.count > 1%}
 						<input type="button" class="btnDeleteRoomType" id="btnDeleteRoomType_{{ roomType.count }}" value="  ลบ  " />
@@ -184,21 +175,23 @@
 						&nbsp;&nbsp;Room Price:
 						<input type="text" name="roomPrice[]" onkeypress="validate(event);" class="roomPrice" id="roomPrice[]" value="0"/>
 						&nbsp;&nbsp;Room Type:
-						<select name="selectRoomType[]" class="selectRoomType" id="selectRoomType[]">
-							{% for room in roomtype %}
-							<option value="{{ room.id }}">{{room.room_typename}}</option>
-							{% endfor %}
-						</select>
+                        <input type="text" name="selectRoomType[]" class="selectRoomType" id="selectRoomType[]"/>
 						&nbsp;
 					</div>
 					</td>
 				</tr>
 				{% endfor %}
-			</table><br />
+			</table>
+
+            <br />
 			<div><a href="#" id="addRoomType">เพิ่ม ROOM TYPE</a></div>
+            </fieldset>
 			<br />
 			<span style="float: right;">
-				<input type="submit" value="ClOSE">
+				{#<input type="submit" value="ClOSE">#}
+				<img src="{{ asset('images/next.png')}}" id="btnNext" width="50" height="50" style="cursor:pointer;display: none;" />
+                &nbsp;&nbsp;
+				<img src="{{ asset('images/cancel.png')}}" id="btnCancel" width="50" height="50" style="cursor:pointer;" />
 			</span>
 		</fieldset>
 	</form>

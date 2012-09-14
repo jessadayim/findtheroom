@@ -4,6 +4,8 @@
 
 <!-- ***** Jquery Transation ***** -->
 <script>
+    var saveIdBuildingSite = null;
+    var locationRoomType = '';
 	$(document).ready(function() {
 		$("#createrecord").click(function() {
 			$.post('new', function(data) {
@@ -43,7 +45,7 @@
 		// $.post('show', function(data) {
 		// $('#listBuildingSite').html(data);
 		// });
-	}); 
+	});
 </script>
 <div id="containerwrap">
 	<div class="grid_12 createLists marginB_10 alpha" style="">

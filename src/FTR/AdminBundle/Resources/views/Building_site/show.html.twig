@@ -9,7 +9,7 @@
 
 <script>
 	var countValuePaging = {{entities|length}};
- var locationRoomType = '';
+
 	$(document).ready(function() {
 
 		//Click ปุ่ม Edit
@@ -51,10 +51,11 @@
 		});
 
 		//Click ปุ่ม  Edit Facility
-		$(".createSite").live('click', function() {
+		$(".createSite").click(function() {
+            saveIdBuildingSite = null;
 			locationRoomType = this.href;
 			$('.innerPanel').fadeOut("slow").load(locationRoomType).fadeIn("slow");
-			// if (checkDoubleClickEdit){
+            // if (checkDoubleClickEdit){
 			// checkDoubleClickEdit = false;
 			// $.post(this.href, function(data) {
 			// $('.innerPanel').slideUp(300).fadeIn(400);

@@ -3,7 +3,7 @@ session_start();
 
 $string = '';
 
-$string .= substr(str_shuffle(str_repeat("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ", 5)), 0, 5);
+$string .= substr(str_shuffle(str_repeat("23456789ABCDEFGHIJKLMNOPQRSTUVWXYZ", 5)), 0, 4);
 // for ($i = 0; $i < 5; $i++) {
 // $string .= chr(rand(97, 122));
 // }

@@ -1,0 +1,47 @@
+{% extends 'FTRAdminBundle:Layout:panel_layout.html.twig' %}
+
+{% block body %}
+
+<!-- ***** Jquery Transation ***** -->
+<script>
+	$(document).ready(function() {
+		$(".innerPanelHref").click(function() {
+            $('#innerPanel').fadeOut('slow').load(this.href).fadeIn("slow");
+            return false;
+		});
+	});
+</script>
+<div id="containerwrap">
+	<div class="grid_12 createLists marginB_10 alpha" style="">
+		<H2>MENAGE RESOURCE</H2>
+		<div class="clear"></div>
+		<p>
+			Welcome to Visual Admin, a slick admin template for almost any project - front or back end. It's based on the 960 grid system which means you can have almost endless layout possibiliites as well as those that come ready to use straight out the box. Please have a click around and feel free to check out the screenshots.
+		</p>
+		<div class="showNotification" id="notification" align="center"></div>
+	</div>
+    <table>
+        <tr>
+            <td style="width: 188px !important;" align="center" >
+                <a href="{{ path('zone') }}" class="innerPanelHref">Zone</a>
+            </td>
+            <td style="width: 188px !important;" align="center" >
+                <a href="{{ path('zone') }}" class="innerPanelHref">Pay-type</a>
+            </td>
+            <td style="width: 188px !important;" align="center" >
+                <a href="{{ path('zone') }}" class="innerPanelHref">Facility list</a>
+            </td>
+            <td style="width: 188px !important;" align="center" >
+                <a href="{{ path('zone') }}" class="innerPanelHref">Building type</a>
+            </td>
+            <td style="width: 188px !important;" align="center" >
+                <a href="{{ path('zone') }}" class="innerPanelHref">Nearly location</a>
+            </td>
+        </tr>
+    </table>
+    <div class="clear"></div>
+    <br/>
+    <div id="innerPanel" ></div>
+</div>
+
+{% endblock %}

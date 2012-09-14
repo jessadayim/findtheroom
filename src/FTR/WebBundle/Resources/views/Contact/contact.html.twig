@@ -57,6 +57,7 @@
         }, function(data) {
             if (data == 1) {
                 $('#formContact').submit();
+                alert("ระบบได้รับข้อความของท่านเรียบร้อย");
             } else if (data == 0) {
                 $("#txterror").html("กรุณากรอก รหัสให้ตรง");
                 $("#txterror").hide();
@@ -95,6 +96,9 @@
             return false;
         } else if ($('#mail').val() == "") {
             $("#txterror").html("กรุณากรอกอีเมลล์");
+            $("#txterror").hide();
+            $("#txterror").show("slow");
+            document.getElementById('txterror').focus();
             return false;
         } else if (reg.test($('#mail').val()) == false) {
             $("#txterror").html("กรุณากรอก Email ให้ถูกต้อง");
