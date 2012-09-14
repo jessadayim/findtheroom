@@ -74,7 +74,7 @@ $(function(){
 
 <div id="show">
     <div class="result">
-    	<div class="wifi"> </div><div style=" display:block; position: absolute; margin-left: 0px; margin-top: 127px; width:200px; text-align:center;">ราคา {{item1.start_price}} - {{item1.end_price}} บาท</div>
+    	<div class="wifi"> </div><div style=" display:block; position: absolute; margin-left: 0px; margin-top: 127px; width:200px; text-align:center;">ราคา {{general.start_price}} - {{general.end_price}} บาท</div>
 		<div class="thumbframe"><img src="{{asset('images/show.png')}}" class="thumb omega"/></div>
     	<div class="desc">
         	<table border="0" width="500" style="margin-top:-8px;">
@@ -83,7 +83,7 @@ $(function(){
                     	หอพัก
                     </td>
                     <td colspan="3">
-                    	{{item1.building_name}}
+                    	{{general.building_name}}
                     </td>
                 </tr>
                 <tr>
@@ -91,13 +91,13 @@ $(function(){
                     	ประเภท
                     </td>
                     <td width="180">
-                    	{{item1.type_name}}
+                    	{{general.type_name}}
                     </td>
                     <td width="90">
                     	ชนิด
                     </td>
                     <td width="180">
-                    	{{item1.typename}}
+                    	{{general.typename}}
                     </td>
                 </tr>
                 <tr>
@@ -105,7 +105,7 @@ $(function(){
                     	ที่อยู่
                     </td>
                 	<td colspan="3">
-                    	{{item1.building_address}}
+                    	{{general.building_address}}
                     </td>
                 </tr>
                 <tr>
@@ -113,7 +113,7 @@ $(function(){
                     	รายละเอียด
                     </td>
                 	<td colspan="3">
-                    	<div style="height:43px; overflow:hidden;">{{item1.detail}}</div>
+                    	<div style="height:43px; overflow:hidden;">{{general.detail}}</div>
                     </td>
                 </tr>
             </table>
@@ -133,30 +133,30 @@ $(function(){
 		<table>
 			<tr height="20" valign="middle">
 				<td align="right" width="150" style="padding-right:20px;">เบอร์โทรติดต่อ :</td>
-				<td width="300">{{item1.phone_number}}</td>
+				<td width="300">{{general.phone_number}}</td>
 				<td align="right" width="150" style="padding-right:10px;">ระยะเวลาเช่าขั้นต่ำ :</td>
 				<td align="center" width="50">6</td>
                 <td width="100">เดือน</td>
 			</tr>
 			<tr height="20" valign="middle">
 				<td align="right" width="150" style="padding-right:20px;">ติดต่อคุณ :</td>
-				<td width="300">{{item1.contact_name}}</td>
+				<td width="300">{{general.contact_name}}</td>
 				<td align="right" width="150" style="padding-right:10px;">ค่าน้ำ :</td>
-				<td align="center" width="50">{{item1.water_unit}}</td>
+				<td align="center" width="50">{{general.water_unit}}</td>
                 <td width="100">บาท ต่อหน่วย</td>
 			</tr>
            <tr height="20" valign="middle">
 				<td align="right" width="150" style="padding-right:20px;">อีเมล :</td>
-				<td width="300"><a href="#">{{item1.contact_email}}</a></td>
+				<td width="300"><a href="#">{{general.contact_email}}</a></td>
 				<td align="right" width="150" style="padding-right:10px;">ค่าไฟ :</td>
-				<td align="center" width="50">{{item1.electricity_unit}}</td>
+				<td align="center" width="50">{{general.electricity_unit}}</td>
                 <td width="100">บาท ต่อหน่วย</td>
 			</tr>
 			<tr height="20" valign="middle">
 				<td align="right" width="150" style="padding-right:20px;">เว็บไซต์ :</td>
-				<td width="300"><a href="facebook.com" target="_new">{{item1.website}}</a></td>
+				<td width="300"><a href="facebook.com" target="_new">{{general.website}}</a></td>
 				<td align="right" width="150" style="padding-right:10px;">ค่าอินเตอร์เน็ต :</td>
-				<td align="center" width="50">{{item1.internet_price}}</td>
+				<td align="center" width="50">{{general.internet_price}}</td>
                 <td width="100">บาท ต่อเดือน</td>
 			</tr>
 		</table>
@@ -170,19 +170,37 @@ $(function(){
 		<table>
 			<tr height="20" valign="middle">
 				<td align="right" width="150" style="padding-right:20px;">โซนในกรุงเทพฯ :</td>
-				<td width="300">{{item1.phone_number}}</td>
-				<td align="right" width="150" style="padding-right:10px;">ใกล้รถไฟฟ้า BTS :</td>
-				<td align="center" width="50">6</td>
+				<td width="300">{{general.zonename}}</td>
+				<td align="right" width="150" style="padding-right:20px;">ใกล้รถไฟฟ้า BTS :</td>
+				<td align="left" width="300">
+                    {% if nearBts is empty %}
+                        -
+                    {% else%}
+                        {{nearBts}}
+                    {% endif%}
+                </td>
 			</tr>
 			<tr height="20" valign="middle">
 				<td align="right" width="150" style="padding-right:20px;">ใกล้มหาวิทยาลัย :</td>
-				<td width="300">{{item1.contact_name}}</td>
-				<td align="right" width="150" style="padding-right:10px;">ใกล้รถไฟฟ้า MRT :</td>
-				<td align="center" width="50">{{item1.water_unit}}</td>
+				<td width="300">
+                    {% if nearCol is empty %}
+                        -
+                    {% else%}
+                        {{nearCol}}
+                    {% endif%}
+                </td>
+				<td align="right" width="150" style="padding-right:20px;">ใกล้รถไฟฟ้า MRT :</td>
+				<td align="left" width="300">
+                    {% if nearMrt is empty %}
+                        -
+                    {% else%}
+                        {{nearMrt}}
+                    {% endif%}
+                </td>
 			</tr>
            <tr height="20" valign="middle">
 				<td align="right" width="150" style="padding-right:20px;">ตามสถานที่ใกล้เคียง :</td>
-				<td width="300"><a href="#">{{item1.contact_email}}</a></td>
+				<td width="300"><a href="#">{{general.nearly_place}}</td>
 				<td colspan="2" >&nbsp;</td>
 			</tr>
 		</table>
@@ -200,7 +218,7 @@ $(function(){
 				<td align="center" width="250" colspan="2" style="padding-right:10px;">ขนาด</td>
 				<td align="center" colspan="2" width="250">อัตราค่าเช่า/เดือน</td>
 			</tr>
-			{% for row in item2 %}
+			{% for row in roomType %}
 			<tr height="135" valign="middle">
 				<td align="left" width="220"><div class="thumbframe"><img src="{{asset('images/show.png')}}" class="thumb omega" style="padding:0px"/></div></td>
 				<td align="left" width="150">{{row.room_typename}}</td>
@@ -220,30 +238,71 @@ $(function(){
         <div id="container5">
 			<div id="slides5">
 				<div class="slides_container" style="width:950px;">
-					{% set introw2 = 0 %}
-							{% for i in 0..1%}
-                                {% if introw2%3 == 0%}
-                                    <div class="slide" style="width:950px;">
-                                {%endif%}
-                                    {% set row2 = introw2+1 %}
-                                        {% if row2%3 == 0%}
-                                        <div class="ap4">
-                                        {% else %}
-                                        <div class="ap3">
-                                        {%endif%}
-                                            <a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><div class="thumbframe4gallery"><img src="{{asset('images/Apartment/ap3.png')}}" class="thumb4gallery"/></div></a><br /><br />
-                                            <a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><div class="thumbframe4gallery"><img src="{{asset('images/Apartment/ap3.png')}}" class="thumb4gallery"/></div></a>
-                                        </div>
-                                    {% set introw2 = introw2+1 %}
-                                {% if introw2%3 == 0%}
-                                    </div>
-                                {%endif%}
-							{% endfor %}
 
-				</div>	<a href="#" class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>
-			<a href="#" class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>			
+                    <div class="slide" style="width:950px;">
+                        <div class="ap">
+                            <a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><div class="thumbframe4gallery"><img src="{{asset('images/Apartment/ap3.png')}}" class="thumb4gallery"/></div></a>
+
+                            <a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><div class="thumbframe4gallery"><img src="{{asset('images/Apartment/ap3.png')}}" class="thumb4gallery"/></div></a>
+
+                        </div>
+                        <div class="ap">
+                            <a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><div class="thumbframe4gallery"><img src="{{asset('images/Apartment/ap3.png')}}" class="thumb4gallery"/></div></a>
+
+                            <a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><div class="thumbframe4gallery"><img src="{{asset('images/Apartment/ap3.png')}}" class="thumb4gallery"/></div></a>
+
+                        </div>
+                        <div class="ap2">
+                            <a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><div class="thumbframe4gallery"><img src="{{asset('images/Apartment/ap3.png')}}" class="thumb4gallery"/></div></a>
+
+                            <a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><div class="thumbframe4gallery"><img src="{{asset('images/Apartment/ap3.png')}}" class="thumb4gallery"/></div></a>
+
+                        </div>
+                    </div>
+
+                    {#{% set introw1 = 0 %}#}
+                    {#{% for i in 0..3%}#}
+                    {#{% if introw1%3 == 0%}#}
+                    {#<div class="slide" style="width:950px;">#}
+                        {#{%endif%}#}
+                        {#{% set row1 = introw1+1 %}#}
+                        {#{% if row1%3 == 0%}#}
+                            {#<div class="ap2">#}
+                            {#{% else %}#}
+                            {#<div class="ap">#}
+                                {#{%endif%}#}
+                                {#<a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><div class="thumbframe4gallery"><img src="{{asset('images/Apartment/ap3.png')}}" class="thumb4gallery"/></div></a><br /><br />#}
+                                {#<a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><div class="thumbframe4gallery"><img src="{{asset('images/Apartment/ap3.png')}}" class="thumb4gallery"/></div></a>#}
+                            {#</div>#}
+                            {#{% set introw1 = introw1+1 %}#}
+                            {#{% if introw1%3 == 0%}#}
+                        {#</div>#}
+                    {#{%endif%}#}
+                    {#{% endfor %}#}
+
+                    {#{% set introw2 = 0 %}#}
+                    {#{% for i in 0..5%}#}
+                    {#{% if introw2%3 == 0%}#}
+                    {#<div class="slide" style="width:950px;">#}
+                        {#{%endif%}#}
+                        {#{% set row2 = introw2+1 %}#}
+                        {#{% if row2%3 == 0%}#}
+                        {#<div class="ap4">#}
+                            {#{% else %}#}
+                            {#<div class="ap3">#}
+                                {#{%endif%}#}
+                                {#<a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><div class="thumbframe4gallery"><img src="{{asset('images/Apartment/ap3.png')}}" class="thumb4gallery"/></div></a><br /><br />#}
+                                {#<a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><div class="thumbframe4gallery"><img src="{{asset('images/Apartment/ap3.png')}}" class="thumb4gallery"/></div></a>#}
+                            {#</div>#}
+                            {#{% set introw2 = introw2+1 %}#}
+                            {#{% if introw2%3 == 0%}#}
+                        {#</div>#}
+                        {#{%endif%}#}
+                        {#{% endfor %}#}
+				</div>
 			</div>
-			
+                <a href="#" class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>
+                <a href="#" class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>
 		</div>  
     </div>
 </div>
@@ -253,7 +312,7 @@ $(function(){
 	<hr class="line" style="top: 60px;" />
     <div>
 		<table>{% set count = 0%}
-			{% for faclist in item3%}
+			{% for faclist in inRoom%}
 				{% if count%4 == 0%}
 					<tr height="20" valign="middle">
 				{% endif%}			
@@ -279,7 +338,7 @@ $(function(){
 	<hr class="line" style="top: 60px; color:#fff;" />
     <div>
 		<table>{% set count = 0%}
-			{% for faclist in item4%}
+			{% for faclist in outRoom%}
 				{% if count%4 == 0%}
 					<tr height="20" valign="middle">
 				{% endif%}

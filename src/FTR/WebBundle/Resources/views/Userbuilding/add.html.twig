@@ -16,7 +16,19 @@
 		if(mybrowser.indexOf('MSIE')>0){
 		$("div#upload_map.uploadify").css("marginTop","-60px");
 		$("#headimage2").css("marginTop","-60px");
-}
+        }
+        if((navigator.userAgent.match(/Android/i)) ||
+                (navigator.userAgent.match(/iPhone/i)) ||
+                (navigator.userAgent.match(/iPod/i)) ||
+                (navigator.userAgent.match(/iPad/i)))
+        {
+            document.getElementById('device').style.display='block';
+            document.getElementById('fix').style.display='none';
+            document.getElementById('datazone').style.display='none';
+            document.getElementById('roomzone').style.display='none';
+            document.getElementById('galleryzone').style.display='none';
+            document.getElementById('etczone').style.display='none';
+        }
 	 });
 </script>
 
@@ -219,6 +231,7 @@
 	var pathimgdefault = "{{asset('images/')}}";
 
 	$(document).ready(function(){
+
 		if(arraygalleryimage.length == 0)
 		{
 			CreateNewRowGallery(nullarrayGal, 0);
@@ -426,8 +439,31 @@
     }
     function Trim(str){return LTrim(RTrim(str));}
 
+    function  validateNumeric(ele) {
+        var number = document.getElementById('internet_price').value;
+        /******************************************************************************
+         DESCRIPTION: Validates that a string contains only valid numbers.
+
+         PARAMETERS:
+         strValue - String to be tested for validity
+
+         RETURNS:
+         True if valid, otherwise false.
+         ******************************************************************************/
+        var objRegExp  =  /(^-?\d\d*\.\d*$)|(^-?\d\d*$)|(^-?\.\d\d*$)/;
+
+        //check for numeric characters
+        alert(objRegExp.test(ele));
+        return false;
+    }
 </script>
 <form name="addform" id="addform" method="post" action="{{path('saveData', {'id': build_id })}}">
+<div id="device" style="height: 200px; margin-bottom: 15px;display: none;">
+    <div style="display: block; position: relative; width:1000px; color:#FFF; font-size:36px; text-align: center; padding-top:50px;">
+        ข้อความ
+        <a class="back" href="{{path('userbuilding')}}"></a> <a class="data" href="{{path('userbuilding')}}"></a>
+    </div>
+</div>
 <div id="fix">
 	<!--<input class="upimg" type="submit" value="" />-->
 	<input class="save" type="submit" value="" />
@@ -442,6 +478,7 @@
 	<input class="gallery" type="button" value="" onclick="document.getElementById('gallery').focus();" />
 	<input class="etc" type="button" value="" onclick="document.getElementById('etc').focus();" />-->
 </div>
+
 
 <div id="datazone" class="detail" style="height: 780px; margin-bottom: 15px;">
 	<img src="{{asset('images/apdata.png')}}" style="display:block; position:relative; float:none;" />
@@ -573,7 +610,7 @@
             </tr>
             <tr height="50" valign="middle">
 				<td align="right" width="240" style="font-size:24px;">เบอร์โทรติดต่อ : *</td>
-                <td align="left" width="200"><input id="telnumber" name="telnumber" type="text" maxlength="10" placeholder="กรุณากรอกเบอร์โทรติดต่อ" style=" padding:2px; font-size:20px;" value="{{buildingdata.sphonenumber}}" onchange="postData('head');" /></td>
+                <td align="left" width="200"><input id="telnumber" name="telnumber" type="text" maxlength="15" placeholder="กรุณากรอกเบอร์โทรติดต่อ" style=" padding:2px; font-size:20px;" value="{{buildingdata.sphonenumber}}" onchange="postData('head');" /></td>
                 <td align="right" width="210" style="font-size:24px;">ระยะเวลาเช่าขั้นต่ำ : *</td>
                <td align="left" width="190"><input id="time" name="time" type="text" maxlength="3" placeholder="กรุณากรอกระยะเวลาเช่าขั้นต่ำ" style=" padding:2px; font-size:20px;" value="{{buildingdata.smonthstay}}" onchange="postData('head');" /></td>
                 <td align="left" width="30" style="font-size:24px;"> เดือน</td>
@@ -582,21 +619,21 @@
 				<td align="right" width="240" style="font-size:24px;">ติดต่อคุณ : *</td>
                 <td align="left" width="200"><input id="contact_person" name="contact_person" type="text" placeholder="กรุณากรอกชื่อผ้ติดต่อ" style=" padding:2px; font-size:20px;" value="{{buildingdata.scontactname}}" onchange="postData('head');" /></td>
                 <td align="right" width="210" style="font-size:24px;">ค่าน้ำ : *</td>
-               <td align="left" width="190"><input id="water_price" name="water_price" type="text" maxlength="3" placeholder="กรุณากรอกค่าน้ำ" style=" padding:2px; font-size:20px;" value="{{buildingdata.fwaterunit}}" onchange="postData('head');" /></td>
+               <td align="left" width="190"><input id="water_price" name="water_price" type="text" maxlength="5" placeholder="กรุณากรอกค่าน้ำ" style=" padding:2px; font-size:20px;" value="{{buildingdata.fwaterunit}}" onchange="postData('head');" /></td>
                 <td align="left" width="30" style="font-size:24px;"> บาท</td>
             </tr>
             <tr height="50" valign="middle">
 				<td align="right" width="240" style="font-size:24px;">อีเมล : *</td>
                 <td align="left" width="200"><input id="contact_email" name="contact_email" type="text" placeholder="กรุณากรอกอีเมล" style=" padding:2px; font-size:20px;" value="{{buildingdata.scontactemail}}" onchange="postData('head');" /></td>
                 <td align="right" width="210" style="font-size:24px;">ค่าไฟ : *</td>
-               <td align="left" width="190"><input id="power_price" name="power_price" type="text" maxlength="3" placeholder="กรุณากรอกค่าไฟ" style=" padding:2px; font-size:20px;" value="{{buildingdata.felectrictunit}}" onchange="postData('head');" /></td>
+               <td align="left" width="190"><input id="power_price" name="power_price" type="text" maxlength="5" placeholder="กรุณากรอกค่าไฟ" style=" padding:2px; font-size:20px;" value="{{buildingdata.felectrictunit}}" onchange="postData('head');" /></td>
                 <td align="left" width="30" style="font-size:24px;"> บาท</td>
             </tr>
             <tr height="50" valign="middle">
 				<td align="right" width="240" style="font-size:24px;">เว็บไซต์ : &nbsp;</td>
                 <td align="left" width="200"><input id="website" name="website" type="text" placeholder="กรุณากรอกเว็บไซต์" style=" padding:2px; font-size:20px;" value="{{buildingdata.swebsite}}" onchange="postData('head');" /></td>
                 <td align="right" width="210" style="font-size:24px;">ค่าอินเตอร์เน็ต : &nbsp;</td>
-               <td align="left" width="190"><input id="internet_price" name="internet_price" type="text" maxlength="3" placeholder="กรุณากรอกค่าอินเตอร์เน็ต" style=" padding:2px; font-size:20px;" value="{{buildingdata.iinternetprice}}" onchange="postData('head');" /></td>
+               <td align="left" width="190"><input id="internet_price" name="internet_price" type="text" maxlength="5" placeholder="กรุณากรอกค่าอินเตอร์เน็ต" style=" padding:2px; font-size:20px;" value="{{buildingdata.iinternetprice}}" onchange="postData('head');" /></td>
                 <td align="left" width="30" style="font-size:24px;"> บาท</td>
             </tr>
         </table>
@@ -644,9 +681,9 @@
 				<td>
 					<div id="provinceChange">
                         {% if provinceName != NULL %}
-                        {{ provinceName }}
+                            {{ provinceName }}
                         {% else %}
-                        โปรดเลือกจังหวัดที่ส่วนข้อมูลหอพักก่อน
+                            โปรดเลือกจังหวัดที่ส่วนข้อมูลหอพักก่อน
                         {% endif %}
 					</div>
 				</td>
@@ -662,7 +699,7 @@
 
 						<select id="bkzone_ot" name="bkzone_ot" class="select" onchange="postData('other');">
 							{% for zlist in zonelist %}
-								<option value="{{ zlist.id }}">{{ zlist.zonename }}</option>
+								<option value="{{ zlist.id }}" >{{ zlist.zonename }}</option>
 							{% endfor %}
 						</select>
 
@@ -676,7 +713,7 @@
 
 						<select id="bts_ot" name="bts_ot" class="select" onchange="postData('other');">
 							{% for btslist in nearBTS %}
-								<option value="{{ btslist.id }}">{{ btslist.name }}</option>
+								<option value="{{ btslist.id }}" {% if btslist.checked =='yes'%}  selected="selected"{% endif %}>{{ btslist.name }}</option>
 							{% endfor %}
 						</select>
 
@@ -690,7 +727,7 @@
 
 						<select id="mrt_ot" name="mrt_ot" class="select" onchange="postData('other');">
 							{% for mrtlist in nearMRT %}
-								<option value="{{ mrtlist.id }}">{{ mrtlist.name }}</option>
+								<option value="{{ mrtlist.id }}" {% if mrtlist.checked =='yes'%}  selected="selected"{% endif %}>{{ mrtlist.name }}</option>
 							{% endfor %}
 						</select>
 
@@ -704,7 +741,7 @@
 
 						<select id="univer_ot" name="univer_ot" class="select" onchange="postData('other');">
 							{% for ulist in nearUniversity %}
-								<option value="{{ ulist.id }}">{{ ulist.name }}</option>
+								<option value="{{ ulist.id }}" {% if ulist.checked =='yes'%}  selected="selected"{% endif %}>{{ ulist.name }}</option>
 							{% endfor %}
 						</select>
 
