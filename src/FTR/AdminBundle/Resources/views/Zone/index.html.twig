@@ -1,43 +1,111 @@
-<h1>Zone list</h1>
+<!-- jQuery data table -->
+<script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script>
+{#<script type='text/javascript' src='{{asset("js/paging/jquery.dataTables.js")}}'></script>#}
+<link rel="stylesheet" href='{{asset("css/paging/sytletable.css")}}' type="text/css" id="" media="print, projection, screen" />
+<script>
+    $(document).ready(function() {
+        $(".btnEditZone").click(function(){
+            $("#zoneSH").hide("slow");
+            $('#newZone').fadeOut('slow');
+            $('#editZone').fadeOut().load(this.href).fadeIn("slow");
+            document.getElementById('containerwrap').scrollIntoView(true);
+            return false;
+        });
 
-<table class="records_list">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Zonename</th>
-            <th>Latitude</th>
-            <th>Longitude</th>
-            <th>Deleted</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for entity in entities %}
-        <tr>
-            <td><a href="{{ path('zone_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td>{{ entity.zonename }}</td>
-            <td>{{ entity.latitude }}</td>
-            <td>{{ entity.longitude }}</td>
-            <td>{{ entity.deleted }}</td>
-            <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('zone_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('zone_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+        $(".btnDelete").click(function(){
+            if (!confirm("คุณต้องการลบ Zone นี้ใช่หรือไม่")){
+                return false;
+            }
+            var url = this.href;
+            $.ajax({
+                type : "POST",
+                url : url,
+                data : {checkPost: 'delete'},
+                success : function(msg) {
+                    if (msg == "finish_math"){
+                        alert('!!! Zone นี้มีการใช้งานอยู่ \nไม่สามารถลบออกได้');
+                    }else if (msg == 'finish') {
+                        $('#innerPanel').fadeOut(100).load("{{ path('zone') }}").fadeIn("slow");
+                        alert('√ ทำการลบ Zone เรียบร้อยแล้ว');
+                    } else {
+                        alert(msg);
+                        alert('เกิดการผิดพลาด\n** กรุณาตรวจสอบ **');
+                    }
+                }
+            });
+            return false;
+        });
 
-<ul>
-    <li>
-        <a href="{{ path('zone_new') }}">
-            Create a new entry
-        </a>
-    </li>
-</ul>
+        $("#btnNewZone").click(function(){
+            $("#zoneSH").hide("slow");
+            $('#editZone').fadeOut('slow');
+            $('#newZone').fadeOut().load("{{ path('zone_new') }}").fadeIn("slow");
+            return false;
+        });
+    });
+</script>
+
+<script type="text/javascript">
+//    jQuery.fn.dataTableExt.oSort['string-case-asc'] = function(x, y) {
+//        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+//    };
+//
+//    jQuery.fn.dataTableExt.oSort['string-case-desc'] = function(x, y) {
+//        return ((x < y) ? 1 : ((x > y) ? -1 : 0));
+//    };
+//
+//    $(document).ready(function() {
+//        $("#sortTable1").dataTable({
+//            "aaSorting" : [[1, 'asc']]
+//        });
+//    });
+</script>
+<fieldset>
+    <h1>Zone list</h1>
+    <div id="newZone"></div>
+    <div id="editZone"></div>
+
+    <span style="float: right;" id="zoneSH">
+        <img src="{{ asset('images/add-bt.png')}}" id="btnNewZone" width="50" height="50" style="cursor:pointer;" />
+    </span>
+    <div class="clear"></div>
+    <br/>
+    <fieldset>
+        <table id="sortTable1"  class="display" border="1" >
+            <thead>
+                    <th>Id</th>
+                    <th>Zonename</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                    <th>Actions</th>
+            </thead>
+            {% for entity in entities %}
+                <tr>
+                    <td>{{ entity.id }}</td>
+                    <td>{{ entity.zonename }}</td>
+                    <td>{{ entity.latitude }}</td>
+                    <td>{{ entity.longitude }}</td>
+                    <td>
+                        <ul>
+
+                            <li>
+                                <a class="btnEditZone" href="{{ path('zone_edit', { 'id': entity.id }) }}">Edit</a>
+                            </li>
+                            <li>
+                                <a class="btnDelete" href="{{ path('zone_edit', { 'id': entity.id }) }}">Delete</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </fieldset>
+</fieldset>
+
+{#<ul>#}
+    {#<li>#}
+        {#<a href="{{ path('zone_new') }}">#}
+            {#Create a new entry#}
+        {#</a>#}
+    {#</li>#}
+{#</ul>#}

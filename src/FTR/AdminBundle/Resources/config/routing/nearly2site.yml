@@ -2,7 +2,6 @@ nearly2site_show:
     pattern:  /{id}/show
     defaults: { _controller: "FTRAdminBundle:Nearly2site:show" }
 
-
 nearly2site_create:
     pattern:  /create
     defaults: { _controller: "FTRAdminBundle:Nearly2site:create" }
