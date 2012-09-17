@@ -12,17 +12,19 @@
 				url : url,
 				data : $(this).serialize(),
 				success : function(msg) {
-					//alert(msg);
-					if (msg == 'finish') {
-						// $('#listBuildingSite').load(window.location + "show");
-						$("#createrecordCancel").hide();
-						$("#createrecord").show('slow');
-						toggle(".createPanel", 'hide');
-						$('#listAdmin').fadeOut('slow').load(window.location + "show").fadeIn("slow");
-					} else {
-						$('.createPanel').html(msg);
-						alert('การแก้ไขผิดพลาด');
-					}
+				alert(msg);
+//					if (msg == 'finish') {
+//						// $('#listBuildingSite').load(window.location + "show");
+//						$("#createrecordCancel").hide();
+//						$("#createrecord").show('slow');
+//						toggle(".createPanel", 'hide');
+//						$('#listAdmin').fadeOut('slow').load(window.location + "show").fadeIn("slow");
+//					} else if(msg == 'fail'){
+//                        alert('ชื่อนี้มีคนใช้แล้ว);
+//                    }else {
+//						$('.createPanel').html(msg);
+//						alert('การแก้ไขผิดพลาด');
+//					}
 				}
 			});
 			return false;
@@ -68,6 +70,12 @@
 		{{ form_widget(form.lastname, { 'attr': {'class': 'widfat'} }) }} &nbsp;
 		{{ form_errors(form.lastname) }}
 		<br />
+        <div class="label" style="">
+            {{ form_label(form.email) }}
+        </div>
+        {{ form_widget(form.email, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+        {{ form_errors(form.email) }}
+        <br />
 		<div class="label" style="">
 			{{ form_label(form.phone_number) }}
 		</div>
@@ -79,12 +87,6 @@
 		</div>
 		{{ form_widget(form.fax_number, { 'attr': {'class': 'widfat'} }) }} &nbsp;
 		{{ form_errors(form.fax_number) }}
-		<br />
-		<div class="label" style="">
-			{{ form_label(form.email) }}
-		</div>
-		{{ form_widget(form.email, { 'attr': {'class': 'widfat'} }) }} &nbsp;
-		{{ form_errors(form.email) }}
 		<br />
 		<div class="label" style="">
 			{{ form_label(form.user_level) }}

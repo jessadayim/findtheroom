@@ -12,16 +12,18 @@
 				url : url,
 				data : $(this).serialize(),
 				success : function(msg) {
-					//alert(msg);
+//					alert(msg);
 					if (msg == 'finish') {
 						// $('#listBuildingSite').load(window.location + "show");
 						$("#createrecordCancel").hide();
 						$("#createrecord").show('slow');
 						toggle(".createPanel", 'hide');
 						$('#listAdmin').fadeOut('slow').load(window.location + "show").fadeIn("slow");
-					} else {
+					}else if(msg == 'fail'){
+                        alert('ชื่อนี้มีคนใช้งานแล้ว');
+                    } else {
 						$('.innerPanel').html(msg);
-						alert('การแก้ไขผิดพลาด');
+						alert('การเพิ่มข้อมูลผิดพลาด');
 					}
 				}
 			});

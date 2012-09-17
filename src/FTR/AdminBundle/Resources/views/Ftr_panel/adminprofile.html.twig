@@ -4,24 +4,28 @@
 <script>
     $(document).ready(function () {
         var url = "{{ path('FTRAdminBundle_UpdateProfile', { 'id': entity.id }) }}";
-        $("#formEdit").submit(function () {
-//            alert($(this).serialize());
-            if (!confirm('คุณต้องการแก้ไขข้อมูล ใช่หรือไม่')) {
-                return false;
-            }
-            $.ajax({
-                type:"POST",
-                url:url,
-                data:$(this).serialize(),
-                success:function (msg) {
-//                    alert(msg);
-                    if (msg == 'finish') {
-                        $('.profile').fadeOut('slow').load(window.location).fadeIn("slow");
-                    } else {
-                        alert('การแก้ไขผิดพลาด');
-                    }
+        $("#formEdit1").submit(function () {
+            if (clickagree() != false) {
+                //            alert($(this).serialize());
+                if (!confirm('คุณต้องการแก้ไขข้อมูล ใช่หรือไม่')) {
+                    return false;
                 }
-            });
+                $.ajax({
+                    type:"POST",
+                    url:url,
+                    data:$(this).serialize(),
+                    success:function (msg) {
+//                    alert(msg);
+                        if (msg == 'finish') {
+                            $('.profile').fadeOut('slow').load(window.location).fadeIn("slow");
+                        }else if(msg == 'fail'){
+                            alert("ชื่อนี้มีคนใช้งานแล้ว");
+                        } else {
+                            alert('การแก้ไขผิดพลาด');
+                        }
+                    }
+                });
+            }
             return false;
         });
     });
@@ -38,7 +42,7 @@
         </p>
 
         <div class="profile">
-            <form id="formEdit" action="{{ path('user_admin_update', { 'id': entity.id }) }}"
+            <form id="formEdit1" action="{{ path('FTRAdminBundle_UpdateProfile', { 'id': entity.id }) }}"
                   method="post" {{ form_enctype(edit_form) }}>
                 <fieldset>
                     <legend>
@@ -47,14 +51,14 @@
                     <div class="label" style="">
                         {{ form_label(edit_form.username) }}
                     </div>
-                    {{ form_widget(edit_form.username, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+                    {{ form_widget(edit_form.username, { 'attr': {'class': 'widfat'}}) }} &nbsp;
                     {{ form_errors(edit_form.username) }}
                     <br/>
 
                     <div class="label" style="">
                         {{ form_label(edit_form.password) }}
                     </div>
-                    {{ form_widget(edit_form.password, { 'attr': {'class': 'widfat','type':'password'} }) }} &nbsp;
+                    {{ form_widget(edit_form.password, { 'attr': {'class': 'widfat'} }) }} &nbsp;
                     {{ form_errors(edit_form.password) }}
                     <br/>
 
@@ -88,5 +92,18 @@
         </div>
     </div>
 </div>
-
+<script>
+    function clickagree() {
+        var regUser = /[^A-Za-z0-9]/;
+        var regTele = /^[0-9]+$/;
+        if (regUser.test($('#ftr_adminbundle_user_admintype_username').val()) == true) {
+            alert("ชื่อผู้ใช้งาน จะต้องเป็นอักขระอังกฤษ หรือตัวเลข");
+            return false;
+        }else if(!$("#ftr_adminbundle_user_admintype_phone_number").val().match(regTele)){
+            alert("หมายเลขโทรศัพท์ต้องเป็นตัวเลขอย่างเดียว");
+            return false;
+        }
+        return true;
+    }
+</script>
 {% endblock %}

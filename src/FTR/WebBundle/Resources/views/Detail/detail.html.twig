@@ -200,7 +200,12 @@ $(function(){
 			</tr>
            <tr height="20" valign="middle">
 				<td align="right" width="150" style="padding-right:20px;">ตามสถานที่ใกล้เคียง :</td>
-				<td width="300"><a href="#">{{general.nearly_place}}</td>
+				<td width="300"><a href="#">
+                    {% if general.nearly_place is empty %}
+                    -
+                    {% else%}
+                    {{general.nearly_place}}
+                    {% endif%}</td>
 				<td colspan="2" >&nbsp;</td>
 			</tr>
 		</table>
@@ -315,35 +320,35 @@ $(function(){
     </div>
 </div>
 
-<div id="gallery">
-    <img src="{{asset('images/gallery.png')}}" class="head" />
-    <hr class="line" style="top: 60px;" />
-    <div id="container6">
-        <div id="slides6">
-            <div class="slides_container" style="width:950px;">
-                {% set introw1 = 0 %}
-                    {% for i in 0..5%}
-                        {%if introw1%6 ==0%}
-                            <div class="slide" style="width:950px;">
-                        {%endif%}
-                            {%set row= introw1+1%}
-                            {%if row%2 ==0%}
-                                <div class="ap">
-                            {%endif%}
-                        {%set introw1=introw1+1%}
-                        {%if introw1%6 ==0%}
-                            </div>
-                        {%endif%}
+{#<div id="gallery">#}
+    {#<img src="{{asset('images/gallery.png')}}" class="head" />#}
+    {#<hr class="line" style="top: 60px;" />#}
+    {#<div id="container6">#}
+        {#<div id="slides6">#}
+            {#<div class="slides_container" style="width:950px;">#}
+                {#{% set introw1 = 0 %}#}
+                    {#{% for i in 0..5%}#}
+                        {#{%if introw1%6 ==0%}#}
+                            {#<div class="slide" style="width:950px;">#}
+                        {#{%endif%}#}
+                            {#{%set row= introw1+1%}#}
+                            {#{%if row%2 ==0%}#}
+                                {#<div class="ap">#}
+                            {#{%endif%}#}
+                        {#{%set introw1=introw1+1%}#}
+                        {#{%if introw1%6 ==0%}#}
+                            {#</div>#}
+                        {#{%endif%}#}
 
-                    {% endfor %}
+                    {#{% endfor %}#}
 
-				</div>
-        </div>
-            <a href="#" class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>
-            <a href="#" class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>
-    </div>
-</div>
-</div>
+				{#</div>#}
+        {#</div>#}
+            {#<a href="#" class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>#}
+            {#<a href="#" class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>#}
+    {#</div>#}
+{#</div>#}
+{#</div>#}
 
 <div class="detail" style="height:100%; padding-bottom:10px;">
 	<img src="{{asset('images/inroom.png')}}" />

@@ -70,7 +70,7 @@ FTRAdminBundle_manage_resource:
 # Creator : MICK
 # Createtime : 2012-08-28
 #
-FTRAdminBuldel_panel:
+FTRAdminBundle_panel:
     pattern: /
     defaults: { _controller: FTRAdminBundle:Panel:index }
 
@@ -153,4 +153,3 @@ FTRAdminBundle_EditProfile:
 FTRAdminBundle_UpdateProfile:
     pattern:  /update/{id}
     defaults: { _controller: FTRAdminBundle:Adminprofile:update }
-

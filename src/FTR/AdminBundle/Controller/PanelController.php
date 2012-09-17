@@ -27,6 +27,7 @@ class PanelController extends Controller {
 					if (!empty($objSQL1)) {
 						$session = $this -> get('session');
 						$session -> set('username', $objSQL1[0]['username']);
+                        $session -> set('id', $objSQL1[0]['id']);
 						// echo "true";
 						// exit();
 						return $this -> redirect($this -> generateUrl('FTRAdminBundle_Dashboard'));
@@ -47,6 +48,7 @@ class PanelController extends Controller {
 		// exit();
 		$session = $this -> get('session');
 		$session -> set('username', '');
+        $session -> set('id', '');
 		return $this -> redirect($this -> generateUrl('FTRAdminBundle_panel'));
 	}
 
