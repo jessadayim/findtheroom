@@ -42,6 +42,17 @@
             $('#newZone').fadeOut().load("{{ path('zone_new') }}").fadeIn("slow");
             return false;
         });
+
+        $(".inPage").click(function(){
+            var value = this.value;
+            var recordValue = $(".record").val();
+            var send = "?numPage=" + value + "&record=" + recordValue;
+            alert("{{ path('zone') }}" + send)
+            $.post("{{ path('zone') }}" + send, function(data) {
+                $('#innerPanel').html(data);
+            });
+            return false;
+        });
     });
 </script>
 
@@ -100,6 +111,67 @@
             {% endfor %}
         </table>
     </fieldset>
+    <div class="paginator">
+        <ul>
+            <strong>showing {{ countListZone }} entities : Page </strong>
+            {% for i in 1..paginator.numpages%}
+                {% if paginator.range.0 > 2 and i == paginator.range.0 %}
+                    ...
+                {% endif %}
+
+                {%  if(i==1 or i==paginator.numpages or i in paginator.range) %}
+                    {% if i==paginator.currentpage %}
+                        {% if i == noPage %}
+                            <input class="disable" type="button" value="{{i}}" id="Submit" name="submitPage" disabled="true"/>
+                        {% else %}
+                            <input class="inPage" type="button" value="{{i}}" id="Submit" name="submitPage"/>
+                        {% endif %}
+                    {% else %}
+                        {% if i == noPage %}
+                        <input class="disable" type="button" value="{{i}}" id="Submit" name="submitPage" disabled="true"/>
+                        {% else %}
+                        <input class="inPage" type="button" value="{{i}}" id="Submit" name="submitPage"/>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+
+                {% if paginator.range[paginator.midrange -1] < paginator.numpages -1 and i == paginator.range[paginator.midrange-1] %}
+                    ...
+                {% endif %}
+            {% endfor %}
+            <div align="right" style="float:right;">
+                <select name="record" style="width:150px;" class="record">
+                    <option value="10">กำหนด Record </option>
+                    {% if limit == '50' %}
+                        <option selected="yes" value="50">50 Record</option>
+                        <option value="100">100 Record</option>
+                        <option value="500">500 Record</option>
+                        <option value="1000">1,000 Record</option>
+                    {% elseif limit == '100' %}
+                        <option value="50">50 Record</option>
+                        <option selected="yes" value="100">100 Record</option>
+                        <option value="500">500 Record</option>
+                        <option value="1000">1,000 Record</option>
+                    {% elseif limit == '500' %}
+                        <option value="50">50 Record</option>
+                        <option value="100">100 Record</option>
+                        <option selected="yes" value="500">500 Record</option>
+                        <option value="1000">1,000 Record</option>
+                    {% elseif limit == '1000' %}
+                        <option value="50">50 Record</option>
+                        <option value="100">100 Record</option>
+                        <option value="500">500 Record</option>
+                        <option selected="yes" value="1000">1,000 Record</option>
+                    {% else %}
+                        <option value="50">50 Record</option>
+                        <option value="100">100 Record</option>
+                        <option value="500">500 Record</option>
+                        <option value="1000">1,000 Record</option>
+                    {% endif %}
+                </select>
+            </div>
+        </ul>
+    </div>
 </fieldset>
 
 {#<ul>#}
