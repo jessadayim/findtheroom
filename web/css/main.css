@@ -10,7 +10,8 @@ body {
 
 @font-face {
     font-family: DB Adman X;
-    src: url(../font/DBAdmanX.otf);
+    src: url("../font/DBAdmanX.otf");
+	src: url("../font/DBAdmanX.eot") format("eot"),url("../font/DBAdmanX.eot?#iefix") format("embedded-opentype"), url("../font/DBAdmanX.woff") format("woff"), url("../font/DBAdmanX.ttf") format("truetype"), url("../font/DBAdmanX.svg#DBAdmanX") format("svg");
     font-weight:normal;
 }
 
