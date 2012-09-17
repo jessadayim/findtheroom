@@ -30,7 +30,9 @@
 						// $('#listBuildingSite').load(window.location + "show");
 						toggle(".editPanel", 'hide');
 						$('#listAdmin').fadeOut('slow').load(window.location + "show").fadeIn("slow");
-					} else {
+					} else if(msg == 'fail'){
+                        alert('ชื่อนี้มีคนใช้งานแล้ว');
+                    } else {
 						$('.innerPanel').html(msg);
 						alert('การแก้ไขผิดพลาด');
 					}
