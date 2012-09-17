@@ -439,23 +439,6 @@
     }
     function Trim(str){return LTrim(RTrim(str));}
 
-    function  validateNumeric(ele) {
-        var number = document.getElementById('internet_price').value;
-        /******************************************************************************
-         DESCRIPTION: Validates that a string contains only valid numbers.
-
-         PARAMETERS:
-         strValue - String to be tested for validity
-
-         RETURNS:
-         True if valid, otherwise false.
-         ******************************************************************************/
-        var objRegExp  =  /(^-?\d\d*\.\d*$)|(^-?\d\d*$)|(^-?\.\d\d*$)/;
-
-        //check for numeric characters
-        alert(objRegExp.test(ele));
-        return false;
-    }
 </script>
 <form name="addform" id="addform" method="post" action="{{path('saveData', {'id': build_id })}}">
 <div id="device" style="height: 200px; margin-bottom: 15px;display: none;">
