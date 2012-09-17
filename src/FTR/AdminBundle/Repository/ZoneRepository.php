@@ -15,12 +15,28 @@ class ZoneRepository extends EntityRepository
     /*
      * Get data zone
      */
-    public function getDataZone($limit, $offset){
+    public function getDataZone($limit, $offset, $textSearch, &$count, $orderBy){
         $sql = "
             SELECT
               z
             FROM FTRWebBundle:Zone z
+            WHERE z.deleted = 0
         ";
+        if (!empty($textSearch) && $textSearch != ''){
+            $sql = "
+                $sql
+                AND z.zonename LIKE '%$textSearch%'
+                OR z.latitude LIKE '%$textSearch%'
+                OR z.longitude LIKE '%$textSearch%'
+            ";
+
+            //นับจำนวนใหม่
+            $count = count($this -> getEntityManager() -> createQuery($sql)-> getResult());
+        }
+        $sql = "
+                $sql
+                ORDER BY z.$orderBy
+            ";
         return $this -> getEntityManager() -> createQuery($sql) -> setFirstResult($offset) -> setMaxResults($limit) -> getResult();
 
     }
