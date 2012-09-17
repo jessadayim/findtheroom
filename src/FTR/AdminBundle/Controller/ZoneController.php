@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use FTR\WebBundle\Entity\Zone;
 use FTR\AdminBundle\Form\ZoneType;
+use FTR\AdminBundle\Helper\Paginator;
 
 /**
  * Zone controller.
@@ -21,10 +22,37 @@ class ZoneController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entities = $em->getRepository('FTRWebBundle:Zone')->findBy(array('deleted' => 0));
+        //set paging
+        $page = 1;
+        $getSelectPage = @$_GET['numPage'];
+        if (!empty($getSelectPage)){
+            $page = $getSelectPage;
+        }
+        $limit = 10;
+        $midRange = 5;
+        $getRecord = @$_GET['record'];
+        if(!empty($getRecord)){
+            $limit = $getRecord;
+        }else {
+            $getRecord = $limit;
+        }
+        $offset = $limit*$page-$limit;
+
+        $entities = $em->getRepository('FTRWebBundle:Zone')->getDataZone($limit, $offset);
+//        $sqlGetAllZone = "";
+        $getEntitiesAllZone = $em->getRepository('FTRWebBundle:Zone')->findBy(array('deleted' => 0));
+        $countListZone = count($getEntitiesAllZone);
+        $paginator = new Paginator($countListZone, $offset, $limit, $midRange);
+
+//        $entities = $em->getRepository('FTRWebBundle:Zone')->findBy(array('deleted' => 0));
 
         return $this->render('FTRAdminBundle:Zone:index.html.twig', array(
-            'entities' => $entities
+            'entities'          => $entities,
+            'paginator'	        => $paginator,
+            'countListZone'		=> $countListZone,
+            'limit' 	        => $limit,
+            'noPage'	        => $page,
+            'record'	        => $getRecord
         ));
     }
 
