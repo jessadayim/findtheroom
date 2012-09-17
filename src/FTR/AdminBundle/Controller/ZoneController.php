@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use FTR\WebBundle\Entity\Zone;
 use FTR\AdminBundle\Form\ZoneType;
+use FTR\AdminBundle\Helper\Paginator;
 
 /**
  * Zone controller.
@@ -21,10 +22,46 @@ class ZoneController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entities = $em->getRepository('FTRWebBundle:Zone')->findBy(array('deleted' => 0));
+        //get post
+        $getSelectPage = @$_GET['numPage'];
+        $getRecord = @$_GET['record'];
+        $getTextSearch = @$_GET['textSearch'];
+        $getOrderBy = @$_GET['orderBy'];
+        $getOrderByType = @$_GET['orderByType'];
+
+        //set paging
+        $page = 1;
+        if (!empty($getSelectPage)){
+            $page = $getSelectPage;
+        }
+        $limit = 10;
+        $midRange = 5;
+        if(!empty($getRecord)){
+            $limit = $getRecord;
+        }else {
+            $getRecord = $limit;
+        }
+        $offset = $limit*$page-$limit;
+        $setOrderBy = 'id';
+        $setOrderByType = 'asc';
+
+        $getEntitiesAllZone = $em->getRepository('FTRWebBundle:Zone')->findBy(array('deleted' => 0));
+        $countListZone = count($getEntitiesAllZone);
+
+        $entities = $em->getRepository('FTRWebBundle:Zone')->getDataZone($limit, $offset, $getTextSearch, $countListZone, "$setOrderBy $setOrderByType");
+
+        $paginator = new Paginator($countListZone, $offset, $limit, $midRange);
 
         return $this->render('FTRAdminBundle:Zone:index.html.twig', array(
-            'entities' => $entities
+            'entities'          => $entities,
+            'paginator'	        => $paginator,
+            'countListZone'		=> $countListZone,
+            'limit' 	        => $limit,
+            'noPage'	        => $page,
+            'record'	        => $getRecord,
+            'textSearch'        => $getTextSearch,
+            'orderBy'             => $getOrderBy,
+            'orderByType'         => $getOrderByType
         ));
     }
 

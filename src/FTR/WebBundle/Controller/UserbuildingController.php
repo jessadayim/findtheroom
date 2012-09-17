@@ -4,6 +4,8 @@ namespace FTR\WebBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 use FTR\WebBundle\Entity\User_owner;
 use FTR\WebBundle\Entity\Building_site;
 use FTR\WebBundle\Entity\Building_type;
