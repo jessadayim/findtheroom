@@ -30,7 +30,9 @@
 						// $('#listBuildingSite').load(window.location + "show");
 						toggle(".editPanel", 'hide');
 						$('#listAdmin').fadeOut('slow').load(window.location + "show").fadeIn("slow");
-					} else {
+					} else if(msg == 'fail'){
+                        alert('ชื่อนี้มีคนใช้แล้ว');
+                    }else {
 						$('.innerPanel').html(msg);
 						alert('การแก้ไขผิดพลาด');
 					}
@@ -97,7 +99,7 @@
 		{{ form_widget(edit_form) }}
 		<br />
 		<span style="float: right;">
-			<input type="submit"  value="CREATE">
+			<input type="submit"  value="UPDATE">
 		</span>
 	</fieldset>
 </form>
