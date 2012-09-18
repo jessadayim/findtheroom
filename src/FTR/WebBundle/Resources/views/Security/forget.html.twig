@@ -24,13 +24,18 @@
 							type : 'POST',
 							data : "email=" + $('input#email').val(),
 							success : function(data) {
-                                //alert(data);
+//                                alert(data);
 								if (data == 1) {
 									// alert("sdfsd");
 									location = "{{path('FTRWebBundle_forget_confirm')}}";
 									//parent.location.href = "{{path('FTRWebBundle_homepage')}}";
 								}else if(data == 0){
                                     $("#txterror").html("กรุณาตรวจสอบ ชื่อผู้ใช้งาน หรืออีเมล");
+                                    $("#txterror").hide();
+                                    $("#txterror").show("slow");
+                                    document.getElementById('txterror').focus();
+                                }else if(data == 3){
+                                    $("#txterror").html("กรุณารอ 2 นาที เพื่อขอรหัสผ่านอีกครั้ง");
                                     $("#txterror").hide();
                                     $("#txterror").show("slow");
                                     document.getElementById('txterror').focus();

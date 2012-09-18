@@ -56,23 +56,30 @@ class RegisterController extends Controller
 					}else{
 						try{
 							$random_token = md5(uniqid(rand(),true));
-							$sql1 ="INSERT INTO user_owner(username,password,firstname,lastname,email,phone_number,fax_number,deleted,confirm_token) VALUES('$username','$password','$firstname','$lastname','$email','$tel','0000000000','0','$random_token')";
+							$sql1 ="INSERT INTO user_owner(username,password,firstname,lastname,email,phone_number,fax_number,deleted,user_level,confirm_token)
+							        VALUES('$username','$password','$firstname','$lastname','$email','$tel','0000000000','0','2','$random_token')";
 							$conn->query($sql1);
-                            $url = $_SERVER['SERVER_NAME'];
-                            $url .= $this->get('router')->generate('FTRWebBundle_homepage', array());
-                           // $url .= $this->get('router')->generate('TRWebBundle_change', array());
-							
-							$link = "สวัสดีค่ะ คุณ $email ยินตีต้อนรับสู่ FindTheRoom.com!
-										ชื่อที่ใช้ในการ login เข้าบัญชีสมาชิกของคุณคือ $username
-										<a href = $url?token=" . $random_token . ">
-  					                        ".$url."?token=". $random_token . "
-  				                        </a><br/>";
+
+                            $sqlOwner = "SELECT email,confirm_token,firstname,lastname
+                                     FROM user_owner
+						             WHERE confirm_token = '$random_token'";
+                            $objOwner = $conn -> fetchAll($sqlOwner);
+                            $token = $objOwner[0]['confirm_token'];
+                            $email = $objOwner[0]['email'];
+
+                            $host = "http://".$_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"];
+                            $url = $this->get('router')->generate('FTRWebBundle_homepage', array());
+                            $url .= "?token=". $token;
 
 							$message = \Swift_Message::newInstance()
-					        ->setSubject('findtheroom')
+					        ->setSubject('ยินดีต้อนรับสมาชิกใหม่ '.$email.' สู่ FindTheRoom.com')
 					        ->setFrom('support@findtheroom.com')
 					        ->setTo($email)
-					        ->setBody($this->renderView('FTRWebBundle:Security:emailreset.html.twig', array('name' => $link)),'text/html');
+					        ->setBody($this->renderView('FTRWebBundle:Register:email.html.twig', array(
+                                            'host' => $host
+                                            ,'url' => $url
+                                            ,'firstName'=>$objOwner[0]['firstname']
+                                            ,'lastName'=>$objOwner[0]['lastname'])),'text/html');
 					    	
 					    	$this->get('mailer')->send($message);
 							
@@ -96,7 +103,7 @@ class RegisterController extends Controller
 					}
 				} catch (Exception $e) {
 					echo 'Caught exception: ',  $e->getMessage(), "\n";
-				}				
+				}
 		}
 		
     }
