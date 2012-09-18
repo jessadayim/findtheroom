@@ -10,8 +10,8 @@ class Pay_typeType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
-            ->add('typename')
-            ->add('deleted')
+            ->add('typename', 'text', array('label' => 'Type Name:', "max_length" => 100))
+//            ->add('deleted')
         ;
     }
 

@@ -23,8 +23,3 @@ zone_update:
     pattern:  /{id}/update
     defaults: { _controller: "FTRAdminBundle:Zone:update" }
     requirements: { _method: post }
-
-zone_delete:
-    pattern:  /{id}/delete
-    defaults: { _controller: "FTRAdminBundle:Zone:delete" }
-    requirements: { _method: post }

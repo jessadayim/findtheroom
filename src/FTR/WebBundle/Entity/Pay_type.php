@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * FTR\WebBundle\Entity\Pay_type
  *
  * @ORM\Table(name="pay_type")
- * @ORM\Entity(repositoryClass="FTR\WebBundle\Repository\Pay_typeRepository")
+ * @ORM\Entity(repositoryClass="FTR\AdminBundle\Repository\Pay_typeRepository")
  */
 class Pay_type
 {

@@ -62,8 +62,8 @@ class ZoneController extends Controller
             'noPage'	        => $page,
             'record'	        => $getRecord,
             'textSearch'        => $getTextSearch,
-            'orderBy'             => $getOrderBy,
-            'orderByType'         => $getOrderByType
+            'orderBy'           => $getOrderBy,
+            'orderByType'       => $getOrderByType
         ));
     }
 
@@ -81,12 +81,8 @@ class ZoneController extends Controller
             throw $this->createNotFoundException('Unable to find Zone entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
-
         return $this->render('FTRAdminBundle:Zone:show.html.twig', array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
-
+            'entity'      => $entity
         ));
     }
 
@@ -121,6 +117,8 @@ class ZoneController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();
+
+            //Check ชื่อ zone ซ้ำ
             $getZoneName = $entity->getZonename();
             $sqlGetZone = "
                 SELECT
@@ -157,6 +155,8 @@ class ZoneController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('FTRWebBundle:Zone')->find($id);
+
+        //Check post เปลี่ยน deleted เป็น 1
         $getCheckPost = @$_POST['checkPost'];
         if ($getCheckPost == "delete"){
             $sqlCheck = "
@@ -183,12 +183,10 @@ class ZoneController extends Controller
         }
 
         $editForm = $this->createForm(new ZoneType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('FTRAdminBundle:Zone:edit.html.twig', array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'edit_form'   => $editForm->createView()
         ));
     }
 
@@ -208,7 +206,6 @@ class ZoneController extends Controller
         }
 
         $editForm   = $this->createForm(new ZoneType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
 
         $request = $this->getRequest();
 
@@ -224,42 +221,7 @@ class ZoneController extends Controller
         return $this->render('FTRAdminBundle:Zone:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         ));
-    }
-
-    /**
-     * Deletes a Zone entity.
-     *
-     */
-    public function deleteAction($id)
-    {
-        $form = $this->createDeleteForm($id);
-        $request = $this->getRequest();
-
-        $form->bindRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
-            $entity = $em->getRepository('FTRWebBundle:Zone')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Zone entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
-        }
-
-        return $this->redirect($this->generateUrl('zone'));
-    }
-
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
-        ;
     }
 
     /*
