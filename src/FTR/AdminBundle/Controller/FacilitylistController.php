@@ -69,26 +69,6 @@ class FacilitylistController extends Controller
     }
 
     /**
-     * Finds and displays a Facilitylist entity.
-     *
-     */
-    public function showAction($id)
-    {
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $entity = $em->getRepository('FTRWebBundle:Facilitylist')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Facilitylist entity.');
-        }
-
-        return $this->render('FTRAdminBundle:Facilitylist:show.html.twig', array(
-            'entity'      => $entity,
-
-        ));
-    }
-
-    /**
      * Displays a form to create a new Facilitylist entity.
      *
      */

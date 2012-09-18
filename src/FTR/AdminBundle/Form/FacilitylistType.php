@@ -12,7 +12,7 @@ class FacilitylistType extends AbstractType
         $builder
             ->add('facility_name', 'text', array('label' => 'Facility Name:', "max_length" => 100))
             ->add('facility_type', 'text', array('label' => 'Facility Type:', "max_length" => 100))
-            ->add('display', 'checkbox', array('label' => 'Display:'))
+            ->add('display', 'checkbox', array('label' => 'Display:', 'required'  => false))
 //            ->add('deleted')
         ;
     }

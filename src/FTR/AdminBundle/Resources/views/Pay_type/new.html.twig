@@ -51,6 +51,10 @@
         height: 50px;
         width: 50px;
     }
+
+    #btnCancelCreate{
+        cursor:pointer;margin-right: 70px
+    }
 </style>
 <fieldset id="createField">
     <form id="formCreate" action="{{ path('pay_type_create') }}" method="post" {{ form_enctype(form) }}>
@@ -62,11 +66,11 @@
         <br />
         {{ form_widget(form) }}
        <span style="float: right;">
-            <img src="{{ asset('images/cancel.png')}}" id="btnCancelCreate" width="50" height="50" style="cursor:pointer;margin-right: 70px" />
+            <img src="{{ asset('images/cancel.png')}}" id="btnCancelCreate" width="50" height="50" />
                 &nbsp;&nbsp;
             <div id="btnCreate">
                 <input type="submit" id="btnInputCreate" value="Edit">
             </div>
-        </span>
+       </span>
     </form>
 </fieldset>
