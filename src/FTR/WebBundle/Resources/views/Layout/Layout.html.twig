@@ -26,6 +26,7 @@
 				$(':input[placeholder]').placeholder();
 			});
 		</script>
+		
 		<script language="javascript">
 			$(document).ready(function() {
 				var mybrowser = navigator.userAgent;
@@ -213,19 +214,71 @@
 			{% endblock %}
 
 			<div class="ad1">
-				<a href='#'><img src="{{asset('images/ad/ad1.gif')}}" /></a>
-				<a href='#'><img src="{{asset('images/ad/ad2.gif')}}" /></a>
-				<a href='#'><img src="{{asset('images/ad/ad3.gif')}}" /></a>
-				<a href='#' style="margin-right:0px !important"><img src="{{asset('images/ad/ad4.gif')}}" /></a>
+			
+			<!-- <script type="text/javascript"> 
+			function initArray() {
+			this.length = initArray.arguments.length; 
+				for (var i = 0; i < this.length; i++) { 
+				this[i] = initArray.arguments[i]; 
+				} 
+			}
+			
+			link = new initArray( 
+			"http://example.com/page1", 
+			"http://example.com/page2", 
+			"http://example.com/page3"
+			);
+			
+			image = new initArray( 
+			"{{asset('images/ad/ad1.gif')}}", 
+			"{{asset('images/ad/ad2.gif')}}", 
+			"{{asset('images/ad/ad3.gif')}}"
+			);
+			
+			text = new initArray( 
+			"Example 1 Title", 
+			"Example 2 Title", 
+			"Example 3 Title"
+			);
+			
+			function getRandom(){ 
+			var core = Math.floor(Math.random()*3); // amount of items in array 
+			displayBanner(core) 
+			}
+			
+			function displayBanner(theNum){ 
+			var ranlink = link[theNum]; 
+			var ranimage = image[theNum]; 
+			var rantext = text[theNum];
+			
+			//document.write('<a href=\"' +ranlink+ '\" target=\"_blank\"><img src=\"'+ranimage+'\" border="0" alt=\"'+rantext+'\"></a>'); 
+			document.getElementById('theImg').alt=rantext; 
+			document.getElementById('theImg').src=ranimage; 
+			document.getElementById('theLink').href=ranlink; 
+			} 
+			</script>
+				
+				<a href="#" target="_blank" id="theLink"><img src="" border="0" alt="" id="theImg"></a>
+				
+			<script type="text/javascript"> 
+				getRandom(); 
+				setInterval("getRandom()", 1000); 
+			</script> -->
+			
+			
+				<a href='#'><div class="thumbframe"><img src="{{asset('images/ad/ad1.gif')}}" class="thumb" /></div></a>
+				<a href='#'><div class="thumbframe"><img src="{{asset('images/ad/ad2.gif')}}" class="thumb" /></div></a>
+				<a href='#'><div class="thumbframe"><img src="{{asset('images/ad/ad3.gif')}}" class="thumb" /></div></a>
+				<a href='#'><div class="thumbframe omega"><img src="{{asset('images/ad/ad4.gif')}}" class="thumb" /></div></a>
 			</div>
-
+			<div class="clear"></div>
 			<div class="ad1">
-				<a href='#'><img src="{{asset('images/ad/ad1.gif')}}" /></a>
-				<a href='#'><img src="{{asset('images/ad/ad2.gif')}}" /></a>
-				<a href='#'><img src="{{asset('images/ad/ad3.gif')}}" /></a>
-				<a href='#' style="margin-right:0px !important"><img src="{{asset('images/ad/ad4.gif')}}" /></a>
+				<a href='#'><div class="thumbframe"><img src="{{asset('images/ad/ad1.gif')}}" class="thumb" /></div></a>
+				<a href='#'><div class="thumbframe"><img src="{{asset('images/ad/ad2.gif')}}" class="thumb" /></div></a>
+				<a href='#'><div class="thumbframe"><img src="{{asset('images/ad/ad3.gif')}}" class="thumb" /></div></a>
+				<a href='#'><div class="thumbframe omega"><img src="{{asset('images/ad/ad4.gif')}}" class="thumb" /></div></a>
 			</div>
-
+			<div class="clear"></div>
 			<div id="fb-root"></div>
 			<script>
 				( function(d, s, id) {
