@@ -22,29 +22,35 @@ class ZoneController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
 
+        //get post
+        $getSelectPage = @$_GET['numPage'];
+        $getRecord = @$_GET['record'];
+        $getTextSearch = @$_GET['textSearch'];
+        $getOrderBy = @$_GET['orderBy'];
+        $getOrderByType = @$_GET['orderByType'];
+
         //set paging
         $page = 1;
-        $getSelectPage = @$_GET['numPage'];
         if (!empty($getSelectPage)){
             $page = $getSelectPage;
         }
         $limit = 10;
         $midRange = 5;
-        $getRecord = @$_GET['record'];
         if(!empty($getRecord)){
             $limit = $getRecord;
         }else {
             $getRecord = $limit;
         }
         $offset = $limit*$page-$limit;
+        $setOrderBy = 'id';
+        $setOrderByType = 'asc';
 
-        $entities = $em->getRepository('FTRWebBundle:Zone')->getDataZone($limit, $offset);
-//        $sqlGetAllZone = "";
         $getEntitiesAllZone = $em->getRepository('FTRWebBundle:Zone')->findBy(array('deleted' => 0));
         $countListZone = count($getEntitiesAllZone);
-        $paginator = new Paginator($countListZone, $offset, $limit, $midRange);
 
-//        $entities = $em->getRepository('FTRWebBundle:Zone')->findBy(array('deleted' => 0));
+        $entities = $em->getRepository('FTRWebBundle:Zone')->getDataZone($limit, $offset, $getTextSearch, $countListZone, "$setOrderBy $setOrderByType");
+
+        $paginator = new Paginator($countListZone, $offset, $limit, $midRange);
 
         return $this->render('FTRAdminBundle:Zone:index.html.twig', array(
             'entities'          => $entities,
@@ -52,7 +58,10 @@ class ZoneController extends Controller
             'countListZone'		=> $countListZone,
             'limit' 	        => $limit,
             'noPage'	        => $page,
-            'record'	        => $getRecord
+            'record'	        => $getRecord,
+            'textSearch'        => $getTextSearch,
+            'orderBy'             => $getOrderBy,
+            'orderByType'         => $getOrderByType
         ));
     }
 

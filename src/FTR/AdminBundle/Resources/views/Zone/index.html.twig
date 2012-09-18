@@ -1,7 +1,7 @@
 <!-- jQuery data table -->
 <script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script>
 {#<script type='text/javascript' src='{{asset("js/paging/jquery.dataTables.js")}}'></script>#}
-<link rel="stylesheet" href='{{asset("css/paging/sytletable.css")}}' type="text/css" id="" media="print, projection, screen" />
+{#<link rel="stylesheet" href='{{asset("css/paging/sytletable.css")}}' type="text/css" id="" media="print, projection, screen" />#}
 <script>
     $(document).ready(function() {
         $(".btnEditZone").click(function(){
@@ -43,17 +43,46 @@
             return false;
         });
 
+        // Paging
         $(".inPage").click(function(){
-            var value = this.value;
-            var recordValue = $(".record").val();
-            var send = "?numPage=" + value + "&record=" + recordValue;
-            alert("{{ path('zone') }}" + send)
-            $.post("{{ path('zone') }}" + send, function(data) {
-                $('#innerPanel').html(data);
-            });
+            var numPage = this.value;
+            getHtml(numPage, getOrderBy());
+            return false;
+        });
+
+        $(".record").change(function(){
+            var numPage = $(".disableBtn").val();
+            getHtml(numPage, getOrderBy());
+            return false;
+        });
+
+        $("#tbxSearch").change(function(){
+            var numPage = 1;
+            getHtml(numPage, getOrderBy());
+            return false;
+        });
+
+        //Order by
+        $(".btnOrderBy").click(function(){
+//            alert(this.href)s
+            var type = this.href;
+
             return false;
         });
     });
+
+    function getOrderBy(){
+        var strOrderBy = "&orderBy=" + $("#orderBy").val() + "&orderByType=" + $("#orderByType").val();
+        return strOrderBy;
+    }
+    function getHtml(numPage, orderBy){
+        var recordValue = $(".record").val();
+        var textSearch = $("#tbxSearch").val();
+        var send = "?numPage=" + numPage + "&record=" + recordValue + "&textSearch=" + textSearch + orderBy;
+        $.post("{{ path('zone') }}" + send, function(data) {
+            $('#innerPanel').html(data);
+        });
+    }
 </script>
 
 <script type="text/javascript">
@@ -71,6 +100,11 @@
 //        });
 //    });
 </script>
+<style type="text/css">
+    .inPage {
+        cursor: pointer;
+    }
+</style>
 <fieldset>
     <h1>Zone list</h1>
     <div id="newZone"></div>
@@ -82,13 +116,25 @@
     <div class="clear"></div>
     <br/>
     <fieldset>
-        <table id="sortTable1"  class="display" border="1" >
+
+        {#Save ค่า Orderby#}
+        <input type="hidden" id="orderBy" value="{{ orderBy }}"/>
+        <input type="hidden" id="orderByType" value="{{ orderByType }}"/>
+
+        <table style="
+        margin: 0 auto;
+        clear: both;
+        width: 100%;
+
+        border-collapse: collapse;
+        border-spacing: 0;
+        " border="1" >
             <thead>
-                    <th>Id</th>
-                    <th>Zonename</th>
-                    <th>Latitude</th>
-                    <th>Longitude</th>
-                    <th>Actions</th>
+                <th><a class="btnOrderBy" href="#">Id</a></th>
+                <th><a class="btnOrderBy" href="#">Zonename</th>
+                <th><a class="btnOrderBy" href="#">Latitude</th>
+                <th><a class="btnOrderBy" href="#">Longitude</th>
+                <th>Actions</th>
             </thead>
             {% for entity in entities %}
                 <tr>
@@ -122,13 +168,13 @@
                 {%  if(i==1 or i==paginator.numpages or i in paginator.range) %}
                     {% if i==paginator.currentpage %}
                         {% if i == noPage %}
-                            <input class="disable" type="button" value="{{i}}" id="Submit" name="submitPage" disabled="true"/>
+                            <input class="disableBtn" type="button" value="{{i}}" id="Submit" name="submitPage" disabled="true"/>
                         {% else %}
                             <input class="inPage" type="button" value="{{i}}" id="Submit" name="submitPage"/>
                         {% endif %}
                     {% else %}
                         {% if i == noPage %}
-                        <input class="disable" type="button" value="{{i}}" id="Submit" name="submitPage" disabled="true"/>
+                        <input class="disableBtn" type="button" value="{{i}}" id="Submit" name="submitPage" disabled="true"/>
                         {% else %}
                         <input class="inPage" type="button" value="{{i}}" id="Submit" name="submitPage"/>
                         {% endif %}
@@ -138,10 +184,13 @@
                 {% if paginator.range[paginator.midrange -1] < paginator.numpages -1 and i == paginator.range[paginator.midrange-1] %}
                     ...
                 {% endif %}
+            {#{% else %}#}
+            {#No matching records found#}
             {% endfor %}
-            <div align="right" style="float:right;">
+            <div align="right" style="float:right;" ><strong>Search:</strong>
+                <input id="tbxSearch" style="height: 25px;margin-bottom: 10px;" value="{{ textSearch }}" />&nbsp;&nbsp;
                 <select name="record" style="width:150px;" class="record">
-                    <option value="10">กำหนด Record </option>
+                    <option value="10">10 Record </option>
                     {% if limit == '50' %}
                         <option selected="yes" value="50">50 Record</option>
                         <option value="100">100 Record</option>
