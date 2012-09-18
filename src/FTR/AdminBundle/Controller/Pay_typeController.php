@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use FTR\WebBundle\Entity\Pay_type;
 use FTR\AdminBundle\Form\Pay_typeType;
+use FTR\AdminBundle\Helper\Paginator;
 
 /**
  * Pay_type controller.
@@ -21,11 +22,54 @@ class Pay_typeController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entities = $em->getRepository('FTRWebBundle:Pay_type')->findAll();
+        //get post
+        $getSelectPage = @$_GET['numPage'];
+        $getRecord = @$_GET['record'];
+        $getTextSearch = @$_GET['textSearch'];
+        $getOrderBy = @$_GET['orderBy'];
+        $getOrderByType = @$_GET['orderByType'];
+
+        //set paging
+        $page = 1;
+        if (!empty($getSelectPage)){
+            $page = $getSelectPage;
+        }
+        $limit = 10;
+        $midRange = 5;
+        if(!empty($getRecord)){
+            $limit = $getRecord;
+        }else {
+            $getRecord = $limit;
+        }
+        $offset = $limit*$page-$limit;
+        if (empty($getOrderBy) && empty($getOrderByType)){
+            $getOrderBy = 'id';
+            $getOrderByType = 'asc';
+        }
+
+        $getEntitiesAllPayType = $em->getRepository('FTRWebBundle:Pay_type')->findBy(array('deleted' => 0));
+        $countListPayType = count($getEntitiesAllPayType);
+
+        $entities = $em->getRepository('FTRWebBundle:Pay_type')->getDataPayType($limit, $offset, $getTextSearch, $countListPayType, "$getOrderBy $getOrderByType");
+
+        $paginator = new Paginator($countListPayType, $offset, $limit, $midRange);
 
         return $this->render('FTRAdminBundle:Pay_type:index.html.twig', array(
-            'entities' => $entities
+            'entities'          => $entities,
+            'paginator'	        => $paginator,
+            'countListPayType'	=> $countListPayType,
+            'limit' 	        => $limit,
+            'noPage'	        => $page,
+            'record'	        => $getRecord,
+            'textSearch'        => $getTextSearch,
+            'orderBy'           => $getOrderBy,
+            'orderByType'       => $getOrderByType
         ));
+//        $entities = $em->getRepository('FTRWebBundle:Pay_type')->findAll();
+//
+//        return $this->render('FTRAdminBundle:Pay_type:index.html.twig', array(
+//            'entities' => $entities
+//        ));
     }
 
     /**
@@ -151,37 +195,18 @@ class Pay_typeController extends Controller
         ));
     }
 
-    /**
-     * Deletes a Pay_type entity.
-     *
-     */
-    public function deleteAction($id)
-    {
-        $form = $this->createDeleteForm($id);
-        $request = $this->getRequest();
-
-        $form->bindRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
-            $entity = $em->getRepository('FTRWebBundle:Pay_type')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Pay_type entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
+    /*
+    * Run คำสั่ง Sql
+    * return array
+    */
+    private function getDataArray($sql){
+        $conn= $this->get('database_connection');
+        if(!$conn){ die("MySQL Connection error");}
+        try{
+            return $conn->fetchAll($sql);
+        } catch (Exception $e) {
+            echo 'Caught exception: ',  $e->getMessage(), "\n";
         }
-
-        return $this->redirect($this->generateUrl('pay_type'));
-    }
-
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
-        ;
+        return array();
     }
 }

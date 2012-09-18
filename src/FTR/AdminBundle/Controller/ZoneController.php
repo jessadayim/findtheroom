@@ -62,8 +62,8 @@ class ZoneController extends Controller
             'noPage'	        => $page,
             'record'	        => $getRecord,
             'textSearch'        => $getTextSearch,
-            'orderBy'             => $getOrderBy,
-            'orderByType'         => $getOrderByType
+            'orderBy'           => $getOrderBy,
+            'orderByType'       => $getOrderByType
         ));
     }
 
@@ -81,12 +81,8 @@ class ZoneController extends Controller
             throw $this->createNotFoundException('Unable to find Zone entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
-
         return $this->render('FTRAdminBundle:Zone:show.html.twig', array(
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
-
         ));
     }
 
@@ -183,12 +179,10 @@ class ZoneController extends Controller
         }
 
         $editForm = $this->createForm(new ZoneType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('FTRAdminBundle:Zone:edit.html.twig', array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'edit_form'   => $editForm->createView()
         ));
     }
 

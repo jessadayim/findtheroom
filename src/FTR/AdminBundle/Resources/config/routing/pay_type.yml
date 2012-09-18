@@ -23,8 +23,3 @@ pay_type_update:
     pattern:  /{id}/update
     defaults: { _controller: "FTRAdminBundle:Pay_type:update" }
     requirements: { _method: post }
-
-pay_type_delete:
-    pattern:  /{id}/delete
-    defaults: { _controller: "FTRAdminBundle:Pay_type:delete" }
-    requirements: { _method: post }
