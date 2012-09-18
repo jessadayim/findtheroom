@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FTR\WebBundle\Entity\Pay_type;
 use FTR\AdminBundle\Form\Pay_typeType;
 use FTR\AdminBundle\Helper\Paginator;
+use FTR\AdminBundle\Helper\LoggerHelper;
 
 /**
  * Pay_type controller.

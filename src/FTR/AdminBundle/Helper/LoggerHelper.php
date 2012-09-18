@@ -40,4 +40,21 @@ class LoggerHelper extends Logger
         $this->pushHandler($logHandler);
         $this->pushHandler($rotateHandler);
     }
+
+    public function objectToArray($object)
+    {
+        $data     = array();
+        $reflector = new \ReflectionObject($object);
+
+        foreach ($reflector->getProperties() as $attribute) {
+            $attribute->setAccessible(TRUE);
+            $data[$attribute->getName()] =
+                $attribute->getValue($object);
+        }
+
+        return array(
+            'className' => get_class($object), 'data' => $data
+        );
+    }
+
 }

@@ -91,7 +91,7 @@ FTRWebBundle_search_ampher:
     defaults: { _controller: FTRWebBundle:Search:ampher}
 
 FTRWebBundle_banner:
-    pattern:  /banner
+    pattern:  /ads
     defaults: { _controller: FTRWebBundle:Banner:banner}
 
 #FTRWebBundle_sendmail_extest:
