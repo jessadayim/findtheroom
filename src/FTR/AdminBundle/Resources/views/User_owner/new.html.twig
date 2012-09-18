@@ -1,102 +1,142 @@
 <script>
-	$(document).ready(function() {
-		var url = "{{ path('user_owner_create') }}";
-		$("#formCreate").submit(function() {
-			//alert(url);
-			if (!confirm('คุณต้องการเพิ่มข้อมูล ใช่หรือไม่')) {
-				return false;
-			}
-			//alert($(this).serialize());
-			$.ajax({
-				type : "POST",
-				url : url,
-				data : $(this).serialize(),
-				success : function(msg) {
-				alert(msg);
-//					if (msg == 'finish') {
-//						// $('#listBuildingSite').load(window.location + "show");
-//						$("#createrecordCancel").hide();
-//						$("#createrecord").show('slow');
-//						toggle(".createPanel", 'hide');
-//						$('#listAdmin').fadeOut('slow').load(window.location + "show").fadeIn("slow");
-//					} else if(msg == 'fail'){
-//                        alert('ชื่อนี้มีคนใช้แล้ว);
-//                    }else {
-//						$('.createPanel').html(msg);
-//						alert('การแก้ไขผิดพลาด');
-//					}
-				}
-			});
-			return false;
-		});
+    $(document).ready(function () {
+        var url = "{{ path('user_owner_create') }}";
+        $("#formCreate").submit(function () {
+            //alert(url);
+            if (chkValidate() != false) {
+                if (!confirm('คุณต้องการเพิ่มข้อมูล ใช่หรือไม่')) {
+                    return false;
+                }
+                //alert($(this).serialize());
+                $.ajax({
+                    type:"POST",
+                    url:url,
+                    data:$(this).serialize(),
+                    success:function (msg) {
+//                    alert(msg);
+                        if (msg == 'finish') {
+                            // $('#listBuildingSite').load(window.location + "show");
+                            $("#createrecordCancel").hide();
+                            $("#createrecord").show('slow');
+                            toggle(".createPanel", 'hide');
+                            $('#listAdmin').fadeOut('slow').load(window.location + "show").fadeIn("slow");
+                        } else if (msg == 'fail') {
+                            alert('ชื่อนี้มีคนใช้แล้ว');
+                        } else {
+                            $('.createPanel').html(msg);
+                            alert('การแก้ไขผิดพลาด');
+                        }
+                    }
+                });
+            }
+            return false;
+        });
 
-		function toggle(id, toggle) {
-			$(id).animate({
-				left : '+=50',
-				height : toggle
-			}, 500, function() {
-			});
-		}
+        function toggle(id, toggle) {
+            $(id).animate({
+                left:'+=50',
+                height:toggle
+            }, 500, function () {
+            });
+        }
 
-	}); 
+    });
 </script>
 
 <form id="formCreate" action="{{ path('user_owner_create') }}" method="post">
-	<fieldset>
-		<legend>
-			CREATE OWNER
-		</legend>
-		<div class="label" style="">
-			{{ form_label(form.username) }}
-		</div>
-		{{ form_widget(form.username, { 'attr': {'class': 'widfat'} }) }} &nbsp;
-		{{ form_errors(form.username) }}
-		<br />
-		<div class="label" style="">
-			{{ form_label(form.password) }}
-		</div>
-		{{ form_widget(form.password, { 'attr': {'class': 'widfat'} }) }} &nbsp;
-		{{ form_errors(form.password) }}
-		<br />
-		<div class="label" style="">
-			{{ form_label(form.firstname) }}
-		</div>
-		{{ form_widget(form.firstname, { 'attr': {'class': 'widfat'} }) }} &nbsp;
-		{{ form_errors(form.firstname) }}
-		<br />
-		<div class="label" style="">
-			{{ form_label(form.lastname) }}
-		</div>
-		{{ form_widget(form.lastname, { 'attr': {'class': 'widfat'} }) }} &nbsp;
-		{{ form_errors(form.lastname) }}
-		<br />
+    <fieldset>
+        <legend>
+            CREATE OWNER
+        </legend>
+        <div class="label" style="">
+            {{ form_label(form.username) }}
+        </div>
+        {{ form_widget(form.username, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+        {{ form_errors(form.username) }}
+        <br/>
+
+        <div class="label" style="">
+            {{ form_label(form.password) }}
+        </div>
+        {{ form_widget(form.password, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+        {{ form_errors(form.password) }}
+        <br/>
+
+        <div class="label" style="">
+            {{ form_label(form.firstname) }}
+        </div>
+        {{ form_widget(form.firstname, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+        {{ form_errors(form.firstname) }}
+        <br/>
+
+        <div class="label" style="">
+            {{ form_label(form.lastname) }}
+        </div>
+        {{ form_widget(form.lastname, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+        {{ form_errors(form.lastname) }}
+        <br/>
+
         <div class="label" style="">
             {{ form_label(form.email) }}
         </div>
         {{ form_widget(form.email, { 'attr': {'class': 'widfat'} }) }} &nbsp;
         {{ form_errors(form.email) }}
-        <br />
-		<div class="label" style="">
-			{{ form_label(form.phone_number) }}
-		</div>
-		{{ form_widget(form.phone_number, { 'attr': {'class': 'widfat'} }) }} &nbsp;
-		{{ form_errors(form.phone_number) }}
-		<br />
-		<div class="label" style="">
-			{{ form_label(form.fax_number) }}
-		</div>
-		{{ form_widget(form.fax_number, { 'attr': {'class': 'widfat'} }) }} &nbsp;
-		{{ form_errors(form.fax_number) }}
-		<br />
-		<div class="label" style="">
-			{{ form_label(form.user_level) }}
-		</div>
-		{{ form_widget(form.user_level, { 'attr': {'class': 'widfat'} }) }} &nbsp;
-		{{ form_errors(form.user_level) }}
-		{{ form_widget(form) }}
-		<br />
+        <br/>
+
+        <div class="label" style="">
+            {{ form_label(form.phone_number) }}
+        </div>
+        {{ form_widget(form.phone_number, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+        {{ form_errors(form.phone_number) }}
+        <br/>
+
+        <div class="label" style="">
+            {{ form_label(form.fax_number) }}
+        </div>
+        {{ form_widget(form.fax_number, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+        {{ form_errors(form.fax_number) }}
+        <br/>
+
+        <div class="label" style="">
+            {{ form_label(form.user_level) }}
+        </div>
+        {{ form_widget(form.user_level, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+        {{ form_errors(form.user_level) }}
+        {{ form_widget(form) }}
+        <br/>
 		<span style="float: right;">
-			<input type="submit"  value="CREATE">
+			<input type="submit" value="CREATE">
 		</span>
-	</fieldset>
+    </fieldset>
 </form>
+<script>
+    function chkValidate() {
+        var regUser = /[^A-Za-z0-9_\.]/;
+        var regPass = /[a-z][0-9]/;
+        var regEmail = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+        var regTel = /^[\d]+$/;
+        if($("#ftr_adminbundle_user_ownertype_username").val().length < 5){
+            alert("ชื่อผู้ใช้งานจะต้องไม่น้อยกว่า 5 ตัว");
+            return false;
+        }else if (regUser.test($('#ftr_adminbundle_user_ownertype_username').val()) == true) {
+            alert("ชื่อผู้ใช้งาน จะต้องเป็นอักขระอังกฤษ หรือตัวเลข และไม่น้อยกว่า 4 ตัว");
+            return false;
+        } else if ($("#ftr_adminbundle_user_ownertype_password").val().length < 6) {
+            alert("รหัสผ่านจะต้องไม่น้อยกว่า 6 ตัว");
+            return false;
+        } else if (!$("#ftr_adminbundle_user_ownertype_password").val().match(regPass)) {
+            alert("รหัสผ่านจะต้องเป็นตัวอักษร และตัวเลข");
+            return false;
+        } else if (!$("#ftr_adminbundle_user_ownertype_email").val().match(regEmail)) {
+            alert("กรุณากรอกอีเมลให้ถูกต้อง");
+            return false;
+        } else if ($("#ftr_adminbundle_user_ownertype_phone_number").val().length < 9 || $("#ftr_adminbundle_user_ownertype_phone_number").val().length > 10) {
+            alert("กรุณากรอกหมายเลขโทรศัพท์ให้ถูกต้อง");
+            return false;
+        } else if (!$("#ftr_adminbundle_user_ownertype_phone_number").val().match(regTel)) {
+            alert("หมายเลขโทรศัพท์ต้องเป็นตัวเลขอย่างเดียว");
+            return false;
+        }
+        return true;
+    }
+</script>

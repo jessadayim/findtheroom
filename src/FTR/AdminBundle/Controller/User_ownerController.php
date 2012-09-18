@@ -92,8 +92,6 @@ class User_ownerController extends Controller
 
                 $em->persist($entity);
                 $em->flush();
-var_dump($entity);
-                exit();
                 //Create เสร็จแล้ว
                 echo 'finish';
                 exit();
