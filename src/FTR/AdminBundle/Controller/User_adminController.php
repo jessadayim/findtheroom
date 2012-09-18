@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use FTR\AdminBundle\Entity\User_admin;
 use FTR\AdminBundle\Form\User_adminType;
 use FTR\AdminBundle\Helper\Paginator;
+use FTR\AdminBundle\Helper\LoggerHelper;
 
 /**
  * User_admin controller.
@@ -120,6 +121,7 @@ class User_adminController extends Controller
 
                 $em->persist($entity);
                 $em->flush();
+
                 //Create เสร็จแล้ว
                 echo 'finish';
                 exit();
@@ -177,6 +179,7 @@ class User_adminController extends Controller
             $entity->setDeleted(1);
             $em->persist($entity);
             $em->flush();
+
             echo 'finish';
             exit();
         }
@@ -198,6 +201,9 @@ class User_adminController extends Controller
             if ($editForm->isValid()) {
                 $em->persist($entity);
                 $em->flush();
+
+                $logger = new LoggerHelper();
+                $logger->addInfo('test log for save data',array('place'=>'test'));
 
                 echo 'finish';
                 exit();
