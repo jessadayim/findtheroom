@@ -19,6 +19,7 @@ use FTR\WebBundle\Entity\Pay_type;
 use FTR\WebBundle\Entity\Roomtype2site;
 use FTR\WebBundle\Entity\Zone;
 use FTR\WebBundle\Controller\SearchController;
+use FTR\AdminBundle\Helper\LoggerHelper;
 
 class UserbuildingController extends Controller
 {
@@ -105,6 +106,7 @@ class UserbuildingController extends Controller
                 $building = new Building_site();
                 $building->setBuildingName('');
                 $building->setBuildingAddress('');
+                $building->setPublish(0);
                 $building->setStartPrice(0);
                 $building->setEndPrice(0);
                 $building->setPhoneNumber('');
@@ -416,54 +418,36 @@ class UserbuildingController extends Controller
         return $fac_listreturn;
     }
 
-    public function saveDataAction($id = null)
+    public function saveDataAction($id)
     {
         $conn = $this->get('database_connection');
         if (!$conn) {
             die("MySQL Connection error");
         }
-        $check = NULL;
+
         $em = $this->getDoctrine()->getEntityManager();
         $session = $this->get('session');
         $user = $session->get('user');
 
-        $today = date("Y-m-d H:i:s");
+        $logger = new LoggerHelper();
+
         if ($_POST) {
             $post_array = $_POST;
-            echo "<pre>";
+            /*echo "<pre>";
             var_dump($post_array);
-            echo "</pre>";
-            exit();
-
-            /*try {
-                if ($id) {
-                    $sql = "select * from building_site where id = $id";
-                    $check = $conn->fetchAll($sql);
-                }
-                //เช็คข้อมูลก่อน เพื่อทราบว่าจะ Insert หรือ Update
-                if (!empty($check)) { //ส่วนนี้ พบข้อมูล ทำการอัพเดต
-
-
-                } else { //ส่วนนี้ ไม่พบข้อมูล ทำการ insert
-
-                    $sqlinsert = "INSERT INTO `building_site` (
-									`building_name`,`building_address`,`start_price`,`end_price`,`phone_number`,
-									`datetimestamp`,`lastupdate`,`userupdate`,`latitude`,`longitude`,
-									`building_type_id`,`pay_type_id`,`user_owner_id`,`detail`,`contact_name`,
-									`contact_email`,`website`,`month_stay`,`water_unit`,`electricity_unit`,
-									`internet_price`) 
-								VALUE('ทดสอบ','7/513 หมู่7','1500','4500','0863494353',
-									'$today','$today','$user','1','1',
-									'1','1','1','ทดสอบดีเทลล์','เจษฎา ยิ้มวิลัย',
-									'exodist@gmail.com','','6','4','8',
-									'799')";
-                    //echo "<pre>";var_dump($sqlinsert);echo "</pre>";exit();
-                    $conn->query($sqlinsert);
-
-                }
-            } catch (Exception $e) {
-                echo 'Caught exception: ', $e->getMessage(), "\n";
-            }*/
+            echo "</pre>";*/
+            //$logger->addInfo('test log for save data',array('place'=>$post_array['placeap']));
+            $buildingData = $em->getRepository('FTRWebBundle:Building_site')->findOneBy(array('id' => $id));
+            if(!empty($buildingData))
+            {
+                $publish = $buildingData->getPublish();
+            }
+            if($publish!=1)
+            {
+                $buildingData->setPublish(2);
+                $em->flush();
+                $logger->addInfo('User '.$user.' update building');
+            }
         }
         //exit();
         return $this->redirect($this->generateUrl('userbuilding'));
