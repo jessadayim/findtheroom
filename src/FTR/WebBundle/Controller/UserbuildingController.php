@@ -37,17 +37,19 @@ class UserbuildingController extends Controller
         }
         $em = $this->getDoctrine()->getEntityManager();
         $conn = $this->get('database_connection');
+        $enabled = null;
+        $arrdata = NULL;
         if (!$conn) {
             die("MySQL Connection error");
         }
         try {
             $sql1 = "SELECT * FROM user_owner WHERE username = '" . $username . "'";
             $objSQL1 = $conn->fetchAll($sql1);
-            $objSQL1[0]['username'];
+            $enabled = $objSQL1[0]['enabled'];
 
             $sql2 = "SELECT * FROM building_site WHERE user_owner_id = '" . $objSQL1[0]['id'] . "'";
             $objSQL2 = $conn->fetchAll($sql2);
-            $arrdata = NULL;
+
             foreach ($objSQL2 as $key => $value) {
                 if ($value['publish'] == 1) {
                     $publish = "แสดงแล้ว";
@@ -76,6 +78,7 @@ class UserbuildingController extends Controller
             'phone_number' => $objSQL1[0]['phone_number'],
             'errormsg' => $errormsg,
             'build_data' => $arrdata,
+            'enabled' => $enabled,
         ));
     }
 
@@ -154,7 +157,7 @@ class UserbuildingController extends Controller
             $imagehead = $this->getImageDatas($building_id, NULL, 'head');
             $imagemap = $this->getImageDatas($building_id, NULL, 'map');
 
-            $sqlFacilityList = "select facilitylist_id from facility2site where building_site_id = $id and deleted = 0";
+            $sqlFacilityList = "select facilitylist_id from facility2site where building_site_id = $building_id and deleted = 0";
             $facFetch = $conn->fetchAll($sqlFacilityList);
             $facArray = NULL;
             foreach ($facFetch as $key => $value) {
@@ -649,11 +652,20 @@ class UserbuildingController extends Controller
                 echo $alert;
             }
             elseif ($type == 'other') {
-                $facilityList = @$_POST['fac'];
-                $alert = $this->saveFacilityData($id, $facilityList);
-
-                $zoneLocation = @$_POST['bkzone_ot'];
-                $nearLocation = @$_POST['near_ot'];
+                if(!empty($_POST['fac'])){
+                    $facilityList = @$_POST['fac'];
+                    $alert = $this->saveFacilityData($id, $facilityList);
+                }
+                if(!empty($_POST['bkzone_ot'])){
+                    $zoneLocation = @$_POST['bkzone_ot'];
+                }else{
+                    $zoneLocation = null;
+                }
+                if(!empty($_POST['near_ot'])){
+                    $nearLocation = @$_POST['near_ot'];
+                }else{
+                    $nearLocation = null;
+                }
                 $arrOther = array(
                     'bts'       => @$_POST['bts_ot'],
                     'mrt'       => @$_POST['mrt_ot'],
@@ -887,9 +899,15 @@ class UserbuildingController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
         $buildingValue = $em->getRepository('FTRWebBundle:Building_site')->findOneBy(array('id' => $id));
-        $buildingValue->setZoneId($zone);
-        $buildingValue->setNearlyPlace($near);
-        $em->flush();
+        if(!empty($zone)||!empty($near)){
+            if(!empty($zone)){
+                $buildingValue->setZoneId($zone);
+            }
+            if(!empty($near)){
+                $buildingValue->setNearlyPlace($near);
+            }
+            $em->flush();
+        }
 
         $nearlyValue = $em->getRepository('FTRWebBundle:Nearly2site')->findBy(array('building_site_id' => $id));
 
@@ -902,25 +920,31 @@ class UserbuildingController extends Controller
             $em->flush();
         }
         //echo "test";exit();
-        $nearlyLocation = new Nearly2site();
-        $nearlyLocation->setBuildingSiteId($id);
-        $nearlyLocation->setNearlyLocationId($arrData['bts']);
-        $nearlyLocation->setDeleted(0);
-        $em->persist($nearlyLocation);
-
-        $nearlyLocation = new Nearly2site();
-        $nearlyLocation->setBuildingSiteId($id);
-        $nearlyLocation->setNearlyLocationId($arrData['mrt']);
-        $nearlyLocation->setDeleted(0);
-        $em->persist($nearlyLocation);
-
-        $nearlyLocation = new Nearly2site();
-        $nearlyLocation->setBuildingSiteId($id);
-        $nearlyLocation->setNearlyLocationId($arrData['university']);
-        $nearlyLocation->setDeleted(0);
-        $em->persist($nearlyLocation);
-        $em->flush();
-
+        if(!empty($arrData['bts']))
+        {
+            $nearlyLocation = new Nearly2site();
+            $nearlyLocation->setBuildingSiteId($id);
+            $nearlyLocation->setNearlyLocationId($arrData['bts']);
+            $nearlyLocation->setDeleted(0);
+            $em->persist($nearlyLocation);
+        }
+        if(!empty($arrData['mrt']))
+        {
+            $nearlyLocation = new Nearly2site();
+            $nearlyLocation->setBuildingSiteId($id);
+            $nearlyLocation->setNearlyLocationId($arrData['mrt']);
+            $nearlyLocation->setDeleted(0);
+            $em->persist($nearlyLocation);
+        }
+        if(!empty($arrData['university']))
+        {
+            $nearlyLocation = new Nearly2site();
+            $nearlyLocation->setBuildingSiteId($id);
+            $nearlyLocation->setNearlyLocationId($arrData['university']);
+            $nearlyLocation->setDeleted(0);
+            $em->persist($nearlyLocation);
+            $em->flush();
+        }
         return "complete";
     }
 

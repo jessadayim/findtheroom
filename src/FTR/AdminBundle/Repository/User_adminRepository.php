@@ -3,7 +3,7 @@
 namespace FTR\AdminBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-
+use Doctrine\ORM\Query\QueryException;
 /**
  * User_adminRepository
  *
@@ -12,4 +12,27 @@ use Doctrine\ORM\EntityRepository;
  */
 class User_adminRepository extends EntityRepository
 {
+    public function getDataAdmin($limit, $offset, $textSearch, &$count, $orderBy){
+        $sql = "
+            SELECT
+              a
+            FROM FTRAdminBundle:User_admin a
+            WHERE a.deleted = 0
+        ";
+        if (!empty($textSearch) && $textSearch != ''){
+            $sql = "
+                $sql
+                AND a.username LIKE '%$textSearch%'
+                OR a.firstname LIKE '%$textSearch%'
+            ";
+
+            //นับจำนวนใหม่
+            $count = count($this -> getEntityManager() -> createQuery($sql)-> getResult());
+        }
+        $sql = "
+                $sql
+                ORDER BY a.$orderBy
+            ";
+        return $this -> getEntityManager() -> createQuery($sql) -> setFirstResult($offset) -> setMaxResults($limit) -> getResult();
+    }
 }

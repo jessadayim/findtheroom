@@ -1,87 +1,190 @@
 <script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script>
-<script type='text/javascript' src='{{asset("js/paging/jquery.dataTables.js")}}'></script>
-<link rel="stylesheet" href='{{asset("css/paging/sytletable.css")}}' type="text/css" id="" media="print, projection, screen" />
-<script type="text/javascript">
-	jQuery.fn.dataTableExt.oSort['string-case-asc'] = function(x, y) {
-		return ((x < y) ? -1 : ((x > y) ? 1 : 0));
-	};
+{#<script type='text/javascript' src='{{asset("js/paging/jquery.dataTables.js")}}'></script>#}
+{#<link rel="stylesheet" href='{{asset("css/paging/sytletable.css")}}' type="text/css" id="" media="print, projection, screen" />#}
 
-	jQuery.fn.dataTableExt.oSort['string-case-desc'] = function(x, y) {
-		return ((x < y) ? 1 : ((x > y) ? -1 : 0));
-	};
 
-	$(document).ready(function() {
-		$("#sortTable1").dataTable({
-			"aaSorting" : [[0, 'asc']]
-		});
-	}); 
-</script>
 <script>
-	$(document).ready(function() {
-		$(".linkEditUseradmin").click(function() {
-			//alert(this.href + '/edit');
-			$.post(this.href + '/edit', function(data) {
-				//alert(data);
-				$('.editPanel').slideUp(300).fadeIn(400);
-				$('.editPanel').html(data);
-				
-				toggle(".createPanel", 'hide');
-				toggle(".editPanel", 'show');
-				$("#createrecordCancel").hide();
-				$("#createrecord").show('slow');
-				document.getElementById('createrecord').scrollIntoView();
-			});
-			return false;
-		});
+    $(document).ready(function () {
+        $(".linkEditUseradmin").click(function () {
+            //alert(this.href + '/edit');
+            $.post(this.href + '/edit', function (data) {
+                //alert(data);
+                $('.editPanel').slideUp(300).fadeIn(400);
+                $('.editPanel').html(data);
 
-		function toggle(id, toggle) {
-			$(id).animate({
-				left : '+=50',
-				height : toggle
-			}, 500, function() {
-			});
-		}
+                toggle(".createPanel", 'hide');
+                toggle(".editPanel", 'show');
+                $("#createrecordCancel").hide();
+                $("#createrecord").show('slow');
+                document.getElementById('createrecord').scrollIntoView();
+            });
+            return false;
+        });
 
-		$(".linkDeleteUseradmin").click(function() {
-			//alert(this.href + "/delete");
-			if (!confirm('คุณต้องการลบข้อมูล ใช่หรือไม่')) {
-				return false;
-			}
-			$.ajax({
-				type : "POST",
-				url : this.href + "/update",
-				data : {
-					checkdelete : 'deleted'
-				},
-				success : function(msg) {
-					//alert(msg);
-					if (msg == 'finish') {						
-						toggle(".createPanel", 'hide');
-						toggle(".editPanel", 'hide');
-						
-						$('#listAdmin').fadeOut('slow').load(window.location + "show").fadeIn("slow");
-					} else {
-						$('.innerPanel').html(msg);
-						alert('การแก้ไขผิดพลาด');
-					}
-				}
-			});
-			return false;
-		});
-	}); 
+        function toggle(id, toggle) {
+            $(id).animate({
+                left:'+=50',
+                height:toggle
+            }, 500, function () {
+            });
+        }
+
+        $(".linkDeleteUseradmin").click(function () {
+            //alert(this.href + "/delete");
+            if (!confirm('คุณต้องการลบข้อมูล ใช่หรือไม่')) {
+                return false;
+            }
+            $.ajax({
+                type:"POST",
+                url:this.href + "/update",
+                data:{
+                    checkdelete:'deleted'
+                },
+                success:function (msg) {
+                    //alert(msg);
+                    if (msg == 'finish') {
+                        toggle(".createPanel", 'hide');
+                        toggle(".editPanel", 'hide');
+
+                        $('#listAdmin').fadeOut('slow').load(window.location + "show").fadeIn("slow");
+                    } else {
+                        $('.innerPanel').html(msg);
+                        alert('การแก้ไขผิดพลาด');
+                    }
+                }
+            });
+            return false;
+        });
+
+        // Paging
+        $(".inPage").click(function () {
+            var numPage = this.value;
+            getHtml(numPage, getOrderBy());
+            return false;
+        });
+
+        //กำหนดจำนวนหน้า
+        $(".record").change(function () {
+            var numPage = $(".disableBtn").val();
+            getHtml(numPage, getOrderBy());
+            return false;
+        });
+
+        //ค้นหาด้วยข้อความ
+        $("#tbxSearch").change(function () {
+            var numPage = 1;
+            getHtml(numPage, getOrderBy());
+            return false;
+        });
+
+        //Order by
+        $(".btnOrderBy").click(function () {
+            var type = this.id;
+            type = type.replace('sort_', '');
+            var numPage = $(".disableBtn").val();
+            var orderBy = "&orderBy=" + type;
+
+            getHtml(numPage, orderBy);
+            return false;
+        });
+    });
+    // ค่าปัจจุบันในการ sort
+    var orderByOld = "{{ orderBy }}";
+
+    //get ค่าการ sort ปัจจุบัน
+    function getOrderBy() {
+        var strOrderBy = "&orderBy=" + orderByOld;
+        return strOrderBy;
+    }
+
+    //Paging, Sorting, Search
+    function getHtml(numPage, orderBy) {
+        //alert('working');
+        var recordValue = $(".record").val();
+        var textSearch = $("#tbxSearch").val();
+        var send = "?numPage=" + numPage + "&record=" + recordValue + "&textSearch=" + textSearch + orderBy;
+        {#alert("{{ path('user_admin') }}"+send);#}
+        $.post("{{ path('user_admin_show') }}" + send, function (data) {
+//            alert(data);
+                    $('#listAdmin').html(data);
+                });
+    }
 </script>
+<style type="text/css">
+    .inPage {
+        cursor: pointer;
+    }
+</style>
 <table id="sortTable1" class="display">
-	<thead>
-		<th style="width: 840px !important;">name</th>
-		<th style="width: 50px !important;">config</th>
-	</thead>
-	{% for entity in entities%}
-	<tr>
-		<td>{{entity.username}}</td>
-		<td><a href="{{entity.id}}" class="linkEditUseradmin">Edit</a>&nbsp;&nbsp;<a href="{{entity.id}}" class="linkDeleteUseradmin" >Delete</a></td>
-	</tr>
-	{% endfor%}
-</table>
+    <thead>
+    <th style="width: 50px !important;"><a class="btnOrderBy" href="#" id="sort_id">Id</a></th>
+    <th style="width: 790px !important;"><a class="btnOrderBy" href="#" id="sort_username">USER NAME</a></th>
+    {#<th style="width: 840px !important;">name</th>#}
 
-<div id="green" style="margin: auto;" class="pager green"></div>
+    <th style="width: 50px !important;">config</th>
+    </thead>
+    {% for entity in entities%}
+    <tr>
+        <td>{{entity.id}}</td>
+        <td>{{entity.username}}</td>
+        <td><a href="{{entity.id}}" class="linkEditUseradmin">Edit</a>&nbsp;&nbsp;<a href="{{entity.id}}"
+                                                                                     class="linkDeleteUseradmin">Delete</a>
+        </td>
+    </tr>
+    {% endfor%}
+</table>
 <div class="clear"></div>
+<div class="paginator">
+    <ul>
+        <strong>showing {{ countListEntities }} entities : Page</strong>
+        {% for i in 1..paginator.numpages %}
+        {% if paginator.range.0 > 2 and i == paginator.range.0 %}
+        ...
+        {% endif %}
+
+        {% if(i==1 or i==paginator.numpages or i in paginator.range) %}
+        {% if i==paginator.currentpage %}
+        {% if i == noPage %}
+        <input class="disableBtn" type="button" value="{{i}}" id="Submit" name="submitPage" disabled="true"/>
+        {% else %}
+        <input class="inPage" type="button" value="{{i}}" id="Submit" name="submitPage"/>
+        {% endif %}
+        {% else %}
+        {% if i == noPage %}
+        <input class="disableBtn" type="button" value="{{i}}" id="Submit" name="submitPage" disabled="true"/>
+        {% else %}
+        <input class="inPage" type="button" value="{{i}}" id="Submit" name="submitPage"/>
+        {% endif %}
+        {% endif %}
+        {% endif %}
+
+        {% if paginator.range[paginator.midrange -1] < paginator.numpages -1 and i == paginator.range[paginator.midrange-1] %}
+        ...
+        {% endif %}
+        {% endfor %}
+        <div align="right" style="float:right;"><strong>Search:</strong>
+            <input id="tbxSearch" style="height: 25px;margin-bottom: 10px;" value="{{ textSearch }}"/>&nbsp;&nbsp;
+            <select name="record" style="width:150px;" class="record">
+                <option value="10">10 Record</option>
+                {% if limit == '50' %}
+                <option selected="yes" value="50">50 Record</option>
+                <option value="100">100 Record</option>
+                <option value="500">500 Record</option>
+                {% elseif limit == '100' %}
+                <option value="50">50 Record</option>
+                <option selected="yes" value="100">100 Record</option>
+                <option value="500">500 Record</option>
+                {% elseif limit == '500' %}
+                <option value="50">50 Record</option>
+                <option value="100">100 Record</option>
+                <option selected="yes" value="500">500 Record</option>
+                {% else %}
+                <option value="50">50 Record</option>
+                <option value="100">100 Record</option>
+                <option value="500">500 Record</option>
+                {% endif %}
+            </select>
+        </div>
+    </ul>
+</div>
+</div>
