@@ -57,7 +57,7 @@ class Pay_typeController extends Controller
         return $this->render('FTRAdminBundle:Pay_type:index.html.twig', array(
             'entities'          => $entities,
             'paginator'	        => $paginator,
-            'countListPayType'	=> $countListPayType,
+            'countList'	        => $countListPayType,
             'limit' 	        => $limit,
             'noPage'	        => $page,
             'record'	        => $getRecord,
@@ -65,11 +65,6 @@ class Pay_typeController extends Controller
             'orderBy'           => $getOrderBy,
             'orderByType'       => $getOrderByType
         ));
-//        $entities = $em->getRepository('FTRWebBundle:Pay_type')->findAll();
-//
-//        return $this->render('FTRAdminBundle:Pay_type:index.html.twig', array(
-//            'entities' => $entities
-//        ));
     }
 
     /**
@@ -86,12 +81,8 @@ class Pay_typeController extends Controller
             throw $this->createNotFoundException('Unable to find Pay_type entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
-
         return $this->render('FTRAdminBundle:Pay_type:show.html.twig', array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
-
+            'entity'      => $entity
         ));
     }
 
@@ -118,15 +109,35 @@ class Pay_typeController extends Controller
     {
         $entity  = new Pay_type();
         $request = $this->getRequest();
+
+        //Set ค่า deleted = 0
+        $entity->setDeleted(0);
         $form    = $this->createForm(new Pay_typeType(), $entity);
         $form->bindRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();
+
+            //Check ชื่อ pay type ซ้ำ
+            $getTypeName = $entity->getTypename();
+            $sqlGetTypeName = "
+                SELECT
+                  *
+                FROM
+                  `pay_type`
+                WHERE `typename` = '$getTypeName'
+                  AND `deleted` = 0
+            ";
+            $objGetTypeName = $this->getDataArray($sqlGetTypeName);
+            if (!empty($objGetTypeName)){
+                echo "finish_comp";
+                exit();
+            }
             $em->persist($entity);
             $em->flush();
-
-            return $this->redirect($this->generateUrl('pay_type_show', array('id' => $entity->getId())));
+            echo 'finish';
+            exit();
+//            return $this->redirect($this->generateUrl('pay_type_show', array('id' => $entity->getId())));
             
         }
 
@@ -146,17 +157,37 @@ class Pay_typeController extends Controller
 
         $entity = $em->getRepository('FTRWebBundle:Pay_type')->find($id);
 
+        //Check post เปลี่ยน deleted เป็น 1
+        $getCheckPost = @$_POST['checkPost'];
+        if ($getCheckPost == "delete"){
+            $sqlCheck = "
+                SELECT
+                  *
+                FROM
+                  `building_site`
+                WHERE `pay_type_id` = $id
+                  AND `deleted` = 0
+            ";
+            $objCheck = $this->getDataArray($sqlCheck);
+            if (!empty($objCheck)){
+                echo "finish_math";
+                exit();
+            }
+            $entity->setDeleted(1);
+            $em->persist($entity);
+            $em->flush();
+            echo 'finish';
+            exit();
+        }
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Pay_type entity.');
         }
 
         $editForm = $this->createForm(new Pay_typeType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('FTRAdminBundle:Pay_type:edit.html.twig', array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'edit_form'   => $editForm->createView()
         ));
     }
 
@@ -175,7 +206,6 @@ class Pay_typeController extends Controller
         }
 
         $editForm   = $this->createForm(new Pay_typeType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
 
         $request = $this->getRequest();
 
@@ -184,14 +214,13 @@ class Pay_typeController extends Controller
         if ($editForm->isValid()) {
             $em->persist($entity);
             $em->flush();
-
-            return $this->redirect($this->generateUrl('pay_type_edit', array('id' => $id)));
+            echo 'finish';exit();
+//            return $this->redirect($this->generateUrl('pay_type_edit', array('id' => $id)));
         }
 
         return $this->render('FTRAdminBundle:Pay_type:edit.html.twig', array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'edit_form'   => $editForm->createView()
         ));
     }
 

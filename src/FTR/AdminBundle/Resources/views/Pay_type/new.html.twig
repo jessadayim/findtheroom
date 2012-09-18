@@ -1,16 +1,72 @@
-<h1>Pay_type creation</h1>
+<script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script>
+<script>
+    $(document).ready(function() {
+        $("#formCreate").submit(function(){
+            var url = "{{ path('pay_type_create') }}";
+            $.ajax({
+                type : "POST",
+                url : url,
+                data : $(this).serialize(),
+                success : function(msg) {
+                    if (msg == "finish_comp"){
+                        alert('!!! ชื่อ Pay Type "' + $("#ftr_adminbundle_pay_typetype_typename").val() + '" นี้มีข้อมูลอยู่แล้ว');
+                    }else if (msg == 'finish') {
+                        $("#btnShowHide").show("slow");
+                        $('#innerPanel').fadeOut(100).load("{{ path('pay_type') }}").fadeIn("slow");
+                        $("#new").slideUp(300).delay(800).fadeOut(400);
+                        alert('√ ทำการเพิ่ม Pay Type เรียบร้อยแล้ว');
+                    } else {
+                        $('#new').fadeOut().load(msg).fadeIn("slow");
+                        alert('เกิดการผิดพลาด\n** กรุณาตรวจสอบ **');
+                    }
+                }
+            });
+            return false;
+        });
 
-<form action="{{ path('pay_type_create') }}" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
-    <p>
-        <button type="submit">Create</button>
-    </p>
-</form>
+        $("#btnCancelCreate").click(function(){
+            $("#btnShowHide").show("slow");
+            $("#new").slideUp(300).delay(800).fadeOut(400);
+            return false;
+        });
+    });
+</script>
+<style type="text/css">
+    #btnCreate {
+        background: url("{{ asset('images/save.png')}}") no-repeat;
+        display: block;
+        float: none;
+        height: 50px;
+        position: absolute;
+        margin-left: 70px;
+        margin-top: -55px;
+    }
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('pay_type') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+    #btnInputCreate {
+        background: url("{{ asset('images/save.png')}}") no-repeat;
+        opacity: 0;
+        -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+        filter: alpha(opacity=0);
+        cursor: pointer;
+        height: 50px;
+        width: 50px;
+    }
+</style>
+<fieldset id="createField">
+    <form id="formCreate" action="{{ path('pay_type_create') }}" method="post" {{ form_enctype(form) }}>
+        <div class="label" style="">
+            {{ form_label(form.typename) }}
+        </div>
+        {{ form_widget(form.typename, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+        {{ form_errors(form.typename) }}
+        <br />
+        {{ form_widget(form) }}
+       <span style="float: right;">
+            <img src="{{ asset('images/cancel.png')}}" id="btnCancelCreate" width="50" height="50" style="cursor:pointer;margin-right: 70px" />
+                &nbsp;&nbsp;
+            <div id="btnCreate">
+                <input type="submit" id="btnInputCreate" value="Edit">
+            </div>
+        </span>
+    </form>
+</fieldset>

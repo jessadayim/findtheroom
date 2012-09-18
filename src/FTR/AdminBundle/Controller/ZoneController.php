@@ -82,7 +82,7 @@ class ZoneController extends Controller
         }
 
         return $this->render('FTRAdminBundle:Zone:show.html.twig', array(
-            'entity'      => $entity,
+            'entity'      => $entity
         ));
     }
 
@@ -117,6 +117,8 @@ class ZoneController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();
+
+            //Check ชื่อ zone ซ้ำ
             $getZoneName = $entity->getZonename();
             $sqlGetZone = "
                 SELECT
@@ -153,6 +155,8 @@ class ZoneController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('FTRWebBundle:Zone')->find($id);
+
+        //Check post เปลี่ยน deleted เป็น 1
         $getCheckPost = @$_POST['checkPost'];
         if ($getCheckPost == "delete"){
             $sqlCheck = "
@@ -202,7 +206,6 @@ class ZoneController extends Controller
         }
 
         $editForm   = $this->createForm(new ZoneType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
 
         $request = $this->getRequest();
 
@@ -218,7 +221,6 @@ class ZoneController extends Controller
         return $this->render('FTRAdminBundle:Zone:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 

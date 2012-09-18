@@ -1,7 +1,7 @@
-<!-- jQuery data table -->
 <script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script>
-{#<script type='text/javascript' src='{{asset("js/paging/jquery.dataTables.js")}}'></script>#}
-{#<link rel="stylesheet" href='{{asset("css/paging/sytletable.css")}}' type="text/css" id="" media="print, projection, screen" />#}
+<script type='text/javascript' src='{{asset("js/paging/data_table/table_paging.js")}}'></script>
+<link rel="stylesheet" type="text/css" href="{{asset('js/paging/data_table/table_style.css')}}" />
+
 <script>
     $(document).ready(function() {
         $(".btnEditZone").click(function(){
@@ -42,116 +42,19 @@
             $('#newZone').fadeOut().load("{{ path('zone_new') }}").fadeIn("slow");
             return false;
         });
-
-        // Paging
-        $(".inPage").click(function(){
-            var numPage = this.value;
-            getHtml(numPage, getOrderBy());
-            return false;
-        });
-
-        //กำหนดจำนวนหน้า
-        $(".record").change(function(){
-            var numPage = $(".disableBtn").val();
-            getHtml(numPage, getOrderBy());
-            return false;
-        });
-
-        //ค้นหาด้วยข้อความ
-        $("#tbxSearch").change(function(){
-            var numPage = 1;
-            getHtml(numPage, getOrderBy());
-            return false;
-        });
-
-        //Order by
-        $(".btnOrderBy").click(function(){
-            var type = this.id;
-            type = type.replace('sort_', '');
-            var numPage = $(".disableBtn").val();
-            var orderBy = "&orderBy=" + type;
-            if (orderByOld == type){
-                if (orderByTypeOld == 'asc'){
-                    orderBy += "&orderByType=desc";
-                }else{
-                    orderBy += "&orderByType=asc";
-                }
-            }else{
-                orderBy += "&orderByType=desc";
-            }
-            getHtml(numPage, orderBy);
-            return false;
-        });
     });
 
     // ค่าปัจจุบันในการ sort
     var orderByOld = "{{ orderBy }}";
     var orderByTypeOld = "{{ orderByType }}";
 
-    //get ค่าการ sort ปัจจุบัน
-    function getOrderBy(){
-        var strOrderBy = "&orderBy=" + orderByOld + "&orderByType=" + orderByTypeOld;
-        return strOrderBy;
-    }
-
-    //Paging, Sorting, Search
-    function getHtml(numPage, orderBy){
-        var recordValue = $(".record").val();
-        var textSearch = $("#tbxSearch").val();
-        var send = "?numPage=" + numPage + "&record=" + recordValue + "&textSearch=" + textSearch + orderBy;
-        $.post("{{ path('zone') }}" + send, function(data) {
-            $('#innerPanel').html(data);
-        });
-    }
+    //ประกาศค่าเริ่มต้น
+    var urlPost = "{{ path('zone') }}";
 </script>
 <style type="text/css">
     .inPage {
         cursor: pointer;
     }
-</style>
-<style type="text/css">
-    #tbZone {
-        border: 1px solid #e3e3e3;
-        background-color: #f2f2f2;
-        width: 100%;
-        border-radius: 6px;
-        -webkit-border-radius: 6px;
-        -moz-border-radius: 6px;
-    }
-    #tbZone td, #tbZone th {
-        padding: 5px;
-        color: #333;
-    }
-    #tbZone thead {
-        font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
-        padding: .2em 0 .2em .5em;
-        text-align: left;
-        color: #4B4B4B;
-        background-color: #C8C8C8;
-        background-image: -webkit-gradient(linear, left top, left bottom, from(#f2f2f2), to(#e3e3e3), color-stop(.6,#B3B3B3));
-        background-image: -moz-linear-gradient(top, #D6D6D6, #B0B0B0, #B3B3B3 90%);
-        border-bottom: solid 1px #999;
-    }
-    #tbZone th {
-        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-        font-size: 17px;
-        line-height: 20px;
-        font-style: normal;
-        font-weight: normal;
-        text-align: left;
-        text-shadow: white 1px 1px 1px;
-    }
-    #tbZone td {
-        line-height: 20px;
-        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-        font-size: 14px;
-        border-bottom: 1px solid #fff;
-        border-top: 1px solid #fff;
-    }
-    #tbZone td:hover {
-        background-color: #fff;
-    }
-    .datagrid ul a:hover { text-decoration: none;border-color: #00557F; color: #FFFFFF; background: none; background-color:#006699;}
 </style>
 <fieldset>
     <h1>Zone list</h1>
@@ -164,7 +67,7 @@
     <div class="clear"></div>
     <br/>
     <fieldset>
-        <table id="tbZone" border="1" >
+        <table id="tbShow" border="1" >
             <thead>
                 <th><a class="btnOrderBy" href="#" id="sort_id">Id</a></th>
                 <th><a class="btnOrderBy" href="#" id="sort_zonename">Zonename</th>

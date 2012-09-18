@@ -26,9 +26,7 @@ class Pay_typeRepository extends EntityRepository
             $sql = "
                 $sql
                 AND p.id LIKE '%$textSearch%'
-                OR p.zonename LIKE '%$textSearch%'
-                OR p.latitude LIKE '%$textSearch%'
-                OR p.longitude LIKE '%$textSearch%'
+                OR p.typename LIKE '%$textSearch%'
             ";
 
             //นับจำนวนใหม่
