@@ -228,40 +228,6 @@ class ZoneController extends Controller
         ));
     }
 
-    /**
-     * Deletes a Zone entity.
-     *
-     */
-    public function deleteAction($id)
-    {
-        $form = $this->createDeleteForm($id);
-        $request = $this->getRequest();
-
-        $form->bindRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
-            $entity = $em->getRepository('FTRWebBundle:Zone')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Zone entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
-        }
-
-        return $this->redirect($this->generateUrl('zone'));
-    }
-
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
-        ;
-    }
-
     /*
     * Run คำสั่ง Sql
     * return array
