@@ -70,10 +70,16 @@
                 <td align="center" width="250" style="font-size:24px;"><a href="{{path('addData',{'id': data.id })}}">แก้ไข</a></td>
             </tr>
             {% endfor %}
+            {% if enabled == '1'%}
             <tr height="70" valign="middle">
                 <td align="left"><a href="{{path('addData')}}"><img src="{{asset('images/add-bt.png')}}" style="padding:0" /></a></td>
                 <td align="left" style="font-size:24px;" colspan="3">&nbsp;</td>
             </tr>
+            {% else %}
+            <tr height align="70" valign="middle">
+                <td align="center" colspan="4">ท่านยังไม่ได้ยืนยันผู้ใช้ กรุณาเช็ค Email ที่ท่านใช้สมัคร</td>
+            </tr>
+            {% endif %}
         </table>
 	</div>
 </div>
