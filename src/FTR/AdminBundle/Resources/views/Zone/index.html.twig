@@ -50,12 +50,14 @@
             return false;
         });
 
+        //กำหนดจำนวนหน้า
         $(".record").change(function(){
             var numPage = $(".disableBtn").val();
             getHtml(numPage, getOrderBy());
             return false;
         });
 
+        //ค้นหาด้วยข้อความ
         $("#tbxSearch").change(function(){
             var numPage = 1;
             getHtml(numPage, getOrderBy());
@@ -64,17 +66,35 @@
 
         //Order by
         $(".btnOrderBy").click(function(){
-//            alert(this.href)s
-            var type = this.href;
-
+            var type = this.id;
+            type = type.replace('sort_', '');
+            var numPage = $(".disableBtn").val();
+            var orderBy = "&orderBy=" + type;
+            if (orderByOld == type){
+                if (orderByTypeOld == 'asc'){
+                    orderBy += "&orderByType=desc";
+                }else{
+                    orderBy += "&orderByType=asc";
+                }
+            }else{
+                orderBy += "&orderByType=desc";
+            }
+            getHtml(numPage, orderBy);
             return false;
         });
     });
 
+    // ค่าปัจจุบันในการ sort
+    var orderByOld = "{{ orderBy }}";
+    var orderByTypeOld = "{{ orderByType }}";
+
+    //get ค่าการ sort ปัจจุบัน
     function getOrderBy(){
-        var strOrderBy = "&orderBy=" + $("#orderBy").val() + "&orderByType=" + $("#orderByType").val();
+        var strOrderBy = "&orderBy=" + orderByOld + "&orderByType=" + orderByTypeOld;
         return strOrderBy;
     }
+
+    //Paging, Sorting, Search
     function getHtml(numPage, orderBy){
         var recordValue = $(".record").val();
         var textSearch = $("#tbxSearch").val();
@@ -83,22 +103,6 @@
             $('#innerPanel').html(data);
         });
     }
-</script>
-
-<script type="text/javascript">
-//    jQuery.fn.dataTableExt.oSort['string-case-asc'] = function(x, y) {
-//        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
-//    };
-//
-//    jQuery.fn.dataTableExt.oSort['string-case-desc'] = function(x, y) {
-//        return ((x < y) ? 1 : ((x > y) ? -1 : 0));
-//    };
-//
-//    $(document).ready(function() {
-//        $("#sortTable1").dataTable({
-//            "aaSorting" : [[1, 'asc']]
-//        });
-//    });
 </script>
 <style type="text/css">
     .inPage {
@@ -116,11 +120,6 @@
     <div class="clear"></div>
     <br/>
     <fieldset>
-
-        {#Save ค่า Orderby#}
-        <input type="hidden" id="orderBy" value="{{ orderBy }}"/>
-        <input type="hidden" id="orderByType" value="{{ orderByType }}"/>
-
         <table style="
         margin: 0 auto;
         clear: both;
@@ -130,10 +129,10 @@
         border-spacing: 0;
         " border="1" >
             <thead>
-                <th><a class="btnOrderBy" href="#">Id</a></th>
-                <th><a class="btnOrderBy" href="#">Zonename</th>
-                <th><a class="btnOrderBy" href="#">Latitude</th>
-                <th><a class="btnOrderBy" href="#">Longitude</th>
+                <th><a class="btnOrderBy" href="#" id="sort_id">Id</a></th>
+                <th><a class="btnOrderBy" href="#" id="sort_zonename">Zonename</th>
+                <th><a class="btnOrderBy" href="#" id="sort_latitude">Latitude</th>
+                <th><a class="btnOrderBy" href="#" id="sort_longitude">Longitude</th>
                 <th>Actions</th>
             </thead>
             {% for entity in entities %}
@@ -144,7 +143,6 @@
                     <td>{{ entity.longitude }}</td>
                     <td>
                         <ul>
-
                             <li>
                                 <a class="btnEditZone" href="{{ path('zone_edit', { 'id': entity.id }) }}">Edit</a>
                             </li>
@@ -154,13 +152,19 @@
                         </ul>
                     </td>
                 </tr>
+            {% else %}
+                <tr>
+                    <td colspan="2"></td>
+                    <td align="center">No matching records found</td>
+                    <td colspan="2"></td>
+                </tr>
             {% endfor %}
         </table>
     </fieldset>
     <div class="paginator">
         <ul>
             <strong>showing {{ countListZone }} entities : Page </strong>
-            {% for i in 1..paginator.numpages%}
+            {% for i in 1..paginator.numpages %}
                 {% if paginator.range.0 > 2 and i == paginator.range.0 %}
                     ...
                 {% endif %}
@@ -184,8 +188,6 @@
                 {% if paginator.range[paginator.midrange -1] < paginator.numpages -1 and i == paginator.range[paginator.midrange-1] %}
                     ...
                 {% endif %}
-            {#{% else %}#}
-            {#No matching records found#}
             {% endfor %}
             <div align="right" style="float:right;" ><strong>Search:</strong>
                 <input id="tbxSearch" style="height: 25px;margin-bottom: 10px;" value="{{ textSearch }}" />&nbsp;&nbsp;
@@ -195,38 +197,21 @@
                         <option selected="yes" value="50">50 Record</option>
                         <option value="100">100 Record</option>
                         <option value="500">500 Record</option>
-                        <option value="1000">1,000 Record</option>
                     {% elseif limit == '100' %}
                         <option value="50">50 Record</option>
                         <option selected="yes" value="100">100 Record</option>
                         <option value="500">500 Record</option>
-                        <option value="1000">1,000 Record</option>
                     {% elseif limit == '500' %}
                         <option value="50">50 Record</option>
                         <option value="100">100 Record</option>
                         <option selected="yes" value="500">500 Record</option>
-                        <option value="1000">1,000 Record</option>
-                    {% elseif limit == '1000' %}
-                        <option value="50">50 Record</option>
-                        <option value="100">100 Record</option>
-                        <option value="500">500 Record</option>
-                        <option selected="yes" value="1000">1,000 Record</option>
                     {% else %}
                         <option value="50">50 Record</option>
                         <option value="100">100 Record</option>
                         <option value="500">500 Record</option>
-                        <option value="1000">1,000 Record</option>
                     {% endif %}
                 </select>
             </div>
         </ul>
     </div>
 </fieldset>
-
-{#<ul>#}
-    {#<li>#}
-        {#<a href="{{ path('zone_new') }}">#}
-            {#Create a new entry#}
-        {#</a>#}
-    {#</li>#}
-{#</ul>#}
