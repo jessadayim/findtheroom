@@ -1,4 +1,4 @@
-<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js'></script>
+<script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script>
 <script>
     function postData(checkAlert){
         var url = "{{ path('zone_update', { 'id': entity.id }) }}";
@@ -90,21 +90,6 @@
         <br />
 
         {{ form_widget(edit_form) }}
-
-
-        {#<ul class="record_actions">#}
-            {#<li>#}
-                {#<a href="{{ path('zone') }}">#}
-                    {#Back to the list#}
-                {#</a>#}
-            {#</li>#}
-            {#<li>#}
-                {#<form action="{{ path('zone_delete', { 'id': entity.id }) }}" method="post">#}
-                    {#{{ form_widget(delete_form) }}#}
-                    {#<button type="submit">Delete</button>#}
-                {#</form>#}
-            {#</li>#}
-        {#</ul>#}
         <span style="float: right;">
             <img src="{{ asset('images/cancel.png')}}" id="btnCancelEdit" width="50" height="50" style="cursor:pointer;margin-right: 70px" />
                 &nbsp;&nbsp;
