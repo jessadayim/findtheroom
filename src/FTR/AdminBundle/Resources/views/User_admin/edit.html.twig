@@ -1,6 +1,6 @@
 <script>
     $(document).ready(function () {
-        $(".editCancle").click(function () {
+        $(".btnCancel").click(function () {
             //alert('working');
             toggle(".editPanel", 'hide');
             return false;
@@ -45,6 +45,27 @@
 
     });
 </script>
+<style type="text/css">
+    #btnEdit {
+        background: url("{{ asset('images/save.png')}}") no-repeat;
+        display: block;
+        float: none;
+        height: 50px;
+        position: absolute;
+        margin-left: 70px;
+        margin-top: -55px;
+    }
+
+    #btnInputEdit {
+        background: url("{{ asset('images/save.png')}}") no-repeat;
+        opacity: 0;
+        -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+        filter: alpha(opacity=0);
+        cursor: pointer;
+        height: 50px;
+        width: 50px;
+    }
+</style>
 <form id="formEdit" action="{{ path('user_admin_update', { 'id': entity.id }) }}"
       method="post" {{ form_enctype(edit_form) }}>
     <fieldset>
@@ -94,8 +115,12 @@
 
         {{ form_rest(edit_form) }}
         <br/>
-		<span style="float: right;">
-			<input type="submit" value="UPDATE">
+        <span style="float: right;">
+            <img src="{{ asset('images/cancel.png')}}" id="btnCancel" width="50" height="50" style="cursor:pointer;margin-right: 70px"/>
+                &nbsp;&nbsp;
+            <div id="btnEdit">
+                <input type="submit" id="btnInputEdit" value="Edit">
+            </div>
 		</span>
     </fieldset>
 </form>
@@ -104,10 +129,10 @@
         var regUser = /[^A-Za-z0-9_\.]/;
         var regPass = /[a-z][0-9]/;
         var regTel = /^[\d]+$/;
-        if($("#ftr_adminbundle_user_admintype_username").val().length < 5){
+        if ($("#ftr_adminbundle_user_admintype_username").val().length < 5) {
             alert("ชื่อผู้ใช้งานจะต้องไม่น้อยกว่า 5 ตัว");
             return false;
-        }else if (regUser.test($('#ftr_adminbundle_user_admintype_username').val()) == true) {
+        } else if (regUser.test($('#ftr_adminbundle_user_admintype_username').val()) == true) {
             alert("ชื่อผู้ใช้งาน จะต้องเป็นอักขระอังกฤษ หรือตัวเลข");
             return false;
         } else if ($("#ftr_adminbundle_user_admintype_password").val().length < 6) {
