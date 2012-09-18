@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use FTR\AdminBundle\Entity\User_admin;
 use FTR\AdminBundle\Form\User_adminType;
+use FTR\AdminBundle\Helper\Paginator;
 
 /**
  * User_admin controller.
@@ -37,27 +38,46 @@ class User_adminController extends Controller
     public function showAction()
     {
         $em = $this->getDoctrine()->getEntityManager();
-        $conn = $this->get('database_connection');
 
-        $sqlGetEntity = "
-						SELECT 
-							username 
-							,id
-						FROM 
-							user_admin 
-						WHERE deleted != 1";
-        try {
-            $entities = $conn->fetchAll($sqlGetEntity);
-        } catch (Exception $e) {
-            echo 'Caught exception: ', $e->getMessage(), "\n";
+        //get post
+        $getSelectPage = @$_GET['numPage'];
+        $getRecord = @$_GET['record'];
+        $getTextSearch = @$_GET['textSearch'];
+        $getOrderBy = @$_GET['orderBy'];
+        $getOrderByType = @$_GET['orderByType'];
+
+        //set paging
+        $page = 1;
+        if (!empty($getSelectPage)) {
+            $page = $getSelectPage;
         }
+        $limit = 10;
+        $midRange = 5;
+        if (!empty($getRecord)) {
+            $limit = $getRecord;
+        } else {
+            $getRecord = $limit;
+        }
+        $offset = $limit * $page - $limit;
+        if (empty($getOrderBy) && empty($getOrderByType)) {
+            $getOrderBy = 'id';
+            $getOrderByType = 'asc';
+        }
+        $getEntitiesAll = $em->getRepository('FTRAdminBundle:User_admin')->findBy(array('deleted' => 0));
+        $countListEntities = count($getEntitiesAll);
 
-        //$deleteForm = $this->createDeleteForm($id);
+        $entities = $em->getRepository('FTRAdminBundle:User_admin')->getDataAdmin($limit, $offset, $getTextSearch, $countListEntities, "$getOrderBy");
+        $paginator = new Paginator($countListEntities, $offset, $limit, $midRange);
 
         return $this->render('FTRAdminBundle:User_admin:show.html.twig', array(
-            'entities' => $entities
-            //'delete_form' => $deleteForm->createView(),
-
+            'entities' => $entities,
+            'paginator'	        => $paginator,
+            'countListEntities'		=> $countListEntities,
+            'limit' 	        => $limit,
+            'noPage'	        => $page,
+            'record'	        => $getRecord,
+            'textSearch'        => $getTextSearch,
+            'orderBy'             => $getOrderBy
         ));
     }
 

@@ -16,6 +16,7 @@ class ZoneRepository extends EntityRepository
      * Get data zone
      */
     public function getDataZone($limit, $offset, $textSearch, &$count, $orderBy){
+
         $sql = "
             SELECT
               z

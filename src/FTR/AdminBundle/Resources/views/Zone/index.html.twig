@@ -99,7 +99,9 @@
         var recordValue = $(".record").val();
         var textSearch = $("#tbxSearch").val();
         var send = "?numPage=" + numPage + "&record=" + recordValue + "&textSearch=" + textSearch + orderBy;
+//        alert(send);
         $.post("{{ path('zone') }}" + send, function(data) {
+//            alert(data);
             $('#innerPanel').html(data);
         });
     }
