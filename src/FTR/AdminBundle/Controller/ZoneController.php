@@ -42,13 +42,15 @@ class ZoneController extends Controller
             $getRecord = $limit;
         }
         $offset = $limit*$page-$limit;
-        $setOrderBy = 'id';
-        $setOrderByType = 'asc';
+        if (empty($getOrderBy) && empty($getOrderByType)){
+            $getOrderBy = 'id';
+            $getOrderByType = 'asc';
+        }
 
         $getEntitiesAllZone = $em->getRepository('FTRWebBundle:Zone')->findBy(array('deleted' => 0));
         $countListZone = count($getEntitiesAllZone);
 
-        $entities = $em->getRepository('FTRWebBundle:Zone')->getDataZone($limit, $offset, $getTextSearch, $countListZone, "$setOrderBy $setOrderByType");
+        $entities = $em->getRepository('FTRWebBundle:Zone')->getDataZone($limit, $offset, $getTextSearch, $countListZone, "$getOrderBy $getOrderByType");
 
         $paginator = new Paginator($countListZone, $offset, $limit, $midRange);
 

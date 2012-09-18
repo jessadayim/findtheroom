@@ -19,6 +19,7 @@ use FTR\WebBundle\Entity\Pay_type;
 use FTR\WebBundle\Entity\Roomtype2site;
 use FTR\WebBundle\Entity\Zone;
 use FTR\WebBundle\Controller\SearchController;
+use FTR\AdminBundle\Helper\LoggerHelper;
 
 class UserbuildingController extends Controller
 {
@@ -426,13 +427,15 @@ class UserbuildingController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $session = $this->get('session');
         $user = $session->get('user');
-
+        $logger = new LoggerHelper();
         $today = date("Y-m-d H:i:s");
         if ($_POST) {
             $post_array = $_POST;
             echo "<pre>";
             var_dump($post_array);
             echo "</pre>";
+            $logger->addInfo('test log for save data',$post_array);
+
             exit();
 
             /*try {

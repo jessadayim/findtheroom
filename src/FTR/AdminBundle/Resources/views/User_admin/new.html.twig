@@ -1,5 +1,12 @@
 <script>
     $(document).ready(function () {
+        $("#btnCancelCreate").click(function() {
+            toggle(".createPanel", 'hide');
+            $("#createrecordCancel").hide();
+            $("#createrecord").show('slow');
+            return false;
+        });
+
         var url = "{{ path('user_admin_create') }}";
         $("#formCreate").submit(function () {
             //alert(url);
@@ -42,7 +49,27 @@
 
     });
 </script>
+<style type="text/css">
+    #btnCreate {
+        background: url("{{ asset('images/add-bt.png')}}") no-repeat;
+        display: block;
+        float: none;
+        height: 50px;
+        position: absolute;
+        margin-left: 70px;
+        margin-top: -55px;
+    }
 
+    #btnInputCreate {
+        background: url("{{ asset('images/add-bt.png')}}") no-repeat;
+        opacity: 0;
+        -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+        filter: alpha(opacity=0);
+        cursor: pointer;
+        height: 50px;
+        width: 50px;
+    }
+</style>
 <form id="formCreate" action="{{ path('user_admin_create') }}" method="post" {{ form_enctype(form) }}>
     <fieldset>
         <legend>
@@ -91,7 +118,11 @@
         {{ form_widget(form) }}
         <br/>
 		<span style="float: right;">
-			<input type="submit" value="CREATE">
+            <img src="{{ asset('images/cancel.png')}}" id="btnCancelCreate" width="50" height="50" style="cursor:pointer;margin-right: 70px"/>
+                &nbsp;&nbsp;
+            <div id="btnCreate">
+                <input type="submit" id="btnInputCreate" value="Create">
+            </div>
 		</span>
     </fieldset>
 </form>
