@@ -47,9 +47,10 @@ font-weight: normal;
 
 /* Detect Device */
     
-    /* Smartphones (portrait) ----------- */
-    @media only screen and (max-device-width : 320px) and (max-device-width : 480px) and (orientation : portrait) {
-		ul.gelbuttonmenu li a{
+	/* Smartphones (landscape) ----------- */
+	@media only screen 
+	and (min-width : 321px) {
+	ul.gelbuttonmenu li a{
 		color: #423C3B;
 		padding: 5px 15px; /*make sure padding is sufficient that the height of the link is enough to fully show the gel button*/
 		margin-right: 50px/*50px*/; /*spacing between each menu link*/
@@ -73,11 +74,13 @@ font-weight: normal;
 		margin-right: 50px/*50px*/; /*spacing between each menu link*/
 		text-decoration: none;
 		font-weight: normal;
-		}
-    
-    /* Smartphones (landscape) ----------- */
-    @media only screen and (max-device-width : 320px) and (max-device-width : 480px) and (orientation : landscape) {
-        ul.gelbuttonmenu li a{
+     	}
+	}
+	
+	/* Smartphones (portrait) ----------- */
+	@media only screen 
+	and (max-width : 320px) {
+	ul.gelbuttonmenu li a{
 		color: #423C3B;
 		padding: 5px 15px; /*make sure padding is sufficient that the height of the link is enough to fully show the gel button*/
 		margin-right: 50px/*50px*/; /*spacing between each menu link*/
@@ -101,10 +104,11 @@ font-weight: normal;
 		margin-right: 50px/*50px*/; /*spacing between each menu link*/
 		text-decoration: none;
 		font-weight: normal;
-		}
-
+     	}
+	}
+		
      /* iPads (portrait) ----------- */
-     @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation : portrait) {
+     @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation : portrait) {
         ul.gelbuttonmenu li a{
 		color: #423C3B;
 		padding: 5px 15px; /*make sure padding is sufficient that the height of the link is enough to fully show the gel button*/
@@ -130,9 +134,9 @@ font-weight: normal;
 		text-decoration: none;
 		font-weight: normal;
      	}
-     
+	 }
      /* iPads (landscape) ----------- */
-     @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation : landscape) {
+     @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation : landscape) {
         ul.gelbuttonmenu li a{
 		color: #423C3B;
 		padding: 5px 15px; /*make sure padding is sufficient that the height of the link is enough to fully show the gel button*/
@@ -157,7 +161,7 @@ font-weight: normal;
 		margin-right: 50px/*50px*/; /*spacing between each menu link*/
 		text-decoration: none;
 		font-weight: normal;
-     	}       
+     	}  
      }
 	 @media screen and (max-device-width: 480px) and (orientation: portrait){
         ul.gelbuttonmenu li a{
