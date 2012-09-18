@@ -25,7 +25,8 @@ class ZoneRepository extends EntityRepository
         if (!empty($textSearch) && $textSearch != ''){
             $sql = "
                 $sql
-                AND z.zonename LIKE '%$textSearch%'
+                AND z.id LIKE '%$textSearch%'
+                OR z.zonename LIKE '%$textSearch%'
                 OR z.latitude LIKE '%$textSearch%'
                 OR z.longitude LIKE '%$textSearch%'
             ";
