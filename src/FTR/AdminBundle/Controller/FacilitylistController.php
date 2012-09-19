@@ -6,6 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use FTR\WebBundle\Entity\Facilitylist;
 use FTR\AdminBundle\Form\FacilitylistType;
+use FTR\AdminBundle\Helper\Paginator;
+use FTR\AdminBundle\Helper\LoggerHelper;
 
 /**
  * Facilitylist controller.
@@ -21,33 +23,48 @@ class FacilitylistController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entities = $em->getRepository('FTRWebBundle:Facilitylist')->findAll();
+        //get post
+        $getSelectPage = @$_GET['numPage'];
+        $getRecord = @$_GET['record'];
+        $getTextSearch = @$_GET['textSearch'];
+        $getOrderBy = @$_GET['orderBy'];
+        $getOrderByType = @$_GET['orderByType'];
 
-        return $this->render('FTRAdminBundle:Facilitylist:index.html.twig', array(
-            'entities' => $entities
-        ));
-    }
-
-    /**
-     * Finds and displays a Facilitylist entity.
-     *
-     */
-    public function showAction($id)
-    {
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $entity = $em->getRepository('FTRWebBundle:Facilitylist')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Facilitylist entity.');
+        //set paging
+        $page = 1;
+        if (!empty($getSelectPage)){
+            $page = $getSelectPage;
+        }
+        $limit = 10;
+        $midRange = 5;
+        if(!empty($getRecord)){
+            $limit = $getRecord;
+        }else {
+            $getRecord = $limit;
+        }
+        $offset = $limit*$page-$limit;
+        if (empty($getOrderBy) && empty($getOrderByType)){
+            $getOrderBy = 'id';
+            $getOrderByType = 'asc';
         }
 
-        $deleteForm = $this->createDeleteForm($id);
+        $getEntitiesAll = $em->getRepository('FTRWebBundle:Facilitylist')->findBy(array('deleted' => 0));
+        $countList = count($getEntitiesAll);
 
-        return $this->render('FTRAdminBundle:Facilitylist:show.html.twig', array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
+        $entities = $em->getRepository('FTRWebBundle:Facilitylist')->getData($limit, $offset, $getTextSearch, $countList, "$getOrderBy $getOrderByType");
 
+        $paginator = new Paginator($countList, $offset, $limit, $midRange);
+
+        return $this->render('FTRAdminBundle:Facilitylist:index.html.twig', array(
+            'entities'          => $entities,
+            'paginator'	        => $paginator,
+            'countList'		    => $countList,
+            'limit' 	        => $limit,
+            'noPage'	        => $page,
+            'record'	        => $getRecord,
+            'textSearch'        => $getTextSearch,
+            'orderBy'           => $getOrderBy,
+            'orderByType'       => $getOrderByType
         ));
     }
 
@@ -74,15 +91,36 @@ class FacilitylistController extends Controller
     {
         $entity  = new Facilitylist();
         $request = $this->getRequest();
+
+        //Set ค่า deleted = 0
+        $entity->setDeleted(0);
+
         $form    = $this->createForm(new FacilitylistType(), $entity);
         $form->bindRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();
+
+            //Check ชื่อ facilitylist ซ้ำ
+            $getName = $entity->getFacilityName();
+            $sql = "
+                SELECT
+                  *
+                FROM
+                  `facilitylist`
+                WHERE `facility_name` = '$getName'
+                  AND `deleted` = 0
+            ";
+            $objGetName = $this->getDataArray($sql);
+            if (!empty($objGetName)){
+                echo "finish_comp";
+                exit();
+            }
             $em->persist($entity);
             $em->flush();
-
-            return $this->redirect($this->generateUrl('facilitylist_show', array('id' => $entity->getId())));
+            echo 'finish';
+            exit();
+//            return $this->redirect($this->generateUrl('facilitylist_show', array('id' => $entity->getId())));
             
         }
 
@@ -102,17 +140,37 @@ class FacilitylistController extends Controller
 
         $entity = $em->getRepository('FTRWebBundle:Facilitylist')->find($id);
 
+        //Check post เปลี่ยน deleted เป็น 1
+        $getCheckPost = @$_POST['checkPost'];
+        if ($getCheckPost == "delete"){
+            $sqlCheck = "
+                SELECT
+                  *
+                FROM
+                  `building_site`
+                WHERE `pay_type_id` = $id
+                  AND `deleted` = 0
+            ";
+            $objCheck = $this->getDataArray($sqlCheck);
+            if (!empty($objCheck)){
+                echo "finish_math";
+                exit();
+            }
+            $entity->setDeleted(1);
+            $em->persist($entity);
+            $em->flush();
+            echo 'finish';
+            exit();
+        }
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Facilitylist entity.');
         }
 
         $editForm = $this->createForm(new FacilitylistType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('FTRAdminBundle:Facilitylist:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -131,7 +189,6 @@ class FacilitylistController extends Controller
         }
 
         $editForm   = $this->createForm(new FacilitylistType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
 
         $request = $this->getRequest();
 
@@ -141,47 +198,28 @@ class FacilitylistController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('facilitylist_edit', array('id' => $id)));
+            echo 'finish';exit();
+//            return $this->redirect($this->generateUrl('facilitylist_edit', array('id' => $id)));
         }
 
         return $this->render('FTRAdminBundle:Facilitylist:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
-    /**
-     * Deletes a Facilitylist entity.
-     *
-     */
-    public function deleteAction($id)
-    {
-        $form = $this->createDeleteForm($id);
-        $request = $this->getRequest();
-
-        $form->bindRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
-            $entity = $em->getRepository('FTRWebBundle:Facilitylist')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Facilitylist entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
+    /*
+    * Run คำสั่ง Sql
+    * return array
+    */
+    private function getDataArray($sql){
+        $conn= $this->get('database_connection');
+        if(!$conn){ die("MySQL Connection error");}
+        try{
+            return $conn->fetchAll($sql);
+        } catch (Exception $e) {
+            echo 'Caught exception: ',  $e->getMessage(), "\n";
         }
-
-        return $this->redirect($this->generateUrl('facilitylist'));
-    }
-
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
-        ;
+        return array();
     }
 }

@@ -8,7 +8,7 @@ $(document).ready(function() {
 
     //กำหนดจำนวนหน้า
     $(".record").change(function(){
-        var numPage = $(".disableBtn").val();
+        var numPage = 1
         getHtml(numPage, getOrderBy());
         return false;
     });

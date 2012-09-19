@@ -1,43 +1,174 @@
-<h1>Facilitylist list</h1>
+<script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script>
+<script type='text/javascript' src='{{asset("js/paging/data_table/table_paging.js")}}'></script>
+<link rel="stylesheet" type="text/css" href="{{asset('js/paging/data_table/table_style.css')}}" />
 
-<table class="records_list">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Facility_name</th>
-            <th>Facility_type</th>
-            <th>Display</th>
-            <th>Deleted</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for entity in entities %}
-        <tr>
-            <td><a href="{{ path('facilitylist_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td>{{ entity.facilityname }}</td>
-            <td>{{ entity.facilitytype }}</td>
-            <td>{{ entity.display }}</td>
-            <td>{{ entity.deleted }}</td>
-            <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('facilitylist_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('facilitylist_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+<script>
+    $(document).ready(function() {
+        $(".btnEdit").click(function(){
+            $("#btnShowHide").hide("slow");
+            $('#new').fadeOut('slow');
+            $('#edit').fadeOut().load(this.href).fadeIn("slow");
+            document.getElementById('containerwrap').scrollIntoView(true);
+            return false;
+        });
 
-<ul>
-    <li>
-        <a href="{{ path('facilitylist_new') }}">
-            Create a new entry
-        </a>
-    </li>
-</ul>
+        $(".btnDelete").click(function(){
+            if (!confirm("คุณต้องการลบ Facility นี้ใช่หรือไม่")){
+                return false;
+            }
+            var url = this.href;
+            $.ajax({
+                type : "POST",
+                url : url,
+                data : {checkPost: 'delete'},
+                success : function(msg) {
+                    if (msg == "finish_math"){
+                        alert('!!! Facility นี้มีการใช้งานอยู่ \nไม่สามารถลบออกได้');
+                    }else if (msg == 'finish') {
+                        $('#innerPanel').fadeOut(100).load("{{ path('facilitylist') }}").fadeIn("slow");
+                        alert('√ ทำการลบ Facility เรียบร้อยแล้ว');
+                    } else {
+                        alert(msg);
+                        alert('เกิดการผิดพลาด\n** กรุณาตรวจสอบ **');
+                    }
+                }
+            });
+            return false;
+        });
+
+        $("#btnNew").click(function(){
+            $("#btnShowHide").hide("slow");
+            $('#edit').fadeOut('slow');
+            $('#new').fadeOut().load("{{ path('facilitylist_new') }}").fadeIn("slow");
+            return false;
+        });
+    });
+
+    // ค่าปัจจุบันในการ sort
+    var orderByOld = "{{ orderBy }}";
+    var orderByTypeOld = "{{ orderByType }}";
+
+    //ประกาศค่าเริ่มต้น
+    var urlPost = "{{ path('facilitylist') }}";
+
+</script>
+<style type="text/css">
+    .inPage {
+        cursor: pointer;
+    }
+</style>
+<fieldset>
+    <h1>Facilitylist list</h1>
+    <div id="new"></div>
+    <div id="edit"></div>
+
+    <span style="float: right;" id="btnShowHide">
+        <img src="{{ asset('images/add-bt.png')}}" id="btnNew" width="50" height="50" style="cursor:pointer;" />
+    </span>
+    <div class="clear"></div>
+    <br/>
+    <fieldset>
+        <table id="tbShow">
+        <thead>
+            <tr>
+                <th><a class="btnOrderBy" href="#" id="sort_id">Id</a></th>
+                <th><a class="btnOrderBy" href="#" id="sort_facility_name">Facility_name</a></th>
+                <th><a class="btnOrderBy" href="#" id="sort_facility_type">Facility_type</a></th>
+                <th><a class="btnOrderBy" href="#" id="sort_display">Display</a></th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td>{{ entity.id }}</td>
+                <td>{{ entity.facilityname }}</td>
+                <td>{{ entity.facilitytype }}</td>
+                <td>
+                    {% if entity.display != 1 %}
+                        Not Show
+                    {% else %}
+                        Show
+                    {% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a class="btnEdit" href="{{ path('facilitylist_edit', { 'id': entity.id }) }}">Edit</a>
+                        </li>
+                        <li>
+                            <a class="btnDelete" href="{{ path('facilitylist_edit', { 'id': entity.id }) }}">Delete</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% else %}
+        <tr>
+            <td colspan="2"></td>
+            <td align="center">No matching records found</td>
+            <td colspan="2"></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <div class="datagrid">
+            <ul>
+                <strong>showing {{ countList }} entities : Page </strong>
+                {% for i in 1..paginator.numpages %}
+                {% if paginator.range.0 > 2 and i == paginator.range.0 %}
+                ...
+                {% endif %}
+
+                {%  if(i==1 or i==paginator.numpages or i in paginator.range) %}
+                {% if i==paginator.currentpage %}
+                {% if i == noPage %}
+                <input class="disableBtn" type="button" value="{{i}}" id="Submit" name="submitPage" disabled="true"/>
+                {% else %}
+                <input class="inPage" type="button" value="{{i}}" id="Submit" name="submitPage"/>
+                {% endif %}
+                {% else %}
+                {% if i == noPage %}
+                <input class="disableBtn" type="button" value="{{i}}" id="Submit" name="submitPage" disabled="true"/>
+                {% else %}
+                <input class="inPage" type="button" value="{{i}}" id="Submit" name="submitPage"/>
+                {% endif %}
+                {% endif %}
+                {% endif %}
+
+                {% if paginator.range[paginator.midrange -1] < paginator.numpages -1 and i == paginator.range[paginator.midrange-1] %}
+                ...
+                {% endif %}
+                {% endfor %}
+                <div align="right" style="float:right;" ><strong>Search:</strong>
+                    <input id="tbxSearch" style="height: 25px;margin-bottom: 10px;" value="{{ textSearch }}" />&nbsp;&nbsp;
+                    <select name="record" style="width:150px;" class="record">
+                        <option value="10">10 Record </option>
+                        {% if limit == '50' %}
+                        <option selected="yes" value="50">50 Record</option>
+                        <option value="100">100 Record</option>
+                        <option value="500">500 Record</option>
+                        {% elseif limit == '100' %}
+                        <option value="50">50 Record</option>
+                        <option selected="yes" value="100">100 Record</option>
+                        <option value="500">500 Record</option>
+                        {% elseif limit == '500' %}
+                        <option value="50">50 Record</option>
+                        <option value="100">100 Record</option>
+                        <option selected="yes" value="500">500 Record</option>
+                        {% else %}
+                        <option value="50">50 Record</option>
+                        <option value="100">100 Record</option>
+                        <option value="500">500 Record</option>
+                        {% endif %}
+                    </select>
+                </div>
+            </ul>
+        </div>
+</fieldset>
+{#<ul>#}
+    {#<li>#}
+        {#<a href="{{ path('facilitylist_new') }}">#}
+            {#Create a new entry#}
+        {#</a>#}
+    {#</li>#}
+{#</ul>#}

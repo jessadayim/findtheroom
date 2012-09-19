@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FTR\WebBundle\Entity\Pay_type;
 use FTR\AdminBundle\Form\Pay_typeType;
 use FTR\AdminBundle\Helper\Paginator;
+use FTR\AdminBundle\Helper\LoggerHelper;
 
 /**
  * Pay_type controller.
@@ -64,25 +65,6 @@ class Pay_typeController extends Controller
             'textSearch'        => $getTextSearch,
             'orderBy'           => $getOrderBy,
             'orderByType'       => $getOrderByType
-        ));
-    }
-
-    /**
-     * Finds and displays a Pay_type entity.
-     *
-     */
-    public function showAction($id)
-    {
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $entity = $em->getRepository('FTRWebBundle:Pay_type')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Pay_type entity.');
-        }
-
-        return $this->render('FTRAdminBundle:Pay_type:show.html.twig', array(
-            'entity'      => $entity
         ));
     }
 

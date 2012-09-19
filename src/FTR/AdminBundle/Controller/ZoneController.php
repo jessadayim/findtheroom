@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FTR\WebBundle\Entity\Zone;
 use FTR\AdminBundle\Form\ZoneType;
 use FTR\AdminBundle\Helper\Paginator;
-
+use FTR\AdminBundle\Helper\LoggerHelper;
 /**
  * Zone controller.
  *
@@ -68,25 +68,6 @@ class ZoneController extends Controller
     }
 
     /**
-     * Finds and displays a Zone entity.
-     *
-     */
-    public function showAction($id)
-    {
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $entity = $em->getRepository('FTRWebBundle:Zone')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Zone entity.');
-        }
-
-        return $this->render('FTRAdminBundle:Zone:show.html.twig', array(
-            'entity'      => $entity
-        ));
-    }
-
-    /**
      * Displays a form to create a new Zone entity.
      *
      */
@@ -134,7 +115,9 @@ class ZoneController extends Controller
                 exit();
             }
             $em->persist($entity);
+
             $em->flush();
+            $this->addLogger('Insert zone', $entity);
             echo 'finish';
             exit();
 //            return $this->redirect($this->generateUrl('zone_show', array('id' => $entity->getId())));
@@ -222,6 +205,12 @@ class ZoneController extends Controller
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
         ));
+    }
+
+    private function addLogger($message, $entity){
+        $logger = new LoggerHelper();
+        $newArray = $logger->objectToArray($entity);
+        $logger->addInfo($message, $newArray);
     }
 
     /*
