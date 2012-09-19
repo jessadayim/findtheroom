@@ -8,6 +8,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use FTR\WebBundle\Entity\Building_site;
 use FTR\AdminBundle\Form\Building_siteType;
+use FTR\AdminBundle\Helper\Paginator;
+use FTR\AdminBundle\Helper\LoggerHelper;
 
 /**
  * Building_site controller.
@@ -38,8 +40,6 @@ class Building_siteController extends Controller
      */
     public function showAction()
     {
-        $conn= $this->get('database_connection');
-        if(!$conn){ die("MySQL Connection error");}
         $sqlGetEntity = "
             SELECT 
               b.*,
@@ -57,12 +57,69 @@ class Building_siteController extends Controller
                 ON (b.`id` = n.`building_site_id`) 
               LEFT JOIN `image` i 
                 ON (b.`id` = i.`building_site_id`) 
-            WHERE b.`deleted` != 1   
-            GROUP BY b.id
+            WHERE b.`deleted` = 0
         ";
-        $entities = $this->getDataArray($sqlGetEntity);
+
+        //get post
+        $getSelectPage = @$_GET['numPage'];
+        $getRecord = @$_GET['record'];
+        $getTextSearch = @$_GET['textSearch'];
+        $getOrderBy = @$_GET['orderBy'];
+        $getOrderByType = @$_GET['orderByType'];
+
+        //set paging
+        $page = 1;
+        if (!empty($getSelectPage)){
+            $page = $getSelectPage;
+        }
+        $limit = 10;
+        $midRange = 5;
+        if(!empty($getRecord)){
+            $limit = $getRecord;
+        }else {
+            $getRecord = $limit;
+        }
+        $offset = $limit*$page-$limit;
+
+        if (empty($getOrderBy) && empty($getOrderByType)){
+            $getOrderBy = 'id';
+            $getOrderByType = 'asc';
+        }
+        if (!empty($getTextSearch) && $getTextSearch != ''){
+            $sqlGetEntity = "
+                $sqlGetEntity
+                AND b.id LIKE '%$getTextSearch%'
+                OR b.building_name LIKE '%$getTextSearch%'
+            ";
+        }
+
+        $sqlGetEntity = "
+            $sqlGetEntity
+            GROUP BY b.$getOrderBy $getOrderByType
+        ";
+
+        //นับจำนวนที่มีทั้งหมด
+        $countList = count($this->getDataArray($sqlGetEntity));
+
+        //จำกัดการแสดงผล
+        $sqlGetEntity = "
+            $sqlGetEntity
+            LIMIT $offset, $limit
+        ";
+        $objBuildingSite = $this->getDataArray($sqlGetEntity);
+
+        $paginator = new Paginator($countList, $offset, $limit, $midRange);
         return array(
-            'entities'  => $entities
+            'buildingSite'      => $objBuildingSite,
+            'entities'          => $objBuildingSite,
+            'paginator'	        => $paginator,
+            'countList'		    => $countList,
+            'limit' 	        => $limit,
+            'noPage'	        => $page,
+            'record'	        => $getRecord,
+            'textSearch'        => $getTextSearch,
+            'orderBy'           => $getOrderBy,
+            'orderByType'       => $getOrderByType
         );
     }
 
