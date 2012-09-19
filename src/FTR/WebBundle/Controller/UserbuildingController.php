@@ -200,10 +200,16 @@ class UserbuildingController extends Controller
             foreach ($arrroom as $key => $roompicvalue) {
                 $roomtype2site_id = $roompicvalue['roomtype2site_id'];
                 $roomtype2sitedata = $em->getRepository('FTRWebBundle:Roomtype2site')->findOneBy(array('id' => $roomtype2site_id));
+                if(!empty($roompicvalue['photo_name']))
+                {
+                    $linkPhoto = "images/building/$id/" . $roompicvalue['photo_name'];
+                }else{
+                    $linkPhoto = "images/show.png";
+                }
                 $arrroomdata[] = array(
                     'id' => $roompicvalue['id'],
                     'photo_name' => $roompicvalue['photo_name'],
-                    'link_photo' => "images/building/$id/" . $roompicvalue['photo_name'],
+                    'link_photo' => $linkPhoto,
                     'roomtype_name' => $roomtype2sitedata->getRoomTypename(),
                     'room_size' => $roomtype2sitedata->getRoomsize(),
                     'room_price' => $roomtype2sitedata->getRoomprice(),
@@ -743,24 +749,28 @@ class UserbuildingController extends Controller
                     $em->flush();
                 } else {
                     $oldImageName = $imageValue->getPhotoName();
-                    $pathImage = $this->getPathUpload($id);
-                    $path = $pathImage . "/" . $oldImageName;
+                    if($oldImageName!=''){
+                        $pathImage = $this->getPathUpload($id);
+                        $path = $pathImage . "/" . $oldImageName;
 
-                    if (file_exists($path)) {
-                        if ($photo_name != $oldImageName) {
-                            unlink($path);
+                        if (file_exists($path)) {
+                            if ($photo_name != $oldImageName) {
+                                unlink($path);
+                            }
                         }
                     }
-
                     $imageValue->setPhotoName($photo_name);
                     $imageValue->setPhotoType($photo_type);
                     $imageValue->setSequence($sequence);
                     $imageValue->setDescription($description);
+
                     $roomtype2siteid = $imageValue->getRoomtype2siteId();
+
                     if ($value['photo_type'] == 'room') {
                         $roomtype2siteid = $this->saveRoomtypeData($id, $data, $roomtype2siteid);
                     }
                     $imageValue->setRoomtype2siteId($roomtype2siteid);
+
                     $em->flush();
                 }
             }
