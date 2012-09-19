@@ -167,6 +167,9 @@ select[disabled] { background-color: #EAEAEA !important; color:#BCBCBC !importan
 .detail #i_containTab3 ul#navi_containTab3 li#tabNavi8.active {background:url(../images/pay.png) no-repeat; background-position:0 -43px; display:block;}
 .detail #i_containTab3 ul#navi_containTab3 li#tabNavi9.active {background:url(../images/package.png) no-repeat; background-position:0 -43px; display:block;}
 
+/*Banner/Ads*/
+.detail .ads{ width:950px; margin: 25px 25px 15px 25px; color:#FFF; font-size: 20px;}
+
 /*Gallery*/
 #gallery { background-color: #423C3B; width: 1000px; height: 400px; display:block; position:relative; margin:15px auto 0px auto;}
 #gallery img.head { padding-top:15px; padding-left:20px;}
