@@ -1,22 +1,87 @@
-<h1>Facilitylist edit</h1>
+<script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script>
+<script>
+    function postData(checkAlert){
 
-<form action="{{ path('facilitylist_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
-    {{ form_widget(edit_form) }}
-    <p>
-        <button type="submit">Edit</button>
-    </p>
-</form>
+    }
+    $(document).ready(function() {
+        $("#formEdit").submit(function(){
+            var url = "{{ path('facilitylist_update', { 'id': entity.id }) }}";
+            $.ajax({
+                type : "POST",
+                url : url,
+                data : $("#formEdit").serialize(),
+                success : function(msg) {
+                    if (msg == 'finish') {
+                        $("#btnShowHide").show("slow");
+                        $('#innerPanel').fadeOut(100).load("{{ path('facilitylist') }}").fadeIn("slow");
+                        $("#edit").slideUp(300).delay(800).fadeOut(400);
+                        alert('√ ทำการแก้ไข Facility เรียบร้อยแล้ว');
+                    } else {
+                        $('#edit').fadeOut().load(msg).fadeIn("slow");
+                        alert('เกิดการผิดพลาด\n** กรุณาตรวจสอบ **');
+                    }
+                }
+            });
+            return false;
+        });
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('facilitylist') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('facilitylist_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+        $("#btnCancelEdit").click(function(){
+            $("#btnShowHide").show("slow");
+            $("#edit").slideUp(300).delay(800).fadeOut(400);
+            return false;
+        });
+    });
+
+</script>
+<style type="text/css">
+    #btnEdit {
+        background: url("{{ asset('images/save.png')}}") no-repeat;
+        display: block;
+        float: none;
+        height: 50px;
+        position: absolute;
+        margin-left: 70px;
+        margin-top: -55px;
+    }
+
+    #btnInputEdit {
+        background: url("{{ asset('images/save.png')}}") no-repeat;
+        opacity: 0;
+        -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+        filter: alpha(opacity=0);
+        cursor: pointer;
+        height: 50px;
+        width: 50px;
+    }
+</style>
+
+<fieldset id="editField">
+    <form id="formEdit" action="{{ path('facilitylist_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+        <div class="label" style="">
+            {{ form_label(edit_form.facility_name) }}
+        </div>
+        {{ form_widget(edit_form.facility_name, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+        {{ form_errors(edit_form.facility_name) }}
+        <br />
+        <div class="label" style="">
+            {{ form_label(edit_form.facility_type) }}
+        </div>
+        {{ form_widget(edit_form.facility_type, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+        {{ form_errors(edit_form.facility_type) }}
+        <br />
+        <div class="label" style="">
+            {{ form_label(edit_form.display) }}
+            {{ form_widget(edit_form.display) }} &nbsp;
+            {{ form_errors(edit_form.display) }}
+        </div>
+        <br />
+        {{ form_widget(edit_form) }}
+        <span style="float: right;">
+            <img src="{{ asset('images/cancel.png')}}" id="btnCancelEdit" width="50" height="50" style="cursor:pointer;margin-right: 70px" />
+                &nbsp;&nbsp;
+            <div id="btnEdit">
+                <input type="submit" id="btnInputEdit" value="Edit">
+            </div>
+        </span>
+    </form>
+</fieldset>

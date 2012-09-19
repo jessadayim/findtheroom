@@ -2,10 +2,6 @@ facilitylist:
     pattern:  /
     defaults: { _controller: "FTRAdminBundle:Facilitylist:index" }
 
-facilitylist_show:
-    pattern:  /{id}/show
-    defaults: { _controller: "FTRAdminBundle:Facilitylist:show" }
-
 facilitylist_new:
     pattern:  /new
     defaults: { _controller: "FTRAdminBundle:Facilitylist:new" }
@@ -22,9 +18,4 @@ facilitylist_edit:
 facilitylist_update:
     pattern:  /{id}/update
     defaults: { _controller: "FTRAdminBundle:Facilitylist:update" }
-    requirements: { _method: post }
-
-facilitylist_delete:
-    pattern:  /{id}/delete
-    defaults: { _controller: "FTRAdminBundle:Facilitylist:delete" }
     requirements: { _method: post }

@@ -2,10 +2,6 @@ pay_type:
     pattern:  /
     defaults: { _controller: "FTRAdminBundle:Pay_type:index" }
 
-pay_type_show:
-    pattern:  /{id}/show
-    defaults: { _controller: "FTRAdminBundle:Pay_type:show" }
-
 pay_type_new:
     pattern:  /new
     defaults: { _controller: "FTRAdminBundle:Pay_type:new" }
