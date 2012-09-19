@@ -1,6 +1,6 @@
 <script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script>
 <script type='text/javascript' src='{{asset("js/paging/data_table/table_paging.js")}}'></script>
-<link rel="stylesheet" type="text/css" href="{{asset('js/paging/data_table/table_style.css')}}" />
+
 <script>
     $(document).ready(function() {
         $(".btnEditZone").click(function(){
@@ -67,39 +67,41 @@
     <div class="clear"></div>
     <br/>
     <fieldset>
-        <table id="tbShow">
-            <thead>
-                <th><a class="btnOrderBy" href="#" id="sort_id">Id</a></th>
-                <th><a class="btnOrderBy" href="#" id="sort_zonename">Zonename</th>
-                <th><a class="btnOrderBy" href="#" id="sort_latitude">Latitude</th>
-                <th><a class="btnOrderBy" href="#" id="sort_longitude">Longitude</th>
-                <th>Actions</th>
-            </thead>
-            {% for entity in entities %}
-                <tr>
-                    <td>{{ entity.id }}</td>
-                    <td>{{ entity.zonename }}</td>
-                    <td>{{ entity.latitude }}</td>
-                    <td>{{ entity.longitude }}</td>
-                    <td>
-                        <ul>
-                            <li>
-                                <a class="btnEditZone" href="{{ path('zone_edit', { 'id': entity.id }) }}">Edit</a>
-                            </li>
-                            <li>
-                                <a class="btnDelete" href="{{ path('zone_edit', { 'id': entity.id }) }}">Delete</a>
-                            </li>
-                        </ul>
-                    </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="2"></td>
-                    <td align="center">No matching records found</td>
-                    <td colspan="2"></td>
-                </tr>
-            {% endfor %}
-        </table>
+        <div class="grid_12 tableLists marginB_10 alpha">
+            <table>
+                <thead>
+                    <th style="width: 160px !important;"><a class="btnOrderBy" href="#" id="sort_id">Id</a></th>
+                    <th style="width: 400px !important;"><a class="btnOrderBy" href="#" id="sort_zonename">Zonename</th>
+                    <th><a class="btnOrderBy" href="#" id="sort_latitude">Latitude</th>
+                    <th><a class="btnOrderBy" href="#" id="sort_longitude">Longitude</th>
+                    <th>Actions</th>
+                </thead>
+                {% for entity in entities %}
+                    <tr>
+                        <td>{{ entity.id }}</td>
+                        <td>{{ entity.zonename }}</td>
+                        <td>{{ entity.latitude }}</td>
+                        <td>{{ entity.longitude }}</td>
+                        <td>
+                            <ul>
+                                <li>
+                                    <a class="btnEditZone" href="{{ path('zone_edit', { 'id': entity.id }) }}">Edit</a>
+                                </li>
+                                <li>
+                                    <a class="btnDelete" href="{{ path('zone_edit', { 'id': entity.id }) }}">Delete</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="2"></td>
+                        <td align="center">No matching records found</td>
+                        <td colspan="2"></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
     </fieldset>
     <div class="paginator">
         <ul>
