@@ -1,8 +1,5 @@
 <script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script>
 <script>
-    function postData(checkAlert){
-
-    }
     $(document).ready(function() {
         $("#formEdit").submit(function(){
             var url = "{{ path('facilitylist_update', { 'id': entity.id }) }}";

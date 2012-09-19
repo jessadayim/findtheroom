@@ -110,7 +110,6 @@ class Building_siteController extends Controller
 
         $paginator = new Paginator($countList, $offset, $limit, $midRange);
         return array(
-            'buildingSite'      => $objBuildingSite,
             'entities'          => $objBuildingSite,
             'paginator'	        => $paginator,
             'countList'		    => $countList,

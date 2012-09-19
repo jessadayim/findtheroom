@@ -2,7 +2,7 @@
 <script type='text/javascript' src='{{asset("js/paging/data_table/table_paging.js")}}'></script>
 
 <script>
-	var countValuePaging = {{buildingSite|length}};
+	var countValuePaging = {{entities|length}};
 
 	$(document).ready(function() {
 
@@ -100,7 +100,7 @@
             <th style="width: 50px !important;" >config</th>
         </thead>
         <tbody>
-        {% for entity in buildingSite %}
+        {% for entity in entities %}
             <tr>
                 <td>{{ entity.id }}</td>
                 <td>{{ entity.building_name }}</td>
