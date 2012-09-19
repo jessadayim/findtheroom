@@ -1,7 +1,6 @@
-<!-- jQuery data table -->
 <script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script>
-{#<script type='text/javascript' src='{{asset("js/paging/jquery.dataTables.js")}}'></script>#}
-<link rel="stylesheet" href='{{asset("css/paging/sytletable.css")}}' type="text/css" id="" media="print, projection, screen" />
+<script type='text/javascript' src='{{asset("js/paging/data_table/table_paging.js")}}'></script>
+<link rel="stylesheet" type="text/css" href="{{asset('js/paging/data_table/table_style.css')}}" />
 <script>
     $(document).ready(function() {
         $(".btnEditZone").click(function(){
@@ -43,23 +42,20 @@
             return false;
         });
     });
-</script>
 
-<script type="text/javascript">
-//    jQuery.fn.dataTableExt.oSort['string-case-asc'] = function(x, y) {
-//        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
-//    };
-//
-//    jQuery.fn.dataTableExt.oSort['string-case-desc'] = function(x, y) {
-//        return ((x < y) ? 1 : ((x > y) ? -1 : 0));
-//    };
-//
-//    $(document).ready(function() {
-//        $("#sortTable1").dataTable({
-//            "aaSorting" : [[1, 'asc']]
-//        });
-//    });
+    // ค่าปัจจุบันในการ sort
+    var orderByOld = "{{ orderBy }}";
+    var orderByTypeOld = "{{ orderByType }}";
+
+    //ประกาศค่าเริ่มต้น
+    var urlPost = "{{ path('zone') }}"
+
 </script>
+<style type="text/css">
+    .inPage {
+        cursor: pointer;
+    }
+</style>
 <fieldset>
     <h1>Zone list</h1>
     <div id="newZone"></div>
@@ -71,13 +67,13 @@
     <div class="clear"></div>
     <br/>
     <fieldset>
-        <table id="sortTable1"  class="display" border="1" >
+        <table id="tbShow">
             <thead>
-                    <th>Id</th>
-                    <th>Zonename</th>
-                    <th>Latitude</th>
-                    <th>Longitude</th>
-                    <th>Actions</th>
+                <th><a class="btnOrderBy" href="#" id="sort_id">Id</a></th>
+                <th><a class="btnOrderBy" href="#" id="sort_zonename">Zonename</th>
+                <th><a class="btnOrderBy" href="#" id="sort_latitude">Latitude</th>
+                <th><a class="btnOrderBy" href="#" id="sort_longitude">Longitude</th>
+                <th>Actions</th>
             </thead>
             {% for entity in entities %}
                 <tr>
@@ -87,7 +83,6 @@
                     <td>{{ entity.longitude }}</td>
                     <td>
                         <ul>
-
                             <li>
                                 <a class="btnEditZone" href="{{ path('zone_edit', { 'id': entity.id }) }}">Edit</a>
                             </li>
@@ -97,15 +92,66 @@
                         </ul>
                     </td>
                 </tr>
+            {% else %}
+                <tr>
+                    <td colspan="2"></td>
+                    <td align="center">No matching records found</td>
+                    <td colspan="2"></td>
+                </tr>
             {% endfor %}
         </table>
     </fieldset>
-</fieldset>
+    <div class="paginator">
+        <ul>
+            <strong>showing {{ countListZone }} entities : Page </strong>
+            {% for i in 1..paginator.numpages %}
+                {% if paginator.range.0 > 2 and i == paginator.range.0 %}
+                    ...
+                {% endif %}
 
-{#<ul>#}
-    {#<li>#}
-        {#<a href="{{ path('zone_new') }}">#}
-            {#Create a new entry#}
-        {#</a>#}
-    {#</li>#}
-{#</ul>#}
+                {%  if(i==1 or i==paginator.numpages or i in paginator.range) %}
+                    {% if i==paginator.currentpage %}
+                        {% if i == noPage %}
+                            <input class="disableBtn" type="button" value="{{i}}" id="Submit" name="submitPage" disabled="true"/>
+                        {% else %}
+                            <input class="inPage" type="button" value="{{i}}" id="Submit" name="submitPage"/>
+                        {% endif %}
+                    {% else %}
+                        {% if i == noPage %}
+                        <input class="disableBtn" type="button" value="{{i}}" id="Submit" name="submitPage" disabled="true"/>
+                        {% else %}
+                        <input class="inPage" type="button" value="{{i}}" id="Submit" name="submitPage"/>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+
+                {% if paginator.range[paginator.midrange -1] < paginator.numpages -1 and i == paginator.range[paginator.midrange-1] %}
+                    ...
+                {% endif %}
+            {% endfor %}
+            <div align="right" style="float:right;" ><strong>Search:</strong>
+                <input id="tbxSearch" style="height: 25px;margin-bottom: 10px;" value="{{ textSearch }}" />&nbsp;&nbsp;
+                <select name="record" style="width:150px;" class="record">
+                    <option value="10">10 Record </option>
+                    {% if limit == '50' %}
+                        <option selected="yes" value="50">50 Record</option>
+                        <option value="100">100 Record</option>
+                        <option value="500">500 Record</option>
+                    {% elseif limit == '100' %}
+                        <option value="50">50 Record</option>
+                        <option selected="yes" value="100">100 Record</option>
+                        <option value="500">500 Record</option>
+                    {% elseif limit == '500' %}
+                        <option value="50">50 Record</option>
+                        <option value="100">100 Record</option>
+                        <option selected="yes" value="500">500 Record</option>
+                    {% else %}
+                        <option value="50">50 Record</option>
+                        <option value="100">100 Record</option>
+                        <option value="500">500 Record</option>
+                    {% endif %}
+                </select>
+            </div>
+        </ul>
+    </div>
+</fieldset>

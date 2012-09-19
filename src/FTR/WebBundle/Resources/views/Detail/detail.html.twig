@@ -218,7 +218,16 @@ $(function(){
 				<td align="center" width="250" colspan="2" style="padding-right:10px;">ขนาด</td>
 				<td align="center" colspan="2" width="250">อัตราค่าเช่า/เดือน</td>
 			</tr>
-
+			{% for row in roomType %}
+			<tr height="135" valign="middle">
+				<td align="left" width="220"><div class="thumbframe"><img src="{{asset('images/show.png')}}" class="thumb omega" style="padding:0px"/></div></td>
+				<td align="left" width="150">{{row.room_typename}}</td>
+				<td align="right" width="110" style="padding-right:10px;">{{row.room_size}}</td>
+                <td align="left" width="140">ตารางเมตร</td>
+				<td align="right" width="130">{{row.room_price}}</td>
+                <td align="left" width="120">บาท</td>
+			</tr>
+			{%endfor%}
 		</table>
 	</div>
 </div>

@@ -6,7 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use FTR\WebBundle\Entity\Zone;
 use FTR\AdminBundle\Form\ZoneType;
-
+use FTR\AdminBundle\Helper\Paginator;
+use FTR\AdminBundle\Helper\LoggerHelper;
 /**
  * Zone controller.
  *
@@ -21,33 +22,48 @@ class ZoneController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entities = $em->getRepository('FTRWebBundle:Zone')->findBy(array('deleted' => 0));
+        //get post
+        $getSelectPage = @$_GET['numPage'];
+        $getRecord = @$_GET['record'];
+        $getTextSearch = @$_GET['textSearch'];
+        $getOrderBy = @$_GET['orderBy'];
+        $getOrderByType = @$_GET['orderByType'];
 
-        return $this->render('FTRAdminBundle:Zone:index.html.twig', array(
-            'entities' => $entities
-        ));
-    }
-
-    /**
-     * Finds and displays a Zone entity.
-     *
-     */
-    public function showAction($id)
-    {
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $entity = $em->getRepository('FTRWebBundle:Zone')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Zone entity.');
+        //set paging
+        $page = 1;
+        if (!empty($getSelectPage)){
+            $page = $getSelectPage;
+        }
+        $limit = 10;
+        $midRange = 5;
+        if(!empty($getRecord)){
+            $limit = $getRecord;
+        }else {
+            $getRecord = $limit;
+        }
+        $offset = $limit*$page-$limit;
+        if (empty($getOrderBy) && empty($getOrderByType)){
+            $getOrderBy = 'id';
+            $getOrderByType = 'asc';
         }
 
-        $deleteForm = $this->createDeleteForm($id);
+        $getEntitiesAllZone = $em->getRepository('FTRWebBundle:Zone')->findBy(array('deleted' => 0));
+        $countListZone = count($getEntitiesAllZone);
 
-        return $this->render('FTRAdminBundle:Zone:show.html.twig', array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
+        $entities = $em->getRepository('FTRWebBundle:Zone')->getDataZone($limit, $offset, $getTextSearch, $countListZone, "$getOrderBy $getOrderByType");
 
+        $paginator = new Paginator($countListZone, $offset, $limit, $midRange);
+
+        return $this->render('FTRAdminBundle:Zone:index.html.twig', array(
+            'entities'          => $entities,
+            'paginator'	        => $paginator,
+            'countListZone'		=> $countListZone,
+            'limit' 	        => $limit,
+            'noPage'	        => $page,
+            'record'	        => $getRecord,
+            'textSearch'        => $getTextSearch,
+            'orderBy'           => $getOrderBy,
+            'orderByType'       => $getOrderByType
         ));
     }
 
@@ -82,6 +98,8 @@ class ZoneController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();
+
+            //Check ชื่อ zone ซ้ำ
             $getZoneName = $entity->getZonename();
             $sqlGetZone = "
                 SELECT
@@ -97,7 +115,9 @@ class ZoneController extends Controller
                 exit();
             }
             $em->persist($entity);
+
             $em->flush();
+            $this->addLogger('Insert zone', $entity);
             echo 'finish';
             exit();
 //            return $this->redirect($this->generateUrl('zone_show', array('id' => $entity->getId())));
@@ -118,6 +138,8 @@ class ZoneController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('FTRWebBundle:Zone')->find($id);
+
+        //Check post เปลี่ยน deleted เป็น 1
         $getCheckPost = @$_POST['checkPost'];
         if ($getCheckPost == "delete"){
             $sqlCheck = "
@@ -144,12 +166,10 @@ class ZoneController extends Controller
         }
 
         $editForm = $this->createForm(new ZoneType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('FTRAdminBundle:Zone:edit.html.twig', array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'edit_form'   => $editForm->createView()
         ));
     }
 
@@ -169,7 +189,6 @@ class ZoneController extends Controller
         }
 
         $editForm   = $this->createForm(new ZoneType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
 
         $request = $this->getRequest();
 
@@ -185,42 +204,13 @@ class ZoneController extends Controller
         return $this->render('FTRAdminBundle:Zone:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
-    /**
-     * Deletes a Zone entity.
-     *
-     */
-    public function deleteAction($id)
-    {
-        $form = $this->createDeleteForm($id);
-        $request = $this->getRequest();
-
-        $form->bindRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
-            $entity = $em->getRepository('FTRWebBundle:Zone')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Zone entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
-        }
-
-        return $this->redirect($this->generateUrl('zone'));
-    }
-
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
-        ;
+    private function addLogger($message, $entity){
+        $logger = new LoggerHelper();
+        $newArray = $logger->objectToArray($entity);
+        $logger->addInfo($message, $newArray);
     }
 
     /*

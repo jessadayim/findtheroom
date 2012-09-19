@@ -1,0 +1,119 @@
+{% extends 'FTRAdminBundle:Layout:panel_layout.html.twig' %}
+
+{% block body %}
+<script>
+    $(document).ready(function () {
+        var url = "{{ path('FTRAdminBundle_UpdateProfile', { 'id': entity.id }) }}";
+        $("#formEdit1").submit(function () {
+            if (chkValidate() != false) {
+                //            alert($(this).serialize());
+                if (!confirm('คุณต้องการแก้ไขข้อมูล ใช่หรือไม่')) {
+                    return false;
+                }
+                $.ajax({
+                    type:"POST",
+                    url:url,
+                    data:$(this).serialize(),
+                    success:function (msg) {
+//                    alert(msg);
+                        if (msg == 'finish') {
+                            $('.profile').fadeOut('slow').load(window.location).fadeIn("slow");
+                        }else if(msg == 'fail'){
+                            alert("ชื่อนี้มีคนใช้งานแล้ว");
+                        } else {
+                            alert('การแก้ไขผิดพลาด');
+                        }
+                    }
+                });
+            }
+            return false;
+        });
+    });
+</script>
+<div id="containerwrap">
+    <div class="grid_12 createLists marginB_10 alpha" style="">
+        <H2>ADMIN PROFILE</H2>
+
+        <div class="clear"></div>
+        <p>
+            Welcome to Visual Admin, a slick admin template for almost any project - front or back end. It's based on
+            the 960 grid system which means you can have almost endless layout possibiliites as well as those that come
+            ready to use straight out the box. Please have a click around and feel free to check out the screenshots.
+        </p>
+
+        <div class="profile">
+            <form id="formEdit1" action="{{ path('FTRAdminBundle_UpdateProfile', { 'id': entity.id }) }}"
+                  method="post" {{ form_enctype(edit_form) }}>
+                <fieldset>
+                    <legend>
+                        EDIT PROFILE
+                    </legend>
+                    <div class="label" style="">
+                        {{ form_label(edit_form.username) }}
+                    </div>
+                    {{ form_widget(edit_form.username, { 'attr': {'class': 'widfat'}}) }} &nbsp;
+                    {{ form_errors(edit_form.username) }}
+                    <br/>
+
+                    <div class="label" style="">
+                        {{ form_label(edit_form.password) }}
+                    </div>
+                    {{ form_widget(edit_form.password, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+                    {{ form_errors(edit_form.password) }}
+                    <br/>
+
+                    <div class="label" style="">
+                        {{ form_label(edit_form.firstname) }}
+                    </div>
+                    {{ form_widget(edit_form.firstname, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+                    {{ form_errors(edit_form.firstname) }}
+                    <br/>
+
+                    <div class="label" style="">
+                        {{ form_label(edit_form.lastname) }}
+                    </div>
+                    {{ form_widget(edit_form.lastname, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+                    {{ form_errors(edit_form.lastname) }}
+                    <br/>
+
+                    <div class="label" style="">
+                        {{ form_label(edit_form.phone_number) }}
+                    </div>
+                    {{ form_widget(edit_form.phone_number, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+                    {{ form_errors(edit_form.phone_number) }}
+                    <br/>
+                    {{ form_rest(edit_form) }}
+                    <br/>
+		<span style="float: right;">
+			<input type="submit" value="UPDATE">
+		</span>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    function chkValidate() {
+        var regUser = /[^A-Za-z0-9]/;
+        var regPass = /[a-z][0-9]/;
+        var regTel = /^[\d]+$/;
+        if (regUser.test($('#ftr_adminbundle_user_admintype_username').val()) == true) {
+            alert("ชื่อผู้ใช้งาน จะต้องเป็นอักขระอังกฤษ หรือตัวเลข");
+            return false;
+        } else if ($("#ftr_adminbundle_user_admintype_password").val().length < 6) {
+            alert("รหัสผ่านจะต้องไม่น้อยกว่า 6 ตัว");
+            return false;
+        } else if (!$("#ftr_adminbundle_user_admintype_password").val().match(regPass)) {
+            alert("รหัสผ่านจะต้องเป็นตัวอักษร และตัวเลข");
+            return false;
+        } else if ($("#ftr_adminbundle_user_admintype_phone_number").val().length < 9 || $("#ftr_adminbundle_user_admintype_phone_number").val().length > 10) {
+            alert("หมายเลฃโทรศัพท์ผิด");
+            return false;
+        } else if (!$("#ftr_adminbundle_user_admintype_phone_number").val().match(regTel)) {
+            alert("หมายเลขโทรศัพท์ต้องเป็นตัวเลขอย่างเดียว");
+            return false;
+        }
+        return true;
+    }
+</script>
+{% endblock %}

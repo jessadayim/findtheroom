@@ -44,3 +44,176 @@ margin-right: 105px/*50px*/; /*spacing between each menu link*/
 text-decoration: none;
 font-weight: normal;
 }
+
+/* Detect Device */
+    
+	/* Smartphones (landscape) ----------- */
+	@media only screen and (min-device-width : 321px) and (max-device-width: 480px) {
+		ul.gelbuttonmenu li a{
+		color: #423C3B;
+		padding: 5px 15px; /*make sure padding is sufficient that the height of the link is enough to fully show the gel button*/
+		margin-right: 50px/*50px*/; /*spacing between each menu link*/
+		text-decoration: none;
+		font-weight: normal;
+		}
+		
+		ul.gelbuttonmenu li a:hover{
+		color: #FFFFFF;
+		background:#BF1E2D;
+		padding: 5px 15px; /*make sure padding is sufficient that the height of the link is enough to fully show the gel button*/
+		margin-right: 50px/*50px*/; /*spacing between each menu link*/
+		text-decoration: none;
+		font-weight: normal;
+		}
+		
+		ul.gelbuttonmenu li a.selected{
+		color: #FFFFFF;
+		background:#BF1E2D;
+		padding: 5px 15px; /*make sure padding is sufficient that the height of the link is enough to fully show the gel button*/
+		margin-right: 50px/*50px*/; /*spacing between each menu link*/
+		text-decoration: none;
+		font-weight: normal;
+     	}
+	}
+	
+	/* Smartphones (portrait) ----------- */
+	@media only screen and (max-device-width : 320px) {
+	ul.gelbuttonmenu li a{
+		color: #423C3B;
+		padding: 5px 15px; /*make sure padding is sufficient that the height of the link is enough to fully show the gel button*/
+		margin-right: 50px/*50px*/; /*spacing between each menu link*/
+		text-decoration: none;
+		font-weight: normal;
+		}
+		
+		ul.gelbuttonmenu li a:hover{
+		color: #FFFFFF;
+		background:#BF1E2D;
+		padding: 5px 15px; /*make sure padding is sufficient that the height of the link is enough to fully show the gel button*/
+		margin-right: 50px/*50px*/; /*spacing between each menu link*/
+		text-decoration: none;
+		font-weight: normal;
+		}
+		
+		ul.gelbuttonmenu li a.selected{
+		color: #FFFFFF;
+		background:#BF1E2D;
+		padding: 5px 15px; /*make sure padding is sufficient that the height of the link is enough to fully show the gel button*/
+		margin-right: 50px/*50px*/; /*spacing between each menu link*/
+		text-decoration: none;
+		font-weight: normal;
+     	}
+	}
+		
+     /* iPads (portrait) ----------- */
+     @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation : portrait) {
+        ul.gelbuttonmenu li a{
+		color: #423C3B;
+		padding: 5px 15px; /*make sure padding is sufficient that the height of the link is enough to fully show the gel button*/
+		margin-right: 50px/*50px*/; /*spacing between each menu link*/
+		text-decoration: none;
+		font-weight: normal;
+		}
+		
+		ul.gelbuttonmenu li a:hover{
+		color: #FFFFFF;
+		background:#BF1E2D;
+		padding: 5px 15px; /*make sure padding is sufficient that the height of the link is enough to fully show the gel button*/
+		margin-right: 50px/*50px*/; /*spacing between each menu link*/
+		text-decoration: none;
+		font-weight: normal;
+		}
+		
+		ul.gelbuttonmenu li a.selected{
+		color: #FFFFFF;
+		background:#BF1E2D;
+		padding: 5px 15px; /*make sure padding is sufficient that the height of the link is enough to fully show the gel button*/
+		margin-right: 50px/*50px*/; /*spacing between each menu link*/
+		text-decoration: none;
+		font-weight: normal;
+     	}
+	 }
+     /* iPads (landscape) ----------- */
+     @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation : landscape) {
+        ul.gelbuttonmenu li a{
+		color: #423C3B;
+		padding: 5px 15px; /*make sure padding is sufficient that the height of the link is enough to fully show the gel button*/
+		margin-right: 50px/*50px*/; /*spacing between each menu link*/
+		text-decoration: none;
+		font-weight: normal;
+		}
+		
+		ul.gelbuttonmenu li a:hover{
+		color: #FFFFFF;
+		background:#BF1E2D;
+		padding: 5px 15px; /*make sure padding is sufficient that the height of the link is enough to fully show the gel button*/
+		margin-right: 50px/*50px*/; /*spacing between each menu link*/
+		text-decoration: none;
+		font-weight: normal;
+		}
+		
+		ul.gelbuttonmenu li a.selected{
+		color: #FFFFFF;
+		background:#BF1E2D;
+		padding: 5px 15px; /*make sure padding is sufficient that the height of the link is enough to fully show the gel button*/
+		margin-right: 50px/*50px*/; /*spacing between each menu link*/
+		text-decoration: none;
+		font-weight: normal;
+     	}  
+     }
+	 @media screen and (max-device-width: 480px) and (orientation: portrait){
+        ul.gelbuttonmenu li a{
+		color: #423C3B;
+		padding: 5px 15px; /*make sure padding is sufficient that the height of the link is enough to fully show the gel button*/
+		margin-right: 50px/*50px*/; /*spacing between each menu link*/
+		text-decoration: none;
+		font-weight: normal;
+		}
+		
+		ul.gelbuttonmenu li a:hover{
+		color: #FFFFFF;
+		background:#BF1E2D;
+		padding: 5px 15px; /*make sure padding is sufficient that the height of the link is enough to fully show the gel button*/
+		margin-right: 50px/*50px*/; /*spacing between each menu link*/
+		text-decoration: none;
+		font-weight: normal;
+		}
+		
+		ul.gelbuttonmenu li a.selected{
+		color: #FFFFFF;
+		background:#BF1E2D;
+		padding: 5px 15px; /*make sure padding is sufficient that the height of the link is enough to fully show the gel button*/
+		margin-right: 50px/*50px*/; /*spacing between each menu link*/
+		text-decoration: none;
+		font-weight: normal;
+     	}   
+	 }
+	 @media screen and (max-device-width: 640px) and (orientation: landscape){
+        ul.gelbuttonmenu li a{
+		color: #423C3B;
+		padding: 5px 15px; /*make sure padding is sufficient that the height of the link is enough to fully show the gel button*/
+		margin-right: 50px/*50px*/; /*spacing between each menu link*/
+		text-decoration: none;
+		font-weight: normal;
+		}
+		
+		ul.gelbuttonmenu li a:hover{
+		color: #FFFFFF;
+		background:#BF1E2D;
+		padding: 5px 15px; /*make sure padding is sufficient that the height of the link is enough to fully show the gel button*/
+		margin-right: 50px/*50px*/; /*spacing between each menu link*/
+		text-decoration: none;
+		font-weight: normal;
+		}
+		
+		ul.gelbuttonmenu li a.selected{
+		color: #FFFFFF;
+		background:#BF1E2D;
+		padding: 5px 15px; /*make sure padding is sufficient that the height of the link is enough to fully show the gel button*/
+		margin-right: 50px/*50px*/; /*spacing between each menu link*/
+		text-decoration: none;
+		font-weight: normal;
+     	}   
+	 }
+
+/* Detect Device */

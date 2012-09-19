@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * FTR\WebBundle\Entity\Zone
  *
  * @ORM\Table(name="zone")
- * @ORM\Entity(repositoryClass="FTR\WebBundle\Repository\ZoneRepository")
+ * @ORM\Entity(repositoryClass="FTR\AdminBundle\Repository\ZoneRepository")
  */
 class Zone
 {

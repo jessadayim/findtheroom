@@ -22,11 +22,12 @@ class PanelController extends Controller {
 				return $this -> render('FTRAdminBundle:Ftr_panel:signin.html.twig', array('txterror' => 'กรุณากรอกข้อมูลให้ครบ'));
 			} else {
 				try {
-					$sql1 = "SELECT id,username FROM user_admin WHERE username = '$username' and password = '$password'";
+					$sql1 = "SELECT id,username FROM user_admin WHERE username = '$username' and password = '$password' and userlevel = 1";
 					$objSQL1 = $conn -> fetchAll($sql1);
 					if (!empty($objSQL1)) {
 						$session = $this -> get('session');
 						$session -> set('username', $objSQL1[0]['username']);
+                        $session -> set('id', $objSQL1[0]['id']);
 						// echo "true";
 						// exit();
 						return $this -> redirect($this -> generateUrl('FTRAdminBundle_Dashboard'));
@@ -47,6 +48,7 @@ class PanelController extends Controller {
 		// exit();
 		$session = $this -> get('session');
 		$session -> set('username', '');
+        $session -> set('id', '');
 		return $this -> redirect($this -> generateUrl('FTRAdminBundle_panel'));
 	}
 

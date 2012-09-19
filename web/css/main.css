@@ -10,7 +10,8 @@ body {
 
 @font-face {
     font-family: DB Adman X;
-    src: url(../font/DBAdmanX.otf);
+    src: url("../font/DBAdmanX.otf");
+	src: url("../font/DBAdmanX.eot") format("eot"),url("../font/DBAdmanX.eot?#iefix") format("embedded-opentype"), url("../font/DBAdmanX.woff") format("woff"), url("../font/DBAdmanX.ttf") format("truetype"), url("../font/DBAdmanX.svg#DB Adman X") format("svg");
     font-weight:normal;
 }
 
@@ -166,6 +167,9 @@ select[disabled] { background-color: #EAEAEA !important; color:#BCBCBC !importan
 .detail #i_containTab3 ul#navi_containTab3 li#tabNavi8.active {background:url(../images/pay.png) no-repeat; background-position:0 -43px; display:block;}
 .detail #i_containTab3 ul#navi_containTab3 li#tabNavi9.active {background:url(../images/package.png) no-repeat; background-position:0 -43px; display:block;}
 
+/*Banner/Ads*/
+.detail .ads{ width:950px; margin: 25px 25px 15px 25px; color:#FFF; font-size: 20px;}
+
 /*Gallery*/
 #gallery { background-color: #423C3B; width: 1000px; height: 400px; display:block; position:relative; margin:15px auto 0px auto;}
 #gallery img.head { padding-top:15px; padding-left:20px;}
@@ -263,7 +267,7 @@ input.regis { background: url(../images/regis-bt.png) no-repeat; border: 0; widt
 
 
 /*Footer*/
-#footer { background-color: #423C3B; width: 1000px; height: 250px; display:block; position:relative; margin:-5px auto 0 auto;}
+#footer { background-color: #423C3B; width: 1000px; height: 250px; display:block; position:relative; margin:-20px auto 0 auto;}
 #footer ul { list-style:none; padding:0; margin-top:0; width:100%;}
 #footer ul li.head { width: 225px; height: 50px; padding-left:20px; padding-top:10px; float:left;}
 #footer ul li.head hr { color: #FFF; background-color: #FFF; width:95%; height: 1px; border: 0 none; padding:0; margin-top:10px;}

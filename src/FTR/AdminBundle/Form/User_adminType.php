@@ -9,21 +9,33 @@ class User_adminType extends AbstractType
 {
     public function buildForm(FormBuilder $builder, array $options)
     {
-    	$userlevel[''] = '';
-        foreach ($options['data']->user_level as $key => $value){
-            $userlevel[$value['id']] = $value['level_name'];
+		//var_dump($options['data']->user_level);
+		if(empty($options['data']->user_level)){
+            $builder
+                ->add('username', 'text',array('label' => 'Username:'))
+                ->add('password', 'text',array( 'label' => 'Password:'))
+                ->add('firstname', 'text',array('label' => 'First Name:'))
+                ->add('lastname', 'text',array('label' => 'Last Name:'))
+                ->add('phone_number', 'text',array('label' => 'Phone Number:'))
+                //->add('userlevel','choice',array('choices'=>$userlevel,'label' => 'Level:'))
+                //->add('deleted',array('label' => 'deleted:'))
+            ;
+        }else{
+            $userlevel[''] = '';
+            foreach ($options['data']->user_level as $key => $value){
+                $userlevel[$value['id']] = $value['level_name'];
+            }
+            $builder
+                ->add('username', 'text',array('label' => 'Username:'))
+                ->add('password', 'text',array('label' => 'Password:'))
+                ->add('firstname', 'text',array('label' => 'First Name:'))
+                ->add('lastname', 'text',array('label' => 'Last Name:'))
+                ->add('phone_number', 'text',array('label' => 'Phone Number:'))
+                ->add('userlevel','choice',array('choices'=>$userlevel,'label' => 'Level:'))
+                //->add('deleted',array('label' => 'deleted:'))
+            ;
         }
-		//var_dump($userlevel);
-		
-        $builder
-            ->add('username', 'text',array('label' => 'Username:'))
-            ->add('password', 'text',array('label' => 'Password:'))
-            ->add('firstname', 'text',array('label' => 'First Name:'))
-            ->add('lastname', 'text',array('label' => 'Last Name:'))
-            ->add('phone_number', 'text',array('label' => 'Phone Number:'))
-            ->add('userlevel','choice',array('choices'=>$userlevel,'label' => 'Level:'))
-            //->add('deleted',array('label' => 'deleted:'))
-        ;
+
     }
 
     public function getName()

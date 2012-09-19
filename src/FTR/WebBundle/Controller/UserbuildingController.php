@@ -4,6 +4,8 @@ namespace FTR\WebBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 use FTR\WebBundle\Entity\User_owner;
 use FTR\WebBundle\Entity\Building_site;
 use FTR\WebBundle\Entity\Building_type;
@@ -17,6 +19,7 @@ use FTR\WebBundle\Entity\Pay_type;
 use FTR\WebBundle\Entity\Roomtype2site;
 use FTR\WebBundle\Entity\Zone;
 use FTR\WebBundle\Controller\SearchController;
+use FTR\AdminBundle\Helper\LoggerHelper;
 
 class UserbuildingController extends Controller
 {
@@ -34,17 +37,19 @@ class UserbuildingController extends Controller
         }
         $em = $this->getDoctrine()->getEntityManager();
         $conn = $this->get('database_connection');
+        $enabled = null;
+        $arrdata = NULL;
         if (!$conn) {
             die("MySQL Connection error");
         }
         try {
             $sql1 = "SELECT * FROM user_owner WHERE username = '" . $username . "'";
             $objSQL1 = $conn->fetchAll($sql1);
-            $objSQL1[0]['username'];
+            $enabled = $objSQL1[0]['enabled'];
 
             $sql2 = "SELECT * FROM building_site WHERE user_owner_id = '" . $objSQL1[0]['id'] . "'";
             $objSQL2 = $conn->fetchAll($sql2);
-            $arrdata = NULL;
+
             foreach ($objSQL2 as $key => $value) {
                 if ($value['publish'] == 1) {
                     $publish = "แสดงแล้ว";
@@ -73,6 +78,7 @@ class UserbuildingController extends Controller
             'phone_number' => $objSQL1[0]['phone_number'],
             'errormsg' => $errormsg,
             'build_data' => $arrdata,
+            'enabled' => $enabled,
         ));
     }
 
@@ -103,6 +109,7 @@ class UserbuildingController extends Controller
                 $building = new Building_site();
                 $building->setBuildingName('');
                 $building->setBuildingAddress('');
+                $building->setPublish(0);
                 $building->setStartPrice(0);
                 $building->setEndPrice(0);
                 $building->setPhoneNumber('');
@@ -150,7 +157,7 @@ class UserbuildingController extends Controller
             $imagehead = $this->getImageDatas($building_id, NULL, 'head');
             $imagemap = $this->getImageDatas($building_id, NULL, 'map');
 
-            $sqlFacilityList = "select facilitylist_id from facility2site where building_site_id = $id and deleted = 0";
+            $sqlFacilityList = "select facilitylist_id from facility2site where building_site_id = $building_id and deleted = 0";
             $facFetch = $conn->fetchAll($sqlFacilityList);
             $facArray = NULL;
             foreach ($facFetch as $key => $value) {
@@ -193,10 +200,16 @@ class UserbuildingController extends Controller
             foreach ($arrroom as $key => $roompicvalue) {
                 $roomtype2site_id = $roompicvalue['roomtype2site_id'];
                 $roomtype2sitedata = $em->getRepository('FTRWebBundle:Roomtype2site')->findOneBy(array('id' => $roomtype2site_id));
+                if(!empty($roompicvalue['photo_name']))
+                {
+                    $linkPhoto = "images/building/$id/" . $roompicvalue['photo_name'];
+                }else{
+                    $linkPhoto = "images/show.png";
+                }
                 $arrroomdata[] = array(
                     'id' => $roompicvalue['id'],
                     'photo_name' => $roompicvalue['photo_name'],
-                    'link_photo' => "images/building/$id/" . $roompicvalue['photo_name'],
+                    'link_photo' => $linkPhoto,
                     'roomtype_name' => $roomtype2sitedata->getRoomTypename(),
                     'room_size' => $roomtype2sitedata->getRoomsize(),
                     'room_price' => $roomtype2sitedata->getRoomprice(),
@@ -414,54 +427,36 @@ class UserbuildingController extends Controller
         return $fac_listreturn;
     }
 
-    public function saveDataAction($id = null)
+    public function saveDataAction($id)
     {
         $conn = $this->get('database_connection');
         if (!$conn) {
             die("MySQL Connection error");
         }
-        $check = NULL;
+
         $em = $this->getDoctrine()->getEntityManager();
         $session = $this->get('session');
         $user = $session->get('user');
 
-        $today = date("Y-m-d H:i:s");
+        $logger = new LoggerHelper();
+
         if ($_POST) {
             $post_array = $_POST;
-            echo "<pre>";
+            /*echo "<pre>";
             var_dump($post_array);
-            echo "</pre>";
-            exit();
-
-            /*try {
-                if ($id) {
-                    $sql = "select * from building_site where id = $id";
-                    $check = $conn->fetchAll($sql);
-                }
-                //เช็คข้อมูลก่อน เพื่อทราบว่าจะ Insert หรือ Update
-                if (!empty($check)) { //ส่วนนี้ พบข้อมูล ทำการอัพเดต
-
-
-                } else { //ส่วนนี้ ไม่พบข้อมูล ทำการ insert
-
-                    $sqlinsert = "INSERT INTO `building_site` (
-									`building_name`,`building_address`,`start_price`,`end_price`,`phone_number`,
-									`datetimestamp`,`lastupdate`,`userupdate`,`latitude`,`longitude`,
-									`building_type_id`,`pay_type_id`,`user_owner_id`,`detail`,`contact_name`,
-									`contact_email`,`website`,`month_stay`,`water_unit`,`electricity_unit`,
-									`internet_price`) 
-								VALUE('ทดสอบ','7/513 หมู่7','1500','4500','0863494353',
-									'$today','$today','$user','1','1',
-									'1','1','1','ทดสอบดีเทลล์','เจษฎา ยิ้มวิลัย',
-									'exodist@gmail.com','','6','4','8',
-									'799')";
-                    //echo "<pre>";var_dump($sqlinsert);echo "</pre>";exit();
-                    $conn->query($sqlinsert);
-
-                }
-            } catch (Exception $e) {
-                echo 'Caught exception: ', $e->getMessage(), "\n";
-            }*/
+            echo "</pre>";*/
+            //$logger->addInfo('test log for save data',array('place'=>$post_array['placeap']));
+            $buildingData = $em->getRepository('FTRWebBundle:Building_site')->findOneBy(array('id' => $id));
+            if(!empty($buildingData))
+            {
+                $publish = $buildingData->getPublish();
+            }
+            if($publish!=1)
+            {
+                $buildingData->setPublish(2);
+                $em->flush();
+                $logger->addInfo('User '.$user.' update building');
+            }
         }
         //exit();
         return $this->redirect($this->generateUrl('userbuilding'));
@@ -663,11 +658,20 @@ class UserbuildingController extends Controller
                 echo $alert;
             }
             elseif ($type == 'other') {
-                $facilityList = @$_POST['fac'];
-                $alert = $this->saveFacilityData($id, $facilityList);
-
-                $zoneLocation = @$_POST['bkzone_ot'];
-                $nearLocation = @$_POST['near_ot'];
+                if(!empty($_POST['fac'])){
+                    $facilityList = @$_POST['fac'];
+                    $alert = $this->saveFacilityData($id, $facilityList);
+                }
+                if(!empty($_POST['bkzone_ot'])){
+                    $zoneLocation = @$_POST['bkzone_ot'];
+                }else{
+                    $zoneLocation = null;
+                }
+                if(!empty($_POST['near_ot'])){
+                    $nearLocation = @$_POST['near_ot'];
+                }else{
+                    $nearLocation = null;
+                }
                 $arrOther = array(
                     'bts'       => @$_POST['bts_ot'],
                     'mrt'       => @$_POST['mrt_ot'],
@@ -745,24 +749,28 @@ class UserbuildingController extends Controller
                     $em->flush();
                 } else {
                     $oldImageName = $imageValue->getPhotoName();
-                    $pathImage = $this->getPathUpload($id);
-                    $path = $pathImage . "/" . $oldImageName;
+                    if($oldImageName!=''){
+                        $pathImage = $this->getPathUpload($id);
+                        $path = $pathImage . "/" . $oldImageName;
 
-                    if (file_exists($path)) {
-                        if ($photo_name != $oldImageName) {
-                            unlink($path);
+                        if (file_exists($path)) {
+                            if ($photo_name != $oldImageName) {
+                                unlink($path);
+                            }
                         }
                     }
-
                     $imageValue->setPhotoName($photo_name);
                     $imageValue->setPhotoType($photo_type);
                     $imageValue->setSequence($sequence);
                     $imageValue->setDescription($description);
+
                     $roomtype2siteid = $imageValue->getRoomtype2siteId();
+
                     if ($value['photo_type'] == 'room') {
                         $roomtype2siteid = $this->saveRoomtypeData($id, $data, $roomtype2siteid);
                     }
                     $imageValue->setRoomtype2siteId($roomtype2siteid);
+
                     $em->flush();
                 }
             }
@@ -901,9 +909,15 @@ class UserbuildingController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
         $buildingValue = $em->getRepository('FTRWebBundle:Building_site')->findOneBy(array('id' => $id));
-        $buildingValue->setZoneId($zone);
-        $buildingValue->setNearlyPlace($near);
-        $em->flush();
+        if(!empty($zone)||!empty($near)){
+            if(!empty($zone)){
+                $buildingValue->setZoneId($zone);
+            }
+            if(!empty($near)){
+                $buildingValue->setNearlyPlace($near);
+            }
+            $em->flush();
+        }
 
         $nearlyValue = $em->getRepository('FTRWebBundle:Nearly2site')->findBy(array('building_site_id' => $id));
 
@@ -916,25 +930,31 @@ class UserbuildingController extends Controller
             $em->flush();
         }
         //echo "test";exit();
-        $nearlyLocation = new Nearly2site();
-        $nearlyLocation->setBuildingSiteId($id);
-        $nearlyLocation->setNearlyLocationId($arrData['bts']);
-        $nearlyLocation->setDeleted(0);
-        $em->persist($nearlyLocation);
-
-        $nearlyLocation = new Nearly2site();
-        $nearlyLocation->setBuildingSiteId($id);
-        $nearlyLocation->setNearlyLocationId($arrData['mrt']);
-        $nearlyLocation->setDeleted(0);
-        $em->persist($nearlyLocation);
-
-        $nearlyLocation = new Nearly2site();
-        $nearlyLocation->setBuildingSiteId($id);
-        $nearlyLocation->setNearlyLocationId($arrData['university']);
-        $nearlyLocation->setDeleted(0);
-        $em->persist($nearlyLocation);
-        $em->flush();
-
+        if(!empty($arrData['bts']))
+        {
+            $nearlyLocation = new Nearly2site();
+            $nearlyLocation->setBuildingSiteId($id);
+            $nearlyLocation->setNearlyLocationId($arrData['bts']);
+            $nearlyLocation->setDeleted(0);
+            $em->persist($nearlyLocation);
+        }
+        if(!empty($arrData['mrt']))
+        {
+            $nearlyLocation = new Nearly2site();
+            $nearlyLocation->setBuildingSiteId($id);
+            $nearlyLocation->setNearlyLocationId($arrData['mrt']);
+            $nearlyLocation->setDeleted(0);
+            $em->persist($nearlyLocation);
+        }
+        if(!empty($arrData['university']))
+        {
+            $nearlyLocation = new Nearly2site();
+            $nearlyLocation->setBuildingSiteId($id);
+            $nearlyLocation->setNearlyLocationId($arrData['university']);
+            $nearlyLocation->setDeleted(0);
+            $em->persist($nearlyLocation);
+            $em->flush();
+        }
         return "complete";
     }
 

@@ -7,6 +7,8 @@
   <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
 
+
+
 <title>Fine the Room : Control Panel</title>
 {% block css %}
 <link rel="stylesheet" type="text/css" href="{{asset('css/panel/reset.css')}}" />
@@ -18,9 +20,7 @@
 {% block js %}
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
 {% endblock %}
-
 </head>
-
 <body>
 {% if app.session.get('username') is empty %}
 	<header id="wrap" class="container_12" style="height: 100px; padding-top: 30px; text-align: center;">
@@ -64,8 +64,9 @@
 		<div id="userpanel" class="grid_4 omega" style="">
 			<ul>
 				<li><a href="#">Hi {{app.session.get('username')}}</a></li>
-				<li><a href="#">My Setting</a></li>
+				<li><a href="{{path('FTRAdminBundle_EditProfile')}}" id="setting">My Setting</a></li>
 				<li><a href="{{path('FTRAdminBundle_logout')}}"><STRONG>Log out</STRONG></a></li>
+
 			</ul>
 			<input type="text" name="txtsearch" id="txtsearch">
 			<input type="submit" name="btnsearch" id="btnsearch" value="SEARCH">

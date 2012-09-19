@@ -26,6 +26,7 @@
 				$(':input[placeholder]').placeholder();
 			});
 		</script>
+		
 		<script language="javascript">
 			$(document).ready(function() {
 				var mybrowser = navigator.userAgent;
@@ -146,8 +147,8 @@
 				</form>
 				{% else %}
 				<div id="login">
-					<input id="username" name="username" value="" type="text" value="" maxlength="25" placeholder="Username" />
-					<input id="password" name="password" value="" type="password" value="" maxlength="25" placeholder="Password" />
+					<input id="username" name="username" value="" type="text" value="" maxlength="25" placeholder="กรุณากรอกชื่อผู้ใช้งาน" />
+					<input id="password" name="password" value="" type="password" value="" maxlength="25" placeholder="กรุณากรอกรหัสผ่าน" />
 					<input id="log2" class="login" type="submit" value="" />
 					{% endif %}
 				</div>
@@ -169,7 +170,7 @@
 						<a id="searchpage" href="{{path('FTRWebBundle_search')}}">ค้นหาอย่างละเอียด</a>
 					</li>
 					<li>
-						<a id="mainpage" href='#'>ลงโฆษณา</a>
+						<a id="bannerpage" href='{{path('FTRWebBundle_banner')}}'>ลงโฆษณา</a>
 					</li>
 					<li>
 						<a id="publishpage" href="{{path('FTRWebBundle_publish')}}">ลงประกาศห้องพักฟรี</a>
@@ -200,6 +201,9 @@
 					} else if (urlparts[i] == 'contact') {
 						$("#contactpage").addClass("selected");
 						check = true
+					} else if (urlparts[i] == 'ads') {
+						$("#bannerpage").addClass("selected");
+						check = true
 					}
 				}
 				if (check == false)
@@ -210,19 +214,71 @@
 			{% endblock %}
 
 			<div class="ad1">
-				<a href='#'><img src="{{asset('images/ad/ad1.gif')}}" /></a>
-				<a href='#'><img src="{{asset('images/ad/ad2.gif')}}" /></a>
-				<a href='#'><img src="{{asset('images/ad/ad3.gif')}}" /></a>
-				<a href='#' style="margin-right:0px !important"><img src="{{asset('images/ad/ad4.gif')}}" /></a>
+			
+			<!-- <script type="text/javascript"> 
+			function initArray() {
+			this.length = initArray.arguments.length; 
+				for (var i = 0; i < this.length; i++) { 
+				this[i] = initArray.arguments[i]; 
+				} 
+			}
+			
+			link = new initArray( 
+			"http://example.com/page1", 
+			"http://example.com/page2", 
+			"http://example.com/page3"
+			);
+			
+			image = new initArray( 
+			"{{asset('images/ad/ad1.gif')}}", 
+			"{{asset('images/ad/ad2.gif')}}", 
+			"{{asset('images/ad/ad3.gif')}}"
+			);
+			
+			text = new initArray( 
+			"Example 1 Title", 
+			"Example 2 Title", 
+			"Example 3 Title"
+			);
+			
+			function getRandom(){ 
+			var core = Math.floor(Math.random()*3); // amount of items in array 
+			displayBanner(core) 
+			}
+			
+			function displayBanner(theNum){ 
+			var ranlink = link[theNum]; 
+			var ranimage = image[theNum]; 
+			var rantext = text[theNum];
+			
+			//document.write('<a href=\"' +ranlink+ '\" target=\"_blank\"><img src=\"'+ranimage+'\" border="0" alt=\"'+rantext+'\"></a>'); 
+			document.getElementById('theImg').alt=rantext; 
+			document.getElementById('theImg').src=ranimage; 
+			document.getElementById('theLink').href=ranlink; 
+			} 
+			</script>
+				
+				<a href="#" target="_blank" id="theLink"><img src="" border="0" alt="" id="theImg"></a>
+				
+			<script type="text/javascript"> 
+				getRandom(); 
+				setInterval("getRandom()", 1000); 
+			</script> -->
+			
+			
+				<a href='#'><div class="thumbframe"><img src="{{asset('images/ad/ad1.gif')}}" class="thumb" /></div></a>
+				<a href='#'><div class="thumbframe"><img src="{{asset('images/ad/ad2.gif')}}" class="thumb" /></div></a>
+				<a href='#'><div class="thumbframe"><img src="{{asset('images/ad/ad3.gif')}}" class="thumb" /></div></a>
+				<a href='#'><div class="thumbframe omega"><img src="{{asset('images/ad/ad4.gif')}}" class="thumb" /></div></a>
 			</div>
-
+			<div class="clear"></div>
 			<div class="ad1">
-				<a href='#'><img src="{{asset('images/ad/ad1.gif')}}" /></a>
-				<a href='#'><img src="{{asset('images/ad/ad2.gif')}}" /></a>
-				<a href='#'><img src="{{asset('images/ad/ad3.gif')}}" /></a>
-				<a href='#' style="margin-right:0px !important"><img src="{{asset('images/ad/ad4.gif')}}" /></a>
+				<a href='#'><div class="thumbframe"><img src="{{asset('images/ad/ad1.gif')}}" class="thumb" /></div></a>
+				<a href='#'><div class="thumbframe"><img src="{{asset('images/ad/ad2.gif')}}" class="thumb" /></div></a>
+				<a href='#'><div class="thumbframe"><img src="{{asset('images/ad/ad3.gif')}}" class="thumb" /></div></a>
+				<a href='#'><div class="thumbframe omega"><img src="{{asset('images/ad/ad4.gif')}}" class="thumb" /></div></a>
 			</div>
-
+			<div class="clear"></div>
 			<div id="fb-root"></div>
 			<script>
 				( function(d, s, id) {
@@ -272,7 +328,7 @@
 
 
 			<div id="copyr">
-				<span>&copy; 2012 FindTheRoom.com</span><span style="float:right;">ติดต่อสอบถามโทร. 02-123-4567</span>
+				<span>&copy; 2012 FindTheRoom.com</span><span style="float:right;">ติดต่อสอบถามโทร.  02-692-1199</span>
 			</div>
 
 	</body>
