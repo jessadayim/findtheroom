@@ -88,9 +88,10 @@ class UserbuildingController extends Controller
         $fac_outroomlist = NULL;
         $arrroom = NULL;
         $arrgallery = NULL;
-        $countroom = 0;
-        $countgallery = 0;
+        $countRoom = 0;
+        $countGallery = 0;
         $building_data = NULL;
+        $arrZone= NULL;
         $session = $this->get('session');
         $user = $session->get('user');
 
@@ -100,9 +101,9 @@ class UserbuildingController extends Controller
             die("MySQL Connection error");
         }
         try {
-            $userdata = $em->getRepository('FTRWebBundle:User_owner')->findOneBy(array('username' => $user));
+            $userData = $em->getRepository('FTRWebBundle:User_owner')->findOneBy(array('username' => $user));
             // เช็คถ้าไม่มีให้ redirect
-            if (empty($userdata)) {
+            if (empty($userData)) {
                 return $this->redirect($this->generateUrl('FTRWebBundle_publish'));
             }
             if (empty($id)) {
@@ -115,7 +116,7 @@ class UserbuildingController extends Controller
                 $building->setPhoneNumber('');
                 $building->setBuildingTypeId(0);
                 $building->setPayTypeId(0);
-                $building->setUserOwnerId($userdata->getId());
+                $building->setUserOwnerId($userData->getId());
                 $building->setContactName('');
                 $building->setContactEmail('');
                 $building->setMonthStay('');
@@ -142,20 +143,22 @@ class UserbuildingController extends Controller
                     );
                 }
                 if ($building_data['ipaytypeid'] != 0) {
-                    $paytype_data = $em->getRepository('FTRWebBundle:Pay_type')->findOneBy(array('id' => $building_data['ipaytypeid']));
+                    $payType_data = $em->getRepository('FTRWebBundle:Pay_type')->findOneBy(array('id' => $building_data['ipaytypeid']));
                 }
                 //var_dump($buildtype_data);exit();
             }
-            $linkimagehead = NULL;
-            $nameimagehead = NULL;
-            $linkimagemap = NULL;
-            $nameimagemap = NULL;
-            $fac_inroomlist = $this->getFacility('inroom');
-            $fac_outroomlist = $this->getFacility('outroom');
-            $arrroom = $this->getImageDatas($building_id, NULL, 'room');
-            $arrgallery = $this->getImageDatas($building_id, NULL, 'gallery');
-            $imagehead = $this->getImageDatas($building_id, NULL, 'head');
-            $imagemap = $this->getImageDatas($building_id, NULL, 'map');
+            $linkImageHead = NULL;
+            $nameImageHead = NULL;
+            $linkImageMap = NULL;
+            $nameImageMap = NULL;
+            $fac_inRoomList = $this->getFacility('inroom');
+            $fac_inRoomLoop = $this->getFacility('inroom','loop');
+            $fac_outRoomList = $this->getFacility('outroom');
+            $fac_outRoomLoop = $this->getFacility('outroom','loop');
+            $arrRoom = $this->getImageDatas($building_id, NULL, 'room');
+            $arrGallery = $this->getImageDatas($building_id, NULL, 'gallery');
+            $imageHead = $this->getImageDatas($building_id, NULL, 'head');
+            $imageMap = $this->getImageDatas($building_id, NULL, 'map');
 
             $sqlFacilityList = "select facilitylist_id from facility2site where building_site_id = $building_id and deleted = 0";
             $facFetch = $conn->fetchAll($sqlFacilityList);
@@ -164,77 +167,90 @@ class UserbuildingController extends Controller
                 $facArray[] = $value['facilitylist_id'];
             }
 
-            foreach ($fac_inroomlist as $key => $value) {
-                $row = $fac_inroomlist[$key]['loop'];
+            foreach ($fac_inRoomList as $key => $value) {
+                $row = $fac_inRoomList[$key]['loop'];
                 foreach ($row as $keyRow => $valueRow) {
                     $fId = $row[$keyRow]['id'];
                     if (is_array($facArray) == true) {
                         if (in_array($fId, $facArray) == true) {
-                            $fac_inroomlist[$key]['loop'][$keyRow]['checked'] = "yes";
+                            $fac_inRoomList[$key]['loop'][$keyRow]['checked'] = "yes";
                         } else {
-                            $fac_inroomlist[$key]['loop'][$keyRow]['checked'] = "no";
+                            $fac_inRoomList[$key]['loop'][$keyRow]['checked'] = "no";
                         }
                     } else {
-                        $fac_inroomlist[$key]['loop'][$keyRow]['checked'] = "no";
+                        $fac_inRoomList[$key]['loop'][$keyRow]['checked'] = "no";
                     }
                 }
             }
 
-            foreach ($fac_outroomlist as $key => $value) {
-                $row = $fac_outroomlist[$key]['loop'];
+            foreach ($fac_outRoomList as $key => $value) {
+                $row = $fac_outRoomList[$key]['loop'];
                 foreach ($row as $keyRow => $valueRow) {
                     $fId = $row[$keyRow]['id'];
                     if (is_array($facArray) == true) {
                         if (in_array($fId, $facArray) == true) {
-                            $fac_outroomlist[$key]['loop'][$keyRow]['checked'] = "yes";
+                            $fac_outRoomList[$key]['loop'][$keyRow]['checked'] = "yes";
                         } else {
-                            $fac_outroomlist[$key]['loop'][$keyRow]['checked'] = "no";
+                            $fac_outRoomList[$key]['loop'][$keyRow]['checked'] = "no";
                         }
                     } else {
-                        $fac_outroomlist[$key]['loop'][$keyRow]['checked'] = "no";
+                        $fac_outRoomList[$key]['loop'][$keyRow]['checked'] = "no";
                     }
                 }
             }
 
-            $arrroomdata = NULL;
-            foreach ($arrroom as $key => $roompicvalue) {
-                $roomtype2site_id = $roompicvalue['roomtype2site_id'];
-                $roomtype2sitedata = $em->getRepository('FTRWebBundle:Roomtype2site')->findOneBy(array('id' => $roomtype2site_id));
-                if(!empty($roompicvalue['photo_name']))
+            $arrRoomData = NULL;
+            foreach ($arrRoom as $key => $roomPicValue) {
+                $roomType2site_id = $roomPicValue['roomtype2site_id'];
+                $roomType2siteData = $em->getRepository('FTRWebBundle:Roomtype2site')->findOneBy(array('id' => $roomType2site_id));
+                if(!empty($roomPicValue['photo_name']))
                 {
-                    $linkPhoto = "images/building/$id/" . $roompicvalue['photo_name'];
+                    $linkPhoto = "images/building/$id/" . $roomPicValue['photo_name'];
+                    if(!file_exists($linkPhoto)){
+                        $linkPhoto = "images/show.png";
+                    }
                 }else{
                     $linkPhoto = "images/show.png";
                 }
-                $arrroomdata[] = array(
-                    'id' => $roompicvalue['id'],
-                    'photo_name' => $roompicvalue['photo_name'],
+                $arrRoomData[] = array(
+                    'id' => $roomPicValue['id'],
+                    'photo_name' => $roomPicValue['photo_name'],
                     'link_photo' => $linkPhoto,
-                    'roomtype_name' => $roomtype2sitedata->getRoomTypename(),
-                    'room_size' => $roomtype2sitedata->getRoomsize(),
-                    'room_price' => $roomtype2sitedata->getRoomprice(),
+                    'roomtype_name' => $roomType2siteData->getRoomTypename(),
+                    'room_size' => $roomType2siteData->getRoomsize(),
+                    'room_price' => $roomType2siteData->getRoomprice(),
                 );
             }
-            $arrgallerydata = NULL;
-            foreach ($arrgallery as $key => $gallerypicvalue) {
-                $arrgallerydata[] = array(
-                    'id' => $gallerypicvalue['id'],
-                    'photo_name' => $gallerypicvalue['photo_name'],
-                    'link_photo' => "images/building/$id/" . $gallerypicvalue['photo_name'],
-                    'description' => $gallerypicvalue['description'],
+            $arrGalleryData = NULL;
+            foreach ($arrGallery as $key => $galleryPicValue) {
+
+                if(!empty($galleryPicValue['photo_name']))
+                {
+                    $linkPhoto = "images/building/$id/" . $galleryPicValue['photo_name'];
+                    if(!file_exists($linkPhoto)){
+                        $linkPhoto = "images/show.png";
+                    }
+                }else{
+                    $linkPhoto = "images/show.png";
+                }
+                $arrGalleryData[] = array(
+                    'id' => $galleryPicValue['id'],
+                    'photo_name' => $galleryPicValue['photo_name'],
+                    'link_photo' => $linkPhoto,
+                    'description' => $galleryPicValue['description'],
                 );
             }
             /*echo "<pre>";
                    var_dump($arrgallerydata);
                    echo "</pre>";
                    exit();*/
-            if (!empty($imagehead)) {
-                $linkimagehead = "images/building/$id/" . $imagehead[0]['photo_name'];
-                $nameimagehead = $imagehead[0]['photo_name'];
+            if (!empty($imageHead)) {
+                $linkImageHead = "images/building/$id/" . $imageHead[0]['photo_name'];
+                $nameImageHead = $imageHead[0]['photo_name'];
             }
-            if (!empty($imagemap)) {
-                $linkimagemap = "images/building/$id/" . $imagemap[0]['photo_name'];
-                $nameimagemap = $imagemap[0]['photo_name'];
+            if (!empty($imageMap)) {
+                $linkImageMap = "images/building/$id/" . $imageMap[0]['photo_name'];
+                $nameImageMap = $imageMap[0]['photo_name'];
             }
 
             $provinceName = $building_data['saddrprovince'];
@@ -282,16 +298,16 @@ class UserbuildingController extends Controller
             'nearInCountry' => $nearInCountry,
             'username' => $user,
             'build_id' => $building_id,
-            'fac_inroom' => $fac_inroomlist,
-            'fac_outroom' => $fac_outroomlist,
-            'rooms' => $arrroomdata,
-            'roomlines' => $countroom,
-            'galleries' => $arrgallerydata,
-            'gellerylines' => $countgallery,
-            'linkimagehead' => $linkimagehead,
-            'nameimagehead' => $nameimagehead,
-            'linkimagemap' => $linkimagemap,
-            'nameimagemap' => $nameimagemap,
+            'fac_inroom' => $fac_inRoomList,
+            'fac_outroom' => $fac_outRoomList,
+            'rooms' => $arrRoomData,
+            'roomlines' => $countRoom,
+            'galleries' => $arrGalleryData,
+            'gellerylines' => $countGallery,
+            'linkimagehead' => $linkImageHead,
+            'nameimagehead' => $nameImageHead,
+            'linkimagemap' => $linkImageMap,
+            'nameimagemap' => $nameImageMap,
         ));
     }
 
@@ -354,10 +370,10 @@ class UserbuildingController extends Controller
         return $imagedata;
     }
 
-    public function getFacility($type)
+    public function getFacility($type,$dataType=null)
     {
-        $fac_inroomlist = NULL;
-        $fac_outroomlist = NULL;
+        $fac_inRoomList = NULL;
+        $fac_outRoomList = NULL;
         $conn = $this->get('database_connection');
         if (!$conn) {
             die("MySQL Connection error");
@@ -368,54 +384,68 @@ class UserbuildingController extends Controller
                  * query for facility list inroom type
                  */
                 $sql = "select * from facilitylist where facility_type = '$type' and display = 1";
-                $faclist_inroom = $conn->fetchAll($sql);
-                $countall_inroom = count($faclist_inroom);
-                foreach ($faclist_inroom as $key => $value) {
-                    $count = $key + 1;
-                    $list[] = array(
-                        'id' => $value['id'],
-                        'facility_name' => $value['facility_name'],
-                        'facility_type' => $value['facility_type'],
-                    );
-                    if ($count % 4 == 0) {
-                        $fac_inroomlist[] = array('loop' => $list);
-                        $list = NULL;
-                    } elseif ($count == $countall_inroom) {
-                        $fac_inroomlist[] = array('loop' => $list);
-                        $list = NULL;
+                $facList_inRoom = $conn->fetchAll($sql);
+                $countAll_inRoom = count($facList_inRoom);
+                if($dataType=='loop')
+                {
+                    foreach ($facList_inRoom as $key => $value) {
+                        $fac_ListReturn[] = array(
+                            'id' => $value['id'],
+
+                        );
                     }
                 }
-                $fac_listreturn = $fac_inroomlist;
+                else
+                {
+                    foreach ($facList_inRoom as $key => $value) {
+                        $count = $key + 1;
+                        $list[] = array(
+                            'id' => $value['id'],
+                            'facility_name' => $value['facility_name'],
+                            'facility_type' => $value['facility_type'],
+                            'value' => $value['id'],
+                        );
+                        if ($count % 4 == 0) {
+                            $fac_inRoomList[] = array('loop' => $list);
+                            $list = NULL;
+                        } elseif ($count == $countAll_inRoom) {
+                            $fac_inRoomList[] = array('loop' => $list);
+                            $list = NULL;
+                        }
+                    }
+                    $fac_ListReturn = $fac_inRoomList;
+                }
             } elseif ($type == 'outroom') {
                 /**
                  * query for facility list outroom type
                  */
                 $sql = "select * from facilitylist where facility_type = '$type' and display = 1";
-                $faclist_outroom = $conn->fetchAll($sql);
-                $countall_outroom = count($faclist_outroom);
-                foreach ($faclist_outroom as $key => $value) {
+                $facList_outRoom = $conn->fetchAll($sql);
+                $countAll_outRoom = count($facList_outRoom);
+                foreach ($facList_outRoom as $key => $value) {
                     $count = $key + 1;
                     $list[] = array(
                         'id' => $value['id'],
                         'facility_name' => $value['facility_name'],
                         'facility_type' => $value['facility_type'],
+                        'value' => $value['id'],
                     );
                     if ($count % 4 == 0) {
                         $num = 4;
-                        if ($count == $countall_outroom) {
-                            $fac_outroomlist[] = array('loop' => $list, 'stat' => 'end', 'count' => $num);
+                        if ($count == $countAll_outRoom) {
+                            $fac_outRoomList[] = array('loop' => $list, 'stat' => 'end', 'count' => $num);
                         } else {
-                            $fac_outroomlist[] = array('loop' => $list, 'stat' => 'not', 'count' => $num);
+                            $fac_outRoomList[] = array('loop' => $list, 'stat' => 'not', 'count' => $num);
                         }
                         $list = NULL;
-                    } elseif ($count == $countall_outroom) {
-                        $countlist = count($list);
-                        $num = 4 - $countlist;
-                        $fac_outroomlist[] = array('loop' => $list, 'stat' => 'end', 'count' => $num);
+                    } elseif ($count == $countAll_outRoom) {
+                        $countList = count($list);
+                        $num = 4 - $countList;
+                        $fac_outRoomList[] = array('loop' => $list, 'stat' => 'end', 'count' => $num);
                         $list = NULL;
                     }
                 }
-                $fac_listreturn = $fac_outroomlist;
+                $fac_ListReturn = $fac_outRoomList;
                 /*echo "<pre>";
                         var_dump($fac_listreturn);
                         echo "</pre>";exit();*/
@@ -424,7 +454,7 @@ class UserbuildingController extends Controller
             echo 'Caught exception: ', $e->getMessage(), "\n";
         }
 
-        return $fac_listreturn;
+        return $fac_ListReturn;
     }
 
     public function saveDataAction($id)
