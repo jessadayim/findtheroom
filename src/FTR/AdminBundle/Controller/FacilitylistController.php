@@ -103,16 +103,7 @@ class FacilitylistController extends Controller
 
             //Check ชื่อ facilitylist ซ้ำ
             $getName = $entity->getFacilityName();
-            $sql = "
-                SELECT
-                  *
-                FROM
-                  `facilitylist`
-                WHERE `facility_name` = '$getName'
-                  AND `deleted` = 0
-            ";
-            $objGetName = $this->getDataArray($sql);
-            if (!empty($objGetName)){
+            if (!$this->checkName($getName, "")){
                 echo "finish_comp";
                 exit();
             }
@@ -195,6 +186,13 @@ class FacilitylistController extends Controller
         $editForm->bindRequest($request);
 
         if ($editForm->isValid()) {
+
+            //Check ชื่อซ้ำกันหรือไม่
+            if(!$this->checkName($entity->getFacilityName(), "AND id != $id")){
+                echo "finish_comp";
+                exit();
+            }
+
             $em->persist($entity);
             $em->flush();
 
@@ -206,6 +204,26 @@ class FacilitylistController extends Controller
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
         ));
+    }
+
+    /*
+     * Check ชื่อไม่ให้ซ้ำกัน
+     */
+    private  function checkName($name, $sql){
+        $sqlCheck = "
+            SELECT
+              *
+            FROM
+              `facilitylist`
+            WHERE `facility_name` = '$name'
+              AND `deleted` = 0
+              $sql
+        ";
+        $objCheck = $this->getDataArray($sqlCheck);
+        if (!empty($objCheck)){
+            return false;
+        }
+        return true;
     }
 
     /*

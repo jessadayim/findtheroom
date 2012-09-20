@@ -21,7 +21,6 @@ class Building_typeController extends Controller
      */
     public function indexAction()
     {
-//        $em = $this->getDoctrine()->getEntityManager();
         $sqlGetEntity = "
             SELECT
               *
@@ -127,11 +126,11 @@ class Building_typeController extends Controller
 
             //Check ชื่อ TypeName ซ้ำ
             $getName = $entity->getTypeName();
-
-            if (!$this->checkName($getName, 0)){
+            if (!$this->checkName($getName, "")){
                 echo "finish_comp";
                 exit();
             }
+
             $em->persist($entity);
             $em->flush();
             echo 'finish';
@@ -201,7 +200,7 @@ class Building_typeController extends Controller
         if ($editForm->isValid()) {
 
             //Check ชื่อซ้ำกันหรือไม่
-            if(!$this->checkName($entity->getTypeName(), $id)){
+            if(!$this->checkName($entity->getTypeName(), "AND id != $id")){
                 echo "finish_comp";
                 exit();
             }
@@ -222,15 +221,15 @@ class Building_typeController extends Controller
     /*
      * Check ชื่อไม่ให้ซ้ำกัน
      */
-    private  function checkName($name, $id){
+    private  function checkName($name, $sql){
         $sqlCheck = "
             SELECT
               *
             FROM
               `building_type`
             WHERE `type_name` = '$name'
-              AND id != $id
               AND `deleted` = 0
+              $sql
         ";
         $objCheck = $this->getDataArray($sqlCheck);
         if (!empty($objCheck)){

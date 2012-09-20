@@ -1,5 +1,3 @@
-
-
 //get ค่าการ sort ปัจจุบัน
 function getOrderBy(){
     var strOrderBy = "&orderBy=" + orderByOld + "&orderByType=" + orderByTypeOld;
@@ -23,7 +21,6 @@ var timeDelay = 800;
 
 //Show id
 function showId(id){
-    alert(id)
     $(id).fadeIn(timeOut);
 }
 
@@ -34,7 +31,7 @@ function hideId(id){
 
 //Reload id
 function reloadId(id, url){
-    $(id).load(url).fadeOut('slow').fadeIn(tiimeUp);
+    $(id).load(url).fadeOut(timeOut).fadeIn(tiimeUp);
 }
 
 
@@ -43,21 +40,19 @@ $(document).ready(function() {
 
     // คลิกปุ่ม New
     $("#btnNew").click(function(){
-//        $("#btnShowHide").hide("slow");
         hideId("#btnShowHide");
-//        $('#edit').fadeOut('slow');
-        hideId("#edit");
-        reloadId('#new', urlPostNew);
+        if ($('#panelEvent').html() == ''){
+            reloadId('#panelEvent', urlPostNew);
+        }else{
+            showId('#panelEvent');
+        }
         return false;
     });
 
     // คลิกปุ่ม Edit
     $(".btnEdit").click(function(){
-//        $("#btnShowHide").hide("slow");
         hideId("#btnShowHide");
-//        $('#new').fadeOut('slow');
-        hideId("#new");
-        reloadId('#edit', this.href);
+        reloadId('#panelEvent', this.href);
         document.getElementById('containerwrap').scrollIntoView(true);
         return false;
     });
@@ -76,10 +71,10 @@ $(document).ready(function() {
                 if (msg == "finish_math"){
                     alert('!!! ' + namePage + ' นี้มีการใช้งานอยู่ \nไม่สามารถลบออกได้');
                 }else if (msg == 'finish') {
-//                    $('#innerPanel').fadeOut(100).load(urlPost).fadeIn("slow");
                     reloadId('#innerPanel', urlPost);
                     alert('√ ทำการลบ ' + namePage + ' เรียบร้อยแล้ว');
                 } else {
+                    reloadId('#panelEvent', msg);
                     alert('เกิดการผิดพลาด\n** กรุณาตรวจสอบ **');
                 }
             }
@@ -124,80 +119,6 @@ $(document).ready(function() {
             orderBy += "&orderByType=desc";
         }
         getHtml(numPage, orderBy);
-        return false;
-    });
-});
-
-//Insert data
-$(document).ready(function() {
-    $("#formCreate").submit(function(){
-        $.ajax({
-            type : "POST",
-            url : urlCreate,
-            data : $(this).serialize(),
-            success : function(msg) {
-                if (msg == "finish_comp"){
-                    alert('!!! ชื่อ ' + namePage + ' "' + $(idCheck).val() + '" นี้มีข้อมูลอยู่แล้ว');
-                }else if (msg == 'finish') {
-//                    $("#btnShowHide").show("slow");
-                    showId("#btnShowHide");
-//                    $('#innerPanel').fadeOut(100).load(urlPost).fadeIn("slow");
-                    reloadId('#innerPanel', urlPost);
-//                    $("#new").slideUp(300).delay(800).fadeOut(400);
-                    hideId("#new");
-                    alert('√ ทำการเพิ่ม ' + namePage + ' เรียบร้อยแล้ว');
-                } else {
-//                    $('#new').fadeOut().load(msg).fadeIn("slow");
-                    reloadId('#new', msg);
-                    alert(msg+'เกิดการผิดพลาด\n** กรุณาตรวจสอบ **');
-                }
-            }
-        });
-        return false;
-    });
-
-    $("#btnCancelCreate").click(function(){
-//        $("#btnShowHide").show("slow");
-        showId("#btnShowHide");
-//        $("#new").slideUp(300).delay(800).fadeOut(400);
-        hideId("#new");
-        return false;
-    });
-});
-
-//Edit data
-$(document).ready(function() {
-    $("#formEdit").submit(function(){
-        $.ajax({
-            type : "POST",
-            url : urlEdit,
-            data : $("#formEdit").serialize(),
-            success : function(msg) {
-                if (msg == "finish_comp"){
-                    alert('!!! ชื่อ ' + namePage + ' "' + $(idCheck).val() + '" นี้มีข้อมูลอยู่แล้ว');
-                }else if (msg == 'finish') {
-//                    $("#btnShowHide").show("slow");
-                    showId("#btnShowHide");
-//                    $('#innerPanel').fadeOut(100).load(urlPost).delay(800).fadeIn("slow");
-                    reloadId('#innerPanel', urlPost);
-//                    $("#edit").slideUp(300).delay(800).fadeOut(400);
-                    hideId("#edit");
-                    alert('√ ทำการแก้ไข ' + namePage + ' เรียบร้อยแล้ว');
-                } else {
-//                    $('#edit').fadeOut(300).load(msg).fadeIn("slow");
-                    reloadId('#edit', msg);
-                    alert('เกิดการผิดพลาด\n** กรุณาตรวจสอบ **');
-                }
-            }
-        });
-        return false;
-    });
-
-    $("#btnCancelEdit").click(function(){
-//        $("#btnShowHide").show("slow");
-        showId("#btnShowHide");
-//        $("#edit").slideUp(300).delay(800).fadeOut(400);
-        hideId("#edit");
         return false;
     });
 });

@@ -100,17 +100,8 @@ class ZoneController extends Controller
             $em = $this->getDoctrine()->getEntityManager();
 
             //Check ชื่อ zone ซ้ำ
-            $getZoneName = $entity->getZonename();
-            $sqlGetZone = "
-                SELECT
-                  *
-                FROM
-                  `zone`
-                WHERE `zonename` = '$getZoneName'
-                  AND `deleted` = 0
-            ";
-            $objGetZone = $this->getDataArray($sqlGetZone);
-            if (!empty($objGetZone)){
+            $getName = $entity->getZonename();
+            if (!$this->checkName($getName, "")){
                 echo "finish_comp";
                 exit();
             }
@@ -195,6 +186,13 @@ class ZoneController extends Controller
         $editForm->bindRequest($request);
 
         if ($editForm->isValid()) {
+
+            //Check ชื่อซ้ำกันหรือไม่
+            if(!$this->checkName($entity->getZonename(), "AND id != $id")){
+                echo "finish_comp";
+                exit();
+            }
+
             $em->persist($entity);
             $em->flush();
 

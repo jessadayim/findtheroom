@@ -374,8 +374,6 @@ class Building_siteController extends Controller
      * 
      */
     private function getNewEntity($Entity){
-        $conn= $this->get('database_connection');
-        if(!$conn){ die("MySQL Connection error");}
         $sqlGetBuildingType = "
             SELECT 
               `id`,
