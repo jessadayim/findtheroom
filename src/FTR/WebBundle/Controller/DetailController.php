@@ -62,13 +62,13 @@ class DetailController extends Controller
                     /**
                      * query Detail facility roomtype
                      * */
-                    /*
+
                     $sqlRoomType = "SELECT room_typename,room_size,room_price
                     FROM roomtype2site
                     WHERE building_site_id = $id
                       AND deleted != 1";
                     $objRoomType = $conn->fetchAll($sqlRoomType);
-                    */
+
                     /**
                      * query Detail facility inroom
                      * */
@@ -97,7 +97,7 @@ class DetailController extends Controller
 
             return $this->render('FTRWebBundle:Detail:detail.html.twig', array(
                 'general' => $detailData,
-                //'roomType' => $objRoomType,
+                'roomType' => $objRoomType,
                 'inRoom' => $objInRoom,
                 'outRoom' => $objOutRoom,
                 'nearBts' => $nearBts,
