@@ -26,6 +26,7 @@
 				$(':input[placeholder]').placeholder();
 			});
 		</script>
+		
 		<script language="javascript">
 			$(document).ready(function() {
 				var mybrowser = navigator.userAgent;
@@ -146,8 +147,8 @@
 				</form>
 				{% else %}
 				<div id="login">
-					<input id="username" name="username" value="" type="text" value="" maxlength="25" placeholder="Username" />
-					<input id="password" name="password" value="" type="password" value="" maxlength="25" placeholder="Password" />
+					<input id="username" name="username" value="" type="text" value="" maxlength="25" placeholder="กรุณากรอกชื่อผู้ใช้งาน" />
+					<input id="password" name="password" value="" type="password" value="" maxlength="25" placeholder="กรุณากรอกรหัสผ่าน" />
 					<input id="log2" class="login" type="submit" value="" />
 					{% endif %}
 				</div>
@@ -213,19 +214,106 @@
 			{% endblock %}
 
 			<div class="ad1">
-				<a href='#'><img src="{{asset('images/ad/ad1.gif')}}" /></a>
-				<a href='#'><img src="{{asset('images/ad/ad2.gif')}}" /></a>
-				<a href='#'><img src="{{asset('images/ad/ad3.gif')}}" /></a>
-				<a href='#' style="margin-right:0px !important"><img src="{{asset('images/ad/ad4.gif')}}" /></a>
+				<script type="text/javascript">
+				var images = [], 
+				index = 0;
+				images[0] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad1.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";
+				images[1] = "<a href = 'http://www.computerhope.com/history/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad2.gif')}}' class='thumb' alt='Computer History'></div></a>";
+				images[2] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad3.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";
+				images[3] = "<a href = 'http://www.computerhope.com/newslet.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad4.gif')}}' class='thumb' alt='Computer Hope Newsletter'></div></a>";
+				index = Math.floor(Math.random() * images.length);
+				document.write(images[index]);
+				</script>
+				
+				<script type="text/javascript">
+				var images = [], 
+				index = 0;
+				images[0] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad1.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";
+				images[1] = "<a href = 'http://www.computerhope.com/history/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad2.gif')}}' class='thumb' alt='Computer History'></div></a>";
+				images[2] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad3.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";
+				images[3] = "<a href = 'http://www.computerhope.com/newslet.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad4.gif')}}' class='thumb' alt='Computer Hope Newsletter'></div></a>";
+				index = Math.floor(Math.random() * images.length);
+				document.write(images[index]);
+				</script>
+				
+				<script type="text/javascript">
+				var images = [], 
+				index = 0;
+				images[0] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad1.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";
+				images[1] = "<a href = 'http://www.computerhope.com/history/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad2.gif')}}' class='thumb' alt='Computer History'></div></a>";
+				images[2] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad3.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";
+				images[3] = "<a href = 'http://www.computerhope.com/newslet.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad4.gif')}}' class='thumb' alt='Computer Hope Newsletter'></div></a>";
+				index = Math.floor(Math.random() * images.length);
+				document.write(images[index]);
+				</script>
+				
+				<script type="text/javascript">
+				var images = [], 
+				index = 0;
+				images[0] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe omega'><img src='{{asset('images/ad/ad1.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";
+				images[1] = "<a href = 'http://www.computerhope.com/history/index.htm'><div class='thumbframe omega'><img src='{{asset('images/ad/ad2.gif')}}' class='thumb' alt='Computer History'></div></a>";
+				images[2] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe omega'><img src='{{asset('images/ad/ad3.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";
+				images[3] = "<a href = 'http://www.computerhope.com/newslet.htm'><div class='thumbframe omega'><img src='{{asset('images/ad/ad4.gif')}}' class='thumb' alt='Computer Hope Newsletter'></div></a>";
+				index = Math.floor(Math.random() * images.length);
+				document.write(images[index]);
+				</script>
+				
+				<!--<a href='#'><div class="thumbframe"><img src="{{asset('images/ad/ad1.gif')}}" class="thumb" /></div></a>
+				<a href='#'><div class="thumbframe"><img src="{{asset('images/ad/ad2.gif')}}" class="thumb" /></div></a>
+				<a href='#'><div class="thumbframe"><img src="{{asset('images/ad/ad3.gif')}}" class="thumb" /></div></a>
+				<a href='#'><div class="thumbframe omega"><img src="{{asset('images/ad/ad4.gif')}}" class="thumb" /></div></a>-->
 			</div>
-
+			<div class="clear"></div>
 			<div class="ad1">
-				<a href='#'><img src="{{asset('images/ad/ad1.gif')}}" /></a>
-				<a href='#'><img src="{{asset('images/ad/ad2.gif')}}" /></a>
-				<a href='#'><img src="{{asset('images/ad/ad3.gif')}}" /></a>
-				<a href='#' style="margin-right:0px !important"><img src="{{asset('images/ad/ad4.gif')}}" /></a>
+				<script type="text/javascript">
+				var images = [], 
+				index = 0;
+				images[0] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad1.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";
+				images[1] = "<a href = 'http://www.computerhope.com/history/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad2.gif')}}' class='thumb' alt='Computer History'></div></a>";
+				images[2] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad3.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";
+				images[3] = "<a href = 'http://www.computerhope.com/newslet.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad4.gif')}}' class='thumb' alt='Computer Hope Newsletter'></div></a>";
+				index = Math.floor(Math.random() * images.length);
+				document.write(images[index]);
+				</script>
+				
+				<script type="text/javascript">
+				var images = [], 
+				index = 0;
+				images[0] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad1.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";
+				images[1] = "<a href = 'http://www.computerhope.com/history/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad2.gif')}}' class='thumb' alt='Computer History'></div></a>";
+				images[2] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad3.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";
+				images[3] = "<a href = 'http://www.computerhope.com/newslet.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad4.gif')}}' class='thumb' alt='Computer Hope Newsletter'></div></a>";
+				index = Math.floor(Math.random() * images.length);
+				document.write(images[index]);
+				</script>
+				
+				<script type="text/javascript">
+				var images = [], 
+				index = 0;
+				images[0] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad1.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";
+				images[1] = "<a href = 'http://www.computerhope.com/history/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad2.gif')}}' class='thumb' alt='Computer History'></div></a>";
+				images[2] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad3.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";
+				images[3] = "<a href = 'http://www.computerhope.com/newslet.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad4.gif')}}' class='thumb' alt='Computer Hope Newsletter'></div></a>";
+				index = Math.floor(Math.random() * images.length);
+				document.write(images[index]);
+				</script>
+				
+				<script type="text/javascript">
+				var images = [], 
+				index = 0;
+				images[0] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe omega'><img src='{{asset('images/ad/ad1.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";
+				images[1] = "<a href = 'http://www.computerhope.com/history/index.htm'><div class='thumbframe omega'><img src='{{asset('images/ad/ad2.gif')}}' class='thumb' alt='Computer History'></div></a>";
+				images[2] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe omega'><img src='{{asset('images/ad/ad3.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";
+				images[3] = "<a href = 'http://www.computerhope.com/newslet.htm'><div class='thumbframe omega'><img src='{{asset('images/ad/ad4.gif')}}' class='thumb' alt='Computer Hope Newsletter'></div></a>";
+				index = Math.floor(Math.random() * images.length);
+				document.write(images[index]);
+				</script>
+				<!--<a href='#'><div class="thumbframe"><img src="{{asset('images/ad/ad1.gif')}}" class="thumb" /></div></a>
+				<a href='#'><div class="thumbframe"><img src="{{asset('images/ad/ad2.gif')}}" class="thumb" /></div></a>
+				<a href='#'><div class="thumbframe"><img src="{{asset('images/ad/ad3.gif')}}" class="thumb" /></div></a>
+				<a href='#'><div class="thumbframe omega"><img src="{{asset('images/ad/ad4.gif')}}" class="thumb" /></div></a>-->
 			</div>
-
+			<div class="clear"></div>
 			<div id="fb-root"></div>
 			<script>
 				( function(d, s, id) {

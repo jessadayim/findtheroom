@@ -97,3 +97,8 @@ FTRWebBundle_banner:
 #FTRWebBundle_sendmail_extest:
 #    pattern:  /sendemail
 #    defaults: { _controller: FTRWebBundle:Userbuilding:sendemail}
+
+#peung
+FTRWebBundle_defalut_countclick:
+    pattern:  /countclick
+    defaults: { _controller: FTRWebBundle:Default:countClick}

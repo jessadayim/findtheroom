@@ -69,25 +69,6 @@ class Pay_typeController extends Controller
     }
 
     /**
-     * Finds and displays a Pay_type entity.
-     *
-     */
-    public function showAction($id)
-    {
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $entity = $em->getRepository('FTRWebBundle:Pay_type')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Pay_type entity.');
-        }
-
-        return $this->render('FTRAdminBundle:Pay_type:show.html.twig', array(
-            'entity'      => $entity
-        ));
-    }
-
-    /**
      * Displays a form to create a new Pay_type entity.
      *
      */

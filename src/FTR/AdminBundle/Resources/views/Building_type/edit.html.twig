@@ -1,22 +1,52 @@
-<h1>Building_type edit</h1>
+<script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script>
+{#<script  src='{{asset("js/paging/data_table/table_paging.js")}}'></script>#}
+<script>
 
-<form action="{{ path('building_type_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
-    {{ form_widget(edit_form) }}
-    <p>
-        <button type="submit">Edit</button>
-    </p>
-</form>
+    //ประกาศค่าเริ่มต้น
+    var urlPost = "{{ path('building_type') }}";
+    var urlEdit = "{{ path('building_type_update', { 'id': entity.id }) }}";
+    var idCheck = "#ftr_adminbundle_building_typetype_type_name";
+    var namePage = 'Building Type';
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('building_type') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('building_type_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+</script>
+<style type="text/css">
+    #btnEdit {
+        background: url("{{ asset('images/save.png')}}") no-repeat;
+        display: block;
+        float: none;
+        height: 50px;
+        position: absolute;
+        margin-left: 70px;
+        margin-top: -55px;
+    }
+
+    #btnInputEdit {
+        background: url("{{ asset('images/save.png')}}") no-repeat;
+        opacity: 0;
+        -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+        filter: alpha(opacity=0);
+        cursor: pointer;
+        height: 50px;
+        width: 50px;
+    }
+</style>
+
+<fieldset id="editField">
+    <form id="formEdit" action="{{ path('building_type_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+        <div class="label" style="">
+            {{ form_label(edit_form.type_name) }}
+        </div>
+        {{ form_widget(edit_form.type_name, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+        {{ form_errors(edit_form.type_name) }}
+        <br />
+
+        {{ form_widget(edit_form) }}
+        <span style="float: right;">
+            <img src="{{ asset('images/cancel.png')}}" id="btnCancelEdit" width="50" height="50" style="cursor:pointer;margin-right: 70px" />
+                &nbsp;&nbsp;
+            <div id="btnEdit">
+                <input type="submit" id="btnInputEdit" value="Edit">
+            </div>
+        </span>
+    </form>
+</fieldset>

@@ -1,16 +1,87 @@
-<h1>Facilitylist creation</h1>
+<script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script>
+<script>
+    $(document).ready(function() {
+        $("#formCreate").submit(function(){
+            var url = "{{ path('facilitylist_create') }}";
+            $.ajax({
+                type : "POST",
+                url : url,
+                data : $(this).serialize(),
+                success : function(msg) {
+                    if (msg == "finish_comp"){
+                        alert('!!! ชื่อ Facility "' + $("#ftr_adminbundle_pay_typetype_typename").val() + '" นี้มีข้อมูลอยู่แล้ว');
+                    }else if (msg == 'finish') {
+                        $("#btnShowHide").show("slow");
+                        $('#innerPanel').fadeOut(100).load("{{ path('facilitylist') }}").fadeIn("slow");
+                        $("#new").slideUp(300).delay(800).fadeOut(400);
+                        alert('√ ทำการเพิ่ม Facility เรียบร้อยแล้ว');
+                    } else {
+                        $('#new').fadeOut().load(msg).fadeIn("slow");
+                        alert('เกิดการผิดพลาด\n** กรุณาตรวจสอบ **');
+                    }
+                }
+            });
+            return false;
+        });
 
-<form action="{{ path('facilitylist_create') }}" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
-    <p>
-        <button type="submit">Create</button>
-    </p>
-</form>
+        $("#btnCancelCreate").click(function(){
+            $("#btnShowHide").show("slow");
+            $("#new").slideUp(300).delay(800).fadeOut(400);
+            return false;
+        });
+    });
+</script>
+<style type="text/css">
+    #btnCreate {
+        background: url("{{ asset('images/save.png')}}") no-repeat;
+        display: block;
+        float: none;
+        height: 50px;
+        position: absolute;
+        margin-left: 70px;
+        margin-top: -55px;
+    }
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('facilitylist') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+    #btnInputCreate {
+        background: url("{{ asset('images/save.png')}}") no-repeat;
+        opacity: 0;
+        -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+        filter: alpha(opacity=0);
+        cursor: pointer;
+        height: 50px;
+        width: 50px;
+    }
+    #btnCancelCreate{
+        cursor:pointer;margin-right: 70px
+    }
+</style>
+<fieldset id="createField">
+    <form id="formCreate" action="{{ path('facilitylist_create') }}" method="post" {{ form_enctype(form) }}>
+        <div class="label" style="">
+            {{ form_label(form.facility_name) }}
+        </div>
+        {{ form_widget(form.facility_name, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+        {{ form_errors(form.facility_name) }}
+        <br />
+        <div class="label" style="">
+            {{ form_label(form.facility_type) }}
+        </div>
+        {{ form_widget(form.facility_type, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+        {{ form_errors(form.facility_type) }}
+        <br />
+        <div class="label" style="">
+            {{ form_label(form.display) }}
+        {{ form_widget(form.display) }} &nbsp;
+        {{ form_errors(form.display) }}
+        </div>
+        <br />
+        {{ form_widget(form) }}
+        <span style="float: right;">
+            <img src="{{ asset('images/cancel.png')}}" id="btnCancelCreate" width="50" height="50" />
+                &nbsp;&nbsp;
+            <div id="btnCreate">
+                <input type="submit" id="btnInputCreate" value="Edit">
+            </div>
+        </span>
+    </form>
+</fieldset>

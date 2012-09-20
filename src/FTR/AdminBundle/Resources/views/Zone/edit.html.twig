@@ -1,35 +1,33 @@
 <script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script>
 <script>
     function postData(checkAlert){
-        var url = "{{ path('zone_update', { 'id': entity.id }) }}";
-        $.ajax({
-            type : "POST",
-            url : url,
-            data : $("#formEditZone").serialize(),
-            success : function(msg) {
-                if (msg == 'finish') {
-                    if (checkAlert == 'yes'){
-                        $("#zoneSH").show("slow");
-                        $('#innerPanel').fadeOut(100).load("{{ path('zone') }}").fadeIn("slow");
-                        $("#editZone").slideUp(300).delay(800).fadeOut(400);
-                        alert('√ ทำการแก้ไข Zone เรียบร้อยแล้ว');
-                    }
-                } else {
-                    $('#editZone').fadeOut().load(msg).fadeIn("slow");
-                    alert('เกิดการผิดพลาด\n** กรุณาตรวจสอบ **');
-                }
-            }
-        });
+
     }
     $(document).ready(function() {
-        $("#formEditZone").submit(function(){
-            postData('yes');
+        $("#formEdit").submit(function(){
+            var url = "{{ path('zone_update', { 'id': entity.id }) }}";
+            $.ajax({
+                type : "POST",
+                url : url,
+                data : $("#formEdit").serialize(),
+                success : function(msg) {
+                    if (msg == 'finish') {
+                        $("#btnShowHide").show("slow");
+                        $('#innerPanel').fadeOut(100).load("{{ path('zone') }}").fadeIn("slow");
+                        $("#edit").slideUp(300).delay(800).fadeOut(400);
+                        alert('√ ทำการแก้ไข Zone เรียบร้อยแล้ว');
+                    } else {
+                        $('#edit').fadeOut().load(msg).fadeIn("slow");
+                        alert('เกิดการผิดพลาด\n** กรุณาตรวจสอบ **');
+                    }
+                }
+            });
             return false;
         });
 
         $("#btnCancelEdit").click(function(){
-            $("#zoneSH").show("slow");
-            $("#editZone").slideUp(300).delay(800).fadeOut(400);
+            $("#btnShowHide").show("slow");
+            $("#edit").slideUp(300).delay(800).fadeOut(400);
             return false;
         });
     });
@@ -48,7 +46,7 @@
     }
 </script>
 <style type="text/css">
-    #btnEditZone {
+    #btnEdit {
         background: url("{{ asset('images/save.png')}}") no-repeat;
         display: block;
         float: none;
@@ -58,7 +56,7 @@
         margin-top: -55px;
     }
 
-    #btnInputEditZone {
+    #btnInputEdit {
         background: url("{{ asset('images/save.png')}}") no-repeat;
         opacity: 0;
         -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
@@ -68,8 +66,8 @@
         width: 50px;
     }
 </style>
-<fieldset id="editZoneField">
-    <form id="formEditZone" action="{{ path('zone_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }} >
+<fieldset id="editField">
+    <form id="formEdit" action="{{ path('zone_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }} >
         <div class="label" style="">
             {{ form_label(edit_form.zonename) }}
         </div>
@@ -93,8 +91,8 @@
         <span style="float: right;">
             <img src="{{ asset('images/cancel.png')}}" id="btnCancelEdit" width="50" height="50" style="cursor:pointer;margin-right: 70px" />
                 &nbsp;&nbsp;
-            <div id="btnEditZone">
-                <input type="submit" id="btnInputEditZone" value="Edit">
+            <div id="btnEdit">
+                <input type="submit" id="btnInputEdit" value="Edit">
             </div>
         </span>
     </form>

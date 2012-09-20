@@ -68,25 +68,6 @@ class ZoneController extends Controller
     }
 
     /**
-     * Finds and displays a Zone entity.
-     *
-     */
-    public function showAction($id)
-    {
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $entity = $em->getRepository('FTRWebBundle:Zone')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Zone entity.');
-        }
-
-        return $this->render('FTRAdminBundle:Zone:show.html.twig', array(
-            'entity'      => $entity
-        ));
-    }
-
-    /**
      * Displays a form to create a new Zone entity.
      *
      */
@@ -226,6 +207,9 @@ class ZoneController extends Controller
         ));
     }
 
+    /*
+     * บันทึก log เกี่ยวกับการ insert, delete, update database
+     */
     private function addLogger($message, $entity){
         $logger = new LoggerHelper();
         $newArray = $logger->objectToArray($entity);
