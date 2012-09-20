@@ -6,7 +6,7 @@
 <script>
 	$(document).ready(function() {
 		$(".innerPanelHref").click(function() {
-            $('#innerPanel').fadeOut('slow').load(this.href).fadeIn("slow");
+            $('#innerPanel').load(this.href).fadeOut(100).fadeIn(100);
             return false;
 		});
 	});
@@ -32,10 +32,10 @@
                 <a href="{{ path('facilitylist') }}" class="innerPanelHref">Facility list</a>
             </td>
             <td style="width: 188px !important;" align="center" >
-                <a href="{{ path('zone') }}" class="innerPanelHref">Building type</a>
+                <a href="{{ path('building_type') }}" class="innerPanelHref">Building type</a>
             </td>
             <td style="width: 188px !important;" align="center" >
-                <a href="{{ path('zone') }}" class="innerPanelHref">Nearly location</a>
+                <a href="{{ path('nearly_location') }}" class="innerPanelHref">Nearly location</a>
             </td>
         </tr>
     </table>

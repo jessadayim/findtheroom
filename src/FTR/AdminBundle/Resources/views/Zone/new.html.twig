@@ -1,35 +1,13 @@
 <script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script>
-<script>
-    $(document).ready(function() {
-        $("#formCreateZone").submit(function(){
-            var url = "{{ path('zone_create') }}";
-            $.ajax({
-                type : "POST",
-                url : url,
-                data : $(this).serialize(),
-                success : function(msg) {
-                    if (msg == "finish_comp"){
-                        alert('!!! ชื่อ Zone "' + $("#ftr_adminbundle_zonetype_zonename").val() + '" นี้มีข้อมูลอยู่แล้ว');
-                    }else if (msg == 'finish') {
-                        $("#zoneSH").show("slow");
-                        $('#innerPanel').fadeOut(100).load("{{ path('zone') }}").fadeIn("slow");
-                        $("#newZone").slideUp(300).delay(800).fadeOut(400);
-                        alert('√ ทำการเพิ่ม Zone เรียบร้อยแล้ว');
-                    } else {
-                        $('#newZone').fadeOut().load(msg).fadeIn("slow");
-                        alert('เกิดการผิดพลาด\n** กรุณาตรวจสอบ **');
-                    }
-                }
-            });
-            return false;
-        });
+<script  src='{{asset("js/paging/data_table/event.js")}}'></script>
 
-        $("#btnCancelCreate").click(function(){
-            $("#zoneSH").show("slow");
-            $("#newZone").slideUp(300).delay(800).fadeOut(400);
-            return false;
-        });
-    });
+<script>
+
+    //ประกาศค่าเริ่มต้น
+    var urlPost = "{{ path('zone') }}";
+    var urlCreate = "{{ path('zone_create') }}";
+    var idCheck = "#ftr_adminbundle_zonetype_zonename";
+    var namePage = 'Zone';
 
     //ตรวจสอบค่าที่เป็น Double
     function validate(evt) {
@@ -65,8 +43,8 @@
         width: 50px;
     }
 </style>
-<fieldset id="editZoneField">
-    <form id="formCreateZone" action="{{ path('zone_create') }}" method="post" {{ form_enctype(form) }}>
+<fieldset id="crateField">
+    <form id="formCreate" action="{{ path('zone_create') }}" method="post" {{ form_enctype(form) }}>
         <div class="label" style="">
             {{ form_label(form.zonename) }}
         </div>

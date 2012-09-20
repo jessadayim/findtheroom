@@ -8,6 +8,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use FTR\WebBundle\Entity\Building_site;
 use FTR\AdminBundle\Form\Building_siteType;
+use FTR\AdminBundle\Helper\Paginator;
+use FTR\AdminBundle\Helper\LoggerHelper;
 
 /**
  * Building_site controller.
@@ -38,8 +40,6 @@ class Building_siteController extends Controller
      */
     public function showAction()
     {
-        $conn= $this->get('database_connection');
-        if(!$conn){ die("MySQL Connection error");}
         $sqlGetEntity = "
             SELECT 
               b.*,
@@ -57,12 +57,68 @@ class Building_siteController extends Controller
                 ON (b.`id` = n.`building_site_id`) 
               LEFT JOIN `image` i 
                 ON (b.`id` = i.`building_site_id`) 
-            WHERE b.`deleted` != 1   
-            GROUP BY b.id
+            WHERE b.`deleted` = 0
         ";
-        $entities = $this->getDataArray($sqlGetEntity);
+
+        //get post
+        $getSelectPage = @$_GET['numPage'];
+        $getRecord = @$_GET['record'];
+        $getTextSearch = @$_GET['textSearch'];
+        $getOrderBy = @$_GET['orderBy'];
+        $getOrderByType = @$_GET['orderByType'];
+
+        //set paging
+        $page = 1;
+        if (!empty($getSelectPage)){
+            $page = $getSelectPage;
+        }
+        $limit = 10;
+        $midRange = 5;
+        if(!empty($getRecord)){
+            $limit = $getRecord;
+        }else {
+            $getRecord = $limit;
+        }
+        $offset = $limit*$page-$limit;
+
+        if (empty($getOrderBy) && empty($getOrderByType)){
+            $getOrderBy = 'id';
+            $getOrderByType = 'asc';
+        }
+        if (!empty($getTextSearch) && $getTextSearch != ''){
+            $sqlGetEntity = "
+                $sqlGetEntity
+                AND b.id LIKE '%$getTextSearch%'
+                OR b.building_name LIKE '%$getTextSearch%'
+            ";
+        }
+
+        $sqlGetEntity = "
+            $sqlGetEntity
+            GROUP BY b.$getOrderBy $getOrderByType
+        ";
+
+        //นับจำนวนที่มีทั้งหมด
+        $countList = count($this->getDataArray($sqlGetEntity));
+
+        //จำกัดการแสดงผล
+        $sqlGetEntity = "
+            $sqlGetEntity
+            LIMIT $offset, $limit
+        ";
+        $objBuildingSite = $this->getDataArray($sqlGetEntity);
+
+        $paginator = new Paginator($countList, $offset, $limit, $midRange);
         return array(
-            'entities'  => $entities
+            'entities'          => $objBuildingSite,
+            'paginator'	        => $paginator,
+            'countList'		    => $countList,
+            'limit' 	        => $limit,
+            'noPage'	        => $page,
+            'record'	        => $getRecord,
+            'textSearch'        => $getTextSearch,
+            'orderBy'           => $getOrderBy,
+            'orderByType'       => $getOrderByType
         );
     }
 
@@ -108,18 +164,10 @@ class Building_siteController extends Controller
             $em = $this->getDoctrine()->getEntityManager();
 
             //Check ว่ามี ขื่อนี้หรือไม่
-            $gtBuildingName = $entity->getBuildingName();
-            $sqlGetNameBuildingSite = "
-                SELECT
-                 *
-                FROM
-                  `building_site`
-                WHERE `deleted` != 1
-                AND `building_name` = '$gtBuildingName'
-            ";
-            $objGetNameBuildingSite = $this->getDataArray($sqlGetNameBuildingSite);
-            if(!empty($objGetNameBuildingSite)){
-                echo "error_$gtBuildingName";
+            $getBuildingName = $entity->getBuildingName();
+
+            if(!$this->checkName($getBuildingName, "")){
+                echo "error_$getBuildingName";
                 exit();
             }
 
@@ -217,18 +265,10 @@ class Building_siteController extends Controller
         
         if ($editForm->isValid()) {
             //Check ว่ามี ขื่อนี้หรือไม่
-            $gtBuildingName = $entity->getBuildingName();
-            $sqlGetNameBuildingSite = "
-                SELECT
-                 *
-                FROM
-                  `building_site`
-                WHERE `deleted` != 1
-                AND `building_name` = '$gtBuildingName'
-            ";
-            $objGetNameBuildingSite = $this->getDataArray($sqlGetNameBuildingSite);
-            if(!empty($objGetNameBuildingSite)){
-                echo "error_$gtBuildingName";
+            $getBuildingName = $entity->getBuildingName();
+
+            if(!$this->checkName($getBuildingName, "AND id != $id")){
+                echo "error_$getBuildingName";
                 exit();
             }
             $em->persist($entity);
@@ -282,6 +322,26 @@ class Building_siteController extends Controller
     }
 
     /*
+    * Check ชื่อไม่ให้ซ้ำกัน
+    */
+    private  function checkName($name, $sql){
+        $sqlCheck = "
+            SELECT
+             *
+            FROM
+              `building_site`
+            WHERE `deleted` = 0
+            AND `building_name` = '$name'
+            $sql
+        ";
+        $objCheck = $this->getDataArray($sqlCheck);
+        if (!empty($objCheck)){
+            return false;
+        }
+        return true;
+    }
+
+    /*
      * สร้าง folder building/id
      */
     private function createFolderBuildingId($id){
@@ -314,8 +374,6 @@ class Building_siteController extends Controller
      * 
      */
     private function getNewEntity($Entity){
-        $conn= $this->get('database_connection');
-        if(!$conn){ die("MySQL Connection error");}
         $sqlGetBuildingType = "
             SELECT 
               `id`,

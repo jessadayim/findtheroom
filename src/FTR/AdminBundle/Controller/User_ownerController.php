@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use FTR\WebBundle\Entity\User_owner;
 use FTR\AdminBundle\Form\User_ownerType;
+use FTR\AdminBundle\Helper\Paginator;
 
 /**
  * User_owner controller.
@@ -35,25 +36,46 @@ class User_ownerController extends Controller
     public function showAction()
     {
         $em = $this->getDoctrine()->getEntityManager();
-        $conn = $this->get('database_connection');
 
-        $sqlGetEntity = "
-						SELECT 
-							username 
-							,id
-						FROM 
-							user_owner 
-						WHERE deleted != 1";
-        try {
-            $entities = $conn->fetchAll($sqlGetEntity);
-        } catch (Exception $e) {
-            echo 'Caught exception: ', $e->getMessage(), "\n";
+        //get post
+        $getSelectPage = @$_GET['numPage'];
+        $getRecord = @$_GET['record'];
+        $getTextSearch = @$_GET['textSearch'];
+        $getOrderBy = @$_GET['orderBy'];
+        $getOrderByType = @$_GET['orderByType'];
+
+        //set paging
+        $page = 1;
+        if (!empty($getSelectPage)) {
+            $page = $getSelectPage;
         }
-        //$deleteForm = $this->createDeleteForm();
+        $limit = 10;
+        $midRange = 5;
+        if (!empty($getRecord)) {
+            $limit = $getRecord;
+        } else {
+            $getRecord = $limit;
+        }
+        $offset = $limit * $page - $limit;
+        if (empty($getOrderBy) && empty($getOrderByType)) {
+            $getOrderBy = 'id';
+            $getOrderByType = 'asc';
+        }
+        $getEntitiesAll = $em->getRepository('FTRWebBundle:User_owner')->findBy(array('deleted' => 0));
+        $countListEntities = count($getEntitiesAll);
 
-        return $this->render('FTRAdminBundle:User_owner:show.html.twig', array('entities' => $entities
-            //'delete_form' => $deleteForm->createView(),
+        $entities = $em->getRepository('FTRWebBundle:User_owner')->getDataOwner($limit, $offset, $getTextSearch, $countListEntities, "$getOrderBy");
+        $paginator = new Paginator($countListEntities, $offset, $limit, $midRange);
 
+        return $this->render('FTRAdminBundle:User_owner:show.html.twig', array(
+            'entities' => $entities,
+            'paginator'	        => $paginator,
+            'countListEntities'		=> $countListEntities,
+            'limit' 	        => $limit,
+            'noPage'	        => $page,
+            'record'	        => $getRecord,
+            'textSearch'        => $getTextSearch,
+            'orderBy'             => $getOrderBy
         ));
     }
 

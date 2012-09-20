@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * FTR\WebBundle\Entity\User_owner
  *
  * @ORM\Table(name="user_owner")
- * @ORM\Entity(repositoryClass="FTR\WebBundle\Repository\User_ownerRepository")
+ * @ORM\Entity(repositoryClass="FTR\AdminBundle\Repository\User_ownerRepository")
  */
 class User_owner {
 	/**

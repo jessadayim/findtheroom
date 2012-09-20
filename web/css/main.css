@@ -154,8 +154,8 @@ select[disabled] { background-color: #EAEAEA !important; color:#BCBCBC !importan
 .detail ul#detail_containTab3 { list-style:none; padding:0; margin-top:0; width:100%;}
 .detail ul#detail_containTab3 li{ float:left; width:100%; margin-top: 10px; margin-left: 0px; height: 335px;}
 
-.detail #i_containTab3 ul#navi_containTab3 li#tabNavi7{ background:url(../images/pub.png) no-repeat; background-position:0 0; display:block;width:125px; }
-.detail #i_containTab3 ul#navi_containTab3 li#tabNavi8{ background:url(../images/pay.png) no-repeat; background-position:0 0; display:block;width:100px; }
+.detail #i_containTab3 ul#navi_containTab3 li#tabNavi7{ background:url(../images/pay.png) no-repeat; background-position:0 0; display:block;width:100px; }
+.detail #i_containTab3 ul#navi_containTab3 li#tabNavi8{ background:url(../images/pub.png) no-repeat; background-position:0 0; display:block;width:125px; }
 .detail #i_containTab3 ul#navi_containTab3 li#tabNavi9{ background:url(../images/package.png) no-repeat; background-position:0 0; display:block;width:100px; }
 
 /* class รูปแบบของแต่ละเนื้อหา */
@@ -163,8 +163,8 @@ select[disabled] { background-color: #EAEAEA !important; color:#BCBCBC !importan
 .detail .detailContent8{ display:none;}
 .detail .detailContent9{ display:none;}
 
-.detail #i_containTab3 ul#navi_containTab3 li#tabNavi7.active {background:url(../images/pub.png) no-repeat; background-position:0 -43px; display:block;}
-.detail #i_containTab3 ul#navi_containTab3 li#tabNavi8.active {background:url(../images/pay.png) no-repeat; background-position:0 -43px; display:block;}
+.detail #i_containTab3 ul#navi_containTab3 li#tabNavi7.active {background:url(../images/pay.png) no-repeat; background-position:0 -43px; display:block;}
+.detail #i_containTab3 ul#navi_containTab3 li#tabNavi8.active {background:url(../images/pub.png) no-repeat; background-position:0 -43px; display:block;}
 .detail #i_containTab3 ul#navi_containTab3 li#tabNavi9.active {background:url(../images/package.png) no-repeat; background-position:0 -43px; display:block;}
 
 /*Banner/Ads*/
