@@ -119,6 +119,10 @@
 
                 <td><a href="{{ entity.id }}" class="linkEditBuildingSite">Edit</a>&nbsp;&nbsp;<a href="{{ entity.id }}" class="linkDelete">Delete</a></td>
             </tr>
+        {% else %}
+            <tr>
+                <td colspan="7" align="center">No matching records found</td>
+            </tr>
         {% endfor %}
         </tbody>
     </table>
