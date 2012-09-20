@@ -1,36 +1,13 @@
 <script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script>
+<script  src='{{asset("js/paging/data_table/event.js")}}'></script>
+
 <script>
-    function postData(checkAlert){
 
-    }
-    $(document).ready(function() {
-        $("#formEdit").submit(function(){
-            var url = "{{ path('zone_update', { 'id': entity.id }) }}";
-            $.ajax({
-                type : "POST",
-                url : url,
-                data : $("#formEdit").serialize(),
-                success : function(msg) {
-                    if (msg == 'finish') {
-                        $("#btnShowHide").show("slow");
-                        $('#innerPanel').fadeOut(100).load("{{ path('zone') }}").fadeIn("slow");
-                        $("#edit").slideUp(300).delay(800).fadeOut(400);
-                        alert('√ ทำการแก้ไข Zone เรียบร้อยแล้ว');
-                    } else {
-                        $('#edit').fadeOut().load(msg).fadeIn("slow");
-                        alert('เกิดการผิดพลาด\n** กรุณาตรวจสอบ **');
-                    }
-                }
-            });
-            return false;
-        });
-
-        $("#btnCancelEdit").click(function(){
-            $("#btnShowHide").show("slow");
-            $("#edit").slideUp(300).delay(800).fadeOut(400);
-            return false;
-        });
-    });
+    //ประกาศค่าเริ่มต้น
+    var urlPost = "{{ path('zone') }}";
+    var urlEdit = "{{ path('zone_update', { 'id': entity.id }) }}";
+    var idCheck = "#ftr_adminbundle_zonetype_zonename";
+    var namePage = 'Zone';
 
     //ตรวจสอบค่าที่เป็น Double
     function validate(evt) {

@@ -1,36 +1,16 @@
 <script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script>
-<script>
-    $(document).ready(function() {
-        $("#formCreate").submit(function(){
-            var url = "{{ path('pay_type_create') }}";
-            $.ajax({
-                type : "POST",
-                url : url,
-                data : $(this).serialize(),
-                success : function(msg) {
-                    if (msg == "finish_comp"){
-                        alert('!!! ชื่อ Pay Type "' + $("#ftr_adminbundle_pay_typetype_typename").val() + '" นี้มีข้อมูลอยู่แล้ว');
-                    }else if (msg == 'finish') {
-                        $("#btnShowHide").show("slow");
-                        $('#innerPanel').fadeOut(100).load("{{ path('pay_type') }}").fadeIn("slow");
-                        $("#new").slideUp(300).delay(800).fadeOut(400);
-                        alert('√ ทำการเพิ่ม Pay Type เรียบร้อยแล้ว');
-                    } else {
-                        $('#new').fadeOut().load(msg).fadeIn("slow");
-                        alert('เกิดการผิดพลาด\n** กรุณาตรวจสอบ **');
-                    }
-                }
-            });
-            return false;
-        });
+<script  src='{{asset("js/paging/data_table/event.js")}}'></script>
 
-        $("#btnCancelCreate").click(function(){
-            $("#btnShowHide").show("slow");
-            $("#new").slideUp(300).delay(800).fadeOut(400);
-            return false;
-        });
-    });
+<script>
+
+    //ประกาศค่าเริ่มต้น
+    var urlPost = "{{ path('pay_type') }}";
+    var urlCreate = "{{ path('pay_type_create') }}";
+    var idCheck = "#ftr_adminbundle_pay_typetype_typename";
+    var namePage = 'Pay Type';
+
 </script>
+
 <style type="text/css">
     #btnCreate {
         background: url("{{ asset('images/save.png')}}") no-repeat;
