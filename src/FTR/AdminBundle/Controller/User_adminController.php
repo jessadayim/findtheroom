@@ -203,7 +203,7 @@ class User_adminController extends Controller
                 $em->flush();
 
                 $logger = new LoggerHelper();
-                $logger->addInfo('test log for save data',array('place'=>'test'));
+                $logger->addInfo('test log for save data',$logger->objectToArray($entity));
 
                 echo 'finish';
                 exit();
