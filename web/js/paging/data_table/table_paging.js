@@ -41,11 +41,7 @@ $(document).ready(function() {
     // คลิกปุ่ม New
     $("#btnNew").click(function(){
         hideId("#btnShowHide");
-        if ($('#panelEvent').html() == ''){
-            reloadId('#panelEvent', urlPostNew);
-        }else{
-            showId('#panelEvent');
-        }
+        reloadId('#panelEvent', urlPostNew);
         return false;
     });
 
