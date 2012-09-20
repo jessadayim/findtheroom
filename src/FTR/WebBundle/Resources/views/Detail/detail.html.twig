@@ -135,28 +135,63 @@ $(function(){
 				<td align="right" width="150" style="padding-right:20px;">เบอร์โทรติดต่อ :</td>
 				<td width="300">{{general.phone_number}}</td>
 				<td align="right" width="150" style="padding-right:10px;">ระยะเวลาเช่าขั้นต่ำ :</td>
-				<td align="center" width="50">6</td>
+				<td align="center" width="50">
+                    {% if general.contact_name is empty %}
+                    -
+                    {% else%}
+                    {{general.contact_name}}
+                    {% endif%}</td>
                 <td width="100">เดือน</td>
 			</tr>
 			<tr height="20" valign="middle">
 				<td align="right" width="150" style="padding-right:20px;">ติดต่อคุณ :</td>
-				<td width="300">{{general.contact_name}}</td>
+				<td width="300">
+                    {% if general.contact_name is empty %}
+                        -
+                    {% else%}
+                        {{general.contact_name}}
+                    {% endif%}</td>
 				<td align="right" width="150" style="padding-right:10px;">ค่าน้ำ :</td>
-				<td align="center" width="50">{{general.water_unit}}</td>
+				<td align="center" width="50">
+                    {% if general.water_unit is empty %}
+                    -
+                    {% else%}
+                        {{general.water_unit}}
+                    {% endif%}</td>
                 <td width="100">บาท ต่อหน่วย</td>
 			</tr>
            <tr height="20" valign="middle">
 				<td align="right" width="150" style="padding-right:20px;">อีเมล :</td>
-				<td width="300"><a href="#">{{general.contact_email}}</a></td>
+				<td width="300"><a href="#">
+                    {% if general.contact_email is empty %}
+                        -
+                    {% else%}
+                        {{general.contact_email}}
+                    {% endif%}</a></td>
 				<td align="right" width="150" style="padding-right:10px;">ค่าไฟ :</td>
-				<td align="center" width="50">{{general.electricity_unit}}</td>
+				<td align="center" width="50">
+                    {% if general.electricity_unit is empty %}
+                        -
+                    {% else%}
+                        {{general.electricity_unit}}
+                    {% endif%}</td>
                 <td width="100">บาท ต่อหน่วย</td>
 			</tr>
 			<tr height="20" valign="middle">
 				<td align="right" width="150" style="padding-right:20px;">เว็บไซต์ :</td>
-				<td width="300"><a href="facebook.com" target="_new">{{general.website}}</a></td>
+				<td width="300"><a href="facebook.com" target="_new">
+                    {% if general.website is empty %}
+                        -
+                    {% else%}
+                        {{general.website}}
+                    {% endif%}</a></td>
 				<td align="right" width="150" style="padding-right:10px;">ค่าอินเตอร์เน็ต :</td>
-				<td align="center" width="50">{{general.internet_price}}</td>
+				<td align="center" width="50">
+                    {% if general.internet_price is empty %}
+                        -
+                    {% else%}
+                        {{general.internet_price}}
+                    {% endif%}</td>
                 <td width="100">บาท ต่อเดือน</td>
 			</tr>
 		</table>
@@ -170,7 +205,12 @@ $(function(){
 		<table>
 			<tr height="20" valign="middle">
 				<td align="right" width="150" style="padding-right:20px;">โซนในกรุงเทพฯ :</td>
-				<td width="300">{{general.zonename}}</td>
+				<td width="300">
+                    {% if general.zonename is empty %}
+                        -
+                    {% else%}
+                        {{general.zonename}}
+                    {% endif%}</td>
 				<td align="right" width="150" style="padding-right:20px;">ใกล้รถไฟฟ้า BTS :</td>
 				<td align="left" width="300">
                     {% if nearBts is empty %}
@@ -200,7 +240,13 @@ $(function(){
 			</tr>
            <tr height="20" valign="middle">
 				<td align="right" width="150" style="padding-right:20px;">ตามสถานที่ใกล้เคียง :</td>
-				<td width="300"><a href="#">{{general.nearly_place}}</td>
+				<td width="300"><a href="#">
+                    {% if general.nearly_place is empty %}
+                        -
+                    {% else%}
+                        {{general.nearly_place}}
+                    {% endif%}
+                </td>
 				<td colspan="2" >&nbsp;</td>
 			</tr>
 		</table>
