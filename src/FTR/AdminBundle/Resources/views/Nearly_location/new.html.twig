@@ -1,16 +1,90 @@
-<h1>Nearly_location creation</h1>
+<script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script>
+<script  src='{{asset("js/paging/data_table/event.js")}}'></script>
 
-<form action="{{ path('nearly_location_create') }}" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
-    <p>
-        <button type="submit">Create</button>
-    </p>
-</form>
+<script>
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('nearly_location') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+    //ประกาศค่าเริ่มต้น
+    var urlPost = "{{ path('nearly_location') }}";
+    var urlCreate = "{{ path('nearly_location_create') }}";
+    var idCheck = "#ftr_adminbundle_nearly_locationtype_name";
+    var namePage = 'Nearly Location';
+
+    //ตรวจสอบค่าที่เป็น Double
+    function validate(evt) {
+        var theEvent = evt || window.event;
+        var key = theEvent.keyCode || theEvent.which;
+        key = String.fromCharCode( key );
+        var regex = /[0-9]|\./;
+        if( !regex.test(key) ) {
+            theEvent.returnValue = false;
+            if(theEvent.preventDefault)
+                theEvent.preventDefault();
+        }
+    }
+</script>
+<style type="text/css">
+    #btnCreate {
+        background: url("{{ asset('images/save.png')}}") no-repeat;
+        display: block;
+        float: none;
+        height: 50px;
+        position: absolute;
+        margin-left: 70px;
+        margin-top: -55px;
+    }
+
+    #btnInputCreate {
+        background: url("{{ asset('images/save.png')}}") no-repeat;
+        opacity: 0;
+        -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+        filter: alpha(opacity=0);
+        cursor: pointer;
+        height: 50px;
+        width: 50px;
+    }
+</style>
+<fieldset id="crateField">
+    <form id="formCreate" action="{{ path('nearly_location_create') }}" method="post" {{ form_enctype(form) }}>
+        <div class="label" style="">
+            {{ form_label(form.name) }}
+        </div>
+        {{ form_widget(form.name, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+        {{ form_errors(form.name) }}
+        <br />
+        <div class="label" style="">
+            {{ form_label(form.address) }}
+        </div>
+        {{ form_widget(form.address, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+        {{ form_errors(form.address) }}
+        <br />
+        <div class="label" style="">
+            {{ form_label(form.nearly_type_id) }}
+        </div>
+        {{ form_widget(form.nearly_type_id, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+        {{ form_errors(form.nearly_type_id) }}
+        <br />
+        <div class="label" style="">
+            {{ form_label(form.latitude) }}
+        </div>
+        {{ form_widget(form.latitude, { 'attr': {'class': 'widthin', 'onkeypress' : 'validate(event)'} }) }} &nbsp;
+        {{ form_errors(form.latitude) }}
+        <br />
+        <div class="label" style="">
+            {{ form_label(form.longitude) }}
+        </div>
+        {{ form_widget(form.longitude, { 'attr': {'class': 'widthin', 'onkeypress' : 'validate(event)'} }) }} &nbsp;
+        {{ form_errors(form.longitude) }}
+        <br />
+
+        {#ต้องแปะไว้ตรงท้ายเสมอ	#}
+          {{ form_rest(form) }}
+
+        <span style="float: right;">
+            <img src="{{ asset('images/cancel.png')}}" id="btnCancelCreate" width="50" height="50" style="cursor:pointer;margin-right: 70px" />
+                &nbsp;&nbsp;
+            <div id="btnCreate">
+                <input type="submit" id="btnInputCreate" value="Edit">
+            </div>
+        </span>
+    </form>
+</fieldset>

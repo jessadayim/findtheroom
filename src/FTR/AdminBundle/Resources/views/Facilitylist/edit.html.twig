@@ -1,35 +1,16 @@
 <script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script>
-<script>
-    $(document).ready(function() {
-        $("#formEdit").submit(function(){
-            var url = "{{ path('facilitylist_update', { 'id': entity.id }) }}";
-            $.ajax({
-                type : "POST",
-                url : url,
-                data : $("#formEdit").serialize(),
-                success : function(msg) {
-                    if (msg == 'finish') {
-                        $("#btnShowHide").show("slow");
-                        $('#innerPanel').fadeOut(100).load("{{ path('facilitylist') }}").fadeIn("slow");
-                        $("#edit").slideUp(300).delay(800).fadeOut(400);
-                        alert('√ ทำการแก้ไข Facility เรียบร้อยแล้ว');
-                    } else {
-                        $('#edit').fadeOut().load(msg).fadeIn("slow");
-                        alert('เกิดการผิดพลาด\n** กรุณาตรวจสอบ **');
-                    }
-                }
-            });
-            return false;
-        });
+<script  src='{{asset("js/paging/data_table/event.js")}}'></script>
 
-        $("#btnCancelEdit").click(function(){
-            $("#btnShowHide").show("slow");
-            $("#edit").slideUp(300).delay(800).fadeOut(400);
-            return false;
-        });
-    });
+<script>
+
+    //ประกาศค่าเริ่มต้น
+    var urlPost = "{{ path('facilitylist') }}";
+    var urlEdit = "{{ path('facilitylist_update', { 'id': entity.id }) }}";
+    var idCheck = "#ftr_adminbundle_facilitylisttype_facility_type";
+    var namePage = 'Facility';
 
 </script>
+
 <style type="text/css">
     #btnEdit {
         background: url("{{ asset('images/save.png')}}") no-repeat;

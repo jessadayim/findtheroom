@@ -1,5 +1,5 @@
 <script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script>
-{#<script  src='{{asset("js/paging/data_table/table_paging.js")}}'></script>#}
+<script  src='{{asset("js/paging/data_table/event.js")}}'></script>
 
 <script>
 
@@ -39,6 +39,8 @@
         {{ form_widget(form.type_name, { 'attr': {'class': 'widfat'} }) }} &nbsp;
         {{ form_errors(form.type_name) }}
         <br />
+        {#ต้องแปะไว้ตรงท้ายเสมอ	#}
+        {{ form_rest(form) }}
         <span style="float: right;">
             <img src="{{ asset('images/cancel.png')}}" id="btnCancelCreate" width="50" height="50" style="cursor:pointer;margin-right: 70px" />
                 &nbsp;&nbsp;

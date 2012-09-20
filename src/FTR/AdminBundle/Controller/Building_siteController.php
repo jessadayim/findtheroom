@@ -164,18 +164,10 @@ class Building_siteController extends Controller
             $em = $this->getDoctrine()->getEntityManager();
 
             //Check ว่ามี ขื่อนี้หรือไม่
-            $gtBuildingName = $entity->getBuildingName();
-            $sqlGetNameBuildingSite = "
-                SELECT
-                 *
-                FROM
-                  `building_site`
-                WHERE `deleted` != 1
-                AND `building_name` = '$gtBuildingName'
-            ";
-            $objGetNameBuildingSite = $this->getDataArray($sqlGetNameBuildingSite);
-            if(!empty($objGetNameBuildingSite)){
-                echo "error_$gtBuildingName";
+            $getBuildingName = $entity->getBuildingName();
+
+            if(!$this->checkName($getBuildingName, "")){
+                echo "error_$getBuildingName";
                 exit();
             }
 
@@ -273,18 +265,10 @@ class Building_siteController extends Controller
         
         if ($editForm->isValid()) {
             //Check ว่ามี ขื่อนี้หรือไม่
-            $gtBuildingName = $entity->getBuildingName();
-            $sqlGetNameBuildingSite = "
-                SELECT
-                 *
-                FROM
-                  `building_site`
-                WHERE `deleted` != 1
-                AND `building_name` = '$gtBuildingName'
-            ";
-            $objGetNameBuildingSite = $this->getDataArray($sqlGetNameBuildingSite);
-            if(!empty($objGetNameBuildingSite)){
-                echo "error_$gtBuildingName";
+            $getBuildingName = $entity->getBuildingName();
+
+            if(!$this->checkName($getBuildingName, "AND id != $id")){
+                echo "error_$getBuildingName";
                 exit();
             }
             $em->persist($entity);
@@ -338,6 +322,26 @@ class Building_siteController extends Controller
     }
 
     /*
+    * Check ชื่อไม่ให้ซ้ำกัน
+    */
+    private  function checkName($name, $sql){
+        $sqlCheck = "
+            SELECT
+             *
+            FROM
+              `building_site`
+            WHERE `deleted` = 0
+            AND `building_name` = '$name'
+            $sql
+        ";
+        $objCheck = $this->getDataArray($sqlCheck);
+        if (!empty($objCheck)){
+            return false;
+        }
+        return true;
+    }
+
+    /*
      * สร้าง folder building/id
      */
     private function createFolderBuildingId($id){
@@ -370,8 +374,6 @@ class Building_siteController extends Controller
      * 
      */
     private function getNewEntity($Entity){
-        $conn= $this->get('database_connection');
-        if(!$conn){ die("MySQL Connection error");}
         $sqlGetBuildingType = "
             SELECT 
               `id`,

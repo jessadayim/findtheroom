@@ -102,19 +102,11 @@ class Pay_typeController extends Controller
 
             //Check ชื่อ pay type ซ้ำ
             $getTypeName = $entity->getTypename();
-            $sqlGetTypeName = "
-                SELECT
-                  *
-                FROM
-                  `pay_type`
-                WHERE `typename` = '$getTypeName'
-                  AND `deleted` = 0
-            ";
-            $objGetTypeName = $this->getDataArray($sqlGetTypeName);
-            if (!empty($objGetTypeName)){
+            if (!$this->checkName($getTypeName, "")){
                 echo "finish_comp";
                 exit();
             }
+
             $em->persist($entity);
             $em->flush();
             echo 'finish';
@@ -194,6 +186,13 @@ class Pay_typeController extends Controller
         $editForm->bindRequest($request);
 
         if ($editForm->isValid()) {
+
+            //Check ชื่อซ้ำกันหรือไม่
+            if(!$this->checkName($entity->getTypename(), "AND id != $id")){
+                echo "finish_comp";
+                exit();
+            }
+
             $em->persist($entity);
             $em->flush();
             echo 'finish';exit();
@@ -204,6 +203,26 @@ class Pay_typeController extends Controller
             'entity'      => $entity,
             'edit_form'   => $editForm->createView()
         ));
+    }
+
+    /*
+     * Check ชื่อไม่ให้ซ้ำกัน
+     */
+    private  function checkName($name, $sql){
+        $sqlCheck = "
+            SELECT
+              *
+            FROM
+              `pay_type`
+            WHERE `typename` = '$name'
+              AND `deleted` = 0
+              $sql
+        ";
+        $objCheck = $this->getDataArray($sqlCheck);
+        if (!empty($objCheck)){
+            return false;
+        }
+        return true;
     }
 
     /*
