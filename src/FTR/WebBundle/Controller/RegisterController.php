@@ -21,6 +21,47 @@ class RegisterController extends Controller
     {
         return $this->render('FTRWebBundle:Register:terms.html.twig');
     }
+    public function sendemailAction()
+    {
+        $conn= $this->get('database_connection');
+        $session = $this->get('session');
+        $id = $session->get('id');
+        if(!empty($id)){
+            $sqlOwner = "SELECT email,confirm_token,firstname,lastname
+                                     FROM user_owner
+						             WHERE id = '$id'";
+            $objOwner = $conn -> fetchAll($sqlOwner);
+            $token = $objOwner[0]['confirm_token'];
+            $email = $objOwner[0]['email'];
+
+            $host = "http://".$_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"];
+            $url = $this->get('router')->generate('FTRWebBundle_homepage', array());
+            $url .= "?token=". $token;
+
+            $link = "ท่านได้ทำการลงทะเบียนกับ FindTheRoom.com เรียบร้อยแล้ว
+    กรุณาคลิกลิงค์  "
+                .$host.$url."
+    เพื่อทำการยืนยันการลงทะเบียน
+เมื่อท่านทำการยืนยันการลงทะเบียนเสร็จเรียบร้อยแล้ว ท่านจะสามารถใช้บริการเหล่านี้ได้
+-ลงทะเบียนหอพักฟรี
+-รับบริการเสริมจาก FindTheRoom.com
+ติดต่อสอบถามข้อมูลเพิ่มเติม โทร 02-692-119";
+
+            $message = \Swift_Message::newInstance()
+                ->setSubject('ยินดีต้อนรับสมาชิกใหม่ '.$email.' สู่ FindTheRoom.com')
+                ->setFrom('support@findtheroom.com')
+                ->setTo($email)
+                ->addPart($link)
+                ->setBody($this->renderView('FTRWebBundle:Register:email.html.twig', array(
+                'host' => $host
+            ,'url' => $url
+            ,'firstName'=>$objOwner[0]['firstname']
+            ,'lastName'=>$objOwner[0]['lastname'])),'text/html');
+
+            $this->get('mailer')->send($message);
+            return $this->redirect($this->generateUrl('FTRWebBundle_homepage'));
+        }
+    }
 	public function RegisConfirmAction()
     {
 		if($_POST)
@@ -71,10 +112,20 @@ class RegisterController extends Controller
                             $url = $this->get('router')->generate('FTRWebBundle_homepage', array());
                             $url .= "?token=". $token;
 
+                            $link = "ท่านได้ทำการลงทะเบียนกับ FindTheRoom.com เรียบร้อยแล้ว
+    กรุณาคลิกลิงค์  "
+        .$host.$url."
+    เพื่อทำการยืนยันการลงทะเบียน
+เมื่อท่านทำการยืนยันการลงทะเบียนเสร็จเรียบร้อยแล้ว ท่านจะสามารถใช้บริการเหล่านี้ได้
+-ลงทะเบียนหอพักฟรี
+-รับบริการเสริมจาก FindTheRoom.com
+ติดต่อสอบถามข้อมูลเพิ่มเติม โทร 02-692-119";
+
 							$message = \Swift_Message::newInstance()
 					        ->setSubject('ยินดีต้อนรับสมาชิกใหม่ '.$email.' สู่ FindTheRoom.com')
 					        ->setFrom('support@findtheroom.com')
 					        ->setTo($email)
+                            ->addPart($link)
 					        ->setBody($this->renderView('FTRWebBundle:Register:email.html.twig', array(
                                             'host' => $host
                                             ,'url' => $url

@@ -63,10 +63,13 @@ class DetailController extends Controller
                      * query Detail facility roomtype
                      * */
 
-                    $sqlRoomType = "SELECT room_typename,room_size,room_price
-                    FROM roomtype2site
-                    WHERE building_site_id = $id
-                      AND deleted != 1";
+                    $sqlRoomType = "SELECT  img.photo_name, img.building_site_id, n2.room_typename, n2.room_size, n2.room_price
+                                    FROM roomtype2site n2
+                                    JOIN image img ON n2.id = img.roomtype2site_id
+                                    WHERE n2.building_site_id =$id
+                                        AND img.photo_type = 'room'
+                                        AND n2.deleted =0
+                                        AND n2.deleted =0";
                     $objRoomType = $conn->fetchAll($sqlRoomType);
 
                     /**
@@ -90,6 +93,18 @@ class DetailController extends Controller
                       AND f.deleted != 1
                       AND f.display != 1";
                     $objOutRoom = $conn->fetchAll($sqlOutRoom);
+
+                    /**
+                     * query image Room
+                     * */
+                    $sqlImage = "SELECT photo_name, building_site_id
+                                    FROM image
+                                    WHERE photo_type = 'recommend'
+                                      AND building_site_id = $id
+                                      AND deleted = 0 ";
+                    $objImage = $conn->fetchAll($sqlImage);
+                    $imageName = $objImage[0]['photo_name'];
+                    $imageID = $objImage[0]['building_site_id'];
                 }
             } catch (Exception $e) {
                 echo 'Caught exception: ', $e->getMessage(), "\n";
@@ -105,7 +120,8 @@ class DetailController extends Controller
                 'nearCol' => $nearCollege,
                 'id' => $id,
                 'countData' => $countData,
-
+                'imageName'=> $imageName,
+                'imageID'=>$imageID
             ));
         } else {
             return $this->redirect($this->generateUrl('FTRWebBundle_list'));

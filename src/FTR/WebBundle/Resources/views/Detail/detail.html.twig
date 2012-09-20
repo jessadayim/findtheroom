@@ -75,7 +75,7 @@ $(function(){
 <div id="show">
     <div class="result">
     	<div class="wifi"> </div><div style=" display:block; position: absolute; margin-left: 0px; margin-top: 127px; width:200px; text-align:center;">ราคา {{general.start_price}} - {{general.end_price}} บาท</div>
-		<div class="thumbframe"><img src="{{asset('images/show.png')}}" class="thumb omega"/></div>
+		<div class="thumbframe"><img src="{{ asset('images/building/')}}{{ imageID }}/{{imageName}}" class="thumb omega" /></div>
     	<div class="desc">
         	<table border="0" width="500" style="margin-top:-8px;">
             	<tr style="font-size:26px">
@@ -83,7 +83,11 @@ $(function(){
                     	หอพัก
                     </td>
                     <td colspan="3">
-                    	{{general.building_name}}
+                        {% if general.building_name is empty %}
+                            -
+                        {% else%}
+                            {{general.building_name}}
+                        {% endif%}
                     </td>
                 </tr>
                 <tr>
@@ -91,13 +95,21 @@ $(function(){
                     	ประเภท
                     </td>
                     <td width="180">
-                    	{{general.type_name}}
+                        {% if general.type_name is empty %}
+                        -
+                        {% else%}
+                        {{general.type_name}}
+                        {% endif%}
                     </td>
                     <td width="90">
                     	ชนิด
                     </td>
                     <td width="180">
-                    	{{general.typename}}
+                        {% if general.typename is empty %}
+                            -
+                        {% else%}
+                            {{general.typename}}
+                        {% endif%}
                     </td>
                 </tr>
                 <tr>
@@ -105,7 +117,12 @@ $(function(){
                     	ที่อยู่
                     </td>
                 	<td colspan="3">
-                    	{{general.building_address}}
+                        {% if general.building_address is empty %}
+                            -
+                        {% else%}
+                            {{general.building_address}}
+                        {% endif%}
+
                     </td>
                 </tr>
                 <tr>
@@ -113,7 +130,12 @@ $(function(){
                     	รายละเอียด
                     </td>
                 	<td colspan="3">
-                    	<div style="height:43px; overflow:hidden;">{{general.detail}}</div>
+                    	<div style="height:43px; overflow:hidden;">
+                            {% if general.detail is empty %}
+                                -
+                            {% else%}
+                                {{general.detail}}
+                            {% endif%}</div>
                     </td>
                 </tr>
             </table>
@@ -136,10 +158,10 @@ $(function(){
 				<td width="300">{{general.phone_number}}</td>
 				<td align="right" width="150" style="padding-right:10px;">ระยะเวลาเช่าขั้นต่ำ :</td>
 				<td align="center" width="50">
-                    {% if general.contact_name is empty %}
-                    -
+                    {% if general.month_stay is empty %}
+                        -
                     {% else%}
-                    {{general.contact_name}}
+                        {{general.month_stay}}
                     {% endif%}</td>
                 <td width="100">เดือน</td>
 			</tr>
@@ -264,7 +286,16 @@ $(function(){
 				<td align="center" width="250" colspan="2" style="padding-right:10px;">ขนาด</td>
 				<td align="center" colspan="2" width="250">อัตราค่าเช่า/เดือน</td>
 			</tr>
-
+            {% for row in roomType %}
+            <tr height="135" valign="middle">
+                <td align="left" width="220"><div class="thumbframe"><img src="{{ asset('images/building/')}}{{ row.building_site_id }}/{{row.photo_name}}" /></div></td>
+                <td align="left" width="150">{{row.room_typename}}</td>
+                <td align="right" width="110" style="padding-right:10px;">{{row.room_size}}</td>
+                <td align="left" width="140">ตารางเมตร</td>
+                <td align="right" width="130">{{row.room_price}}</td>
+                <td align="left" width="120">บาท</td>
+            </tr>
+            {%endfor%}
 		</table>
 	</div>
 </div>
@@ -296,7 +327,14 @@ $(function(){
 
                         </div>
                     </div>
+                    <div class="slide" style="width:950px;">
+                        <div class="ap">
+                            <a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><div class="thumbframe4gallery"><img src="{{asset('images/Apartment/ap3.png')}}" class="thumb4gallery"/></div></a>
 
+                            <a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><div class="thumbframe4gallery"><img src="{{asset('images/Apartment/ap3.png')}}" class="thumb4gallery"/></div></a>
+
+                        </div>
+                    </div>
                     {#{% set introw1 = 0 %}#}
                     {#{% for i in 0..3%}#}
                     {#{% if introw1%3 == 0%}#}
@@ -336,10 +374,10 @@ $(function(){
                         {#</div>#}
                         {#{%endif%}#}
                         {#{% endfor %}#}
-				</div>
-			</div>
-                <a href="#" class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>
+				</div><a href="#" class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>
                 <a href="#" class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>
+			</div>
+
 		</div>  
     </div>
 </div>
