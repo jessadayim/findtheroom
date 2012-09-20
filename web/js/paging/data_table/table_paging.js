@@ -15,7 +15,7 @@ function getHtml(numPage, orderBy){
 }
 
 //Set time
-var tiimeUp = 300;
+var timeUp = 300;
 var timeOut = 400;
 var timeDelay = 800;
 
@@ -31,7 +31,7 @@ function hideId(id){
 
 //Reload id
 function reloadId(id, url){
-    $(id).load(url).fadeOut(timeOut).fadeIn(tiimeUp);
+    $(id).load(url).fadeOut(timeOut).fadeIn(timeUp);
 }
 
 

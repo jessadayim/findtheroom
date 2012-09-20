@@ -8,16 +8,13 @@
 
 		//Click ปุ่ม Edit
 		$(".linkEditBuildingSite").click(function() {
-			$.post(this.href + '/edit', function(data) {
-				$('.innerPanel').slideUp(300).fadeIn(400);
-				$('.innerPanel').html(data);
-				toggle(".createPanel", 'hide');
-				toggle(".innerPanel", 'show');
+            reloadId('.innerPanel', this.href + '/edit');
+            hideId(".createPanel");
+            showId(".innerPanel");
 
-				$("#createrecordCancel").hide();
-				$("#createrecord").show('slow');
-				document.getElementById('createrecord').scrollIntoView();
-			});
+            hideId("#createRecordCancel");
+            showId("#createRecord");
+            document.getElementById('createRecord').scrollIntoView();
 			return false;
 		});
 
@@ -49,20 +46,10 @@
             saveIdBuildingSite = null;
 			locationRoomType = this.href;
 			$('.innerPanel').fadeOut("slow").load(locationRoomType).fadeIn("slow");
-            // if (checkDoubleClickEdit){
-			// checkDoubleClickEdit = false;
-			// $.post(this.href, function(data) {
-			// $('.innerPanel').slideUp(300).fadeIn(400);
-			// $('.innerPanel').html(data);
 			toggle(".createPanel", 'hide');
-			// toggle(".innerPanel", 'show');
-			$("#createrecordCancel").hide();
-			$("#createrecord").show('slow');
-			document.getElementById('createrecord').scrollIntoView();
-			// });
-			// // รอเวลาเพิ่อให้ คลิกซ้ำได้
-			// setTimeout("changeCheckClick();", 500);
-			// }
+			$("#createRecordCancel").hide();
+			$("#createRecord").show('slow');
+			document.getElementById('createRecord').scrollIntoView();
 			return false;
 		});
 
