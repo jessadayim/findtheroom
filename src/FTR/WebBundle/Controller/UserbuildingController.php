@@ -159,7 +159,6 @@ class UserbuildingController extends Controller
             $arrGallery = $this->getImageDatas($building_id, NULL, 'gallery');
             $imageHead = $this->getImageDatas($building_id, NULL, 'head');
             $imageMap = $this->getImageDatas($building_id, NULL, 'map');
-
             $sqlFacilityList = "select facilitylist_id from facility2site where building_site_id = $building_id and deleted = 0";
             $facFetch = $conn->fetchAll($sqlFacilityList);
             $facArray = NULL;
@@ -299,7 +298,9 @@ class UserbuildingController extends Controller
             'username' => $user,
             'build_id' => $building_id,
             'fac_inroom' => $fac_inRoomList,
+            'fac_inroom_loop' => $fac_inRoomLoop,
             'fac_outroom' => $fac_outRoomList,
+            'fac_outroom_loop' => $fac_outRoomLoop,
             'rooms' => $arrRoomData,
             'roomlines' => $countRoom,
             'galleries' => $arrGalleryData,
@@ -390,8 +391,7 @@ class UserbuildingController extends Controller
                 {
                     foreach ($facList_inRoom as $key => $value) {
                         $fac_ListReturn[] = array(
-                            'id' => $value['id'],
-
+                            'id' => 'fac'.$value['id'],
                         );
                     }
                 }
@@ -422,30 +422,41 @@ class UserbuildingController extends Controller
                 $sql = "select * from facilitylist where facility_type = '$type' and display = 1";
                 $facList_outRoom = $conn->fetchAll($sql);
                 $countAll_outRoom = count($facList_outRoom);
-                foreach ($facList_outRoom as $key => $value) {
-                    $count = $key + 1;
-                    $list[] = array(
-                        'id' => $value['id'],
-                        'facility_name' => $value['facility_name'],
-                        'facility_type' => $value['facility_type'],
-                        'value' => $value['id'],
-                    );
-                    if ($count % 4 == 0) {
-                        $num = 4;
-                        if ($count == $countAll_outRoom) {
-                            $fac_outRoomList[] = array('loop' => $list, 'stat' => 'end', 'count' => $num);
-                        } else {
-                            $fac_outRoomList[] = array('loop' => $list, 'stat' => 'not', 'count' => $num);
-                        }
-                        $list = NULL;
-                    } elseif ($count == $countAll_outRoom) {
-                        $countList = count($list);
-                        $num = 4 - $countList;
-                        $fac_outRoomList[] = array('loop' => $list, 'stat' => 'end', 'count' => $num);
-                        $list = NULL;
+                if($dataType=='loop')
+                {
+                    foreach ($facList_outRoom as $key => $value) {
+                        $fac_ListReturn[] = array(
+                            'id' => 'fac'.$value['id'],
+                        );
                     }
                 }
-                $fac_ListReturn = $fac_outRoomList;
+                else
+                {
+                    foreach ($facList_outRoom as $key => $value) {
+                        $count = $key + 1;
+                        $list[] = array(
+                            'id' => $value['id'],
+                            'facility_name' => $value['facility_name'],
+                            'facility_type' => $value['facility_type'],
+                            'value' => $value['id'],
+                        );
+                        if ($count % 4 == 0) {
+                            $num = 4;
+                            if ($count == $countAll_outRoom) {
+                                $fac_outRoomList[] = array('loop' => $list, 'stat' => 'end', 'count' => $num);
+                            } else {
+                                $fac_outRoomList[] = array('loop' => $list, 'stat' => 'not', 'count' => $num);
+                            }
+                            $list = NULL;
+                        } elseif ($count == $countAll_outRoom) {
+                            $countList = count($list);
+                            $num = 4 - $countList;
+                            $fac_outRoomList[] = array('loop' => $list, 'stat' => 'end', 'count' => $num);
+                            $list = NULL;
+                        }
+                    }
+                    $fac_ListReturn = $fac_outRoomList;
+                }
                 /*echo "<pre>";
                         var_dump($fac_listreturn);
                         echo "</pre>";exit();*/

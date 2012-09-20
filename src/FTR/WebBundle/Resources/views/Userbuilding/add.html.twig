@@ -439,9 +439,51 @@
     }
     function Trim(str){return LTrim(RTrim(str));}
 
+    var arrLoopIn =
+            [
+                {% for loopin in fac_inroom_loop %}
+                ['{{ loopin.id }}'],
+                {% endfor %}
+            ];
+    var arrLoopOut =
+            [
+                {% for loopout in fac_outroom_loop %}
+                ['{{ loopout.id }}'],
+                {% endfor %}
+            ];
     function checkAll(type)
     {
+        var facin = document.getElementById('facInAll').checked;
+        var facout = document.getElementById('facOutAll').checked;
+        if(type=='inRoom')
+        {
 
+            for(var i=0;i<arrLoopIn.length;i++)
+            {
+                var facId = arrLoopIn[i][0];
+                if(facin)
+                {
+                    $('input[id='+facId+']').attr('checked', true);
+                }else if(!facin)
+                {
+                    $('input[id='+facId+']').attr('checked', false);
+                }
+            }
+        }else if(type=='outRoom')
+        {
+            for(var i=0;i<arrLoopOut.length;i++)
+            {
+                var facId = arrLoopOut[i][0];
+                if(facout)
+                {
+                    $('input[id='+facId+']').attr('checked', true);
+                }else if(!facout)
+                {
+                    $('input[id='+facId+']').attr('checked', false);
+                }
+            }
+        }
+        postData('other');
     }
     </script>
     <form name="addform" id="addform" method="post" action="{{path('saveData', {'id': build_id })}}">
@@ -751,9 +793,12 @@
         <div style="margin-top:30px;">
             <table>
                 <tr>
-                    <td colspan="4" style="padding-bottom:5px;">
+                    <td colspan="3" style="padding-bottom:5px;">
                         สิ่งอำนวยความสะดวกในห้อง :
                     </td>
+                 <td align="center">
+                    <input id="facInAll" name="facInAll" type="checkbox" onclick="checkAll('inRoom');" /><label for="facInAll">เลือกทั้งหมด</label>
+                </td>
                 </tr>
                 {% for list in fac_inroom %}
                     <tr height="40" valign="middle">
@@ -775,8 +820,11 @@
         <div style="margin-top:30px;">
             <table>
                 <tr>
-                    <td colspan="4" style="padding-bottom:5px;">
+                    <td colspan="3" style="padding-bottom:5px;">
                         สิ่งอำนวยความสะดวกในอาคารและใกล้เคียงอาคาร :
+                    </td>
+                    <td align="center">
+                        <input id="facOutAll" name="facOutAll" type="checkbox" onclick="checkAll('outRoom');" /><label for="facOutAll">เลือกทั้งหมด</label>
                     </td>
                 </tr>
                 {% for list in fac_outroom %}
