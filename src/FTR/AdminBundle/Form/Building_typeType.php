@@ -10,8 +10,8 @@ class Building_typeType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
-            ->add('type_name')
-            ->add('deleted')
+            ->add('type_name', 'text', array('label' => 'Building Type Name:', "max_length" => 100))
+//            ->add('deleted')
         ;
     }
 

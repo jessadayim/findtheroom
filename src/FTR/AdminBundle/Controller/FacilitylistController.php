@@ -209,6 +209,15 @@ class FacilitylistController extends Controller
     }
 
     /*
+     * บันทึก log เกี่ยวกับการ insert, delete, update database
+     */
+    private function addLogger($message, $entity){
+        $logger = new LoggerHelper();
+        $newArray = $logger->objectToArray($entity);
+        $logger->addInfo($message, $newArray);
+    }
+
+    /*
     * Run คำสั่ง Sql
     * return array
     */

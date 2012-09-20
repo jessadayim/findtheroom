@@ -1,54 +1,15 @@
 <script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script>
-<script type='text/javascript' src='{{asset("js/paging/data_table/table_paging.js")}}'></script>
-<link rel="stylesheet" type="text/css" href="{{asset('js/paging/data_table/table_style.css')}}" />
+
 <script>
-    $(document).ready(function() {
-        $(".btnEditZone").click(function(){
-            $("#zoneSH").hide("slow");
-            $('#newZone').fadeOut('slow');
-            $('#editZone').fadeOut().load(this.href).fadeIn("slow");
-            document.getElementById('containerwrap').scrollIntoView(true);
-            return false;
-        });
 
-        $(".btnDelete").click(function(){
-            if (!confirm("คุณต้องการลบ Zone นี้ใช่หรือไม่")){
-                return false;
-            }
-            var url = this.href;
-            $.ajax({
-                type : "POST",
-                url : url,
-                data : {checkPost: 'delete'},
-                success : function(msg) {
-                    if (msg == "finish_math"){
-                        alert('!!! Zone นี้มีการใช้งานอยู่ \nไม่สามารถลบออกได้');
-                    }else if (msg == 'finish') {
-                        $('#innerPanel').fadeOut(100).load("{{ path('zone') }}").fadeIn("slow");
-                        alert('√ ทำการลบ Zone เรียบร้อยแล้ว');
-                    } else {
-                        alert(msg);
-                        alert('เกิดการผิดพลาด\n** กรุณาตรวจสอบ **');
-                    }
-                }
-            });
-            return false;
-        });
-
-        $("#btnNewZone").click(function(){
-            $("#zoneSH").hide("slow");
-            $('#editZone').fadeOut('slow');
-            $('#newZone').fadeOut().load("{{ path('zone_new') }}").fadeIn("slow");
-            return false;
-        });
-    });
+    //ประกาศค่าเริ่มต้น
+    var urlPost = "{{ path('zone') }}";
+    var urlPostNew = "{{ path('zone_new') }}";
+    var namePage = 'Zone';
 
     // ค่าปัจจุบันในการ sort
     var orderByOld = "{{ orderBy }}";
     var orderByTypeOld = "{{ orderByType }}";
-
-    //ประกาศค่าเริ่มต้น
-    var urlPost = "{{ path('zone') }}"
 
 </script>
 <style type="text/css">
@@ -58,48 +19,50 @@
 </style>
 <fieldset>
     <h1>Zone list</h1>
-    <div id="newZone"></div>
-    <div id="editZone"></div>
+    <div id="new"></div>
+    <div id="edit"></div>
 
-    <span style="float: right;" id="zoneSH">
-        <img src="{{ asset('images/add-bt.png')}}" id="btnNewZone" width="50" height="50" style="cursor:pointer;" />
+    <span style="float: right;" id="btnShowHide">
+        <img src="{{ asset('images/add-bt.png')}}" id="btnNew" width="50" height="50" style="cursor:pointer;" />
     </span>
     <div class="clear"></div>
     <br/>
     <fieldset>
-        <table id="tbShow">
-            <thead>
-                <th><a class="btnOrderBy" href="#" id="sort_id">Id</a></th>
-                <th><a class="btnOrderBy" href="#" id="sort_zonename">Zonename</th>
-                <th><a class="btnOrderBy" href="#" id="sort_latitude">Latitude</th>
-                <th><a class="btnOrderBy" href="#" id="sort_longitude">Longitude</th>
-                <th>Actions</th>
-            </thead>
-            {% for entity in entities %}
-                <tr>
-                    <td>{{ entity.id }}</td>
-                    <td>{{ entity.zonename }}</td>
-                    <td>{{ entity.latitude }}</td>
-                    <td>{{ entity.longitude }}</td>
-                    <td>
-                        <ul>
-                            <li>
-                                <a class="btnEditZone" href="{{ path('zone_edit', { 'id': entity.id }) }}">Edit</a>
-                            </li>
-                            <li>
-                                <a class="btnDelete" href="{{ path('zone_edit', { 'id': entity.id }) }}">Delete</a>
-                            </li>
-                        </ul>
-                    </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="2"></td>
-                    <td align="center">No matching records found</td>
-                    <td colspan="2"></td>
-                </tr>
-            {% endfor %}
-        </table>
+        <div class="grid_12 tableLists marginB_10 alpha">
+            <table>
+                <thead>
+                    <th style="width: 160px !important;"><a class="btnOrderBy" href="#" id="sort_id">Id</a></th>
+                    <th style="width: 400px !important;"><a class="btnOrderBy" href="#" id="sort_zonename">Zonename</th>
+                    <th><a class="btnOrderBy" href="#" id="sort_latitude">Latitude</th>
+                    <th><a class="btnOrderBy" href="#" id="sort_longitude">Longitude</th>
+                    <th>Actions</th>
+                </thead>
+                {% for entity in entities %}
+                    <tr>
+                        <td>{{ entity.id }}</td>
+                        <td>{{ entity.zonename }}</td>
+                        <td>{{ entity.latitude }}</td>
+                        <td>{{ entity.longitude }}</td>
+                        <td>
+                            <ul>
+                                <li>
+                                    <a class="btnEdit" href="{{ path('zone_edit', { 'id': entity.id }) }}">Edit</a>
+                                </li>
+                                <li>
+                                    <a class="btnDelete" href="{{ path('zone_edit', { 'id': entity.id }) }}">Delete</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="2"></td>
+                        <td align="center">No matching records found</td>
+                        <td colspan="2"></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
     </fieldset>
     <div class="paginator">
         <ul>

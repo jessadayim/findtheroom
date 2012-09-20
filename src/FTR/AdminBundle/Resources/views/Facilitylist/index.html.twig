@@ -1,6 +1,5 @@
 <script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script>
 <script type='text/javascript' src='{{asset("js/paging/data_table/table_paging.js")}}'></script>
-<link rel="stylesheet" type="text/css" href="{{asset('js/paging/data_table/table_style.css')}}" />
 
 <script>
     $(document).ready(function() {
@@ -68,49 +67,50 @@
     <div class="clear"></div>
     <br/>
     <fieldset>
-        <table id="tbShow">
-        <thead>
-            <tr>
-                <th><a class="btnOrderBy" href="#" id="sort_id">Id</a></th>
-                <th><a class="btnOrderBy" href="#" id="sort_facility_name">Facility_name</a></th>
-                <th><a class="btnOrderBy" href="#" id="sort_facility_type">Facility_type</a></th>
-                <th><a class="btnOrderBy" href="#" id="sort_display">Display</a></th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td>{{ entity.id }}</td>
-                <td>{{ entity.facilityname }}</td>
-                <td>{{ entity.facilitytype }}</td>
-                <td>
-                    {% if entity.display != 1 %}
-                        Not Show
-                    {% else %}
-                        Show
-                    {% endif %}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a class="btnEdit" href="{{ path('facilitylist_edit', { 'id': entity.id }) }}">Edit</a>
-                        </li>
-                        <li>
-                            <a class="btnDelete" href="{{ path('facilitylist_edit', { 'id': entity.id }) }}">Delete</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% else %}
-        <tr>
-            <td colspan="2"></td>
-            <td align="center">No matching records found</td>
-            <td colspan="2"></td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
+        <div class="grid_12 tableLists marginB_10 alpha">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 60px !important;"><a class="btnOrderBy" href="#" id="sort_id">Id</a></th>
+                        <th style="width: 400px !important;"><a class="btnOrderBy" href="#" id="sort_facility_name">Facility_name</a></th>
+                        <th><a class="btnOrderBy" href="#" id="sort_facility_type">Facility_type</a></th>
+                        <th><a class="btnOrderBy" href="#" id="sort_display">Display</a></th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for entity in entities %}
+                    <tr>
+                        <td>{{ entity.id }}</td>
+                        <td>{{ entity.facilityname }}</td>
+                        <td>{{ entity.facilitytype }}</td>
+                        <td>
+                            {% if entity.display != 1 %}
+                                Not Show
+                            {% else %}
+                                Show
+                            {% endif %}</td>
+                        <td>
+                            <ul>
+                                <li>
+                                    <a class="btnEdit" href="{{ path('facilitylist_edit', { 'id': entity.id }) }}">Edit</a>
+                                </li>
+                                <li>
+                                    <a class="btnDelete" href="{{ path('facilitylist_edit', { 'id': entity.id }) }}">Delete</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                {% else %}
+                <tr>
+                    <td colspan="2"></td>
+                    <td align="center">No matching records found</td>
+                    <td colspan="2"></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
         <div class="datagrid">
             <ul>
                 <strong>showing {{ countList }} entities : Page </strong>

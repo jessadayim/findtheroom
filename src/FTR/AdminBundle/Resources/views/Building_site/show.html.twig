@@ -1,11 +1,5 @@
-<!-- <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js'></script> -->
-<!-- <script type='text/javascript' src='{{asset("js/paging/smartpaginator.buildingsite.js")}}'></script>
-<link rel='stylesheet' type='text/css' href='{{asset("css/paging/smartpaginator.buildingsite.css")}}' /> -->
-
-<!-- jQuery data table -->
 <script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script>
-<script type='text/javascript' src='{{asset("js/paging/jquery.dataTables.js")}}'></script>
-<link rel="stylesheet" href='{{asset("css/paging/sytletable.css")}}' type="text/css" id="" media="print, projection, screen" />
+<script type='text/javascript' src='{{asset("js/paging/data_table/table_paging.js")}}'></script>
 
 <script>
 	var countValuePaging = {{entities|length}};
@@ -86,51 +80,102 @@
 	function changeCheckClick() {
 		checkDoubleClickEdit = true;
 	}
+
+    // ค่าปัจจุบันในการ sort
+    var orderByOld = "{{ orderBy }}";
+    var orderByTypeOld = "{{ orderByType }}";
+
+    //ประกาศค่าเริ่มต้น
+    var urlPost = "{{ path('building_site_show') }}";
 </script>
-<script type="text/javascript">
-	jQuery.fn.dataTableExt.oSort['string-case-asc'] = function(x, y) {
-		return ((x < y) ? -1 : ((x > y) ? 1 : 0));
-	};
+<fieldset>
+    <table>
+        <thead>
+            <th style="width: 100px !important;" ><a class="btnOrderBy" href="#" id="sort_id">id</a></th>
+            <th style="width: 410px !important;" ><a class="btnOrderBy" href="#" id="sort_building_name">name</a></th>
+            <th style="width: 70px !important;" >facility</th>
+            <th style="width: 110px !important;" >roomtype</th>
+            <th style="width: 100px !important;" >nearly</th>
+            <th style="width: 100px !important;" >gallery</th>
+            <th style="width: 50px !important;" >config</th>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td>{{ entity.id }}</td>
+                <td>{{ entity.building_name }}</td>
 
-	jQuery.fn.dataTableExt.oSort['string-case-desc'] = function(x, y) {
-		return ((x < y) ? 1 : ((x > y) ? -1 : 0));
-	};
+                <!-- facility -->
+                <td><a href="{{ path('facility2site_show', { 'id': entity.id }) }}" class="createSite">Edit</a></td>
 
-	$(document).ready(function() {
-		$("#sortTable1").dataTable({
-			"aaSorting" : [[0, 'asc']]
-		});
-	}); 
-</script>
-<table id="sortTable1" class="display" >
-	<thead>
-		<th style="width: 510px !important;" >name</th>
-		<th style="width: 70px !important;" >facility</th>
-		<th style="width: 110px !important;" >roomtype</th>
-		<th style="width: 100px !important;" >nearly</th>
-		<th style="width: 100px !important;" >gallery</th>
-		<th style="width: 50px !important;" >config</th>
-	</thead>
-	{% for entity in entities %}
-        <tr>
-            <td>{{ entity.building_name }}</td>
+                <!-- room type -->
+                <td><a href="{{ path('roomtype2site_show', { 'id': entity.id }) }}" class="createSite">Edit</a></td>
 
-            <!-- facility -->
-            <td><a href="{{ path('facility2site_show', { 'id': entity.id }) }}" class="createSite">Edit</a></td>
+                <!-- nearly -->
+                <td><a href="{{ path('nearly2site_show', { 'id': entity.id }) }}" class="createSite">Edit</a></td>
 
-            <!-- room type -->
-            <td><a href="{{ path('roomtype2site_show', { 'id': entity.id }) }}" class="createSite">Edit</a></td>
+                <!-- upload gallery -->
+                <td><a href="{{ path('image_show', { 'id': entity.id }) }}" class="createSite">Edit</a></td>
 
-            <!-- nearly -->
-            <td><a href="{{ path('nearly2site_show', { 'id': entity.id }) }}" class="createSite">Edit</a></td>
+                <td><a href="{{ entity.id }}" class="linkEditBuildingSite">Edit</a>&nbsp;&nbsp;<a href="{{ entity.id }}" class="linkDelete">Delete</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</fieldset>
+<div class="datagrid">
+    <ul>
+        <strong>showing {{ countList }} entities : Page </strong>
+        {% for i in 1..paginator.numpages %}
+        {% if paginator.range.0 > 2 and i == paginator.range.0 %}
+        ...
+        {% endif %}
 
-            <!-- upload gallery -->
-            <td><a href="{{ path('image_show', { 'id': entity.id }) }}" class="createSite">Edit</a></td>
+        {%  if(i==1 or i==paginator.numpages or i in paginator.range) %}
+        {% if i==paginator.currentpage %}
+        {% if i == noPage %}
+        <input class="disableBtn" type="button" value="{{i}}" id="Submit" name="submitPage" disabled="true"/>
+        {% else %}
+        <input class="inPage" type="button" value="{{i}}" id="Submit" name="submitPage"/>
+        {% endif %}
+        {% else %}
+        {% if i == noPage %}
+        <input class="disableBtn" type="button" value="{{i}}" id="Submit" name="submitPage" disabled="true"/>
+        {% else %}
+        <input class="inPage" type="button" value="{{i}}" id="Submit" name="submitPage"/>
+        {% endif %}
+        {% endif %}
+        {% endif %}
 
-            <td><a href="{{ entity.id }}" class="linkEditBuildingSite">Edit</a>&nbsp;&nbsp;<a href="{{ entity.id }}" class="linkDelete">Delete</a></td>
-        </tr>
-	{% endfor %}
-</table>
+        {% if paginator.range[paginator.midrange -1] < paginator.numpages -1 and i == paginator.range[paginator.midrange-1] %}
+        ...
+        {% endif %}
+        {% endfor %}
+        <div align="right" style="float:right;" ><strong>Search:</strong>
+            <input id="tbxSearch" style="height: 25px;margin-bottom: 10px;" value="{{ textSearch }}" />&nbsp;&nbsp;
+            <select name="record" style="width:150px;" class="record">
+                <option value="10">10 Record </option>
+                {% if limit == '50' %}
+                <option selected="yes" value="50">50 Record</option>
+                <option value="100">100 Record</option>
+                <option value="500">500 Record</option>
+                {% elseif limit == '100' %}
+                <option value="50">50 Record</option>
+                <option selected="yes" value="100">100 Record</option>
+                <option value="500">500 Record</option>
+                {% elseif limit == '500' %}
+                <option value="50">50 Record</option>
+                <option value="100">100 Record</option>
+                <option selected="yes" value="500">500 Record</option>
+                {% else %}
+                <option value="50">50 Record</option>
+                <option value="100">100 Record</option>
+                <option value="500">500 Record</option>
+                {% endif %}
+            </select>
+        </div>
+    </ul>
+</div>
 <br />
 
 <div class="clear"></div>
