@@ -13,6 +13,7 @@ else
 {
     $output = shell_exec('php ../app/console cache:clear --env=prod --no-debug');
 }
+$output .= shell_exec('php ../app/console doctrine:schema:update --force');
 echo "<pre>$output</pre>";
 
 ?>

@@ -100,15 +100,18 @@ class MainController extends Controller {
 		}
 
 		try {
-			$sql1Bts = "SELECT b.id, b.building_name, n.name, t.type_name, b.start_price, b.end_price
+			$sql1Bts = "SELECT img.photo_name, img.building_site_id, b.id, b.building_name, n.name, t.type_name, b.start_price, b.end_price
                         FROM building_site b
                         JOIN building_type t ON b.building_type_id = t.id
                         JOIN nearly2site n2 ON n2.building_site_id = b.id
                         JOIN nearly_location n ON n.id = n2.nearly_location_id
                         JOIN nearly_type nt ON nt.id = n.nearly_type_id
+                        JOIN image img ON b.id = img.building_site_id
                         WHERE b.recommend =1
-                        AND nt.id =1
-                        AND b.deleted !=  '1'";
+                            AND img.photo_type = 'recommend'
+                            AND nt.id = 1
+                            AND img.deleted =  0
+                            AND b.deleted =  0";
 			$objBts = $conn -> fetchAll($sql1Bts);
 			if (count($objBts) <= 3) {
 				$numrow1 = 0;
@@ -120,15 +123,18 @@ class MainController extends Controller {
 			echo 'Caught exception: ', $e -> getMessage(), "\n";
 		}
 		try {
-			$sqlMrt = "SELECT b.id, b.building_name, n.name, t.type_name, b.start_price, b.end_price
+			$sqlMrt = "SELECT img.photo_name, img.building_site_id, b.id, b.building_name, n.name, t.type_name, b.start_price, b.end_price
                         FROM building_site b
                         JOIN building_type t ON b.building_type_id = t.id
                         JOIN nearly2site n2 ON n2.building_site_id = b.id
                         JOIN nearly_location n ON n.id = n2.nearly_location_id
                         JOIN nearly_type nt ON nt.id = n.nearly_type_id
+                        JOIN image img ON b.id = img.building_site_id
                         WHERE b.recommend =1
-                        AND nt.id =2
-                        AND b.deleted !=  '1'";
+                            AND img.photo_type = 'recommend'
+                            AND nt.id = 2
+                            AND img.deleted =  0
+                            AND b.deleted =  0";
 			$objMrt = $conn -> fetchAll($sqlMrt);
 			if (count($objMrt) <= 3) {
 				$numrow2 = 0;
@@ -140,15 +146,18 @@ class MainController extends Controller {
 			echo 'Caught exception: ', $e -> getMessage(), "\n";
 		}
 		try {
-			$sqlCollege = "SELECT b.id, b.building_name, n.name, t.type_name, b.start_price, b.end_price
+			$sqlCollege = "SELECT img.photo_name, img.building_site_id, b.id, b.building_name, n.name, t.type_name, b.start_price, b.end_price
                         FROM building_site b
                         JOIN building_type t ON b.building_type_id = t.id
                         JOIN nearly2site n2 ON n2.building_site_id = b.id
                         JOIN nearly_location n ON n.id = n2.nearly_location_id
                         JOIN nearly_type nt ON nt.id = n.nearly_type_id
+                        JOIN image img ON b.id = img.building_site_id
                         WHERE b.recommend =1
-                        AND nt.id =3
-                        AND b.deleted !=  '1'";
+                            AND img.photo_type = 'recommend'
+                            AND nt.id = 3
+                            AND img.deleted =  0
+                            AND b.deleted =  0 ";
 			$objCollege = $conn -> fetchAll($sqlCollege);
 			if (count($objCollege) <= 3) {
 				$numrow3 = 0;
@@ -159,7 +168,7 @@ class MainController extends Controller {
 			echo 'Caught exception: ', $e -> getMessage(), "\n";
 		}
         try {
-            $sqlCountView = "SELECT b.id,b.building_name,n.name,t.type_name, b.start_price, b.end_price, nt.type_name AS nearlyType
+            $sqlCountView = "SELECT img.photo_name, img.building_site_id, b.id, b.building_name,n.name,t.type_name, b.start_price, b.end_price, nt.type_name AS nearlyType
                                 FROM banner_count ban
                                 INNER JOIN building_site b ON ban.building_site_id = b.id
                                 INNER JOIN building_type t ON b.building_type_id = t.id
@@ -167,8 +176,11 @@ class MainController extends Controller {
                                 INNER JOIN nearly2site n2 ON n2.building_site_id = b.id
                                 INNER JOIN nearly_location n ON n.id = n2.nearly_location_id
                                 INNER JOIN nearly_type nt ON nt.id = n.nearly_type_id
+                                INNER JOIN image img ON b.id = img.building_site_id
                                 WHERE b.recommend =1
-                                  AND b.deleted !=  '1'
+                                    AND img.photo_type = 'recommend'
+                                    AND img.deleted =  0
+                                    AND b.deleted =  0
                                 GROUP BY ban.building_site_id
                                 ORDER BY COUNT(ban.building_site_id) DESC";
             $objCountView = $conn -> fetchAll($sqlCountView);
