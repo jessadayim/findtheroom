@@ -33,7 +33,11 @@ FTRWebBundle_sendcontact:
 FTRWebBundle_regis:
     pattern:  /regis
     defaults: { _controller: FTRWebBundle:Register:register }
-    
+
+FTRWebBundle_regisSendEmail:
+    pattern:  /regisSendEmail
+    defaults: { _controller: FTRWebBundle:Register:sendemail }
+
 FTRWebBundle_confirm:
     pattern:  /regis/confirm
     defaults: { _controller: FTRWebBundle:Register:RegisConfirm}

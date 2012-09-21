@@ -1,4 +1,4 @@
-<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js'></script>
+<script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script>
 <script>
     var url = "{{ path('nearly2site_create') }}";
     function postOnchange(){
@@ -17,20 +17,15 @@
         });
     }
     $(document).ready(function() {
-//        $("#formCreateNearly").submit(function() {
-//            postOnchange();
-//            $('#divPostCreateNearly').slideUp(300).delay(800).fadeOut(400);
-//            return false;
-//        });
         $("#btnCancel").click(function(){
             postOnchange();
-            $('#divPostCreateNearly').slideUp(300).delay(800).fadeOut(400);
+            hideId("#divPostCreateNearly");
         });
 
         $("#btnNext").click(function(){
             var strUrl = "{{ path('image_show', { 'id': '--' }) }}";
             strUrl = strUrl.replace('--', saveIdBuildingSite);
-            $('.innerPanel').fadeOut().load(strUrl).fadeIn("slow");
+            reloadId('.innerPanel', strUrl);
         });
 
         $('.selectNearly').change(function() {
@@ -38,7 +33,7 @@
         });
     });
     if (saveIdBuildingSite != null){
-        $("#btnNext").show();
+        showId("#btnNext");
     }
 </script>
 <div id="divPostCreateNearly">

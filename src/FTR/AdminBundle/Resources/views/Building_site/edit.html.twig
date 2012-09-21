@@ -1,22 +1,10 @@
-<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js'></script>
+<script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script>
 <script>
     var url = "{{ path('building_site_update', { 'id': entity.id }) }}";
 
 	$(document).ready(function() {
-//		$("#btnCancelEdit").click(function() {
-//			toggle(".innerPanel", 'hide');
-//			return false;
-//		});
-
-//		function toggle(id, toggle) {
-//			$(id).animate({
-//				left : '+=50',
-//				height : toggle
-//			}, 500, function() {
-//			});
-//		}
         $("#btnCancel").click(function(){
-            $('.innerPanel').slideUp(300).delay(800).fadeOut(400);
+            hideId(".innerPanel");
         });
 
         $("#formEdit").submit(function(){
@@ -37,13 +25,9 @@
                         alert('ชื่อ "'+id+'" นี้มีข้อมูลอยู่แล้ว \nกรุณาตั้งชื่ออื่น');
                         $("#ftr_adminbundle_building_sitetype_building_name").focus();
                     }else if (msg == 'finish') {
-//                        $('.innerPanel').slideUp(300).delay(800).fadeOut(400);
                         alert('บันทึกข้อมูล เสร็จแล้ว');
-                        // $('#listBuildingSite').load(window.location + "show");
-//                        toggle(".innerPanel", 'hide');
-//                        $('#listBuildingSite').fadeOut('slow').load(window.location + "show").fadeIn("slow");
                     } else {
-                        $('.innerPanel').html(msg);
+                        reloadId('.innerPanel', msg);
                         alert('การแก้ไขผิดพลาด');
                     }
                 }

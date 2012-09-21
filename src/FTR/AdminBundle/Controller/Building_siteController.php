@@ -95,7 +95,8 @@ class Building_siteController extends Controller
 
         $sqlGetEntity = "
             $sqlGetEntity
-            GROUP BY b.$getOrderBy $getOrderByType
+            GROUP BY b.id
+            ORDER BY b.$getOrderBy  $getOrderByType
         ";
 
         //นับจำนวนที่มีทั้งหมด

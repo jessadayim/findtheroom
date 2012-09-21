@@ -1,27 +1,15 @@
-<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js'></script>
+<script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script>
 <script>
     $(document).ready(function() {
-        function toggle(id, toggle) {
-            $(id).animate({
-                left : '+=50',
-                height : toggle
-            }, 500, function() {
-            });
-        }
-
         $("#btnCancel").click(function(){
-            $('#divPostCreateFacility').slideUp(300).delay(800).fadeOut(400);
+            hideId("#divPostCreateFacility");
         });
 
         $("#btnNext").click(function(){
             var strUrl = "{{ path('roomtype2site_show', { 'id': '--' }) }}";
             strUrl = strUrl.replace('--', saveIdBuildingSite);
-            $('.innerPanel').fadeOut().load(strUrl).fadeIn("slow");
+            reloadId('.innerPanel', strUrl);
         });
-//        $("#formCreateFacility").submit(function() {
-//            $('#divPostCreateFacility').slideUp(300).delay(800).fadeOut(400);
-//            return false;
-//        });
 
         var url = "{{ path('facility2site_create') }}";
         $('.checkFacility').click(function() {

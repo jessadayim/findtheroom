@@ -1,4 +1,4 @@
-<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js'></script>
+<script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script>
 <script>
 	var countRoomType2Site = {{roomtype2site|length}};
 	var maxRoomType = 20;
@@ -43,20 +43,15 @@
 
 	
 	$(document).ready(function() {
-//		$("#formCreateRoomType2Site").submit(function() {
-//			postOnchange();
-//			$('#divPostCreateRoomType2Site').slideUp(300).delay(800).fadeOut(400);
-//			return false;
-//		});
         $("#btnCancel").click(function(){
             postOnchange();
-            $('#divPostCreateRoomType2Site').slideUp(300).delay(800).fadeOut(400);
+            hideId("#divPostCreateRoomType2Site");
         });
 
         $("#btnNext").click(function(){
             var strUrl = "{{ path('nearly2site_show', { 'id': '--' }) }}";
             strUrl = strUrl.replace('--', saveIdBuildingSite);
-            $('.innerPanel').fadeOut().load(strUrl).fadeIn("slow");
+            reloadId('.innerPanel', strUrl);
         });
 
 		$("#addRoomType").click(function() {
@@ -75,9 +70,9 @@
 			checkReload = true;
 			// save
 			postOnchange();
-			
-			$("#trRoomType_" + countRoomType2Site).hide();
-			$("#trRoomType_" + countRoomType2Site).show('slow');
+
+            hideId("#trRoomType_" + countRoomType2Site);
+            showId("#trRoomType_" + countRoomType2Site);
 			return false;	
 		});
 		$(".btnDeleteRoomType").click(function(){
@@ -127,7 +122,7 @@
 	}
 
     if (saveIdBuildingSite != null){
-        $("#btnNext").show();
+        showId("#btnNext");
         var strUrl = "{{ path('roomtype2site_show', { 'id': '--' }) }}";
         locationRoomType = strUrl.replace('--', saveIdBuildingSite);
     }
@@ -150,36 +145,36 @@
             <fieldset>
 			<table id="tbRoomType2Site">
 				{% for roomType in roomtype2site %}
-				<tr id="trRoomType_{{ roomType.count }}">
-					<td>
-					<div>
-						{{ roomType.count }}. Room Size:
-						<input type="text" name="roomSize[]" onkeypress="validate(event);" class="roomSize" id="roomSize[]" value="{{ roomType.room_size }}" />
-						&nbsp;&nbsp;Room Price:
-						<input type="text" name="roomPrice[]" onkeypress="validate(event);" class="roomPrice" id="roomPrice[]" value="{{ roomType.room_price }}"/>
-						&nbsp;Room Type:&nbsp;
-                        <input type="text" name="selectRoomType[]" class="selectRoomType" id="selectRoomType[]" value="{{ roomType.room_typename }}"/>
-						&nbsp;
-						{% if roomType.count > 1%}
-						<input type="button" class="btnDeleteRoomType" id="btnDeleteRoomType_{{ roomType.count }}" value="  ลบ  " />
-						{% endif %}
-					</div>
-					</td>
-				</tr>
+                    <tr id="trRoomType_{{ roomType.count }}">
+                        <td>
+                        <div>
+                            {{ roomType.count }}. Room Size:
+                            <input type="text" name="roomSize[]" onkeypress="validate(event);" class="roomSize" id="roomSize[]" value="{{ roomType.room_size }}" />
+                            &nbsp;&nbsp;Room Price:
+                            <input type="text" name="roomPrice[]" onkeypress="validate(event);" class="roomPrice" id="roomPrice[]" value="{{ roomType.room_price }}"/>
+                            &nbsp;Room Type:&nbsp;
+                            <input type="text" name="selectRoomType[]" class="selectRoomType" id="selectRoomType[]" value="{{ roomType.room_typename }}"/>
+                            &nbsp;
+                            {% if roomType.count > 1%}
+                            <input type="button" class="btnDeleteRoomType" id="btnDeleteRoomType_{{ roomType.count }}" value="  ลบ  " />
+                            {% endif %}
+                        </div>
+                        </td>
+                    </tr>
 				{% else %}
-				<tr id="trRoomType_1">
-					<td>
-					<div>
-						1. Room Size:
-						<input type="text" name="roomSize[]" onkeypress="validate(event);" class="roomSize" id="roomSize[]" value="0" />
-						&nbsp;&nbsp;Room Price:
-						<input type="text" name="roomPrice[]" onkeypress="validate(event);" class="roomPrice" id="roomPrice[]" value="0"/>
-						&nbsp;&nbsp;Room Type:
-                        <input type="text" name="selectRoomType[]" class="selectRoomType" id="selectRoomType[]"/>
-						&nbsp;
-					</div>
-					</td>
-				</tr>
+                    <tr id="trRoomType_1">
+                        <td>
+                        <div>
+                            1. Room Size:
+                            <input type="text" name="roomSize[]" onkeypress="validate(event);" class="roomSize" id="roomSize[]" value="0" />
+                            &nbsp;&nbsp;Room Price:
+                            <input type="text" name="roomPrice[]" onkeypress="validate(event);" class="roomPrice" id="roomPrice[]" value="0"/>
+                            &nbsp;&nbsp;Room Type:
+                            <input type="text" name="selectRoomType[]" class="selectRoomType" id="selectRoomType[]"/>
+                            &nbsp;
+                        </div>
+                        </td>
+                    </tr>
 				{% endfor %}
 			</table>
 

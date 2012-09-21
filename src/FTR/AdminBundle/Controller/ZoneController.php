@@ -206,6 +206,26 @@ class ZoneController extends Controller
     }
 
     /*
+    * Check ชื่อไม่ให้ซ้ำกัน
+    */
+    private  function checkName($name, $sql){
+        $sqlCheck = "
+            SELECT
+             *
+            FROM
+              `zone`
+            WHERE `deleted` = 0
+            AND `zonename` = '$name'
+            $sql
+        ";
+        $objCheck = $this->getDataArray($sqlCheck);
+        if (!empty($objCheck)){
+            return false;
+        }
+        return true;
+    }
+
+    /*
      * บันทึก log เกี่ยวกับการ insert, delete, update database
      */
     private function addLogger($message, $entity){

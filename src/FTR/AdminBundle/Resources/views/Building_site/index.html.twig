@@ -7,52 +7,52 @@
     var saveIdBuildingSite = null;
     var locationRoomType = '';
 	$(document).ready(function() {
-		$("#createrecord").click(function() {
-			$.post('new', function(data) {
-				$('.createPanel').slideUp(600).fadeIn(600);
-				if (!$('.createPanel').html()){
-					$('.createPanel').html(data);
-				}
-				toggle(".innerPanel", 'hide');
-
-				$("#createrecord").hide();
-				$("#createrecordCancel").show('slow');
-
-			});
+		$("#createRecord").click(function() {
+            if (!$('.createPanel').html()){
+                reloadId('.createPanel', window.location + "new");
+            }else{
+                showId(".createPanel");
+            }
+            hideId(".innerPanel");
+            hideId("#createRecord");
+            showId("#createRecordCancel");
 			return false;
 		});
 
-		$("#createrecordCancel").click(function() {
-			$("#createrecordCancel").hide();
-			$("#createrecord").show('slow');
-			toggle(".createPanel", 'toggle');
+		$("#createRecordCancel").click(function() {
+            hideId("#createRecordCancel");
+            showId("#createRecord");
+            hideId(".createPanel");
 			return false;
 		});
-
-		// var checkHide = {{checkhide}};
-		// if (checkHide) {
-		// toggle(".createPanel", 'show');
-		// }
-
-		function toggle(id, toggle) {
-			$(id).animate({
-				left : '+=50',
-				height : toggle
-			}, 500, function() {
-			});
-		}
-
-		// $.post('show', function(data) {
-		// $('#listBuildingSite').html(data);
-		// });
 	});
+
+    //Set time
+    var timeUp = 300;
+    var timeOut = 400;
+    var timeDelay = 800;
+
+    //Show id
+    function showId(id){
+        $(id).fadeIn(timeOut);
+    }
+
+    //Hide id
+    function hideId(id){
+        $(id).fadeOut(timeOut);
+    }
+
+    //Reload id
+    function reloadId(id, url){
+        $(id).load(url).fadeOut(timeOut).fadeIn(timeUp);
+    }
 </script>
 <div id="containerwrap">
 	<div class="grid_12 createLists marginB_10 alpha" style="">
 		<H2>BUILDING SITE LISTS</H2>
 		<div class="listsPanel" style="margin-left: -110px !important;">
-			<a href="" id="createrecord">CREAT BUILDING SITE</a>
-			<a href="" id="createrecordCancel" style="display: none;">CANCEL CREAT BUILDING SITE</a>
+			<a href="" id="createRecord">CREAT BUILDING SITE</a>
+			<a href="" id="createRecordCancel" style="display: none;">CANCEL CREAT BUILDING SITE</a>
 		</div>
 		<div class="clear"></div>
 		<p>
