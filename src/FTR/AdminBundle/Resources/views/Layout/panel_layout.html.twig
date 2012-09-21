@@ -9,6 +9,7 @@
 
 
 
+
 <title>Fine the Room : Control Panel</title>
 {% block css %}
 <link rel="stylesheet" type="text/css" href="{{asset('css/panel/reset.css')}}" />
@@ -20,6 +21,17 @@
 {% block js %}
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
 {% endblock %}
+<script>
+    $(function() {
+        //Check ให้ใช้งานเฉพาะ Google Chrome
+        if(!(navigator.userAgent.match(/Chrome/i))) {
+            $("body").fadeOut(500);
+            alert('กรุณาใช้ Google Chrome ในการเข้าเว็บไซต์');
+            $("body").html('<br/><br/><br/><div align="center">Download Google Chrome &nbsp;<a target="_blank" href="http://support.google.com/chrome/bin/answer.py?hl=th&answer=95346">คลิก</a></div>');
+            $("body").fadeIn(500);
+        }
+    });
+</script>
 </head>
 <body>
 {% if app.session.get('username') is empty %}
