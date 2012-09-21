@@ -177,6 +177,24 @@ class Building_siteController extends Controller
             $entity->setDatetimestamp(new \DateTime());
             $entity->setStartPrice(0);
             $entity->setEndPrice(0);
+
+            //เลือกเขต หรือจังหวัด
+            $getProvince = $entity->getAddrProvince();
+            $getZone = $entity->getZoneId();
+            $checkZone = @$_POST['bc'];
+            if ($checkZone == 'bkk'){
+                if (empty($getZone)){
+                    echo "error_zone";
+                    exit();
+                }
+                $entity->setAddrProvince(null);
+            }else{
+                if (empty($getProvince)){
+                    echo "error_province";
+                    exit();
+                }
+                $entity->setZoneId(null);
+            }
             
             $em->persist($entity);
             $em->flush();
@@ -252,7 +270,7 @@ class Building_siteController extends Controller
         }
         // เพิ่มชุด array ใช้ในการค้นหา
         $entity = $this->getNewEntity($entity);
-        
+
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Building_site entity.');
         }
@@ -267,11 +285,29 @@ class Building_siteController extends Controller
         if ($editForm->isValid()) {
             //Check ว่ามี ขื่อนี้หรือไม่
             $getBuildingName = $entity->getBuildingName();
-
             if(!$this->checkName($getBuildingName, "AND id != $id")){
                 echo "error_$getBuildingName";
                 exit();
             }
+
+            //เลือกเขต หรือจังหวัด
+            $getProvince = $entity->getAddrProvince();
+            $getZone = $entity->getZoneId();
+            $checkZone = @$_POST['bc'];
+            if ($checkZone == 'bkk'){
+                if (empty($getZone)){
+                    echo "error_zone";
+                    exit();
+                }
+                $entity->setAddrProvince(null);
+            }else{
+                if (empty($getProvince)){
+                    echo "error_province";
+                    exit();
+                }
+                $entity->setZoneId(null);
+            }
+
             $em->persist($entity);
             $em->flush();
             echo 'finish';
@@ -400,17 +436,24 @@ class Building_siteController extends Controller
             WHERE `deleted` != 1   
         ";
         $sqlGetUserOwner = "
-            SELECT 
+            SELECT
               `id`,
-              `username` 
+              `username`
             FROM
-              `user_owner` 
-            WHERE `deleted` != 1  
+              `user_owner`
+            WHERE `deleted` != 1
+        ";
+        $sqlGetAddressProvince = "
+            SELECT
+              *
+            FROM
+              `province`
         ";
         $Entity->buildingtype = $this->getDataArray($sqlGetBuildingType);
         $Entity->zone = $this->getDataArray($sqlGetZone);
         $Entity->paytype = $this->getDataArray($sqlGetPayType);
         $Entity->userowner = $this->getDataArray($sqlGetUserOwner);
+        $Entity->proveince = $this->getDataArray($sqlGetAddressProvince);
         return $Entity;
     }
 }
