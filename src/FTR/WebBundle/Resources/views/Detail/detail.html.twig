@@ -75,7 +75,7 @@ $(function(){
 <div id="show">
     <div class="result">
     	<div class="wifi"> </div><div style=" display:block; position: absolute; margin-left: 0px; margin-top: 127px; width:200px; text-align:center;">ราคา {{general.start_price}} - {{general.end_price}} บาท</div>
-		<div class="thumbframe"><img src="{{ asset('images/building/')}}{{ imageID }}/{{imageName}}" class="thumb omega" /></div>
+		<div class="thumbframe"><img src="{{ asset('images/Apartment/ap1.png')}}" class="thumb omega" /></div>
     	<div class="desc">
         	<table border="0" width="500" style="margin-top:-8px;">
             	<tr style="font-size:26px">
@@ -117,12 +117,11 @@ $(function(){
                     	ที่อยู่
                     </td>
                 	<td colspan="3">
-                        {% if general.building_address is empty %}
+                        {% if general.building_address is empty and general.addr_prefecture is empty and general.addr_province is empty and general.addr_zipcode is empty%}
                             -
                         {% else%}
-                            {{general.building_address}}
+                            {{general.building_address}} {{general.addr_prefecture}} {{general.addr_province}} {{general.addr_zipcode}}
                         {% endif%}
-
                     </td>
                 </tr>
                 <tr>
@@ -286,16 +285,22 @@ $(function(){
 				<td align="center" width="250" colspan="2" style="padding-right:10px;">ขนาด</td>
 				<td align="center" colspan="2" width="250">อัตราค่าเช่า/เดือน</td>
 			</tr>
-            {% for row in roomType %}
+            {%if roomType is empty%}
             <tr height="135" valign="middle">
-                <td align="left" width="220"><div class="thumbframe"><img src="{{ asset('images/building/')}}{{ row.building_site_id }}/{{row.photo_name}}" /></div></td>
-                <td align="left" width="150">{{row.room_typename}}</td>
-                <td align="right" width="110" style="padding-right:10px;">{{row.room_size}}</td>
-                <td align="left" width="140">ตารางเมตร</td>
-                <td align="right" width="130">{{row.room_price}}</td>
-                <td align="left" width="120">บาท</td>
+                <td align="center" width="220" colspan="5">ไม่มีประเภทห้องพัก</td>
             </tr>
-            {%endfor%}
+            {%else%}
+                {% for row in roomType %}
+                <tr height="135" valign="middle">
+                    <td align="left" width="220"><div class="thumbframe"><img src="{{ asset('images/building/')}}{{ row.building_site_id }}/{{row.photo_name}}" /></div></td>
+                    <td align="left" width="150">{{row.room_typename}}</td>
+                    <td align="right" width="110" style="padding-right:10px;">{{row.room_size}}</td>
+                    <td align="left" width="140">ตารางเมตร</td>
+                    <td align="right" width="130">{{row.room_price}}</td>
+                    <td align="left" width="120">บาท</td>
+                </tr>
+                {%endfor%}
+            {%endif%}
 		</table>
 	</div>
 </div>
@@ -306,54 +311,25 @@ $(function(){
         <div id="container5">
 			<div id="slides5">
 				<div class="slides_container" style="width:950px;">
-
+                    {% set introw1 = 0 %}
+                    {% for i in 0..3%}
+                    {% if introw1%3 == 0%}
                     <div class="slide" style="width:950px;">
-                        <div class="ap">
-                            <a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><div class="thumbframe4gallery"><img src="{{asset('images/Apartment/ap3.png')}}" class="thumb4gallery"/></div></a>
-
-                            <a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><div class="thumbframe4gallery"><img src="{{asset('images/Apartment/ap3.png')}}" class="thumb4gallery"/></div></a>
-
+                        {%endif%}
+                        {% set row1 = introw1+1 %}
+                        {% if row1%3 == 0%}
+                            <div class="ap2">
+                            {% else %}
+                            <div class="ap">
+                                {%endif%}
+                                <a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><div class="thumbframe4gallery"><img src="{{asset('images/Apartment/ap3.png')}}" class="thumb4gallery"/></div></a><br /><br />
+                                <a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><div class="thumbframe4gallery"><img src="{{asset('images/Apartment/ap3.png')}}" class="thumb4gallery"/></div></a>
+                            </div>
+                            {% set introw1 = introw1+1 %}
+                            {% if introw1%3 == 0%}
                         </div>
-                        <div class="ap">
-                            <a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><div class="thumbframe4gallery"><img src="{{asset('images/Apartment/ap3.png')}}" class="thumb4gallery"/></div></a>
-
-                            <a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><div class="thumbframe4gallery"><img src="{{asset('images/Apartment/ap3.png')}}" class="thumb4gallery"/></div></a>
-
-                        </div>
-                        <div class="ap2">
-                            <a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><div class="thumbframe4gallery"><img src="{{asset('images/Apartment/ap3.png')}}" class="thumb4gallery"/></div></a>
-
-                            <a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><div class="thumbframe4gallery"><img src="{{asset('images/Apartment/ap3.png')}}" class="thumb4gallery"/></div></a>
-
-                        </div>
-                    </div>
-                    <div class="slide" style="width:950px;">
-                        <div class="ap">
-                            <a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><div class="thumbframe4gallery"><img src="{{asset('images/Apartment/ap3.png')}}" class="thumb4gallery"/></div></a>
-
-                            <a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><div class="thumbframe4gallery"><img src="{{asset('images/Apartment/ap3.png')}}" class="thumb4gallery"/></div></a>
-
-                        </div>
-                    </div>
-                    {#{% set introw1 = 0 %}#}
-                    {#{% for i in 0..3%}#}
-                    {#{% if introw1%3 == 0%}#}
-                    {#<div class="slide" style="width:950px;">#}
-                        {#{%endif%}#}
-                        {#{% set row1 = introw1+1 %}#}
-                        {#{% if row1%3 == 0%}#}
-                            {#<div class="ap2">#}
-                            {#{% else %}#}
-                            {#<div class="ap">#}
-                                {#{%endif%}#}
-                                {#<a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><div class="thumbframe4gallery"><img src="{{asset('images/Apartment/ap3.png')}}" class="thumb4gallery"/></div></a><br /><br />#}
-                                {#<a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><div class="thumbframe4gallery"><img src="{{asset('images/Apartment/ap3.png')}}" class="thumb4gallery"/></div></a>#}
-                            {#</div>#}
-                            {#{% set introw1 = introw1+1 %}#}
-                            {#{% if introw1%3 == 0%}#}
-                        {#</div>#}
-                    {#{%endif%}#}
-                    {#{% endfor %}#}
+                    {%endif%}
+                    {% endfor %}
 
                     {#{% set introw2 = 0 %}#}
                     {#{% for i in 0..5%}#}
@@ -374,10 +350,10 @@ $(function(){
                         {#</div>#}
                         {#{%endif%}#}
                         {#{% endfor %}#}
-				</div><a href="#" class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>
-                <a href="#" class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>
+				</div>
 			</div>
-
+                <a href="#" class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>
+                <a href="#" class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>
 		</div>  
     </div>
 </div>
