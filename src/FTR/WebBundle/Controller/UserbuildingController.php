@@ -18,8 +18,8 @@ use FTR\WebBundle\Entity\Nearly2site;
 use FTR\WebBundle\Entity\Pay_type;
 use FTR\WebBundle\Entity\Roomtype2site;
 use FTR\WebBundle\Entity\Zone;
-use FTR\WebBundle\Controller\SearchController;
 use FTR\AdminBundle\Helper\LoggerHelper;
+use FTR\AdminBundle\Helper\Paginator;
 
 class UserbuildingController extends Controller
 {
@@ -28,6 +28,10 @@ class UserbuildingController extends Controller
     {
         $session = $this->get('session');
         $username = $session->get('user');
+        $itemCount = null;
+        $offset = null;
+        $limit = null;
+        $midRange = 5;
         if (empty($username)) {
             return $this->redirect($this->generateUrl('FTRWebBundle_regis'));
         }
@@ -50,6 +54,8 @@ class UserbuildingController extends Controller
             $sql2 = "SELECT * FROM building_site WHERE user_owner_id = '" . $objSQL1[0]['id'] . "'";
             $objSQL2 = $conn->fetchAll($sql2);
 
+            $itemCount = count($objSQL2);
+
             foreach ($objSQL2 as $key => $value) {
                 if ($value['publish'] == 1) {
                     $publish = "แสดงแล้ว";
@@ -69,6 +75,8 @@ class UserbuildingController extends Controller
             echo 'Caught exception: ', $e->getMessage(), "\n";
         }
 
+        $paging = new Paginator($itemCount,$offset,$limit,$midRange);
+
         return $this->render('FTRWebBundle:Userbuilding:listap.html.twig', array(
             'firstname' => $objSQL1[0]['firstname'],
             'lastname' => $objSQL1[0]['lastname'],
@@ -79,6 +87,8 @@ class UserbuildingController extends Controller
             'errormsg' => $errormsg,
             'build_data' => $arrdata,
             'enabled' => $enabled,
+            'paginator' => $paging,
+            'countList' => $itemCount,
         ));
     }
 
