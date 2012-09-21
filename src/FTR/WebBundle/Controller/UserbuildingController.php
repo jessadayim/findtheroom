@@ -112,7 +112,7 @@ class UserbuildingController extends Controller
             'build_data' => $arrData,
             'paginator' => $paging,
             'countList' => $itemCount,
-        ))
+        ));
     }
 
     public function addDataAction($id = null)

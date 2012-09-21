@@ -31,7 +31,7 @@ class Ads_Control
     /**
      * @var string $zone
      *
-     * @ORM\Column(name="zone", type="string", lenght=64)
+     * @ORM\Column(name="zone", type="string", length=64)
      */
     private $zone;
 
