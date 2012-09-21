@@ -707,7 +707,6 @@ class UserbuildingController extends Controller
                     'electric_price' => $electric_price,
                     'website' => $website,
                     'internet_price' => $internet_price,
-                    'publish' => '0',
                 );
 
                 $alert = $this->saveBuildingData($id, $arrbuilding_data);
@@ -925,7 +924,7 @@ class UserbuildingController extends Controller
         $buildingValue->setStartPrice($returnValue['startPrice']);
         $buildingValue->setEndPrice($returnValue['endPrice']);
         $buildingValue->setPhoneNumber($arrData['phone_number']);
-        $buildingValue->setPublish(intval($arrData['publish']));
+        //$buildingValue->setPublish(intval($arrData['publish']));
         $buildingValue->setLastupdate($today);
         $buildingValue->setUserupdate($username);
         $buildingValue->setLatitude($arrData['latitude']);
