@@ -69,6 +69,7 @@
 
     function chValidate() {
         var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+        var regEx = /^[0-9]+$/;
 
         if ($('#name').val() == "") {
             $("#txterror").html("กรุณากรอก ชื่อ");
@@ -82,11 +83,17 @@
             $("#txterror").show("slow");
             document.getElementById('txterror').focus();
             return false;
-        } else if (document.getElementById('tel').value.length < 9) {
-            $("#txterror").html("หมายเลขโทรศัพท์ไม่ถูกต้อง");
+        } else if (document.getElementById('tel').value.length < 9 || document.getElementById('tel').value.length > 10) {
+            $("#txterror").html("กรุณากรอกหมายเลขโทรศัพท์ให้ครบ");
             $("#txterror").hide();
             $("#txterror").show("slow");
-            document.getElementById('txterror').focus();
+            document.getElementById('tel').focus();
+            return false;
+        } else if(!$("#tel").val().match(regEx)){
+            $("#txterror").html("หมายเลขโทรศัพท์ต้องเป็นตัวเลขอย่างเดียว");
+            $("#txterror").hide();
+            $("#txterror").show("slow");
+            document.getElementById('tel').focus();
             return false;
         } else if ($('#title').val() == "") {
             $("#txterror").html("กรุณากรอก เรื่องที่ต้องการติดต่อ");

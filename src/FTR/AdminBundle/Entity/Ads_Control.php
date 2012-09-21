@@ -49,6 +49,20 @@ class Ads_Control
      */
     private $publish;
 
+    /**
+     * @var datetime $date_start
+     *
+     * @ORM\Column(name="date_start", type="datetime")
+     */
+    private $date_start;
+
+    /**
+     * @var datetime $date_end
+     *
+     * @ORM\Column(name="date_end", type="datetime")
+     */
+    private $date_end;
+
 
     /**
      * Get id
@@ -138,5 +152,45 @@ class Ads_Control
     public function getPublish()
     {
         return $this->publish;
+    }
+
+    /**
+     * Set date_start
+     *
+     * @param datetime $date_start
+     */
+    public function setDateStart($dateStart)
+    {
+        $this->date_start = $dateStart;
+    }
+
+    /**
+     * Get date_start
+     *
+     * @return datetime
+     */
+    public function getDateStart()
+    {
+        return $this->date_start;
+    }
+
+    /**
+     * Set date_end
+     *
+     * @param datetime $date_end
+     */
+    public function setDateEnd($dateEnd)
+    {
+        $this->date_end = $dateEnd;
+    }
+
+    /**
+     * Get date_end
+     *
+     * @return datetime
+     */
+    public function getDateEnd()
+    {
+        return $this->date_end;
     }
 }

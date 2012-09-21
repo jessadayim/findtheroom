@@ -57,6 +57,8 @@ class MainController extends Controller {
 					b.type_name,
 					c.typename,
 					d.zonename,
+					a.addr_province,
+					a.addr_prefecture,
 					FORMAT(a.start_price,0) AS start_price,
 					FORMAT(a.end_price,0) AS end_price
 				FROM

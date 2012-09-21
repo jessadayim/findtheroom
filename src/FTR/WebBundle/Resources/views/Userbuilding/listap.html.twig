@@ -50,38 +50,6 @@
         </form>
 	</div>
 </div>
-<div class="detail" style="height: 100%; margin-bottom: 15px;">
-	<img src="{{asset('images/owner.png')}}" style="display:block; position:relative; float:none;" />
-	<hr class="line" style="top: 60px;" />
-    <div style="width:1000px; display:block; position:relative; height:100%; margin-top: 0px;">
-		<table style="margin-top: 0px; padding-bottom:15px;">
-        	<tr height="80" valign="middle">
-				<td align="left" width="250" style="font-size:24px;">ชื่อตึก</td>
-                <td align="center" width="250" style="font-size:24px;">สถานะการแสดง</td>
-                <td align="center" width="250" style="font-size:24px;">ดูหน้าตัวอย่าง</td>
-                <td align="center" width="250" style="font-size:24px;">แก้ไขรายละเอียด</td>
-            </tr>
-            <hr class="line" style="top: 60px;" />
-            {% for data in build_data %}
-        	<tr height="50" valign="middle">
-				<td align="left" width="250" style="font-size:24px;">{{data.building_name}}</td>
-                <td align="center" width="250" style="font-size:24px;">{{data.publish}}</td>
-                <td align="center" width="250" style="font-size:24px;"><a href="{{path('FTRWebBundle_detail',{'buildId': data.id })}}" target="_blank">ดู</a></td>
-                <td align="center" width="250" style="font-size:24px;"><a href="{{path('addData',{'id': data.id })}}">แก้ไข</a></td>
-            </tr>
-            {% endfor %}
-            {% if enabled == '1'%}
-            <tr height="70" valign="middle">
-                <td align="left"><a href="{{path('addData')}}"><img src="{{asset('images/add-bt.png')}}" style="padding:0" /></a></td>
-                <td align="left" style="font-size:24px;" colspan="3">&nbsp;</td>
-            </tr>
-            {% else %}
-            <tr height align="70" valign="middle">
-                <td align="center" colspan="4">ท่านยังไม่ได้ยืนยันผู้ใช้ กรุณาเช็ค Email ที่ท่านใช้สมัคร   <a href="{{path('FTRWebBundle_regisSendEmail')}}">ส่งอีกครั้ง</a></td>
-            </tr>
-            {% endif %}
-        </table>
-	</div>
-</div>
+
 
 {% endblock %}

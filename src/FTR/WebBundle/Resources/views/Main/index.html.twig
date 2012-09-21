@@ -43,6 +43,7 @@ $(document).ready(function() {
 					</p>
 				</div>-->
 			</div>
+
 			
 		</div>
 		<a href='#' class="prev"><img src="{{asset('images/slider/arrow-prev.png')}}" width="29" height="57" alt="Arrow Prev"></a>
@@ -178,7 +179,7 @@ $(document).ready(function() {
 				<th width="250">ชื่อหอพัก</th>
 				<th width="150">ประเภท</th>
 				<th width="150">ชนิด</th>
-				<th width="200">เขต</th>
+				<th width="200">โซน/อำเภอ</th>
 				<th width="150">ราคา</th>
 			</tr>
 		</thead>
@@ -189,7 +190,11 @@ $(document).ready(function() {
 				<td class="first">{{ tlist.building_name }}</td>
 				<td>{{ tlist.type_name }}</td>
 				<td>{{ tlist.typename }}</td>
+                {% if tlist.addr_province !='กรุงเทพมหานคร' %}
+                <td>{{ tlist.addr_prefecture }}</td>
+                {% else %}
 				<td>{{ tlist.zonename }}</td>
+                {% endif %}
 				<td>{{ tlist.start_price }} - {{ tlist.end_price }} บาท</td>
 			</tr>
 		{% endfor %}

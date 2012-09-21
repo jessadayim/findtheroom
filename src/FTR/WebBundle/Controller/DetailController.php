@@ -25,7 +25,10 @@ class DetailController extends Controller
                     FROM building_site b JOIN building_type t ON b.building_type_id = t.id
                         JOIN zone z ON b.zone_id = z.id
                         JOIN pay_type p ON p.id = b.pay_type_id
-                    WHERE b.id = $id";
+                    WHERE b.id = $id
+                        AND b.deleted =0
+                        AND t.deleted =0
+                        AND z.deleted =0";
 
                 $objGeneral = $conn->fetchAll($sqlGeneral);
                 $countData = count($objGeneral);
@@ -62,36 +65,29 @@ class DetailController extends Controller
                     /**
                      * query Detail facility roomtype
                      * */
-
-                    $sqlRoomType = "SELECT  img.photo_name, img.building_site_id, n2.room_typename, n2.room_size, n2.room_price
+                    $sqlRoomType = "SELECT n2.*,img.*
                                     FROM roomtype2site n2
-                                    JOIN image img ON n2.id = img.roomtype2site_id
-                                    WHERE n2.building_site_id =$id
-                                        AND img.photo_type = 'room'
-                                        AND n2.deleted =0
-                                        AND n2.deleted =0";
+                                    LEFT JOIN image img
+                                        ON n2.id = img.roomtype2site_id
+                                    where n2.building_site_id = $id ";
                     $objRoomType = $conn->fetchAll($sqlRoomType);
 
                     /**
                      * query Detail facility inroom
                      * */
-                    $sqlInRoom = "SELECT building_site_id,facility_name
-                    FROM facilitylist f
-                      LEFT JOIN facility2site f2 ON f2.facilitylist_id = f.id
-                    WHERE f.facility_type = 'inroom'
-                      AND f.deleted != 1
-                      AND f.display != 1";
+                    $sqlInRoom = "SELECT f2.building_site_id, f.facility_name
+                                  FROM facilitylist f
+                                  LEFT JOIN facility2site f2 ON f2.facilitylist_id = f.id
+                                  WHERE f.facility_type =  'inroom'  AND f.deleted = 0";
                     $objInRoom = $conn->fetchAll($sqlInRoom);
 
                     /**
                      * query Detail facility outroom
                      * */
-                    $sqlOutRoom = "SELECT building_site_id,facility_name
-                    FROM facilitylist f
-                      LEFT JOIN facility2site f2 ON f2.facilitylist_id = f.id
-                    WHERE f.facility_type = 'outroom'
-                      AND f.deleted != 1
-                      AND f.display != 1";
+                    $sqlOutRoom = "SELECT f2.building_site_id, f.facility_name
+                                   FROM facilitylist f
+                                   LEFT JOIN facility2site f2 ON f2.facilitylist_id = f.id
+                                   WHERE f.facility_type =  'outroom' AND f.deleted = 0";
                     $objOutRoom = $conn->fetchAll($sqlOutRoom);
 
                     /**
@@ -103,11 +99,19 @@ class DetailController extends Controller
                                       AND building_site_id = $id
                                       AND deleted = 0 ";
                     $objImage = $conn->fetchAll($sqlImage);
-                    $imageName = $objImage[0]['photo_name'];
-                    $imageID = $objImage[0]['building_site_id'];
+
+                    if(empty($objImage[0]['photo_name']) || empty($objImage[0]['building_site_id'])){
+                           $imageName = '';
+                           $imageID = '';
+                    }else{
+                        $imageName = $objImage[0]['photo_name'];
+                        $imageID = $objImage[0]['building_site_id'];
+                    }
+                }else{
+                    return $this->redirect($this->generateUrl('FTRWebBundle_list'));
                 }
             } catch (Exception $e) {
-                echo 'Caught exception: ', $e->getMessage(), "\n";
+                return $this->redirect($this->generateUrl('FTRWebBundle_list'));
             }
 
             return $this->render('FTRWebBundle:Detail:detail.html.twig', array(
