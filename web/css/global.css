@@ -105,24 +105,27 @@
 */
 
 .pagination {
-	margin:-40px 0 0 850px;
-	width:120px;
+	/*margin:-40px 0 0 850px;
+	width:120px;*/
+	margin:-40px 0 0 0;
+	width:950px;
 	position:absolute;
 	z-index:102;
 }
 
 .pagination li {
-	float:left;
+	float:right;
 	margin:0 1px;
 	list-style:none;
+	display:block;
 }
 
 .pagination li a {
 	display:block;
-	width:21px;
+	width:21px;/*for >9 = 22*/
 	height:24px;
 	padding-top:4px;
-	padding-left:11px;
+	padding-left:11px;/*for >9 = 7*/
 	background-image:url(../images/slider/pagination.png);
 	background-position:0 0;
 	float:left;
