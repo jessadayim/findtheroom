@@ -21,6 +21,7 @@ class AdminprofileController extends Controller
     {
         $session = $this->get('session');
         $id = $session->get('id');
+
         if (!empty($id)) {
             $em = $this->getDoctrine()->getEntityManager();
             $entity = $em->getRepository('FTRAdminBundle:User_admin')->find($id);

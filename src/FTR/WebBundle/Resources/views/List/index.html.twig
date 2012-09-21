@@ -3,7 +3,7 @@
 <script type="text/javascript">
     $(function() {
         $("#demo5").paginate({
-            count 		: 30,
+            count 		: {{ countNumPage }},
             start 		: 1,
             display     : 20,
             border					: false,
@@ -14,13 +14,23 @@
         });
     });
 
-    function switchDisplay(pageName){
-        alert(pageName);
-        alert({{ numData }});
+    //Reload id
+    function reloadId(id, url){
+        $(id).load(url).fadeOut(timeOut).fadeIn(timeUp);
+    }
 
-        $.ajax({type:'POST', url: "{{path('FTRWebBundle_list')}}", data:$('#frmSearch').serialize(),
+    function switchDisplay(pageName){
+        {#alert(pageName);#}
+        {#alert({{ numData }});#}
+        var url = "{{path('FTRWebBundle_list')}}";
+        $.ajax({
+            type: 'POST',
+            url: window.location + "&numPage=" + pageName + "&isAjax=yes",
+            data: $('#frmSearch').serialize(),
             success: function(response) {
-                document.getElementById("show").innerHTML = response;
+                $("#show").html(response);
+                $("#show").fadeIn(400);
+//                document.getElementById("show").innerHTML = response;
         }});
     }
 </script>

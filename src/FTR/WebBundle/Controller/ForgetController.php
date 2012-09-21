@@ -48,11 +48,20 @@ class ForgetController extends Controller {
                 $host = "http://".$_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"];
                 $url = $this->get('router')->generate('TRWebBundle_change', array());
                 $url .= "?token=".$objSQL1[0]['confirm_token'];
+                $link = "ท่านได้ทำการลงทะเบียนกับ FindTheRoom.com เรียบร้อยแล้ว
+    กรุณาคลิกลิงค์  "
+                    .$host.$url."
+    เพื่อทำการยืนยันการลงทะเบียน
+เมื่อท่านทำการยืนยันการลงทะเบียนเสร็จเรียบร้อยแล้ว ท่านจะสามารถใช้บริการเหล่านี้ได้
+-ลงทะเบียนหอพักฟรี
+-รับบริการเสริมจาก FindTheRoom.com
+ติดต่อสอบถามข้อมูลเพิ่มเติม โทร 02-692-119";
 
                 if (count($objSQL1) == 1) {
                     $message = \Swift_Message::newInstance()
                         -> setSubject('คุณได้ลืมรหัสผ่าน และขอตั้งรหัสผ่านใหม่ FindTheRoom.com‏')
                         -> setFrom('support@findtheroom.com') -> setTo($objSQL1[0]['email'])
+                        -> addPart($link)
                         -> setBody($this -> renderView('FTRWebBundle:Security:emailreset.html.twig', array(
                                     'host' => $host,
                                     'url' => $url

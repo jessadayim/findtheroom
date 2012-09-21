@@ -36,11 +36,8 @@ class ListController extends Controller
 
         //query value
         $whereQuery         = null;
-        $numStart           = 0;
         $numShow            = 10;
         $pageNumber         = 1;
-        $numStartDisplay    = $numStart + 1;
-        $numEnd             = $numStart + $numShow;
         $parameter          = array();
 
         // post zone aaaaaa
@@ -50,7 +47,14 @@ class ListController extends Controller
             $zone           = @$_GET['zone'];
             $nearly         = @$_GET['nearly'];
             $isAjax         = @$_GET['isAjax'];
+            $pageNumber     = @$_GET['numPage'];
         }
+        if (empty($pageNumber)){
+            $pageNumber = 1;
+        }
+        $numStart =  $numShow*$pageNumber-$numShow;
+        $numStartDisplay    = $numStart + 1;
+        $numEnd             = $numStart + $numShow;
 
         //display textSearch
         if( !empty($buildingType) )
@@ -337,32 +341,33 @@ class ListController extends Controller
             $limitDisplay = " LIMIT $numStart , $numShow";
 
             $sql_c = "
-                $selectFieldCount
-                $fromTable
-                WHERE 1
-                    $whereQuery
-                $limitDisplay
-            ";
+                    $selectField
+                    $fromTable
+                    WHERE 1
+                        $whereQuery
+                         GROUP BY a.id
+                ";
 
             $sql = "
                 $selectField
                 $fromTable
                 WHERE 1
                     $whereQuery
+                     GROUP BY a.id
                 $limitDisplay
             ";
-
             $resultCount    = $conn->fetchAll($sql_c);
             $result         = $conn->fetchAll($sql);
         } catch (Exception $e) {
             echo 'Caught exception: ',  $e->getMessage(), "\n";
         }
 
-        $numData = $resultCount[0]['count'];
+        $numData = count($resultCount);
         if($numEnd > $numData)
         {
-             $numEnd = $numStart + $numData;
+             $numEnd = $numData;
         }
+        $countNumPage = ceil($numData/$numShow);
 
         $dataSet = array(
             'result'            => $result,
@@ -370,6 +375,7 @@ class ListController extends Controller
             'searchType'        => $searchType,
             'numStartDisplay'   => $numStartDisplay,
             'numEnd'            => $numEnd,
+            'countNumPage'      => $countNumPage,
             'parameter'         => $parameter,
             'pageNumber'        => $pageNumber,
             'textSearch'        => $textSearch,
@@ -378,17 +384,18 @@ class ListController extends Controller
 
         if($isAjax=="yes")
         {
-            return $this->render('FTRWebBundle:List:showList.html.twig',array(
-                'result'            => $result,
-                'numData'           => $numData,
-                'searchType'        => $searchType,
-                'numStartDisplay'   => $numStartDisplay,
-                'numEnd'            => $numEnd,
-                'parameter'         => $parameter,
-                'pageNumber'        => $pageNumber,
-                'textSearch'        => $textSearch,
-                'txtSearch'         => $txtSearch,
-            ));
+            return $this->showListAction($dataSet);
+//            return $this->render('FTRWebBundle:List:showList.html.twig',array(
+//                'result'            => $result,
+//                'numData'           => $numData,
+//                'searchType'        => $searchType,
+//                'numStartDisplay'   => $numStartDisplay,
+//                'numEnd'            => $numEnd,
+//                'parameter'         => $parameter,
+//                'pageNumber'        => $pageNumber,
+//                'textSearch'        => $textSearch,
+//                'txtSearch'         => $txtSearch,
+//            ));
         }
         else
         {
@@ -398,6 +405,7 @@ class ListController extends Controller
                 'searchType'        => $searchType,
                 'numStartDisplay'   => $numStartDisplay,
                 'numEnd'            => $numEnd,
+                'countNumPage'      => $countNumPage,
                 'parameter'         => $parameter,
                 'pageNumber'        => $pageNumber,
                 'textSearch'        => $textSearch,
