@@ -58,7 +58,6 @@ class UserbuildingController extends Controller
             'password' => $objSQL1[0]['password'],
             'phone_number' => $objSQL1[0]['phone_number'],
             'errormsg' => $error_msg,
-            'enabled' => $enabled,
         ));
     }
 
@@ -112,6 +111,7 @@ class UserbuildingController extends Controller
             'build_data' => $arrData,
             'paginator' => $paging,
             'countList' => $itemCount,
+            'enabled' => $enabled,
         ));
     }
 
