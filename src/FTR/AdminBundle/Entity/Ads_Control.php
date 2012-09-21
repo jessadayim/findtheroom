@@ -29,9 +29,9 @@ class Ads_Control
     private $title;
 
     /**
-     * @var integer $zone
+     * @var string $zone
      *
-     * @ORM\Column(name="zone", type="integer")
+     * @ORM\Column(name="zone", type="string", lenght=64)
      */
     private $zone;
 
@@ -97,7 +97,7 @@ class Ads_Control
     /**
      * Set zone
      *
-     * @param integer $zone
+     * @param string $zone
      */
     public function setZone($zone)
     {
@@ -107,7 +107,7 @@ class Ads_Control
     /**
      * Get zone
      *
-     * @return integer 
+     * @return string
      */
     public function getZone()
     {

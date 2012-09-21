@@ -24,7 +24,45 @@ use FTR\AdminBundle\Helper\Paginator;
 class UserbuildingController extends Controller
 {
 
-    public function indexAction($errormsg = NULL)
+    public function indexAction($error_msg = NULL)
+    {
+        $session = $this->get('session');
+        $username = $session->get('user');
+        $objSQL1 = null;
+        if (empty($username)) {
+            return $this->redirect($this->generateUrl('FTRWebBundle_regis'));
+        }
+
+        if (empty($errormsg)) { //Default error messeges
+            $error_msg = array('email' => NULL, 'password' => NULL, 'tel' => NULL, 'confirmpass' => 'ต้องใส่ยืนยันรหัสก่อนบันทึก');
+        }
+        $conn = $this->get('database_connection');
+        $enabled = null;
+        $arrdata = NULL;
+        if (!$conn) {
+            die("MySQL Connection error");
+        }
+        try {
+            $sql1 = "SELECT * FROM user_owner WHERE username = '" . $username . "'";
+            $objSQL1 = $conn->fetchAll($sql1);
+            $enabled = $objSQL1[0]['enabled'];
+        } catch (Exception $e) {
+            echo 'Caught exception: ', $e->getMessage(), "\n";
+        }
+
+        return $this->render('FTRWebBundle:Userbuilding:listap.html.twig', array(
+            'firstname' => $objSQL1[0]['firstname'],
+            'lastname' => $objSQL1[0]['lastname'],
+            'username' => $objSQL1[0]['username'],
+            'email' => $objSQL1[0]['email'],
+            'password' => $objSQL1[0]['password'],
+            'phone_number' => $objSQL1[0]['phone_number'],
+            'errormsg' => $error_msg,
+            'enabled' => $enabled,
+        ));
+    }
+
+    public function listApartmentAction()
     {
         $session = $this->get('session');
         $username = $session->get('user');
@@ -32,17 +70,11 @@ class UserbuildingController extends Controller
         $offset = null;
         $limit = null;
         $midRange = 5;
-        if (empty($username)) {
-            return $this->redirect($this->generateUrl('FTRWebBundle_regis'));
-        }
 
-        if (empty($errormsg)) { //Default error messeges
-            $errormsg = array('email' => NULL, 'password' => NULL, 'tel' => NULL, 'confirmpass' => 'ต้องใส่ยืนยันรหัสก่อนบันทึก');
-        }
         $em = $this->getDoctrine()->getEntityManager();
         $conn = $this->get('database_connection');
         $enabled = null;
-        $arrdata = NULL;
+        $arrData = NULL;
         if (!$conn) {
             die("MySQL Connection error");
         }
@@ -65,7 +97,7 @@ class UserbuildingController extends Controller
                 else {
                     $publish = "รอการยืนยัน";
                 }
-                $arrdata[] = array(
+                $arrData[] = array(
                     'id' => $value['id'],
                     'building_name' => $value['building_name'],
                     'publish' => $publish,
@@ -76,25 +108,11 @@ class UserbuildingController extends Controller
         }
 
         $paging = new Paginator($itemCount,$offset,$limit,$midRange);
-
-        return $this->render('FTRWebBundle:Userbuilding:listap.html.twig', array(
-            'firstname' => $objSQL1[0]['firstname'],
-            'lastname' => $objSQL1[0]['lastname'],
-            'username' => $objSQL1[0]['username'],
-            'email' => $objSQL1[0]['email'],
-            'password' => $objSQL1[0]['password'],
-            'phone_number' => $objSQL1[0]['phone_number'],
-            'errormsg' => $errormsg,
-            'build_data' => $arrdata,
-            'enabled' => $enabled,
+        return $this->render('FTRWebBundle:Userbuilding:list_table.html.twig', array(
+            'build_data' => $arrData,
             'paginator' => $paging,
             'countList' => $itemCount,
-        ));
-    }
-
-    public function listApartmentAction()
-    {
-
+        ))
     }
 
     public function addDataAction($id = null)
