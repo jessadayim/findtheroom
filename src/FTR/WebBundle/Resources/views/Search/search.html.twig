@@ -1,3 +1,4 @@
+
 <!-- peung -->
 <script language="javascript">
     function fncAlert(){
@@ -25,7 +26,6 @@
     function getAmpher()
     {
         var  provincename = document.getElementById('selProvince').value;
-        //alert(provincename);
         $.get("{{path('FTRWebBundle_search_ampher')}}", { province_name: provincename },
             function(data) {
                 if(data != "no")
@@ -35,6 +35,22 @@
         });
     }
 
+//    Rux
+    $(document).ready(function() {
+
+        //เลือกรายการต่างจังหวัด
+        $("#selProvince").change(function(){
+            $("#cou").attr('checked', true);
+            fncAlert();
+            getAmpher();
+        });
+
+        //คลิกปุ่ม ต่างจังหวัด
+        $("#cou").click(function(){
+            fncAlert();
+            $("#selProvince").focus();
+        });
+    });
 </script>
 <form method="post" action="{{path('FTRWebBundle_list')}}?searchType=fullSearch" id="frmSearch" name="frmSearch">
 <div id="search2">
@@ -93,21 +109,21 @@
 					<input id="bk" name="bc" type="radio" value="bkk" {% if bc == 'bkk' %} checked {% endif %} OnClick="JavaScript:fncAlert();" /><label for="bk">กรุงเทพฯ</label>
 				</td>
 				<td width="170">
-					<input id="cou" name="bc" type="radio" value="country" {% if bc == 'country' %} checked {% endif %} OnClick="JavaScript:fncAlert();" /><label for="cou">ต่างจังหวัด</label>
+					<input id="cou" name="bc" type="radio" value="country" {% if bc == 'country' %} checked {% endif %} /><label for="cou">ต่างจังหวัด</label>
 				</td>
 				<td width="200">
 					<div class="styled-select">
-						<label for="cou">
-						<select class="select" name="selProvince" id="selProvince" onchange="javascript:getAmpher()">
-							{% for pvList in province %}
-								<option value="{{ pvList.PROVINCE_VALUE }}"
-                                    {% if selProvince == pvList.PROVINCE_VALUE %}
-                                        selected="selected"
-                                    {% endif %}
-                                >{{ pvList.PROVINCE_NAME }}</option>
-							{% endfor %}
-						</select>
-						</label>
+						{#<label for="cou">#}
+                            <select class="select" name="selProvince" id="selProvince">
+                                {% for pvList in province %}
+                                    <option value="{{ pvList.PROVINCE_VALUE }}"
+                                        {% if selProvince == pvList.PROVINCE_VALUE %}
+                                            selected="selected"
+                                        {% endif %}
+                                    >{{ pvList.PROVINCE_NAME }}</option>
+                                {% endfor %}
+                            </select>
+						{#</label>#}
 					</div>
 				</td>
 			</tr>
