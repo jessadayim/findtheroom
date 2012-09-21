@@ -8,6 +8,20 @@ use Acme\WebBundle\Repository\Building_siteRepository;
 
 class MainController extends Controller {
 
+    public function bannerData(){
+        $conn = $this -> get('database_connection');
+        if (!$conn) { die("MySQL Connection error");
+        }
+        $sql = "SELECT codes FROM ads_control WHERE zone = 'C'";
+        $objSQL = $conn -> fetchAll($sql);
+        $banner[] = '';
+        for($i=0;$i<count($objSQL);$i++){
+            $banner[$i] = $objSQL[0]['codes'];
+        }
+        return $banner;
+
+    }
+
 	public function indexAction() {
         $em = $this -> getDoctrine() -> getEntityManager();
 
@@ -35,12 +49,12 @@ class MainController extends Controller {
 			//}
 		} else {$enable = false;
 		}
-
+        $banner = $this->bannerData();
 		$top_last_building = $this -> getTopLastBuilding();
 		$last_update = date("Y-m-d H:i:s", mktime(date("H"), date("i"), date("s"), date("m"), date("d"), date("Y")));
 		$last_update = $this -> convertThaiDate($last_update);
 
-		return $this -> render('FTRWebBundle:Main:index.html.twig', array('top_last_building' => $top_last_building, 'last_update' => $last_update, 'enable' => $enable));
+		return $this -> render('FTRWebBundle:Main:index.html.twig', array('top_last_building' => $top_last_building, 'last_update' => $last_update, 'enable' => $enable, 'zoneC'=>$banner));
 	}
 
 	function getTopLastBuilding() {
