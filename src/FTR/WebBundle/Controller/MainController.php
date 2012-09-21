@@ -18,8 +18,6 @@ class MainController extends Controller {
         for($i=0;$i<count($objSQL);$i++){
             $banner[$i] = $objSQL[0]['codes'];
         }
-        echo $banner[0];
-        exit();
         return $banner;
 
     }
