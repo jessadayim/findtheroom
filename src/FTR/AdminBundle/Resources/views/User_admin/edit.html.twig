@@ -1,7 +1,7 @@
 <script>
     $(document).ready(function () {
-        $(".btnCancel").click(function () {
-            //alert('working');
+        $("#btnCancel").click(function () {
+//            alert('working');
             toggle(".editPanel", 'hide');
             return false;
         });
@@ -66,6 +66,7 @@
         width: 50px;
     }
 </style>
+
 <form id="formEdit" action="{{ path('user_admin_update', { 'id': entity.id }) }}"
       method="post" {{ form_enctype(edit_form) }}>
     <fieldset>

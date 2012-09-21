@@ -24,7 +24,7 @@ class ContactController extends Controller
 				$message = \Swift_Message::newInstance()
 				        ->setSubject($title)
 				        ->setFrom($email)
-				        ->setTo('suriyaj@sourcecode.co.th')
+				        ->setTo('support@findtheroom.com')
 				        ->setBody("คุณ $name<br/>$desc",'text/html');
 				    	
 				    	$this->get('mailer')->send($message);
