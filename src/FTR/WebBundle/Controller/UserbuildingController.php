@@ -92,6 +92,11 @@ class UserbuildingController extends Controller
         ));
     }
 
+    public function listApartmentAction()
+    {
+
+    }
+
     public function addDataAction($id = null)
     {
         $fac_inroomlist = NULL;
