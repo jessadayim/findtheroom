@@ -20,7 +20,13 @@
                         var id = arrMsg[1];
                     }
                     var str = msg;
-                    if (str.search('error') > -1 && arrMsg.length == 2){
+                    if (str == "error_province"){
+                        alert('กรุณาเลือกจังหวัด');
+                        $("#ftr_adminbundle_building_sitetype_addr_province").focus();
+                    }else if (str == "error_zone"){
+                        alert('กรุณาเลือก Zone ของกรุงเทพ');
+                        $("#ftr_adminbundle_building_sitetype_zone_id").focus();
+                    }else if (str.search('error') > -1 && arrMsg.length == 2){
                         alert('ชื่อ "'+id+'" นี้มีข้อมูลอยู่แล้ว \nกรุณาตั้งชื่ออื่น');
                         $("#ftr_adminbundle_building_sitetype_building_name").focus();
                     }else if (str.search('finish') > -1 && arrMsg.length == 2) {
@@ -43,6 +49,19 @@
 			});
 			return false;
 		});
+
+        $("#bk").click(function(){
+            $("#cou").attr('checked', false);
+            $("#ftr_adminbundle_building_sitetype_zone_id").attr('disabled', false);
+            $("#ftr_adminbundle_building_sitetype_addr_province").attr('disabled', true);
+        });
+
+        $("#cou").click(function(){
+            $("#bk").attr('checked', false);
+            $("#ftr_adminbundle_building_sitetype_addr_province").attr('disabled', false);
+            $("#ftr_adminbundle_building_sitetype_zone_id").attr('disabled', true);
+        });
+
 	});
 
     //ตรวจสอบค่าที่เป็น Double
@@ -57,6 +76,8 @@
                 theEvent.preventDefault();
         }
     }
+
+    $("#ftr_adminbundle_building_sitetype_addr_province").attr('disabled', true);
 </script>
 <style type="text/css">
     #btnCreate {
@@ -91,12 +112,35 @@
 			{{ form_widget(form.building_type_id, { 'attr': {'class': 'widfat'} }) }} &nbsp;
 			{{ form_errors(form.building_type_id) }}
 			<br />
-			<div class="label" style="">
-				{{ form_label(form.zone_id) }}
-			</div>
-			{{ form_widget(form.zone_id, { 'attr': {'class': 'widfat'} }) }} &nbsp;
-			{{ form_errors(form.zone_id) }}
-			<br />
+            <br />
+            <div class="label" style="">
+                เลือกจังหวัด
+            </div>
+            <table>
+                <tr height="50" valign="middle">
+                    <td >
+                        <input id="bk" name="bc" type="radio" value="bkk" checked=""/>&nbsp;<label for="bk">กรุงเทพฯ</label>
+                    </td>
+                    <td width="100"></td>
+                    <td>
+                        <input id="cou" name="bc" type="radio" value="country"  />&nbsp;<label for="cou">ต่างจังหวัด</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                            {{ form_label(form.zone_id) }}
+                        {{ form_widget(form.zone_id, { 'attr': {'class': 'widthin'} }) }} &nbsp;
+                        {{ form_errors(form.zone_id) }}
+                    </td>
+                    <td></td>
+                    <td>
+                        {{ form_label(form.addr_province) }}
+                        {{ form_widget(form.addr_province, { 'attr': {'class': 'widthin'} }) }} &nbsp;
+                        {{ form_errors(form.addr_province) }}
+                    </td>
+                </tr>
+            </table>
+            <br />
 			<div class="label" style="">
 				{{ form_label(form.pay_type_id) }}
 			</div>

@@ -17,7 +17,7 @@ class Building_siteType extends AbstractType
             $buildingType[$value['id']] = $value['type_name'];
         }
         
-        $zone[''] = '';
+//        $zone[''] = '';
         foreach ($options['data']->zone as $key => $value){
             $zone[$value['id']] = $value['zonename'];
         }
@@ -26,10 +26,15 @@ class Building_siteType extends AbstractType
         foreach ($options['data']->paytype as $key => $value){
             $payType[$value['id']] = $value['typename'];
         }
-        
+
         $userOwner[''] = '';
         foreach ($options['data']->userowner as $key => $value){
             $userOwner[$value['id']] = $value['username'];
+        }
+
+//        $addressProvince[''] = '';
+        foreach ($options['data']->proveince as $key => $value){
+            $addressProvince[$value['PROVINCE_ID']] = $value['PROVINCE_NAME'];
         }
 
         // echo '<pre>';
@@ -49,20 +54,26 @@ class Building_siteType extends AbstractType
             ->add('longitude', 'text', array('label' => 'Longtitude:', 'max_length' => 25))
             ->add('recommend', 'checkbox', array('label' => 'Recommend:', 'required'  => false))
             ->add('building_type_id', 'choice', array(
-                    'choices'   => $buildingType,
-                    'label'     => 'Type:'
+                'choices'   => $buildingType,
+                'label'     => 'Type:'
             ))
             ->add('zone_id', 'choice', array(
-                    'choices'   => $zone,
-                    'label'     => 'Zone:'
+                'choices'   => $zone,
+                'label'     => 'Zone:',
+                'required'  => false
             ))
             ->add('pay_type_id', 'choice', array(
-                    'choices'   => $payType,
-                    'label'     => 'Pay Type:'
+                'choices'   => $payType,
+                'label'     => 'Pay Type:'
             ))
             ->add('user_owner_id', 'choice', array(
-                    'choices'   => $userOwner,
-                    'label'     => 'Owner:'
+                'choices'   => $userOwner,
+                'label'     => 'Owner:'
+            ))
+            ->add('addr_province', 'choice', array(
+                'choices'   => $addressProvince,
+                'label'     => 'จังหวัด:',
+                'required'  => false
             ))
             ->add('detail', 'textarea', array('label' => 'Detail:', 'max_length' => 500))
             ->add('contact_name', 'text', array('label' => 'Contact Name:', 'max_length' => 100))
