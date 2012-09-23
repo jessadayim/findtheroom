@@ -306,55 +306,44 @@ $(function(){
 </div>
 
 <div id="gallery">
+    <div class="clear"></div>
 	<img src="{{asset('images/gallery.png')}}" class="head" />
         <hr class="line" style="top: 60px;" />
         <div id="container5">
 			<div id="slides5">
 				<div class="slides_container" style="width:950px;">
                     {% set introw1 = 0 %}
-                    {% for i in 0..3%}
-                    {% if introw1%3 == 0%}
+                    {% for image in imageName%}
+                    {% if introw1%6 == 0%}
                     <div class="slide" style="width:950px;">
                         {%endif%}
                         {% set row1 = introw1+1 %}
                         {% if row1%3 == 0%}
-                            <div class="ap2">
+                            <div class="ap2" style="height: 160px;">
                             {% else %}
-                            <div class="ap">
+                            <div class="ap" style="height: 160px;">
                                 {%endif%}
-                                <a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><div class="thumbframe4gallery"><img src="{{asset('images/Apartment/ap3.png')}}" class="thumb4gallery"/></div></a><br /><br />
-                                <a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><div class="thumbframe4gallery"><img src="{{asset('images/Apartment/ap3.png')}}" class="thumb4gallery"/></div></a>
+                                <a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}" title="{{image.description}}"><div class="thumbframe4gallery">
+                                    <img src="{{ asset('images/building/')}}{{ image.building_site_id }}/{{image.photo_name}}" class="thumb4gallery"/>
+                                    {#<img src="{{asset('images/Apartment/ap3.png')}}" class="thumb4gallery"/>#}
+                                </div></a>
                             </div>
                             {% set introw1 = introw1+1 %}
-                            {% if introw1%3 == 0%}
+                            {% if introw1%6 == 0%}
                         </div>
                     {%endif%}
                     {% endfor %}
-
-                    {#{% set introw2 = 0 %}#}
-                    {#{% for i in 0..5%}#}
-                    {#{% if introw2%3 == 0%}#}
-                    {#<div class="slide" style="width:950px;">#}
-                        {#{%endif%}#}
-                        {#{% set row2 = introw2+1 %}#}
-                        {#{% if row2%3 == 0%}#}
-                        {#<div class="ap4">#}
-                            {#{% else %}#}
-                            {#<div class="ap3">#}
-                                {#{%endif%}#}
-                                {#<a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><div class="thumbframe4gallery"><img src="{{asset('images/Apartment/ap3.png')}}" class="thumb4gallery"/></div></a><br /><br />#}
-                                {#<a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}"><div class="thumbframe4gallery"><img src="{{asset('images/Apartment/ap3.png')}}" class="thumb4gallery"/></div></a>#}
-                            {#</div>#}
-                            {#{% set introw2 = introw2+1 %}#}
-                            {#{% if introw2%3 == 0%}#}
-                        {#</div>#}
-                        {#{%endif%}#}
-                        {#{% endfor %}#}
 				</div>
+                    {%if countGallery%9 == 0  %}
+                    <a href="#" class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>
+                    <a href="#" class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>
+                    {%endif%}
 			</div>
+                {%if countGallery%9 != 0  %}
                 <a href="#" class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>
                 <a href="#" class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>
-		</div>  
+                {%endif%}
+		</div>
     </div>
 </div>
 
