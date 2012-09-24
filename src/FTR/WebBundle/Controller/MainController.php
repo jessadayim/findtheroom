@@ -34,6 +34,10 @@ class MainController extends Controller {
                 }
 
             }
+            $zoneZull = implode('', $zone2);
+            if(empty($zoneZull)){
+                $image = '';
+            }else{
             $sqlZone = "SELECT zone, date_start, date_end FROM ads_control WHERE publish = 1 GROUP BY zone";
             $objZone = $conn -> fetchAll($sqlZone);
             for($i=0;$i<count($objZone);$i++){
@@ -41,7 +45,7 @@ class MainController extends Controller {
                     $max = count($zone[$objZone[$i]['zone']]) - 1;
                     $image[$i] = $zone[$objZone[$i]['zone']][rand(0,$max)];
                 }
-            }
+            }}
         }else{
             $image = '';
         }
