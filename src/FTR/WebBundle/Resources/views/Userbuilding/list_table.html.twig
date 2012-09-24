@@ -1,36 +1,97 @@
-<div class="detail" style="height: 100%; margin-bottom: 15px;">
-    <img src="{{asset('images/owner.png')}}" style="display:block; position:relative; float:none;" />
-    <hr class="line" style="top: 60px;" />
-    <div style="width:1000px; display:block; position:relative; height:100%; margin-top: 0px;">
-        <table style="margin-top: 0px; padding-bottom:15px;">
-            <tr height="80" valign="middle">
-                <td align="left" width="250" style="font-size:24px;">ชื่อตึก</td>
-                <td align="center" width="250" style="font-size:24px;">สถานะการแสดง</td>
-                <td align="center" width="250" style="font-size:24px;">ดูหน้าตัวอย่าง</td>
-                <td align="center" width="250" style="font-size:24px;">แก้ไขรายละเอียด</td>
+<script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script>
+<script type='text/javascript' src='{{asset("js/paging/data_table/table_paging.js")}}'></script>
+<script type="text/javascript">
+
+    // ค่าปัจจุบันในการ sort
+    var orderByOld = "{{ orderBy }}";
+    var orderByTypeOld = "{{ orderByType }}";
+
+    //ประกาศค่าเริ่มต้น
+    var urlPost = "{{ path('listBuilding') }}";
+</script>
+<img src="{{asset('images/owner.png')}}" style="display:block; position:relative; float:none;" />
+<hr class="line" style="top: 60px;" />
+<div style="width:1000px; display:block; position:relative; height:100%; margin-top: 0px;">
+    <table style="margin-top: 30px; padding-bottom:15px;">
+        <thead height="80" valign="middle">
+        <th align="left" width="250" style="font-size:24px;"><a class="btnOrderBy" href="#" id="sort_building_name">ชื่อตึก</a></td>
+        <th align="center" width="250" style="font-size:24px;">สถานะการแสดง</td>
+        <th align="center" width="250" style="font-size:24px;">ดูหน้าตัวอย่าง</td>
+        <th align="center" width="250" style="font-size:24px;">แก้ไขรายละเอียด</td>
+        </thead>
+        <hr class="line" style="top: 30px;" />
+        <tbody>
+        {% for data in build_data %}
+            <tr height="50" valign="middle">
+                <td align="left" width="250" style="font-size:24px;">{{data.building_name}}</td>
+                <td align="center" width="250" style="font-size:24px;">{{data.publish}}</td>
+                <td align="center" width="250" style="font-size:24px;"><a href="{{path('FTRWebBundle_detail',{'buildId': data.id })}}" target="_blank">ดู</a></td>
+                <td align="center" width="250" style="font-size:24px;"><a href="{{path('addData',{'id': data.id })}}">แก้ไข</a></td>
             </tr>
-            <hr class="line" style="top: 60px;" />
-            {% for data in build_data %}
-                <tr height="50" valign="middle">
-                    <td align="left" width="250" style="font-size:24px;">{{data.building_name}}</td>
-                    <td align="center" width="250" style="font-size:24px;">{{data.publish}}</td>
-                    <td align="center" width="250" style="font-size:24px;"><a href="{{path('FTRWebBundle_detail',{'buildId': data.id })}}" target="_blank">ดู</a></td>
-                    <td align="center" width="250" style="font-size:24px;"><a href="{{path('addData',{'id': data.id })}}">แก้ไข</a></td>
-                </tr>
-            {% endfor %}
-            {% if enabled == '1'%}
-                <tr height="70" valign="middle">
-                    <td align="left"><a href="{{path('addData')}}"><img src="{{asset('images/add-bt.png')}}" style="padding:0" /></a></td>
-                    <td align="left" style="font-size:24px;" colspan="3">&nbsp;</td>
-                </tr>
-                <tr>
-                    <td>แสดงผล {{ countList }} ตึก : หน้า</td>
-                </tr>
-            {% else %}
-                <tr height align="70" valign="middle">
-                    <td align="center" colspan="4">ท่านยังไม่ได้ยืนยันผู้ใช้ กรุณาเช็ค Email ที่ท่านใช้สมัคร   <a href="{{path('FTRWebBundle_regisSendEmail')}}">ส่งอีกครั้ง</a></td>
-                </tr>
-            {% endif %}
-        </table>
-    </div>
+        {% endfor %}
+        {% if enabled == '1'%}
+            <tr height="70" valign="middle">
+                <td align="left"><a href="{{path('addData')}}"><img src="{{asset('images/add-bt.png')}}" style="padding:0" /></a></td>
+                <td align="left" style="font-size:24px;" colspan="3">&nbsp;</td>
+            </tr>
+            <tr>
+                <td>
+                    แสดงผล {{ countList }} ตึก : หน้า
+                    {% for i in 1..paginator.numpages %}
+                        {% if paginator.range.0 > 2 and i == paginator.range.0 %}
+                            ...
+                        {% endif %}
+
+                        {%  if(i==1 or i==paginator.numpages or i in paginator.range) %}
+                            {% if i==paginator.currentpage %}
+                                {% if i == noPage %}
+                                    <input class="disableBtn" type="button" value="{{i}}" id="Submit" name="submitPage" disabled="true"/>
+                                {% else %}
+                                    <input class="inPage" type="button" value="{{i}}" id="Submit" name="submitPage"/>
+                                {% endif %}
+                            {% else %}
+                                {% if i == noPage %}
+                                    <input class="disableBtn" type="button" value="{{i}}" id="Submit" name="submitPage" disabled="true"/>
+                                {% else %}
+                                    <input class="inPage" type="button" value="{{i}}" id="Submit" name="submitPage"/>
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+
+                        {% if paginator.range[paginator.midrange -1] < paginator.numpages -1 and i == paginator.range[paginator.midrange-1] %}
+                            ...
+                        {% endif %}
+                    {% endfor %}
+                    <div align="right" style="float:right;" ><strong>Search:</strong>
+                        <input id="tbxSearch" style="height: 25px;margin-bottom: 10px;" value="{{ textSearch }}" />&nbsp;&nbsp;
+                        <select name="record" style="width:150px;" class="record">
+                            <option value="10">10 Record </option>
+                            {% if limit == '50' %}
+                                <option selected="yes" value="50">50 Record</option>
+                                <option value="100">100 Record</option>
+                                <option value="500">500 Record</option>
+                                {% elseif limit == '100' %}
+                                <option value="50">50 Record</option>
+                                <option selected="yes" value="100">100 Record</option>
+                                <option value="500">500 Record</option>
+                                {% elseif limit == '500' %}
+                                <option value="50">50 Record</option>
+                                <option value="100">100 Record</option>
+                                <option selected="yes" value="500">500 Record</option>
+                            {% else %}
+                                <option value="50">50 Record</option>
+                                <option value="100">100 Record</option>
+                                <option value="500">500 Record</option>
+                            {% endif %}
+                        </select>
+                    </div>
+                </td>
+            </tr>
+        {% else %}
+            <tr height align="70" valign="middle">
+                <td align="center" colspan="4">ท่านยังไม่ได้ยืนยันผู้ใช้ กรุณาเช็ค Email ที่ท่านใช้สมัคร   <a href="{{path('FTRWebBundle_regisSendEmail')}}">ส่งอีกครั้ง</a></td>
+            </tr>
+        {% endif %}
+        </tbody>
+    </table>
 </div>

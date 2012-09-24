@@ -1,162 +1,214 @@
 {% extends 'FTRWebBundle:Layout:Layout.html.twig' %}
 {% block body %}
 <script>
-$(document).ready(function() {
-	if('{{enable}}'==true){
-		$.fancybox({
-			'content'			: "{{path('FTRWebBundle_regis_success')}}",
-			'width'				: 700,
-			'height'			: 400,
-			'autoScale'			: false,
-			'transitionIn'		: 'elastic',
-			'transitionOut'		: 'elastic',
-			'type'				: 'iframe'
-		});
-	}
-});
+    $(document).ready(function () {
+        if ('{{enable}}' == true) {
+            $.fancybox({
+                'content':"{{path('FTRWebBundle_regis_success')}}",
+                'width':700,
+                'height':400,
+                'autoScale':false,
+                'transitionIn':'elastic',
+                'transitionOut':'elastic',
+                'type':'iframe'
+            });
+        }
+    });
 </script>
 <div id="container">
-	<div id="slides">
-		<div class="slides_container">
-			
-			<div class="slide">
-				<a href='#' title="" target="_new"><img src="{{asset('images/slider/slide-1.jpg')}}" width="1000" height="300"></a>
-				<!--<div class="caption">
-					<p>
-						1 ห้องพักสุดหรู พร้อมชุดห้องครัวในตัว ราคาพิเศษ <span class="sale">7,000</span> บาท -> 5,000 บาท
-					</p>
-				</div>-->
-			</div>
-			<div class="slide">
-				<a href='#' title="" target="_new"><img src="{{asset('images/slider/slide-2.jpg')}}" width="1000" height="300"></a>
-				<!--<div class="caption">
-					<p>
-						2 ห้องพักสุดหรู พร้อมชุดห้องครัวในตัว ราคาพิเศษ <span class="sale">7,000</span> บาท -> 5,000 บาท
-					</p>
-				</div>-->
-			</div>
-			<div class="slide">
-				<a href='#' title="" target="_new"><img src="{{asset('images/slider/slide-3.jpg')}}" width="1000" height="300"></a>
-				<!--<div class="caption">
-					<p>
-						3 ห้องพักสุดหรู พร้อมชุดห้องครัวในตัว ราคาพิเศษ <span class="sale">7,000</span> บาท -> 5,000 บาท
-					</p>
-				</div>-->
-			</div>
+    <div id="slides">
+        <div class="slides_container">
 
-			
-		</div>
-		<a href='#' class="prev"><img src="{{asset('images/slider/arrow-prev.png')}}" width="29" height="57" alt="Arrow Prev"></a>
-		<a href='#' class="next"><img src="{{asset('images/slider/arrow-next.png')}}" width="29" height="57" alt="Arrow Next"></a>
-	</div>
+            <div class="slide">
+                <a href='#' title="" target="_new"><img src="{{asset('images/slider/slide-1.jpg')}}" width="1000"
+                                                        height="300"></a>
+                <!--<div class="caption">
+                        <p>
+                            1 ห้องพักสุดหรู พร้อมชุดห้องครัวในตัว ราคาพิเศษ <span class="sale">7,000</span> บาท -> 5,000 บาท
+                        </p>
+                    </div>-->
+            </div>
+            <div class="slide">
+                <a href='#' title="" target="_new"><img src="{{asset('images/slider/slide-2.jpg')}}" width="1000"
+                                                        height="300"></a>
+                <!--<div class="caption">
+                        <p>
+                            2 ห้องพักสุดหรู พร้อมชุดห้องครัวในตัว ราคาพิเศษ <span class="sale">7,000</span> บาท -> 5,000 บาท
+                        </p>
+                    </div>-->
+            </div>
+            <div class="slide">
+                <a href='#' title="" target="_new"><img src="{{asset('images/slider/slide-3.jpg')}}" width="1000"
+                                                        height="300"></a>
+                <!--<div class="caption">
+                        <p>
+                            3 ห้องพักสุดหรู พร้อมชุดห้องครัวในตัว ราคาพิเศษ <span class="sale">7,000</span> บาท -> 5,000 บาท
+                        </p>
+                    </div>-->
+            </div>
+
+
+        </div>
+        <a href='#' class="prev"><img src="{{asset('images/slider/arrow-prev.png')}}" width="29" height="57"
+                                      alt="Arrow Prev"></a>
+        <a href='#' class="next"><img src="{{asset('images/slider/arrow-next.png')}}" width="29" height="57"
+                                      alt="Arrow Next"></a>
+    </div>
 </div>
 
 
 {% render "FTRWebBundle:Search:shortsearch" %}
 
 {% render "FTRWebBundle:Main:recom" %}
-
 <div class="clear"></div>
-<div class="ad1">
-				<script type="text/javascript">
-				var images = [], 
-				index = 0;
-				images[0] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad1.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";
-				images[1] = "<a href = 'http://www.computerhope.com/history/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad2.gif')}}' class='thumb' alt='Computer History'></div></a>";
-				images[2] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad3.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";
-				images[3] = "<a href = 'http://www.computerhope.com/newslet.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad4.gif')}}' class='thumb' alt='Computer Hope Newsletter'></div></a>";
-				index = Math.floor(Math.random() * images.length);
-				document.write(images[index]);
-				</script>
-				
-				<script type="text/javascript">
-				var images = [], 
-				index = 0;
-				images[0] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad1.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";
-				images[1] = "<a href = 'http://www.computerhope.com/history/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad2.gif')}}' class='thumb' alt='Computer History'></div></a>";
-				images[2] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad3.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";
-				images[3] = "<a href = 'http://www.computerhope.com/newslet.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad4.gif')}}' class='thumb' alt='Computer Hope Newsletter'></div></a>";
-				index = Math.floor(Math.random() * images.length);
-				document.write(images[index]);
-				</script>
-				
-				<script type="text/javascript">
-				var images = [], 
-				index = 0;
-				images[0] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad1.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";
-				images[1] = "<a href = 'http://www.computerhope.com/history/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad2.gif')}}' class='thumb' alt='Computer History'></div></a>";
-				images[2] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad3.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";
-				images[3] = "<a href = 'http://www.computerhope.com/newslet.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad4.gif')}}' class='thumb' alt='Computer Hope Newsletter'></div></a>";
-				index = Math.floor(Math.random() * images.length);
-				document.write(images[index]);
-				</script>
-				
-				<script type="text/javascript">
-				var images = [], 
-				index = 0;
-				images[0] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe omega'><img src='{{asset('images/ad/ad1.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";
-				images[1] = "<a href = 'http://www.computerhope.com/history/index.htm'><div class='thumbframe omega'><img src='{{asset('images/ad/ad2.gif')}}' class='thumb' alt='Computer History'></div></a>";
-				images[2] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe omega'><img src='{{asset('images/ad/ad3.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";
-				images[3] = "<a href = 'http://www.computerhope.com/newslet.htm'><div class='thumbframe omega'><img src='{{asset('images/ad/ad4.gif')}}' class='thumb' alt='Computer Hope Newsletter'></div></a>";
-				index = Math.floor(Math.random() * images.length);
-				document.write(images[index]);
-				</script>
-				
-				<!--<a href='#'><div class="thumbframe"><img src="{{asset('images/ad/ad1.gif')}}" class="thumb" /></div></a>
-				<a href='#'><div class="thumbframe"><img src="{{asset('images/ad/ad2.gif')}}" class="thumb" /></div></a>
-				<a href='#'><div class="thumbframe"><img src="{{asset('images/ad/ad3.gif')}}" class="thumb" /></div></a>
-				<a href='#'><div class="thumbframe omega"><img src="{{asset('images/ad/ad4.gif')}}" class="thumb" /></div></a>-->
-			</div>
-			<div class="clear"></div>
-			<div class="ad1">
-				<script type="text/javascript">
-				var images = [], 
-				index = 0;
-				images[0] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad1.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";
-				images[1] = "<a href = 'http://www.computerhope.com/history/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad2.gif')}}' class='thumb' alt='Computer History'></div></a>";
-				images[2] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad3.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";
-				images[3] = "<a href = 'http://www.computerhope.com/newslet.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad4.gif')}}' class='thumb' alt='Computer Hope Newsletter'></div></a>";
-				index = Math.floor(Math.random() * images.length);
-				document.write(images[index]);
-				</script>
-				
-				<script type="text/javascript">
-				var images = [], 
-				index = 0;
-				images[0] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad1.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";
-				images[1] = "<a href = 'http://www.computerhope.com/history/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad2.gif')}}' class='thumb' alt='Computer History'></div></a>";
-				images[2] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad3.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";
-				images[3] = "<a href = 'http://www.computerhope.com/newslet.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad4.gif')}}' class='thumb' alt='Computer Hope Newsletter'></div></a>";
-				index = Math.floor(Math.random() * images.length);
-				document.write(images[index]);
-				</script>
-				
-				<script type="text/javascript">
-				var images = [], 
-				index = 0;
-				images[0] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad1.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";
-				images[1] = "<a href = 'http://www.computerhope.com/history/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad2.gif')}}' class='thumb' alt='Computer History'></div></a>";
-				images[2] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad3.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";
-				images[3] = "<a href = 'http://www.computerhope.com/newslet.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad4.gif')}}' class='thumb' alt='Computer Hope Newsletter'></div></a>";
-				index = Math.floor(Math.random() * images.length);
-				document.write(images[index]);
-				</script>
-				
-				<script type="text/javascript">
-				var images = [], 
-				index = 0;
-				images[0] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe omega'><img src='{{asset('images/ad/ad1.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";
-				images[1] = "<a href = 'http://www.computerhope.com/history/index.htm'><div class='thumbframe omega'><img src='{{asset('images/ad/ad2.gif')}}' class='thumb' alt='Computer History'></div></a>";
-				images[2] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe omega'><img src='{{asset('images/ad/ad3.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";
-				images[3] = "<a href = 'http://www.computerhope.com/newslet.htm'><div class='thumbframe omega'><img src='{{asset('images/ad/ad4.gif')}}' class='thumb' alt='Computer Hope Newsletter'></div></a>";
-				index = Math.floor(Math.random() * images.length);
-				document.write(images[index]);
-				</script>
-				<!--<a href='#'><div class="thumbframe"><img src="{{asset('images/ad/ad1.gif')}}" class="thumb" /></div></a>
-				<a href='#'><div class="thumbframe"><img src="{{asset('images/ad/ad2.gif')}}" class="thumb" /></div></a>
-				<a href='#'><div class="thumbframe"><img src="{{asset('images/ad/ad3.gif')}}" class="thumb" /></div></a>
-				<a href='#'><div class="thumbframe omega"><img src="{{asset('images/ad/ad4.gif')}}" class="thumb" /></div></a>-->
-			</div>
+    {%set i = 0%}
+    {% for test in zoneC %}
+        {%if i%4 == 0%}
+            <div class="ad1">
+        {%endif%}
+            {%set j = i+1%}
+            {%if j%4 == 0%}
+                <div class='thumbframe omega'>
+            {%else%}
+                <div class='thumbframe'>
+            {%endif%}
+            {{test|raw}}</div>
+        {%set i = i+1%}
+        {%if i%4 == 0%}
+            </div>
+        {%endif%}
+    {%endfor%}
+
+
+    {#{% set introw1 = 0 %}#}
+    {#{% for recom1 in roomBts%}#}
+    {#{% if introw1%3 == 0%}#}
+    {#<div class="slide">#}
+        {#{%endif%}#}
+        {#{% set row1 = introw1+1 %}#}
+        {#{% if row1%3 == 0%}#}
+        {#<div class="ap2">#}
+            {#{% else %}#}
+            {#<div class="ap">#}
+                {#{%endif%}#}
+                {#<div class="recom"></div>#}
+                {#<img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />#}
+                {#<br />#}
+                {#<br />#}
+										{#<span style="color:#FFF;"> <b style="font-size:24px">{{recom1.building_name}}</b>#}
+											{#<br />#}
+											{#ประเภท : {{recom1.type_name}}#}
+											{#<br />#}
+											{#ใกล้ BTS สถานี : {{recom1.name}}#}
+											{#<br />#}
+											{#<br />#}
+											{#ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span>#}
+            {#</div>#}
+            {#{% set introw1 = introw1+1 %}#}
+            {#{% if introw1%3 == 0%}#}
+        {#</div>#}
+        {#{%endif%}#}
+        {#{% endfor %}#}
+    {#<script type="text/javascript">#}
+
+				{#var images = [],#}
+				{#index = 0;#}
+				{#images[0] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad1.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";#}
+				{#images[1] = "<a href = 'http://www.computerhope.com/history/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad2.gif')}}' class='thumb' alt='Computer History'></div></a>";#}
+				{#images[2] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad3.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";#}
+				{#images[3] = "<a href = 'http://www.computerhope.com/newslet.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad4.gif')}}' class='thumb' alt='Computer Hope Newsletter'></div></a>";#}
+				{#index = Math.floor(Math.random() * images.length);#}
+				{#document.write(images[0]);#}
+				{#</script>#}
+
+				{#<script type="text/javascript">#}
+				{#var images = [],#}
+				{#index = 0;#}
+				{#images[0] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad1.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";#}
+				{#images[1] = "<a href = 'http://www.computerhope.com/history/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad2.gif')}}' class='thumb' alt='Computer History'></div></a>";#}
+				{#images[2] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad3.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";#}
+				{#images[3] = "<a href = 'http://www.computerhope.com/newslet.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad4.gif')}}' class='thumb' alt='Computer Hope Newsletter'></div></a>";#}
+				{#index = Math.floor(Math.random() * images.length);#}
+				{#document.write(images[index]);#}
+				{#</script>#}
+				{##}
+				{#<script type="text/javascript">#}
+				{#var images = [], #}
+				{#index = 0;#}
+				{#images[0] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad1.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";#}
+				{#images[1] = "<a href = 'http://www.computerhope.com/history/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad2.gif')}}' class='thumb' alt='Computer History'></div></a>";#}
+				{#images[2] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad3.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";#}
+				{#images[3] = "<a href = 'http://www.computerhope.com/newslet.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad4.gif')}}' class='thumb' alt='Computer Hope Newsletter'></div></a>";#}
+				{#index = Math.floor(Math.random() * images.length);#}
+				{#document.write(images[index]);#}
+				{#</script>#}
+				{##}
+				{#<script type="text/javascript">#}
+				{#var images = [], #}
+				{#index = 0;#}
+				{#images[0] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe omega'><img src='{{asset('images/ad/ad1.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";#}
+				{#images[1] = "<a href = 'http://www.computerhope.com/history/index.htm'><div class='thumbframe omega'><img src='{{asset('images/ad/ad2.gif')}}' class='thumb' alt='Computer History'></div></a>";#}
+				{#images[2] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe omega'><img src='{{asset('images/ad/ad3.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";#}
+				{#images[3] = "<a href = 'http://www.computerhope.com/newslet.htm'><div class='thumbframe omega'><img src='{{asset('images/ad/ad4.gif')}}' class='thumb' alt='Computer Hope Newsletter'></div></a>";#}
+				{#index = Math.floor(Math.random() * images.length);#}
+				{#document.write(images[index]);#}
+				{#</script>#}
+				{##}
+				{#<!--<a href='#'><div class="thumbframe"><img src="{{asset('images/ad/ad1.gif')}}" class="thumb" /></div></a>#}
+				{#<a href='#'><div class="thumbframe"><img src="{{asset('images/ad/ad2.gif')}}" class="thumb" /></div></a>#}
+				{#<a href='#'><div class="thumbframe"><img src="{{asset('images/ad/ad3.gif')}}" class="thumb" /></div></a>#}
+				{#<a href='#'><div class="thumbframe omega"><img src="{{asset('images/ad/ad4.gif')}}" class="thumb" /></div></a>-->#}
+
+{#<div class="clear"></div>#}
+{#<div class="ad1">#}
+    {#<script type="text/javascript">#}
+        {#var images = [],#}
+                {#index = 0;#}
+        {#images[0] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad1.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";#}
+        {#images[1] = "<a href = 'http://www.computerhope.com/history/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad2.gif')}}' class='thumb' alt='Computer History'></div></a>";#}
+        {#images[2] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad3.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";#}
+        {#images[3] = "<a href = 'http://www.computerhope.com/newslet.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad4.gif')}}' class='thumb' alt='Computer Hope Newsletter'></div></a>";#}
+        {#index = Math.floor(Math.random() * images.length);#}
+        {#document.write(images[index]);#}
+    {#</script>#}
+
+    {#<script type="text/javascript">#}
+        {#var images = [],#}
+                {#index = 0;#}
+        {#images[0] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad1.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";#}
+        {#images[1] = "<a href = 'http://www.computerhope.com/history/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad2.gif')}}' class='thumb' alt='Computer History'></div></a>";#}
+        {#images[2] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad3.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";#}
+        {#images[3] = "<a href = 'http://www.computerhope.com/newslet.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad4.gif')}}' class='thumb' alt='Computer Hope Newsletter'></div></a>";#}
+        {#index = Math.floor(Math.random() * images.length);#}
+        {#document.write(images[index]);#}
+    {#</script>#}
+
+    {#<script type="text/javascript">#}
+        {#var images = [],#}
+                {#index = 0;#}
+        {#images[0] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad1.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";#}
+        {#images[1] = "<a href = 'http://www.computerhope.com/history/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad2.gif')}}' class='thumb' alt='Computer History'></div></a>";#}
+        {#images[2] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad3.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";#}
+        {#images[3] = "<a href = 'http://www.computerhope.com/newslet.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad4.gif')}}' class='thumb' alt='Computer Hope Newsletter'></div></a>";#}
+        {#index = Math.floor(Math.random() * images.length);#}
+        {#document.write(images[index]);#}
+    {#</script>#}
+
+    {#<script type="text/javascript">#}
+        {#var images = [],#}
+                {#index = 0;#}
+        {#images[0] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe omega'><img src='{{asset('images/ad/ad1.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";#}
+        {#images[1] = "<a href = 'http://www.computerhope.com/history/index.htm'><div class='thumbframe omega'><img src='{{asset('images/ad/ad2.gif')}}' class='thumb' alt='Computer History'></div></a>";#}
+        {#images[2] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe omega'><img src='{{asset('images/ad/ad3.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";#}
+        {#images[3] = "<a href = 'http://www.computerhope.com/newslet.htm'><div class='thumbframe omega'><img src='{{asset('images/ad/ad4.gif')}}' class='thumb' alt='Computer Hope Newsletter'></div></a>";#}
+        {#index = Math.floor(Math.random() * images.length);#}
+        {#document.write(images[index]);#}
+    {#</script>#}
+    {#<!--<a href='#'><div class="thumbframe"><img src="{{asset('images/ad/ad1.gif')}}" class="thumb" /></div></a>#}
+				{#<a href='#'><div class="thumbframe"><img src="{{asset('images/ad/ad2.gif')}}" class="thumb" /></div></a>#}
+				{#<a href='#'><div class="thumbframe"><img src="{{asset('images/ad/ad3.gif')}}" class="thumb" /></div></a>#}
+				{#<a href='#'><div class="thumbframe omega"><img src="{{asset('images/ad/ad4.gif')}}" class="thumb" /></div></a>-->#}
+{#</div>#}
 <div class="clear"></div>
 
 <!--
@@ -171,36 +223,36 @@ $(document).ready(function() {
 	<br /><br />กระดานพูดคุย
 </div>-->
 <div id="update">
-	<img src="{{asset('images/update.png')}}" /> <span class="time">( {{ last_update }} )</span>
-	<hr class="line" style="top: 60px;" />
-	<table>
-		<thead>
-			<tr>
-				<th width="250">ชื่อหอพัก</th>
-				<th width="150">ประเภท</th>
-				<th width="150">ชนิด</th>
-				<th width="200">โซน/อำเภอ</th>
-				<th width="150">ราคา</th>
-			</tr>
-		</thead>
-		<tbody>
-		
-		{% for tlist in top_last_building %}
-			<tr>
-				<td class="first">{{ tlist.building_name }}</td>
-				<td>{{ tlist.type_name }}</td>
-				<td>{{ tlist.typename }}</td>
-                {% if tlist.addr_province !='กรุงเทพมหานคร' %}
-                <td>{{ tlist.addr_prefecture }}</td>
-                {% else %}
-				<td>{{ tlist.zonename }}</td>
-                {% endif %}
-				<td>{{ tlist.start_price }} - {{ tlist.end_price }} บาท</td>
-			</tr>
-		{% endfor %}
-		
-		</tbody>
-	</table>
+    <img src="{{asset('images/update.png')}}"/> <span class="time">( {{ last_update }} )</span>
+    <hr class="line" style="top: 60px;"/>
+    <table>
+        <thead>
+        <tr>
+            <th width="250">ชื่อหอพัก</th>
+            <th width="150">ประเภท</th>
+            <th width="150">ชนิด</th>
+            <th width="200">โซน/อำเภอ</th>
+            <th width="150">ราคา</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for tlist in top_last_building %}
+        <tr>
+            <td class="first">{{ tlist.building_name }}</td>
+            <td>{{ tlist.type_name }}</td>
+            <td>{{ tlist.typename }}</td>
+            {% if tlist.addr_province !='กรุงเทพมหานคร' %}
+            <td>{{ tlist.addr_prefecture }}</td>
+            {% else %}
+            <td>{{ tlist.zonename }}</td>
+            {% endif %}
+            <td>{{ tlist.start_price }} - {{ tlist.end_price }} บาท</td>
+        </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
 </div>
 <!--
 <div class="ad1">

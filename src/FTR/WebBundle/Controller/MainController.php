@@ -3,10 +3,53 @@
 namespace FTR\WebBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Acme\WebBundle\Entity\Building_site;
-use Acme\WebBundle\Repository\Building_siteRepository;
+use FTR\WebBundle\Entity\Building_site;
+use FTR\WebBundle\Repository\Building_siteRepository;
 
 class MainController extends Controller {
+
+    public function bannerData(){
+        $conn = $this -> get('database_connection');
+        if (!$conn) { die("MySQL Connection error");
+        }
+        $sql = "SELECT codes, zone, date_start, date_end FROM ads_control WHERE publish = 1";
+        $objSQL = $conn -> fetchAll($sql);
+        if(count($objSQL) > 0){
+            $zone[][] = '';
+            $j = 0;
+            $uni = '';
+            $zone2[] = '';
+            for($i=0;$i<count($objSQL);$i++){
+                $time = date("Y-m-d H:i:s", time());
+                //echo strtotime($objSQL[$i]['date_end'])." ";
+                if(strtotime($time) >= strtotime($objSQL[$i]['date_start']) && strtotime($time) <= strtotime($objSQL[$i]['date_end'])){
+                    $zone2[$i] = $objSQL[$i]['zone'];
+                    if($uni != $objSQL[$i]['zone']){
+                        $j = 0;
+                    }else{
+                        $j = $j + 1;
+                    }
+                    $zone[$objSQL[$i]['zone']][$j] = $objSQL[$i]['codes'];
+                    $uni = $objSQL[$i]['zone'];
+                }
+
+            }
+            $sqlZone = "SELECT zone, date_start, date_end FROM ads_control WHERE publish = 1 GROUP BY zone";
+            $objZone = $conn -> fetchAll($sqlZone);
+            for($i=0;$i<count($objZone);$i++){
+                if(strtotime($time) >= strtotime($objZone[$i]['date_start']) && strtotime($time) <= strtotime($objZone[$i]['date_end'])){
+                    $max = count($zone[$objZone[$i]['zone']]) - 1;
+                    $image[$i] = $zone[$objZone[$i]['zone']][rand(0,$max)];
+                }
+            }
+        }else{
+            $image = '';
+        }
+
+
+        return $image;
+
+    }
 
 	public function indexAction() {
         $em = $this -> getDoctrine() -> getEntityManager();
@@ -35,12 +78,12 @@ class MainController extends Controller {
 			//}
 		} else {$enable = false;
 		}
-
+        $banner = $this->bannerData();
 		$top_last_building = $this -> getTopLastBuilding();
 		$last_update = date("Y-m-d H:i:s", mktime(date("H"), date("i"), date("s"), date("m"), date("d"), date("Y")));
 		$last_update = $this -> convertThaiDate($last_update);
 
-		return $this -> render('FTRWebBundle:Main:index.html.twig', array('top_last_building' => $top_last_building, 'last_update' => $last_update, 'enable' => $enable));
+		return $this -> render('FTRWebBundle:Main:index.html.twig', array('top_last_building' => $top_last_building, 'last_update' => $last_update, 'enable' => $enable, 'zoneC'=>$banner));
 	}
 
 	function getTopLastBuilding() {
