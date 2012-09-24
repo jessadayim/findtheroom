@@ -1,16 +1,84 @@
-<h1>Ads_Control creation</h1>
+<script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script>
+<script  src='{{asset("js/paging/data_table/event.js")}}'></script>
 
-<form action="{{ path('ads_control_create') }}" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
-    <p>
-        <button type="submit">Create</button>
-    </p>
-</form>
+<script>
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('ads_control') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+    //ประกาศค่าเริ่มต้น
+    var urlPost = "{{ path('ads_control') }}";
+    var urlCreate = "{{ path('ads_control_create') }}";
+    var idCheck = "#ftr_adminbundle_facilitylisttype_facility_type";
+    var namePage = 'Facility';
+
+</script>
+
+<style type="text/css">
+    #btnCreate {
+        background: url("{{ asset('images/save.png')}}") no-repeat;
+        display: block;
+        float: none;
+        height: 50px;
+        position: absolute;
+        margin-left: 70px;
+        margin-top: -55px;
+    }
+
+    #btnInputCreate {
+        background: url("{{ asset('images/save.png')}}") no-repeat;
+        opacity: 0;
+        -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+        filter: alpha(opacity=0);
+        cursor: pointer;
+        height: 50px;
+        width: 50px;
+    }
+    #btnCancelCreate{
+        cursor:pointer;margin-right: 70px
+    }
+</style>
+<fieldset id="createField">
+    <form id="formCreate" action="{{ path('ads_control_create') }}" method="post" {{ form_enctype(form) }}>
+        <div class="label" style="">
+            {{ form_label(form.title) }}
+        </div>
+        {{ form_widget(form.title, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+        {{ form_errors(form.title) }}
+        <br />
+        <div class="label" style="">
+            {{ form_label(form.zone) }}
+        </div>
+        {{ form_widget(form.zone, { 'attr': {'class': 'widthin'} }) }} &nbsp;
+        {{ form_errors(form.zone) }}
+        <br />
+        <div class="label" style="">
+            {{ form_label(form.codes) }}
+        </div>
+        {{ form_widget(form.codes, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+        {{ form_errors(form.codes) }}
+        <br />
+        <div class="label" style="">
+        {{ form_label(form.publish) }}&nbsp;
+        {{ form_widget(form.publish) }}
+        {{ form_errors(form.publish) }}
+        <br />
+        <div class="label" style="">
+            {{ form_label(form.date_start) }}
+        </div>
+        {{ form_widget(form.date_start, { 'attr': {'class': 'widthin'} }) }} &nbsp;
+        {{ form_errors(form.date_start) }}
+        <br />
+        <div class="label" style="">
+            {{ form_label(form.date_end) }}
+        </div>
+        {{ form_widget(form.date_end, { 'attr': {'class': 'widthin'} }) }} &nbsp;
+        {{ form_errors(form.date_end) }}
+        <br />
+        {{ form_widget(form) }}
+        <span style="float: right;">
+            <img src="{{ asset('images/cancel.png')}}" id="btnCancelCreate" width="50" height="50" />
+                &nbsp;&nbsp;
+            <div id="btnCreate">
+                <input type="submit" id="btnInputCreate" value="Edit">
+            </div>
+        </span>
+    </form>
+</fieldset>

@@ -6,6 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use FTR\AdminBundle\Entity\Ads_Control;
 use FTR\AdminBundle\Form\Ads_ControlType;
+use FTR\AdminBundle\Helper\Paginator;
+use FTR\AdminBundle\Helper\LoggerHelper;
+use FTR\AdminBundle\Helper\FTRConstant;
 
 /**
  * Ads_Control controller.
@@ -19,35 +22,85 @@ class Ads_ControlController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getEntityManager();
+//        $em = $this->getDoctrine()->getEntityManager();
+//
+//        $entities = $em->getRepository('FTRAdminBundle:Ads_Control')->findAll();
+//
+//        return $this->render('FTRAdminBundle:Ads_Control:index.html.twig', array(
+//            'entities' => $entities
+//        ));
+//        $constant = new FTRConstant();
+//        $getAdsPosition = $constant->getAdsPosition();
 
-        $entities = $em->getRepository('FTRAdminBundle:Ads_Control')->findAll();
 
-        return $this->render('FTRAdminBundle:Ads_Control:index.html.twig', array(
-            'entities' => $entities
-        ));
-    }
+        //get post
+        $getSelectPage = @$_GET['numPage'];
+        $getRecord = @$_GET['record'];
+        $getTextSearch = @$_GET['textSearch'];
+        $getOrderBy = @$_GET['orderBy'];
+        $getOrderByType = @$_GET['orderByType'];
 
-    /**
-     * Finds and displays a Ads_Control entity.
-     *
-     */
-    public function showAction($id)
-    {
-        $em = $this->getDoctrine()->getEntityManager();
+        //set paging
+        $page = 1;
+        if (!empty($getSelectPage)){
+            $page = $getSelectPage;
+        }
+        $limit = 10;
+        $midRange = 5;
+        if(!empty($getRecord)){
+            $limit = $getRecord;
+        }else {
+            $getRecord = $limit;
+        }
+        $offset = $limit*$page-$limit;
 
-        $entity = $em->getRepository('FTRAdminBundle:Ads_Control')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Ads_Control entity.');
+        if (empty($getOrderBy) && empty($getOrderByType)){
+            $getOrderBy = 'id';
+            $getOrderByType = 'asc';
         }
 
-        $deleteForm = $this->createDeleteForm($id);
+        $sqlGetEntity = "
+            SELECT
+              *
+            FROM
+              `ads_control` a
 
-        return $this->render('FTRAdminBundle:Ads_Control:show.html.twig', array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
+        ";
+        if (!empty($getTextSearch) && $getTextSearch != ''){
+            $sqlGetEntity = "
+                $sqlGetEntity
+                AND a.id LIKE '%$getTextSearch%'
+                OR a.title LIKE '%$getTextSearch%'
+                OR a.zone LIKE '%$getTextSearch%'
+            ";
+        }
 
+        $sqlGetEntity = "
+            $sqlGetEntity
+            GROUP BY a.$getOrderBy $getOrderByType
+        ";
+
+        //นับจำนวนที่มีทั้งหมด
+        $countList = count($this->getDataArray($sqlGetEntity));
+
+        //จำกัดการแสดงผล
+        $sqlGetEntity = "
+            $sqlGetEntity
+            LIMIT $offset, $limit
+        ";
+        $objResult = $this->getDataArray($sqlGetEntity);
+
+        $paginator = new Paginator($countList, $offset, $limit, $midRange);
+        return $this->render('FTRAdminBundle:Ads_Control:index.html.twig', array(
+            'entities'          => $objResult,
+            'paginator'	        => $paginator,
+            'countList'		    => $countList,
+            'limit' 	        => $limit,
+            'noPage'	        => $page,
+            'record'	        => $getRecord,
+            'textSearch'        => $getTextSearch,
+            'orderBy'           => $getOrderBy,
+            'orderByType'       => $getOrderByType
         ));
     }
 
@@ -58,6 +111,10 @@ class Ads_ControlController extends Controller
     public function newAction()
     {
         $entity = new Ads_Control();
+
+        //เพิ่ม array ads
+        $entity = $this->getNewEntity($entity);
+
         $form   = $this->createForm(new Ads_ControlType(), $entity);
 
         return $this->render('FTRAdminBundle:Ads_Control:new.html.twig', array(
@@ -73,6 +130,10 @@ class Ads_ControlController extends Controller
     public function createAction()
     {
         $entity  = new Ads_Control();
+
+        //เพิ่ม array ads
+        $entity = $this->getNewEntity($entity);
+
         $request = $this->getRequest();
         $form    = $this->createForm(new Ads_ControlType(), $entity);
         $form->bindRequest($request);
@@ -102,17 +163,18 @@ class Ads_ControlController extends Controller
 
         $entity = $em->getRepository('FTRAdminBundle:Ads_Control')->find($id);
 
+        //เพิ่ม array ads
+        $entity = $this->getNewEntity($entity);
+
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Ads_Control entity.');
         }
 
         $editForm = $this->createForm(new Ads_ControlType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('FTRAdminBundle:Ads_Control:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -126,12 +188,14 @@ class Ads_ControlController extends Controller
 
         $entity = $em->getRepository('FTRAdminBundle:Ads_Control')->find($id);
 
+        //เพิ่ม array ads
+        $entity = $this->getNewEntity($entity);
+
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Ads_Control entity.');
         }
 
         $editForm   = $this->createForm(new Ads_ControlType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
 
         $request = $this->getRequest();
 
@@ -146,42 +210,60 @@ class Ads_ControlController extends Controller
 
         return $this->render('FTRAdminBundle:Ads_Control:edit.html.twig', array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'edit_form'   => $editForm->createView()
         ));
     }
 
-    /**
-     * Deletes a Ads_Control entity.
-     *
+    /*
+     * Check ชื่อไม่ให้ซ้ำกัน
      */
-    public function deleteAction($id)
-    {
-        $form = $this->createDeleteForm($id);
-        $request = $this->getRequest();
-
-        $form->bindRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
-            $entity = $em->getRepository('FTRAdminBundle:Ads_Control')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Ads_Control entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
+    private  function checkName($name, $sql){
+        $sqlCheck = "
+            SELECT
+              *
+            FROM
+              `ads_control`
+            WHERE `title` = '$name'
+              $sql
+        ";
+        $objCheck = $this->getDataArray($sqlCheck);
+        if (!empty($objCheck)){
+            return false;
         }
-
-        return $this->redirect($this->generateUrl('ads_control'));
+        return true;
     }
 
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
-        ;
+    /*
+     * บันทึก log เกี่ยวกับการ insert, delete, update database
+     */
+    private function addLogger($message, $entity){
+        $logger = new LoggerHelper();
+        $newArray = $logger->objectToArray($entity);
+        $logger->addInfo($message, $newArray);
     }
+
+    private function getNewEntity($Entity){
+
+        $constant = new FTRConstant();
+        $getAdsPosition = $constant->getAdsPosition();
+
+        $Entity->adsPosition = $getAdsPosition;
+        return $Entity;
+    }
+
+    /*
+    * Run คำสั่ง Sql
+    * return array
+    */
+    private function getDataArray($sql){
+        $conn= $this->get('database_connection');
+        if(!$conn){ die("MySQL Connection error");}
+        try{
+            return $conn->fetchAll($sql);
+        } catch (Exception $e) {
+            echo 'Caught exception: ',  $e->getMessage(), "\n";
+        }
+        return array();
+    }
+
 }
