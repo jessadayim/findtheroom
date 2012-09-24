@@ -199,6 +199,9 @@ class Building_siteController extends Controller
             $em->persist($entity);
             $em->flush();
 
+            //สร้าง logs
+            $this->addLogger('Insert Building Site', $entity);
+
             $getNewID = $entity->getId();
 
             //สร้าง folder building/$id
@@ -265,6 +268,10 @@ class Building_siteController extends Controller
             $entity->setDeleted(1);
             $em->persist($entity);
             $em->flush();
+
+            //สร้าง logs
+            $this->addLogger('Update Building Site: Deleted = 1', $entity);
+
             echo 'finish';
             exit();
         }
@@ -310,6 +317,10 @@ class Building_siteController extends Controller
 
             $em->persist($entity);
             $em->flush();
+
+            //สร้าง logs
+            $this->addLogger('Update Building Site', $entity);
+
             echo 'finish';
             exit();
             // return $this->redirect($this->generateUrl('building_site_edit', array('id' => $id)));
@@ -376,6 +387,15 @@ class Building_siteController extends Controller
             return false;
         }
         return true;
+    }
+
+    /*
+     * บันทึก log เกี่ยวกับการ insert, delete, update database
+     */
+    private function addLogger($message, $entity){
+        $logger = new LoggerHelper();
+        $newArray = $logger->objectToArray($entity);
+        $logger->addInfo($message, $newArray);
     }
 
     /*

@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use FTR\WebBundle\Entity\Image;
 use FTR\AdminBundle\Form\ImageType;
+use FTR\AdminBundle\Helper\LoggerHelper;
 
 /**
  * Image controller.
@@ -87,6 +88,9 @@ class ImageController extends Controller
             $entity -> setPhotoType('gallery');
             $entity -> setSequence(0);
             $em->persist($entity);
+
+            //สร้าง logs
+            $this->addLogger('Insert Image', $entity);
             $em->flush();
         }
         $ObjGetGallery = $this->getDataArray($sqlGetGallery);
@@ -221,12 +225,19 @@ class ImageController extends Controller
                     $entity -> setPhotoName($getNameImage);
                     $entity -> setPhotoType('head');
                     $entity -> setSequence(0);
+
+                    //สร้าง logs
+                    $this->addLogger('Insert Head Image', $entity);
+
                 }else{
                     $ObjGetImage = $this->getDataArray($sqlGetImage);
                     $getNameImageOld = $ObjGetImage[0]['photo_name'];
                     $this->deleteFileByBuildingId($getBuildingSiteId, $getNameImageOld);
                     $entity = $em->getRepository('FTRWebBundle:Image')->find($getIdImage);
                     $entity -> setPhotoName($getNameImage);
+
+                    //สร้าง logs
+                    $this->addLogger('Update Head Image', $entity);
                 }
             }break;
             case "map":{
@@ -238,12 +249,18 @@ class ImageController extends Controller
                     $entity -> setPhotoName($getNameImage);
                     $entity -> setPhotoType('map');
                     $entity -> setSequence(0);
+
+                    //สร้าง logs
+                    $this->addLogger('Insert Map Image', $entity);
                 }else{
                     $ObjGetImage = $this->getDataArray($sqlGetImage);
                     $getNameImageOld = $ObjGetImage[0]['photo_name'];
                     $this->deleteFileByBuildingId($getBuildingSiteId, $getNameImageOld);
                     $entity = $em->getRepository('FTRWebBundle:Image')->find($getIdImage);
                     $entity -> setPhotoName($getNameImage);
+
+                    //สร้าง logs
+                    $this->addLogger('Update Map Image', $entity);
                 }
             }break;
             case "room":{
@@ -271,6 +288,9 @@ class ImageController extends Controller
                     $entity -> setPhotoName($getNameImage);
                     $entity -> setPhotoType('room');
                     $entity -> setSequence(0);
+
+                    //สร้าง logs
+                    $this->addLogger('Insert Room Image', $entity);
                 }else{
                     $sqlGetImage = "
                         SELECT
@@ -294,6 +314,9 @@ class ImageController extends Controller
                     $entity = $em->getRepository('FTRWebBundle:Image')->find($getIdImageOld);
                     $entity -> setPhotoName($getNameImage);
                     $em->persist($entity);
+
+                    //สร้าง logs
+                    $this->addLogger('Update Room Image', $entity);
                 }
             }break;
             case "gallery":{
@@ -305,6 +328,9 @@ class ImageController extends Controller
                     $entity -> setPhotoName($getNameImage);
                     $entity -> setPhotoType('gallery');
                     $entity -> setSequence($getSequence);
+
+                    //สร้าง logs
+                    $this->addLogger('Insert Gallery Image', $entity);
                 }else if ($getNewImageGallery == 'delete'){
                     $sqlGetGallery = "
                         SELECT
@@ -340,6 +366,9 @@ class ImageController extends Controller
                         }
                     }
                     $em->flush();
+
+                    //สร้าง logs
+                    $this->addLogger('Update Gallery Image', $entity);
                     echo 'finish';
                     exit();
                 }else{
@@ -354,6 +383,9 @@ class ImageController extends Controller
                         }
                         $entity -> setPhotoName($getNameImage);
                     }
+
+                    //สร้าง logs
+                    $this->addLogger('Update Image', $entity);
                 }
             }break;
             case "recommend":{
@@ -365,12 +397,18 @@ class ImageController extends Controller
                     $entity -> setPhotoName($getNameImage);
                     $entity -> setPhotoType('recommend');
                     $entity -> setSequence(0);
+
+                    //สร้าง logs
+                    $this->addLogger('Insert Recommend Image', $entity);
                 }else{
                     $ObjGetImage = $this->getDataArray($sqlGetImage);
                     $getNameImageOld = $ObjGetImage[0]['photo_name'];
                     $this->deleteFileByBuildingId($getBuildingSiteId, $getNameImageOld);
                     $entity = $em->getRepository('FTRWebBundle:Image')->find($getIdImage);
                     $entity -> setPhotoName($getNameImage);
+
+                    //สร้าง logs
+                    $this->addLogger('Update Recommend Image', $entity);
                 }
             }break;
             default :{
@@ -408,6 +446,15 @@ class ImageController extends Controller
         if(!file_exists($path)){
             mkdir($path, 0777);
         }
+    }
+
+    /*
+     * บันทึก log เกี่ยวกับการ insert, delete, update database
+     */
+    private function addLogger($message, $entity){
+        $logger = new LoggerHelper();
+        $newArray = $logger->objectToArray($entity);
+        $logger->addInfo($message, $newArray);
     }
 
     private function getDataArray($sql){
