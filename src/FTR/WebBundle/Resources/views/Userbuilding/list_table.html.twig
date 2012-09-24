@@ -66,27 +66,27 @@
                         {% endif %}
                     {% endfor %}
 					</div>
-                    <div style="float:left; margin-left:345px;"><strong>Search:</strong>
-                        <input id="tbxSearch" style="padding: 2px;font-size: 20px;" value="{{ textSearch }}" />
-						<div class="styled-select" style="margin-top:-30px; margin-left: 255px;">
+                    <div style="float:left; margin-left:305px; margin-top:-5px;"><strong>ค้นหา:</strong>
+                        <input id="tbxSearch" style="padding: 2px;font-size: 20px;" value="{{ textSearch }}" /><img src="{{asset('images/minisearch.png')}}" style="padding-top:0px;position:absolute;padding-left:10px; cursor:pointer;">
+						<div class="styled-select" style="margin-top:-30px; margin-left: 295px;">
                         <select class="select" name="record" class="record">
-                            <option value="10">10 Record </option>
+                            <option value="10">10 รายการ </option>
                             {% if limit == '50' %}
-                                <option selected="yes" value="50">50 Record</option>
-                                <option value="100">100 Record</option>
-                                <option value="500">500 Record</option>
+                                <option selected="yes" value="50">50 รายการ</option>
+                                <option value="100">100 รายการ</option>
+                                <option value="500">500 รายการ</option>
                                 {% elseif limit == '100' %}
-                                <option value="50">50 Record</option>
-                                <option selected="yes" value="100">100 Record</option>
-                                <option value="500">500 Record</option>
+                                <option value="50">50 รายการ</option>
+                                <option selected="yes" value="100">100 รายการ</option>
+                                <option value="500">500 รายการ</option>
                                 {% elseif limit == '500' %}
-                                <option value="50">50 Record</option>
-                                <option value="100">100 Record</option>
-                                <option selected="yes" value="500">500 Record</option>
+                                <option value="50">50 รายการ</option>
+                                <option value="100">100 รายการ</option>
+                                <option selected="yes" value="500">500 รายการ</option>
                             {% else %}
-                                <option value="50">50 Record</option>
-                                <option value="100">100 Record</option>
-                                <option value="500">500 Record</option>
+                                <option value="50">50 รายการ</option>
+                                <option value="100">100 รายการ</option>
+                                <option value="500">500 รายการ</option>
                             {% endif %}
                         </select>
 						</div>
