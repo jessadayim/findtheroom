@@ -66,6 +66,9 @@ FTRAdminBundle_manage_resource:
     resource: "@FTRAdminBundle/Resources/config/routing/manage_resource.yml"
     prefix:   /manage_resource
 
+FTRAdminBundle_ads_control:
+    resource: "@FTRAdminBundle/Resources/config/routing/ads_control.yml"
+    prefix:   /ads_control
 # Routing of Backend Panel
 # Creator : MICK
 # Createtime : 2012-08-28
