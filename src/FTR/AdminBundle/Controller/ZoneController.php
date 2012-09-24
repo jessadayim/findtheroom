@@ -108,7 +108,10 @@ class ZoneController extends Controller
             $em->persist($entity);
 
             $em->flush();
-            $this->addLogger('Insert zone', $entity);
+
+            //สร้าง logs
+            $this->addLogger('Insert Zone', $entity);
+
             echo 'finish';
             exit();
 //            return $this->redirect($this->generateUrl('zone_show', array('id' => $entity->getId())));
@@ -149,6 +152,10 @@ class ZoneController extends Controller
             $entity->setDeleted(1);
             $em->persist($entity);
             $em->flush();
+
+            //สร้าง logs
+            $this->addLogger('Update Zone: Deleted = 1', $entity);
+
             echo 'finish';
             exit();
         }
@@ -195,6 +202,9 @@ class ZoneController extends Controller
 
             $em->persist($entity);
             $em->flush();
+
+            //สร้าง logs
+            $this->addLogger('Update Zone', $entity);
 
             echo 'finish';exit();
 //            return $this->redirect($this->generateUrl('zone_edit', array('id' => $id)));
