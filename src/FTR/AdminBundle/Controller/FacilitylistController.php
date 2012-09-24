@@ -109,6 +109,10 @@ class FacilitylistController extends Controller
             }
             $em->persist($entity);
             $em->flush();
+
+            //สร้าง logs
+            $this->addLogger('Insert Facility', $entity);
+
             echo 'finish';
             exit();
 //            return $this->redirect($this->generateUrl('facilitylist_show', array('id' => $entity->getId())));
@@ -150,6 +154,10 @@ class FacilitylistController extends Controller
             $entity->setDeleted(1);
             $em->persist($entity);
             $em->flush();
+
+            //สร้าง logs
+            $this->addLogger('Update Facility: Deleted = 1', $entity);
+
             echo 'finish';
             exit();
         }
@@ -195,6 +203,9 @@ class FacilitylistController extends Controller
 
             $em->persist($entity);
             $em->flush();
+
+            //สร้าง logs
+            $this->addLogger('Update Facility', $entity);
 
             echo 'finish';exit();
 //            return $this->redirect($this->generateUrl('facilitylist_edit', array('id' => $id)));
