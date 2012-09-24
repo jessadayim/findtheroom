@@ -124,6 +124,9 @@ class UserbuildingController extends Controller
                 ORDER BY b.$getOrderBy  $getOrderByType
             ";
 
+            $objSQL2 = $conn->fetchAll($sql2);
+            //นับจำนวนที่มีทั้งหมด
+            $itemCount = count($objSQL2);
 
             //จำกัดการแสดงผล
             $sql2 = "
@@ -133,8 +136,6 @@ class UserbuildingController extends Controller
             //echo $sql2;
             //exit();
             $objSQL2 = $conn->fetchAll($sql2);
-            //นับจำนวนที่มีทั้งหมด
-            $itemCount = count($objSQL2);
 
             foreach ($objSQL2 as $key => $value) {
                 if ($value['publish'] == 1) {
@@ -356,11 +357,11 @@ class UserbuildingController extends Controller
             $province = $this->getProvince($building_data['saddrprovince'], null);
             $district = $this->getDistrictAction($provinceName, $building_data['saddrprefecture'], 'call');
             $provinceOther = $this->getProvince($provinceName, 'other');
-            $nearBTS = $this->getNearly(2,$id);
-            $nearMRT = $this->getNearly(3,$id);
-            $nearUniversity = $this->getNearly(4,$id);
-            $nearBy = $this->getNearly(5,$id);
-            $nearInCountry = $this->getNearly(6,$id);
+            $nearBTS = $this->getNearly(2,$building_id);
+            $nearMRT = $this->getNearly(3,$building_id);
+            $nearUniversity = $this->getNearly(4,$building_id);
+            $nearBy = $this->getNearly(5,$building_id);
+            $nearInCountry = $this->getNearly(6,$building_id);
             /*echo "<pre>";
                    var_dump($nearBTS);
                    echo "</pre>";
@@ -1466,6 +1467,7 @@ class UserbuildingController extends Controller
                     where building_site_id = $buildingId)
                   order by id
 			";
+            //echo $sql;exit();
             $result_data = $conn->fetchAll($sql);
         } catch (Exception $e) {
             echo 'Caught exception: ', $e->getMessage(), "\n";
