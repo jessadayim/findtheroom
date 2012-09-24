@@ -1,12 +1,20 @@
 <script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script>
 <script type='text/javascript' src='{{asset("js/paging/data_table/table_paging.js")}}'></script>
+<script type="text/javascript">
 
+    // ค่าปัจจุบันในการ sort
+    var orderByOld = "{{ orderBy }}";
+    var orderByTypeOld = "{{ orderByType }}";
+
+    //ประกาศค่าเริ่มต้น
+    var urlPost = "{{ path('listBuilding') }}";
+</script>
 <img src="{{asset('images/owner.png')}}" style="display:block; position:relative; float:none;" />
 <hr class="line" style="top: 60px;" />
 <div style="width:1000px; display:block; position:relative; height:100%; margin-top: 0px;">
     <table style="margin-top: 30px; padding-bottom:15px;">
         <thead height="80" valign="middle">
-        <th align="left" width="250" style="font-size:24px;">ชื่อตึก</td>
+        <th align="left" width="250" style="font-size:24px;"><a class="btnOrderBy" href="#" id="sort_building_name">ชื่อตึก</a></td>
         <th align="center" width="250" style="font-size:24px;">สถานะการแสดง</td>
         <th align="center" width="250" style="font-size:24px;">ดูหน้าตัวอย่าง</td>
         <th align="center" width="250" style="font-size:24px;">แก้ไขรายละเอียด</td>

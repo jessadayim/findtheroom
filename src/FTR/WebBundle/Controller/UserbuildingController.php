@@ -66,9 +66,6 @@ class UserbuildingController extends Controller
         $session = $this->get('session');
         $username = $session->get('user');
         $itemCount = null;
-        $offset = null;
-        $limit = null;
-        $midRange = 5;
 
         $em = $this->getDoctrine()->getEntityManager();
         $conn = $this->get('database_connection');
@@ -82,9 +79,61 @@ class UserbuildingController extends Controller
             $objSQL1 = $conn->fetchAll($sql1);
             $enabled = $objSQL1[0]['enabled'];
 
-            $sql2 = "SELECT * FROM building_site WHERE user_owner_id = '" . $objSQL1[0]['id'] . "'";
-            $objSQL2 = $conn->fetchAll($sql2);
+            $getTextSearch = null;
 
+            if($_GET)
+            {
+                //get data
+                $getSelectPage = @$_GET['numPage'];
+                $getRecord = @$_GET['record'];
+                $getTextSearch = @$_GET['textSearch'];
+                $getOrderBy = @$_GET['orderBy'];
+                $getOrderByType = @$_GET['orderByType'];
+            }
+
+            $sql2 = "SELECT * FROM building_site b WHERE user_owner_id = '" . $objSQL1[0]['id'] . "'";
+            //set paging
+            $page = 1;
+            if (!empty($getSelectPage)){
+                $page = $getSelectPage;
+            }
+            $limit = 10;
+            $midRange = 5;
+            if(!empty($getRecord)){
+                $limit = $getRecord;
+            }else {
+                $getRecord = $limit;
+            }
+            $offset = $limit*$page-$limit;
+
+            if (empty($getOrderBy) && empty($getOrderByType)){
+                $getOrderBy = 'id';
+                $getOrderByType = 'asc';
+            }
+            if (!empty($getTextSearch) && $getTextSearch != ''){
+                $sql2 = "
+                $sql2
+                AND b.id LIKE '%$getTextSearch%'
+                OR b.building_name LIKE '%$getTextSearch%'
+            ";
+            }
+
+            $sql2 = "
+                $sql2
+                GROUP BY b.id
+                ORDER BY b.$getOrderBy  $getOrderByType
+            ";
+
+
+            //จำกัดการแสดงผล
+            $sql2 = "
+                $sql2
+                LIMIT $offset, $limit
+            ";
+            //echo $sql2;
+            //exit();
+            $objSQL2 = $conn->fetchAll($sql2);
+            //นับจำนวนที่มีทั้งหมด
             $itemCount = count($objSQL2);
 
             foreach ($objSQL2 as $key => $value) {
@@ -106,12 +155,19 @@ class UserbuildingController extends Controller
             echo 'Caught exception: ', $e->getMessage(), "\n";
         }
 
+
         $paging = new Paginator($itemCount,$offset,$limit,$midRange);
         return $this->render('FTRWebBundle:Userbuilding:list_table.html.twig', array(
             'build_data' => $arrData,
             'paginator' => $paging,
             'countList' => $itemCount,
             'enabled' => $enabled,
+            'limit' 	        => $limit,
+            'noPage'	        => $page,
+            'record'	        => $getRecord,
+            'textSearch'        => $getTextSearch,
+            'orderBy'           => $getOrderBy,
+            'orderByType'       => $getOrderByType
         ));
     }
 
