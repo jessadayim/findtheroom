@@ -72,6 +72,7 @@ class SecurityController extends Controller
 	{
 		$session = $this->get('session');
 		$session->set('user', '');
+        $session->set('id', '');
 		return $this->redirect($this->generateUrl('FTRWebBundle_homepage'));
 	}
 }
