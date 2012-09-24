@@ -99,14 +99,6 @@ class Nearly_locationController extends Controller
             'orderBy'           => $getOrderBy,
             'orderByType'       => $getOrderByType
         ));
-
-//        $em = $this->getDoctrine()->getEntityManager();
-
-//        $entities = $em->getRepository('FTRWebBundle:Nearly_location')->findAll();
-//
-//        return $this->render('FTRAdminBundle:Nearly_location:index.html.twig', array(
-//            'entities' => $entities
-//        ));
     }
 
     /**
@@ -158,6 +150,10 @@ class Nearly_locationController extends Controller
 
             $em->persist($entity);
             $em->flush();
+
+            //สร้าง logs
+            $this->addLogger('Insert Nearly location', $entity);
+
             echo 'finish';
             exit();
 
@@ -191,6 +187,9 @@ class Nearly_locationController extends Controller
             $em->persist($entity);
             $em->flush();
             echo 'finish';
+
+            //สร้าง logs
+            $this->addLogger('Update Nearly location: deleted = 1', $entity);
             exit();
         }
 
@@ -241,6 +240,9 @@ class Nearly_locationController extends Controller
 
             $em->persist($entity);
             $em->flush();
+
+            //สร้าง logs
+            $this->addLogger('Update Nearly location', $entity);
             echo 'finish';
             exit();
 //            return $this->redirect($this->generateUrl('nearly_location_edit', array('id' => $id)));

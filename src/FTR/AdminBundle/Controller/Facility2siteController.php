@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use FTR\WebBundle\Entity\Facility2site;
 use FTR\AdminBundle\Form\Facility2siteType;
+use FTR\AdminBundle\Helper\LoggerHelper;
 
 /**
  * Facility2site controller.
@@ -67,7 +68,7 @@ class Facility2siteController extends Controller
         $getBuildingSiteID = @$_POST['building_site_id'];
         $getCheckPost = @$_POST['check_post'];
         
-        $sqlGetfacility = "
+        $sqlGetFacility = "
             SELECT
                 id
             FROM 
@@ -75,25 +76,34 @@ class Facility2siteController extends Controller
             WHERE facilitylist_id = $getPostFacilityListID 
             AND building_site_id = $getBuildingSiteID
         ";
-        $getfacility = $this->getDataArray($sqlGetfacility);
+        $getFacility = $this->getDataArray($sqlGetFacility);
         
-        if (empty($getfacility)){
+        if (empty($getFacility)){
             if ($getCheckPost == 'true'){
                 $entity  = new Facility2site();            
                 $entity ->setBuildingSiteId($getBuildingSiteID);
                 $entity ->setDeleted(0);
                 $entity ->setFacilitylistId($getPostFacilityListID);
+
+                //สร้าง logs
+                $this->addLogger('Insert Facility2site', $entity);
             }        
             else {
                 echo 'finish';
                 exit();
             }   
         }else{
-            $entity = $em->getRepository('FTRWebBundle:Facility2site')->find($getfacility[0]['id']);
+            $entity = $em->getRepository('FTRWebBundle:Facility2site')->find($getFacility[0]['id']);
             if ($getCheckPost == 'true'){
                 $entity ->setDeleted(0);
+
+                //สร้าง logs
+                $this->addLogger('Update Facility2site', $entity);
             }else {
                 $entity ->setDeleted(1);
+
+                //สร้าง logs
+                $this->addLogger('Update Facility2site: Deleted = 1', $entity);
             }
         } 
         $em->persist($entity);
@@ -111,5 +121,14 @@ class Facility2siteController extends Controller
             echo 'Caught exception: ',  $e->getMessage(), "\n";
         }
         return array();
+    }
+
+    /*
+     * บันทึก log เกี่ยวกับการ insert, delete, update database
+     */
+    private function addLogger($message, $entity){
+        $logger = new LoggerHelper();
+        $newArray = $logger->objectToArray($entity);
+        $logger->addInfo($message, $newArray);
     }
 }

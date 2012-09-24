@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use FTR\WebBundle\Entity\Roomtype2site;
 use FTR\AdminBundle\Form\Roomtype2siteType;
+use FTR\AdminBundle\Helper\LoggerHelper;
 
 /**
  * Roomtype2site controller.
@@ -110,7 +111,10 @@ class Roomtype2siteController extends Controller
                     $entity ->setDeleted(1);
                 }
                 $em->persist($entity);
-            }            
+            }
+
+            //สร้าง logs
+            $this->addLogger('Update Roomtype2site', $entity);
             if (count($objGetRoomType2Site) < $countRoomTypeId){
                 foreach($getRoomType as $key => $value){
                     if ($key >= count($objGetRoomType2Site)){
@@ -123,6 +127,9 @@ class Roomtype2siteController extends Controller
                         $em->persist($entity);
                     }
                 }
+
+                //สร้าง logs
+                $this->addLogger('Insert Roomtype2site', $entity);
             }
         }else{
             foreach($getRoomType as $key => $value){
@@ -133,6 +140,9 @@ class Roomtype2siteController extends Controller
                 $entity ->setRoomprice($this->checkEmptyValue($getRoomPrice[$key]));
                 $entity ->setDeleted(0);
                 $em->persist($entity);
+
+                //สร้าง logs
+                $this->addLogger('Insert Roomtype2site', $entity);
             }
         }
         $em->flush();
@@ -156,10 +166,23 @@ class Roomtype2siteController extends Controller
             $entity->setEndPrice($endPrice);
             $em->persist($entity);
             $em->flush();
+
+            //สร้าง logs
+            $this->addLogger('Update Roomtype2site', $entity);
+
         }
 
         echo 'finish';
         exit();        
+    }
+
+    /*
+     * บันทึก log เกี่ยวกับการ insert, delete, update database
+     */
+    private function addLogger($message, $entity){
+        $logger = new LoggerHelper();
+        $newArray = $logger->objectToArray($entity);
+        $logger->addInfo($message, $newArray);
     }
 
     /*
