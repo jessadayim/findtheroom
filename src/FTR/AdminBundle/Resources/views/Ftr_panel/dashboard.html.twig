@@ -1,103 +1,151 @@
 {% extends 'FTRAdminBundle:Layout:panel_layout.html.twig' %}
 
 {% block body %}
-  <!-- ***** Jquery Chart ***** -->
-  <script type="text/javascript">
-		$(function () {
-		    var chart;
-		    $(document).ready(function() {
-		        chart = new Highcharts.Chart({
-		            chart: {
-		                renderTo: 'chartcontainer',
-		                type: 'line',
-		                marginRight: 130,
-		                marginBottom: 25
-		            },
-		            title: {
-		                text: 'Monthly Average Temperature',
-		                x: -20 //center
-		            },
-		            subtitle: {
-		                text: 'Source: WorldClimate.com',
-		                x: -20
-		            },
-		            xAxis: {
-		                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-		                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-		            },
-		            yAxis: {
-		                title: {
-		                    text: 'Temperature (°C)'
-		                },
-		                plotLines: [{
-		                    value: 0,
-		                    width: 1,
-		                    color: '#808080'
-		                }]
-		            },
-		            tooltip: {
-		                formatter: function() {
-		                        return '<b>'+ this.series.name +'</b><br/>'+
-		                        this.x +': '+ this.y +'°C';
-		                }
-		            },
-		            legend: {
-		                layout: 'vertical',
-		                align: 'right',
-		                verticalAlign: 'top',
-		                x: -10,
-		                y: 100,
-		                borderWidth: 0
-		            },
-		            series: [{
-		                name: 'Tokyo',
-		                data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 20.6]
-		            }, {
-		                name: 'New York',
-		                data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5]
-		            }, {
-		                name: 'Berlin',
-		                data: [-0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0]
-		            }, {
-		                name: 'London',
-		                data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
-		            }]
-		        });
-		    });
-		    
-		});
-  </script>
-  
-  <script src="{{asset('js/panel/chart/highcharts.js')}}"></script>
-  <script src="{{asset('js/chart/modules/exporting.js')}}"></script>
-  
-  <!-- ***** Jquery Chart ***** -->  
-  
-<div class="grid_12" style="margin: 20px 0 0 0;">
-	
-  <H1><B>Findtheroom Panel</B></H1>
-  <hr>
-  <p>Welcome to Visual Admin, a slick admin template for almost any project - front or back end. It's based on the 960 grid system which means you can have almost endless layout possibiliites as well as those that come ready to use straight out the box. Please have a click around and feel free to check out the screenshots.</p>
-  <div id="chartcontainer" class="grid_12 marginB_20" style="height: 400px; margin: 0 auto"></div>
-  <div class="clear"></div>
-  <hr>
-</div><!-- End #wrap -->
 
-<div class="grid_6 dashboardColumn marginB_10" style="">
-	<H2>CONTENT 1</H2>
-	<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+<!-- ***** Jquery Notification ***** -->
+<script type="text/javascript" src="{{asset('js/gritter/js/jquery.gritter.js')}}"></script>
+<link rel="stylesheet" type="text/css" href="{{asset('js/gritter/css/jquery.gritter.css')}}"/>
+
+<script>
+    function postData(token) {
+        var token = token;
+
+        //alert(addfixpath);
+        $.post(addfixpath, $("#addform").serialize(),
+                function (data) {
+                    var completetext = data;
+                    //alert(completetext);
+                    $.gritter.add({
+                        // (string | mandatory) the heading of the notification
+                        title:'บันทึกข้อมูลสำเร็จ',
+                        // (string | mandatory) the text inside the notification
+                        text:'ข้อมูลของท่านได้รับการบันทึกโดยอัตโนมัติ'
+                    });
+                });
+    }
+</script>
+<!-- ***** Jquery Notification ***** -->
+
+<!-- ***** Jquery Chart ***** -->
+<script type="text/javascript">
+    $(function () {
+        var chart;
+        $(document).ready(function () {
+            chart = new Highcharts.Chart({
+                chart:{
+                    renderTo:'chartcontainer',
+                    type:'line',
+                    marginRight:130,
+                    marginBottom:25
+                },
+                title:{
+                    text:'Monthly Average Temperature',
+                    x:-20 //center
+                },
+                subtitle:{
+                    text:'Source: WorldClimate.com',
+                    x:-20
+                },
+                xAxis:{
+                    categories:['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+                },
+                yAxis:{
+                    title:{
+                        text:'Temperature (°C)'
+                    },
+                    plotLines:[
+                        {
+                            value:0,
+                            width:1,
+                            color:'#808080'
+                        }
+                    ]
+                },
+                tooltip:{
+                    formatter:function () {
+                        return '<b>' + this.series.name + '</b><br/>' +
+                                this.x + ': ' + this.y + '°C';
+                    }
+                },
+                legend:{
+                    layout:'vertical',
+                    align:'right',
+                    verticalAlign:'top',
+                    x:-10,
+                    y:100,
+                    borderWidth:0
+                },
+                series:[
+                    {
+                        name:'Tokyo',
+                        data:[7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 20.6]
+                    },
+                    {
+                        name:'New York',
+                        data:[-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5]
+                    },
+                    {
+                        name:'Berlin',
+                        data:[-0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0]
+                    },
+                    {
+                        name:'London',
+                        data:[3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
+                    }
+                ]
+            });
+        });
+
+    });
+</script>
+
+<script src="{{asset('js/panel/chart/highcharts.js')}}"></script>
+<script src="{{asset('js/chart/modules/exporting.js')}}"></script>
+
+<!-- ***** Jquery Chart ***** -->
+
+<div class="grid_12" style="margin: 20px 0 0 0;">
+
+    <H1><B>Findtheroom Panel</B></H1>
+    <hr>
+    <p>Welcome to Visual Admin, a slick admin template for almost any project - front or back end. It's based on the 960
+        grid system which means you can have almost endless layout possibiliites as well as those that come ready to use
+        straight out the box. Please have a click around and feel free to check out the screenshots.</p>
+
+    <div id="chartcontainer" class="grid_12 marginB_20" style="height: 400px; margin: 0 auto"></div>
+    <div class="clear"></div>
+    <hr>
+</div><!-- End #wrap -->
+<div class="grid_12 marginB_10" style=""><H1>อพาทเม้นที่ยังไม่ได้ Approve.</H1></div>
+<div class="grid_12 marginB_10" style="height: 300px; border: 1px #000 dashed">
+    <div id="innerPanel" class="detail" style="height: 100%; margin-bottom: 15px;">
+        {% render "FTRAdminBundle:Building_site:buildingApprove" %}
+    </div>
 </div>
-<div class="grid_6 dashboardColumn marginB_10" style="">
-	<H2>CONTENT 2</H2>
-	<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-</div>
-<div class="grid_6 dashboardColumn marginB_10" style="">
-	<H2>CONTENT 2</H2>
-	<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-</div>
-<div class="grid_6 dashboardColumn marginB_10" style="">
-	<H2>CONTENT 2</H2>
-	<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-</div>
+{#<div class="grid_6 dashboardColumn marginB_10" style="">#}
+	{#<H2>CONTENT 1</H2>#}
+	{#<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>#}
+{#</div>#}
+{#<div class="grid_6 dashboardColumn marginB_10" style="">#}
+	{#<H2>CONTENT 2</H2>#}
+	{#<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>#}
+{#</div>#}
+{#<div class="grid_6 dashboardColumn marginB_10" style="">#}
+	{#<H2>CONTENT 2</H2>#}
+	{#<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>#}
+{#</div>#}
+{#<div class="grid_6 dashboardColumn marginB_10" style="">#}
+	{#<H2>CONTENT 2</H2>#}
+	{#<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>#}
+{#</div>#}
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        postData("999");
+    });
+</script>
 
 {% endblock %}
