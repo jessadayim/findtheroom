@@ -9,9 +9,10 @@ function getHtml(numPage, orderBy){
     var recordValue = $(".record").val();
     var textSearch = $("#tbxSearch").val();
     var send = "?numPage=" + numPage + "&record=" + recordValue + "&textSearch=" + textSearch + orderBy;
-    $.post(urlPost + send, function(data) {
-        $('#innerPanel').html(data);
-    });
+    reloadId('#innerPanel', urlPost + send);
+//    $.post(urlPost + send, function(data) {
+//
+//    });
 }
 
 //Set time

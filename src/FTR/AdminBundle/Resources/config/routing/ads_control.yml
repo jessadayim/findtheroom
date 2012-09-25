@@ -3,7 +3,7 @@ ads_control:
     defaults: { _controller: "FTRAdminBundle:Ads_Control:index" }
 
 ads_control_show:
-    pattern:  /{id}/show
+    pattern:  /show
     defaults: { _controller: "FTRAdminBundle:Ads_Control:show" }
 
 ads_control_new:
@@ -22,9 +22,4 @@ ads_control_edit:
 ads_control_update:
     pattern:  /{id}/update
     defaults: { _controller: "FTRAdminBundle:Ads_Control:update" }
-    requirements: { _method: post }
-
-ads_control_delete:
-    pattern:  /{id}/delete
-    defaults: { _controller: "FTRAdminBundle:Ads_Control:delete" }
     requirements: { _method: post }

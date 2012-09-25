@@ -1,53 +1,117 @@
-<h1>Ads_Control</h1>
+<script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script>
+<script  src='{{asset("js/paging/data_table/table_paging.js")}}'></script>
 
-<table class="record_properties">
-    <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ entity.id }}</td>
-        </tr>
-        <tr>
-            <th>Title</th>
-            <td>{{ entity.title }}</td>
-        </tr>
-        <tr>
-            <th>Zone</th>
-            <td>{{ entity.zone }}</td>
-        </tr>
-        <tr>
-            <th>Codes</th>
-            <td>{{ entity.codes }}</td>
-        </tr>
-        <tr>
+<script>
+
+    //ประกาศค่าเริ่มต้น
+    var urlPost = "{{ path('ads_control_show') }}";
+    var urlPostNew = "{{ path('ads_control_new') }}";
+    var namePage = 'Ads Control';
+
+    // ค่าปัจจุบันในการ sort
+    var orderByOld = "{{ orderBy }}";
+    var orderByTypeOld = "{{ orderByType }}";
+
+</script>
+<style type="text/css">
+    .inPage {
+        cursor: pointer;
+    }
+</style>
+<fieldset>
+    <span style="float: right;" id="btnShowHide">
+        <img src="{{ asset('images/add-bt.png')}}" id="btnNew" width="50" height="50" style="cursor:pointer;" />
+    </span>
+    <div class="clear"></div>
+    <br/>
+    <table>
+        <thead>
+            <th style="width: 100px !important;"><a class="btnOrderBy" href="#" id="sort_id">Id</a></th>
+            <th style="width: 400px !important;"><a class="btnOrderBy" href="#" id="sort_title">title</th>
+            <th><a class="btnOrderBy" href="#" id="sort_zone">Zone</a></th>
+            <th><a class="btnOrderBy" href="#" id="sort_codes">codes</a></th>
+            <th><a class="btnOrderBy" href="#" id="sort_date_start">Date start</a></th>
+            <th><a class="btnOrderBy" href="#" id="sort_date_end">Date end</a></th>
             <th>Publish</th>
-            <td>{{ entity.publish }}</td>
-        </tr>
-        <tr>
-            <th>Date_start</th>
-            <td>{{ entity.datestart|date('Y-m-d H:i:s') }}</td>
-        </tr>
-        <tr>
-            <th>Date_end</th>
-            <td>{{ entity.dateend|date('Y-m-d H:i:s') }}</td>
-        </tr>
-    </tbody>
-</table>
+            <th>Actions</th>
+        </thead>
+        <tbody>
+            {% for entity in entities %}
+            <tr {{ entity.bg }}>
+                <td>{{ entity.id }}</td>
+                <td>{{ entity.title }}</td>
+                <td>{{ entity.zone }}</td>
+                <td>{{ entity.codes }}</td>
+                <td>{{ entity.date_start }}</td>
+                <td>{{ entity.date_end }}</td>
+                <td>{% if entity.publish == 1 %}
+                    Show
+                    {% else %}
+                    Not Show
+                    {% endif %}
+                </td>
+                <td align="center"> <a class="btnEdit" href="{{ path('ads_control_edit', { 'id': entity.id }) }}">Edit</a>&nbsp;&nbsp;
+                    {#<a class="btnDelete" href="{{ path('ads_control_edit', { 'id': entity.id }) }}">Delete</a>#}
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="8" align="center">No matching records found</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</fieldset>
+<div class="paginator">
+    <ul>
+        <strong>showing {{ countList }} entities : Page </strong>
+        {% for i in 1..paginator.numpages %}
+        {% if paginator.range.0 > 2 and i == paginator.range.0 %}
+        ...
+        {% endif %}
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('ads_control') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('ads_control_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('ads_control_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+        {%  if(i==1 or i==paginator.numpages or i in paginator.range) %}
+        {% if i==paginator.currentpage %}
+        {% if i == noPage %}
+        <input class="disableBtn" type="button" value="{{i}}" id="Submit" name="submitPage" disabled="true"/>
+        {% else %}
+        <input class="inPage" type="button" value="{{i}}" id="Submit" name="submitPage"/>
+        {% endif %}
+        {% else %}
+        {% if i == noPage %}
+        <input class="disableBtn" type="button" value="{{i}}" id="Submit" name="submitPage" disabled="true"/>
+        {% else %}
+        <input class="inPage" type="button" value="{{i}}" id="Submit" name="submitPage"/>
+        {% endif %}
+        {% endif %}
+        {% endif %}
+
+        {% if paginator.range[paginator.midrange -1] < paginator.numpages -1 and i == paginator.range[paginator.midrange-1] %}
+        ...
+        {% endif %}
+        {% endfor %}
+        <div align="right" style="float:right;" ><strong>Search:</strong>
+            <input id="tbxSearch" style="height: 25px;margin-bottom: 10px;" value="{{ textSearch }}" />&nbsp;&nbsp;
+            <select name="record" style="width:150px;" class="record">
+                <option value="10">10 Record </option>
+                {% if limit == '50' %}
+                <option selected="yes" value="50">50 Record</option>
+                <option value="100">100 Record</option>
+                <option value="500">500 Record</option>
+                {% elseif limit == '100' %}
+                <option value="50">50 Record</option>
+                <option selected="yes" value="100">100 Record</option>
+                <option value="500">500 Record</option>
+                {% elseif limit == '500' %}
+                <option value="50">50 Record</option>
+                <option value="100">100 Record</option>
+                <option selected="yes" value="500">500 Record</option>
+                {% else %}
+                <option value="50">50 Record</option>
+                <option value="100">100 Record</option>
+                <option value="500">500 Record</option>
+                {% endif %}
+            </select>
+        </div>
+    </ul>
+</div>
