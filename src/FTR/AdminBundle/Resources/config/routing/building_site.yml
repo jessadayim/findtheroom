@@ -25,3 +25,11 @@ building_site_update:
 building_site_delete:
     pattern:  /{id}/delete
     defaults: { _controller: FTRAdminBundle:Building_site:delete }
+
+building_site_approve:
+    pattern: /approve
+    defaults: { _controller: FTRAdminBundle:Building_site:buildingApprove }
+
+building_site_postapprove:
+    pattern: /postapprove/{buildingId}
+    defaults: { _controller: FTRAdminBundle:Building_site:buildingPostApprove }

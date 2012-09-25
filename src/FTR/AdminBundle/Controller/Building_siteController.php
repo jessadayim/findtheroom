@@ -476,4 +476,91 @@ class Building_siteController extends Controller
         $Entity->proveince = $this->getDataArray($sqlGetAddressProvince);
         return $Entity;
     }
+
+    /**
+     * Finds and displays a Building_site entity.
+     *
+     * @Route("/approve", name="building_site_approve")
+     * @Template()
+     */
+    public function buildingApproveAction()
+    {
+        $sqlGetEntity = "
+            select
+              id,
+              building_name,
+              publish,
+              deleted
+            from
+              building_site b
+            where b.deleted != 1
+              and b.publish = 2
+        ";
+        //get post
+        $getSelectPage = @$_GET['numPage'];
+        $getRecord = @$_GET['record'];
+        $getTextSearch = @$_GET['textSearch'];
+        $getOrderBy = @$_GET['orderBy'];
+        $getOrderByType = @$_GET['orderByType'];
+
+        //set paging
+        $page = 1;
+        if (!empty($getSelectPage)){
+            $page = $getSelectPage;
+        }
+        $limit = 10;
+        $midRange = 5;
+        if(!empty($getRecord)){
+            $limit = $getRecord;
+        }else {
+            $getRecord = $limit;
+        }
+        $offset = $limit*$page-$limit;
+
+        if (empty($getOrderBy) && empty($getOrderByType)){
+            $getOrderBy = 'id';
+            $getOrderByType = 'asc';
+        }
+        if (!empty($getTextSearch) && $getTextSearch != ''){
+            $sqlGetEntity = "
+                $sqlGetEntity
+                AND b.id LIKE '%$getTextSearch%'
+                OR b.building_name LIKE '%$getTextSearch%'
+            ";
+        }
+
+        $sqlGetEntity = "
+            $sqlGetEntity
+            GROUP BY b.id
+            ORDER BY b.$getOrderBy  $getOrderByType
+        ";
+
+        //นับจำนวนที่มีทั้งหมด
+        $countList = count($this->getDataArray($sqlGetEntity));
+
+        //จำกัดการแสดงผล
+        $sqlGetEntity = "
+            $sqlGetEntity
+            LIMIT $offset, $limit
+        ";
+        $objBuildingSite = $this->getDataArray($sqlGetEntity);
+
+        $paginator = new Paginator($countList, $offset, $limit, $midRange);
+        return array(
+            'entities'          => $objBuildingSite,
+            'paginator'	        => $paginator,
+            'countList'		    => $countList,
+            'limit' 	        => $limit,
+            'noPage'	        => $page,
+            'record'	        => $getRecord,
+            'textSearch'        => $getTextSearch,
+            'orderBy'           => $getOrderBy,
+            'orderByType'       => $getOrderByType
+        );
+    }
+
+    public function buildingPostApproveAction()
+    {
+
+    }
 }

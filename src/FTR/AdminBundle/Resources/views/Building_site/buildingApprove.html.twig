@@ -1,0 +1,97 @@
+<script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script>
+<script type='text/javascript' src='{{asset("js/paging/data_table/table_paging.js")}}'></script>
+
+<script type="text/javascript">
+
+
+    // ค่าปัจจุบันในการ sort
+    var orderByOld = "{{ orderBy }}";
+    var orderByTypeOld = "{{ orderByType }}";
+
+    //ประกาศค่าเริ่มต้น
+    var urlPost = "{{ path('building_site_approve') }}";
+
+</script>
+
+<fieldset>
+    <table>
+        <thead>
+        <th style="width: 100px !important;" ><a class="btnOrderBy" href="#" id="sort_id">id</a></th>
+        <th style="width: 410px !important;" ><a class="btnOrderBy" href="#" id="sort_building_name">name</a></th>
+        <th style="width: 70px !important;" >facility</th>
+        <th style="width: 110px !important;" >roomtype</th>
+        <th style="width: 100px !important;" >nearly</th>
+        <th style="width: 100px !important;" >gallery</th>
+        <th style="width: 50px !important;" >config</th>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+        <tr>
+            <td>{{ entity.id }}</td>
+            <td>{{ entity.building_name }}</td>
+
+         </tr>
+        {% else %}
+        <tr>
+            <td colspan="7" align="center">No matching records found</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</fieldset>
+<div class="datagrid">
+    <ul>
+        <strong>showing {{ countList }} entities : Page </strong>
+        {% for i in 1..paginator.numpages %}
+            {% if paginator.range.0 > 2 and i == paginator.range.0 %}
+                ...
+            {% endif %}
+
+            {%  if(i==1 or i==paginator.numpages or i in paginator.range) %}
+                {% if i==paginator.currentpage %}
+                    {% if i == noPage %}
+                        <input class="disableBtn" type="button" value="{{i}}" id="Submit" name="submitPage" disabled="true"/>
+                    {% else %}
+                        <input class="inPage" type="button" value="{{i}}" id="Submit" name="submitPage"/>
+                    {% endif %}
+                {% else %}
+                    {% if i == noPage %}
+                        <input class="disableBtn" type="button" value="{{i}}" id="Submit" name="submitPage" disabled="true"/>
+                    {% else %}
+                        <input class="inPage" type="button" value="{{i}}" id="Submit" name="submitPage"/>
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+
+            {% if paginator.range[paginator.midrange -1] < paginator.numpages -1 and i == paginator.range[paginator.midrange-1] %}
+                ...
+            {% endif %}
+        {% endfor %}
+        <div align="right" style="float:right;" ><strong>Search:</strong>
+            <input id="tbxSearch" style="height: 25px;margin-bottom: 10px;" value="{{ textSearch }}" />&nbsp;&nbsp;
+            <select name="record" style="width:150px;" class="record">
+                <option value="10">10 Record </option>
+                {% if limit == '50' %}
+                    <option selected="yes" value="50">50 Record</option>
+                    <option value="100">100 Record</option>
+                    <option value="500">500 Record</option>
+                    {% elseif limit == '100' %}
+                    <option value="50">50 Record</option>
+                    <option selected="yes" value="100">100 Record</option>
+                    <option value="500">500 Record</option>
+                    {% elseif limit == '500' %}
+                    <option value="50">50 Record</option>
+                    <option value="100">100 Record</option>
+                    <option selected="yes" value="500">500 Record</option>
+                {% else %}
+                    <option value="50">50 Record</option>
+                    <option value="100">100 Record</option>
+                    <option value="500">500 Record</option>
+                {% endif %}
+            </select>
+        </div>
+    </ul>
+</div>
+<br />
+
+<div class="clear"></div>
