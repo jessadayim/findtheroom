@@ -2,6 +2,10 @@ ads_control:
     pattern:  /
     defaults: { _controller: "FTRAdminBundle:Ads_Control:index" }
 
+ads_control_show:
+    pattern:  /show
+    defaults: { _controller: "FTRAdminBundle:Ads_Control:show" }
+
 ads_control_new:
     pattern:  /new
     defaults: { _controller: "FTRAdminBundle:Ads_Control:new" }

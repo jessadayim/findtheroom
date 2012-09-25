@@ -20,18 +20,20 @@ class Ads_ControlType extends AbstractType
                 'label'     => 'Zone:'
             ))
             ->add('codes', 'textarea', array('label' => 'Codes:', 'max_length' => 2000))
-            ->add('publish','checkbox', array('label' => 'Publish:'))
-            ->add('date_start', 'date', array(
-                'format'    => \IntlDateFormatter::SHORT,
-                'input'     => 'datetime',
-                'widget'    => 'choice',
-                'data'      => new \DateTime("now"),
+            ->add('publish','checkbox', array('label' => 'Publish:', 'required'  => false))
+            ->add('date_start', 'datetime', array(
+                'empty_value' => array(
+                    'year' => 'Year',
+                    'month' => 'Month',
+                    'day' => 'Day'
+                ),
                 'label'     => 'Date Start:'))
-            ->add('date_end', 'date',  array(
-                'format'    => \IntlDateFormatter::SHORT,
-                'input'     => 'datetime',
-                'widget'    => 'single_text',
-                'data'      => new \DateTime("now"),
+            ->add('date_end', 'datetime',  array(
+                'empty_value' => array(
+                    'year' => 'Year',
+                    'month' => 'Month',
+                    'day' => 'Day'
+                ),
                 'label'     => 'Date End:'))
         ;
     }

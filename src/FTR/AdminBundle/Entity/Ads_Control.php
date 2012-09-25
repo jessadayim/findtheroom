@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * FTR\AdminBundle\Entity\Ads_Control
  *
  * @ORM\Table(name="ads_control")
- * @ORM\Entity(repositoryClass="FTR\AdminBundle\Entity\Ads_ControlRepository")
+ * @ORM\Entity(repositoryClass="FTR\AdminBundle\Repository\Ads_ControlRepository")
  */
 class Ads_Control
 {
@@ -43,9 +43,9 @@ class Ads_Control
     private $codes;
 
     /**
-     * @var integer $publish
+     * @var boolean $publish
      *
-     * @ORM\Column(name="publish", type="integer")
+     * @ORM\Column(name="publish", type="boolean")
      */
     private $publish;
 
@@ -137,7 +137,7 @@ class Ads_Control
     /**
      * Set publish
      *
-     * @param integer $publish
+     * @param boolean $publish
      */
     public function setPublish($publish)
     {
@@ -147,7 +147,7 @@ class Ads_Control
     /**
      * Get publish
      *
-     * @return integer 
+     * @return boolean
      */
     public function getPublish()
     {

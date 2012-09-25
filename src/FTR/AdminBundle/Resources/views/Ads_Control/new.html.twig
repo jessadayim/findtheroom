@@ -4,10 +4,10 @@
 <script>
 
     //ประกาศค่าเริ่มต้น
-    var urlPost = "{{ path('ads_control') }}";
+    var urlPost = "{{ path('ads_control_show') }}";
     var urlCreate = "{{ path('ads_control_create') }}";
-    var idCheck = "#ftr_adminbundle_facilitylisttype_facility_type";
-    var namePage = 'Facility';
+    var idCheck = "#ftr_adminbundle_ads_controltype_title";
+    var namePage = 'Ads Control';
 
 </script>
 
@@ -55,10 +55,11 @@
         {{ form_widget(form.codes, { 'attr': {'class': 'widfat'} }) }} &nbsp;
         {{ form_errors(form.codes) }}
         <br />
-        <div class="label" style="">
+        <div  style="">
         {{ form_label(form.publish) }}&nbsp;
         {{ form_widget(form.publish) }}
         {{ form_errors(form.publish) }}
+        </div>
         <br />
         <div class="label" style="">
             {{ form_label(form.date_start) }}

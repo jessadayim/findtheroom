@@ -1,8 +1,7 @@
 <?php
 /**
  * Created by Rux
- * User: SourcecodeEx
- * Date: 2012-09-24 15:40:00
+ * Date: 2012-09-24
  * Time: 15:40 น.
  *
  */

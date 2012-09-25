@@ -9,6 +9,7 @@ use FTR\AdminBundle\Form\Ads_ControlType;
 use FTR\AdminBundle\Helper\Paginator;
 use FTR\AdminBundle\Helper\LoggerHelper;
 use FTR\AdminBundle\Helper\FTRConstant;
+use FTR\AdminBundle\Helper\FTRHelper;
 
 /**
  * Ads_Control controller.
@@ -22,17 +23,11 @@ class Ads_ControlController extends Controller
      */
     public function indexAction()
     {
-//        $em = $this->getDoctrine()->getEntityManager();
-//
-//        $entities = $em->getRepository('FTRAdminBundle:Ads_Control')->findAll();
-//
-//        return $this->render('FTRAdminBundle:Ads_Control:index.html.twig', array(
-//            'entities' => $entities
-//        ));
-//        $constant = new FTRConstant();
-//        $getAdsPosition = $constant->getAdsPosition();
+        return $this->render('FTRAdminBundle:Ads_Control:index.html.twig', array());
+    }
 
-
+    public function showAction()
+    {
         //get post
         $getSelectPage = @$_GET['numPage'];
         $getRecord = @$_GET['record'];
@@ -61,10 +56,11 @@ class Ads_ControlController extends Controller
 
         $sqlGetEntity = "
             SELECT
-              *
+              *,
+              DATEDIFF(`date_end`, NOW()) AS cutDate
             FROM
               `ads_control` a
-
+            WHERE 1
         ";
         if (!empty($getTextSearch) && $getTextSearch != ''){
             $sqlGetEntity = "
@@ -72,12 +68,13 @@ class Ads_ControlController extends Controller
                 AND a.id LIKE '%$getTextSearch%'
                 OR a.title LIKE '%$getTextSearch%'
                 OR a.zone LIKE '%$getTextSearch%'
+                OR a.codes LIKE '%$getTextSearch%'
             ";
         }
 
         $sqlGetEntity = "
             $sqlGetEntity
-            GROUP BY a.$getOrderBy $getOrderByType
+            ORDER BY a.$getOrderBy $getOrderByType
         ";
 
         //นับจำนวนที่มีทั้งหมด
@@ -90,8 +87,25 @@ class Ads_ControlController extends Controller
         ";
         $objResult = $this->getDataArray($sqlGetEntity);
 
+//        $helper = new FTRHelper();
+        foreach($objResult as $key => $value){
+            $getCutDate = $value["cutDate"];
+            if(intval($getCutDate) == 0){
+                $objResult[$key]['bg'] = 'style="background-color: red;"';
+            }else if (intval($getCutDate) <= 3 && intval($getCutDate) > 0){
+                $objResult[$key]['bg'] = 'style="background-color: orange;"';
+            }else if (intval($getCutDate) <= 7 && intval($getCutDate) > 0){
+                $objResult[$key]['bg'] = 'style="background-color: yellow;"';
+            }else{
+                $objResult[$key]['bg'] = '';
+            }
+//            $newDate = $helper->convertThaiDateTime($value['date_start']);
+//            $objResult[$key]['date_start'] = $newDate;
+//            $newDate = $helper->convertThaiDateTime($value['date_end']);
+//            $objResult[$key]['date_end'] = $newDate;
+        }
         $paginator = new Paginator($countList, $offset, $limit, $midRange);
-        return $this->render('FTRAdminBundle:Ads_Control:index.html.twig', array(
+        return $this->render('FTRAdminBundle:Ads_Control:show.html.twig', array(
             'entities'          => $objResult,
             'paginator'	        => $paginator,
             'countList'		    => $countList,
@@ -140,10 +154,23 @@ class Ads_ControlController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();
+
+            //Check ชื่อ zone ซ้ำ
+            $getName = $entity->getTitle();
+            if (!$this->checkName($getName, "")){
+                echo "finish_comp";
+                exit();
+            }
             $em->persist($entity);
+
             $em->flush();
 
-            return $this->redirect($this->generateUrl('ads_control_show', array('id' => $entity->getId())));
+            //สร้าง logs
+            $this->addLogger('Insert Ads Control', $entity);
+
+            echo 'finish';
+            exit();
+//            return $this->redirect($this->generateUrl('ads_control_show', array('id' => $entity->getId())));
             
         }
 
@@ -161,17 +188,41 @@ class Ads_ControlController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entity = $em->getRepository('FTRAdminBundle:Ads_Control')->find($id);
+        $entity =  $em->getRepository('FTRAdminBundle:Ads_Control')->find($id);
 
         //เพิ่ม array ads
         $entity = $this->getNewEntity($entity);
 
+        //Check post เปลี่ยน deleted เป็น 1
+        $getCheckPost = @$_POST['checkPost'];
+        if ($getCheckPost == "delete"){
+            $sqlCheck = "
+                SELECT
+                  *
+                FROM
+                  `ads_control`
+                WHERE `title` = $id
+            ";
+            $objCheck = $this->getDataArray($sqlCheck);
+            if (!empty($objCheck)){
+                echo "finish_math";
+                exit();
+            }
+            $entity->setDeleted(1);
+            $em->persist($entity);
+            $em->flush();
+
+            //สร้าง logs
+            $this->addLogger('Update Ads Control: Deleted = 1', $entity);
+
+            echo 'finish';
+            exit();
+        }
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Ads_Control entity.');
         }
 
         $editForm = $this->createForm(new Ads_ControlType(), $entity);
-
         return $this->render('FTRAdminBundle:Ads_Control:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
@@ -202,10 +253,20 @@ class Ads_ControlController extends Controller
         $editForm->bindRequest($request);
 
         if ($editForm->isValid()) {
+            //Check ชื่อซ้ำกันหรือไม่
+            if(!$this->checkName($entity->getTitle(), "AND id != $id")){
+                echo "finish_comp";
+                exit();
+            }
+
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('ads_control_edit', array('id' => $id)));
+            //สร้าง logs
+            $this->addLogger('Update Ads Control', $entity);
+
+            echo 'finish';exit();
+//            return $this->redirect($this->generateUrl('ads_control_edit', array('id' => $id)));
         }
 
         return $this->render('FTRAdminBundle:Ads_Control:edit.html.twig', array(
