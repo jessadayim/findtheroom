@@ -341,10 +341,13 @@ class UserbuildingController extends Controller
                 $linkImageMap = "images/building/$id/" . $imageMap[0]['photo_name'];
                 $nameImageMap = $imageMap[0]['photo_name'];
             }
-
+            $provinceName = null;
             $provinceId = $building_data['saddrprovince'];
+            if(!empty($provinceId))
+            {
+                $provinceName = $this->getProvinceDataAction($provinceId,'call');
+            }
 
-            $provinceName = $this->getProvinceDataAction($provinceId,'call');
 
             $payType = $this->getPayType($building_data['ipaytypeid']);
             if(!empty($zone_data)){
