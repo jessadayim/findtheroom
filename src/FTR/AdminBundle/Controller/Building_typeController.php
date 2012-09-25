@@ -133,7 +133,11 @@ class Building_typeController extends Controller
 
             $em->persist($entity);
             $em->flush();
-            echo 'finish';
+
+        //สร้าง logs
+        $this->addLogger('Insert Building Type', $entity);
+
+        echo 'finish';
             exit();
 //            return $this->redirect($this->generateUrl('building_type_show', array('id' => $entity->getId())));
             
@@ -162,6 +166,10 @@ class Building_typeController extends Controller
             $entity->setDeleted(1);
             $em->persist($entity);
             $em->flush();
+
+            //สร้าง logs
+            $this->addLogger('Update Building Type: Deleted = 1', $entity);
+
             echo 'finish';
             exit();
         }
@@ -207,6 +215,10 @@ class Building_typeController extends Controller
 
             $em->persist($entity);
             $em->flush();
+
+            //สร้าง logs
+            $this->addLogger('Update Building Type', $entity);
+
             echo 'finish';
             exit();
 //            return $this->redirect($this->generateUrl('building_type_edit', array('id' => $id)));

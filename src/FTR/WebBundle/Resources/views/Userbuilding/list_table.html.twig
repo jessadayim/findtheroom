@@ -1,15 +1,25 @@
 <script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script>
 <script type='text/javascript' src='{{asset("js/paging/data_table/table_paging.js")}}'></script>
+<script type="text/javascript">
 
+    // ค่าปัจจุบันในการ sort
+    var orderByOld = "{{ orderBy }}";
+    var orderByTypeOld = "{{ orderByType }}";
+
+    //ประกาศค่าเริ่มต้น
+    var urlPost = "{{ path('listBuilding') }}";
+</script>
 <img src="{{asset('images/owner.png')}}" style="display:block; position:relative; float:none;" />
 <hr class="line" style="top: 60px;" />
 <div style="width:1000px; display:block; position:relative; height:100%; margin-top: 0px;">
-    <table style="margin-top: 30px; padding-bottom:15px;">
-        <thead height="80" valign="middle">
-        <th align="left" width="250" style="font-size:24px;">ชื่อตึก</td>
-        <th align="center" width="250" style="font-size:24px;">สถานะการแสดง</td>
-        <th align="center" width="250" style="font-size:24px;">ดูหน้าตัวอย่าง</td>
-        <th align="center" width="250" style="font-size:24px;">แก้ไขรายละเอียด</td>
+
+    <table style="margin-top: 20px; padding-bottom:15px;">
+        <thead valign="middle">
+        <th align="left" width="250" style="font-size:24px; padding-bottom:10px;"><a class="btnOrderBy" href="#" id="sort_building_name">ชื่อตึก<img src="{{asset('images/sort.png')}}" style="padding-top:0px; padding-left:10px; position:absolute;"></a></td>
+        <th align="center" width="250" style="font-size:24px; padding-bottom:10px;"><a class="btnOrderBy" href="#" id="sort_publish">สถานะการแสดง<img src="{{asset('images/sort.png')}}" style="padding-top:0px; padding-left:10px; position:absolute;"></a></td>
+        <th align="center" width="250" style="font-size:24px; padding-bottom:10px;">ดูหน้าตัวอย่าง</td>
+        <th align="center" width="250" style="font-size:24px; padding-bottom:10px;">แก้ไขรายละเอียด</td>
+
         </thead>
         <hr class="line" style="top: 30px;" />
         <tbody>
@@ -27,11 +37,65 @@
                 <td align="left" style="font-size:24px;" colspan="3">&nbsp;</td>
             </tr>
             <tr>
-                <td>แสดงผล {{ countList }} ตึก : หน้า</td>
+                <td colspan="4" valign="middle">
+					<div style="float:left;">
+                    แสดงผล {{ countList }} ตึก : หน้า
+                    {% for i in 1..paginator.numpages %}
+                        {% if paginator.range.0 > 2 and i == paginator.range.0 %}
+                            ...
+                        {% endif %}
+
+                        {%  if(i==1 or i==paginator.numpages or i in paginator.range) %}
+                            {% if i==paginator.currentpage %}
+                                {% if i == noPage %}
+                                    <input class="disableBtn" type="button" value="{{i}}" id="Submit" name="submitPage" disabled="true"/>
+                                {% else %}
+                                    <input class="inPage" type="button" value="{{i}}" id="Submit" name="submitPage"/>
+                                {% endif %}
+                            {% else %}
+                                {% if i == noPage %}
+                                    <input class="disableBtn" type="button" value="{{i}}" id="Submit" name="submitPage" disabled="true"/>
+                                {% else %}
+                                    <input class="inPage" type="button" value="{{i}}" id="Submit" name="submitPage"/>
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+
+                        {% if paginator.range[paginator.midrange -1] < paginator.numpages -1 and i == paginator.range[paginator.midrange-1] %}
+                            ...
+                        {% endif %}
+                    {% endfor %}
+					</div>
+                    <div style="float:left; margin-left:305px; margin-top:-5px;"><strong>ค้นหา:</strong>
+                        <input id="tbxSearch" style="padding: 2px;font-size: 20px;" value="{{ textSearch }}" /><img src="{{asset('images/minisearch.png')}}" style="padding-top:0px;position:absolute;padding-left:10px; cursor:pointer;">
+						<div class="styled-select" style="margin-top:-30px; margin-left: 295px;">
+                        <select class="select" name="record" class="record">
+                            <option value="10">10 รายการ </option>
+                            {% if limit == '50' %}
+                                <option selected="yes" value="50">50 รายการ</option>
+                                <option value="100">100 รายการ</option>
+                                <option value="500">500 รายการ</option>
+                                {% elseif limit == '100' %}
+                                <option value="50">50 รายการ</option>
+                                <option selected="yes" value="100">100 รายการ</option>
+                                <option value="500">500 รายการ</option>
+                                {% elseif limit == '500' %}
+                                <option value="50">50 รายการ</option>
+                                <option value="100">100 รายการ</option>
+                                <option selected="yes" value="500">500 รายการ</option>
+                            {% else %}
+                                <option value="50">50 รายการ</option>
+                                <option value="100">100 รายการ</option>
+                                <option value="500">500 รายการ</option>
+                            {% endif %}
+                        </select>
+						</div>
+                    </div>
+                </td>
             </tr>
         {% else %}
             <tr height align="70" valign="middle">
-                <td align="center" colspan="4">ท่านยังไม่ได้ยืนยันผู้ใช้ กรุณาเช็ค Email ที่ท่านใช้สมัคร   <a href="{{path('FTRWebBundle_regisSendEmail')}}">ส่งอีกครั้ง</a></td>
+                <td align="center" colspan="4" style="padding-top:20px;">ท่านยังไม่ได้ยืนยันผู้ใช้ กรุณาเช็ค Email ที่ท่านใช้สมัคร   <a href="{{path('FTRWebBundle_regisSendEmail')}}">ส่งอีกครั้ง</a></td>
             </tr>
         {% endif %}
         </tbody>
