@@ -212,6 +212,7 @@ class UserbuildingController extends Controller
                 $building->setMonthStay('');
                 $building->setWaterUnit(0);
                 $building->setElectricityUnit(0);
+                $building->setDeleted(0);
                 $em->persist($building);
                 $em->flush();
                 $building_id = $building->getId();
