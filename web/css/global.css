@@ -107,17 +107,24 @@
 .pagination {
 	/*margin:-40px 0 0 850px;
 	width:120px;*/
-	margin:-40px 0 0 0;
+	
+	/*margin:-40px 0 0 0;
 	width:950px;
 	position:absolute;
+	z-index:102;*/
+	
+	margin:-40px 0 0 0;
+	width:auto;
+	position:absolute;
 	z-index:102;
+	float: right !important;
+	right:10px;
 }
 
 .pagination li {
-	float:right;
 	margin:0 1px;
 	list-style:none;
-	display:block;
+		float: left !important;
 }
 
 .pagination li a {

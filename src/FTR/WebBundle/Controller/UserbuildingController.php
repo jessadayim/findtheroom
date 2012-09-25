@@ -212,6 +212,7 @@ class UserbuildingController extends Controller
                 $building->setMonthStay('');
                 $building->setWaterUnit(0);
                 $building->setElectricityUnit(0);
+                $building->setDeleted(0);
                 $em->persist($building);
                 $em->flush();
                 $building_id = $building->getId();
@@ -341,8 +342,13 @@ class UserbuildingController extends Controller
                 $linkImageMap = "images/building/$id/" . $imageMap[0]['photo_name'];
                 $nameImageMap = $imageMap[0]['photo_name'];
             }
+            $provinceName = null;
+            $provinceId = $building_data['saddrprovince'];
+            if(!empty($provinceId))
+            {
+                $provinceName = $this->getProvinceDataAction($provinceId,'call');
+            }
 
-            $provinceName = $building_data['saddrprovince'];
 
             $payType = $this->getPayType($building_data['ipaytypeid']);
             if(!empty($zone_data)){
@@ -355,15 +361,15 @@ class UserbuildingController extends Controller
 
             $buildingType = $this->getBuildingType($building_data['ibuildingtypeid']);
             $province = $this->getProvince($building_data['saddrprovince'], null);
-            $district = $this->getDistrictAction($provinceName, $building_data['saddrprefecture'], 'call');
-            $provinceOther = $this->getProvince($provinceName, 'other');
+            $district = $this->getDistrictAction($provinceId, $building_data['saddrprefecture'], 'call');
+            $provinceOther = $this->getProvince($provinceId, 'other');
             $nearBTS = $this->getNearly(2,$building_id);
             $nearMRT = $this->getNearly(3,$building_id);
             $nearUniversity = $this->getNearly(4,$building_id);
             $nearBy = $this->getNearly(5,$building_id);
             $nearInCountry = $this->getNearly(6,$building_id);
             /*echo "<pre>";
-                   var_dump($nearBTS);
+                   var_dump($district);
                    echo "</pre>";
                    exit();*/
             $this->getPathUpload($building_id);
@@ -1156,7 +1162,7 @@ class UserbuildingController extends Controller
     function getProvince($provinceName, $type = null)
     {
         $result_data = array();
-        $all[] = array('PROVINCE_VALUE' => '0', 'PROVINCE_NAME' => '- กรุณาระบุ -', 'checked' => 'no');
+        $all[] = array('PROVINCE_ID' => '0', 'PROVINCE_NAME' => '- กรุณาระบุ -', 'checked' => 'no');
         $sqlPlus = null;
         $sqlPlus2 = null;
         $conn = $this->get('database_connection');
@@ -1179,29 +1185,32 @@ class UserbuildingController extends Controller
             if (!empty($provinceName)) {
                 $sql = "
                     SELECT
+                      PROVINCE_ID AS PROVINCE_ID,
                       PROVINCE_NAME AS PROVINCE_VALUE,
                       PROVINCE_NAME AS PROVINCE_NAME,
                       PROVINCE_NAME AS OrderBy,
                       'yes' AS checked
                     FROM
                       province
-                    WHERE PROVINCE_NAME LIKE '%$provinceName%'
+                    WHERE PROVINCE_ID LIKE '%$provinceName%'
                           $sqlPlus
                     UNION
                     SELECT
+                      PROVINCE_ID AS PROVINCE_ID,
                       PROVINCE_NAME AS PROVINCE_VALUE,
                       PROVINCE_NAME AS PROVINCE_NAME,
                       PROVINCE_NAME AS OrderBy,
                       'no' AS checked
                     FROM
                       province
-                    WHERE PROVINCE_NAME NOT LIKE '%$provinceName%'
+                    WHERE PROVINCE_ID NOT LIKE '%$provinceName%'
                           $sqlPlus
                     ORDER BY OrderBy ASC
                 ";
             } else {
                 $sql = "
                     SELECT
+                      PROVINCE_ID AS PROVINCE_ID,
                       PROVINCE_NAME AS PROVINCE_VALUE,
                       PROVINCE_NAME AS PROVINCE_NAME,
                       'no' AS checked
@@ -1224,6 +1233,37 @@ class UserbuildingController extends Controller
         return $result;
     }
 
+    public function getProvinceDataAction($province,$type=null)
+    {
+        $conn = $this->get('database_connection');
+        $result_data = array();
+
+            if (!$conn) {
+                    die("MySQL Connection error");
+                }
+            try {
+
+                $sql = "
+                    SELECT
+                      PROVINCE_NAME
+                    FROM
+                      province
+                    WHERE
+                      province_id = $province
+                ";
+                $result_data = $conn->fetchAll($sql);
+
+            }  catch (Exception $e) {
+                echo 'Caught exception: ', $e->getMessage(), "\n";
+            }
+        if($type=='call'){
+            return $result_data[0]['PROVINCE_NAME'];
+        }else{
+            echo $result_data[0]['PROVINCE_NAME'];
+        }
+        exit();
+    }
+
     public function getDistrictAction($province, $district = null, $call = null)
     {
         //echo $province;exit();
@@ -1237,7 +1277,7 @@ class UserbuildingController extends Controller
                 <div class=\"styled-select\">
                 <select id=\"district\" name=\"district\" class=\"select\" onchange=\"postData('head');\">";
             foreach ($amphur as $key => $var) {
-                echo "<option value=\"" . $amphur[$key]['AMPHUR_VALUE'] . "\">" . $amphur[$key]['AMPHUR_NAME'] . "</option>";
+                echo "<option value=\"" . $amphur[$key]['AMPHUR_ID'] . "\">" . $amphur[$key]['AMPHUR_NAME'] . "</option>";
             }
             echo "
                 </div>
@@ -1255,7 +1295,7 @@ class UserbuildingController extends Controller
     function getAmphur($province = null, $district = null)
     {
         $result_data = array();
-        $all[] = array('AMPHUR_VALUE' => 0, 'AMPHUR_NAME' => ' - กรุณาระบุ - ', 'checked' => 'no');
+        $all[] = array('AMPHUR_ID' => 0, 'AMPHUR_NAME' => ' - กรุณาระบุ - ', 'checked' => 'no');
         $whereQuery = NULL;
         $conn = $this->get('database_connection');
         if (!$conn) {
@@ -1265,15 +1305,16 @@ class UserbuildingController extends Controller
             $sqlPlus = null;
             $sqlPlus2 = null;
             if (!empty($district)) {
-                $sqlPlus = "AMPHUR_NAME NOT LIKE '%$district%'
+                $sqlPlus = "AMPHUR_ID NOT LIKE '%$district%'
                       AND";
-                $sqlPlus2 = "AMPHUR_NAME LIKE '%$district%'
+                $sqlPlus2 = "AMPHUR_ID LIKE '%$district%'
                       AND";
             }
             if (!empty($province)) {
                 if (!empty($district)) {
                     $sql = "
                         (SELECT
+                          AMPHUR_ID AS AMPHUR_ID,
                           AMPHUR_NAME AS AMPHUR_VALUE,
                           AMPHUR_NAME AS AMPHUR_NAME,
                           'no' AS checked,
@@ -1285,9 +1326,10 @@ class UserbuildingController extends Controller
                             province_id
                           FROM
                             province
-                          WHERE province_name LIKE '%$province%'))
+                          WHERE province_id LIKE '%$province%'))
                         UNION
                         (SELECT
+                          AMPHUR_ID AS AMPHUR_ID,
                           AMPHUR_NAME AS AMPHUR_VALUE,
                           AMPHUR_NAME AS AMPHUR_NAME,
                           'yes' AS checked,
@@ -1299,12 +1341,13 @@ class UserbuildingController extends Controller
                             province_id
                           FROM
                             province
-                          WHERE province_name LIKE '%$province%'))
+                          WHERE province_id LIKE '%$province%'))
                         ORDER BY OrderBy ASC
                     ";
                 } else {
                     $sql = "
                         SELECT
+                          AMPHUR_ID AS AMPHUR_ID,
                           AMPHUR_NAME AS AMPHUR_VALUE,
                           AMPHUR_NAME AS AMPHUR_NAME,
                           'no' AS checked,
@@ -1316,7 +1359,7 @@ class UserbuildingController extends Controller
                             province_id
                           FROM
                             province
-                          WHERE province_name LIKE '%$province%')
+                          WHERE province_id LIKE '%$province%')
                     ";
                 }
                 $result_data = $conn->fetchAll($sql);

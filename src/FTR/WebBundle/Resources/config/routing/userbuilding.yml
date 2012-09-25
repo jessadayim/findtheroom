@@ -25,3 +25,7 @@ getDistrict:
 listBuilding:
     pattern: /list_building
     defaults: { _controller: FTRWebBundle:Userbuilding:listApartment, 'province' :null }
+
+getProvince:
+    pattern: /getprovince/{province}
+    defaults: { _controller: FTRWebBundle:Userbuilding:getProvinceData, 'province' :null }
