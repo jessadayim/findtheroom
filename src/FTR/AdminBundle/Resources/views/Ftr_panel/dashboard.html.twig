@@ -1,6 +1,60 @@
 {% extends 'FTRAdminBundle:Layout:panel_layout.html.twig' %}
 
 {% block body %}
+    <!-- ***** Jquery Notification ***** -->
+    <script type="text/javascript" src="{{asset('js/gritter/js/jquery.gritter.js')}}"></script>
+    <link rel="stylesheet" type="text/css" href="{{asset('js/gritter/css/jquery.gritter.css')}}"/>
+
+    <script type="text/javascript">
+        function notifyBuilding(token) {
+            var token = token;
+
+            $.gritter.add({
+                // (string | mandatory) the heading of the notification
+                title: 'ท่านยังไม่ได้อนุมัติ : <a href="#innerPanel" style="color: #F0F060;">'+token+'</a> โครงการ',
+                // (string | mandatory) the text inside the notification
+                text:'<span style="color: #F0F060;">กรุณาอนุมัติ (Approve)โครงการด้วยค่ะ</span>',
+                sticky: true
+            });
+        }
+
+        function notifyWarning7Day(token) {
+            var token = token;
+
+            $.gritter.add({
+                // (string | mandatory) the heading of the notification
+                title: 'Banner : <a href="#innerPanel" style="color: #F5D300;">'+token+'</a> รายการ',
+                // (string | mandatory) the text inside the notification
+                text:'<span style="color: #F5D300;">แจ้งเตือน Banner ที่จะหมดอายุภายในอีก 7 วัน</span>',
+                sticky: true
+            });
+        }
+
+        function notifyWarning3Day(token) {
+            var token = token;
+
+            $.gritter.add({
+                // (string | mandatory) the heading of the notification
+                title: 'Banner : <a href="#innerPanel" style="color: #FF5500;">'+token+'</a> รายการ',
+                // (string | mandatory) the text inside the notification
+                text:'<span style="color: #FF5500;">แจ้งเตือน Banner ที่จะหมดอายุภายในอีก 3 วัน</span>',
+                sticky: true
+            });
+        }
+
+        function notifyWarning1Day(token) {
+            var token = token;
+
+            $.gritter.add({
+                // (string | mandatory) the heading of the notification
+                title: 'Banner : <a href="#innerPanel" style="color: red;">'+token+'</a> รายการ',
+                // (string | mandatory) the text inside the notification
+                text:'<span style="color: red;">แจ้งเตือน Banner ที่จะหมดอายุภายในอีก 1 วัน</span>',
+                sticky: true
+            });
+        }
+    </script>
+    <!-- ***** Jquery Notification ***** -->
   <!-- ***** Jquery Chart ***** -->
   <script type="text/javascript">
 		$(function () {
@@ -67,7 +121,7 @@
 		    
 		});
   </script>
-  
+
   <script src="{{asset('js/panel/chart/highcharts.js')}}"></script>
   <script src="{{asset('js/chart/modules/exporting.js')}}"></script>
   
@@ -83,23 +137,21 @@
   <hr>
 </div><!-- End #wrap -->
 
-<div class="grid_6 dashboardColumn marginB_10" style="">
-	<H2>CONTENT 1</H2>
-	<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-</div>
-<div class="grid_6 dashboardColumn marginB_10" style="">
-	<H2>CONTENT 2</H2>
-	<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-</div>
-<div class="grid_6 dashboardColumn marginB_10" style="">
-	<H2>CONTENT 2</H2>
-	<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-</div>
-<div class="grid_6 dashboardColumn marginB_10" style="">
-	<H2>CONTENT 2</H2>
-	<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-</div>
-<div id="innerPanel" class="detail" style="height: 100%; margin-bottom: 15px;">
-   {% render "FTRAdminBundle:Building_site:buildingApprove" %}
-</div>
+
+
+    <div class="grid_12  marginB_10" style=""><H2>อพาทเม้นที่ยังไม่ได้อนุมัติ</H2></div>
+    <div class="grid_12  marginB_10" style="">
+        <div id="innerPanel" class="detail" style="height: 100%; margin-bottom: 15px;">
+            {% render "FTRAdminBundle:Building_site:buildingApprove" %}
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            notifyBuilding(countlist);
+            notifyWarning7Day("10");
+            notifyWarning3Day("5");
+            notifyWarning1Day("31");
+        });
+    </script>
 {% endblock %}

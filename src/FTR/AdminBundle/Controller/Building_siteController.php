@@ -561,6 +561,25 @@ class Building_siteController extends Controller
 
     public function buildingPostApproveAction()
     {
-
+        $em = $this->getDoctrine()->getEntityManager();
+        if($_GET){
+            $buildingId = @$_GET['buildingId'];
+            $action = @$_GET['action'];
+            if($action=='yes')
+            {
+                $publish = 1;
+            }else{
+                $publish = 0;
+            }
+            $entity = $em->getRepository('FTRWebBundle:Building_site')->find($buildingId);
+            $entity->setPublish($publish);
+            $em->persist($entity);
+            $em->flush();
+            
+            echo 'Success';
+        }else{
+            echo "Fail";
+        }
+        exit();
     }
 }
