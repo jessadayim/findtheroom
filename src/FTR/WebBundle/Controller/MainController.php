@@ -8,13 +8,23 @@ use FTR\WebBundle\Repository\Building_siteRepository;
 
 class MainController extends Controller {
 
+    /**
+    * Function Get Ads Image
+    */
     public function bannerData(){
         $conn = $this -> get('database_connection');
         if (!$conn) { die("MySQL Connection error");
         }
-        $sql = "SELECT codes, zone, date_start, date_end FROM ads_control WHERE publish = 1";
+
+        /**
+        * Get ads image
+        */
+        $sql = "SELECT codes, zone, date_start, date_end
+                FROM ads_control
+                WHERE publish = 1";
         $objSQL = $conn -> fetchAll($sql);
         if(count($objSQL) > 0){
+
             $zone[][] = '';
             $j = 0;
             $uni = '';
@@ -32,22 +42,56 @@ class MainController extends Controller {
                     $zone[$objSQL[$i]['zone']][$j] = $objSQL[$i]['codes'];
                     $uni = $objSQL[$i]['zone'];
                 }
-
             }
-            $sqlZone = "SELECT zone, date_start, date_end FROM ads_control WHERE publish = 1 GROUP BY zone";
-            $objZone = $conn -> fetchAll($sqlZone);
-            for($i=0;$i<count($objZone);$i++){
-                if(strtotime($time) >= strtotime($objZone[$i]['date_start']) && strtotime($time) <= strtotime($objZone[$i]['date_end'])){
-                    $max = count($zone[$objZone[$i]['zone']]) - 1;
-                    $image[$i] = $zone[$objZone[$i]['zone']][rand(0,$max)];
+
+            /**
+            * Get Zone Ads image
+            */
+            $zoneNull = implode('', $zone2);
+            if(empty($zoneNull)){
+                $zoneC = '';
+                $zoneA = '';
+                $zoneD = '';
+            }else{
+                $sqlZone = "SELECT zone, date_start, date_end
+                            FROM ads_control
+                            WHERE publish = 1
+                            GROUP BY zone";
+                $objZone = $conn -> fetchAll($sqlZone);
+                for($i=0;$i<count($objZone);$i++){
+                    if(strtotime($time) >= strtotime($objZone[$i]['date_start']) && strtotime($time) <= strtotime($objZone[$i]['date_end'])){
+                        if(strstr($objZone[$i]['zone'], "A") ){
+                            $maxZoneA = count($zone[$objZone[$i]['zone']]) - 1;
+                            $zoneSplit[$i] = $zone[$objZone[$i]['zone']][rand(0,$maxZoneA)];
+                            $string1 = explode("<noscript>", $zoneSplit[$i]);
+                            $string2 = explode("</noscript>", $string1[1]);
+                            $zoneA[$i]  = $string2[0];
+                        }else if(strstr($objZone[$i]['zone'], "C") ){
+                            $maxZoneC = count($zone[$objZone[$i]['zone']]) - 1;
+                            $zoneC[$i] = $zone[$objZone[$i]['zone']][rand(0,$maxZoneC)];
+                        }else if(strstr($objZone[$i]['zone'], "D") ){
+                            $maxZoneD = count($zone[$objZone[$i]['zone']]) - 1;
+                            $zoneD[$i] = $zone[$objZone[$i]['zone']][rand(0,$maxZoneD)];
+                        }
+                    }
+                }
+                if(empty($zoneA)){
+                    $zoneA = '';
+                }
+                else if(empty($zoneC)){
+                    $zoneC = '';
+                }else if(empty($zoneD)){
+                    $zoneD = '';
                 }
             }
         }else{
-            $image = '';
+            $zoneA = '';
+            $zoneC = '';
+            $zoneD = '';
         }
 
-
-        return $image;
+//        exit();
+        return array('zoneA'=>$zoneA, 'zoneC'=>$zoneC, 'zoneD'=>$zoneD);
 
     }
 
@@ -79,11 +123,20 @@ class MainController extends Controller {
 		} else {$enable = false;
 		}
         $banner = $this->bannerData();
+        $session = $this->get('session');
+
+        $zoneA = $banner['zoneA'];
+        $zoneC = $banner['zoneC'];
+        $zoneD = $banner['zoneD'];
+        $session->set('zoneD', $zoneD);
+//        var_dump($session->get('zone'));
+
 		$top_last_building = $this -> getTopLastBuilding();
 		$last_update = date("Y-m-d H:i:s", mktime(date("H"), date("i"), date("s"), date("m"), date("d"), date("Y")));
 		$last_update = $this -> convertThaiDate($last_update);
 
-		return $this -> render('FTRWebBundle:Main:index.html.twig', array('top_last_building' => $top_last_building, 'last_update' => $last_update, 'enable' => $enable, 'zoneC'=>$banner));
+		return $this -> render('FTRWebBundle:Main:index.html.twig', array('top_last_building' => $top_last_building, 'last_update' => $last_update
+                                                                          , 'enable' => $enable, 'zoneA'=>$zoneA, 'zoneC'=>$zoneC));
 	}
 
 	function getTopLastBuilding() {
