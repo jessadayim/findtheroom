@@ -72,7 +72,7 @@ class Ads_ControlController extends Controller
             ";
         }
 
-        echo $sqlGetEntity = "
+        $sqlGetEntity = "
             $sqlGetEntity
             ORDER BY $getOrderBy $getOrderByType
         ";
