@@ -77,6 +77,10 @@
 						}
 					});
 				});
+                $("#formLogout").submit(function(e) {
+                    alert();
+                    return true;
+                });
 			});
 		</script>
 		<script type="text/javascript">
@@ -141,9 +145,9 @@
 			<div id="logo"><a href="{{path('FTRWebBundle_homepage')}}"><span></span></a></div>
 			{% if app.session.get('user')  %}
 			<div id="login" style="text-align:right; margin-right:60px;">
-				<form action="{{path('FTRWebBundle_logout')}}" method="post">
+				<form id="formLogout" action="{{path('FTRWebBundle_logout')}}" method="post" >
 					Logged in as {{ app.session.get('user') }}
-					<input class="logout" type="submit" value=""/>
+					<input class="logout" type="button" value=""/>
 				</form>
 				{% else %}
 				<div id="login">

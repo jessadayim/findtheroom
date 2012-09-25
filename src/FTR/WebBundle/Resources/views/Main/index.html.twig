@@ -70,54 +70,37 @@
 
 {% render "FTRWebBundle:Main:recom" %}
 <div class="clear"></div>
-    {%set i = 0%}
-    {% for imageC in zoneC %}
-        {%if i%4 == 0%}
-            <div class="ad1">
-        {%endif%}
-            {%set j = i+1%}
-            {%if j%4 == 0%}
-                <div class='thumbframe omega'>
-            {%else%}
-                <div class='thumbframe'>
-            {%endif%}
-            {{imageC|raw}}</div>
-        {%set i = i+1%}
-        {%if i%4 == 0%}
-            </div>
-        {%endif%}
-    {%endfor%}
-
-
-    {#{% set introw1 = 0 %}#}
-    {#{% for recom1 in roomBts%}#}
-    {#{% if introw1%3 == 0%}#}
-    {#<div class="slide">#}
+<div class="ad1">
+    <div class='thumbframe'>
+        {{zoneC1|raw}}
+    </div>
+    <div class='thumbframe'>
+        {{zoneC2|raw}}
+    </div>
+    <div class='thumbframe'>
+        {{zoneC3|raw}}
+    </div>
+    <div class='thumbframe omega'>
+        {{zoneC4|raw}}
+    </div>
+</div>
+    {#{%set i = 0%}#}
+    {#{% for imageC in zoneC %}#}
+        {#{%if i%4 == 0%}#}
+            {#<div class="ad1">#}
         {#{%endif%}#}
-        {#{% set row1 = introw1+1 %}#}
-        {#{% if row1%3 == 0%}#}
-        {#<div class="ap2">#}
-            {#{% else %}#}
-            {#<div class="ap">#}
-                {#{%endif%}#}
-                {#<div class="recom"></div>#}
-                {#<img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />#}
-                {#<br />#}
-                {#<br />#}
-										{#<span style="color:#FFF;"> <b style="font-size:24px">{{recom1.building_name}}</b>#}
-											{#<br />#}
-											{#ประเภท : {{recom1.type_name}}#}
-											{#<br />#}
-											{#ใกล้ BTS สถานี : {{recom1.name}}#}
-											{#<br />#}
-											{#<br />#}
-											{#ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span>#}
+            {#{%set j = i+1%}#}
+            {#{%if j%4 == 0%}#}
+                {#<div class='thumbframe omega'>#}
+            {#{%else%}#}
+                {#<div class='thumbframe'>#}
+            {#{%endif%}#}
+            {#{{imageC|raw}}</div>#}
+        {#{%set i = i+1%}#}
+        {#{%if i%4 == 0%}#}
             {#</div>#}
-            {#{% set introw1 = introw1+1 %}#}
-            {#{% if introw1%3 == 0%}#}
-        {#</div>#}
         {#{%endif%}#}
-        {#{% endfor %}#}
+    {#{%endfor%}#}
     {#<script type="text/javascript">#}
 
 				{#var images = [],#}
