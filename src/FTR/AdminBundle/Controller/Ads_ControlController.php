@@ -50,7 +50,7 @@ class Ads_ControlController extends Controller
         $offset = $limit*$page-$limit;
 
         if (empty($getOrderBy) && empty($getOrderByType)){
-            $getOrderBy = 'id';
+            $getOrderBy = 'cutDate >= 0';
             $getOrderByType = 'asc';
         }
 
@@ -72,9 +72,9 @@ class Ads_ControlController extends Controller
             ";
         }
 
-        $sqlGetEntity = "
+        echo $sqlGetEntity = "
             $sqlGetEntity
-            ORDER BY a.$getOrderBy $getOrderByType
+            ORDER BY $getOrderBy $getOrderByType
         ";
 
         //นับจำนวนที่มีทั้งหมด
