@@ -22,41 +22,18 @@
             {#<div class="slide"><img src='http://server3.sourcecode.co.th/openx/www/delivery/avw.php?zoneid=46&amp;cb=INSERT_RANDOM_NUMBER_HERE&amp;n=ad62cf1a' border='0' alt='' /></div>#}
             {#<div class="slide"><img src='http://server3.sourcecode.co.th/openx/www/delivery/avw.php?zoneid=47&amp;cb=INSERT_RANDOM_NUMBER_HERE&amp;n=ad62cf1a' border='0' alt='' /></div>#}
             <!-- Comment for OpenX Loop Script -->
-            {%for imageA in zoneA%}
+            {#{%for imageA in zoneA%}#}
+            {#<div class="slide">#}
+                {#{{imageA|raw}}#}
+            {#</div>#}
+            {#{%endfor%}#}
+
             <div class="slide">
-                {{imageA|raw}}
+                {{zoneA1|raw}}
             </div>
-            {%endfor%}
-
-            {#<div class="slide">#}
-                {#<a href='#' title="" target="_new"><img src="{{asset('images/slider/slide-1.jpg')}}" width="1000"#}
-                                                        {#height="300"></a>#}
-                {#<!--<div class="caption">#}
-                        {#<p>#}
-                            {#1 ห้องพักสุดหรู พร้อมชุดห้องครัวในตัว ราคาพิเศษ <span class="sale">7,000</span> บาท -> 5,000 บาท#}
-                        {#</p>#}
-                    {#</div>-->#}
-            {#</div>#}
-            {#<div class="slide">#}
-                {#<a href='#' title="" target="_new"><img src="{{asset('images/slider/slide-2.jpg')}}" width="1000"#}
-                                                        {#height="300"></a>#}
-                {#<!--<div class="caption">#}
-                        {#<p>#}
-                            {#2 ห้องพักสุดหรู พร้อมชุดห้องครัวในตัว ราคาพิเศษ <span class="sale">7,000</span> บาท -> 5,000 บาท#}
-                        {#</p>#}
-                    {#</div>-->#}
-            {#</div>#}
-            {#<div class="slide">#}
-                {#<a href='#' title="" target="_new"><img src="{{asset('images/slider/slide-3.jpg')}}" width="1000"#}
-                                                        {#height="300"></a>#}
-                {#<!--<div class="caption">#}
-                        {#<p>#}
-                            {#3 ห้องพักสุดหรู พร้อมชุดห้องครัวในตัว ราคาพิเศษ <span class="sale">7,000</span> บาท -> 5,000 บาท#}
-                        {#</p>#}
-                    {#</div>-->#}
-            {#</div>#}
-
-
+            <div class="slide">
+                {{zoneA2|raw}}
+            </div>
         </div>
         <a href='#' class="prev"><img src="{{asset('images/slider/arrow-prev.png')}}" width="29" height="57"
                                       alt="Arrow Prev"></a>

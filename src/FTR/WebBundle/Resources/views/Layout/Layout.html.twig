@@ -216,26 +216,23 @@
 			</script>
 			{% block body %}
 			{% endblock %}
-            {%set i = 0%}
-            {% for imageC in app.session.get('zoneD') %}
-            {%if i%4 == 0%}
             <div class="ad1">
-                {%endif%}
-                {%set j = i+1%}
-                {%if j%4 == 0%}
-                <div class='thumbframe omega'>
-                    {%else%}
-                    <div class='thumbframe'>
-                        {%endif%}
-                        {{imageC|raw}}</div>
-                    {%set i = i+1%}
-                    {%if i%4 == 0%}
+                <div class='thumbframe'>
+                    {{app.session.get('zoneD1')|raw}}
                 </div>
-                {%endif%}
-                {%endfor%}
+                <div class='thumbframe'>
+                    {{app.session.get('zoneD2')|raw}}
+                </div>
+                <div class='thumbframe'>
+                    {{app.session.get('zoneD3')|raw}}
+                </div>
+                <div class='thumbframe omega'>
+                    {{app.session.get('zoneD4')|raw}}
+                </div>
+            </div>
 			{#<div class="ad1">#}
 				{#<script type="text/javascript">#}
-				{#var images = [], #}
+				{#var images = [],#}
 				{#index = 0;#}
 				{#images[0] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad1.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";#}
 				{#images[1] = "<a href = 'http://www.computerhope.com/history/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad2.gif')}}' class='thumb' alt='Computer History'></div></a>";#}
@@ -244,9 +241,9 @@
 				{#index = Math.floor(Math.random() * images.length);#}
 				{#document.write(images[index]);#}
 				{#</script>#}
-				{##}
+
 				{#<script type="text/javascript">#}
-				{#var images = [], #}
+				{#var images = [],#}
 				{#index = 0;#}
 				{#images[0] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad1.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";#}
 				{#images[1] = "<a href = 'http://www.computerhope.com/history/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad2.gif')}}' class='thumb' alt='Computer History'></div></a>";#}
@@ -255,9 +252,9 @@
 				{#index = Math.floor(Math.random() * images.length);#}
 				{#document.write(images[index]);#}
 				{#</script>#}
-				{##}
+
 				{#<script type="text/javascript">#}
-				{#var images = [], #}
+				{#var images = [],#}
 				{#index = 0;#}
 				{#images[0] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad1.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";#}
 				{#images[1] = "<a href = 'http://www.computerhope.com/history/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad2.gif')}}' class='thumb' alt='Computer History'></div></a>";#}
@@ -266,9 +263,9 @@
 				{#index = Math.floor(Math.random() * images.length);#}
 				{#document.write(images[index]);#}
 				{#</script>#}
-				{##}
+
 				{#<script type="text/javascript">#}
-				{#var images = [], #}
+				{#var images = [],#}
 				{#index = 0;#}
 				{#images[0] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe omega'><img src='{{asset('images/ad/ad1.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";#}
 				{#images[1] = "<a href = 'http://www.computerhope.com/history/index.htm'><div class='thumbframe omega'><img src='{{asset('images/ad/ad2.gif')}}' class='thumb' alt='Computer History'></div></a>";#}
@@ -277,7 +274,7 @@
 				{#index = Math.floor(Math.random() * images.length);#}
 				{#document.write(images[index]);#}
 				{#</script>#}
-				{##}
+
 				{#<!--<a href='#'><div class="thumbframe"><img src="{{asset('images/ad/ad1.gif')}}" class="thumb" /></div></a>#}
 				{#<a href='#'><div class="thumbframe"><img src="{{asset('images/ad/ad2.gif')}}" class="thumb" /></div></a>#}
 				{#<a href='#'><div class="thumbframe"><img src="{{asset('images/ad/ad3.gif')}}" class="thumb" /></div></a>#}
@@ -286,7 +283,7 @@
 			{#<div class="clear"></div>#}
 			{#<div class="ad1">#}
 				{#<script type="text/javascript">#}
-				{#var images = [], #}
+				{#var images = [],#}
 				{#index = 0;#}
 				{#images[0] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad1.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";#}
 				{#images[1] = "<a href = 'http://www.computerhope.com/history/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad2.gif')}}' class='thumb' alt='Computer History'></div></a>";#}
@@ -295,9 +292,9 @@
 				{#index = Math.floor(Math.random() * images.length);#}
 				{#document.write(images[index]);#}
 				{#</script>#}
-				{##}
+
 				{#<script type="text/javascript">#}
-				{#var images = [], #}
+				{#var images = [],#}
 				{#index = 0;#}
 				{#images[0] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad1.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";#}
 				{#images[1] = "<a href = 'http://www.computerhope.com/history/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad2.gif')}}' class='thumb' alt='Computer History'></div></a>";#}
@@ -306,9 +303,9 @@
 				{#index = Math.floor(Math.random() * images.length);#}
 				{#document.write(images[index]);#}
 				{#</script>#}
-				{##}
+
 				{#<script type="text/javascript">#}
-				{#var images = [], #}
+				{#var images = [],#}
 				{#index = 0;#}
 				{#images[0] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad1.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";#}
 				{#images[1] = "<a href = 'http://www.computerhope.com/history/index.htm'><div class='thumbframe'><img src='{{asset('images/ad/ad2.gif')}}' class='thumb' alt='Computer History'></div></a>";#}
@@ -317,9 +314,9 @@
 				{#index = Math.floor(Math.random() * images.length);#}
 				{#document.write(images[index]);#}
 				{#</script>#}
-				{##}
+
 				{#<script type="text/javascript">#}
-				{#var images = [], #}
+				{#var images = [],#}
 				{#index = 0;#}
 				{#images[0] = "<a href = 'http://www.computerhope.com/index.htm'><div class='thumbframe omega'><img src='{{asset('images/ad/ad1.gif')}}' class='thumb' alt='Visit Computer Hope'></div></a>";#}
 				{#images[1] = "<a href = 'http://www.computerhope.com/history/index.htm'><div class='thumbframe omega'><img src='{{asset('images/ad/ad2.gif')}}' class='thumb' alt='Computer History'></div></a>";#}
