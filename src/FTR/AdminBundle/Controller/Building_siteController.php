@@ -575,7 +575,7 @@ class Building_siteController extends Controller
             $entity->setPublish($publish);
             $em->persist($entity);
             $em->flush();
-            
+
             echo 'Success';
         }else{
             echo "Fail";
