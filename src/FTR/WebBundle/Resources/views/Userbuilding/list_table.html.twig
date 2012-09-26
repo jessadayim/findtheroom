@@ -6,7 +6,7 @@
 <div style="width:1000px; display:block; position:relative; height:100%; margin-top: 0px;">
     <table style="margin-top: 30px; padding-bottom:15px;">
         <thead height="80" valign="middle">
-        <th align="left" width="250" style="font-size:24px;">ชื่อตึก</td>
+        <th align="left" width="250" style="font-size:24px;"><a class="btnOrderBy" href="#" id="sort_building_name">ชื่อตึก</a></td>
         <th align="center" width="250" style="font-size:24px;">สถานะการแสดง</td>
         <th align="center" width="250" style="font-size:24px;">ดูหน้าตัวอย่าง</td>
         <th align="center" width="250" style="font-size:24px;">แก้ไขรายละเอียด</td>
@@ -27,7 +27,57 @@
                 <td align="left" style="font-size:24px;" colspan="3">&nbsp;</td>
             </tr>
             <tr>
-                <td>แสดงผล {{ countList }} ตึก : หน้า</td>
+                <td>
+                    แสดงผล {{ countList }} ตึก : หน้า
+                    {% for i in 1..paginator.numpages %}
+                        {% if paginator.range.0 > 2 and i == paginator.range.0 %}
+                            ...
+                        {% endif %}
+
+                        {%  if(i==1 or i==paginator.numpages or i in paginator.range) %}
+                            {% if i==paginator.currentpage %}
+                                {% if i == noPage %}
+                                    <input class="disableBtn" type="button" value="{{i}}" id="Submit" name="submitPage" disabled="true"/>
+                                {% else %}
+                                    <input class="inPage" type="button" value="{{i}}" id="Submit" name="submitPage"/>
+                                {% endif %}
+                            {% else %}
+                                {% if i == noPage %}
+                                    <input class="disableBtn" type="button" value="{{i}}" id="Submit" name="submitPage" disabled="true"/>
+                                {% else %}
+                                    <input class="inPage" type="button" value="{{i}}" id="Submit" name="submitPage"/>
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+
+                        {% if paginator.range[paginator.midrange -1] < paginator.numpages -1 and i == paginator.range[paginator.midrange-1] %}
+                            ...
+                        {% endif %}
+                    {% endfor %}
+                    <div align="right" style="float:right;" ><strong>Search:</strong>
+                        <input id="tbxSearch" style="height: 25px;margin-bottom: 10px;" value="{{ textSearch }}" />&nbsp;&nbsp;
+                        <select name="record" style="width:150px;" class="record">
+                            <option value="10">10 Record </option>
+                            {% if limit == '50' %}
+                                <option selected="yes" value="50">50 Record</option>
+                                <option value="100">100 Record</option>
+                                <option value="500">500 Record</option>
+                                {% elseif limit == '100' %}
+                                <option value="50">50 Record</option>
+                                <option selected="yes" value="100">100 Record</option>
+                                <option value="500">500 Record</option>
+                                {% elseif limit == '500' %}
+                                <option value="50">50 Record</option>
+                                <option value="100">100 Record</option>
+                                <option selected="yes" value="500">500 Record</option>
+                            {% else %}
+                                <option value="50">50 Record</option>
+                                <option value="100">100 Record</option>
+                                <option value="500">500 Record</option>
+                            {% endif %}
+                        </select>
+                    </div>
+                </td>
             </tr>
         {% else %}
             <tr height align="70" valign="middle">
