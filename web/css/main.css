@@ -196,6 +196,7 @@ input.regis { background: url(../images/regis-bt.png) no-repeat; border: 0; widt
 /*Add Data Apartment*/
 .detail table .styled-select { background: url(../images/new_arrow.png) no-repeat right center #FFF; width:180px; height: 30px; overflow: hidden; margin-left:2px;}
 .detail table .styled-select .select{border: 0px; /*font-family: DB Adman X;*/ font-size: 14px; color: #423C3B; background: transparent; padding: 5px; width:210px; height: 30px; -webkit-appearance: none;}
+.detail table .styled-select .record{border: 0px; /*font-family: DB Adman X;*/ font-size: 14px; color: #423C3B; background: transparent; padding: 5px; width:210px; height: 30px; -webkit-appearance: none;}
 .detail table input.save{ background: url(../images/save.png) no-repeat; border: 0; width: 51px; height: 51px; cursor: pointer; position:absolute; margin-top:-10px; margin-left:100px;}
 .detail table input.canc{ background: url(../images/canc.png) no-repeat; border: 0; width: 51px; height: 51px; cursor: pointer; position:absolute; margin-top:-10px; margin-left:160px;}
 .detail table input.back{ background: url(../images/back.png) no-repeat; border: 0; width: 51px; height: 51px; cursor: pointer; position:absolute; margin-top:-10px; margin-left:160px;}
