@@ -21,6 +21,11 @@ class Building_typeController extends Controller
      */
     public function indexAction()
     {
+        return $this->render('FTRAdminBundle:Building_type:index.html.twig', array());
+    }
+
+    public function showAction()
+    {
         $sqlGetEntity = "
             SELECT
               *
@@ -78,7 +83,7 @@ class Building_typeController extends Controller
         $objResult = $this->getDataArray($sqlGetEntity);
 
         $paginator = new Paginator($countList, $offset, $limit, $midRange);
-        return $this->render('FTRAdminBundle:Building_type:index.html.twig', array(
+        return $this->render('FTRAdminBundle:Building_type:show.html.twig', array(
             'entities'          => $objResult,
             'paginator'	        => $paginator,
             'countList'		    => $countList,
