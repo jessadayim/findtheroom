@@ -21,14 +21,12 @@ class DetailController extends Controller
                 /**
                  * query Detail page general detail
                  * */
-                $sqlGeneral = "SELECT b.*,t.*,z.*,p.*
-                    FROM building_site b JOIN building_type t ON b.building_type_id = t.id
-                        JOIN zone z ON b.zone_id = z.id
-                        JOIN pay_type p ON p.id = b.pay_type_id
-                    WHERE b.id = $id
-                        AND b.deleted =0
-                        AND t.deleted =0
-                        AND z.deleted =0";
+                $sqlGeneral = "SELECT b.*,t.type_name, t.deleted AS 'typeDeleted',z.zonename, z.deleted AS 'zoneDeleted',p.typename, p.deleted AS 'payDeleted'
+                               FROM building_site b JOIN building_type t ON b.building_type_id = t.id
+                                  JOIN zone z ON b.zone_id = z.id
+                                  JOIN pay_type p ON p.id = b.pay_type_id
+                               WHERE b.id = $id
+                                  AND b.deleted =0";
 
                 $objGeneral = $conn->fetchAll($sqlGeneral);
                 $countData = count($objGeneral);
@@ -40,14 +38,14 @@ class DetailController extends Controller
                      * query Detail Nearly Type Bts
                      * */
                     $sqlNearlyBts = "SELECT nl.name,nt.id
-                    FROM nearly2site n2
-                      JOIN nearly_location nl ON n2.nearly_location_id = nl.id
-                      JOIN nearly_type nt ON nl.nearly_type_id = nt.id
-                    WHERE n2.building_site_id = $id
-                      AND nt.id IN (1,2,3)
-                      AND n2.deleted !=1
-                      AND nl.deleted !=1
-                      AND nt.deleted !=1";
+                                     FROM nearly2site n2
+                                        JOIN nearly_location nl ON n2.nearly_location_id = nl.id
+                                        JOIN nearly_type nt ON nl.nearly_type_id = nt.id
+                                     WHERE n2.building_site_id = $id
+                                        AND nt.id IN (1,2,3)
+                                        AND n2.deleted =0
+                                        AND nl.deleted =0
+                                        AND nt.deleted =0";
                     $objNearBts = $conn->fetchAll($sqlNearlyBts);
                     $nearBts = "";
                     $nearMrt = "";
@@ -65,47 +63,46 @@ class DetailController extends Controller
                     /**
                      * query Detail facility roomtype
                      * */
-                    $sqlRoomType = "SELECT n2.*,img.*
-                                    FROM roomtype2site n2
+                    $sqlRoomType = "SELECT r2.room_size, r2.room_price, r2.room_typename,img.building_site_id, img.photo_name, img.deleted, img.sequence
+                                    FROM roomtype2site r2
                                     LEFT JOIN image img
-                                        ON n2.id = img.roomtype2site_id
-                                    where n2.building_site_id = $id ";
+                                        ON r2.id = img.roomtype2site_id
+                                    WHERE r2.building_site_id = $id AND r2.deleted = 0
+                                    ORDER BY img.sequence";
                     $objRoomType = $conn->fetchAll($sqlRoomType);
 
                     /**
                      * query Detail facility inroom
                      * */
-                    $sqlInRoom = "SELECT f2.building_site_id, f.facility_name
+                    $sqlInRoom = "SELECT f2.building_site_id, f2.deleted, f.facility_name
                                   FROM facilitylist f
                                   LEFT JOIN facility2site f2 ON f2.facilitylist_id = f.id
-                                  WHERE f.facility_type =  'inroom'  AND f.deleted = 0";
+                                  WHERE f.facility_type =  'inroom'
+                                      AND f.deleted = 0";
                     $objInRoom = $conn->fetchAll($sqlInRoom);
 
                     /**
                      * query Detail facility outroom
                      * */
-                    $sqlOutRoom = "SELECT f2.building_site_id, f.facility_name
+                    $sqlOutRoom = "SELECT f2.building_site_id, f2.deleted, f.facility_name
                                    FROM facilitylist f
                                    LEFT JOIN facility2site f2 ON f2.facilitylist_id = f.id
-                                   WHERE f.facility_type =  'outroom' AND f.deleted = 0";
+                                   WHERE f.facility_type =  'outroom'
+                                      AND f.deleted = 0";
                     $objOutRoom = $conn->fetchAll($sqlOutRoom);
 
                     /**
-                     * query image Room
+                     * query image Gallery
                      * */
-                    $sqlImage = "SELECT photo_name, building_site_id
+                    $sqlImage = "SELECT photo_name, building_site_id, description
                                     FROM image
-                                    WHERE photo_type = 'recommend'
+                                    WHERE photo_type = 'gallery'
                                       AND building_site_id = $id
-                                      AND deleted = 0 ";
+                                      AND deleted = 0
+                                    ORDER BY sequence";
                     $objImage = $conn->fetchAll($sqlImage);
-
-                    if(empty($objImage[0]['photo_name']) || empty($objImage[0]['building_site_id'])){
-                           $imageName = '';
-                           $imageID = '';
-                    }else{
-                        $imageName = $objImage[0]['photo_name'];
-                        $imageID = $objImage[0]['building_site_id'];
+                    if(empty($objImage[0]['photo_name'])){
+                        $objImage = "";
                     }
                 }else{
                     return $this->redirect($this->generateUrl('FTRWebBundle_list'));
@@ -113,7 +110,6 @@ class DetailController extends Controller
             } catch (Exception $e) {
                 return $this->redirect($this->generateUrl('FTRWebBundle_list'));
             }
-
             return $this->render('FTRWebBundle:Detail:detail.html.twig', array(
                 'general' => $detailData,
                 'roomType' => $objRoomType,
@@ -124,8 +120,8 @@ class DetailController extends Controller
                 'nearCol' => $nearCollege,
                 'id' => $id,
                 'countData' => $countData,
-                'imageName'=> $imageName,
-                'imageID'=>$imageID
+                'imageName'=> $objImage,
+                'countGallery'=>count($objImage)
             ));
         } else {
             return $this->redirect($this->generateUrl('FTRWebBundle_list'));

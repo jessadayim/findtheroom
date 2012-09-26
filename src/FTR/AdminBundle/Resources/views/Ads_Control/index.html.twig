@@ -1,0 +1,15 @@
+{% extends 'FTRAdminBundle:Layout:panel_layout.html.twig' %}
+
+{% block body %}
+<div id="containerwrap">
+    <div class="grid_12 createLists marginB_10 alpha" style="">
+        <h1>Ads_Control list</h1>
+        <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+    <br/>
+    <div id="innerPanel" class="grid_12 tableLists marginB_10 alpha" style="">
+        {% render "FTRAdminBundle:Ads_Control:show" %}
+    </div>
+</div>
+{% endblock %}

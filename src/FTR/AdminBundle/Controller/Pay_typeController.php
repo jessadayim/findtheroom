@@ -21,6 +21,11 @@ class Pay_typeController extends Controller
      */
     public function indexAction()
     {
+        return $this->render('FTRAdminBundle:Pay_type:index.html.twig', array());
+    }
+
+    public function showAction()
+    {
         $em = $this->getDoctrine()->getEntityManager();
 
         //get post
@@ -55,7 +60,7 @@ class Pay_typeController extends Controller
 
         $paginator = new Paginator($countListPayType, $offset, $limit, $midRange);
 
-        return $this->render('FTRAdminBundle:Pay_type:index.html.twig', array(
+        return $this->render('FTRAdminBundle:Pay_type:show.html.twig', array(
             'entities'          => $entities,
             'paginator'	        => $paginator,
             'countList'	        => $countListPayType,
@@ -109,6 +114,10 @@ class Pay_typeController extends Controller
 
             $em->persist($entity);
             $em->flush();
+
+            //สร้าง logs
+            $this->addLogger('Insert Pay Type', $entity);
+
             echo 'finish';
             exit();
 //            return $this->redirect($this->generateUrl('pay_type_show', array('id' => $entity->getId())));
@@ -150,6 +159,10 @@ class Pay_typeController extends Controller
             $entity->setDeleted(1);
             $em->persist($entity);
             $em->flush();
+
+            //สร้าง logs
+            $this->addLogger('Update Pay Type: Deleted = 1', $entity);
+
             echo 'finish';
             exit();
         }
@@ -195,6 +208,9 @@ class Pay_typeController extends Controller
 
             $em->persist($entity);
             $em->flush();
+
+            //สร้าง logs
+            $this->addLogger('Update Pay type', $entity);
             echo 'finish';exit();
 //            return $this->redirect($this->generateUrl('pay_type_edit', array('id' => $id)));
         }
@@ -223,6 +239,15 @@ class Pay_typeController extends Controller
             return false;
         }
         return true;
+    }
+
+    /*
+     * บันทึก log เกี่ยวกับการ insert, delete, update database
+     */
+    private function addLogger($message, $entity){
+        $logger = new LoggerHelper();
+        $newArray = $logger->objectToArray($entity);
+        $logger->addInfo($message, $newArray);
     }
 
     /*

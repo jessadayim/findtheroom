@@ -3,6 +3,7 @@
 namespace FTR\WebBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use FTR\AdminBundle\Helper\FTRConstant;
 
 
 class SearchController extends Controller
@@ -85,6 +86,11 @@ class SearchController extends Controller
         $buildingType   = $this->getBuildingType();
         $province       = $this->getProvince();
 
+        $constant = new FTRConstant();
+        $pinApartment = $constant->getPinApartment();
+        $pinMan = $constant->getPinMan();
+        $pinWomen = $constant->getPinWomen();
+
         return $this->render('FTRWebBundle:Search:shortSearch.html.twig', array(
             'payType' 			    =>$payType,
             'bkkZone' 		        =>$bkkZone,
@@ -101,6 +107,9 @@ class SearchController extends Controller
             'lessPrice'             =>$lessPrice,
             'mostPrice'             =>$mostPrice,
             'selProvince'           =>$selProvince,
+            'pinApartment'          =>$pinApartment,
+            'pinMan'                =>$pinMan,
+            'pinWomen'              =>$pinWomen
         ));
     }
 

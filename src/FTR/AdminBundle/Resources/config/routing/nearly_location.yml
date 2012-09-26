@@ -2,6 +2,10 @@ nearly_location:
     pattern:  /
     defaults: { _controller: "FTRAdminBundle:Nearly_location:index" }
 
+nearly_location_show:
+    pattern:  /show
+    defaults: { _controller: "FTRAdminBundle:Nearly_location:show" }
+
 nearly_location_new:
     pattern:  /new
     defaults: { _controller: "FTRAdminBundle:Nearly_location:new" }

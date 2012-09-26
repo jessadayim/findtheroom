@@ -1,3 +1,0 @@
-manage_resource:
-    pattern:  /
-    defaults: { _controller: FTRAdminBundle:Manage_resource:index }

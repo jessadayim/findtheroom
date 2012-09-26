@@ -45,7 +45,7 @@ class RegisterController extends Controller
 เมื่อท่านทำการยืนยันการลงทะเบียนเสร็จเรียบร้อยแล้ว ท่านจะสามารถใช้บริการเหล่านี้ได้
 -ลงทะเบียนหอพักฟรี
 -รับบริการเสริมจาก FindTheRoom.com
-ติดต่อสอบถามข้อมูลเพิ่มเติม โทร 02-692-119";
+ติดต่อสอบถามข้อมูลเพิ่มเติม โทร 02-692-1199";
 
             $message = \Swift_Message::newInstance()
                 ->setSubject('ยินดีต้อนรับสมาชิกใหม่ '.$email.' สู่ FindTheRoom.com')
@@ -58,8 +58,15 @@ class RegisterController extends Controller
             ,'firstName'=>$objOwner[0]['firstname']
             ,'lastName'=>$objOwner[0]['lastname'])),'text/html');
 
-            $this->get('mailer')->send($message);
-            return $this->redirect($this->generateUrl('FTRWebBundle_homepage'));
+//            $this->get('mailer')->send($message);
+            if($this->get('mailer')->send($message)){
+                echo 'success';
+                exit();
+            }else{
+                echo 'fail';
+                exit();
+            }
+//            return $this->redirect($this->generateUrl('FTRWebBundle_homepage'));
         }
     }
 	public function RegisConfirmAction()
@@ -119,7 +126,7 @@ class RegisterController extends Controller
 เมื่อท่านทำการยืนยันการลงทะเบียนเสร็จเรียบร้อยแล้ว ท่านจะสามารถใช้บริการเหล่านี้ได้
 -ลงทะเบียนหอพักฟรี
 -รับบริการเสริมจาก FindTheRoom.com
-ติดต่อสอบถามข้อมูลเพิ่มเติม โทร 02-692-119";
+ติดต่อสอบถามข้อมูลเพิ่มเติม โทร 02-692-1199";
 
 							$message = \Swift_Message::newInstance()
 					        ->setSubject('ยินดีต้อนรับสมาชิกใหม่ '.$email.' สู่ FindTheRoom.com')

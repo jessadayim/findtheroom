@@ -68,7 +68,7 @@
 						//alert(patt.test($('#newpass').val()));return false;
 						if (patt.test($('#newpass').val()) == false) {
 							//alert("pattern working");
-							$("font#txterror").html("รหัสผ่านต้องมีตัวอักษรและตัวเลข");
+							$("font#txterror").html("ชื่อผู้ใช้งาน จะต้องเป็นอักขระอังกฤษ หรือตัวเลข");
 							$("font#txterror").hide();
 							$("font#txterror").show("slow");
 							document.getElementById('newpass').focus();

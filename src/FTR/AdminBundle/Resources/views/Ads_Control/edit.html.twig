@@ -1,0 +1,85 @@
+<script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script>
+<script  src='{{asset("js/paging/data_table/event.js")}}'></script>
+
+<script>
+
+    //ประกาศค่าเริ่มต้น
+    var urlPost = "{{ path('ads_control_show') }}";
+    var urlEdit = "{{ path('ads_control_update', { 'id': entity.id }) }}";
+    var idCheck = "#ftr_adminbundle_ads_controltype_title";
+    var namePage = 'Ads Control';
+
+</script>
+<style type="text/css">
+    #btnEdit {
+        background: url("{{ asset('images/save.png')}}") no-repeat;
+        display: block;
+        float: none;
+        height: 50px;
+        position: absolute;
+        margin-left: 70px;
+        margin-top: -55px;
+    }
+
+    #btnInputEdit {
+        background: url("{{ asset('images/save.png')}}") no-repeat;
+        opacity: 0;
+        -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+        filter: alpha(opacity=0);
+        cursor: pointer;
+        height: 50px;
+        width: 50px;
+    }
+</style>
+<fieldset id="editField">
+    <legend>
+        Ads_Control edit
+    </legend>
+        <form id="formEdit" action="{{ path('ads_control_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+        <div class="label" style="">
+            {{ form_label(edit_form.title) }}
+        </div>
+        {{ form_widget(edit_form.title, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+        {{ form_errors(edit_form.title) }}
+        <br />
+        <div class="label" style="">
+            {{ form_label(edit_form.zone) }}
+        </div>
+        {{ form_widget(edit_form.zone, { 'attr': {'class': 'widthin'} }) }} &nbsp;
+        {{ form_errors(edit_form.zone) }}
+        <br />
+        <div class="label" style="">
+            {{ form_label(edit_form.codes) }}
+        </div>
+        {{ form_widget(edit_form.codes, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+        {{ form_errors(edit_form.codes) }}
+        <br />
+        <div  style="">
+            {{ form_label(edit_form.publish) }}&nbsp;
+            {{ form_widget(edit_form.publish) }}
+            {{ form_errors(edit_form.publish) }}
+        </div>
+        <br />
+        <div class="label" style="">
+            {{ form_label(edit_form.date_start) }}
+        </div>
+        {{ form_widget(edit_form.date_start, { 'attr': {'class': 'widthin'} }) }} &nbsp;
+        {{ form_errors(edit_form.date_start) }}
+        <br />
+        <div class="label" style="">
+            {{ form_label(edit_form.date_end) }}
+        </div>
+        {{ form_widget(edit_form.date_end, { 'attr': {'class': 'widthin'} }) }} &nbsp;
+        {{ form_errors(edit_form.date_end) }}
+        <br />
+        {{ form_widget(edit_form) }}
+
+        <span style="float: right;">
+            <img src="{{ asset('images/cancel.png')}}" id="btnCancelEdit" width="50" height="50" style="cursor:pointer;margin-right: 70px" />
+                &nbsp;&nbsp;
+            <div id="btnEdit">
+                <input type="submit" id="btnInputEdit" value="Edit">
+            </div>
+        </span>
+    </form>
+</fieldset>

@@ -2,6 +2,10 @@ building_type:
     pattern:  /
     defaults: { _controller: "FTRAdminBundle:Building_type:index" }
 
+building_type_show:
+    pattern:  /show
+    defaults: { _controller: "FTRAdminBundle:Building_type:show" }
+
 building_type_new:
     pattern:  /new
     defaults: { _controller: "FTRAdminBundle:Building_type:new" }

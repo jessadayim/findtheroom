@@ -20,6 +20,11 @@ class ZoneController extends Controller
      */
     public function indexAction()
     {
+        return $this->render('FTRAdminBundle:Zone:index.html.twig', array());
+    }
+
+    public function showAction()
+    {
         $em = $this->getDoctrine()->getEntityManager();
 
         //get post
@@ -54,7 +59,7 @@ class ZoneController extends Controller
 
         $paginator = new Paginator($countListZone, $offset, $limit, $midRange);
 
-        return $this->render('FTRAdminBundle:Zone:index.html.twig', array(
+        return $this->render('FTRAdminBundle:Zone:show.html.twig', array(
             'entities'          => $entities,
             'paginator'	        => $paginator,
             'countListZone'		=> $countListZone,
@@ -108,7 +113,10 @@ class ZoneController extends Controller
             $em->persist($entity);
 
             $em->flush();
-            $this->addLogger('Insert zone', $entity);
+
+            //สร้าง logs
+            $this->addLogger('Insert Zone', $entity);
+
             echo 'finish';
             exit();
 //            return $this->redirect($this->generateUrl('zone_show', array('id' => $entity->getId())));
@@ -149,6 +157,10 @@ class ZoneController extends Controller
             $entity->setDeleted(1);
             $em->persist($entity);
             $em->flush();
+
+            //สร้าง logs
+            $this->addLogger('Update Zone: Deleted = 1', $entity);
+
             echo 'finish';
             exit();
         }
@@ -195,6 +207,9 @@ class ZoneController extends Controller
 
             $em->persist($entity);
             $em->flush();
+
+            //สร้าง logs
+            $this->addLogger('Update Zone', $entity);
 
             echo 'finish';exit();
 //            return $this->redirect($this->generateUrl('zone_edit', array('id' => $id)));

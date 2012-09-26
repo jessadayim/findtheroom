@@ -4,27 +4,27 @@
 <link rel="stylesheet" type="text/css" href="{{asset('css/jquery.fancybox-1.3.4.css')}}" media="screen" />
 <script type="text/javascript" src="{{asset('js/fancybox/jquery.easing-1.4.pack.js')}}"></script>
 <script>
-	window.fbAsyncInit = function() {
-		FB.init({
-			appId : '414830161885886', // App ID
-			channelUrl : '//www.findtheroom.com//login.php', // Channel File ระบุไฟล์ที่จะใช้ login
-			status : true, // check login status
-			cookie : true, // enable cookies to allow the server to access the session
-			xfbml : true // parse XFBML
-		});
-	};
-	// Load the SDK Asynchronously
-	( function(d) {
-			var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-			if (d.getElementById(id)) {
-				return;
-			}
-			js = d.createElement('script');
-			js.id = id;
-			js.async = true;
-			js.src = "//connect.facebook.net/en_US/all.js";
-			ref.parentNode.insertBefore(js, ref);
-		}(document)); 
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId : '414830161885886', // App ID
+            channelUrl : '//www.findtheroom.com//login.php', // Channel File ระบุไฟล์ที่จะใช้ login
+            status : true, // check login status
+            cookie : true, // enable cookies to allow the server to access the session
+            xfbml : true // parse XFBML
+        });
+    };
+    // Load the SDK Asynchronously
+    ( function(d) {
+        var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+        if (d.getElementById(id)) {
+            return;
+        }
+        js = d.createElement('script');
+        js.id = id;
+        js.async = true;
+        js.src = "//connect.facebook.net/en_US/all.js";
+        ref.parentNode.insertBefore(js, ref);
+    }(document));
 </script>
 <script>
 	$(document).ready(function() {
@@ -80,10 +80,18 @@
 	</div>
     <hr class="line" style="top: 400px;" />
     <div style="width:1000px; display:block; position:relative;">
+
+
 		<table style="margin-top: 70px;">
             <tr height="60" valign="middle">
 				<td align="right" width="400" style="font-size:24px;">หรือ</td>
-                <td align="left" width="600"><div class="fb-login-button">เข้าสู่ระบบด้วย Facebook</div></td>
+                <td align="left" width="600">
+                    <div id="fb-root"></div>
+                    {#<div class="fb-login-button" data-show-faces="false" data-width="200" data-max-  rows="1">Test text</div>#}
+                   {#<div class="fb-login-button" data-show-faces="false" data-width="200" data-max-  rows="1">Test text</div>#}
+                   {#<fb:login-button>Login with Facebook</fb:login-button>#}
+                   <div class="fb-login-button" data-show-faces="false" data-width="200" data-max-  rows="1">Test text</div>
+                </td>
             </tr>
         </table>
 	</div>

@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use FTR\WebBundle\Entity\Nearly2site;
 use FTR\AdminBundle\Form\Nearly2siteType;
+use FTR\AdminBundle\Helper\LoggerHelper;
 
 /**
  * Nearly2site controller.
@@ -93,6 +94,9 @@ class Nearly2siteController extends Controller
                 $entity ->setNearlyLocationId($value);
                 $entity ->setDeleted(0);
                 $em->persist($entity);
+
+                //สร้าง logs
+                $this->addLogger('Insert Nearly2site', $entity);
             }
         }else{
             foreach ($objGeNearly2Site as $key => $value) {
@@ -107,6 +111,9 @@ class Nearly2siteController extends Controller
                     $entity ->setDeleted(0);
                 }
                 $em->persist($entity);
+
+                //สร้าง logs
+                $this->addLogger('Update Nearly2site', $entity);
             }
             if (count($objGeNearly2Site) < count($getNearlyPost)){
                 foreach ($getNearlyPost as $key => $value) {
@@ -118,6 +125,9 @@ class Nearly2siteController extends Controller
                         $em->persist($entity);
                     }
                 }
+
+                //สร้าง logs
+                $this->addLogger('Insert Nearly2site', $entity);
             }
         }
         $em->flush();
@@ -134,5 +144,14 @@ class Nearly2siteController extends Controller
             echo 'Caught exception: ',  $e->getMessage(), "\n";
         }
         return array();
+    }
+
+    /*
+     * บันทึก log เกี่ยวกับการ insert, delete, update database
+     */
+    private function addLogger($message, $entity){
+        $logger = new LoggerHelper();
+        $newArray = $logger->objectToArray($entity);
+        $logger->addInfo($message, $newArray);
     }
 }

@@ -16,7 +16,7 @@
             if(mybrowser.indexOf('MSIE')>0){
                 $("div#upload_map.uploadify").css("marginTop","-60px");
                 $("#headimage2").css("marginTop","-60px");
-            }
+                    }
             if((navigator.userAgent.match(/Android/i)) ||
                     (navigator.userAgent.match(/iPhone/i)) ||
                     (navigator.userAgent.match(/iPod/i)) ||
@@ -106,64 +106,7 @@
                 '<td><LABEL align="left">บาท</LABEL><input type="hidden" name="imageid'+num+'" id="imageid'+num+'" value="'+imageid+'" /></td>' +
                 '</tr>';
         $("#tableroom").append(strInner);
-    {#var theTable = document.all.tableroom;#}
-    {#var newRow = theTable.insertRow(theTable.rows.length)#}
 
-
-    {#// newRow.id = newRow.uniqueID#}
-    {#newRow.id = 'roomtrid'+num#}
-    {#var item1 = 1#}
-    {#var newCell#}
-
-    {#//*** Column 1 ***//#}
-    {#newCell = newRow.insertCell(0)#}
-    {#newCell.id = newCell.uniqueID#}
-    {#newCell.setAttribute("className", "css-name");#}
-    {#newCell.innerHTML = "<img src=\"{{asset('images/delete.png')}}\" style=\"padding-left:0px; margin-left:-10px; cursor:pointer;\" onclick=\"RemoveRow("+num+","+imageid+");\" />"#}
-
-    {#//*** Column 2 ***//#}
-    {#newCell = newRow.insertCell(1)#}
-    {#newCell.id = newCell.uniqueID#}
-    {#newCell.setAttribute("className", "css-name");#}
-    {#newCell.innerHTML = '<div id="roompic'+num+"\" class=\"thumbframe4add\"><img src=\""+pathimage+"\"  class=\"nopad thumb4img\" /></div>"#}
-
-    {#//*** Column 3 ***//#}
-    {#newCell = newRow.insertCell(2)#}
-    {#newCell.id = newCell.uniqueID#}
-    {#newCell.setAttribute("className", "css-name");#}
-    {#newCell.innerHTML = "<input type=\"file\" name=\"room"+num+"\" id=\"room"+num+"\" /><input type=\"hidden\" name=\"hdnfilename"+num+"\" id=\"hdnfilename"+num+"\" value=\""+nameimage+"\" onchange=\"postData('image');\" />"#}
-
-    {#//*** Column 4 ***//#}
-    {#newCell = newRow.insertCell(3)#}
-    {#newCell.id = newCell.uniqueID#}
-    {#newCell.setAttribute("className", "css-name");#}
-    {#newCell.innerHTML = "<input name=\"typeap_name"+num+"\" id=\"typeap_name"+num+"\" type=\"text\" maxlength=\"30\" placeholder=\"กรุณากรอกประเภทห้องพัก\" value=\""+typename+"\" style=\" padding:2px; font-size:20px;\" onchange=\"postData('image');\" />"#}
-
-    {#//*** Column 5 ***//#}
-    {#newCell = newRow.insertCell(4)#}
-    {#newCell.id = newCell.uniqueID#}
-    {#newCell.setAttribute('align', 'center');#}
-    {#newCell.innerHTML = "<input name=\"typeap_size"+num+"\" id=\"typeap_size"+num+"\" type=\"text\" maxlength=\"10\" placeholder=\"ขนาด\" value=\""+roomsize+"\" style=\" padding:2px; font-size:20px; width:80px;\" onchange=\"postData('image');\" />"#}
-
-    {#//*** Column 6 ***//#}
-    {#newCell = newRow.insertCell(5)#}
-    {#newCell.id = newCell.uniqueID#}
-    {#newCell.setAttribute("className", "css-name");#}
-    {#newCell.innerHTML = "<LABEL align=\"left\">ตารางเมตร</LABEL>"#}
-
-    {#//*** Column 7 ***//#}
-    {#newCell = newRow.insertCell(6)#}
-    {#newCell.id = newCell.uniqueID#}
-    {#newCell.setAttribute('align', 'center');#}
-    {#newCell.innerHTML = "<input name=\"typeap_price"+num+"\" id=\"typeap_price"+num+"\" type=\"text\" maxlength=\"10\" placeholder=\"อัตราค่าเช่า\" value=\""+roomprice+"\" style=\" padding:2px; font-size:20px; width:80px;\" onchange=\"postData('image');\" />"#}
-
-    {#//*** Column 8 ***//#}
-    {#newCell = newRow.insertCell(7)#}
-    {#newCell.id = newCell.uniqueID#}
-    {#newCell.setAttribute("className", "css-name");#}
-    {#newCell.innerHTML = "<LABEL align=\"left\">บาท</LABEL><input type=\"hidden\" name=\"imageid"+num+"\" id=\"imageid"+num+"\" value=\""+imageid+"\" />"#}
-
-        //document.addform.hdnMaxLine.value = intLine;
         loopbutton();
         intLine++;
         document.addform.hdnMaxLine.value = intLine;
@@ -189,10 +132,8 @@
         arraydataimage = arrayread;
     }
 
-    function RemoveRow(num, imageid)
+    function RemoveRow(num, imageId)
     {
-        //intLine = parseInt(document.addform.hdnMaxLine.value);
-        //alert(num);
         var strdefault = '<tr height="40" valign="bottom">'+
                 '<td align="left" colspan="4" style="font-size:24px;" width="500">ประเภทห้องพัก</td>'+
                 '<td align="center" width="100">ขนาด</td>'+
@@ -201,15 +142,13 @@
                 '<td width="60">&nbsp;</td>'+
                 '</tr>'
 
+        $.get("{{ path('setDeleteImage') }}" , { id:imageId},
+                function(data){
+                    //alert(data);
+         });
+
         if(intLine > 1)
         {
-            // theTable = (document.all) ? document.all.tbtype :
-            // document.getElementById("tableroom")
-            // theTableBody = theTable.tBodies[0];
-            // theTableBody.deleteRow(num);
-            // intLine--;
-            // document.addform.hdnMaxLine.value = intLine;
-            // loopbutton();
             readdataroom(num);
             $("#tableroom").html(strdefault);
             intLine = 0;
@@ -265,39 +204,6 @@
                 '</tr>';
         $("#tbgal").append(strInner);
 
-    {#var theTable = document.all.tbgal#}
-    {#var newRow = theTable.insertRow(theTable.rows.length)#}
-    {#//newRow.id = newRow.uniqueID#}
-    {#newRow.id = 'galtrid'+num#}
-
-    {#var item1 = 1#}
-    {#var newCell#}
-
-    {#//*** Column 1 ***//#}
-    {#newCell = newRow.insertCell(0)#}
-    {#newCell.id = newCell.uniqueID#}
-    {#newCell.setAttribute("className", "css-name");#}
-    {#newCell.innerHTML = "<img src=\"{{asset('images/delete.png')}}\" style=\"padding-left:0px; margin-left:-10px; cursor:pointer;\" />"#}
-
-    {#//*** Column 2 ***//#}
-    {#newCell = newRow.insertCell(1)#}
-    {#newCell.id = newCell.uniqueID#}
-    {#newCell.setAttribute("className", "css-name");#}
-    {#newCell.innerHTML = '<div id="gallerypic'+num+"\" class=\"thumbframe4add\"><img src=\""+pathimage+"\" class=\"nopad thumb4img\" /></div>"#}
-
-    {#//*** Column 3 ***//#}
-    {#newCell = newRow.insertCell(2)#}
-    {#newCell.id = newCell.uniqueID#}
-    {#newCell.setAttribute("className", "css-name");#}
-    {#newCell.innerHTML = "<input type=\"file\" name=\"gallery"+num+"\" id=\"gallery"+num+"\" /><input type=\"hidden\" name=\"hdngalleryname"+num+"\" id=\"hdngalleryname"+num+"\" value=\""+nameimage+"\" />"#}
-
-    {#//*** Column 4 ***//#}
-    {#newCell = newRow.insertCell(3)#}
-    {#newCell.id = newCell.uniqueID#}
-    {#newCell.setAttribute("className", "css-name");#}
-    {#newCell.innerHTML = "<textarea id=\"galtitle"+num+"\" name=\"galtitle"+num+"\" maxlenght=\"500\" placeholder=\"กรอกข้อมูลของรูปที่นี่\" class=\"galdesc\" onchange=\"postData('image');\" >"+description+"</textarea><input type=\"hidden\" name=\"imageidgal"+num+"\" id=\"imageidgal"+num+"\" value=\""+imageid+"\" />"#}
-
-        //document.addform.hdnMaxLineGal.value = intLine;
         loopbuttongallery();
         intLineGal++;
         document.addform.hdnMaxLineGal.value = intLineGal;
@@ -407,9 +313,18 @@
         var provinceName = document.getElementById('province').value;
         var pathtochange = "{{path('getDistrict')}}";
         var addfixpath = pathtochange+'/'+provinceName;
-        document.getElementById('provinceChange').innerHTML = provinceName;
+        var pathtochange2 = "{{path('getProvince')}}";
+        var addfixpath2 = pathtochange2+'/'+provinceName;
+        $.get(addfixpath2,
+                function(data) {
+                    if(data != "no")
+                    {
+                        document.getElementById('provinceChange').innerHTML = data;
+                    }
+                });
+        //document.getElementById('provinceChange').innerHTML = provinceName;
 
-        if(Trim(provinceName)=='กรุงเทพมหานคร')
+        if(Trim(provinceName)==1)
         {
             var type = 0;
         }
@@ -547,9 +462,9 @@
                             <select id="province" name="province" class="select" onchange="getAmphur();">
                                 {% for list in province %}
                                     {% if list.checked == 'no' %}
-                                        <option value="{{list.PROVINCE_VALUE}}">{{list.PROVINCE_NAME}}</option>
+                                        <option value="{{list.PROVINCE_ID}}">{{list.PROVINCE_NAME}}</option>
                                     {% else %}
-                                        <option value="{{list.PROVINCE_VALUE}}" selected="selected">{{list.PROVINCE_NAME}}</option>
+                                        <option value="{{list.PROVINCE_ID}}" selected="selected">{{list.PROVINCE_NAME}}</option>
                                     {% endif %}
                                 {% endfor %}
                             </select>
@@ -564,9 +479,9 @@
                             <select id="district" name="district" class="select" onchange="postData('head');">
                                 {% for list in district %}
                                     {% if list.checked == 'no' %}
-                                        <option value="{{list.AMPHUR_VALUE}}">{{list.AMPHUR_NAME}}</option>
+                                        <option value="{{list.AMPHUR_ID}}">{{list.AMPHUR_NAME}}</option>
                                     {% else %}
-                                        <option value="{{list.AMPHUR_VALUE}}" selected="selected">{{list.AMPHUR_NAME}}</option>
+                                        <option value="{{list.AMPHUR_ID}}" selected="selected">{{list.AMPHUR_NAME}}</option>
                                     {% endif %}
                                 {% endfor %}
                             </select>
