@@ -2,6 +2,10 @@ zone:
     pattern:  /
     defaults: { _controller: "FTRAdminBundle:Zone:index" }
 
+zone_show:
+    pattern:  /show
+    defaults: { _controller: "FTRAdminBundle:Zone:show" }
+
 zone_new:
     pattern:  /new
     defaults: { _controller: "FTRAdminBundle:Zone:new" }

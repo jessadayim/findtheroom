@@ -20,6 +20,11 @@ class ZoneController extends Controller
      */
     public function indexAction()
     {
+        return $this->render('FTRAdminBundle:Zone:index.html.twig', array());
+    }
+
+    public function showAction()
+    {
         $em = $this->getDoctrine()->getEntityManager();
 
         //get post
@@ -54,7 +59,7 @@ class ZoneController extends Controller
 
         $paginator = new Paginator($countListZone, $offset, $limit, $midRange);
 
-        return $this->render('FTRAdminBundle:Zone:index.html.twig', array(
+        return $this->render('FTRAdminBundle:Zone:show.html.twig', array(
             'entities'          => $entities,
             'paginator'	        => $paginator,
             'countListZone'		=> $countListZone,

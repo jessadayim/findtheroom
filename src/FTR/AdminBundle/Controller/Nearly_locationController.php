@@ -21,6 +21,11 @@ class Nearly_locationController extends Controller
      */
     public function indexAction()
     {
+        return $this->render('FTRAdminBundle:Nearly_location:index.html.twig', array());
+    }
+
+    public function showAction()
+    {
         $sqlGetEntity = "
             SELECT
               n.*,
@@ -88,7 +93,7 @@ class Nearly_locationController extends Controller
         $objResult = $this->getDataArray($sqlGetEntity);
 
         $paginator = new Paginator($countList, $offset, $limit, $midRange);
-        return $this->render('FTRAdminBundle:Nearly_location:index.html.twig', array(
+        return $this->render('FTRAdminBundle:Nearly_location:show.html.twig', array(
             'entities'          => $objResult,
             'paginator'	        => $paginator,
             'countList'		    => $countList,
