@@ -35,7 +35,6 @@ class MainController extends Controller {
                         $image = $string2[0];
                     }
                 }
-
                 return $image;
             }
             else{
@@ -86,6 +85,7 @@ class MainController extends Controller {
         $zonec2 = $this->getAds('C-2');
         $zonec3 = $this->getAds('C-3');
         $zonec4 = $this->getAds('C-4');
+        $zonec5 = $this->getAds('C-5');
 
         //Zone D
         $zoned1 = $this->getAds('D-1');
@@ -97,7 +97,7 @@ class MainController extends Controller {
         $session->set('zoneD2', $zoned2);
         $session->set('zoneD3', $zoned3);
         $session->set('zoneD4', $zoned4);
-
+//echo $zonea2;exit();
         $top_last_building = $this -> getTopLastBuilding();
         $last_update = date("Y-m-d H:i:s", mktime(date("H"), date("i"), date("s"), date("m"), date("d"), date("Y")));
         $last_update = $this -> convertThaiDate($last_update);
@@ -105,7 +105,7 @@ class MainController extends Controller {
         return $this -> render('FTRWebBundle:Main:index.html.twig', array('top_last_building' => $top_last_building
         , 'last_update' => $last_update, 'enable' => $enable
         , 'zoneA1'=>$zonea1, 'zoneA2'=>$zonea2
-        , 'zoneC1'=>$zonec1, 'zoneC2'=>$zonec2, 'zoneC3'=>$zonec3, 'zoneC4'=>$zonec4));
+        , 'zoneC1'=>$zonec1, 'zoneC2'=>$zonec2, 'zoneC3'=>$zonec3, 'zoneC4'=>$zonec4, 'zoneC5'=>$zonec5));
     }
 
     function getTopLastBuilding() {
@@ -235,7 +235,7 @@ class MainController extends Controller {
             echo 'Caught exception: ', $e -> getMessage(), "\n";
         }
         try {
-            $sqlCountView = "SELECT img.photo_name, img.building_site_id, b.id, b.building_name,n.name,t.type_name, b.start_price, b.end_price, nt.type_name AS nearlyType
+            $sqlCountView = "SELECT COUNT(ban.building_site_id), img.photo_name, img.building_site_id, b.id, b.building_name,n.name,t.type_name, b.start_price, b.end_price, nt.type_name AS nearlyType
                                 FROM banner_count ban
                                 INNER JOIN building_site b ON ban.building_site_id = b.id
                                 INNER JOIN building_type t ON b.building_type_id = t.id
