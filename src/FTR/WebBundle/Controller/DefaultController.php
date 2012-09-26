@@ -25,6 +25,7 @@ class DefaultController extends Controller
         $clickType      = @$_GET['clickType'];
 
         switch ($clickType) {
+            case "buildingRecom":
             case "buildingsite":
                 $building_site_id = @$_GET['id'];
                 $refname = "$clickType";
