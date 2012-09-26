@@ -112,10 +112,10 @@ class UserbuildingController extends Controller
             }
             if (!empty($getTextSearch) && $getTextSearch != ''){
                 $sql2 = "
-                $sql2
-                AND b.id LIKE '%$getTextSearch%'
-                OR b.building_name LIKE '%$getTextSearch%'
-            ";
+                    $sql2
+                    AND b.id LIKE '%$getTextSearch%'
+                    OR b.building_name LIKE '%$getTextSearch%'
+                ";
             }
 
             $sql2 = "
@@ -135,9 +135,9 @@ class UserbuildingController extends Controller
             ";
             //echo $sql2;
             //exit();
-            $objSQL2 = $conn->fetchAll($sql2);
+            $objSQL3 = $conn->fetchAll($sql2);
 
-            foreach ($objSQL2 as $key => $value) {
+            foreach ($objSQL3 as $key => $value) {
                 if ($value['publish'] == 1) {
                     $publish = "แสดงแล้ว";
                 } elseif ($value['publish'] == 0) {

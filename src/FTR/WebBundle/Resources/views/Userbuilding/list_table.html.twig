@@ -1,4 +1,4 @@
-<script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script>
+
 <script type='text/javascript' src='{{asset("js/paging/data_table/table_paging.js")}}'></script>
 <script type="text/javascript">
 
@@ -70,10 +70,10 @@
                         {% endif %}
                     {% endfor %}
 					</div>
-                    <div style="float:left; margin-left:305px; margin-top:-5px;"><strong>ค้นหา:</strong>
+                    <div style="float:left; margin-left:470px; margin-top:-5px; position:absolute;"><strong>ค้นหา:</strong>
                         <input id="tbxSearch" style="padding: 2px;font-size: 20px;" value="{{ textSearch }}" /><img src="{{asset('images/minisearch.png')}}" style="padding-top:0px;position:absolute;padding-left:10px; cursor:pointer;">
 						<div class="styled-select" style="margin-top:-30px; margin-left: 295px;">
-                        <select class="select" name="record" class="record">
+                        <select name="record" class="record">
                             <option value="10">10 รายการ </option>
                             {% if limit == '50' %}
                                 <option selected="yes" value="50">50 รายการ</option>
