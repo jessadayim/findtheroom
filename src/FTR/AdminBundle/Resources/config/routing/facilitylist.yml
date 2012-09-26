@@ -2,6 +2,10 @@ facilitylist:
     pattern:  /
     defaults: { _controller: "FTRAdminBundle:Facilitylist:index" }
 
+facilitylist_show:
+    pattern:  /show
+    defaults: { _controller: "FTRAdminBundle:Facilitylist:show" }
+
 facilitylist_new:
     pattern:  /new
     defaults: { _controller: "FTRAdminBundle:Facilitylist:new" }
