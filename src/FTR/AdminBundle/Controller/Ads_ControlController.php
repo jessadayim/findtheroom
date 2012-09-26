@@ -50,7 +50,7 @@ class Ads_ControlController extends Controller
         $offset = $limit*$page-$limit;
 
         if (empty($getOrderBy) && empty($getOrderByType)){
-            $getOrderBy = 'id';
+            $getOrderBy = 'cutDate >= 0';
             $getOrderByType = 'asc';
         }
 
@@ -74,7 +74,7 @@ class Ads_ControlController extends Controller
 
         $sqlGetEntity = "
             $sqlGetEntity
-            ORDER BY a.$getOrderBy $getOrderByType
+            ORDER BY $getOrderBy $getOrderByType
         ";
 
         //นับจำนวนที่มีทั้งหมด
@@ -91,13 +91,13 @@ class Ads_ControlController extends Controller
         foreach($objResult as $key => $value){
             $getCutDate = $value["cutDate"];
             if(intval($getCutDate) == 0){
-                $objResult[$key]['bg'] = 'style="background-color: red;"';
+                $objResult[$key]['bg'] = 'red';
             }else if (intval($getCutDate) <= 3 && intval($getCutDate) > 0){
-                $objResult[$key]['bg'] = 'style="background-color: orange;"';
+                $objResult[$key]['bg'] = 'orange';
             }else if (intval($getCutDate) <= 7 && intval($getCutDate) > 0){
-                $objResult[$key]['bg'] = 'style="background-color: yellow;"';
+                $objResult[$key]['bg'] = 'yellow';
             }else{
-                $objResult[$key]['bg'] = '';
+                $objResult[$key]['bg'] = 'white';
             }
 //            $newDate = $helper->convertThaiDateTime($value['date_start']);
 //            $objResult[$key]['date_start'] = $newDate;

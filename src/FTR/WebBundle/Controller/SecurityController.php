@@ -75,5 +75,12 @@ class SecurityController extends Controller
         $session->set('id', '');
 		return $this->redirect($this->generateUrl('FTRWebBundle_homepage'));
 	}
+
+    public function loginFacebookAction(){
+        require_once($_SERVER['DOCUMENT_ROOT'] . "findtheroom/web/facebook-php-sdk/facebook.php");
+//        require("/facebook-php-sdk/facebook.php");
+//        require("/facebook-php-sdk/connect_facebook.php");
+        exit();
+    }
 }
 

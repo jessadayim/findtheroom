@@ -26,4 +26,25 @@ class FTRConstant
             "D-5", "D-6", "D-7", "D-8"
         );
     }
+
+    // Pin Google Map
+    private $googlePinApartment = "http://aux.iconpedia.net/uploads/18144547311350443868.png";//"http://www.findtheroom.com/web/images/Pin-GG/apartment.png";
+    private $googlePinMan = "http://cdn1.iconfinder.com/data/icons/fugue/icon/pin.png";//"http://www.findtheroom.com/web/images/Pin-GG/man.png";
+    private $googlePinWomen = "http://www.phukieo.net/hospital/images/stories/pin-icon.png";//"http://www.findtheroom.com/web/images/Pin-GG/woman.png";
+
+    public function getPinApartment()
+    {
+        return $this->googlePinApartment;
+    }
+
+    public function getPinMan()
+    {
+        return $this->googlePinMan;
+    }
+
+    public function getPinWomen()
+    {
+        return $this->googlePinWomen;
+    }
+    // end Pin Google Map
 }

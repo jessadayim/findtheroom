@@ -11,90 +11,40 @@ class MainController extends Controller {
     /**
      * Function Get Ads Image
      */
-    public function bannerData(){
-        $conn = $this -> get('database_connection');
-        if (!$conn) { die("MySQL Connection error");
-        }
-
-        /**
-         * Get ads image
-         */
-        $sql = "SELECT codes, zone, date_start, date_end
-                FROM ads_control
-                WHERE publish = 1";
-        $objSQL = $conn -> fetchAll($sql);
-        if(count($objSQL) > 0){
-
-            $zone[][] = '';
-            $j = 0;
-            $uni = '';
-            $zone2[] = '';
-            for($i=0;$i<count($objSQL);$i++){
-                $time = date("Y-m-d H:i:s", time());
-                //echo strtotime($objSQL[$i]['date_end'])." ";
-                if(strtotime($time) >= strtotime($objSQL[$i]['date_start']) && strtotime($time) <= strtotime($objSQL[$i]['date_end'])){
-                    $zone2[$i] = $objSQL[$i]['zone'];
-                    if($uni != $objSQL[$i]['zone']){
-                        $j = 0;
-                    }else{
-                        $j = $j + 1;
-                    }
-                    $zone[$objSQL[$i]['zone']][$j] = $objSQL[$i]['codes'];
-                    $uni = $objSQL[$i]['zone'];
-                }
-            }
-
-            /**
-             * Get Zone Ads image
-             */
-            $zoneNull = implode('', $zone2);
-            if(empty($zoneNull)){
-                $zoneC = '';
-                $zoneA = '';
-                $zoneD = '';
-            }else{
-                $sqlZone = "SELECT zone, date_start, date_end
-                            FROM ads_control
-                            WHERE publish = 1
-                            GROUP BY zone";
-                $objZone = $conn -> fetchAll($sqlZone);
-                for($i=0;$i<count($objZone);$i++){
-                    if(strtotime($time) >= strtotime($objZone[$i]['date_start']) && strtotime($time) <= strtotime($objZone[$i]['date_end'])){
-                        $max = count($zone[$objZone[$i]['zone']]) - 1;
-                        echo $max;
-                        if(strstr($objZone[$i]['zone'], "A") ){
-                            $maxZoneA = count($zone[$objZone[$i]['zone']]) - 1;
-                            $zoneSplit[$i] = $zone[$objZone[$i]['zone']][rand(0,$maxZoneA)];
-                            $string1 = explode("<noscript>", $zoneSplit[$i]);
-                            $string2 = explode("</noscript>", $string1[1]);
-                            $zoneA[$i]  = $string2[0];
-                        }else if(strstr($objZone[$i]['zone'], "C") ){
-                            $maxZoneC = count($zone[$objZone[$i]['zone']]) - 1;
-                            $zoneC[$i] = $zone[$objZone[$i]['zone']][rand(0,$maxZoneC)];
-                        }else if(strstr($objZone[$i]['zone'], "D") ){
-                            $maxZoneD = count($zone[$objZone[$i]['zone']]) - 1;
-                            $zoneD[$i] = $zone[$objZone[$i]['zone']][rand(0,$maxZoneD)];
-                        }
+    public function getAds($zone){
+        if(!empty($zone)){
+            $conn = $this -> get('database_connection');
+            $time = date("Y-m-d H:i:s", time());
+            $sql = "
+                SELECT a.codes
+                FROM ads_control a
+                WHERE a.publish = 1
+                AND a.date_start <= '$time'
+                AND a.date_end >= '$time'
+                AND a.zone = '$zone'
+            ";
+            $result = $conn -> fetchAll($sql);
+            $countResult = count($result);
+            if($countResult>0){
+                $resultRandom = $result[rand(0, $countResult -1)];
+                $image = $resultRandom['codes'];
+                if(strstr($zone, "A-")){
+                    if(strstr($image, "<noscript>") && strstr($image, "</noscript>")){
+                        $string1 = explode("<noscript>", $image);
+                        $string2 = explode("</noscript>", $string1[1]);
+                        $image = $string2[0];
                     }
                 }
-                if(empty($zoneA)){
-                    $zoneA = '';
-                }
-                else if(empty($zoneC)){
-                    $zoneC = '';
-                }else if(empty($zoneD)){
-                    $zoneD = '';
-                }
+
+                return $image;
             }
-        }else{
-            $zoneA = '';
-            $zoneC = '';
-            $zoneD = '';
+            else{
+                return false;
+            }
         }
-
-//        exit();
-        return array('zoneA'=>$zoneA, 'zoneC'=>$zoneC, 'zoneD'=>$zoneD);
-
+        else{
+            return false;
+        }
     }
 
     public function indexAction() {
@@ -124,21 +74,38 @@ class MainController extends Controller {
             //}
         } else {$enable = false;
         }
-        $banner = $this->bannerData();
-        $session = $this->get('session');
 
-        $zoneA = $banner['zoneA'];
-        $zoneC = $banner['zoneC'];
-        $zoneD = $banner['zoneD'];
-        $session->set('zoneD', $zoneD);
-//        var_dump($session->get('zone'));
+        $session = $this->get('session');
+//เรียกใช้ banner
+        //Zone A
+        $zonea1 = $this->getAds('A-1');
+        $zonea2 = $this->getAds('A-2');
+
+        //Zone C
+        $zonec1 = $this->getAds('C-1');
+        $zonec2 = $this->getAds('C-2');
+        $zonec3 = $this->getAds('C-3');
+        $zonec4 = $this->getAds('C-4');
+
+        //Zone D
+        $zoned1 = $this->getAds('D-1');
+        $zoned2 = $this->getAds('D-2');
+        $zoned3 = $this->getAds('D-3');
+        $zoned4 = $this->getAds('D-4');
+
+        $session->set('zoneD1', $zoned1);
+        $session->set('zoneD2', $zoned2);
+        $session->set('zoneD3', $zoned3);
+        $session->set('zoneD4', $zoned4);
 
         $top_last_building = $this -> getTopLastBuilding();
         $last_update = date("Y-m-d H:i:s", mktime(date("H"), date("i"), date("s"), date("m"), date("d"), date("Y")));
         $last_update = $this -> convertThaiDate($last_update);
 
-        return $this -> render('FTRWebBundle:Main:index.html.twig', array('top_last_building' => $top_last_building, 'last_update' => $last_update
-        , 'enable' => $enable, 'zoneA'=>$zoneA, 'zoneC'=>$zoneC));
+        return $this -> render('FTRWebBundle:Main:index.html.twig', array('top_last_building' => $top_last_building
+        , 'last_update' => $last_update, 'enable' => $enable
+        , 'zoneA1'=>$zonea1, 'zoneA2'=>$zonea2
+        , 'zoneC1'=>$zonec1, 'zoneC2'=>$zonec2, 'zoneC3'=>$zonec3, 'zoneC4'=>$zonec4));
     }
 
     function getTopLastBuilding() {
