@@ -58,8 +58,15 @@ class RegisterController extends Controller
             ,'firstName'=>$objOwner[0]['firstname']
             ,'lastName'=>$objOwner[0]['lastname'])),'text/html');
 
-            $this->get('mailer')->send($message);
-            return $this->redirect($this->generateUrl('FTRWebBundle_homepage'));
+//            $this->get('mailer')->send($message);
+            if($this->get('mailer')->send($message)){
+                echo 'success';
+                exit();
+            }else{
+                echo 'fail';
+                exit();
+            }
+//            return $this->redirect($this->generateUrl('FTRWebBundle_homepage'));
         }
     }
 	public function RegisConfirmAction()

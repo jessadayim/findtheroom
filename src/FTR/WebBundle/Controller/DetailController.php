@@ -101,14 +101,15 @@ class DetailController extends Controller
                                       AND deleted = 0
                                     ORDER BY sequence";
                     $objImage = $conn->fetchAll($sqlImage);
-
+                    if(empty($objImage[0]['photo_name'])){
+                        $objImage = "";
+                    }
                 }else{
                     return $this->redirect($this->generateUrl('FTRWebBundle_list'));
                 }
             } catch (Exception $e) {
                 return $this->redirect($this->generateUrl('FTRWebBundle_list'));
             }
-
             return $this->render('FTRWebBundle:Detail:detail.html.twig', array(
                 'general' => $detailData,
                 'roomType' => $objRoomType,

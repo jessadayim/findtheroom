@@ -8,6 +8,18 @@
 
     //ประกาศค่าเริ่มต้น
     var urlPost = "{{ path('listBuilding') }}";
+    $(document).ready(function() {
+        $("#clickAgain").click(function(e) {
+//            alert('working');
+            $.post("{{path('FTRWebBundle_regisSendEmail')}}", function(data) {
+                if(data = 'success'){
+                    alert('กรุณาเช็คอีเมลเพื่อทำการยืนยันการสมัคร');
+                }else{
+                    alert('ไม่สามารถส่งอีเมลได้กรุณากดส่งอีกครั้ง');
+                }
+            });
+            return false;
+        });});
 </script>
 <img src="{{asset('images/owner.png')}}" style="display:block; position:relative; float:none;" />
 <hr class="line" style="top: 60px;" />
@@ -99,7 +111,7 @@
             </tr>
         {% else %}
             <tr height align="70" valign="middle">
-                <td align="center" colspan="4" style="padding-top:20px;">ท่านยังไม่ได้ยืนยันผู้ใช้ กรุณาเช็ค Email ที่ท่านใช้สมัคร   <a href="{{path('FTRWebBundle_regisSendEmail')}}">ส่งอีกครั้ง</a></td>
+                <td align="center" colspan="4" style="padding-top:20px;">ท่านยังไม่ได้ยืนยันผู้ใช้ กรุณาเช็ค Email ที่ท่านใช้สมัคร   <a id="clickAgain">ส่งอีกครั้ง</a></td>
             </tr>
         {% endif %}
         </tbody>
