@@ -21,6 +21,11 @@ class FacilitylistController extends Controller
      */
     public function indexAction()
     {
+        return $this->render('FTRAdminBundle:Facilitylist:index.html.twig', array());
+    }
+
+    public function showAction()
+    {
         $em = $this->getDoctrine()->getEntityManager();
 
         //get post
@@ -55,7 +60,7 @@ class FacilitylistController extends Controller
 
         $paginator = new Paginator($countList, $offset, $limit, $midRange);
 
-        return $this->render('FTRAdminBundle:Facilitylist:index.html.twig', array(
+        return $this->render('FTRAdminBundle:Facilitylist:show.html.twig', array(
             'entities'          => $entities,
             'paginator'	        => $paginator,
             'countList'		    => $countList,

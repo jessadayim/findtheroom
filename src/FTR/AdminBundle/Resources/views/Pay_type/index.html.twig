@@ -1,128 +1,15 @@
-<script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script>
-<script  src='{{asset("js/paging/data_table/table_paging.js")}}'></script>
+{% extends 'FTRAdminBundle:Layout:panel_layout.html.twig' %}
 
-<script>
-
-    //ประกาศค่าเริ่มต้น
-    var urlPost = "{{ path('pay_type') }}";
-    var urlPostNew = "{{ path('pay_type_new') }}";
-    var namePage = 'Pay Type';
-
-    // ค่าปัจจุบันในการ sort
-    var orderByOld = "{{ orderBy }}";
-    var orderByTypeOld = "{{ orderByType }}";
-
-</script>
-
-<style type="text/css">
-    .inPage {
-        cursor: pointer;
-    }
-</style>
-<fieldset>
-    <h1>Pay_type list</h1>
-
-    {#div สำหรับแสดงผล create, edit#}
-    <div id="panelEvent"></div>
-
-    <span style="float: right;" id="btnShowHide">
-        <img src="{{ asset('images/add-bt.png')}}" id="btnNew" width="50" height="50" style="cursor:pointer;" />
-    </span>
+{% block body %}
+<div id="containerwrap">
+    <div class="grid_12 createLists marginB_10 alpha" style="">
+        <h1>Pay Type</h1>
+        <div class="clear"></div>
+    </div>
     <div class="clear"></div>
     <br/>
-    <fieldset>
-        <div class="grid_12 tableLists marginB_10 alpha">
-            <table>
-                <thead>
-                    <tr>
-                        <th style="width: 160px !important;"><a class="btnOrderBy" href="#" id="sort_id">Id</a></th>
-                        <th style="width: 600px !important;"><a class="btnOrderBy" href="#" id="sort_typename">Typename</a></th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for entity in entities %}
-                    <tr>
-                        <td>{{ entity.id }}</td>
-                        <td>{{ entity.typename }}</td>
-                        <td>
-                            <ul>
-                                <li>
-                                    <a class="btnEdit" href="{{ path('pay_type_edit', { 'id': entity.id }) }}">Edit</a>
-                                </li>
-                                <li>
-                                    <a class="btnDelete" href="{{ path('pay_type_edit', { 'id': entity.id }) }}">Delete</a>
-                                </li>
-                            </ul>
-                        </td>
-                    </tr>
-                {% else %}
-                    <tr>
-                        <td colspan="3" align="center">No matching records found</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </fieldset>
-    <div class="datagrid">
-        <ul>
-            <strong>showing {{ countList }} entities : Page </strong>
-            {% for i in 1..paginator.numpages %}
-            {% if paginator.range.0 > 2 and i == paginator.range.0 %}
-            ...
-            {% endif %}
-
-            {%  if(i==1 or i==paginator.numpages or i in paginator.range) %}
-            {% if i==paginator.currentpage %}
-            {% if i == noPage %}
-            <input class="disableBtn" type="button" value="{{i}}" id="Submit" name="submitPage" disabled="true"/>
-            {% else %}
-            <input class="inPage" type="button" value="{{i}}" id="Submit" name="submitPage"/>
-            {% endif %}
-            {% else %}
-            {% if i == noPage %}
-            <input class="disableBtn" type="button" value="{{i}}" id="Submit" name="submitPage" disabled="true"/>
-            {% else %}
-            <input class="inPage" type="button" value="{{i}}" id="Submit" name="submitPage"/>
-            {% endif %}
-            {% endif %}
-            {% endif %}
-
-            {% if paginator.range[paginator.midrange -1] < paginator.numpages -1 and i == paginator.range[paginator.midrange-1] %}
-            ...
-            {% endif %}
-            {% endfor %}
-            <div align="right" style="float:right;" ><strong>Search:</strong>
-                <input id="tbxSearch" style="height: 25px;margin-bottom: 10px;" value="{{ textSearch }}" />&nbsp;&nbsp;
-                <select name="record" style="width:150px;" class="record">
-                    <option value="10">10 Record </option>
-                    {% if limit == '50' %}
-                    <option selected="yes" value="50">50 Record</option>
-                    <option value="100">100 Record</option>
-                    <option value="500">500 Record</option>
-                    {% elseif limit == '100' %}
-                    <option value="50">50 Record</option>
-                    <option selected="yes" value="100">100 Record</option>
-                    <option value="500">500 Record</option>
-                    {% elseif limit == '500' %}
-                    <option value="50">50 Record</option>
-                    <option value="100">100 Record</option>
-                    <option selected="yes" value="500">500 Record</option>
-                    {% else %}
-                    <option value="50">50 Record</option>
-                    <option value="100">100 Record</option>
-                    <option value="500">500 Record</option>
-                    {% endif %}
-                </select>
-            </div>
-        </ul>
+    <div id="innerPanel" class="grid_12 tableLists marginB_10 alpha" style="">
+        {% render "FTRAdminBundle:Pay_type:show" %}
     </div>
-</fieldset>
-{#<ul>#}
-    {#<li>#}
-        {#<a href="{{ path('pay_type_new') }}">#}
-            {#Create a new entry#}
-        {#</a>#}
-    {#</li>#}
-{#</ul>#}
+</div>
+{% endblock %}

@@ -21,6 +21,11 @@ class Pay_typeController extends Controller
      */
     public function indexAction()
     {
+        return $this->render('FTRAdminBundle:Pay_type:index.html.twig', array());
+    }
+
+    public function showAction()
+    {
         $em = $this->getDoctrine()->getEntityManager();
 
         //get post
@@ -55,7 +60,7 @@ class Pay_typeController extends Controller
 
         $paginator = new Paginator($countListPayType, $offset, $limit, $midRange);
 
-        return $this->render('FTRAdminBundle:Pay_type:index.html.twig', array(
+        return $this->render('FTRAdminBundle:Pay_type:show.html.twig', array(
             'entities'          => $entities,
             'paginator'	        => $paginator,
             'countList'	        => $countListPayType,

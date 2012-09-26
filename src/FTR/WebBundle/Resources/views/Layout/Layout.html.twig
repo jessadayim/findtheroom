@@ -189,10 +189,13 @@
 					if (urlparts[i] == 'search') {
 						$("#searchpage").addClass("selected");
 						check = true
-					} else if (urlparts[i] == 'special/beauty') {
-						$("#").addClass("selected");
+					} else if (urlparts[i].substr(0,4) == 'list') {
+						$("#searchpage").addClass("selected");
 						check = true
-					} else if (urlparts[i] == 'publish') {
+					} else if (urlparts[i] == 'detail') {
+                        $("#searchpage").addClass("selected");
+                        check = true
+                    } else if (urlparts[i] == 'publish') {
 						$("#publishpage").addClass("selected");
 						check = true
 					} else if (urlparts[i] == 'regis') {

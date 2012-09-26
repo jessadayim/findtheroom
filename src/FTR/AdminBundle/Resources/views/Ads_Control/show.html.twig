@@ -19,6 +19,7 @@
     }
 </style>
 <fieldset>
+    <div id="panelEvent"></div>
     <span style="float: right;" id="btnShowHide">
         <img src="{{ asset('images/add-bt.png')}}" id="btnNew" width="50" height="50" style="cursor:pointer;" />
     </span>
@@ -26,13 +27,13 @@
     <br/>
     <table>
         <thead>
-            <th style="width: 100px !important;"><a class="btnOrderBy" href="#" id="sort_a.id">Id</a></th>
-            <th style="width: 400px !important;"><a class="btnOrderBy" href="#" id="sort_a.title">title</th>
-            <th><a class="btnOrderBy" href="#" id="sort_a.zone">Zone</a></th>
-            <th><a class="btnOrderBy" href="#" id="sort_a.codes">codes</a></th>
-            <th><a class="btnOrderBy" href="#" id="sort_a.date_start">Date start</a></th>
-            <th><a class="btnOrderBy" href="#" id="sort_a.date_end">Date end</a></th>
-            <th>Publish</th>
+            <th style="width: 100px !important;"><a class="btnOrderBy" href="#" id="sort_id">Id</a></th>
+            <th style="width: 400px !important;"><a class="btnOrderBy" href="#" id="sort_title">title</th>
+            <th><a class="btnOrderBy" href="#" id="sort_zone">Zone</a></th>
+            <th><a class="btnOrderBy" href="#" id="sort_codes">codes</a></th>
+            <th><a class="btnOrderBy" href="#" id="sort_date_start">Date start</a></th>
+            <th><a class="btnOrderBy" href="#" id="sort_date_end">Date end</a></th>
+            <th><a class="btnOrderBy" href="#" id="sort_publish">Publish</a></th>
             <th>Actions</th>
         </thead>
         <tbody>

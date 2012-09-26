@@ -1,5 +1,5 @@
 userbuilding:
-    pattern:  /listap
+    pattern:  /userbuilding
     defaults: { _controller: FTRWebBundle:Userbuilding:index }
     
 addData:
@@ -29,3 +29,7 @@ listBuilding:
 getProvince:
     pattern: /getprovince/{province}
     defaults: { _controller: FTRWebBundle:Userbuilding:getProvinceData, 'province' :null }
+
+setDeleteImage:
+    pattern: /deleteimage
+    defaults: { _controller: FTRWebBundle:Userbuilding:setDeleteImage }
