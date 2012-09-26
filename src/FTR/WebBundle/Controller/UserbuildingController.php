@@ -1545,11 +1545,18 @@ class UserbuildingController extends Controller
             $photoType = $imageData->getPhotoType();
             $sequence = $imageData->getSequence();
 
-            $imageArray = $em->getRepository('FTRWebBundle:Image')->findBy(array('building_site_id'=>$buildingId,'photo_type'=>$photoType);
-//            foreach($imageArray as $key => $value)
-//            {
-//
-//            }
+            $imageArray = $em->getRepository('FTRWebBundle:Image')->findBy(array('building_site_id'=>$buildingId,'photo_type'=>$photoType));
+            foreach($imageArray as $key => $value)
+            {
+                $imageName = $value->getPhotoName();
+                if($photoName==$imageName)
+                {
+                    
+                }
+                else{
+
+                }
+            }
         }
         exit();
     }
