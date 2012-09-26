@@ -451,10 +451,10 @@ class UserbuildingController extends Controller
         }
         try {
             $sql = "select * from image
-								where building_site_id = '$buildid' 
-									and photo_type = '$type' 
-									or roomtype2site_id = '$roomtype2siteid' 
-									and deleted = 0";
+								where deleted = 0 and building_site_id = '$buildid'
+									and photo_type = '$type'
+									or roomtype2site_id = '$roomtype2siteid'
+									";
             $imagedata = $conn->fetchAll($sql);
             /*echo "<pre>";
                    var_dump($imagedata);
@@ -876,6 +876,7 @@ class UserbuildingController extends Controller
                     $image->setPhotoType($photo_type);
                     $image->setSequence($sequence);
                     $image->setDescription($description);
+                    $image->setDeleted(0);
                     if ($value['photo_type'] == 'room') {
                         $roomtype2siteid = $this->saveRoomtypeData($id, $data, NULL);
                     }
@@ -1546,16 +1547,20 @@ class UserbuildingController extends Controller
             $sequence = $imageData->getSequence();
 
             $imageArray = $em->getRepository('FTRWebBundle:Image')->findBy(array('building_site_id'=>$buildingId,'photo_type'=>$photoType));
+            $count = 0;
             foreach($imageArray as $key => $value)
             {
-                $imageName = $value->getPhotoName();
+                echo $imageName = $value->getPhotoName();
                 if($photoName==$imageName)
                 {
-                    
+                    $value->setDeleted(1);
+                    $value->setSequence(NULL);
                 }
                 else{
-
+                    $value->setSequence($count);
+                    $count++;
                 }
+                $em->flush();
             }
         }
         exit();
