@@ -49,33 +49,63 @@ class Ads_ControlController extends Controller
         }
         $offset = $limit*$page-$limit;
 
-        if (empty($getOrderBy) && empty($getOrderByType)){
-            $getOrderBy = 'cutDate >= 0';
-            $getOrderByType = 'asc';
-        }
-
-        $sqlGetEntity = "
+        $sqlGetEntity1 = "
             SELECT
               *,
-              DATEDIFF(`date_end`, NOW()) AS cutDate
+              DATEDIFF(a.`date_end`, NOW()) AS cutDate
             FROM
               `ads_control` a
-            WHERE 1
+            WHERE DATEDIFF(a.`date_end`, NOW()) > - 1
+        ";
+        $sqlGetEntity2 = "
+            SELECT
+              *,
+              DATEDIFF(a.`date_end`, NOW()) AS cutDate
+            FROM
+              `ads_control` a
+            WHERE DATEDIFF(a.`date_end`, NOW()) < 0
         ";
         if (!empty($getTextSearch) && $getTextSearch != ''){
-            $sqlGetEntity = "
-                $sqlGetEntity
+
+            $sqlGetEntity1 = "
+                $sqlGetEntity1
+                AND a.id LIKE '%$getTextSearch%'
+                OR a.title LIKE '%$getTextSearch%'
+                OR a.zone LIKE '%$getTextSearch%'
+                OR a.codes LIKE '%$getTextSearch%'
+            ";
+
+            $sqlGetEntity2 = "
+                $sqlGetEntity2
                 AND a.id LIKE '%$getTextSearch%'
                 OR a.title LIKE '%$getTextSearch%'
                 OR a.zone LIKE '%$getTextSearch%'
                 OR a.codes LIKE '%$getTextSearch%'
             ";
         }
+        if (empty($getOrderBy) && empty($getOrderByType)){
+            $getOrderBy = 'cutDate';
+            $getOrderByType = 'asc';
+            $sqlGetEntity = "
+                (
+                    $sqlGetEntity1
+                    ORDER BY cutDate asc
+                )
+                UNION
+                (
+                    $sqlGetEntity2
+                    ORDER BY cutDate asc
+                )
+            ";
+        }else{
+            $sqlGetEntity = "
+                $sqlGetEntity1
+                UNION
+                $sqlGetEntity2
+                ORDER BY $getOrderBy $getOrderByType
+            ";
+        }
 
-        $sqlGetEntity = "
-            $sqlGetEntity
-            ORDER BY $getOrderBy $getOrderByType
-        ";
 
         //นับจำนวนที่มีทั้งหมด
         $countList = count($this->getDataArray($sqlGetEntity));
