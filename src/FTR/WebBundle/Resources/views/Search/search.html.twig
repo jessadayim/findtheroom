@@ -135,7 +135,7 @@
 				<td width="250">
 					<div class="styled-select">
                   
-						<select class="select" id="sbk1" name="bkkZone" {% if bc == 'country' %} disabled {% endif %} >
+						<select class="select" id="sbk1" name="bkkZone" {% if bc == 'country' %} disabled {% endif %} disabled>
 							{% for zList in zonelist %}
 								<option value="{{ zList.id }}"
                                     {% if bkkZone == zList.id %}
@@ -153,7 +153,7 @@
 				<td width="250">
 					<div class="styled-select">
                     
-						<select class="select" id="sbk2" name="nBts" {% if bc == 'country' %} disabled {% endif %}>
+						<select class="select" id="sbk2" name="nBts" {% if bc == 'country' %} disabled {% endif %} disabled>
 							{% for btsList in nearBTS %}
 								<option value="{{ btsList.id }}"
                                     {% if nBts == btsList.id %}
@@ -170,7 +170,7 @@
 				<td width="250">
 					<div class="styled-select">
                   
-						<select class="select" id="sbk3"  name="nMrt" {% if bc == 'country' %} disabled {% endif %}>
+						<select class="select" id="sbk3"  name="nMrt" {% if bc == 'country' %} disabled {% endif %} disabled>
 							{% for mrtList in nearMRT %}
 								<option value="{{ mrtList.id }}"
                                     {% if nMrt == mrtList.id %}
@@ -188,7 +188,7 @@
 				<td width="250">
 					<div class="styled-select">
                    
-						<select class="select" id="sbk4" name="nUniversity" {% if bc == 'country' %} disabled {% endif %}>
+						<select class="select" id="sbk4" name="nUniversity" {% if bc == 'country' %} disabled {% endif %} disabled>
 							{% for ulist in nearUniversity %}
 								<option value="{{ ulist.id }}"
                                     {% if nUniversity == ulist.id %}
@@ -210,7 +210,7 @@
 				<td width="300">
                     <span id="divAmpher">
                        <div class="styled-select">
-                                <select class="select" id="scou" name="selAmpher" {% if bc == 'bkk' %} disabled {% endif %}>
+                                <select class="select" id="scou" name="selAmpher" {% if bc == 'bkk' %} disabled {% endif %} disabled>
                                     {% for aList in ampher %}
                                         <option value="{{ aList.AMPHUR_VALUE }}"
                                             {% if selAmpher == aList.AMPHUR_VALUE %}
