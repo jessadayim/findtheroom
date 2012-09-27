@@ -16,8 +16,8 @@ class PanelController extends Controller {
 		}
 		if ($request -> getMethod() == 'POST') {
 			$username = $request -> get('username');
-			$password = $request -> get('password');
-			
+			$password = md5($request -> get('password'));
+
 			if ($username == '' || $password == '') {
 				return $this -> render('FTRAdminBundle:Ftr_panel:signin.html.twig', array('txterror' => 'กรุณากรอกข้อมูลให้ครบ'));
 			} else {
@@ -32,6 +32,7 @@ class PanelController extends Controller {
 						// exit();
 						return $this -> redirect($this -> generateUrl('FTRAdminBundle_Dashboard'));
 					} else {
+//                        return $this->redirect($this->generateUrl('FTRAdminBundle_panel'));
 						return $this -> render('FTRAdminBundle:Ftr_panel:signin.html.twig', array('txterror' => 'กรุณาตรวจสอบชื่อ และรหัสผ่าน'));
 					}
 

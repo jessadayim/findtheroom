@@ -149,7 +149,7 @@ class RegisterController extends Controller
 							$session->set('user', $user);
 							$session->set('id', $id);
 													
-							$time = date("Y-m-d : H:i:s", time());							
+							$time = date("Y-m-d H:i:s", time());
 							$sql2 ="UPDATE user_owner SET last_login = '$time' WHERE id= '$id'";
 							$conn->query($sql2);
 														

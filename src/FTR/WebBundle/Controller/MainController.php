@@ -47,6 +47,7 @@ class MainController extends Controller {
     }
 
     public function indexAction() {
+//        var_dump($_COOKIE);
         $em = $this -> getDoctrine() -> getEntityManager();
 
         $conn = $this -> get('database_connection');

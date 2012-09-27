@@ -70,6 +70,8 @@ class AdminprofileController extends Controller
         $username = $entity->getUsername();
         if($this->checkUser($username,$id) == 1){
             if ($editForm->isValid()) {
+                $password = md5($entity->getPassword());
+                $entity->setPassword($password);
                 $em->persist($entity);
                 $em->flush();
 
