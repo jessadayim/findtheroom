@@ -579,10 +579,6 @@ class UserbuildingController extends Controller
 
         if ($_POST) {
             $post_array = $_POST;
-            /*echo "<pre>";
-            var_dump($post_array);
-            echo "</pre>";*/
-            //$logger->addInfo('test log for save data',array('place'=>$post_array['placeap']));
             $buildingData = $em->getRepository('FTRWebBundle:Building_site')->findOneBy(array('id' => $id));
             if(!empty($buildingData))
             {
@@ -595,7 +591,6 @@ class UserbuildingController extends Controller
                 $logger->addInfo('User '.$user.' update building');
             }
         }
-        //exit();
         return $this->redirect($this->generateUrl('userbuilding'));
     }
 
@@ -618,65 +613,92 @@ class UserbuildingController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
 
         if ($_POST) {
-            $firstname = $_POST['fname'];
-            $lastname = $_POST['lname'];
+            $first_name = $_POST['fname'];
+            $last_name = $_POST['lname'];
             $username = $_POST['username'];
             $email = $_POST['email'];
-            $password = $_POST['password'];
-            $confirmpass = $_POST['cpassword'];
+            //$password = $_POST['password'];
+            $confirmPass = $_POST['cpassword'];
             $tel_number = $_POST['tel'];
-        }
-        $errmsg = NULL;
-        $errmsg['tel'] = NULL;
-        $errmsg['password'] = NULL;
-        $errmsg['email'] = NULL;
-        $errmsg['confirmpass'] = NULL;
-        if (!empty($confirmpass)) {
-            if (strlen($password) < 8 || strlen($confirmpass) < 8 || strlen($password) > 12 || strlen($confirmpass) > 12) {
-                $errpass = 'รหัสผ่านต้องมี 8 อักษร และไม่เกิน 12 อักษร';
-            }
-            if (!preg_match("#[a-z]+#", $password) || !preg_match("#[a-z]+#", $confirmpass)) {
-                $errpass = 'รหัสผ่านต้องมีอักษรอย่างน้อย 1 ตัว';
-            }
-            if ($password != $confirmpass) {
-                $errpass = 'รหัสผ่านยืนยันไม่ตรงกัน';
-            }
-            if (!empty($errpass)) {
-                $errmsg['password'] = 'ผิดพลาด!:' . $errpass;
-            }
 
-            $toemail = trim($email);
-            $fixmail = str_replace(' ', '', $toemail);
-            if (!filter_var($fixmail, FILTER_VALIDATE_EMAIL)) {
-                $errmsg['email'] = 'ผิดพลาด!:email ไม่ถูกต้อง';
-            }
+            $errMsg = array();
+            $errMsg['tel'] = NULL;
+            $errMsg['password'] = NULL;
+            $errMsg['email'] = NULL;
+            $errMsg['confirmpass'] = NULL;
+            $errPass = NULL;
+            if (!empty($confirmPass)) {
+                if (strlen($confirmPass) < 8 || strlen($confirmPass) > 12) {
+                    $errPass = 'รหัสผ่านต้องมี 8 อักษร และไม่เกิน 12 อักษร';
+                }
 
-            if (strlen($tel_number) < 9) {
-                $errmsg['tel'] = 'ผิดพลาด!:หมายเลขโทรศัพท์ไม่ถูกต้อง';
-            }
+                if (!preg_match("#[a-z]+#", $confirmPass)) {
+                    $errPass = 'รหัสผ่านต้องมีอักษรอย่างน้อย 1 ตัว';
+                }
 
-            if (!empty($errmsg['password']) || !empty($errmsg['email']) || !empty($errmsg['tel'])) {
-                return $this->indexAction($errmsg);
+                if (!empty($errPass)) {
+                    $errMsg['password'] = 'ผิดพลาด!:' . $errPass;
+                }
+
+                $toEmail = trim($email);
+                $fixMail = str_replace(' ', '', $toEmail);
+                if (!filter_var($fixMail, FILTER_VALIDATE_EMAIL)) {
+                    $errMsg['email'] = 'ผิดพลาด!:email ไม่ถูกต้อง';
+                }
+
+                if (strlen($tel_number) < 9) {
+                    $errMsg['tel'] = 'ผิดพลาด!:หมายเลขโทรศัพท์ไม่ถูกต้อง';
+                }
+
+                if (!empty($errMsg['password']) || !empty($errMsg['email']) || !empty($errMsg['tel'])) {
+                    return $this->indexAction($errMsg);
+                } else {
+
+                    $session = $this->get('session');
+                    $user = $session->get('user');
+                    $userOwner = $em->getRepository('FTRWebBundle:User_owner')->findOneBy(array('username' => $user));
+                    $confirmPassMD5 = md5($confirmPass);
+                    $passwordUser = $userOwner->getPassword();
+                    if($confirmPassMD5=$passwordUser)
+                    {
+                        $userOwner->setUsername($username);
+                        $userOwner->setFirstname($first_name);
+                        $userOwner->setLastname($last_name);
+                        $userOwner->setEmail($toEmail);
+                        $userOwner->setPhoneNumber($tel_number);
+                        $em->flush();
+                    }
+
+                    $session->set('user', $username);
+                    return $this->redirect($this->generateUrl('userbuilding'));
+                }
             } else {
-                $session = $this->get('session');
-                $user = $session->get('user');
-                $userowner = $em->getRepository('FTRWebBundle:User_owner')->findOneBy(array('username' => $user));
-                $userowner->setUsername($username);
-                $userowner->setPassword($password);
-                $userowner->setFirstname($firstname);
-                $userowner->setLastname($lastname);
-                $userowner->setEmail($email);
-                $userowner->setPhoneNumber($tel_number);
-                $em->flush();
-
-                $session->set('user', $username);
-                return $this->redirect($this->generateUrl('userbuilding'));
+                $errMsg['confirmpass'] = 'ไม่ได้กรอกยืนยันรหัสผ่าน';
+                return $this->indexAction($errMsg);
             }
-        } else {
-            $errmsg['confirmpass'] = 'ไม่ได้กรอกยืนยันรหัสผ่าน';
-            return $this->indexAction($errmsg);
         }
+        $errMsg['confirmpass'] = 'ไม่ได้กรอกยืนยันรหัสผ่าน';
+        return $this->indexAction($errMsg);
+    }
 
+    public function changePassUserProfileAction()
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $session = $this->get('session');
+        $user = $session->get('user');
+        if(!empty($user))
+        {
+            $userOwner = $em->getRepository('FTRWebBundle:User_owner')->findOneBy(array('username' => $user));
+            if($_POST){
+                $newPassword = @$_POST['newpass'];
+                $savePassword = md5($newPassword);
+                $userOwner->setPassword($savePassword);
+                $em->flush();
+            }else{
+                return $this->render('FTRWebBundle:Userbuilding:changepass.html.twig', array());
+            }
+        }
+        exit();
     }
 
     public function getPathUpload($id)
