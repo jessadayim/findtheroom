@@ -11,12 +11,12 @@ class SecurityController extends Controller
     public function loginAction()
     {
     	$username = $_POST['username'];
-		$password = $_POST['password'];
+		$password = md5($_POST['password']);
 		if($username !=NULL&& $password !=NULL){
 			$conn= $this->get('database_connection');
 			if(!$conn){ die("MySQL Connection error");}
 				try{
-					$sql1 ="SELECT * FROM user_owner WHERE username = '$username' and password = '$password' and deleted != '1'";
+					$sql1 ="SELECT * FROM user_owner WHERE (username = '$username' OR email = '$username') and password = '$password' and deleted != '1'";
 					$objSQL1 = $conn -> fetchAll($sql1);
 					$rowcount = count($objSQL1);
 					if($rowcount == 1){

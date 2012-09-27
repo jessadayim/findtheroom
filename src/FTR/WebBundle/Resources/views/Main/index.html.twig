@@ -27,13 +27,71 @@
                 {#{{imageA|raw}}#}
             {#</div>#}
             {#{%endfor%}#}
+            {%if zoneA1 is empty and zoneA2 is empty and zoneA3 is empty and zoneA4 is empty and zoneA5 is empty and zoneA6 is empty and zoneA7 is empty and zoneA8 is empty and zoneA9 is empty and zoneA10 is empty%}
+                <div class="slide">
+                    <img src='{{asset('images/default/slide.jpg')}}' width="1000" height="300">
+                </div>
+            {%else%}
+                {%if zoneA1%}
+                    <div class="slide">
+                        {{zoneA1|raw}}
+                    </div>
+                {%endif%}
 
-            <div class="slide">
-                {{zoneA1|raw}}
-            </div>
-            <div class="slide">
-                {{zoneA2|raw}}
-            </div>
+                {%if zoneA2%}
+                    <div class="slide">
+                        {{zoneA2|raw}}
+                    </div>
+                {%endif%}
+
+                {%if zoneA3%}
+                    <div class="slide">
+                        {{zoneA3|raw}}
+                    </div>
+                {%endif%}
+
+                {%if zoneA4%}
+                    <div class="slide">
+                        {{zoneA4|raw}}
+                    </div>
+                {%endif%}
+
+                {%if zoneA5%}
+                    <div class="slide">
+                        {{zoneA5|raw}}
+                    </div>
+                {%endif%}
+
+                {%if zoneA6%}
+                    <div class="slide">
+                        {{zoneA6|raw}}
+                    </div>
+                {%endif%}
+
+                {%if zoneA7%}
+                    <div class="slide">
+                        {{zoneA7|raw}}
+                    </div>
+                {%endif%}
+
+                {%if zoneA8%}
+                    <div class="slide">
+                        {{zoneA8|raw}}
+                    </div>
+                {%endif%}
+
+                {%if zoneA9%}
+                    <div class="slide">
+                        {{zoneA9|raw}}
+                    </div>
+                {%endif%}
+
+                {%if zoneA10%}
+                    <div class="slide">
+                        {{zoneA10|raw}}
+                    </div>
+                {%endif%}
+            {%endif%}
         </div>
         <a href='#' class="prev"><img src="{{asset('images/slider/arrow-prev.png')}}" width="29" height="57"
                                       alt="Arrow Prev"></a>
@@ -49,19 +107,68 @@
 <div class="clear"></div>
 <div class="ad1">
     <div class='thumbframe'>
+        {%if zoneC1 is empty%}
+        <img src='{{asset('images/default/banner.jpg')}}' class='thumb' alt='Visit Computer Hope'>
+        {%else%}
         {{zoneC1|raw}}
+        {%endif%}
+
     </div>
     <div class='thumbframe'>
+        {%if zoneC2 is empty%}
+        <img src='{{asset('images/default/banner.jpg')}}' class='thumb' alt='Visit Computer Hope'>
+        {%else%}
         {{zoneC2|raw}}
+        {%endif%}
+
     </div>
     <div class='thumbframe'>
+        {%if zoneC3 is empty%}
+        <img src='{{asset('images/default/banner.jpg')}}' class='thumb' alt='Visit Computer Hope'>
+        {%else%}
         {{zoneC3|raw}}
+        {%endif%}
+
     </div>
     <div class='thumbframe omega'>
+        {%if zoneC4 is empty%}
+        <img src='{{asset('images/default/banner.jpg')}}' class='thumb' alt='Visit Computer Hope'>
+        {%else%}
         {{zoneC4|raw}}
+        {%endif%}
+
     </div>
     <div class='thumbframe'>
+        {%if zoneC5 is empty%}
+        <img src='{{asset('images/default/banner.jpg')}}' class='thumb' alt='Visit Computer Hope'>
+        {%else%}
         {{zoneC5|raw}}
+        {%endif%}
+
+    </div>
+    <div class='thumbframe'>
+        {%if zoneC6 is empty%}
+        <img src='{{asset('images/default/banner.jpg')}}' class='thumb' alt='Visit Computer Hope'>
+        {%else%}
+        {{zoneC6|raw}}
+        {%endif%}
+
+    </div>
+    <div class='thumbframe'>
+        {%if zoneC7 is empty%}
+        <img src='{{asset('images/default/banner.jpg')}}' class='thumb' alt='Visit Computer Hope'>
+        {%else%}
+        {{zoneC7|raw}}
+        {%endif%}
+
+    </div>
+    <div class='thumbframe omega'>
+        {%if zoneC8 is empty%}
+        <img src='{{asset('images/default/banner.jpg')}}' class='thumb' alt='Visit Computer Hope'>
+        {%else%}
+        {{zoneC8|raw}}
+        {%endif%}
+
     </div>
 </div>
     {#{%set i = 0%}#}

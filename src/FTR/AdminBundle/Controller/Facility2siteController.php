@@ -124,11 +124,17 @@ class Facility2siteController extends Controller
     }
 
     /*
-     * บันทึก log เกี่ยวกับการ insert, delete, update database
-     */
+    * บันทึก log เกี่ยวกับการ insert, delete, update database
+    */
     private function addLogger($message, $entity){
         $logger = new LoggerHelper();
         $newArray = $logger->objectToArray($entity);
-        $logger->addInfo($message, $newArray);
+
+        //Get Session Username
+        $session = $this->get('session');
+        $username = $session->get('username');
+
+        //add log
+        $logger->addInfo("$message by '$username'", $newArray);
     }
 }

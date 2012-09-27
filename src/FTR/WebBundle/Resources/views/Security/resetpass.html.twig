@@ -17,7 +17,7 @@
 		</script>
 	</head>
 	<body style=" background-color:#FFF; color:#423C3B;">
-		<img src="{{asset('images/forget.png')}}" style="padding-top: 20px;" />
+		<img src="{{asset('images/reset-h.png')}}" style="padding-top: 20px;" />
 		<hr style=" width:98%; margin-left:-5px; margin-top:15px; margin-bottom:10px;" />
 		<form action="{{path('TRWebBundle_chgconfirm')}}" method="post">
 			<table style="padding-left:10px;">
@@ -68,7 +68,7 @@
 						//alert(patt.test($('#newpass').val()));return false;
 						if (patt.test($('#newpass').val()) == false) {
 							//alert("pattern working");
-							$("font#txterror").html("ชื่อผู้ใช้งาน จะต้องเป็นอักขระอังกฤษ หรือตัวเลข");
+							$("font#txterror").html("รหัสผ่าน จะต้องเป็นอักขระอังกฤษ หรือตัวเลข");
 							$("font#txterror").hide();
 							$("font#txterror").show("slow");
 							document.getElementById('newpass').focus();
