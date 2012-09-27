@@ -429,7 +429,6 @@ class ImageController extends Controller
         $path = "./images/building/".$id."/".$nameImage;
         if(!file_exists($path)){
             echo "No File is path : '$path'";
-            exit();
         }else{
             unlink($path);
         }
