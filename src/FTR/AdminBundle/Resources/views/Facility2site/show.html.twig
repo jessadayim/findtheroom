@@ -1,4 +1,9 @@
 <script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script>
+
+{#gritter#}
+<script type="text/javascript" src="{{asset('js/gritter/js/jquery.gritter.js')}}"></script>
+<link rel="stylesheet" type="text/css" href="{{asset('js/gritter/css/jquery.gritter.css')}}" />
+
 <script>
     $(document).ready(function() {
         $("#btnCancel").click(function(){
@@ -30,6 +35,7 @@
                 },
                 success : function(msg) {
                     if (msg == 'finish') {
+                        showMessage('บันทึกข้อมูลสำเร็จ', 'ข้อมูลของท่านได้รับการบันทึกแล้ว');
                         //$('#listBuildingSite').fadeOut('slow').load(window.location + "show").fadeIn("slow");
                     } else {
                         alert(msg)
@@ -39,6 +45,7 @@
             });
         });
     });
+
     if (saveIdBuildingSite != null){
         $("#btnNext").show();
     }

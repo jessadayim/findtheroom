@@ -33,3 +33,7 @@ getProvince:
 setDeleteImage:
     pattern: /deleteimage
     defaults: { _controller: FTRWebBundle:Userbuilding:setDeleteImage }
+
+changePassUser:
+    pattern: /changepassword
+    defaults: { _controller: FTRWebBundle:Userbuilding:changePassUserProfile }

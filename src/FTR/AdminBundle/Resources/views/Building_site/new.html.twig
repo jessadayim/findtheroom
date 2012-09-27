@@ -1,5 +1,19 @@
 <script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script>
+
+{#gritter#}
+<script type="text/javascript" src="{{asset('js/gritter/js/jquery.gritter.js')}}"></script>
+<link rel="stylesheet" type="text/css" href="{{asset('js/gritter/css/jquery.gritter.css')}}" />
 <script>
+    //show message
+    function showMessage(title, text){
+        $.gritter.add({
+            // (string | mandatory) the heading of the notification
+            title: title,
+            // (string | mandatory) the text inside the notification
+            text: text
+        });
+    }
+
 	$(document).ready(function() {
 		$("#btnCancelCreate").click(function() {
             hideId(".createPanel");
@@ -34,13 +48,8 @@
 						$(".createPanel").html('');
                         hideId("#createRecordCancel");
                         showId("#createRecord");
-                        reloadId('#innerPanel', urlPost);
-
-                        saveIdBuildingSite = id;
-                        var strUrl = "{{ path('facility2site_show', { 'id': '--' }) }}";
-                        strUrl = strUrl.replace('--', id);
-                        reloadId('.innerPanel', strUrl);
-                        alert('เพิ่ม BUILDING SITE สำเร็จแล้ว');
+                        reloadList();
+                        showMessage('บันทึกข้อมูลสำเร็จ', 'เพิ่มข้อมูล Building Site สำเร็จแล้ว');
 					} else {alert(msg);
                         reloadId('.createPanel', msg);
 						alert('การ CREATE ผิดพลาด\n** กรุณาตรวจสอบ **');

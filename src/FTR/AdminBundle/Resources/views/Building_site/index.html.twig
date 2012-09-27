@@ -46,6 +46,12 @@
     function reloadId(id, url){
         $(id).load(url).fadeOut(timeOut).fadeIn(timeUp);
     }
+
+    //Reload List
+    function reloadList(){
+        var strUrl = "{{ path('building_site_show') }}";
+        reloadId('#innerPanel', strUrl);
+    }
 </script>
 <div id="containerwrap">
 	<div class="grid_12 createLists marginB_10 alpha" style="">
