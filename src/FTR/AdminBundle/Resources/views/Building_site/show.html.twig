@@ -1,10 +1,24 @@
 <script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script>
 <script type='text/javascript' src='{{asset("js/paging/data_table/table_paging.js")}}'></script>
 
+{#gritter#}
+<script type="text/javascript" src="{{asset('js/gritter/js/jquery.gritter.js')}}"></script>
+<link rel="stylesheet" type="text/css" href="{{asset('js/gritter/css/jquery.gritter.css')}}" />
+
 <script>
 	var countValuePaging = {{entities|length}};
 
-	$(document).ready(function() {
+    //show message
+    function showMessage(title, text){
+        $.gritter.add({
+            // (string | mandatory) the heading of the notification
+            title: title,
+            // (string | mandatory) the text inside the notification
+            text: text
+        });
+    }
+
+    $(document).ready(function() {
 
 		//Click ปุ่ม Edit
 		$(".linkEditBuildingSite").click(function() {
@@ -33,6 +47,7 @@
 					if (msg == 'finish') {
 						//alert('การลบสร็จเรียบร้อย');
 						$('#listBuildingSite').fadeOut('slow').load(window.location + "show").fadeIn("slow");
+                        showMessage('ลบข้อมูลสำเร็จ', 'ลบข้อมูล Building Site แล้ว');
 					} else {
 						alert('การลบผิดพลาด');
 					}
@@ -84,7 +99,7 @@
             <th style="width: 110px !important;" >roomtype</th>
             <th style="width: 100px !important;" >nearly</th>
             <th style="width: 100px !important;" >gallery</th>
-            <th style="width: 50px !important;" >config</th>
+            <th style="width: 50px !important;" >action</th>
         </thead>
         <tbody>
         {% for entity in entities %}
@@ -104,7 +119,11 @@
                 <!-- upload gallery -->
                 <td><a href="{{ path('image_show', { 'id': entity.id }) }}" class="createSite">Edit</a></td>
 
-                <td><a href="{{ entity.id }}" class="linkEditBuildingSite">Edit</a>&nbsp;&nbsp;<a href="{{ entity.id }}" class="linkDelete">Delete</a></td>
+                <td width="100">
+                    <a href="{{ entity.id }}" class="linkEditBuildingSite">Edit</a>
+                    &nbsp;&nbsp;
+                    <a href="{{ entity.id }}" class="linkDelete">Delete</a>
+                </td>
             </tr>
         {% else %}
             <tr>
