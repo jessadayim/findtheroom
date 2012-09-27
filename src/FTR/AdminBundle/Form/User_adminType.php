@@ -13,7 +13,7 @@ class User_adminType extends AbstractType
 		if(empty($options['data']->user_level)){
             $builder
                 ->add('username', 'text',array('label' => 'Username:'))
-                ->add('password', 'text',array( 'label' => 'Password:'))
+                ->add('password', 'password',array( 'label' => 'Password:'))
                 ->add('firstname', 'text',array('label' => 'First Name:'))
                 ->add('lastname', 'text',array('label' => 'Last Name:'))
                 ->add('phone_number', 'text',array('label' => 'Phone Number:'))
@@ -27,7 +27,7 @@ class User_adminType extends AbstractType
             }
             $builder
                 ->add('username', 'text',array('label' => 'Username:'))
-                ->add('password', 'text',array('label' => 'Password:'))
+                ->add('password', 'password',array('label' => 'Password:'))
                 ->add('firstname', 'text',array('label' => 'First Name:'))
                 ->add('lastname', 'text',array('label' => 'Last Name:'))
                 ->add('phone_number', 'text',array('label' => 'Phone Number:'))

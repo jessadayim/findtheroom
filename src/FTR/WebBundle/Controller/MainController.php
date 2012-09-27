@@ -79,6 +79,14 @@ class MainController extends Controller {
         //Zone A
         $zonea1 = $this->getAds('A-1');
         $zonea2 = $this->getAds('A-2');
+        $zonea3 = $this->getAds('A-3');
+        $zonea4 = $this->getAds('A-4');
+        $zonea5 = $this->getAds('A-5');
+        $zonea6 = $this->getAds('A-6');
+        $zonea7 = $this->getAds('A-7');
+        $zonea8 = $this->getAds('A-8');
+        $zonea9 = $this->getAds('A-9');
+        $zonea10 = $this->getAds('A-10');
 
         //Zone C
         $zonec1 = $this->getAds('C-1');
@@ -86,17 +94,19 @@ class MainController extends Controller {
         $zonec3 = $this->getAds('C-3');
         $zonec4 = $this->getAds('C-4');
         $zonec5 = $this->getAds('C-5');
+        $zonec6 = $this->getAds('C-6');
+        $zonec7 = $this->getAds('C-7');
+        $zonec8 = $this->getAds('C-8');
 
         //Zone D
-        $zoned1 = $this->getAds('D-1');
-        $zoned2 = $this->getAds('D-2');
-        $zoned3 = $this->getAds('D-3');
-        $zoned4 = $this->getAds('D-4');
-
-        $session->set('zoneD1', $zoned1);
-        $session->set('zoneD2', $zoned2);
-        $session->set('zoneD3', $zoned3);
-        $session->set('zoneD4', $zoned4);
+        $session->set('zoneD1', $this->getAds('D-1'));
+        $session->set('zoneD2', $this->getAds('D-2'));
+        $session->set('zoneD3', $this->getAds('D-3'));
+        $session->set('zoneD4', $this->getAds('D-4'));
+        $session->set('zoneD5', $this->getAds('D-5'));
+        $session->set('zoneD6', $this->getAds('D-6'));
+        $session->set('zoneD7', $this->getAds('D-7'));
+        $session->set('zoneD8', $this->getAds('D-8'));
 //echo $zonea2;exit();
         $top_last_building = $this -> getTopLastBuilding();
         $last_update = date("Y-m-d H:i:s", mktime(date("H"), date("i"), date("s"), date("m"), date("d"), date("Y")));
@@ -104,8 +114,8 @@ class MainController extends Controller {
 
         return $this -> render('FTRWebBundle:Main:index.html.twig', array('top_last_building' => $top_last_building
         , 'last_update' => $last_update, 'enable' => $enable
-        , 'zoneA1'=>$zonea1, 'zoneA2'=>$zonea2
-        , 'zoneC1'=>$zonec1, 'zoneC2'=>$zonec2, 'zoneC3'=>$zonec3, 'zoneC4'=>$zonec4, 'zoneC5'=>$zonec5));
+        , 'zoneA1'=>$zonea1, 'zoneA2'=>$zonea2, 'zoneA3'=>$zonea3, 'zoneA4'=>$zonea4, 'zoneA5'=>$zonea5, 'zoneA6'=>$zonea6, 'zoneA7'=>$zonea7, 'zoneA8'=>$zonea8, 'zoneA9'=>$zonea9, 'zoneA10'=>$zonea10
+        , 'zoneC1'=>$zonec1, 'zoneC2'=>$zonec2, 'zoneC3'=>$zonec3, 'zoneC4'=>$zonec4, 'zoneC5'=>$zonec5, 'zoneC6'=>$zonec6, 'zoneC7'=>$zonec7, 'zoneC8'=>$zonec8));
     }
 
     function getTopLastBuilding() {
