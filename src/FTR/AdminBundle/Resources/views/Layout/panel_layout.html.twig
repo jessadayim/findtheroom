@@ -35,14 +35,13 @@
         var host = window.location.host;
         path = path.substring(path.search(host)+host.length, path.length );
         var pathCheck = "{{asset(path('FTRAdminBundle_panel'))}}";
-        if(path != pathCheck ){
+        if(path != pathCheck && "{{app.session.get('username')}}" == ""){
             window.location = pathCheck;
         }
     });
 </script>
 </head>
 <body>
-<input type="hidden" id="checkSession" value="{{app.session.get('username')}}"/>
 {% if app.session.get('username') is empty %}
 	<header id="wrap" class="container_12" style="height: 100px; padding-top: 30px; text-align: center;">
 		<H1>FindtheRoom PANEL</H1>
