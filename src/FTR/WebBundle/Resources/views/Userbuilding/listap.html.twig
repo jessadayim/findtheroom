@@ -1,5 +1,19 @@
 {% extends 'FTRWebBundle:Layout:Layout.html.twig' %}
 {% block body %}
+    <script>
+        function changePassPopup()
+        {
+            $.fancybox({
+                'content'			: "{{path('TRWebBundle_change')}}",
+                'width'				: 700,
+                'height'			: 400,
+                'autoScale'			: false,
+                'transitionIn'		: 'elastic',
+                'transitionOut'		: 'elastic',
+                'type'				: 'iframe'
+            });
+        }
+    </script>
 <div class="detail" style="height: 390px; margin-bottom: 15px;">
 	<img src="{{asset('images/user.png')}}" style="display:block; position:relative; float:none;" />
 	<hr class="line" style="top: 60px;" />
@@ -22,12 +36,11 @@
 	                </td>
 	            </tr>
 	            <tr height="60" valign="top">
-					<td align="left" width="200" style="font-size:24px;">รหัสผ่าน : </td>
-	                <td align="left" width="300">
-	                	<input name="password" type="password" maxlength="30" placeholder="กรุณากรอกรหัสผ่าน" value="{{password}}" style=" padding:2px; font-size:20px;" />
-	                	<br>
-	                	<div id="passerror"><font class="alertmsg">{{errormsg.password}}</font></div>
-	                </td>
+                    <td align="left" width="200" style="font-size:24px;">เบอร์โทรศัพท์ : </td>
+                    <td align="left" width="300"><input name="tel" type="text" maxlength="30" placeholder="กรุณากรอกเบอร์โทรศัพท์" value="{{phone_number}}" style=" padding:2px; font-size:20px;" />
+                        <br>
+                        <div id="passerror"><font class="alertmsg">{{errormsg.tel}}</font></div>
+                    </td>
 	                <td align="left" width="200" style="font-size:24px;">ยืนยันรหัสผ่าน : </td>
 	                <td align="left" width="120"><input name="cpassword" type="password" maxlength="30" placeholder="ยืนยันรหัสผ่าน" value="" style=" padding:2px; font-size:20px;" />
 	                	<br>
@@ -35,16 +48,12 @@
 	                </td>
 	            </tr>
 	            <tr height="60" valign="top">
-					<td align="left" width="200" style="font-size:24px;">เบอร์โทรศัพท์ : </td>
-	                <td align="left" width="300"><input name="tel" type="text" maxlength="30" placeholder="กรุณากรอกเบอร์โทรศัพท์" value="{{phone_number}}" style=" padding:2px; font-size:20px;" />
-	                	<br>
-	                	<div id="passerror"><font class="alertmsg">{{errormsg.tel}}</font></div>
-	                </td>
+                    <td align="center" colspan="2"><a id="changePass" onclick="changePassPopup();">เปลี่ยนรหัสผ่าน</a></td>
 	                <td align="left" width="200" style="font-size:24px;" colspan="2"></td>
 	            </tr>
 	            <tr height="50" valign="top">
 					<td align="left" style="font-size:24px;" colspan="3">&nbsp;</td>
-	                <td align="left" width="150"><input class="edit" type="submit" /></td>
+	                <td align="left" width="150"><input class="edit" type="submit" /><input type="button" onclick="changePassPopup();"></td>
 	            </tr>
 	        </table>
         </form>
