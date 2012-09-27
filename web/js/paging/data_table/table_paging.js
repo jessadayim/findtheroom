@@ -7,12 +7,13 @@ function getOrderBy(){
 //Paging, Sorting, Search
 function getHtml(numPage, orderBy){
     var recordValue = $(".record").val();
-    var textSearch = $("#tbxSearch").val();
+    var textSearch = $("#tbxSearch").val().trim();
     var send = "?numPage=" + numPage + "&record=" + recordValue + "&textSearch=" + textSearch + orderBy;
-    reloadId('#innerPanel', urlPost + send);
-//    $.post(urlPost + send, function(data) {
-//
-//    });
+//    reloadId('#innerPanel', urlPost + send);
+    $.post(urlPost + send, function(data) {
+        $('#innerPanel').html(data);
+//        reloadId('#innerPanel', data);
+    });
 }
 
 //Set time
@@ -32,7 +33,7 @@ function hideId(id){
 
 //Reload id
 function reloadId(id, url){
-    $(id).load(url).fadeOut(timeOut).fadeIn(timeUp);
+    $(id).load(url).fadeOut(timeDelay).fadeIn(timeUp);
 }
 
 
