@@ -27,78 +27,71 @@
                 {#{{imageA|raw}}#}
             {#</div>#}
             {#{%endfor%}#}
-
-            <div class="slide">
-                {%if zoneA1 is empty%}
+            {%if zoneA1 is empty and zoneA2 is empty and zoneA3 is empty and zoneA4 is empty and zoneA5 is empty and zoneA6 is empty and zoneA7 is empty and zoneA8 is empty and zoneA9 is empty and zoneA10 is empty%}
+                <div class="slide">
                     <img src='{{asset('images/default/slide.jpg')}}' width="1000" height="300">
-                {%else%}
-                    {{zoneA1|raw}}
+                </div>
+            {%else%}
+                {%if zoneA1%}
+                    <div class="slide">
+                        {{zoneA1|raw}}
+                    </div>
                 {%endif%}
 
-            </div>
-            <div class="slide">
-                {%if zoneA2 is empty%}
-                <img src='{{asset('images/default/slide.jpg')}}' width="1000" height="300">
-                {%else%}
-                {{zoneA2|raw}}
+                {%if zoneA2%}
+                    <div class="slide">
+                        {{zoneA2|raw}}
+                    </div>
                 {%endif%}
-            </div>
-            <div class="slide">
-                {%if zoneA3 is empty%}
-                <img src='{{asset('images/default/slide.jpg')}}' width="1000" height="300">
-                {%else%}
-                {{zoneA3|raw}}
+
+                {%if zoneA3%}
+                    <div class="slide">
+                        {{zoneA3|raw}}
+                    </div>
                 {%endif%}
-            </div>
-            <div class="slide">
-                {%if zoneA4 is empty%}
-                <img src='{{asset('images/default/slide.jpg')}}' width="1000" height="300">
-                {%else%}
-                {{zoneA4|raw}}
+
+                {%if zoneA4%}
+                    <div class="slide">
+                        {{zoneA4|raw}}
+                    </div>
                 {%endif%}
-            </div>
-            <div class="slide">
-                {%if zoneA5 is empty%}
-                <img src='{{asset('images/default/slide.jpg')}}' width="1000" height="300">
-                {%else%}
-                {{zoneA5|raw}}
+
+                {%if zoneA5%}
+                    <div class="slide">
+                        {{zoneA5|raw}}
+                    </div>
                 {%endif%}
-            </div>
-            <div class="slide">
-                {%if zoneA6 is empty%}
-                <img src='{{asset('images/default/slide.jpg')}}' width="1000" height="300">
-                {%else%}
-                {{zoneA6|raw}}
+
+                {%if zoneA6%}
+                    <div class="slide">
+                        {{zoneA6|raw}}
+                    </div>
                 {%endif%}
-            </div>
-            <div class="slide">
-                {%if zoneA7 is empty%}
-                <img src='{{asset('images/default/slide.jpg')}}' width="1000" height="300">
-                {%else%}
-                {{zoneA7|raw}}
+
+                {%if zoneA7%}
+                    <div class="slide">
+                        {{zoneA7|raw}}
+                    </div>
                 {%endif%}
-            </div>
-            <div class="slide">
-                {%if zoneA8 is empty%}
-                <img src='{{asset('images/default/slide.jpg')}}' width="1000" height="300">
-                {%else%}
-                {{zoneA8|raw}}
+
+                {%if zoneA8%}
+                    <div class="slide">
+                        {{zoneA8|raw}}
+                    </div>
                 {%endif%}
-            </div>
-            <div class="slide">
-                {%if zoneA9 is empty%}
-                <img src='{{asset('images/default/slide.jpg')}}' width="1000" height="300">
-                {%else%}
-                {{zoneA9|raw}}
+
+                {%if zoneA9%}
+                    <div class="slide">
+                        {{zoneA9|raw}}
+                    </div>
                 {%endif%}
-            </div>
-            <div class="slide">
-                {%if zoneA10 is empty%}
-                <img src='{{asset('images/default/slide.jpg')}}' width="1000" height="300">
-                {%else%}
-                {{zoneA10|raw}}
+
+                {%if zoneA10%}
+                    <div class="slide">
+                        {{zoneA10|raw}}
+                    </div>
                 {%endif%}
-            </div>
+            {%endif%}
         </div>
         <a href='#' class="prev"><img src="{{asset('images/slider/arrow-prev.png')}}" width="29" height="57"
                                       alt="Arrow Prev"></a>
