@@ -34,7 +34,7 @@
 						$(".createPanel").html('');
                         hideId("#createRecordCancel");
                         showId("#createRecord");
-                        reloadId('#listBuildingSite', window.location + "show");
+                        reloadId('#innerPanel', urlPost);
 
                         saveIdBuildingSite = id;
                         var strUrl = "{{ path('facility2site_show', { 'id': '--' }) }}";
