@@ -142,7 +142,7 @@
                 '<td width="60">&nbsp;</td>'+
                 '</tr>'
 
-        deleteImage(imageId);
+        deleteImage(num,imageId,'room');
 
         if(intLine > 1)
         {
@@ -227,7 +227,7 @@
 
     function RemoveRowGal(num, imageId)
     {
-        deleteImage(imageId);
+        deleteImage(num,imageId,'gallery');
         if(intLineGal > 1)
         {
             readdatagallery(num);
@@ -238,11 +238,12 @@
         }
     }
 
-    function deleteImage(imageId)
+    function deleteImage(num,imageId,type)
     {
-        $.get("{{ path('setDeleteImage') }}" , { id:imageId},
+        var buildid = document.getElementById('hdnbuildid').value;
+        $.get("{{ path('setDeleteImage') }}" , { buildingId:buildid, sequence:num, id:imageId, type:type},
                 function(data){
-                    alert(data);
+                    //alert(data);
                 });
     }
 

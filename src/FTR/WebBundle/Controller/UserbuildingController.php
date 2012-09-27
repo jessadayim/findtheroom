@@ -1539,22 +1539,31 @@ class UserbuildingController extends Controller
 
         if($_GET)
         {
-            $imageId = $_GET['id'];
-            $imageData = $em->getRepository('FTRWebBundle:Image')->find($imageId);
-            $buildingId = $imageData->getBuildingSiteId();
-            $photoName = $imageData->getPhotoName();
-            $photoType = $imageData->getPhotoType();
-            $sequence = $imageData->getSequence();
+            $getSequence = $_GET['sequence'];
+            //$getImageId = $_GET['id'];
+            $getType = $_GET['type'];
+            $getBuildingId = $_GET['buildingId'];
 
-            $imageArray = $em->getRepository('FTRWebBundle:Image')->findBy(array('building_site_id'=>$buildingId,'photo_type'=>$photoType));
+            $imageData = $em->getRepository('FTRWebBundle:Image')->findOneBy(array('building_site_id'=>$getBuildingId,'photo_type'=>$getType,'sequence'=>$getSequence));
+            $photoName = $imageData->getPhotoName();
+
+            $imageArray = $em->getRepository('FTRWebBundle:Image')->findBy(array('building_site_id'=>$getBuildingId,'photo_type'=>$getType));
             $count = 0;
             foreach($imageArray as $key => $value)
             {
-                echo $imageName = $value->getPhotoName();
+                $imageName = $value->getPhotoName();
                 if($photoName==$imageName)
                 {
-                    $value->setDeleted(1);
-                    $value->setSequence(NULL);
+                    $pathFolder = $this->getPathUpload($getBuildingId);
+                    $path = $pathFolder.'/'.$photoName;
+
+                    $roomType2siteId = $value->getRoomtype2siteId();
+                    if(!empty($roomType2siteId)){
+                        $roomType2siteData = $em->getRepository('FTRWebBundle:Roomtype2site')->findOneBy(array('id'=>$roomType2siteId));
+                        $em->remove($roomType2siteData);
+                    }
+                    $this->deleteFile($path);
+                    $em->remove($value);
                 }
                 else{
                     $value->setSequence($count);
@@ -1564,5 +1573,11 @@ class UserbuildingController extends Controller
             }
         }
         exit();
+    }
+    public function deleteFile($path)
+    {
+        if (file_exists($path)) {
+            unlink($path);
+        }
     }
 }
