@@ -196,7 +196,7 @@ class Building_siteController extends Controller
                 $entity->setZoneId(null);
             }
 
-            $entity = array_map('trim', $entity);
+//            $entity = array_map('trim', $entity);
             $em->persist($entity);
             $em->flush();
 

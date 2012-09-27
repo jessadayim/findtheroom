@@ -1,10 +1,25 @@
 <script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script>
+
+{#gritter#}
+<script type="text/javascript" src="{{asset('js/gritter/js/jquery.gritter.js')}}"></script>
+<link rel="stylesheet" type="text/css" href="{{asset('js/gritter/css/jquery.gritter.css')}}" />
+
 <script>
 	var countRoomType2Site = {{roomtype2site|length}};
 	var maxRoomType = 20;
 	var url = "{{ path('roomtype2site_create') }}";
 	var checkReload = false;
-	
+
+    //show message
+    function showMessage(title, text){
+        $.gritter.add({
+            // (string | mandatory) the heading of the notification
+            title: title,
+            // (string | mandatory) the text inside the notification
+            text: text
+        });
+    }
+
 	function postOnchange(){
 		$.ajax({
 			type : "POST",
@@ -12,12 +27,13 @@
 			data : $("#formCreateRoomType2Site").serialize(),
 			success : function(msg) {
 				if (msg == 'finish') {
+                    showMessage('บันทึกข้อมูลสำเร็จ', 'ข้อมูลของท่านได้รับการบันทึกแล้ว');
 					if (checkReload){						
 						setTimeout("reload();", 200);
 					}
 				} else {
 
-					alert('เกิดการผิดพลาด\n** กรุณาตรวจสอบ **' +msg);
+					alert('เกิดการผิดพลาด\n** กรุณาตรวจสอบ **' + msg);
 				}
 			}
 		});
