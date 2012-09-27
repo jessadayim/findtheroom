@@ -69,8 +69,9 @@
 		<a id="login" href="{{path('FTRWebBundle_loginpublish')}}"><img src="{{asset('images/login.png')}}" style="margin-left:10px; margin-top:27px;" /></a>
 	</div>
 	{% else %}
-	<div style="width:900px; display:block; position:relative; height:250px; margin-top: 20px;">
-		<a href="{{path('userbuilding')}}"><img src="{{asset('images/free-pub.png')}}" style="margin-left:30px; margin-top:40px;" /></a>
+	<div style="width:950px; display:block; position:relative; height:250px; margin-top: 20px;">
+		<img src="{{asset('images/free-pub.png')}}" style="margin-left:30px; margin-top:40px;" /><a href="#" class="pub-link">ลงประกาศฟรี!</a><span class="pub-nolink" style="margin-left:290px">หรือ</span>
+        <a href="#" class="pub-link" style="margin-left:385px">แก้ไขรายละเอียด</a>
 	</div>
 	{% endif %}
 </div>
