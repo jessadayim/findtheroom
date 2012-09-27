@@ -30,10 +30,19 @@
             $("body").html('<br/><br/><br/><div align="center">Download Google Chrome &nbsp;<a target="_blank" href="http://support.google.com/chrome/bin/answer.py?hl=th&answer=95346">คลิก</a></div>');
             $("body").fadeIn(500);
         }
+        // check user admin for redirect index
+        var path = window.location.href;
+        var host = window.location.host;
+        path = path.substring(path.search(host)+host.length, path.length );
+        var pathCheck = "{{asset(path('FTRAdminBundle_panel'))}}";
+        if(path != pathCheck ){
+            window.location = pathCheck;
+        }
     });
 </script>
 </head>
 <body>
+<input type="hidden" id="checkSession" value="{{app.session.get('username')}}"/>
 {% if app.session.get('username') is empty %}
 	<header id="wrap" class="container_12" style="height: 100px; padding-top: 30px; text-align: center;">
 		<H1>FindtheRoom PANEL</H1>
