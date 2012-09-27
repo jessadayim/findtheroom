@@ -142,10 +142,7 @@
                 '<td width="60">&nbsp;</td>'+
                 '</tr>'
 
-        $.get("{{ path('setDeleteImage') }}" , { id:imageId},
-                function(data){
-                    //alert(data);
-         });
+        deleteImage(num,imageId,'room');
 
         if(intLine > 1)
         {
@@ -197,7 +194,7 @@
         var description = arraydata[3];
 
         var strInner = '<tr>' +
-                '<td><img src="{{asset('images/delete.png')}}" style="padding-left:0px; margin-left:-10px; cursor:pointer;" onclick="RemoveRow('+num+','+imageid+');" /></td>' +
+                '<td><img src="{{asset('images/delete.png')}}" style="padding-left:0px; margin-left:-10px; cursor:pointer;" onclick="RemoveRowGal('+num+','+imageid+');" /></td>' +
                 '<td><div id="gallerypic'+num+'" class="thumbframe4add"><img src="'+pathimage+'" class="nopad thumb4img"</div></td>' +
                 '<td><input type="file" name="gallery'+num+'" id="gallery'+num+'" /><input type="hidden" name="hdngalleryname'+num+'" id="hdngalleryname'+num+'" value="'+nameimage+'" /></td>' +
                 '<td><textarea id="galtitle'+num+'" name="galtitle'+num+'" maxlenght="500" placeholder="กรอกข้อมูลของรูปที่นี่" class="galdesc" onchange="postData('+"'"+"image"+"'"+');" >'+description+'</textarea><input type="hidden" name="imageidgal'+num+'" id="imageidgal'+num+'" value="'+imageid+'" /></td>' +
@@ -215,37 +212,39 @@
         var buildid = document.getElementById('hdnbuildid').value;
         for(var i=0 ; i < intLineGal ; i++)
         {
-
-            if (num != i){
+            if (numGal != i){
                 if ($('#hdngalleryname'+i).val() == ''){
                     var filename = pathimgdefault + 'show.png';
                 }else {
                     var filename = pathimgbuilding + '/' + buildid + "/" + $('#hdngalleryname'+i).val();
                 }
-                var arrayadd = [$('#imageidgal'+i).val(), filename, $('#typeap_name'+i).val(), $('#typeap_size'+i).val(), $('#typeap_price'+i).val(), $('#hdngalleryname'+i).val()];
+                var arrayadd = [$('#imageidgal'+i).val(), filename, $('#hdngalleryname'+i).val(), $('#galtitle'+i).val()];
                 arrayread.push(arrayadd);
             }
         }
-        arraydataimage = arrayread;
+        arraygalleryimage = arrayread;
     }
 
-    function RemoveRowGal(num, imageid)
+    function RemoveRowGal(num, imageId)
     {
-        if(intLine > 1)
+        deleteImage(num,imageId,'gallery');
+        if(intLineGal > 1)
         {
-            // theTable = (document.all) ? document.all.tbtype :
-            // document.getElementById("tableroom")
-            // theTableBody = theTable.tBodies[0];
-            // theTableBody.deleteRow(num);
-            // intLine--;
-            // document.addform.hdnMaxLine.value = intLine;
-            // loopbutton();
             readdatagallery(num);
             intLineGal = 0;
             document.addform.hdnMaxLineGal.value = intLineGal;
-            genrowimage();
+            genrowimageGal();
 
         }
+    }
+
+    function deleteImage(num,imageId,type)
+    {
+        var buildid = document.getElementById('hdnbuildid').value;
+        $.get("{{ path('setDeleteImage') }}" , { buildingId:buildid, sequence:num, id:imageId, type:type},
+                function(data){
+                    //alert(data);
+                });
     }
 
     function moveToDiv(id) {

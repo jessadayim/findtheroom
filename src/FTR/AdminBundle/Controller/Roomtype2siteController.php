@@ -102,19 +102,37 @@ class Roomtype2siteController extends Controller
                     $entity ->setRoomTypename($getRoomType[$key]);
                     $entity ->setRoomsize($this->checkEmptyValue($getRoomSize[$key]));
                     $entity ->setRoomprice($this->checkEmptyValue($getRoomPrice[$key]));
-                    $entity ->setDeleted(0);  
+                    $entity ->setDeleted(0);
+                    $em->persist($entity);
+
+                    //สร้าง logs
+                    $this->addLogger('Update Roomtype2site', $entity);
                 }else{
                     $entity ->setBuildingSiteId($getBuildingSiteId);
                     $entity ->setRoomTypename('');
                     $entity ->setRoomsize(0);
                     $entity ->setRoomprice(0);
                     $entity ->setDeleted(1);
+                    $em->persist($entity);
+
+                    $entity = $em->getRepository('FTRWebBundle:Image')->findOneBy(array(
+                        "building_site_id" => $getBuildingSiteId,
+                        "roomtype2site_id" => $value['id']
+                    ));
+                    if (!empty($entity)){
+                        $nameImage = $entity->getPhotoName();
+                        if (!empty($nameImage)){
+                            $this->deleteFileByBuildingId($getBuildingSiteId, $nameImage);
+                            $em->remove($entity);
+                        }
+
+                        //สร้าง logs
+                        $this->addLogger('Delete Image', $entity);
+                    }
                 }
-                $em->persist($entity);
+
             }
 
-            //สร้าง logs
-            $this->addLogger('Update Roomtype2site', $entity);
             if (count($objGetRoomType2Site) < $countRoomTypeId){
                 foreach($getRoomType as $key => $value){
                     if ($key >= count($objGetRoomType2Site)){
@@ -182,7 +200,25 @@ class Roomtype2siteController extends Controller
     private function addLogger($message, $entity){
         $logger = new LoggerHelper();
         $newArray = $logger->objectToArray($entity);
-        $logger->addInfo($message, $newArray);
+
+        //Get Session Username
+        $session = $this->get('session');
+        $username = $session->get('username');
+
+        //add log
+        $logger->addInfo("$message by '$username'", $newArray);
+    }
+
+    /*
+     * ลบไฟล์รูปภาพ เมื่อมีคำสั่งลบรูปมา
+     */
+    private function deleteFileByBuildingId($id, $nameImage){
+        $path = "./images/building/".$id."/".$nameImage;
+        if(!file_exists($path)){
+            echo "No File is path : '$path'";
+        }else{
+            unlink($path);
+        }
     }
 
     /*

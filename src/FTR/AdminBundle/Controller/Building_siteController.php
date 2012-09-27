@@ -195,7 +195,8 @@ class Building_siteController extends Controller
                 }
                 $entity->setZoneId(null);
             }
-            
+
+            $entity = array_map('trim', $entity);
             $em->persist($entity);
             $em->flush();
 
@@ -395,7 +396,13 @@ class Building_siteController extends Controller
     private function addLogger($message, $entity){
         $logger = new LoggerHelper();
         $newArray = $logger->objectToArray($entity);
-        $logger->addInfo($message, $newArray);
+
+        //Get Session Username
+        $session = $this->get('session');
+        $username = $session->get('username');
+
+        //add log
+        $logger->addInfo("$message by '$username'", $newArray);
     }
 
     /*
