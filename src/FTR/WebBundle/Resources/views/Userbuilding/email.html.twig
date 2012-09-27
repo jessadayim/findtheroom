@@ -1,5 +1,28 @@
-testttt
-<br>
-{{name}}
-<br>
-sent email
+<h1>"แจ้งการบันทึกข้อมูล เพื่อยืนยันการแสดงผล"</h1>
+<table border="1">
+    <tr>
+        <td>
+            ID หอพักในฐานข้อมูล :
+        </td>
+        <td>
+            {{ buildingData.buildingId }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            หอพัก ชื่อ:
+        </td>
+        <td>
+            {{ buildingData.buildingName }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Email ติดต่อ:
+        </td>
+        <td>
+            {{ buildingData.emailBuilding }}
+        </td>
+    </tr>
+</table>
+ทำการบันทึกข้อมูลแล้ว ส่งข้อมูลมาเพื่อรับการยืนยันให้แสดงผลบนเว็บ"findtheroom.com"

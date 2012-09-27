@@ -583,29 +583,51 @@ class UserbuildingController extends Controller
             if(!empty($buildingData))
             {
                 $publish = $buildingData->getPublish();
-            }
-            if($publish!=1)
-            {
-                $buildingData->setPublish(2);
-                $em->flush();
-                $logger->addInfo('User '.$user.' update building');
+                $emailBuilding = $buildingData->getContactEmail();
+                $buildingName = $buildingData->getBuildingName();
+
+                if($publish!=1)
+                {
+                    $buildingData->setPublish(2);
+                    $em->flush();
+                    $textHead = 'แจ้งการบันทึกข้อมูลเพื่อยืนยันการแสดงผล';
+                    $textToSend = '"'.$textHead.'"
+
+ID หอพักในฐานข้อมูล : '.$id.'
+หอพัก ชื่อ: '.$buildingName.'
+Email ติดต่อ : '.$emailBuilding.'
+ทำการบันทึกข้อมูลแล้ว
+ส่งข้อมูลมาเพื่อรับการยืนยันให้แสดงผลบนเว็บ"findtheroom.com"
+                    ';
+                    $arrData = array(
+                        'buildingId' => $id,
+                        'buildingName' => $buildingName,
+                        'emailBuilding' => $emailBuilding,
+                    );
+                    $this->sendemailAction($emailBuilding,$textHead,$textToSend,$arrData);
+                    $logger->addInfo('User '.$user.' update building');
+                }
             }
         }
         return $this->redirect($this->generateUrl('userbuilding'));
     }
 
-    public function sendemailAction()
+    public function sendemailAction($sendFrom,$textHead,$textToSend,$arrData)
     {
-        $name = "extest";
-        $message = \Swift_Message::newInstance()
-            ->setSubject('Hello Email')
-            ->setFrom('jessaday@sourcecode.co.th')
-            ->setTo('exodist@gmail.com')
-            ->setBody($this->renderView('FTRWebBundle:Userbuilding:email.html.twig', array('name' => $name)), 'text/html');
+        //$arrEmail = array("jessaday@sourcecode.co.th");
+        $arrEmail = array("admin@findtheroom.com","webmaster@findtheroom.com");
+        foreach($arrEmail as $key => $value)
+        {
+            $message = \Swift_Message::newInstance()
+                ->setSubject("=?utf-8?B?".base64_encode($textHead)."?=")
+                ->setFrom($sendFrom)
+                ->setTo($value)
+                ->addPart($textToSend)
+                ->setBody($this->renderView('FTRWebBundle:Userbuilding:email.html.twig', array('buildingData' => $arrData)), 'text/html');
 
-        $this->get('mailer')->send($message);
-
-        return $this->render('FTRWebBundle:Userbuilding:email.html.twig', array('name' => $name));
+            $this->get('mailer')->send($message);
+        }
+        return "success";
     }
 
     public function updateUserProfileAction()
@@ -659,7 +681,7 @@ class UserbuildingController extends Controller
                     $userOwner = $em->getRepository('FTRWebBundle:User_owner')->findOneBy(array('username' => $user));
                     $confirmPassMD5 = md5($confirmPass);
                     $passwordUser = $userOwner->getPassword();
-                    if($confirmPassMD5=$passwordUser)
+                    if($confirmPassMD5==$passwordUser)
                     {
                         $userOwner->setUsername($username);
                         $userOwner->setFirstname($first_name);
