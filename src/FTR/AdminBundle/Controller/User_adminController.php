@@ -107,6 +107,7 @@ class User_adminController extends Controller
     {
         $entity = new User_admin();
         $entity = $this->getNewEntity($entity);
+//        $entity = md5($entity->getPassword());
 
         $request = $this->getRequest();
         $form = $this->createForm(new User_adminType(), $entity);
@@ -116,7 +117,8 @@ class User_adminController extends Controller
         if ($this->checkUser($username) == 1) {
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getEntityManager();
-
+                $password = md5($entity->getPassword());
+                $entity->setPassword($password);
                 $entity->setDeleted(0);
 
                 $em->persist($entity);

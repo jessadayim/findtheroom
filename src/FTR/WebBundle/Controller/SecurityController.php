@@ -11,7 +11,7 @@ class SecurityController extends Controller
     public function loginAction()
     {
     	$username = $_POST['username'];
-		$password = $_POST['password'];
+		$password = md5($_POST['password']);
 		if($username !=NULL&& $password !=NULL){
 			$conn= $this->get('database_connection');
 			if(!$conn){ die("MySQL Connection error");}

@@ -451,10 +451,10 @@ class UserbuildingController extends Controller
         }
         try {
             $sql = "select * from image
-								where building_site_id = '$buildid' 
-									and photo_type = '$type' 
-									or roomtype2site_id = '$roomtype2siteid' 
-									and deleted = 0";
+								where deleted = 0 and building_site_id = '$buildid'
+									and photo_type = '$type'
+									or roomtype2site_id = '$roomtype2siteid'
+									";
             $imagedata = $conn->fetchAll($sql);
             /*echo "<pre>";
                    var_dump($imagedata);
@@ -876,6 +876,7 @@ class UserbuildingController extends Controller
                     $image->setPhotoType($photo_type);
                     $image->setSequence($sequence);
                     $image->setDescription($description);
+                    $image->setDeleted(0);
                     if ($value['photo_type'] == 'room') {
                         $roomtype2siteid = $this->saveRoomtypeData($id, $data, NULL);
                     }
@@ -1538,26 +1539,45 @@ class UserbuildingController extends Controller
 
         if($_GET)
         {
-            $imageId = $_GET['id'];
-            $imageData = $em->getRepository('FTRWebBundle:Image')->find($imageId);
-            $buildingId = $imageData->getBuildingSiteId();
-            $photoName = $imageData->getPhotoName();
-            $photoType = $imageData->getPhotoType();
-            $sequence = $imageData->getSequence();
+            $getSequence = $_GET['sequence'];
+            //$getImageId = $_GET['id'];
+            $getType = $_GET['type'];
+            $getBuildingId = $_GET['buildingId'];
 
-            $imageArray = $em->getRepository('FTRWebBundle:Image')->findBy(array('building_site_id'=>$buildingId,'photo_type'=>$photoType));
+            $imageData = $em->getRepository('FTRWebBundle:Image')->findOneBy(array('building_site_id'=>$getBuildingId,'photo_type'=>$getType,'sequence'=>$getSequence));
+            $photoName = $imageData->getPhotoName();
+
+            $imageArray = $em->getRepository('FTRWebBundle:Image')->findBy(array('building_site_id'=>$getBuildingId,'photo_type'=>$getType));
+            $count = 0;
             foreach($imageArray as $key => $value)
             {
                 $imageName = $value->getPhotoName();
                 if($photoName==$imageName)
                 {
-                    
+                    $pathFolder = $this->getPathUpload($getBuildingId);
+                    $path = $pathFolder.'/'.$photoName;
+
+                    $roomType2siteId = $value->getRoomtype2siteId();
+                    if(!empty($roomType2siteId)){
+                        $roomType2siteData = $em->getRepository('FTRWebBundle:Roomtype2site')->findOneBy(array('id'=>$roomType2siteId));
+                        $em->remove($roomType2siteData);
+                    }
+                    $this->deleteFile($path);
+                    $em->remove($value);
                 }
                 else{
-
+                    $value->setSequence($count);
+                    $count++;
                 }
+                $em->flush();
             }
         }
         exit();
+    }
+    public function deleteFile($path)
+    {
+        if (file_exists($path)) {
+            unlink($path);
+        }
     }
 }

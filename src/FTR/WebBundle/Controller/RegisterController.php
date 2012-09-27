@@ -78,7 +78,7 @@ class RegisterController extends Controller
 			$lastname = $_POST['lastname'];
 			$username = $_POST['regusername'];
 			$email = $_POST['email'];
-			$password = $_POST['regpassword'];
+			$password = md5($_POST['regpassword']);
 			$tel = $_POST['tele'];
 			
 			$em = $this->getDoctrine()->getEntityManager();
