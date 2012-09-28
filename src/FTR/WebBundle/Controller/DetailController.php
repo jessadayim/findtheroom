@@ -18,7 +18,7 @@ class DetailController extends Controller
         return $buildingId;
     }
 
-    public function DetailAction($buildId=null)
+    public function DetailAction($buildId,$province,$prefecture,$slug)
     {
         $detailData = array();
         $countData = 0;
@@ -27,7 +27,7 @@ class DetailController extends Controller
         //echo $buildId;
         if (!empty($buildId)) {
             $id = $buildId;
-            $id = $this->getBuildingId($id);
+//            $id = $this->getBuildingId($id);
             try {
                 /**
                  * query Detail page general detail
@@ -44,6 +44,42 @@ class DetailController extends Controller
 
                 if ($countData == 1) {
                     $detailData = $objGeneral[0];
+
+                    $sqlAdd = "SELECT am.AMPHUR_NAME, pro.PROVINCE_NAME
+                                   FROM building_site b
+                                      JOIN amphur am ON b.addr_prefecture = am.AMPHUR_ID
+                                      JOIN province pro ON b.addr_province = pro.PROVINCE_ID
+                                   WHERE b.id = $id
+                                   AND b.deleted =0";
+
+                    $objAdd = $conn->fetchAll($sqlAdd);
+                    $amphur = "";
+                    $province = "";
+                    foreach ($objAdd as $value) {
+                        if($value['AMPHUR_NAME'] != ""){
+                            $amphur = $value['AMPHUR_NAME'];
+                        }if($value['PROVINCE_NAME'] != ""){
+                            $province = $value['PROVINCE_NAME'];
+                        }
+                    }
+                    /**
+                     * query image MAP HEAD
+                     * */
+                    $sqlImageType = "SELECT photo_name, building_site_id, description, photo_type
+                                    FROM image
+                                    WHERE photo_type = 'head' OR photo_type = 'map'
+                                      AND building_site_id = $id
+                                      AND deleted = 0";
+                    $objImageType = $conn->fetchAll($sqlImageType);
+                    $head = "";
+                    $map = "";
+                    foreach ($objImageType as $value) {
+                        if($value['photo_type'] == 'head'){
+                            $head = $value['photo_name'];
+                        }if($value['photo_type'] == 'map'){
+                            $map = $value['photo_name'];
+                        }
+                    }
 
                     /**
                      * query Detail Nearly Type Bts
@@ -132,7 +168,11 @@ class DetailController extends Controller
                 'id' => $id,
                 'countData' => $countData,
                 'imageName'=> $objImage,
-                'countGallery'=>count($objImage)
+                'countGallery'=>count($objImage),
+                'head'=>$head,
+                'map'=>$map,
+                'amphur'=>$amphur,
+                'province'=>$province
             ));
         } else {
             return $this->redirect($this->generateUrl('FTRWebBundle_list'));
