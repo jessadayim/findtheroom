@@ -178,6 +178,13 @@ class Building_siteController extends Controller
             $entity->setStartPrice(0);
             $entity->setEndPrice(0);
 
+            //Add Slug
+            $getName = $entity->getBuildingName();
+            $getName = str_replace(' ', '-', trim($getName));
+            $entity->setSlug($getName);
+
+
+
             //เลือกเขต หรือจังหวัด
             $getProvince = $entity->getAddrProvince();
             $getZone = $entity->getZoneId();
@@ -315,6 +322,11 @@ class Building_siteController extends Controller
                 }
                 $entity->setZoneId(null);
             }
+
+            //Add Slug
+            $getName = $entity->getBuildingName();
+            $getName = str_replace(' ', '-', trim($getName));
+            $entity->setSlug($getName);
 
             $em->persist($entity);
             $em->flush();
