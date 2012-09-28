@@ -18,7 +18,7 @@ class DetailController extends Controller
         return $buildingId;
     }
 
-    public function DetailAction($buildId=null)
+    public function DetailAction($buildId,$province,$prefecture,$slug)
     {
         $detailData = array();
         $countData = 0;
@@ -27,7 +27,7 @@ class DetailController extends Controller
         //echo $buildId;
         if (!empty($buildId)) {
             $id = $buildId;
-            $id = $this->getBuildingId($id);
+//            $id = $this->getBuildingId($id);
             try {
                 /**
                  * query Detail page general detail
@@ -58,8 +58,8 @@ class DetailController extends Controller
                     foreach ($objAdd as $value) {
                         if($value['AMPHUR_NAME'] != ""){
                             $amphur = $value['AMPHUR_NAME'];
-                        }if($value['AMPHUR_NAME'] != ""){
-                            $province = $value['AMPHUR_NAME'];
+                        }if($value['PROVINCE_NAME'] != ""){
+                            $province = $value['PROVINCE_NAME'];
                         }
                     }
                     /**
