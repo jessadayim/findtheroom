@@ -149,6 +149,7 @@ class UserbuildingController extends Controller
                 $arrData[] = array(
                     'id' => $value['id'],
                     'building_name' => $value['building_name'],
+                    'slug' => $value['slug'],
                     'publish' => $publish,
                 );
             }

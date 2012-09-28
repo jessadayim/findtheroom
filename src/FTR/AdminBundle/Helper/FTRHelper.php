@@ -12,8 +12,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class FTRHelper
 {
     /*
-     * return array Ads position
+     * Defind doctrine for use Database
      */
+    private $doctrine;
+
+    public function setDoctrine($doctrine)
+    {
+        $this->doctrine = $doctrine;
+    }
+
+    /*
+    * return array Ads position
+    */
     public function dateDiff($date_start, $date_end){
         if((!empty($date_start))&&(!empty($date_end))){
             $date_diff_sec = strtotime($date_end) - strtotime($date_start);
@@ -94,5 +104,13 @@ class FTRHelper
 
         $newDate = intval($dd)." ".$mm." ".$yy." เวลา ".$h.":".$m." น." ;
         return $newDate;
+    }
+
+    public function getBuildingIdFromLink($buildingLink)
+    {
+        $buildingData = $this->doctrine->getEntityManager()
+                            ->getRepository('FTRWebBundle:Building_site')
+                            ->findOneBy(array('slug'=>$buildingLink));
+        return $buildingData->getId();
     }
 }

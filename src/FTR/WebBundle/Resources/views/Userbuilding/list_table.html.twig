@@ -43,7 +43,7 @@
             <tr height="50" valign="middle">
                 <td align="left" width="250" style="font-size:24px;">{{data.building_name}}</td>
                 <td align="center" width="250" style="font-size:24px;">{{data.publish}}</td>
-                <td align="center" width="250" style="font-size:24px;"><a href="{{path('FTRWebBundle_detail',{'buildId': data.id })}}" target="_blank">ดู</a></td>
+                <td align="center" width="250" style="font-size:24px;"><a href="{{path('FTRWebBundle_detail',{'buildId': data.slug })}}" target="_blank">ดู</a></td>
                 <td align="center" width="250" style="font-size:24px;"><a href="{{path('addData',{'id': data.id })}}">แก้ไข</a></td>
             </tr>
         {% endfor %}

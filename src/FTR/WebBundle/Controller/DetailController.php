@@ -3,10 +3,20 @@
 namespace FTR\WebBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use FTR\AdminBundle\Helper\FTRHelper;
 
 
 class DetailController extends Controller
 {
+
+    public function getBuildingId($slug)
+    {
+        $doctrine = $this->getDoctrine();
+        $ftr_helper = new FTRHelper();
+        $ftr_helper->setDoctrine($doctrine);
+        $buildingId = $ftr_helper->getBuildingIdFromLink($slug);
+        return $buildingId;
+    }
 
     public function DetailAction($buildId=null)
     {
@@ -17,6 +27,7 @@ class DetailController extends Controller
         //echo $buildId;
         if (!empty($buildId)) {
             $id = $buildId;
+            $id = $this->getBuildingId($id);
             try {
                 /**
                  * query Detail page general detail
