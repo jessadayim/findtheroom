@@ -43,7 +43,7 @@
 	<img src="{{asset('images/user.png')}}" style="display:block; position:relative; float:none;" />
 	<hr class="line" style="top: 60px;" />
     <div style="width:1000px; display:block; position:relative; height:240px; margin-top: 40px;">
-        {%if regisStatus != 'success'%}
+
 		<table style="margin-top: 0px;">
         	<tr height="60" valign="top">
 				<td align="left" width="200" style="font-size:24px;">ชื่อแรก : *</td>
@@ -78,19 +78,10 @@
                 </td>
             </tr>
         </table>
-        {%else%}
-        <table style="margin-top: 0px;">
-            <tr height="60" valign="top">
-                <td>
-                    ระบบได้ทำการส่งลิงค์ เพื่อทำการยืนยันการสมัครสมาชิก กรุณากลับไปเช็คอีเมล์ที่ท่านได้ลงทะเบียนเอาไว้
-                </td>
-            </tr>
-        </table>{%endif%}
 	</div>
     <hr class="line" style="top: 400px;" />
     <div style="width:1000px; display:block; position:relative;">
 
-        {%if regisStatus != 'success'%}
 		<table style="margin-top: 70px;">
             <tr height="60" valign="middle">
 				<td align="right" width="400" style="font-size:24px;">หรือ</td>
@@ -103,7 +94,6 @@
                 </td>
             </tr>
         </table>
-        {%endif%}
 	</div>
 </div>
 </form>

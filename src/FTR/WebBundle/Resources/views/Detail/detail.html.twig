@@ -306,16 +306,10 @@ $(function(){
                 <tr height="135" valign="middle">
                     <td align="left" width="220">
                         <div class="thumbframe">
-                            {% if type.photo_name is empty%}
-                                <img src='{{asset('images/default/banner.jpg')}}'>
-                            {%else%}
-                                {%if type.deleted != 1%}
-                                <img src="{{ asset('images/building/')}}{{ type.building_site_id }}/{{type.photo_name}}" />
-                                {%else%}
-                                <img src='{{asset('images/default/banner.jpg')}}'>
-                                {%endif%}
-                            {%endif%}
 
+                            {%if type.deleted != 1%}
+                                <img src="{{ asset('images/building/')}}{{ type.building_site_id }}/{{type.photo_name}}" />
+                            {%endif%}
                         </div>
                     </td>
                     <td align="left" width="150">{{type.room_typename}}</td>
