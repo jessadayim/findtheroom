@@ -318,7 +318,7 @@
 
         {% for tlist in top_last_building %}
         <tr>
-            <td class="first">{{ tlist.building_name }}</td>
+            <td class="first"><a href="{{ path('FTRWebBundle_detail',{'buildId':tlist.id}) }}" target="_blank">{{ tlist.building_name }}</a></td>
             <td>{{ tlist.type_name }}</td>
             <td>{{ tlist.typename }}</td>
             {% if tlist.addr_province !='กรุงเทพมหานคร' %}

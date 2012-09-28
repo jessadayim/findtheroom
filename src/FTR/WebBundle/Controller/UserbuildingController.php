@@ -149,6 +149,7 @@ class UserbuildingController extends Controller
                 $arrData[] = array(
                     'id' => $value['id'],
                     'building_name' => $value['building_name'],
+                    'slug' => $value['slug'],
                     'publish' => $publish,
                 );
             }
@@ -195,6 +196,12 @@ class UserbuildingController extends Controller
             // เช็คถ้าไม่มีให้ redirect
             if (empty($userData)) {
                 return $this->redirect($this->generateUrl('FTRWebBundle_publish'));
+            }
+
+            $enabled = $userData->getEnabled();
+            if(empty($enabled))
+            {
+                return $this->redirect($this->generateUrl('userbuilding'));
             }
             if (empty($id)) {
                 $building = new Building_site();

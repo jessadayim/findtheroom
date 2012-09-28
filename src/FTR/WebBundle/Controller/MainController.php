@@ -136,7 +136,8 @@ class MainController extends Controller {
 					a.addr_province,
 					a.addr_prefecture,
 					FORMAT(a.start_price,0) AS start_price,
-					FORMAT(a.end_price,0) AS end_price
+					FORMAT(a.end_price,0) AS end_price,
+					a.id
 				FROM
 					building_site a
 					INNER JOIN building_type b ON (a.building_type_id=b.id)

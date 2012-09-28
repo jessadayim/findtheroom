@@ -232,6 +232,13 @@ class Building_site
     private $addr_zipcode;
 
     /**
+     * @var string $slug
+     *
+     * @ORM\Column(name="slug", type="string", length=255)
+     */
+    private $slug;
+
+    /**
      * @var boolean $deleted
      *
      * @ORM\Column(name="deleted", type="boolean", nullable="true")
@@ -847,6 +854,26 @@ class Building_site
     public function getAddrZipcode()
     {
         return $this->addr_zipcode;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 
     /**
