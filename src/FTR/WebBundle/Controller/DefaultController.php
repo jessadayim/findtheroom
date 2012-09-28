@@ -28,8 +28,11 @@ class DefaultController extends Controller
             case "buildingRecom":
             case "buildingsite":
                 $building_site_id = @$_GET['id'];
+                $province = @$_GET['province'];
+                $prefecture = @$_GET['prefactre'];
+                $slug = @$_GET['slug'];
                 $refname = "$clickType";
-                $linkname = $this->generateUrl('FTRWebBundle_detail', array('buildId' => $building_site_id));
+                $linkname = $this->generateUrl('FTRWebBundle_detail', array('buildId' => $building_site_id, 'province' => $province, 'prefecture' => $prefecture, 'slug' => $slug));
                 break;
             case 1:
                 echo "i equals 1";
@@ -62,6 +65,7 @@ class DefaultController extends Controller
 
            // mysql_close($conn);
         }
+//        var_dump($linkname);exit();
         return $this->redirect($linkname);
         //exit();
     }

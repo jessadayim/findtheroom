@@ -9,8 +9,8 @@
      <br>
         {% if numData > 0 %}
         {% for rlist in result %}
-        <!-- <form action="{{path('FTRWebBundle_detail')}}" method="post"> -->
-        <form action="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingsite&id={{rlist.id}}" method="post">
+        {#<!-- <form action="{{path('FTRWebBundle_detail')}}" method="post"> -->#}
+        <form action="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingsite&id={{rlist.id}}&province={{rlist.PROVINCE_NAME}}&prefactre={{rlist.AMPHUR_NAME}}&slug={{rlist.slug}}" method="post">
             <input type="hidden" value="{{ rlist.id }}" name ="bid" id="bid">
             <div class="result">
                 {% if rlist.facilitylist_id==1 or rlist.facilitylist_id==2 %}

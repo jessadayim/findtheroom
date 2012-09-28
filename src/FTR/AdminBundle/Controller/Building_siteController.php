@@ -165,12 +165,12 @@ class Building_siteController extends Controller
             $em = $this->getDoctrine()->getEntityManager();
 
             //Check ว่ามี ขื่อนี้หรือไม่
-            $getBuildingName = $entity->getBuildingName();
-
-            if(!$this->checkName($getBuildingName, "")){
-                echo "error_$getBuildingName";
-                exit();
-            }
+//            $getBuildingName = $entity->getBuildingName();
+//
+//            if(!$this->checkName($getBuildingName, "")){
+//                echo "error_$getBuildingName";
+//                exit();
+//            }
 
             //ตั่งค่าพื้นฐาน
             $entity->setDeleted(0);
@@ -292,11 +292,11 @@ class Building_siteController extends Controller
         
         if ($editForm->isValid()) {
             //Check ว่ามี ขื่อนี้หรือไม่
-            $getBuildingName = $entity->getBuildingName();
-            if(!$this->checkName($getBuildingName, "AND id != $id")){
-                echo "error_$getBuildingName";
-                exit();
-            }
+//            $getBuildingName = $entity->getBuildingName();
+//            if(!$this->checkName($getBuildingName, "AND id != $id")){
+//                echo "error_$getBuildingName";
+//                exit();
+//            }
 
             //เลือกเขต หรือจังหวัด
             $getProvince = $entity->getAddrProvince();
