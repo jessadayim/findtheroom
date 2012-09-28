@@ -80,9 +80,15 @@ class SecurityController extends Controller
 	}
 
     public function loginFacebookAction(){
-        require_once($_SERVER['DOCUMENT_ROOT'] . "findtheroom/web/facebook-php-sdk/facebook.php");
-//        require("/facebook-php-sdk/facebook.php");
-//        require("/facebook-php-sdk/connect_facebook.php");
+        require_once($_SERVER['DOCUMENT_ROOT'] . "/findtheroom/web/facebook-php-sdk/facebook.php");
+        require_once($_SERVER['DOCUMENT_ROOT'] . "/findtheroom/web/facebook-php-sdk/connect_facebook.php");
+        echo "working";
+        if($me){
+            echo "id facebook : ".$me['id'];
+            echo "<a href='$logoutUrl'>logout</a>";
+        }else{
+            echo "<a href='$loginUrl'>login</a>";
+        }
         exit();
     }
 }
