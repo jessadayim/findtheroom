@@ -267,6 +267,8 @@ input.regis { background: url(../images/regis-bt.png) no-repeat; border: 0; widt
 #update table th { font-size: 25px; text-align: center; padding: 5px; background-color:#BF1E2D;}
 #update table td { font-size: 18px; text-align: center; padding: 5px;}
 #update table td.first { font-size: 18px; text-align: left; padding: 5px;}
+#update table a{ border:0px; color:#FFF; text-decoration:none; cursor:pointer;}
+#update table a:hover{ border:0px; color:#BF1E2D; text-decoration:none;}
 
 #update TR:nth-child(odd) {
     background-color: #2e2e2e;
