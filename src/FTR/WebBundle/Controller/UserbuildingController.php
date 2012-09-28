@@ -196,6 +196,12 @@ class UserbuildingController extends Controller
             if (empty($userData)) {
                 return $this->redirect($this->generateUrl('FTRWebBundle_publish'));
             }
+
+            $enabled = $userData->getEnabled();
+            if(empty($enabled))
+            {
+                return $this->redirect($this->generateUrl('userbuilding'));
+            }
             if (empty($id)) {
                 $building = new Building_site();
                 $building->setBuildingName('');
