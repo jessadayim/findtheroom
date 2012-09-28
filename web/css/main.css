@@ -172,6 +172,10 @@ select[disabled] { background-color: #EAEAEA !important; color:#BCBCBC !importan
 .detail #i_containTab3 ul#navi_containTab3 li#tabNavi8.active {background:url(../images/pub.png) no-repeat; background-position:0 -43px; display:block;}
 .detail #i_containTab3 ul#navi_containTab3 li#tabNavi9.active {background:url(../images/package.png) no-repeat; background-position:0 -43px; display:block;}
 
+.detail .pub-link {font-size: 60px; color:#fff; margin-left: 20px; margin-top: 115px; position: absolute; text-decoration:none;}
+.detail .pub-link:hover {font-size: 60px; color:#BF1E2D; margin-left: 20px; margin-top: 115px; position: absolute;}
+.detail .pub-nolink {font-size: 60px; color:#fff; margin-left: 20px; margin-top: 115px; position: absolute;}
+
 /*Banner/Ads*/
 .detail .ads{ width:950px; margin: 25px 25px 15px 25px; color:#FFF; font-size: 20px;}
 

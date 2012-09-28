@@ -36,10 +36,11 @@
                                         $("#txterror").show("slow");
                                         document.getElementById('txterror').focus();
 									} else if (data == 1) {
-										// parent.location.reload();
+
 										$.cookie('username', $('input#username').val(), options);
 										$.cookie('password', $('input#password').val(), options);
-										$.cookie('chbox', "true", options);
+                                        $.cookie('chbox', 'true', options);
+//										$.cookie('chbox',  $('#re').attr('checked'), options);
 										parent.location.href = "{{path('userbuilding')}}";
 									}
 								},
@@ -62,10 +63,10 @@
                                         $("#txterror").show("slow");
                                         document.getElementById('txterror').focus();
 									} else if (data == 1) {
-										// parent.location.reload();
-										$.cookie('username', "false", options);
-										$.cookie('password', "false", options);
-										$.cookie('chbox', "false", options);
+										$.cookie('username', "", options);
+										$.cookie('password', "", options);
+										$.cookie('chbox', "", options);
+
 										parent.location.href = "{{path('userbuilding')}}";
 									}
 								},
@@ -131,32 +132,29 @@
 
 				<tr height="50" valign="middle">
 					<td align="left" width="120" style="font-size:24px;">ชื่อผู้ใช้งาน : *<span></span></td>
-					<td align="left" width="120"> {% if username != 'false' %}
-					<input id="username" name="username" value="{{username}}" type="text" maxlength="30" placeholder="กรุณากรอกชื่อผู้ใช้งาน" style=" padding:2px; font-size:20px;" />
-					{%else%}
-					<input id="username" name="username" value="" type="text" maxlength="30" placeholder="กรุณากรอกชื่อผู้ใช้งาน" style=" padding:2px; font-size:20px;" />
-					{%endif%} </td>
+					<td align="left" width="120">
+					<input id="username" name="username" value="{{app.request.cookies.get('username')}}" type="text" maxlength="30" placeholder="กรุณากรอกชื่อผู้ใช้งาน" style=" padding:2px; font-size:20px;" />
+				    </td>
 				</tr>
 				<tr height="50" valign="middle">
 					<td align="left" width="120" style="font-size:24px;">รหัสผ่าน : *</td>
-					<td align="left" width="120"> {% if password != 'false' %}
-					<input id="password" name="password" value="{{password}}" type="password" maxlength="30" placeholder="กรุณากรอกรหัสผ่าน" style=" padding:2px; font-size:20px;"/>
+					<td align="left" width="120">
+					<input id="password" name="password" value="{{app.request.cookies.get('password')}}" type="password" maxlength="30" placeholder="กรุณากรอกรหัสผ่าน" style=" padding:2px; font-size:20px;"/>
 					</td>
-					{%else%}
-					<input id="password" name="password" value="" type="password" maxlength="30" placeholder="กรุณากรอกรหัสผ่าน" style=" padding:2px; font-size:20px;"/>
-					</td>
-					{%endif%}
 				</tr>
 				<tr height="20" valign="middle">
 					<td colspan="2"  align="center" width="120" style="font-size:22px;"><label id="txterror" style="font-size: 16px;color: red;"></label></td>
 				</tr>
 				<tr height="30" valign="middle">
 					<td align="left" width="120" style="font-size:24px;">&nbsp;</td>
-					<td align="left" width="120" style="font-size:22px;"> {% if chbox != 'false' %}
-					<input id="re" name="option1" type="checkbox" value="rem" checked="true" />
-					<label for="re">จำฉันไว้</label> {%else%}
+					<td align="left" width="120" style="font-size:22px;">
+                        {%if app.request.cookies.get('chbox') is empty%}
 					<input id="re" name="option1" type="checkbox" value="rem" />
-					<label for="re">จำฉันไว้</label> {%endif%} </td>
+					<label for="re">จำฉันไว้</label>
+                        {%else%}
+                        <input id="re" name="option1" type="checkbox" value="rem" checked="checked" />
+                        <label for="re">จำฉันไว้</label
+                        {%endif%}</td>
 				</tr>
 				<tr valign="middle">
 					<td align="left" width="120" style="font-size:24px;">&nbsp;</td>

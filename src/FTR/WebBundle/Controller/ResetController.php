@@ -25,7 +25,7 @@ class ResetController extends Controller
     	$session = $this->get('session');
 		$token = $session -> get('token');
 		
-    	$pass = $_POST['newpass'];
+    	$pass = md5($_POST['newpass']);
 		
 		$em = $this->getDoctrine()->getEntityManager();
 		$user = $em->getRepository('FTRWebBundle:User_owner')->findOneBy(array('confirm_token'=> $token));

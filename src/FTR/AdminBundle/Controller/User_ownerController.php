@@ -110,6 +110,8 @@ class User_ownerController extends Controller
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getEntityManager();
 
+                $password = md5($entity->getPassword());
+                $entity->setPassword($password);
                 $entity->setDeleted(0);
 
                 $em->persist($entity);
@@ -186,6 +188,8 @@ class User_ownerController extends Controller
         $username = $entity->getUsername();
         if ($this->checkUser($username, $id) == 1) {
             if ($editForm->isValid()) {
+                $password = md5($entity->getPassword());
+                $entity->setPassword($password);
                 $em->persist($entity);
                 $em->flush();
 

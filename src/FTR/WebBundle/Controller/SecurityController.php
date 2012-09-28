@@ -4,6 +4,8 @@ namespace FTR\WebBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Cookie;
 
 
 class SecurityController extends Controller
@@ -50,22 +52,23 @@ class SecurityController extends Controller
 	}
 	public function logPublishAction()
     {
-    	// var_dump($_COOKIE);exit();
-    		if(empty($_COOKIE['username'])){
-				$username ="";
-			}else{
-				$username = $_COOKIE['username'];
-			}if(empty($_COOKIE['password'])){
-				$password = "";
-			}else{
-				$password = $_COOKIE['password'];
-			}if(empty($_COOKIE['chbox'])){
-				$chbox = "";
-			}else{
-				$chbox = $_COOKIE['chbox'];
-			}
+
+//    		if(empty($_COOKIE['username'])){
+//				$username ="";
+//			}else{
+//				$username = $_COOKIE['username'];
+//			}if(empty($_COOKIE['password'])){
+//				$password = "";
+//			}else{
+//				$password = $_COOKIE['password'];
+//			}if(empty($_COOKIE['chbox'])){
+//				$chbox = "";
+//			}else{
+//				$chbox = $_COOKIE['chbox'];
+//			}
 			
-			 return $this->render('FTRWebBundle:Security:login.html.twig',array('username'=>$username,'password'=>$password,'chbox'=>$chbox)); 
+//			 return $this->render('FTRWebBundle:Security:login.html.twig',array('username'=>$username,'password'=>$password,'chbox'=>$chbox));
+        return $this->render('FTRWebBundle:Security:login.html.twig',array());
     }
 
 	public function logoutAction()
