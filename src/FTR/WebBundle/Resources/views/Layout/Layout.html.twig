@@ -147,8 +147,8 @@
 				</form>
 				{% else %}
 				<div id="login">
-					<input id="username" name="username" value="" type="text" value="" maxlength="25" placeholder="กรุณากรอกชื่อผู้ใช้งาน" />
-					<input id="password" name="password" value="" type="password" value="" maxlength="25" placeholder="กรุณากรอกรหัสผ่าน" />
+					<input id="username" name="username" type="text" value="{{app.request.cookies.get('username')}}" maxlength="25" placeholder="กรุณากรอกชื่อผู้ใช้งาน" />
+					<input id="password" name="password" type="password" value="{{app.request.cookies.get('password')}}" maxlength="25" placeholder="กรุณากรอกรหัสผ่าน" />
 					<input id="log2" class="login" type="submit" value="" />
 					{% endif %}
 				</div>

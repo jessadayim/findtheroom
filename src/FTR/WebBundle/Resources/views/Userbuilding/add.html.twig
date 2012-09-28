@@ -399,8 +399,40 @@
         }
         postData('other');
     }
-    </script>
-    <form name="addform" id="addform" method="post" action="{{path('saveData', {'id': build_id })}}">
+
+    function checkSubmitData()
+    {
+        var nameAp = document.getElementById('nameap').value;
+        var placeAp = document.getElementById('placeap').value;
+        var province = document.getElementById('province').value;
+        var district = document.getElementById('district').value;
+        var zipCode = document.getElementById('zipcode').value;
+        var longitude = document.getElementById('longitude').value;
+        var latitude = document.getElementById('latitude').value;
+        var apType = document.getElementById('aptype').value;
+        var telNumber = document.getElementById('telnumber').value;
+        var time = document.getElementById('time').value;
+        var contact_person = document.getElementById('contact_person').value;
+        var water_price = document.getElementById('water_price').value;
+        var contact_email = document.getElementById('contact_email').value;
+        var power_price = document.getElementById('power_price').value;
+        var pass ='';
+        if(nameAp==''||placeAp==''||zipCode==''||longitude==''||latitude==''||telNumber==''||time==''||contact_person==''||water_price==''||contact_email==''||power_price==''||province==0||district==0||apType==0)
+        {
+            alert('ข้อมูลที่จำเป็นยังกรอกไม่ครบ กรุณาตรวจสอบข้อมูลด้วยค่ะ');
+            return false;
+        }
+        else{
+            if(confirm("ยืนยันการบันทึกข้อมูล")==true)
+            {
+                return true;
+            }else{
+                return false;
+            }
+        }
+    }
+</script>
+    <form name="addform" id="addform" method="post" action="{{path('saveData', {'id': build_id })}}" onsubmit="javascript:return checkSubmitData();">
     <div id="device" style="height: 200px; margin-bottom: 15px;display: none;">
         <div style="display: block; position: relative; width:1000px; color:#FFF; font-size:36px; text-align: center; padding-top:50px;">
             ข้อความ
