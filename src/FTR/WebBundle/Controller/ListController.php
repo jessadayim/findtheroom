@@ -324,16 +324,18 @@ class ListController extends Controller
             $selectFieldCount = "SELECT count(*) as count ";
             $selectField = "
                  SELECT
-                    a.id,
+                    a.id,a.slug,
                     a.building_name,b.type_name,c.typename,
                     a.addr_number,a.addr_prefecture,a.addr_province,
                     a.addr_zipcode,a.detail,a.start_price,a.end_price,
-                    a.latitude,a.longitude,d.facilitylist_id
+                    a.latitude,a.longitude,d.facilitylist_id,p.PROVINCE_NAME,am.AMPHUR_NAME
             ";
             $fromTable = "
                 FROM building_site a
                     INNER JOIN building_type b ON(a.building_type_id=b.id)
                     INNER JOIN pay_type c ON(a.pay_type_id=c.id)
+                    INNER JOIN province p ON(a.addr_province=p.PROVINCE_ID)
+                    INNER JOIN amphur am ON(a.addr_prefecture=am.AMPHUR_ID)
                     LEFT OUTER JOIN facility2site d ON (d.building_site_id = a.id)
                     LEFT OUTER JOIN nearly2site e ON (e.building_site_id = a.id)
                     LEFT OUTER JOIN nearly_location f ON (e.nearly_location_id = f.id)

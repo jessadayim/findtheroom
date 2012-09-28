@@ -75,7 +75,7 @@ $(function(){
 <div id="show">
     <div class="result">
     	<div class="wifi"> </div><div style=" display:block; position: absolute; margin-left: 0px; margin-top: 127px; width:200px; text-align:center;">ราคา {{general.start_price}} - {{general.end_price}} บาท</div>
-		<div class="thumbframe"><img src="{{ asset('images/Apartment/ap1.png')}}" class="thumb omega" /></div>
+		<div class="thumbframe">{%if head is empty%}<img src="{{ asset('images/building/')}}{{ id }}/{{head}}" class="thumb omega" />{%else%}<img src='{{asset('images/default/banner.jpg')}}' class='thumb omega' alt='Visit Computer Hope'>{%endif%}</div>
     	<div class="desc">
         	<table border="0" width="500" style="margin-top:-8px;">
             	<tr style="font-size:26px">
@@ -128,7 +128,7 @@ $(function(){
                         {% if general.building_address is empty and general.addr_prefecture is empty and general.addr_province is empty and general.addr_zipcode is empty%}
                             -
                         {% else%}
-                            {{general.building_address}} {{general.addr_prefecture}} {{general.addr_province}} {{general.addr_zipcode}}
+                            {{general.building_address}} {{amphur}} {{province}}
                         {% endif%}
                     </td>
                 </tr>
@@ -150,7 +150,7 @@ $(function(){
         <div class="dmap">
         	<span style="float:left; margin-right: 15px;">แผนที่</span>
             <a id="gmap" href="{{asset('images/Apartment/ap1.png')}}" style="float:left; margin-right: 10px; margin-top: -10px;"><img src="{{asset('images/gmap.png')}}" /></a>
-            <a id="imap" href="{{asset('images/Apartment/ap1.png')}}" style="float:left; margin-top: -10px;"><img src="{{asset('images/imap.png')}}" /></a>
+            <a id="imap" href="{{ asset('images/building/')}}{{ id }}/{{map}}" style="float:left; margin-top: -10px;"><img src="{{asset('images/imap.png')}}" /></a>
         </div>
     </div>
 </div>
@@ -306,9 +306,16 @@ $(function(){
                 <tr height="135" valign="middle">
                     <td align="left" width="220">
                         <div class="thumbframe">
-                            {%if type.deleted != 1%}
+                            {% if type.photo_name is empty%}
+                                <img src='{{asset('images/default/banner.jpg')}}'>
+                            {%else%}
+                                {%if type.deleted != 1%}
                                 <img src="{{ asset('images/building/')}}{{ type.building_site_id }}/{{type.photo_name}}" />
+                                {%else%}
+                                <img src='{{asset('images/default/banner.jpg')}}'>
+                                {%endif%}
                             {%endif%}
+
                         </div>
                     </td>
                     <td align="left" width="150">{{type.room_typename}}</td>
