@@ -43,6 +43,7 @@
 	<img src="{{asset('images/user.png')}}" style="display:block; position:relative; float:none;" />
 	<hr class="line" style="top: 60px;" />
     <div style="width:1000px; display:block; position:relative; height:240px; margin-top: 40px;">
+
 		<table style="margin-top: 0px;">
         	<tr height="60" valign="top">
 				<td align="left" width="200" style="font-size:24px;">ชื่อแรก : *</td>
@@ -80,7 +81,6 @@
 	</div>
     <hr class="line" style="top: 400px;" />
     <div style="width:1000px; display:block; position:relative;">
-
 
 		<table style="margin-top: 70px;">
             <tr height="60" valign="middle">
@@ -161,13 +161,13 @@
 			$("#alert_password").hide();
 			if (document.getElementById('regpassword').value.length < 8 || document.getElementById('regpassword').value.length > 12) {
 				//alert(document.getElementById('regpassword').value);
-				$("#alert_password").html("รหัสผ่านต้องมี 8 อักษร และไม่เกิน 12 อักษร");
+				$("#alert_password").html("รหัสผ่านต้องมีอย่างน้อย 8 อักษร และไม่เกิน 12 อักษร");
 				$("#alert_password").hide();
 				$("#alert_password").show("slow");
 				document.getElementById('regpassword').focus();
 				return false;
 			} else {
-				var reg = /[a-z][0-9]/;
+				var reg = /(?=.*\d)(?=.*[a-z]).{6,}/;
 				if (reg.test($('#regpassword').val()) == false) {
 					$("#alert_password").html("รหัสผ่านต้องมีตัวอักษรและตัวเลข");
 					$("#alert_password").hide();

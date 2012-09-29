@@ -10,8 +10,15 @@ class RegisterController extends Controller
     
     public function RegisterAction()
     {
-        return $this->render('FTRWebBundle:Register:register.html.twig', array('erusername'=>NULL,'eremail'=>NULL,'firstname'=>NULL,'lastname'=>NULL
-																									,'username'=>NULL,'email'=>NULL,'tel'=>NULL));
+        $session = $this->get('session');
+        $user = $session->get('user');
+        if(empty($user)){
+            return $this->render('FTRWebBundle:Register:register.html.twig', array('erusername'=>NULL,'eremail'=>NULL,'firstname'=>NULL,'lastname'=>NULL
+                                                                                    ,'username'=>NULL,'email'=>NULL,'tel'=>NULL,'regisStatus'=>NULL));
+        }else{
+            return $this->redirect($this->generateUrl('FTRWebBundle_publish'));
+        }
+
     }
 	public function regSuccessAction()
     {
@@ -153,7 +160,7 @@ class RegisterController extends Controller
 							$sql2 ="UPDATE user_owner SET last_login = '$time' WHERE id= '$id'";
 							$conn->query($sql2);
 														
-							return $this->render('FTRWebBundle:Publish:publish.html.twig', array());
+							return $this->render('FTRWebBundle:Publish:publish.html.twig');
 						
 						} catch (Exception $e) {
 							echo 'Caught exception: ',  $e->getMessage(), "\n";

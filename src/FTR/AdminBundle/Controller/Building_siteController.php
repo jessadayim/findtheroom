@@ -165,18 +165,25 @@ class Building_siteController extends Controller
             $em = $this->getDoctrine()->getEntityManager();
 
             //Check ว่ามี ขื่อนี้หรือไม่
-            $getBuildingName = $entity->getBuildingName();
-
-            if(!$this->checkName($getBuildingName, "")){
-                echo "error_$getBuildingName";
-                exit();
-            }
+//            $getBuildingName = $entity->getBuildingName();
+//
+//            if(!$this->checkName($getBuildingName, "")){
+//                echo "error_$getBuildingName";
+//                exit();
+//            }
 
             //ตั่งค่าพื้นฐาน
             $entity->setDeleted(0);
             $entity->setDatetimestamp(new \DateTime());
             $entity->setStartPrice(0);
             $entity->setEndPrice(0);
+
+            //Add Slug
+            $getName = $entity->getBuildingName();
+            $getName = str_replace(' ', '-', trim($getName));
+            $entity->setSlug($getName);
+
+
 
             //เลือกเขต หรือจังหวัด
             $getProvince = $entity->getAddrProvince();
@@ -292,11 +299,11 @@ class Building_siteController extends Controller
         
         if ($editForm->isValid()) {
             //Check ว่ามี ขื่อนี้หรือไม่
-            $getBuildingName = $entity->getBuildingName();
-            if(!$this->checkName($getBuildingName, "AND id != $id")){
-                echo "error_$getBuildingName";
-                exit();
-            }
+//            $getBuildingName = $entity->getBuildingName();
+//            if(!$this->checkName($getBuildingName, "AND id != $id")){
+//                echo "error_$getBuildingName";
+//                exit();
+//            }
 
             //เลือกเขต หรือจังหวัด
             $getProvince = $entity->getAddrProvince();
@@ -315,6 +322,11 @@ class Building_siteController extends Controller
                 }
                 $entity->setZoneId(null);
             }
+
+            //Add Slug
+            $getName = $entity->getBuildingName();
+            $getName = str_replace(' ', '-', trim($getName));
+            $entity->setSlug($getName);
 
             $em->persist($entity);
             $em->flush();
