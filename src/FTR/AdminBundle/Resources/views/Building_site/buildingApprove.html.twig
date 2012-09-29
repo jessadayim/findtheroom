@@ -38,7 +38,7 @@
         <tr>
             <td align="left">{{ entity.id }}</td>
             <td align="left">{{ entity.building_name }}</td>
-            <td align="center"><a href="{{path('FTRWebBundle_detail',{'buildId': entity.id })}}" target="_blank">ดู</a></td>
+            <td align="center"><a href="{{ path('FTRWebBundle_detail',{'buildId': entity.id, 'province': entity.PROVINCE_NAME, 'prefecture': entity.AMPHUR_NAME, 'slug': entity.slug}) }}" target="_blank">ดู</a></td>
             <td align="center">
                 <select id="actionselect{{ entity.id }}" name="actionselect{{ entity.id }}" onchange="changeStatApprove({{entity.id}});">
                     <option value="no">ไม่ Approve</option>

@@ -494,12 +494,17 @@ class Building_siteController extends Controller
     {
         $sqlGetEntity = "
             select
-              id,
-              building_name,
-              publish,
-              deleted
+              b.id,
+              b.building_name,
+              b.publish,
+              b.slug,
+              trim(p.PROVINCE_NAME) as PROVINCE_NAME,
+              trim(a.AMPHUR_NAME) as AMPHUR_NAME,
+              b.deleted
             from
               building_site b
+              left join province p on(b.addr_province=p.PROVINCE_ID)
+              left join amphur a on(b.addr_prefecture=a.AMPHUR_ID)
             where b.deleted != 1
               and b.publish = 2
         ";
@@ -551,7 +556,7 @@ class Building_siteController extends Controller
             LIMIT $offset, $limit
         ";
         $objBuildingSite = $this->getDataArray($sqlGetEntity);
-
+//var_dump($objBuildingSite);exit();
         $paginator = new Paginator($countList, $offset, $limit, $midRange);
         return array(
             'entities'          => $objBuildingSite,

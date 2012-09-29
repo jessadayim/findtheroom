@@ -91,7 +91,18 @@ class UserbuildingController extends Controller
                 $getOrderByType = @$_GET['orderByType'];
             }
 
-            $sql2 = "SELECT * FROM building_site b WHERE user_owner_id = '" . $objSQL1[0]['id'] . "'";
+            $sql2 = "
+                select
+                 *,
+                 trim(p.PROVINCE_NAME) as PROVINCE_NAME,
+                 trim(a.AMPHUR_NAME) as AMPHUR_NAME
+                from
+                 building_site b
+                 left join province p on(b.addr_province=p.PROVINCE_ID)
+                 left join amphur a on(b.addr_prefecture=a.AMPHUR_ID)
+                where b.deleted !=1 AND
+                 b.user_owner_id = '" . $objSQL1[0]['id'] . "'
+            ";
             //set paging
             $page = 1;
             if (!empty($getSelectPage)){
@@ -146,10 +157,21 @@ class UserbuildingController extends Controller
                 else {
                     $publish = "รอการยืนยัน";
                 }
+                if(empty($value['PROVINCE_NAME']))
+                {
+                    $value['PROVINCE_NAME'] = 'nodata';
+                }
+
+                if(empty($value['AMPHUR_NAME']))
+                {
+                    $value['AMPHUR_NAME'] = 'nodata';
+                }
                 $arrData[] = array(
                     'id' => $value['id'],
                     'building_name' => $value['building_name'],
                     'slug' => $value['slug'],
+                    'PROVINCE_NAME' => $value['PROVINCE_NAME'],
+                    'AMPHUR_NAME' => $value['AMPHUR_NAME'],
                     'publish' => $publish,
                 );
             }
@@ -157,7 +179,7 @@ class UserbuildingController extends Controller
             echo 'Caught exception: ', $e->getMessage(), "\n";
         }
 
-
+        //var_dump($sql2);exit();
         $paging = new Paginator($itemCount,$offset,$limit,$midRange);
         return $this->render('FTRWebBundle:Userbuilding:list_table.html.twig', array(
             'build_data' => $arrData,
@@ -220,6 +242,7 @@ class UserbuildingController extends Controller
                 $building->setWaterUnit(0);
                 $building->setElectricityUnit(0);
                 $building->setDeleted(0);
+                $building->setSlug('');
                 $em->persist($building);
                 $em->flush();
                 $building_id = $building->getId();

@@ -6,7 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 class PanelController extends Controller {
-	public function signinAction() {
+	public function signinAction()
+    {
 		//$username = $_POST['username'];!empty($_POST['username']) && !empty($_POST['password'])
 		$request = $this -> get('request');
 		$em = $this -> getDoctrine() -> getEntityManager();
@@ -41,6 +42,7 @@ class PanelController extends Controller {
 				}
 			}
 		}
+        exit();
 	}
 
 	public function logoutAction() {
