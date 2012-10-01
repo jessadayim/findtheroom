@@ -47,4 +47,17 @@ class FTRConstant
         return $this->googlePinWomen;
     }
     // end Pin Google Map
+    
+    //Check สี Ads Control
+    public function checkColorAds($val){
+        if($val == 0){
+            return 'red';
+        }else if ($val <= 3 && $val > 0){
+            return 'orange';
+        }else if ($val <= 7 && $val > 0){
+            return 'yellow';
+        }else{
+            return 'white';
+        }
+    }
 }

@@ -86,7 +86,7 @@ class Ads_ControlController extends Controller
         if (empty($getOrderBy) && empty($getOrderByType)){
             $getOrderBy = 'cutDate';
             $getOrderByType = 'asc';
-            $sqlGetEntity = "
+            echo $sqlGetEntity = "
                 (
                     $sqlGetEntity1
                     ORDER BY cutDate asc
@@ -117,18 +117,10 @@ class Ads_ControlController extends Controller
         ";
         $objResult = $this->getDataArray($sqlGetEntity);
 
-//        $helper = new FTRHelper();
+        $constant = new FTRConstant();
         foreach($objResult as $key => $value){
             $getCutDate = $value["cutDate"];
-            if(intval($getCutDate) == 0){
-                $objResult[$key]['bg'] = 'red';
-            }else if (intval($getCutDate) <= 3 && intval($getCutDate) > 0){
-                $objResult[$key]['bg'] = 'orange';
-            }else if (intval($getCutDate) <= 7 && intval($getCutDate) > 0){
-                $objResult[$key]['bg'] = 'yellow';
-            }else{
-                $objResult[$key]['bg'] = 'white';
-            }
+            $objResult[$key]['bg'] = $constant->checkColorAds(intval($getCutDate));
 //            $newDate = $helper->convertThaiDateTime($value['date_start']);
 //            $objResult[$key]['date_start'] = $newDate;
 //            $newDate = $helper->convertThaiDateTime($value['date_end']);
