@@ -86,7 +86,7 @@ class Ads_ControlController extends Controller
         if (empty($getOrderBy) && empty($getOrderByType)){
             $getOrderBy = 'cutDate';
             $getOrderByType = 'asc';
-            echo $sqlGetEntity = "
+            $sqlGetEntity = "
                 (
                     $sqlGetEntity1
                     ORDER BY cutDate asc
