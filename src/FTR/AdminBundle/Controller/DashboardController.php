@@ -18,7 +18,7 @@ class DashboardController extends Controller
             WHERE DATEDIFF(a.`date_end`, NOW()) = 0
         ";
 
-        $obj3Day = $this->getDataArray($sql1Day);
+        $obj1Day = $this->getDataArray($sql1Day);
 
         $sql3Day ="
             SELECT
@@ -29,7 +29,7 @@ class DashboardController extends Controller
               AND DATEDIFF(a.`date_end`, NOW()) < 3
         ";
 
-        $obj7Day = $this->getDataArray($sql3Day);
+        $obj3Day = $this->getDataArray($sql3Day);
 
         $sql7Day ="
             SELECT
@@ -40,7 +40,7 @@ class DashboardController extends Controller
               AND DATEDIFF(a.`date_end`, NOW()) < 7
         ";
 
-        $obj1Day = $this->getDataArray($sql7Day);
+        $obj7Day = $this->getDataArray($sql7Day);
 
         return $this->render('FTRAdminBundle:Ftr_panel:dashboard.html.twig', array(
             'session'   => 1,
