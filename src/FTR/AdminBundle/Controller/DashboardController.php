@@ -36,7 +36,7 @@ class DashboardController extends Controller
               COUNT(a.`id`) AS c
             FROM
               `ads_control` a
-            WHERE DATEDIFF(a.`date_end`, NOW()) > 0
+            WHERE DATEDIFF(a.`date_end`, NOW()) > 2
               AND DATEDIFF(a.`date_end`, NOW()) < 7
         ";
 
