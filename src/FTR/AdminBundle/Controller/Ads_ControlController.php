@@ -84,19 +84,22 @@ class Ads_ControlController extends Controller
             ";
         }
         if (empty($getOrderBy) && empty($getOrderByType)){
-            $getOrderBy = 'cutDate';
-            $getOrderByType = 'asc';
-            $sqlGetEntity = "
-                (
-                    $sqlGetEntity1
-                    ORDER BY cutDate asc
-                )
-                UNION
-                (
-                    $sqlGetEntity2
-                    ORDER BY cutDate asc
-                )
+            //นับจำนวนที่มีทั้งหมด
+            $countList = count($this->getDataArray($sqlGetEntity1)) + count($this->getDataArray($sqlGetEntity2));
+
+            //จำกัดการแสดงผล
+            $sqlGetEntity1 = "
+                $sqlGetEntity1
+                ORDER BY a.date_end
+                LIMIT $offset, $limit
             ";
+            $sqlGetEntity2 = "
+                $sqlGetEntity2
+                ORDER BY a.id
+                LIMIT $offset, $limit
+            ";
+
+            $objResult = array_merge($this->getDataArray($sqlGetEntity1), $this->getDataArray($sqlGetEntity2))  ;
         }else{
             $sqlGetEntity = "
                 $sqlGetEntity1
@@ -104,31 +107,25 @@ class Ads_ControlController extends Controller
                 $sqlGetEntity2
                 ORDER BY $getOrderBy $getOrderByType
             ";
-        }
 
+            //นับจำนวนที่มีทั้งหมด
+            $countList = count($this->getDataArray($sqlGetEntity));
 
-        //นับจำนวนที่มีทั้งหมด
-        $countList = count($this->getDataArray($sqlGetEntity));
-
-        //จำกัดการแสดงผล
-        $sqlGetEntity = "
+            //จำกัดการแสดงผล
+            $sqlGetEntity = "
             $sqlGetEntity
             LIMIT $offset, $limit
         ";
-        $objResult = $this->getDataArray($sqlGetEntity);
+            $objResult = $this->getDataArray($sqlGetEntity);
+        }
 
-//        $helper = new FTRHelper();
+
+
+
+        $constant = new FTRConstant();
         foreach($objResult as $key => $value){
             $getCutDate = $value["cutDate"];
-            if(intval($getCutDate) == 0){
-                $objResult[$key]['bg'] = 'red';
-            }else if (intval($getCutDate) <= 3 && intval($getCutDate) > 0){
-                $objResult[$key]['bg'] = 'orange';
-            }else if (intval($getCutDate) <= 7 && intval($getCutDate) > 0){
-                $objResult[$key]['bg'] = 'yellow';
-            }else{
-                $objResult[$key]['bg'] = 'white';
-            }
+            $objResult[$key]['bg'] = $constant->checkColorAds(intval($getCutDate));
 //            $newDate = $helper->convertThaiDateTime($value['date_start']);
 //            $objResult[$key]['date_start'] = $newDate;
 //            $newDate = $helper->convertThaiDateTime($value['date_end']);

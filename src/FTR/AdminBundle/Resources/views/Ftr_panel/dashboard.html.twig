@@ -149,9 +149,9 @@
     <script type="text/javascript">
         $(document).ready(function () {
             notifyBuilding(countlist);
-            notifyWarning7Day("10");
-            notifyWarning3Day("5");
-            notifyWarning1Day("31");
+            notifyWarning7Day("{{ day7 }}");
+            notifyWarning3Day("{{ day3 }}");
+            notifyWarning1Day("{{ day1 }}");
         });
     </script>
 {% endblock %}
