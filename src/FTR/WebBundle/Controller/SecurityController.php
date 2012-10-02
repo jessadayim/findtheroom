@@ -116,22 +116,54 @@ class SecurityController extends Controller
         $conn= $this->get('database_connection');
         if(!$conn){ die("MySQL Connection error");}
 
-        $sqlCheckUser ="SELECT id, username FROM user_owner WHERE facebook_id = '$id'  and deleted != '1'";
-        $objCheckUser = $conn -> fetchAll($sqlCheckUser);
-        $rowCount = count($objCheckUser);
+        $session = $this->get('session');
 
-        if($rowCount == 1){
-            $session = $this->get('session');
-            $user = $objCheckUser[0]['username'];
-            $id = $objCheckUser[0]['id'];
+        try{
+            $sqlCheckUser ="SELECT id, username
+                            FROM user_owner
+                            WHERE facebook_id = '$id'
+                                AND deleted = 0";
+            $objCheckUser = $conn -> fetchAll($sqlCheckUser);
+            $rowCount = count($objCheckUser);
 
-            $session->set('user', $user);
-            $session->set('id', $id);
-        }else{
-            $sqlCheckUser ="INSERT INTO user_owner(username, email, deleted, user_level, facebook_id) VALUES('$username', '$email', 0, 2, '$id')";
-            $conn->query($sqlCheckUser);
+            if($rowCount == 1){
+                $user = $objCheckUser[0]['username'];
+                $id = $objCheckUser[0]['id'];
+                $session->set('user', $user);
+                $session->set('id', $id);
+            }else{
+                $sqlCheckEmail = "SELECT id
+                                  FROM user_owner
+                                  WHERE email = '$email'
+                                      AND deleted = 0";
+                $objCheckEmail = $conn -> fetchAll($sqlCheckEmail);
+
+                if(count($objCheckUser) == 1){
+                    $userId = $objCheckEmail[0]['id'];
+                    $sqlUpdateUser ="UPDATE user_owner
+                                     SET facebook_id = '$id'
+                                     WHERE id = '$userId'";
+                    $conn->query($sqlUpdateUser);
+                }else{
+                    $sqlRegisterUser ="INSERT INTO user_owner(username, email, deleted, user_level, facebook_id)
+                                       VALUES('$username', '$email', 0, 2, '$id')";
+                    $conn->query($sqlRegisterUser);
+                }
+
+                $sqlGetUser ="SELECT id, username
+                            FROM user_owner
+                            WHERE facebook_id = '$id'
+                                AND deleted = 0";
+                $objGetUser = $conn -> fetchAll($sqlGetUser);
+
+                $user = $objGetUser[0]['username'];
+                $id = $objGetUser[0]['id'];
+                $session->set('user', $user);
+                $session->set('id', $id);
+            }
+        }catch (\Exception $e){
+            echo "ERROR : ".$e;
         }
-
         exit();
     }
 }
