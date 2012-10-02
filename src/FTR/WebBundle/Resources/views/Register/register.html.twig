@@ -38,6 +38,35 @@
 		});
 	});
 </script>
+
+<script>
+    function reponseFbRegister() {
+//                alert('workinajax');
+        var myData = 'connect=1'; //For demo, we will pass a post variable, Check process_facebook.php
+        jQuery.ajax({
+            type:"POST",
+            url:"{{path('FTRWebBundle_loginFacebook')}}",
+            dataType:"html",
+            data:myData,
+            success:function (response) {
+//                        alert(response);
+                parent.location.href = "{{path('FTRWebBundle_publish')}}";
+//                           parent.$.fancybox.close();
+            },
+            error:function (xhr, ajaxOptions, thrownError) {
+                alert(thrownError+" "+ajaxOptions+" "+xhr);
+//                        $("#results").html('<fieldset style="padding:20px;color:red;">' + thrownError+ajaxOptions+ xhr+ '</fieldset>'); //Error
+            }
+        });
+    }
+
+    function LodingAnimate() //Show loading Image
+    {
+        $("#results").html('<img src="{{asset('images/ajax-loader.gif')}}" /> Please Wait Connecting...'); //show loading image while we process user
+    }
+
+
+</script>
 <form action="{{path('FTRWebBundle_confirm')}}" method="post" onsubmit="return clickagree();" >
 <div class="detail" style="height: 460px; margin-bottom: 15px;">
 	<img src="{{asset('images/user.png')}}" style="display:block; position:relative; float:none;" />
@@ -83,20 +112,43 @@
     <div style="width:1000px; display:block; position:relative;">
 
 		<table style="margin-top: 70px;">
-            <tr height="60" valign="middle">
+            <tr height="50" valign="middle">
 				<td align="right" width="400" style="font-size:24px;">หรือ</td>
                 <td align="left" width="600">
-                    <div id="fb-root"></div>
                     {#<div class="fb-login-button" data-show-faces="false" data-width="200" data-max-  rows="1">Test text</div>#}
                    {#<div class="fb-login-button" data-show-faces="false" data-width="200" data-max-  rows="1">Test text</div>#}
                    {#<fb:login-button>Login with Facebook</fb:login-button>#}
-                   <div class="fb-login-button" data-show-faces="false" data-width="200" data-max-  rows="1">Test text</div>
+                   <a onclick="javascript:loginFbRegister();" style="cursor:pointer"><img src="{{asset('images/facebook_btn.png')}}" alt=""></a>&nbsp;&nbsp;<label id="results"></label>
                 </td>
             </tr>
         </table>
 	</div>
 </div>
 </form>
+<script type="text/javascript">
+    function loginFbRegister() {
+//                alert('working');
+        FB.login(function (response) {
+//                    alert(response.status);
+            if (response.status === "connected") {
+//                        alert('working');
+                LodingAnimate(); //Animate login
+                FB.api('/me', function (data) {
+//                            alert(data.id);
+                    if (data.email == null) {
+                        //Facbeook user email is empty, you can check something like this.
+                        alert("You must allow us to access your email id!");
+//                                ResetAnimate();
+                    } else {
+//                        alert('working');
+                        reponseFbRegister();
+                    }
+                });
+            }
+        });
+    }
+
+</script>
 <script>
 	function clickagree() {
 		if ($('#firstname').val() == "") {

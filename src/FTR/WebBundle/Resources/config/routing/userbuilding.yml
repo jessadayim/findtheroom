@@ -5,6 +5,10 @@ userbuilding:
 addData:
     pattern: /add/{id}
     defaults: { _controller: FTRWebBundle:Userbuilding:addData ,'id' :null }
+
+addNewBuildData:
+    pattern: /addbuilding
+    defaults: { _controller: FTRWebBundle:Userbuilding:addNewData }
     
 saveData:
     pattern: /save/{id}
@@ -16,7 +20,7 @@ updateUserProfile:
     
 autoSaveForm:
     pattern: /autosave/{id}/{type}
-    defaults: { _controller: FTRWebBundle:Userbuilding:autoSaveForm,'type' :null }
+    defaults: { _controller: FTRWebBundle:Userbuilding:autoSaveForm,'type' :null,'id' :null }
 
 getDistrict:
     pattern: /getdistrict/{province}

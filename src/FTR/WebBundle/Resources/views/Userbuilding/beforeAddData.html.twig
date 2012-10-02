@@ -1,0 +1,62 @@
+{% extends 'FTRWebBundle:Layout:Layout.html.twig' %}
+{% block body %}
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        // refresh captcha
+        $('img#refresh').click(function() {
+            change_captcha();
+        });
+
+        function change_captcha() {
+            var src = document.getElementById('captcha').src;
+            var subStr = src.split('?');
+
+            document.getElementById('captcha').src = subStr[0] + "?rnd=" + Math.random();
+        }
+        $('#btnsubmit').click(function() {
+
+                chkCaptcha();
+
+        });
+    });
+    function chkCaptcha() {
+        $.post("{{asset('captcha/post.php')}}", {
+            name : $('#code').val()
+        }, function(data) {
+            if (data == 1) {
+                $('#formAdd').submit();
+            } else if (data == 0) {
+                $("#txterror").html("กรุณากรอก รหัสให้ตรง");
+                $("#txterror").hide();
+                $("#txterror").show("slow");
+                document.getElementById('txterror').focus();
+            }return false;
+        });
+    }
+</script>
+<div class="detail" style="margin-bottom:15px; height: 150px;">
+<form id="formAdd" action="{{ path('addNewBuildData') }}" method="post">
+    <table align="center">
+        <tr>
+            <td colspan="3">ก่อนการเพิ่มตึกใหม่กรุณายืนยันก่อน</td>
+        </tr>
+        <tr valign="top" height="40">
+            <td align="left" width="100" style="padding-top:10px;">กรอกรหัสยืนยันตามรูปภาพ : *</td>
+            <td align="left" width="180">
+                <div id="captchaimage">
+                    <img id="captcha" src="{{asset('captcha/get_captcha.php')}}" width="160" height="40" style="padding-left:0px; padding-bottom:10px; padding-top:10px;"/>
+
+                </div><a><img src="{{asset('captcha/refresh.png')}}"  alt="" id="refresh" style="position:absolute;margin-top:-65px;margin-left:150px;"/></a>
+                <input id="code" name="code" type="text" maxlength="5" style="width:156px;"/>
+                <label id="txterror" style="color: #F8EB00;"></label>
+            </td>
+            <td align="left" colspan="2" style="padding-top:60px;">
+                <input class="send" type="button" id="btnsubmit" value="" />
+                {#<input class="cancel" type="submit" value="" />#}
+            </td>
+        </tr>
+    </table>
+</form>
+</div>
+{% endblock %}

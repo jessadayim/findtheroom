@@ -81,13 +81,88 @@ class SecurityController extends Controller
 
     public function loginFacebookAction(){
         require_once($_SERVER['DOCUMENT_ROOT'] . "/findtheroom/web/facebook-php-sdk/facebook.php");
-        require_once($_SERVER['DOCUMENT_ROOT'] . "/findtheroom/web/facebook-php-sdk/connect_facebook.php");
-        echo "working";
-        if($me){
-            echo "id facebook : ".$me['id'];
-            echo "<a href='$logoutUrl'>logout</a>";
-        }else{
-            echo "<a href='$loginUrl'>login</a>";
+        $facebook = new \facebook(array(
+            'appId'  => '414830161885886', // appid ที่ได้จาก facebook
+            'secret' => '52377fb41e97b22b385d6563a354313d', // app secret ที่ได้จาก facebook
+            'cookie' => false, // อนุญาตใช้งาน cookie
+        ));
+
+        $fbuser = $facebook->getUser();
+
+        $me = null;
+
+        if ($fbuser) {
+            try {
+                // Proceed knowing you have a logged in user who's authenticated.
+                $me = $facebook->api('/me'); //user
+                $uid = $facebook->getUser();
+            }
+            catch (FacebookApiException $e)
+            {
+                //echo error_log($e);
+                $fbuser = null;
+            }
+        }
+        if (!$fbuser){
+            $loginUrl = $facebook->getLoginUrl();
+            header('Location: '.$loginUrl);
+        }
+
+        //user details
+        $id = $me['id'];
+        $email = $me['email'];
+        $username = $me['username'];
+
+        $conn= $this->get('database_connection');
+        if(!$conn){ die("MySQL Connection error");}
+
+        $session = $this->get('session');
+
+        try{
+            $sqlCheckUser ="SELECT id, username
+                            FROM user_owner
+                            WHERE facebook_id = '$id'
+                                AND deleted = 0";
+            $objCheckUser = $conn -> fetchAll($sqlCheckUser);
+            $rowCount = count($objCheckUser);
+
+            if($rowCount == 1){
+                $user = $objCheckUser[0]['username'];
+                $id = $objCheckUser[0]['id'];
+                $session->set('user', $user);
+                $session->set('id', $id);
+            }else{
+                $sqlCheckEmail = "SELECT id
+                                  FROM user_owner
+                                  WHERE email = '$email'
+                                      AND deleted = 0";
+                $objCheckEmail = $conn -> fetchAll($sqlCheckEmail);
+
+                if(count($objCheckUser) == 1){
+                    $userId = $objCheckEmail[0]['id'];
+                    $sqlUpdateUser ="UPDATE user_owner
+                                     SET facebook_id = '$id'
+                                     WHERE id = '$userId'";
+                    $conn->query($sqlUpdateUser);
+                }else{
+                    $sqlRegisterUser ="INSERT INTO user_owner(username, email, deleted, user_level, facebook_id)
+                                       VALUES('$username', '$email', 0, 2, '$id')";
+                    $conn->query($sqlRegisterUser);
+                }
+
+                $sqlGetUser ="SELECT id, username
+                            FROM user_owner
+                            WHERE facebook_id = '$id'
+                                AND deleted = 0";
+                $objGetUser = $conn -> fetchAll($sqlGetUser);
+
+                $user = $objGetUser[0]['username'];
+                $id = $objGetUser[0]['id'];
+                $session->set('user', $user);
+                $session->set('id', $id);
+            }
+        }catch (\Exception $e){
+            echo "ERROR : ".$e;
         }
         exit();
     }
