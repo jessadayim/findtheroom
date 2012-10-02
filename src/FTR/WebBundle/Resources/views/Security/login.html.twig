@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -96,33 +96,69 @@
 
 			}
 		</script>
+
+        <script>
+            function AjaxResponse() {
+//                alert('workinajax');
+                var myData = 'connect=1'; //For demo, we will pass a post variable, Check process_facebook.php
+                jQuery.ajax({
+                    type:"POST",
+                    url:"{{path('FTRWebBundle_loginFacebook')}}",
+                    dataType:"html",
+                    data:myData,
+                    success:function (response) {
+//                        alert(response);
+                        parent.location.href = "{{path('FTRWebBundle_publish')}}";
+//                           parent.$.fancybox.close();
+                    },
+                    error:function (xhr, ajaxOptions, thrownError) {
+                        alert(thrownError+" "+ajaxOptions+" "+xhr);
+//                        $("#results").html('<fieldset style="padding:20px;color:red;">' + thrownError+ajaxOptions+ xhr+ '</fieldset>'); //Error
+                    }
+                });
+            }
+
+            function LodingAnimate() //Show loading Image
+            {
+                $("#results").html('<img src="{{asset('images/ajax-loader.gif')}}" /> Please Wait Connecting...'); //show loading image while we process user
+            }
+
+
+        </script>
 	</head>
 
 	<body style=" background-color:#FFF; color:#423C3B;">
 
 		<div id="fb-root"></div>
 		<script>
-			window.fbAsyncInit = function() {
-				FB.init({
+            window.fbAsyncInit = function () {
+                FB.init({
 					appId : '414830161885886', // App ID
 					channelUrl : '//www.findtheroom.com//login.php', // Channel File ระบุไฟล์ที่จะใช้ login
 					status : true, // check login status
 					cookie : true, // enable cookies to allow the server to access the session
-					xfbml : true // parse XFBML
+					xfbml : true, // parse XFBML
+                    oauth:true
 				});
 			};
+            (function () {
+                var e = document.createElement('script');
+                e.async = true;
+                e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
+                document.getElementById('fb-root').appendChild(e);
+            }());
 			// Load the SDK Asynchronously
-			( function(d) {
-					var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-					if (d.getElementById(id)) {
-						return;
-					}
-					js = d.createElement('script');
-					js.id = id;
-					js.async = true;
-					js.src = "//connect.facebook.net/en_US/all.js";
-					ref.parentNode.insertBefore(js, ref);
-				}(document));
+//			( function(d) {
+//					var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+//					if (d.getElementById(id)) {
+//						return;
+//					}
+//					js = d.createElement('script');
+//					js.id = id;
+//					js.async = true;
+//					js.src = "//connect.facebook.net/en_US/all.js";
+//					ref.parentNode.insertBefore(js, ref);
+//				}(document));
 		</script>
 		<img src="{{asset('images/login-h.png')}}" style="padding-top: 20px;" />
 		<hr style=" width:98%; margin-left:-5px; margin-top:15px; margin-bottom:10px;" />
@@ -175,13 +211,40 @@
 					<td align="center" width="300" style="font-size:24px;">หรือ</td>
 				</tr>
 				<tr height="50" valign="middle">
-					<td align="center" width="300">
-                    <a href="{{path('FTRWebBundle_loginFacebook')}}">
-					<div class="fb-login-button">
-						เข้าสู่ระบบด้วย Facebook
-					</div></a></td>
+					<td align="center" width="300">                    
+					{#<div class="fb-login-button" onlogin="javascript:CallAfterLogin();" scope="publish_stream,email" size="medium">เข้าสู่ระบบด้วย Facebook</div>#}
+					<a onclick="javascript:CallAfterLogin();" style="cursor:pointer"><img src="{{asset('images/facebook_btn.png')}}" alt="">
+					</a><br><br>
+                        <div id="results">
+                        </div>
+                    </td>
 				</tr>
 			</table>
 		</div>
+
+        <script type="text/javascript">
+            function CallAfterLogin() {
+//                alert('working');
+                FB.login(function (response) {
+//                    alert(response.status);
+                    if (response.status === "connected") {
+//                        alert('working');
+                        LodingAnimate(); //Animate login
+                        FB.api('/me', function (data) {
+//                            alert(data.id);
+                            if (data.email == null) {
+                                //Facbeook user email is empty, you can check something like this.
+                                alert("You must allow us to access your email id!");
+//                                ResetAnimate();
+                            } else {
+                                AjaxResponse();
+                            }
+                        });
+                    }
+                });
+            }
+
+        </script>
+
 	</body>
 </html>
