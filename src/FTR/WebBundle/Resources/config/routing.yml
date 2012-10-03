@@ -17,7 +17,7 @@ FTRWebBundle_detail:
 FTRWebBundle_publish:
     pattern:  /publish
     defaults: { _controller: FTRWebBundle:Publish:publish }
-    
+
 FTRWebBundle_contact:
     pattern:  /contact
     defaults: { _controller: FTRWebBundle:Contact:contact }
@@ -49,7 +49,11 @@ FTRWebBundle_terms:
 FTRWebBundle_regis_success:
     pattern:  /regis/success
     defaults: { _controller: FTRWebBundle:Register:regsuccess }
-       
+
+FTRWebBundle_regis_alertemail:
+    pattern:  /regis/alertemail
+    defaults: { _controller: FTRWebBundle:Register:alertEmail }
+
 FTRWebBundle_login:
     pattern:  /login
     defaults: { _controller: FTRWebBundle:Security:login}
@@ -63,15 +67,15 @@ FTRWebBundle_logout:
     defaults: { _controller: FTRWebBundle:Security:logout}
 
 TRWebBundle_reset:
-    pattern:  /reset
+    pattern:  /reset/{userId}
     defaults: { _controller: FTRWebBundle:Reset:reset}
-    
+
 TRWebBundle_change:
     pattern:  /reset/change
     defaults: { _controller: FTRWebBundle:Reset:change}
 
 TRWebBundle_chgconfirm:
-    pattern:  /reset/change/confirm
+    pattern:  /reset/change
     defaults: { _controller: FTRWebBundle:Reset:passchg}
 
 FTRWebBundle_forget:

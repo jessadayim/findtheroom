@@ -2,7 +2,7 @@
 {% block body %}
 <script>
     $(document).ready(function () {
-        if ('{{enable}}' == true) {
+        if ('{{enableRegis}}' == true) {
             $.fancybox({
                 'content':"{{path('FTRWebBundle_regis_success')}}",
                 'width':700,
@@ -11,6 +11,16 @@
                 'transitionIn':'elastic',
                 'transitionOut':'elastic',
                 'type':'iframe'
+            });
+        }else if('{{enableReset}}' == true){
+            $.fancybox({
+                'content'			: "{{path('TRWebBundle_reset', { 'userId': userId })}}",
+                'width'				: 700,
+                'height'			: 400,
+                'autoScale'			: false,
+                'transitionIn'		: 'elastic',
+                'transitionOut'		: 'elastic',
+                'type'				: 'iframe'
             });
         }
     });

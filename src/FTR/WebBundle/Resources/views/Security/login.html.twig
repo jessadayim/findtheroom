@@ -107,8 +107,11 @@
                     dataType:"html",
                     data:myData,
                     success:function (response) {
-//                        alert(response);
-                        parent.location.href = "{{path('FTRWebBundle_publish')}}";
+                        if(response == 'fail'){
+                            alert("กรุณาเช็คเงื่อนไขการเข้าสู่ระบบด้วย facebook");
+                        }else{
+                            parent.location.href = "{{path('FTRWebBundle_publish')}}";
+                        }
 //                           parent.$.fancybox.close();
                     },
                     error:function (xhr, ajaxOptions, thrownError) {

@@ -13,9 +13,17 @@
 //            alert('working');
             $.post("{{path('FTRWebBundle_regisSendEmail')}}", function(data) {
                 if(data = 'success'){
-                    alert('กรุณาเช็คอีเมลเพื่อทำการยืนยันการสมัคร');
+                    $.fancybox({
+                        'content' : "{{path('FTRWebBundle_regis_alertemail')}}",
+                        'width' : 700,
+                        'height' : 400,
+                        'autoScale' : false,
+                        'transitionIn' : 'elastic',
+                        'transitionOut' : 'elastic',
+                        'type' : 'iframe'
+                    });
                 }else{
-                    alert('ไม่สามารถส่งอีเมลได้กรุณากดส่งอีกครั้ง');
+                    alert('ไม่สามารถส่งอีเมลได้กรุณาลองส่งอีกครั้ง');
                 }
             });
             return false;

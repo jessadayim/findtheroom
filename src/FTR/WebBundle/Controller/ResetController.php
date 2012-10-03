@@ -8,31 +8,19 @@ use Acme\WebBundle\Entity\User_owner;
 
 class ResetController extends Controller
 {
-    public function resetAction()
+    public function resetAction($userId)
     {
-		return $this->render('FTRWebBundle:Security:resetpass.html.twig',array('token'=>'1d0f686e6bdbac25af7396c843601b28'));	
+		return $this->render('FTRWebBundle:Security:resetpass.html.twig',array('userId'=>$userId));
     }
-	public function changeAction()
+	public function passchgAction($userId)
     {
-    	$token = $_GET['token'];
-		$session = $this->get('session');
-		$session -> set('token',$token);
-		
-		return $this->render('FTRWebBundle:Resetting:changepass.html.twig',array());
-    }
-	public function passchgAction()
-    {
-    	$session = $this->get('session');
-		$token = $session -> get('token');
-		
     	$pass = md5($_POST['newpass']);
 		
 		$em = $this->getDoctrine()->getEntityManager();
-		$user = $em->getRepository('FTRWebBundle:User_owner')->findOneBy(array('confirm_token'=> $token));
+		$user = $em->getRepository('FTRWebBundle:User_owner')->findOneBy(array('id'=> $userId));
 		$user->setPassword($pass);
     	$em->flush();
-		
-		$session ->set('token');
-		exit();
+
+        return $this->redirect($this->generateUrl('FTRWebBundle_homepage'));
     }
 }
