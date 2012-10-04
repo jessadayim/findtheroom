@@ -5,6 +5,10 @@
 <script type="text/javascript" src="{{asset('js/gritter/js/jquery.gritter.js')}}"></script>
 <link rel="stylesheet" type="text/css" href="{{asset('js/gritter/css/jquery.gritter.css')}}" />
 
+{#fancybox#}
+<script type="text/javascript" src="{{asset('js/fancybox/jquery.fancybox-1.3.4.pack.js')}}"></script>
+<link rel="stylesheet" type="text/css" href="{{asset('css/jquery.fancybox-1.3.4.css')}}" media="screen" />
+
 <script>
 	var countValuePaging = {{entities|length}};
 
@@ -77,6 +81,21 @@
 		}
 
 	});
+
+    function showFancy(){
+        $.fancybox({
+            'href'          : "#showMap",
+            'titleShow' 	: false,
+            'transitionIn' 	: 'elastic',
+            'transitionOut' : 'elastic',
+            'scrolling'		: 'no',
+            'height'		: 'auto',
+            'width'         : 'auto',
+            'onComplete'       : function(){
+                resizeMap();
+            }
+        });
+    }
 
 	var checkDoubleClickEdit = true;
 	function changeCheckClick() {
@@ -199,6 +218,9 @@
     var nameLat = "#ftr_adminbundle_building_sitetype_latitude";
     var nameLong = "#ftr_adminbundle_building_sitetype_longitude";
 
+    var defaultLat =    13.752058;
+    var defaultLong =    100.496012;
+
     var geocoder = new google.maps.Geocoder();
 
     function geocodePosition(pos) {
@@ -206,7 +228,6 @@
             latLng: pos
         }, function(responses) {
             if (responses && responses.length > 0) {
-
                 updateMarkerAddress(responses[0].formatted_address);
             } else {
                 updateMarkerAddress('Cannot determine address at this location.');
@@ -230,7 +251,7 @@
     }
 
     function initialize() {
-        var latLng = new google.maps.LatLng(13.777318,100.557924);
+        var latLng = new google.maps.LatLng(defaultLat, defaultLong);
         var map = new google.maps.Map(document.getElementById('map'), {
             zoom: 12,
             center: latLng,
@@ -282,6 +303,11 @@
     }
 
     function resizeMap(){
+        if ($(nameLat).val() != '' && $(nameLat).val() != "0" && $(nameLong).val() != '' && $(nameLong).val() != "0")  {
+            defaultLat = $(nameLat).val();
+            defaultLong = $(nameLong).val();
+        }
+        initialize();
         google.maps.event.trigger(map, "resize");
     }
     // Onload handler to fire off the app.
@@ -511,7 +537,7 @@
         background-image: url("http://labs.google.com/ridefinder/images/mm_20_red.png");
     }
 </style>
-<div id="hideFancy" style="display: none; *margin-left:-9999px; *height:0px; *position:relative; *top:-500px; *display:block ">
+<div id="hideFancy" style="display: none;">
     <div style="width:auto;height:auto;overflow: auto;position:relative;">
         <div style="width: 900px; height: 500px;" id="showMap">
             <div style="margin-bottom: 5px;">
@@ -528,9 +554,9 @@
                     <b>Marker status:</b>
                     <div id="markerStatus"><i>Click and drag the marker.</i></div>
                     <b>Current position:</b>
-                    <div id="info">-34.397, 150.644</div>
+                    <div id="info"></div>
                     <b>Closest matching address:</b>
-                    <div id="address">Fire Rd, Avon รัฐนิวเซาท์เวลส์ 2574 ประเทศออสเตรเลีย</div>
+                    <div id="address"></div>
                 </div>
                 <div >
                     <div id="searchWell"></div>
