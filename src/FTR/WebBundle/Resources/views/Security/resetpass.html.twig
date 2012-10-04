@@ -19,7 +19,7 @@
 	<body style=" background-color:#FFF; color:#423C3B;">
 		<img src="{{asset('images/reset-h.png')}}" style="padding-top: 20px;" />
 		<hr style=" width:98%; margin-left:-5px; margin-top:15px; margin-bottom:10px;" />
-		<form action="{{path('TRWebBundle_chgconfirm')}}" method="post">
+		<form action="{{path('TRWebBundle_chgconfirm',{'userId':userId})}}" method="post">
 			<table style="padding-left:10px;">
 				<tr height="40" valign="middle">
 					<td align="left" width="600" style="font-size:24px;" colspan="3">ตั้งค่ารหัสผ่านใหม่ กรุณากรอกรหัสผ่านใหม่ และยืนยันรหัสผ่านใหม่ให้ตรงกัน</td>
@@ -64,7 +64,7 @@
 						document.getElementById('newpass').focus();
 						return false;
 					} else {
-						var patt = /[a-z][0-9]/;
+						var patt = /(?=.*\d)(?=.*[a-z]).{6,}/;
 						//alert(patt.test($('#newpass').val()));return false;
 						if (patt.test($('#newpass').val()) == false) {
 							//alert("pattern working");

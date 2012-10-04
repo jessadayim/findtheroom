@@ -13,13 +13,34 @@
 //            alert('working');
             $.post("{{path('FTRWebBundle_regisSendEmail')}}", function(data) {
                 if(data = 'success'){
-                    alert('กรุณาเช็คอีเมลเพื่อทำการยืนยันการสมัคร');
+                    $.fancybox({
+                        'content' : "{{path('FTRWebBundle_regis_alertemail')}}",
+                        'width' : 700,
+                        'height' : 400,
+                        'autoScale' : false,
+                        'transitionIn' : 'elastic',
+                        'transitionOut' : 'elastic',
+                        'type' : 'iframe'
+                    });
                 }else{
-                    alert('ไม่สามารถส่งอีเมลได้กรุณากดส่งอีกครั้ง');
+                    alert('ไม่สามารถส่งอีเมลได้กรุณาลองส่งอีกครั้ง');
                 }
             });
             return false;
         });});
+    function deleteBuild(id)
+    {
+        var urlReload = "{{ path('listApartment') }}";
+        if(confirm('ยืนยันการลบข้อมูล')==true){
+            $.get("{{ path('deleteData') }}" , { id:id},
+                    function(data){
+                        //alert(data);
+                        reloadInner(urlReload);
+                    });
+        }else{
+            return false;
+        }
+    }
 </script>
 <img src="{{asset('images/owner.png')}}" style="display:block; position:relative; float:none;" />
 <hr class="line" style="top: 60px;" />
@@ -34,7 +55,7 @@
             <a class="btnOrderBy" href="#" id="sort_publish">สถานะการแสดง<img src="{{asset('images/sort.png')}}" style="padding-top:0px; padding-left:10px; position:absolute;">
         </th>
         <th align="center" width="250" style="font-size:24px; padding-bottom:10px;">ดูหน้าตัวอย่าง</th>
-        <th align="center" width="250" style="font-size:24px; padding-bottom:10px;">แก้ไขรายละเอียด</th>
+        <th align="center" width="250" style="font-size:24px; padding-bottom:10px;">จัดการรายละเอียด</th>
 
         </thead>
         <hr class="line" style="top: 30px;" />
@@ -43,8 +64,13 @@
             <tr height="50" valign="middle">
                 <td align="left" width="250" style="font-size:24px;">{{data.building_name}}</td>
                 <td align="center" width="250" style="font-size:24px;">{{data.publish}}</td>
-                <td align="center" width="250" style="font-size:24px;"><a href="{{ path('FTRWebBundle_detail',{'buildId': data.id, 'province': data.PROVINCE_NAME, 'prefecture': data.AMPHUR_NAME, 'slug': data.slug}) }}" target="_blank">ดู</a></td>
-                <td align="center" width="250" style="font-size:24px;"><a href="{{path('addData',{'id': data.id })}}">แก้ไข</a></td>
+                <td align="center" width="250" style="font-size:24px;">
+                    <a href="{{ path('FTRWebBundle_detail',{'buildId': data.id, 'province': data.PROVINCE_NAME, 'prefecture': data.AMPHUR_NAME, 'slug': data.slug}) }}" target="_blank">ดู</a>
+                </td>
+                <td align="center" width="250" style="font-size:24px;">
+                    <a href="{{path('addData',{'id': data.id })}}">แก้ไข</a>
+                    <a class="deleteContent" onclick="javascript:return deleteBuild({{ data.id }});">ลบข้อมูล</a>
+                </td>
             </tr>
         {% endfor %}
 

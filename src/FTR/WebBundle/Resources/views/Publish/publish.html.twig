@@ -21,6 +21,18 @@
 </script>
 <script type="text/javascript">
 		$(document).ready(function() {
+            if('{{enable}}' == true){
+                $.fancybox({
+                    'content' : "{{path('FTRWebBundle_regis_alertemail')}}",
+                    'width' : 700,
+                    'height' : 400,
+                    'autoScale' : false,
+                    'transitionIn' : 'elastic',
+                    'transitionOut' : 'elastic',
+                    'type' : 'iframe'
+                });
+            }
+
 			$("a#gmap").fancybox({
 				'overlayShow'	: true,
 				'transitionIn'	: 'elastic',

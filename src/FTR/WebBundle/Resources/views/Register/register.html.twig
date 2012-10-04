@@ -4,27 +4,34 @@
 <link rel="stylesheet" type="text/css" href="{{asset('css/jquery.fancybox-1.3.4.css')}}" media="screen" />
 <script type="text/javascript" src="{{asset('js/fancybox/jquery.easing-1.4.pack.js')}}"></script>
 <script>
-    window.fbAsyncInit = function() {
+    window.fbAsyncInit = function () {
         FB.init({
             appId : '414830161885886', // App ID
             channelUrl : '//www.findtheroom.com//login.php', // Channel File ระบุไฟล์ที่จะใช้ login
             status : true, // check login status
             cookie : true, // enable cookies to allow the server to access the session
-            xfbml : true // parse XFBML
+            xfbml : true, // parse XFBML
+            oauth:true
         });
     };
+    (function () {
+        var e = document.createElement('script');
+        e.async = true;
+        e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
+        document.getElementById('fb-root').appendChild(e);
+    }());
     // Load the SDK Asynchronously
-    ( function(d) {
-        var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-        if (d.getElementById(id)) {
-            return;
-        }
-        js = d.createElement('script');
-        js.id = id;
-        js.async = true;
-        js.src = "//connect.facebook.net/en_US/all.js";
-        ref.parentNode.insertBefore(js, ref);
-    }(document));
+    //			( function(d) {
+    //					var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+    //					if (d.getElementById(id)) {
+    //						return;
+    //					}
+    //					js = d.createElement('script');
+    //					js.id = id;
+    //					js.async = true;
+    //					js.src = "//connect.facebook.net/en_US/all.js";
+    //					ref.parentNode.insertBefore(js, ref);
+    //				}(document));
 </script>
 <script>
 	$(document).ready(function() {

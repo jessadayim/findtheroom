@@ -46,15 +46,13 @@ class ForgetController extends Controller {
                                   WHERE id= '$id'";
                 $conn->query($sqlLastRequest);
                 $host = "http://".$_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"];
-                $url = $this->get('router')->generate('TRWebBundle_change', array());
-                $url .= "?token=".$objSQL1[0]['confirm_token'];
-                $link = "ท่านได้ทำการลงทะเบียนกับ FindTheRoom.com เรียบร้อยแล้ว
-    กรุณาคลิกลิงค์  "
+                $url = $this->get('router')->generate('FTRWebBundle_homepage', array());
+                $url .= "?resetToken=".$objSQL1[0]['confirm_token'];
+                $link = "สวัสดี !
+    กรุณาคลิกลิงค์ต่อไปนี้เพื่อตั้งรหัสผ่านของคุณใหม่   "
                     .$host.$url."
-    เพื่อทำการยืนยันการลงทะเบียน
-เมื่อท่านทำการยืนยันการลงทะเบียนเสร็จเรียบร้อยแล้ว ท่านจะสามารถใช้บริการเหล่านี้ได้
--ลงทะเบียนหอพักฟรี
--รับบริการเสริมจาก FindTheRoom.com
+    ขอบคุณค่ะ
+ทีมงาน FindTheRoom
 ติดต่อสอบถามข้อมูลเพิ่มเติม โทร 02-692-1199";
 
                 if (count($objSQL1) == 1) {

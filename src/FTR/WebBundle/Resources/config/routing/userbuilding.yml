@@ -41,3 +41,11 @@ setDeleteImage:
 changePassUser:
     pattern: /changepassword
     defaults: { _controller: FTRWebBundle:Userbuilding:changePassUserProfile }
+
+deleteData:
+    pattern: /deletebuild
+    defaults: { _controller: FTRWebBundle:Userbuilding:deleteBuilding }
+
+listApartment:
+    pattern: /listapartment
+    defaults: { _controller: FTRWebBundle:Userbuilding:listApartment }

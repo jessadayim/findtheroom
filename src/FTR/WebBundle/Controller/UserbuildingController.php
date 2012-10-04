@@ -1138,6 +1138,8 @@ Email ติดต่อ : '.$emailBuilding.'
         $em = $this->getDoctrine()->getEntityManager();
         $buildingValue = $em->getRepository('FTRWebBundle:Building_site')->findOneBy(array('id' => $id));
         $buildingValue->setBuildingName($arrData['building_name']);
+        $dataSlug = str_replace(' ','-',$arrData['building_name']);
+        $buildingValue->setSlug($dataSlug);
         $buildingValue->setBuildingAddress($arrData['building_addr']);
 
         $returnValue = $this->saveMinMaxRoomPrice($id);
@@ -1734,10 +1736,31 @@ Email ติดต่อ : '.$emailBuilding.'
         }
         exit();
     }
+
     public function deleteFile($path)
     {
         if (file_exists($path)) {
             unlink($path);
         }
+    }
+
+    public function deleteBuildingAction()
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        if($_GET)
+        {
+            $id = $_GET['id'];
+            $buildingData = $em->getRepository('FTRWebBundle:Building_site')->findOneBy(array('id'=>$id));
+            if(!empty($buildingData)){
+                $buildingData->setDeleted(1);
+                $em->flush();
+                echo 1;
+            }else{
+                echo 0;
+            }
+        }else{
+            echo 0;
+        }
+        exit();
     }
 }
