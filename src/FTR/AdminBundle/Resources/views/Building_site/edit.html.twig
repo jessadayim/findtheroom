@@ -20,6 +20,7 @@
     $(document).ready(function() {
         $("#btnCancel").click(function(){
             hideId(".innerPanel");
+            $(".innerPanel").html('');
         });
 
         $("#formEdit").submit(function(){
@@ -69,6 +70,8 @@
             $("#ftr_adminbundle_building_sitetype_zone_id").attr('disabled', true);
         });
 
+
+
 	});
     if ($("#ftr_adminbundle_building_sitetype_zone_id").val()){
         $("#ftr_adminbundle_building_sitetype_addr_province").attr('disabled', true);
@@ -89,6 +92,18 @@
                 theEvent.preventDefault();
         }
     }
+
+    jQuery.noConflict();
+    /* calling thumbnailScroller function with options as parameters */
+    (function($){
+        $(document).ready(function(){
+            //        fancybox google map
+            $("#findLocation").click(function(){
+                showFancy();
+                return false;
+            });
+        });
+    })(jQuery);
 </script>
 <style type="text/css">
     #btnEdit {
@@ -185,17 +200,22 @@
 		{{ form_widget(edit_form.phone_number, { 'attr': {'class': 'widthin'} }) }} &nbsp;
 		{{ form_errors(edit_form.phone_number) }}
 		<br />
-		<div class="label" style="">
-			{{ form_label(edit_form.latitude) }}
-		</div>
-		{{ form_widget(edit_form.latitude, { 'attr': {'class': 'widthin', 'onkeypress' : 'validate(event)'} }) }} &nbsp;
-		{{ form_errors(edit_form.latitude) }}
-		<br />
-		<div class="label" style="">
-			{{ form_label(edit_form.longitude) }}
-		</div>
-		{{ form_widget(edit_form.longitude, { 'attr': {'class': 'widthin', 'onkeypress' : 'validate(event)'} }) }} &nbsp;
-		{{ form_errors(edit_form.longitude) }}
+
+        <fieldset>
+            <div class="label" style="">
+                {{ form_label(edit_form.latitude) }}
+            </div>
+            {{ form_widget(edit_form.latitude, { 'attr': {'class': 'widthin', 'onkeypress' : 'validate(event)'} }) }} &nbsp;
+            {{ form_errors(edit_form.latitude) }}
+            <br />
+            <div class="label" style="">
+                {{ form_label(edit_form.longitude) }}
+            </div>
+            {{ form_widget(edit_form.longitude, { 'attr': {'class': 'widthin', 'onkeypress' : 'validate(event)'} }) }} &nbsp;
+            {{ form_errors(edit_form.longitude) }}
+            <a href="#showMap" id="findLocation">ค้นหาแผนที่</a>
+        </fieldset>
+
 		<br />
 		<div class="label" style="">
 			{{ form_label(edit_form.recommend) }}

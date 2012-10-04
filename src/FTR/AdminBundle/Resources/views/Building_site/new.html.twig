@@ -1,8 +1,10 @@
+
 <script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script>
 
 {#gritter#}
 <script type="text/javascript" src="{{asset('js/gritter/js/jquery.gritter.js')}}"></script>
 <link rel="stylesheet" type="text/css" href="{{asset('js/gritter/css/jquery.gritter.css')}}" />
+
 <script>
     //show message
     function showMessage(title, text){
@@ -15,6 +17,7 @@
     }
 
 	$(document).ready(function() {
+        $(".innerPanel").html('');
 		$("#btnCancelCreate").click(function() {
             hideId(".createPanel");
             hideId("#createRecordCancel");
@@ -71,7 +74,18 @@
             $("#ftr_adminbundle_building_sitetype_zone_id").attr('disabled', true);
         });
 
+
 	});
+    jQuery.noConflict();
+    /* calling thumbnailScroller function with options as parameters */
+    (function($){
+        $(document).ready(function(){
+            $("#findLocation").click(function(){
+                showFancy();
+                return false;
+            });
+        });
+    })(jQuery);
 
     //ตรวจสอบค่าที่เป็น Double
     function validate(evt) {
@@ -87,7 +101,12 @@
     }
 
     $("#ftr_adminbundle_building_sitetype_addr_province").attr('disabled', true);
+
+
 </script>
+
+
+
 <style type="text/css">
     #btnCreate {
         background: url("{{ asset('images/add-bt.png')}}") no-repeat;
@@ -181,6 +200,8 @@
 			{{ form_widget(form.phone_number, { 'attr': {'class': 'widthin'} }) }} &nbsp;
 			{{ form_errors(form.phone_number) }}
 			<br />
+
+            <fieldset>
 			<div class="label" style="">
 				{{ form_label(form.latitude) }}
 			</div>
@@ -192,6 +213,9 @@
 			</div>
 			{{ form_widget(form.longitude, { 'attr': {'class': 'widthin', 'onkeypress' : 'validate(event)'} }) }} &nbsp;
 			{{ form_errors(form.longitude) }}
+            <a href="#showMap" id="findLocation">ค้นหาแผนที่</a>
+            </fieldset>
+
 			<br />
 			<div class="label" style="">
 				{{ form_label(form.recommend) }}
@@ -269,3 +293,4 @@
 		</fieldset>
 	</form>
 </div>
+
