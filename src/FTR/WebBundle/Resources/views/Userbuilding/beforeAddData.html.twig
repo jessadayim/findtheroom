@@ -35,28 +35,30 @@
         });
     }
 </script>
-<div class="detail" style="margin-bottom:15px; height: 150px;">
-<form id="formAdd" action="{{ path('addNewBuildData') }}" method="post">
-    <table align="center">
-        <tr>
-            <td colspan="3">ก่อนการเพิ่มตึกใหม่กรุณายืนยันก่อน</td>
-        </tr>
-        <tr valign="top" height="40">
-            <td align="left" width="100" style="padding-top:10px;">กรอกรหัสยืนยันตามรูปภาพ : *</td>
-            <td align="left" width="180">
-                <div id="captchaimage">
-                    <img id="captcha" src="{{asset('captcha/get_captcha.php')}}" width="160" height="40" style="padding-left:0px; padding-bottom:10px; padding-top:10px;"/>
+<div class="detail" style="margin-bottom:15px; height: 100%; padding-bottom: 30px;">
+    <img src="{{asset('images/confirm.png')}}" style="display:block; position:relative; float:none;" />
+    <hr class="line" style="top: 60px;" />
+    <form id="formAdd" action="{{ path('addNewBuildData') }}" method="post">
+        <table>
+            <tr>
+                <td colspan="3">ก่อนการเพิ่มตึกใหม่กรุณายืนยันก่อน</td>
+            </tr>
+            <tr valign="top" height="40">
+                <td align="left" width="200" style="padding-top:10px;">กรอกรหัสยืนยันตามรูปภาพ : *</td>
+                <td align="left" width="180">
+                    <div id="captchaimage">
+                        <img id="captcha" src="{{asset('captcha/get_captcha.php')}}" width="160" height="40" style="padding-left:0px; padding-bottom:10px; padding-top:10px;"/>
 
-                </div><a><img src="{{asset('captcha/refresh.png')}}"  alt="" id="refresh" style="position:absolute;margin-top:-65px;margin-left:150px;"/></a>
-                <input id="code" name="code" type="text" maxlength="5" style="width:156px;"/>
-                <label id="txterror" style="color: #F8EB00;"></label>
-            </td>
-            <td align="left" colspan="2" style="padding-top:60px;">
-                <input class="send" type="button" id="btnsubmit" value="" />
-                {#<input class="cancel" type="submit" value="" />#}
-            </td>
-        </tr>
-    </table>
-</form>
+                    </div><a><img src="{{asset('captcha/refresh.png')}}"  alt="" id="refresh" style="position:absolute;margin-top:-65px;margin-left:150px;"/></a>
+                    <input id="code" name="code" type="text" maxlength="5" style="width:156px;"/>
+                    <label id="txterror" style="color: #F8EB00;"></label>
+                </td>
+                <td align="left" colspan="2" style="padding-top:60px;">
+                    <input class="con" type="button" id="btnsubmit" value="" />
+                    {#<input class="cancel" type="submit" value="" />#}
+                </td>
+            </tr>
+        </table>
+    </form>
 </div>
 {% endblock %}
