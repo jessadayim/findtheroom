@@ -1138,6 +1138,8 @@ Email ติดต่อ : '.$emailBuilding.'
         $em = $this->getDoctrine()->getEntityManager();
         $buildingValue = $em->getRepository('FTRWebBundle:Building_site')->findOneBy(array('id' => $id));
         $buildingValue->setBuildingName($arrData['building_name']);
+        $dataSlug = str_replace(' ','-',$arrData['building_name']);
+        $buildingValue->setSlug($dataSlug);
         $buildingValue->setBuildingAddress($arrData['building_addr']);
 
         $returnValue = $this->saveMinMaxRoomPrice($id);
