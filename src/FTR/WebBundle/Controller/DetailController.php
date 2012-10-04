@@ -70,25 +70,23 @@ class DetailController extends Controller
                     /**
                      * query Detail Nearly Type
                      * */
-                    $sqlNearlyBts = "SELECT nl.name,nt.id
+                    $sqlNearlyType = "SELECT nl.name,nt.type_name
                                      FROM nearly2site n2
-                                        JOIN nearly_location nl ON n2.nearly_location_id = nl.id
-                                        JOIN nearly_type nt ON nl.nearly_type_id = nt.id
+                                        LEFT JOIN nearly_location nl ON (n2.nearly_location_id = nl.id AND nl.deleted =0)
+                                        LEFT JOIN nearly_type nt ON (nl.nearly_type_id = nt.id AND nt.deleted =0)
                                      WHERE n2.building_site_id = $id
-                                        AND nt.id IN (1,2,3)
-                                        AND n2.deleted =0
-                                        AND nl.deleted =0
-                                        AND nt.deleted =0";
-                    $objNearBts = $conn->fetchAll($sqlNearlyBts);
+                                        AND nt.type_name IN ('bts','mrt','university')
+                                        AND n2.deleted =0";
+                    $objNearType = $conn->fetchAll($sqlNearlyType);
                     $nearBts = "";
                     $nearMrt = "";
                     $nearCollege = "";
-                    foreach ($objNearBts as $value) {
-                        if ($value['id'] == 1) {
+                    foreach ($objNearType as $value) {
+                        if ($value['type_name'] == 'bts') {
                             $nearBts = $value['name'];
-                        } else if ($value['id'] == 2) {
+                        } else if ($value['type_name'] == 'mrt') {
                             $nearMrt = $value['name'];
-                        } else if ($value['id'] == 3) {
+                        } else if ($value['type_name'] == 'university') {
                             $nearCollege = $value['name'];
                         }
                     }
@@ -99,7 +97,7 @@ class DetailController extends Controller
                     $sqlRoomType = "SELECT r2.room_size, r2.room_price, r2.room_typename,img.building_site_id, img.photo_name, img.deleted, img.sequence
                                     FROM roomtype2site r2
                                     LEFT JOIN image img
-                                        ON r2.id = img.roomtype2site_id
+                                        ON (r2.id = img.roomtype2site_id AND img.deleted = 0 )
                                     WHERE r2.building_site_id = $id AND r2.deleted = 0
                                     ORDER BY img.sequence";
                     $objRoomType = $conn->fetchAll($sqlRoomType);
@@ -113,10 +111,10 @@ class DetailController extends Controller
                                   LEFT JOIN facility2site f2
                                       ON (
                                           f2.facilitylist_id = f.id
-                                          AND f2.building_site_id = 1
+                                          AND f2.building_site_id = $id
                                           AND f2.deleted = 0
                                       )
-                                  WHERE f.deleted = 0 AND f.display = 0   AND f.facility_type= 'inroom'";
+                                  WHERE f.deleted = 0 AND f.display = 1   AND f.facility_type= 'inroom'";
                     $objInRoom = $conn->fetchAll($sqlInRoom);
 
                     /**
@@ -128,10 +126,10 @@ class DetailController extends Controller
                                    LEFT JOIN facility2site f2
                                        ON (
                                            f2.facilitylist_id = f.id
-                                           AND f2.building_site_id = 1
+                                           AND f2.building_site_id = $id
                                            AND f2.deleted = 0
                                        )
-                                   WHERE f.deleted = 0 AND f.display = 0   AND f.facility_type= 'inroom'";
+                                   WHERE f.deleted = 0 AND f.display = 1   AND f.facility_type= 'outroom'";
                     $objOutRoom = $conn->fetchAll($sqlOutRoom);
 
                     /**

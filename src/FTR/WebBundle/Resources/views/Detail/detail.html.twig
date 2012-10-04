@@ -297,12 +297,8 @@ $(function(){
                 <tr height="135" valign="middle">
                     <td align="left" width="220">
                         <div class="thumbframe">
-                            {%if type.deleted != 1%}
-                                {%if type.photo_name is empty%}
-                                        <img src="{{ asset('images/building/')}}{{ type.building_site_id }}/{{type.photo_name}}" />
-                                {%else%}
-                                    <img src='{{asset('images/default/banner.jpg')}}'>
-                                {%endif%}
+                            {%if type.photo_name != null%}
+                                <img src="{{ asset('images/building/')}}{{ type.building_site_id }}/{{type.photo_name}}" />
                             {%else%}
                                 <img src='{{asset('images/default/banner.jpg')}}'>
                             {%endif%}
