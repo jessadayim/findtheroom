@@ -28,6 +28,19 @@
             });
             return false;
         });});
+    function deleteBuild(id)
+    {
+        var urlReload = "{{ path('listApartment') }}";
+        if(confirm('ยืนยันการลบข้อมูล')==true){
+            $.get("{{ path('deleteData') }}" , { id:id},
+                    function(data){
+                        //alert(data);
+                        reloadInner(urlReload);
+                    });
+        }else{
+            return false;
+        }
+    }
 </script>
 <img src="{{asset('images/owner.png')}}" style="display:block; position:relative; float:none;" />
 <hr class="line" style="top: 60px;" />
@@ -42,7 +55,7 @@
             <a class="btnOrderBy" href="#" id="sort_publish">สถานะการแสดง<img src="{{asset('images/sort.png')}}" style="padding-top:0px; padding-left:10px; position:absolute;">
         </th>
         <th align="center" width="250" style="font-size:24px; padding-bottom:10px;">ดูหน้าตัวอย่าง</th>
-        <th align="center" width="250" style="font-size:24px; padding-bottom:10px;">แก้ไขรายละเอียด</th>
+        <th align="center" width="250" style="font-size:24px; padding-bottom:10px;">จัดการรายละเอียด</th>
 
         </thead>
         <hr class="line" style="top: 30px;" />
@@ -56,6 +69,7 @@
                 </td>
                 <td align="center" width="250" style="font-size:24px;">
                     <a href="{{path('addData',{'id': data.id })}}">แก้ไข</a>
+                    <a class="deleteContent" onclick="javascript:return deleteBuild({{ data.id }});">ลบข้อมูล</a>
                 </td>
             </tr>
         {% endfor %}

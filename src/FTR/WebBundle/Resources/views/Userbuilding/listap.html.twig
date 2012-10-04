@@ -13,6 +13,11 @@
                 'type'				: 'iframe'
             });
         }
+
+        function reloadInner(url)
+        {
+            $('#innerPanel').load(url);
+        }
     </script>
 <div class="detail" style="height: 390px; margin-bottom: 15px;">
 	<img src="{{asset('images/user.png')}}" style="display:block; position:relative; float:none;" />
