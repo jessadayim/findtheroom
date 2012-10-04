@@ -157,8 +157,9 @@ class MainController extends Controller {
 					b.type_name,
 					c.typename,
 					d.zonename,
-					a.addr_province,
-					a.addr_prefecture,
+					pro.PROVINCE_NAME,
+					am.AMPHUR_NAME,
+					a.slug,
 					FORMAT(a.start_price,0) AS start_price,
 					FORMAT(a.end_price,0) AS end_price,
 					a.id
@@ -167,6 +168,8 @@ class MainController extends Controller {
 					INNER JOIN building_type b ON (a.building_type_id=b.id)
 					INNER JOIN pay_type c ON (a.pay_type_id=c.id)
 					INNER JOIN zone d ON (a.zone_id=d.id)
+					INNER JOIN amphur am ON a.addr_prefecture	 = am.AMPHUR_ID
+                    INNER JOIN province pro ON a.addr_province = pro.PROVINCE_ID
 				WHERE a.publish = 1
 				ORDER BY lastupdate DESC LIMIT 10
 			";

@@ -98,11 +98,11 @@ $(function(){
                         {% if general.type_name is empty %}
                         -
                         {% else%}
-                            {%if general.typeDeleted == 1%}
-                                -
-                            {%else%}
+                            {#{%if general.typeDeleted == 1%}#}
+                                {#-#}
+                            {#{%else%}#}
                                 {{general.type_name}}
-                            {%endif%}
+                            {#{%endif%}#}
                         {% endif%}
                     </td>
                     <td width="90">
@@ -112,11 +112,11 @@ $(function(){
                         {% if general.typename is empty %}
                             -
                         {% else%}
-                            {%if general.payDeleted == 1%}
-                                -
-                            {%else%}
+                            {#{%if general.payDeleted == 1%}#}
+                                {#-#}
+                            {#{%else%}#}
                                 {{general.typename}}
-                            {%endif%}
+                            {#{%endif%}#}
                         {% endif%}
                     </td>
                 </tr>
@@ -128,7 +128,7 @@ $(function(){
                         {% if general.building_address is empty and general.addr_prefecture is empty and general.addr_province is empty and general.addr_zipcode is empty%}
                             -
                         {% else%}
-                            {{general.building_address}} {{amphur}} {{province}}
+                            {{general.building_address}} {{general.addr_number}} {{general.AMPHUR_NAME}} {{general.PROVINCE_NAME}} {{general.addr_zipcode}}
                         {% endif%}
                     </td>
                 </tr>
@@ -238,11 +238,7 @@ $(function(){
                     {% if general.zonename is empty %}
                         -
                     {% else%}
-                        {%if general.zoneDeleted == 1%}
-                            -
-                        {%else%}
                             {{general.zonename}}
-                        {%endif%}
                     {% endif%}</td>
 				<td align="right" width="150" style="padding-right:20px;">ใกล้รถไฟฟ้า BTS :</td>
 				<td align="left" width="300">
@@ -342,7 +338,7 @@ $(function(){
                             {% else %}
                             <div class="ap" style="height: 160px;">
                                 {%endif%}
-                                <a class="pop" rel="group" href="{{asset('images/slider/slide-1.jpg')}}" title="{{image.description}}"><div class="thumbframe4gallery">
+                                <a class="pop" rel="group" href="{{ asset('images/building/')}}{{ image.building_site_id }}/{{image.photo_name}}" title="{{image.description}}"><div class="thumbframe4gallery">
                                     <img src="{{ asset('images/building/')}}{{ image.building_site_id }}/{{image.photo_name}}" class="thumb4gallery"/>
                                     {#<img src="{{asset('images/Apartment/ap3.png')}}" class="thumb4gallery"/>#}
                                 </div></a>
@@ -376,15 +372,10 @@ $(function(){
 					<tr height="20" valign="middle">
 				{% endif%}			
 						<td align="left" width="250">
-							{% if faclist.building_site_id == id%}
-                                {%if faclist.deleted == 1%}
-                                    <span class="noright">{{faclist.facility_name}}</span>
-                                {%else%}
-                                    <span class="right">{{faclist.facility_name}}</span>
-                                {%endif%}
-
+							{% if faclist.facility2site_id != null%}
+                                <span class="right">{{faclist.facility_name}}</span>
 							{% else %}
-							<span class="noright">{{faclist.facility_name}}</span>
+							    <span class="noright" style="opacity:0.2;">{{faclist.facility_name}}</span>
 							{%endif%}
 						</td>
 				{% set count = count+1%}
@@ -406,17 +397,13 @@ $(function(){
 				{% if count%4 == 0%}
 					<tr height="20" valign="middle">
 				{% endif%}
-						<td align="left" width="250">
-							{% if faclist.building_site_id == id%}
-                                {%if faclist.deleted == 1%}
-                                    <span class="noright">{{faclist.facility_name}}</span>
-                                {%else%}
-                                    <span class="right">{{faclist.facility_name}}</span>
-                                {%endif%}
-							{% else %}
-							<span class="noright">{{faclist.facility_name}}</span>
-							{%endif%}
-						</td>
+                        <td align="left" width="250">
+                            {% if faclist.facility2site_id != null%}
+                            <span class="right">{{faclist.facility_name}}</span>
+                            {% else %}
+                            <span class="noright" style="opacity:0.2;">{{faclist.facility_name}}</span>
+                            {%endif%}
+                        </td>
 				{% set count = count+1%}
 				{% if count%4 == 0%}
 					</tr>
