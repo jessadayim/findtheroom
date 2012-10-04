@@ -10,6 +10,6 @@ class PublishController extends Controller
     
     public function PublishAction()
     {
-        return $this->render('FTRWebBundle:Publish:publish.html.twig', array());
+        return $this->render('FTRWebBundle:Publish:publish.html.twig', array('enable'=>false));
     }
 }

@@ -69,10 +69,11 @@
 								{% set row1 = introw1+1 %}
 								{% if row1%3 == 0%}
 								<div class="ap2">
+                                    <a class="ap2" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.building_site_id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
 									{% else %}
 									<div class="ap">
+                                        <a class="ap" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.building_site_id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
 										{%endif%}
-                                        <a href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.building_site_id}}" style="text-decoration: none">
 										<div class="recom"></div>
                                             <img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />
 										<br />
@@ -83,8 +84,8 @@
 											ใกล้ BTS สถานี : {{recom1.name}}
 											<br />
 											<br />
-											ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span></a>
-									</div>
+											ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span>
+									</div></a>
 									{% set introw1 = introw1+1 %}
 									{% if introw1%3 == 0%}
 								</div>
@@ -105,10 +106,12 @@
 								{% set row1 = introw1+1 %}
 								{% if row1%3 == 0%}
 								<div class="ap2">
+                                    <a class="ap2" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.building_site_id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
 									{% else %}
 									<div class="ap">
+                                        <a class="ap" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.building_site_id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
 										{%endif%}
-                                        <a href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.building_site_id}}" style="text-decoration: none">
+
 										<div class="recom"></div>
                                             <img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />
 										<br />
@@ -119,7 +122,8 @@
 											ใกล้ BTS สถานี : {{recom1.name}}
 											<br />
 											<br />
-											ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span></a>
+											ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span>
+                                        </a>
 									</div>
 									{% set introw1 = introw1+1 %}
 									{% if introw1%3 == 0%}
@@ -143,10 +147,12 @@
 								{% set row2 = introw2+1 %}
 								{% if row2%3 == 0%}
 								<div class="ap2">
+                                    <a class="ap2" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.building_site_id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
 									{% else %}
 									<div class="ap">
+                                        <a class="ap" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.building_site_id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
 										{%endif%}
-                                        <a href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.building_site_id}}" style="text-decoration: none">
+
 										<div class="recom"></div>
                                         <img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />
 										<br />
@@ -157,8 +163,8 @@
 											ใกล้ MRT สถานี : {{recom1.name}}
 											<br />
 											<br />
-											ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span></a>
-									</div>
+											ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span>
+									</div></a>
 									{% set introw2 = introw2+1 %}
 									{% if introw2%3 == 0%}
 								</div>
@@ -178,10 +184,12 @@
 								{% set row2 = introw2+1 %}
 								{% if row2%3 == 0%}
 								<div class="ap2">
+                                    <a class="ap2" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.building_site_id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
 									{% else %}
 									<div class="ap">
+                                        <a class="ap" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.building_site_id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
 										{%endif%}
-                                        <a href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.building_site_id}}" style="text-decoration: none">
+
 										<div class="recom"></div>
                                         <img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />
 										<br />
@@ -216,10 +224,12 @@
 								{% set row3 = introw3+1 %}
 								{% if row3%3 == 0%}
 								<div class="ap2">
+                                    <a class="ap2" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.building_site_id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
 									{% else %}
 									<div class="ap">
+                                        <a class="ap" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.building_site_id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
 										{%endif%}
-                                        <a href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.building_site_id}}" style="text-decoration: none">
+
 										<div class="recom"></div>
                                         <img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />
 										<br />
@@ -230,8 +240,8 @@
 											ใกล้มหาวิทยาลัย : {{recom1.name}}
 											<br />
 											<br />
-											ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span></a>
-									</div>
+											ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span>
+									</div></a>
 									{% set introw3 = introw3+1 %}
 									{% if introw3%3 == 0%}
 								</div>
@@ -251,9 +261,12 @@
 								{% set row3 = introw3+1 %}
 								{% if row3%3 == 0%}
 								<div class="ap2">
+                                    <a class="ap2" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.building_site_id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
 									{% else %}
 									<div class="ap">
-										{%endif%}<a href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.building_site_id}}" style="text-decoration: none">
+                                        <a class="ap" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.building_site_id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
+										{%endif%}
+
 										<div class="recom"></div>
                                         <img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />
 										<br />
@@ -264,8 +277,8 @@
 											ใกล้มหาวิทยาลัย : {{recom1.name}}
 											<br />
 											<br />
-											ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span></a>
-									</div>
+											ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span>
+									</div></a>
 									{% set introw3 = introw3+1 %}
 									{% if introw3%3 == 0%}
 								</div>
@@ -289,10 +302,12 @@
 								{% set row4 = introw4+1 %}
 								{% if row4%3 == 0%}
 								<div class="ap2">
+                                    <a class="ap2" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.building_site_id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
 									{% else %}
 									<div class="ap">
+                                        <a class="ap" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.building_site_id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
 										{%endif%}
-                                        <a href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.building_site_id}}" style="text-decoration: none">
+
 										<div class="recom"></div>
                                         <img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />
 										<br />
@@ -303,8 +318,8 @@
 											ใกล้ {{recom1.nearlyType}} : {{recom1.name}}
 											<br />
 											<br />
-											ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span></a>
-									</div>
+											ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span>
+									</div></a>
 									{% set introw4 = introw4+1 %}
 									{% if introw4%3 == 0%}
 								</div>
@@ -324,10 +339,12 @@
 								{% set row4 = introw4+1 %}
 								{% if row4%3 == 0%}
 								<div class="ap2">
+                                    <a class="ap2" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.building_site_id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
 									{% else %}
 									<div class="ap">
+                                        <a class="ap2" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.building_site_id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
 										{%endif%}
-                                        <a href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.building_site_id}}" style="text-decoration: none">
+
 										<div class="recom"></div>
                                         <img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />
 										<br />
@@ -338,8 +355,8 @@
 											ใกล้ {{recom1.nearlyType}} : {{recom1.name}}
 											<br />
 											<br />
-											ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span></a>
-									</div>
+											ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span>
+									</div></a>
 									{% set introw4 = introw4+1 %}
 									{% if introw4%3 == 0%}
 								</div>

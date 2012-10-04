@@ -79,6 +79,49 @@ class SecurityController extends Controller
 		return $this->redirect($this->generateUrl('FTRWebBundle_homepage'));
 	}
 
+    public function sendEmail($id){
+        $conn= $this->get('database_connection');
+        $sqlOwner = "SELECT email, confirm_token, firstname, lastname, facebook_id
+                     FROM user_owner
+					 WHERE id = '$id' AND deleted = 0";
+        $objOwner = $conn -> fetchAll($sqlOwner);
+        $token = $objOwner[0]['confirm_token'];
+        $email = $objOwner[0]['email'];
+
+        $host = "http://".$_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"];
+        $url = $this->get('router')->generate('FTRWebBundle_homepage', array());
+        $url .= "?confirmToken=". $token;
+
+        $link = "ท่านได้ทำการลงทะเบียนกับ FindTheRoom.com เรียบร้อยแล้ว
+    กรุณาคลิกลิงค์  "
+            .$host.$url."
+    เพื่อทำการยืนยันการลงทะเบียน
+เมื่อท่านทำการยืนยันการลงทะเบียนเสร็จเรียบร้อยแล้ว ท่านจะสามารถใช้บริการเหล่านี้ได้
+-ลงทะเบียนหอพักฟรี
+-รับบริการเสริมจาก FindTheRoom.com
+ติดต่อสอบถามข้อมูลเพิ่มเติม โทร 02-692-1199";
+
+        $message = \Swift_Message::newInstance()
+            ->setSubject('ยินดีต้อนรับสมาชิกใหม่ '.$email.' สู่ FindTheRoom.com')
+            ->setFrom('support@findtheroom.com')
+            ->setTo($email)
+            ->addPart($link)
+            ->setBody($this->renderView('FTRWebBundle:Register:email.html.twig', array(
+            'host' => $host
+        ,'url' => $url
+        ,'firstName'=>$objOwner[0]['firstname']
+        ,'lastName'=>$objOwner[0]['lastname'])),'text/html');
+
+        $this->get('mailer')->send($message);
+    }
+
+    public function updateLogin($id){
+        $conn= $this->get('database_connection');
+        $time = date("Y-m-d H:i:s", time());
+        $sql2 ="UPDATE user_owner SET last_login = '$time' WHERE id = '$id' AND deleted = 0";
+        $conn->query($sql2);
+    }
+
     public function loginFacebookAction(){
         require_once($_SERVER['DOCUMENT_ROOT'] . "/findtheroom/web/facebook-php-sdk/facebook.php");
         $facebook = new \facebook(array(
@@ -109,29 +152,74 @@ class SecurityController extends Controller
         }
 
         //user details
-        $id = $me['id'];
+        $facebookId = $me['id'];
         $email = $me['email'];
         $username = $me['username'];
 
-        $conn= $this->get('database_connection');
-        if(!$conn){ die("MySQL Connection error");}
-
-        $sqlCheckUser ="SELECT id, username FROM user_owner WHERE facebook_id = '$id'  and deleted != '1'";
-        $objCheckUser = $conn -> fetchAll($sqlCheckUser);
-        $rowCount = count($objCheckUser);
-
-        if($rowCount == 1){
-            $session = $this->get('session');
-            $user = $objCheckUser[0]['username'];
-            $id = $objCheckUser[0]['id'];
-
-            $session->set('user', $user);
-            $session->set('id', $id);
+        if(empty($facebookId) || empty($email) || empty($username)){
+            echo "fail";
         }else{
-            $sqlCheckUser ="INSERT INTO user_owner(username, email, deleted, user_level, facebook_id) VALUES('$username', '$email', 0, 2, '$id')";
-            $conn->query($sqlCheckUser);
-        }
+            $conn= $this->get('database_connection');
+            if(!$conn){ die("MySQL Connection error");}
 
+            $session = $this->get('session');
+
+            try{
+                //query ใช้ตรวจสอบ id facebook ของ user
+                $sqlCheckUser ="SELECT id, username
+                                FROM user_owner
+                                WHERE facebook_id = '$facebookId'
+                                    AND deleted = 0";
+                $objCheckUser = $conn -> fetchAll($sqlCheckUser);
+                $rowCount = count($objCheckUser);
+
+                if($rowCount == 1){
+                    $this->updateLogin($objCheckUser[0]['id']);
+
+                    $user = $objCheckUser[0]['username'];
+                    $id = $objCheckUser[0]['id'];
+                    $session->set('user', $user);
+                    $session->set('id', $id);
+                }else{
+                    //query ตรวจสอบอีเมล
+                    $sqlCheckEmail = "SELECT id
+                                      FROM user_owner
+                                      WHERE email = '$email'
+                                          AND deleted = 0";
+                    $objCheckEmail = $conn -> fetchAll($sqlCheckEmail);
+
+                    if(count($objCheckEmail) == 1){
+                        $userId = $objCheckEmail[0]['id'];
+                        $sqlUpdateUser ="UPDATE user_owner
+                                         SET facebook_id = '$facebookId'
+                                         WHERE id = '$userId'
+                                            AND deleted = 0";
+                        $conn->query($sqlUpdateUser);
+                    }else{
+                        $random_token = md5(uniqid(rand(),true));
+                        $sqlRegisterUser ="INSERT INTO user_owner(username, email, deleted, user_level, confirm_token, facebook_id)
+                                           VALUES('$username', '$email', 0, 2, '$random_token', '$facebookId')";
+                        $conn->query($sqlRegisterUser);
+                    }
+
+                    $sqlGetUser ="SELECT id, username
+                                  FROM user_owner
+                                  WHERE facebook_id = '$facebookId'
+                                      AND deleted = 0";
+                    $objGetUser = $conn -> fetchAll($sqlGetUser);
+
+                    $this->sendEmail($objGetUser[0]['id']);
+                    $this->updateLogin($objGetUser[0]['id']);
+
+                    $user = $objGetUser[0]['username'];
+                    $id = $objGetUser[0]['id'];
+                    $session->set('user', $user);
+                    $session->set('id', $id);
+                }
+            }catch (\Exception $e){
+                echo "ERROR : ".$e;
+            }
+        }
         exit();
     }
 }

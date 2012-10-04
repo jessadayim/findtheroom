@@ -47,32 +47,56 @@ class MainController extends Controller {
     }
 
     public function indexAction() {
-//        var_dump($_COOKIE);
-        $em = $this -> getDoctrine() -> getEntityManager();
 
+        $userId = "";
         $conn = $this -> get('database_connection');
         if (!$conn) { die("MySQL Connection error");
         }
 
-        if (!empty($_GET['token'])) {
-            $token = $_GET['token'];
+        if (!empty($_GET['confirmToken'])) {
+            $token = $_GET['confirmToken'];
             // if(!empty($objSQL0)){
-            $sql = "UPDATE user_owner SET enabled = '1' WHERE confirm_token= '$token'";
-            $conn -> query($sql);
 
-            $sql = "SELECT enabled FROM user_owner WHERE confirm_token = '$token'";
-            $objSQL = $conn -> fetchAll($sql);
-            if (!empty($objSQL)) {
-                if ($objSQL[0]['enabled'] == 1) {
-                    $enable = true;
-                } else {
-                    $enable = false;
+            $sqlGetUser = "SELECT id,enabled FROM user_owner WHERE confirm_token = '$token' AND deleted = 0";
+            $objGetUser = $conn -> fetchAll($sqlGetUser);
+            if (count($objGetUser) == 1) {
+                try {
+                    $sqlEnableUpdate = "UPDATE user_owner SET enabled = '1' WHERE confirm_token= '$token' AND deleted = 0";
+                    $conn -> query($sqlEnableUpdate);
+                    $enableRegis = true;
+                    $enableReset = false;
+                } catch (Exception $e) {
+                    $enableRegis = false;
+                    $enableReset = false;
+                    echo 'Caught exception: ', $e -> getMessage(), "\n";
                 }
-            } else {$enable = false;
+            } else {
+                $enableRegis = false;
+                $enableReset = false;
             }
 
             //}
-        } else {$enable = false;
+        }else if(!empty($_GET['resetToken'])){
+            $token = $_GET['resetToken'];
+            try {
+                $sqlGetUserReset = "SELECT id,enabled FROM user_owner WHERE confirm_token = '$token' AND deleted = 0";
+                $objGetUserReset = $conn -> fetchAll($sqlGetUserReset);
+                if(count($objGetUserReset) == 1){
+                    $userId = $objGetUserReset[0]['id'];
+                    $enableReset = true;
+                    $enableRegis = false;
+                }else{
+                    $enableRegis = false;
+                    $enableReset = false;
+                }
+            } catch (Exception $e) {
+                $enableRegis = false;
+                $enableReset = false;
+                echo 'Caught exception: ', $e -> getMessage(), "\n";
+            }
+        } else {
+            $enableRegis = false;
+            $enableReset = false;
         }
 
         $session = $this->get('session');
@@ -112,9 +136,9 @@ class MainController extends Controller {
         $top_last_building = $this -> getTopLastBuilding();
         $last_update = date("Y-m-d H:i:s", mktime(date("H"), date("i"), date("s"), date("m"), date("d"), date("Y")));
         $last_update = $this -> convertThaiDate($last_update);
-
+//var_dump($enableRegis);
         return $this -> render('FTRWebBundle:Main:index.html.twig', array('top_last_building' => $top_last_building
-        , 'last_update' => $last_update, 'enable' => $enable
+        , 'last_update' => $last_update, 'enableRegis' => $enableRegis, 'enableReset' => $enableReset, 'userId' => $userId
         , 'zoneA1'=>$zonea1, 'zoneA2'=>$zonea2, 'zoneA3'=>$zonea3, 'zoneA4'=>$zonea4, 'zoneA5'=>$zonea5, 'zoneA6'=>$zonea6, 'zoneA7'=>$zonea7, 'zoneA8'=>$zonea8, 'zoneA9'=>$zonea9, 'zoneA10'=>$zonea10
         , 'zoneC1'=>$zonec1, 'zoneC2'=>$zonec2, 'zoneC3'=>$zonec3, 'zoneC4'=>$zonec4, 'zoneC5'=>$zonec5, 'zoneC6'=>$zonec6, 'zoneC7'=>$zonec7, 'zoneC8'=>$zonec8));
     }
@@ -179,13 +203,15 @@ class MainController extends Controller {
         }
 
         try {
-            $sql1Bts = "SELECT img.photo_name, img.building_site_id, b.id, b.building_name, n.name, t.type_name, b.start_price, b.end_price
+            $sql1Bts = "SELECT pro.PROVINCE_NAME, am.AMPHUR_NAME, b.slug, img.photo_name, img.building_site_id, b.id, b.building_name, n.name, t.type_name, b.start_price, b.end_price
                         FROM building_site b
                         JOIN building_type t ON b.building_type_id = t.id
                         JOIN nearly2site n2 ON n2.building_site_id = b.id
                         JOIN nearly_location n ON n.id = n2.nearly_location_id
                         JOIN nearly_type nt ON nt.id = n.nearly_type_id
                         JOIN image img ON b.id = img.building_site_id
+                        JOIN amphur am ON b.addr_prefecture	 = am.AMPHUR_ID
+                        JOIN province pro ON b.addr_province = pro.PROVINCE_ID
                         WHERE b.recommend =1
                             AND img.photo_type = 'recommend'
                             AND nt.id = 1
@@ -202,13 +228,15 @@ class MainController extends Controller {
             echo 'Caught exception: ', $e -> getMessage(), "\n";
         }
         try {
-            $sqlMrt = "SELECT img.photo_name, img.building_site_id, b.id, b.building_name, n.name, t.type_name, b.start_price, b.end_price
+            $sqlMrt = "SELECT pro.PROVINCE_NAME, am.AMPHUR_NAME, b.slug, img.photo_name, img.building_site_id, b.id, b.building_name, n.name, t.type_name, b.start_price, b.end_price
                         FROM building_site b
                         JOIN building_type t ON b.building_type_id = t.id
                         JOIN nearly2site n2 ON n2.building_site_id = b.id
                         JOIN nearly_location n ON n.id = n2.nearly_location_id
                         JOIN nearly_type nt ON nt.id = n.nearly_type_id
                         JOIN image img ON b.id = img.building_site_id
+                        JOIN amphur am ON b.addr_prefecture	 = am.AMPHUR_ID
+                        JOIN province pro ON b.addr_province = pro.PROVINCE_ID
                         WHERE b.recommend =1
                             AND img.photo_type = 'recommend'
                             AND nt.id = 2
@@ -225,13 +253,15 @@ class MainController extends Controller {
             echo 'Caught exception: ', $e -> getMessage(), "\n";
         }
         try {
-            $sqlCollege = "SELECT img.photo_name, img.building_site_id, b.id, b.building_name, n.name, t.type_name, b.start_price, b.end_price
+            $sqlCollege = "SELECT pro.PROVINCE_NAME, am.AMPHUR_NAME, b.slug, img.photo_name, img.building_site_id, b.id, b.building_name, n.name, t.type_name, b.start_price, b.end_price
                         FROM building_site b
                         JOIN building_type t ON b.building_type_id = t.id
                         JOIN nearly2site n2 ON n2.building_site_id = b.id
                         JOIN nearly_location n ON n.id = n2.nearly_location_id
                         JOIN nearly_type nt ON nt.id = n.nearly_type_id
                         JOIN image img ON b.id = img.building_site_id
+                        JOIN amphur am ON b.addr_prefecture	 = am.AMPHUR_ID
+                        JOIN province pro ON b.addr_province = pro.PROVINCE_ID
                         WHERE b.recommend =1
                             AND img.photo_type = 'recommend'
                             AND nt.id = 3
@@ -247,7 +277,7 @@ class MainController extends Controller {
             echo 'Caught exception: ', $e -> getMessage(), "\n";
         }
         try {
-            $sqlCountView = "SELECT COUNT(ban.building_site_id), img.photo_name, img.building_site_id, b.id, b.building_name,n.name,t.type_name, b.start_price, b.end_price, nt.type_name AS nearlyType
+            $sqlCountView = "SELECT pro.PROVINCE_NAME, am.AMPHUR_NAME, b.slug, COUNT(ban.building_site_id), img.photo_name, img.building_site_id, b.id, b.building_name,n.name,t.type_name, b.start_price, b.end_price, nt.type_name AS nearlyType
                                 FROM banner_count ban
                                 INNER JOIN building_site b ON ban.building_site_id = b.id
                                 INNER JOIN building_type t ON b.building_type_id = t.id
@@ -256,6 +286,8 @@ class MainController extends Controller {
                                 INNER JOIN nearly_location n ON n.id = n2.nearly_location_id
                                 INNER JOIN nearly_type nt ON nt.id = n.nearly_type_id
                                 INNER JOIN image img ON b.id = img.building_site_id
+                                INNER JOIN amphur am ON b.addr_prefecture	 = am.AMPHUR_ID
+                                INNER JOIN province pro ON b.addr_province = pro.PROVINCE_ID
                                 WHERE b.recommend =1
                                     AND img.photo_type = 'recommend'
                                     AND img.deleted =  0
