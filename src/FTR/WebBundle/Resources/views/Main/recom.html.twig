@@ -78,7 +78,7 @@
                                             {%if recom1.photo_name != null%}
                                             <img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />
                                             {%else%}
-                                            <img src='{{asset('images/default/banner.jpg')}}'>
+                                            <img src='{{asset('images/default/rec.jpg')}}'>
                                             {%endif%}
 										<br />
 										<span style="color:#FFF;"> <b style="font-size:24px">{{recom1.building_name}}</b>
@@ -126,7 +126,7 @@
                                             {%if recom1.photo_name != null%}
                                             <img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />
                                             {%else%}
-                                            <img src='{{asset('images/default/banner.jpg')}}'>
+                                            <img src='{{asset('images/default/rec.jpg')}}'>
                                             {%endif%}
 										<br />
 										<span style="color:#FFF;"> <b style="font-size:24px">{{recom1.building_name}}</b>
@@ -171,7 +171,7 @@
                                             {%if recom1.photo_name != null%}
                                             <img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />
                                             {%else%}
-                                            <img src='{{asset('images/default/banner.jpg')}}'>
+                                            <img src='{{asset('images/default/rec.jpg')}}'>
                                             {%endif%}
 										<br />
 										<span style="color:#FFF;"> <b style="font-size:24px">{{recom1.building_name}}</b>
@@ -218,7 +218,7 @@
                                             {%if recom1.photo_name != null%}
                                             <img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />
                                             {%else%}
-                                            <img src='{{asset('images/default/banner.jpg')}}'>
+                                            <img src='{{asset('images/default/rec.jpg')}}'>
                                             {%endif%}
 										<br />
 										<span style="color:#FFF;"> <b style="font-size:24px">{{recom1.building_name}}</b>
@@ -262,7 +262,7 @@
                                             {%if recom1.photo_name != null%}
                                             <img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />
                                             {%else%}
-                                            <img src='{{asset('images/default/banner.jpg')}}'>
+                                            <img src='{{asset('images/default/rec.jpg')}}'>
                                             {%endif%}
 										<br />
 										<span style="color:#FFF;"> <b style="font-size:24px">{{recom1.building_name}}</b>
@@ -309,7 +309,7 @@
                                             {%if recom1.photo_name != null%}
                                             <img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />
                                             {%else%}
-                                            <img src='{{asset('images/default/banner.jpg')}}'>
+                                            <img src='{{asset('images/default/rec.jpg')}}'>
                                             {%endif%}
 										<br />
 										<span style="color:#FFF;"> <b style="font-size:24px">{{recom1.building_name}}</b>
@@ -354,7 +354,7 @@
                                             {%if recom1.photo_name != null%}
                                             <img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />
                                             {%else%}
-                                            <img src='{{asset('images/default/banner.jpg')}}'>
+                                            <img src='{{asset('images/default/rec.jpg')}}'>
                                             {%endif%}
 										<br />
 										<span style="color:#FFF;"> <b style="font-size:24px">{{recom1.building_name}}</b>
@@ -372,9 +372,15 @@
 								{%endif%}
 								{% endfor %}
 							</div>
+                                {%if countView|length%9 != 0%}
+                                <a href='#' class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>
+                                <a href='#' class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>
+                                {%endif%}
 						</div>
-						<a href='#' class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>
-						<a href='#' class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>
+                            {%if countView|length%9 == 0%}
+                            <a href='#' class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>
+                            <a href='#' class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>
+                            {%endif%}
 					{%else%}
 						<div class="slides_container" style="width:950px; display: inherit !important;">
 							{% set introw4 = 0 %}
@@ -395,7 +401,7 @@
                                             {%if recom1.photo_name != null%}
                                             <img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />
                                             {%else%}
-                                            <img src='{{asset('images/default/banner.jpg')}}'>
+                                            <img src='{{asset('images/default/rec.jpg')}}'>
                                             {%endif%}
 										<br />
 										<span style="color:#FFF;"> <b style="font-size:24px">{{recom1.building_name}}</b>

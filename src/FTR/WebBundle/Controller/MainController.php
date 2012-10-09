@@ -46,6 +46,22 @@ class MainController extends Controller {
         }
     }
 
+    public function adsFooterAction(){
+
+        $session = $this->get('session');
+        //Zone D
+        $session->set('zoneD1', $this->getAds('D-1'));
+        $session->set('zoneD2', $this->getAds('D-2'));
+        $session->set('zoneD3', $this->getAds('D-3'));
+        $session->set('zoneD4', $this->getAds('D-4'));
+        $session->set('zoneD5', $this->getAds('D-5'));
+        $session->set('zoneD6', $this->getAds('D-6'));
+        $session->set('zoneD7', $this->getAds('D-7'));
+        $session->set('zoneD8', $this->getAds('D-8'));
+
+        return $this -> render('FTRWebBundle:Layout:adsfooter.html.twig', array());
+    }
+
     public function indexAction() {
 
         $userId = "";
@@ -99,7 +115,6 @@ class MainController extends Controller {
             $enableReset = false;
         }
 
-        $session = $this->get('session');
 //เรียกใช้ banner
         //Zone A
         $zonea1 = $this->getAds('A-1');
@@ -123,15 +138,7 @@ class MainController extends Controller {
         $zonec7 = $this->getAds('C-7');
         $zonec8 = $this->getAds('C-8');
 
-        //Zone D
-        $session->set('zoneD1', $this->getAds('D-1'));
-        $session->set('zoneD2', $this->getAds('D-2'));
-        $session->set('zoneD3', $this->getAds('D-3'));
-        $session->set('zoneD4', $this->getAds('D-4'));
-        $session->set('zoneD5', $this->getAds('D-5'));
-        $session->set('zoneD6', $this->getAds('D-6'));
-        $session->set('zoneD7', $this->getAds('D-7'));
-        $session->set('zoneD8', $this->getAds('D-8'));
+
 //echo $zonea2;exit();
         $top_last_building = $this -> getTopLastBuilding();
         $last_update = date("Y-m-d H:i:s", mktime(date("H"), date("i"), date("s"), date("m"), date("d"), date("Y")));
@@ -277,14 +284,14 @@ class MainController extends Controller {
         try {
             $sqlCountView = "SELECT pro.PROVINCE_NAME, am.AMPHUR_NAME, b.slug, COUNT(ban.building_site_id), img.photo_name, img.building_site_id, b.id, b.building_name,n.name,t.type_name, b.start_price, b.end_price, nt.type_name AS nearlyType
                                 FROM banner_count ban
-                                LEFT JOIN building_site b ON (ban.building_site_id = b.id )
-                                LEFT JOIN building_type t ON (b.building_type_id = t.id AND t.deleted = 0)
-                                LEFT JOIN nearly2site n2 ON (n2.building_site_id = b.id AND n2.deleted = 0)
-                                LEFT JOIN nearly_location n ON (n.id = n2.nearly_location_id AND n.deleted = 0)
-                                LEFT JOIN nearly_type nt ON (nt.id = n.nearly_type_id AND nt.deleted = 0)
-                                LEFT JOIN image img ON (b.id = img.building_site_id AND img.photo_type = 'recommend' AND img.deleted = 0)
-                                LEFT JOIN amphur am ON (b.addr_prefecture = am.AMPHUR_ID)
-                                LEFT JOIN province pro ON (b.addr_province = pro.PROVINCE_ID)
+                                INNER JOIN building_site b ON (ban.building_site_id = b.id )
+                                INNER JOIN building_type t ON (b.building_type_id = t.id AND t.deleted = 0)
+                                INNER JOIN nearly2site n2 ON (n2.building_site_id = b.id AND n2.deleted = 0)
+                                INNER JOIN nearly_location n ON (n.id = n2.nearly_location_id AND n.deleted = 0)
+                                INNER JOIN nearly_type nt ON (nt.id = n.nearly_type_id AND nt.deleted = 0)
+                                INNER JOIN image img ON (b.id = img.building_site_id AND img.photo_type = 'recommend' AND img.deleted = 0)
+                                INNER JOIN amphur am ON (b.addr_prefecture = am.AMPHUR_ID)
+                                INNER JOIN province pro ON (b.addr_province = pro.PROVINCE_ID)
                                 WHERE b.recommend =1
                                     AND b.deleted =  0
                                 GROUP BY ban.building_site_id
