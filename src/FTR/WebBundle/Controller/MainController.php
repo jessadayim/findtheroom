@@ -157,8 +157,9 @@ class MainController extends Controller {
 					b.type_name,
 					c.typename,
 					d.zonename,
-					a.addr_province,
-					a.addr_prefecture,
+					pro.PROVINCE_NAME,
+					am.AMPHUR_NAME,
+					a.slug,
 					FORMAT(a.start_price,0) AS start_price,
 					FORMAT(a.end_price,0) AS end_price,
 					a.id
@@ -167,6 +168,8 @@ class MainController extends Controller {
 					INNER JOIN building_type b ON (a.building_type_id=b.id)
 					INNER JOIN pay_type c ON (a.pay_type_id=c.id)
 					INNER JOIN zone d ON (a.zone_id=d.id)
+					INNER JOIN amphur am ON a.addr_prefecture	 = am.AMPHUR_ID
+                    INNER JOIN province pro ON a.addr_province = pro.PROVINCE_ID
 				WHERE a.publish = 1
 				ORDER BY lastupdate DESC LIMIT 10
 			";
@@ -205,18 +208,17 @@ class MainController extends Controller {
         try {
             $sql1Bts = "SELECT pro.PROVINCE_NAME, am.AMPHUR_NAME, b.slug, img.photo_name, img.building_site_id, b.id, b.building_name, n.name, t.type_name, b.start_price, b.end_price
                         FROM building_site b
-                        JOIN building_type t ON b.building_type_id = t.id
-                        JOIN nearly2site n2 ON n2.building_site_id = b.id
-                        JOIN nearly_location n ON n.id = n2.nearly_location_id
-                        JOIN nearly_type nt ON nt.id = n.nearly_type_id
-                        JOIN image img ON b.id = img.building_site_id
-                        JOIN amphur am ON b.addr_prefecture	 = am.AMPHUR_ID
-                        JOIN province pro ON b.addr_province = pro.PROVINCE_ID
-                        WHERE b.recommend =1
-                            AND img.photo_type = 'recommend'
-                            AND nt.id = 1
-                            AND img.deleted =  0
-                            AND b.deleted =  0";
+                        LEFT JOIN building_type t ON (b.building_type_id = t.id AND t.deleted = 0)
+                        LEFT JOIN nearly2site n2 ON (n2.building_site_id = b.id AND n2.deleted = 0)
+                        LEFT JOIN nearly_location n ON (n.id = n2.nearly_location_id AND n.deleted = 0)
+                        LEFT JOIN nearly_type nt ON (nt.id = n.nearly_type_id AND nt.deleted = 0)
+                        LEFT JOIN image img ON (b.id = img.building_site_id AND img.photo_type = 'recommend' AND img.deleted = 0)
+                        LEFT JOIN amphur am ON (b.addr_prefecture = am.AMPHUR_ID)
+                        LEFT JOIN province pro ON (b.addr_province = pro.PROVINCE_ID)
+                        WHERE b.recommend = 1
+                            AND nt.type_name = 'bts'
+                            AND b.deleted =  0
+                            ";
             $objBts = $conn -> fetchAll($sql1Bts);
             if (count($objBts) <= 3) {
                 $numrow1 = 0;
@@ -230,17 +232,15 @@ class MainController extends Controller {
         try {
             $sqlMrt = "SELECT pro.PROVINCE_NAME, am.AMPHUR_NAME, b.slug, img.photo_name, img.building_site_id, b.id, b.building_name, n.name, t.type_name, b.start_price, b.end_price
                         FROM building_site b
-                        JOIN building_type t ON b.building_type_id = t.id
-                        JOIN nearly2site n2 ON n2.building_site_id = b.id
-                        JOIN nearly_location n ON n.id = n2.nearly_location_id
-                        JOIN nearly_type nt ON nt.id = n.nearly_type_id
-                        JOIN image img ON b.id = img.building_site_id
-                        JOIN amphur am ON b.addr_prefecture	 = am.AMPHUR_ID
-                        JOIN province pro ON b.addr_province = pro.PROVINCE_ID
-                        WHERE b.recommend =1
-                            AND img.photo_type = 'recommend'
-                            AND nt.id = 2
-                            AND img.deleted =  0
+                        LEFT JOIN building_type t ON (b.building_type_id = t.id AND t.deleted = 0)
+                        LEFT JOIN nearly2site n2 ON (n2.building_site_id = b.id AND n2.deleted = 0)
+                        LEFT JOIN nearly_location n ON (n.id = n2.nearly_location_id AND n.deleted = 0)
+                        LEFT JOIN nearly_type nt ON (nt.id = n.nearly_type_id AND nt.deleted = 0)
+                        LEFT JOIN image img ON (b.id = img.building_site_id AND img.photo_type = 'recommend' AND img.deleted = 0)
+                        LEFT JOIN amphur am ON (b.addr_prefecture = am.AMPHUR_ID)
+                        LEFT JOIN province pro ON (b.addr_province = pro.PROVINCE_ID)
+                        WHERE b.recommend = 1
+                            AND nt.type_name = 'mrt'
                             AND b.deleted =  0";
             $objMrt = $conn -> fetchAll($sqlMrt);
             if (count($objMrt) <= 3) {
@@ -255,18 +255,16 @@ class MainController extends Controller {
         try {
             $sqlCollege = "SELECT pro.PROVINCE_NAME, am.AMPHUR_NAME, b.slug, img.photo_name, img.building_site_id, b.id, b.building_name, n.name, t.type_name, b.start_price, b.end_price
                         FROM building_site b
-                        JOIN building_type t ON b.building_type_id = t.id
-                        JOIN nearly2site n2 ON n2.building_site_id = b.id
-                        JOIN nearly_location n ON n.id = n2.nearly_location_id
-                        JOIN nearly_type nt ON nt.id = n.nearly_type_id
-                        JOIN image img ON b.id = img.building_site_id
-                        JOIN amphur am ON b.addr_prefecture	 = am.AMPHUR_ID
-                        JOIN province pro ON b.addr_province = pro.PROVINCE_ID
-                        WHERE b.recommend =1
-                            AND img.photo_type = 'recommend'
-                            AND nt.id = 3
-                            AND img.deleted =  0
-                            AND b.deleted =  0 ";
+                        LEFT JOIN building_type t ON (b.building_type_id = t.id AND t.deleted = 0)
+                        LEFT JOIN nearly2site n2 ON (n2.building_site_id = b.id AND n2.deleted = 0)
+                        LEFT JOIN nearly_location n ON (n.id = n2.nearly_location_id AND n.deleted = 0)
+                        LEFT JOIN nearly_type nt ON (nt.id = n.nearly_type_id AND nt.deleted = 0)
+                        LEFT JOIN image img ON (b.id = img.building_site_id AND img.photo_type = 'recommend' AND img.deleted = 0)
+                        LEFT JOIN amphur am ON (b.addr_prefecture = am.AMPHUR_ID)
+                        LEFT JOIN province pro ON (b.addr_province = pro.PROVINCE_ID)
+                        WHERE b.recommend = 1
+                            AND nt.type_name = 'university'
+                            AND b.deleted =  0";
             $objCollege = $conn -> fetchAll($sqlCollege);
             if (count($objCollege) <= 3) {
                 $numrow3 = 0;
@@ -279,18 +277,15 @@ class MainController extends Controller {
         try {
             $sqlCountView = "SELECT pro.PROVINCE_NAME, am.AMPHUR_NAME, b.slug, COUNT(ban.building_site_id), img.photo_name, img.building_site_id, b.id, b.building_name,n.name,t.type_name, b.start_price, b.end_price, nt.type_name AS nearlyType
                                 FROM banner_count ban
-                                INNER JOIN building_site b ON ban.building_site_id = b.id
-                                INNER JOIN building_type t ON b.building_type_id = t.id
-                                INNER JOIN zone z ON b.zone_id = z.id
-                                INNER JOIN nearly2site n2 ON n2.building_site_id = b.id
-                                INNER JOIN nearly_location n ON n.id = n2.nearly_location_id
-                                INNER JOIN nearly_type nt ON nt.id = n.nearly_type_id
-                                INNER JOIN image img ON b.id = img.building_site_id
-                                INNER JOIN amphur am ON b.addr_prefecture	 = am.AMPHUR_ID
-                                INNER JOIN province pro ON b.addr_province = pro.PROVINCE_ID
+                                INNER JOIN building_site b ON (ban.building_site_id = b.id )
+                                INNER JOIN building_type t ON (b.building_type_id = t.id AND t.deleted = 0)
+                                INNER JOIN nearly2site n2 ON (n2.building_site_id = b.id AND n2.deleted = 0)
+                                INNER JOIN nearly_location n ON (n.id = n2.nearly_location_id AND n.deleted = 0)
+                                INNER JOIN nearly_type nt ON (nt.id = n.nearly_type_id AND nt.deleted = 0)
+                                INNER JOIN image img ON (b.id = img.building_site_id AND img.photo_type = 'recommend' AND img.deleted = 0)
+                                INNER JOIN amphur am ON (b.addr_prefecture = am.AMPHUR_ID)
+                                INNER JOIN province pro ON (b.addr_province = pro.PROVINCE_ID)
                                 WHERE b.recommend =1
-                                    AND img.photo_type = 'recommend'
-                                    AND img.deleted =  0
                                     AND b.deleted =  0
                                 GROUP BY ban.building_site_id
                                 ORDER BY COUNT(ban.building_site_id) DESC";

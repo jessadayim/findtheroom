@@ -60,7 +60,7 @@
 				<div id="container2">
 					{% if numrow1 != 0%}
 						<div id="slides2">
-							<div class="slides_container" style="width:950px;">
+                            <div class="slides_container" style="width:950px;">
 							{% set introw1 = 0 %}
 							{% for recom1 in roomBts%}
 							{% if introw1%3 == 0%}
@@ -69,13 +69,17 @@
 								{% set row1 = introw1+1 %}
 								{% if row1%3 == 0%}
 								<div class="ap2">
-                                    <a class="ap2" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.building_site_id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
+                                    <a class="ap2" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
 									{% else %}
 									<div class="ap">
-                                        <a class="ap" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.building_site_id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
+                                        <a class="ap" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
 										{%endif%}
 										<div class="recom"></div>
+                                            {%if recom1.photo_name != null%}
                                             <img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />
+                                            {%else%}
+                                            <img src='{{asset('images/default/banner.jpg')}}'>
+                                            {%endif%}
 										<br />
 										<span style="color:#FFF;"> <b style="font-size:24px">{{recom1.building_name}}</b>
 											<br />
@@ -92,9 +96,15 @@
 								{%endif%}
 								{% endfor %}
 							</div>
+                                {%if roomBts|length%9 == 0%}
+                                <a href='#' class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>
+                                <a href='#' class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>
+                                {%endif%}
 						</div>
-						<a href='#' class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>
-						<a href='#' class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>
+                            {%if roomBts|length%9 != 0%}
+                            <a href='#' class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>
+                            <a href='#' class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>
+                            {%endif%}
 					{%else%}
 
 						<div class="slides_container" style="width:950px; display: inherit !important;">
@@ -106,14 +116,18 @@
 								{% set row1 = introw1+1 %}
 								{% if row1%3 == 0%}
 								<div class="ap2">
-                                    <a class="ap2" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.building_site_id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
+                                    <a class="ap2" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
 									{% else %}
 									<div class="ap">
-                                        <a class="ap" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.building_site_id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
+                                        <a class="ap" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
 										{%endif%}
 
 										<div class="recom"></div>
+                                            {%if recom1.photo_name != null%}
                                             <img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />
+                                            {%else%}
+                                            <img src='{{asset('images/default/banner.jpg')}}'>
+                                            {%endif%}
 										<br />
 										<span style="color:#FFF;"> <b style="font-size:24px">{{recom1.building_name}}</b>
 											<br />
@@ -147,14 +161,18 @@
 								{% set row2 = introw2+1 %}
 								{% if row2%3 == 0%}
 								<div class="ap2">
-                                    <a class="ap2" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.building_site_id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
+                                    <a class="ap2" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
 									{% else %}
 									<div class="ap">
-                                        <a class="ap" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.building_site_id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
+                                        <a class="ap" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
 										{%endif%}
 
 										<div class="recom"></div>
-                                        <img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />
+                                            {%if recom1.photo_name != null%}
+                                            <img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />
+                                            {%else%}
+                                            <img src='{{asset('images/default/banner.jpg')}}'>
+                                            {%endif%}
 										<br />
 										<span style="color:#FFF;"> <b style="font-size:24px">{{recom1.building_name}}</b>
 											<br />
@@ -171,9 +189,15 @@
 								{%endif%}
 								{% endfor %}
 							</div>
+                                {%if roomMrt|length%9 == 0%}
+                                <a href='#' class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>
+                                <a href='#' class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>
+                                {%endif%}
 						</div>
-						<a href='#' class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>
-						<a href='#' class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>
+                            {%if roomMrt|length%9 != 0%}
+                            <a href='#' class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>
+                            <a href='#' class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>
+                            {%endif%}
 					{%else%}
 						<div class="slides_container" style="width:950px; display: inherit !important;">
 							{% set introw2 = 0 %}
@@ -184,14 +208,18 @@
 								{% set row2 = introw2+1 %}
 								{% if row2%3 == 0%}
 								<div class="ap2">
-                                    <a class="ap2" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.building_site_id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
+                                    <a class="ap2" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
 									{% else %}
 									<div class="ap">
-                                        <a class="ap" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.building_site_id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
+                                        <a class="ap" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
 										{%endif%}
 
 										<div class="recom"></div>
-                                        <img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />
+                                            {%if recom1.photo_name != null%}
+                                            <img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />
+                                            {%else%}
+                                            <img src='{{asset('images/default/banner.jpg')}}'>
+                                            {%endif%}
 										<br />
 										<span style="color:#FFF;"> <b style="font-size:24px">{{recom1.building_name}}</b>
 											<br />
@@ -224,14 +252,18 @@
 								{% set row3 = introw3+1 %}
 								{% if row3%3 == 0%}
 								<div class="ap2">
-                                    <a class="ap2" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.building_site_id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
+                                    <a class="ap2" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
 									{% else %}
 									<div class="ap">
-                                        <a class="ap" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.building_site_id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
+                                        <a class="ap" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
 										{%endif%}
 
 										<div class="recom"></div>
-                                        <img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />
+                                            {%if recom1.photo_name != null%}
+                                            <img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />
+                                            {%else%}
+                                            <img src='{{asset('images/default/banner.jpg')}}'>
+                                            {%endif%}
 										<br />
 										<span style="color:#FFF;"> <b style="font-size:24px">{{recom1.building_name}}</b>
 											<br />
@@ -248,9 +280,15 @@
 								{%endif%}
 								{% endfor %}
 							</div>
+                                {%if roomCollege|length%9 != 0%}
+                                <a href='#' class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>
+                                <a href='#' class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>
+                                {%endif%}
 						</div>
-						<a href='#' class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>
-						<a href='#' class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>
+                            {%if roomCollege|length%9 == 0%}
+                            <a href='#' class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>
+                            <a href='#' class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>
+                            {%endif%}
 					{%else%}
 						<div class="slides_container" style="width:950px; display: inherit !important;">
 							{% set introw3 = 0 %}
@@ -261,14 +299,18 @@
 								{% set row3 = introw3+1 %}
 								{% if row3%3 == 0%}
 								<div class="ap2">
-                                    <a class="ap2" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.building_site_id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
+                                    <a class="ap2" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
 									{% else %}
 									<div class="ap">
-                                        <a class="ap" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.building_site_id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
+                                        <a class="ap" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
 										{%endif%}
 
 										<div class="recom"></div>
-                                        <img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />
+                                            {%if recom1.photo_name != null%}
+                                            <img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />
+                                            {%else%}
+                                            <img src='{{asset('images/default/banner.jpg')}}'>
+                                            {%endif%}
 										<br />
 										<span style="color:#FFF;"> <b style="font-size:24px">{{recom1.building_name}}</b>
 											<br />
@@ -302,14 +344,18 @@
 								{% set row4 = introw4+1 %}
 								{% if row4%3 == 0%}
 								<div class="ap2">
-                                    <a class="ap2" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.building_site_id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
+                                    <a class="ap2" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
 									{% else %}
 									<div class="ap">
-                                        <a class="ap" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.building_site_id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
+                                        <a class="ap" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
 										{%endif%}
 
 										<div class="recom"></div>
-                                        <img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />
+                                            {%if recom1.photo_name != null%}
+                                            <img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />
+                                            {%else%}
+                                            <img src='{{asset('images/default/banner.jpg')}}'>
+                                            {%endif%}
 										<br />
 										<span style="color:#FFF;"> <b style="font-size:24px">{{recom1.building_name}}</b>
 											<br />
@@ -339,14 +385,18 @@
 								{% set row4 = introw4+1 %}
 								{% if row4%3 == 0%}
 								<div class="ap2">
-                                    <a class="ap2" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.building_site_id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
+                                    <a class="ap2" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
 									{% else %}
 									<div class="ap">
-                                        <a class="ap2" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.building_site_id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
+                                        <a class="ap2" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
 										{%endif%}
 
 										<div class="recom"></div>
-                                        <img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />
+                                            {%if recom1.photo_name != null%}
+                                            <img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />
+                                            {%else%}
+                                            <img src='{{asset('images/default/banner.jpg')}}'>
+                                            {%endif%}
 										<br />
 										<span style="color:#FFF;"> <b style="font-size:24px">{{recom1.building_name}}</b>
 											<br />
