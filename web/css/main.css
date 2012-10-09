@@ -150,6 +150,7 @@ select[disabled] { background-color: #EAEAEA !important; color:#BCBCBC !importan
 .detail table span.right { background: url(../images/right.png) no-repeat; border: 0; height: 27px; margin-top:0px; margin-left:0px; display:block; padding-left: 30px; padding-top: 7px;}
 .detail table span.noright { background: url(../images/no-right.png) no-repeat; border: 0; height: 27px; margin-top:0px; margin-left:0px; display:block; padding-left: 30px; padding-top: 7px;}
 .detail table input.send { background: url(../images/send.png) no-repeat; border: 0; width: 55px; height: 55px; cursor: pointer; position:absolute; margin-left: 155px;}
+.detail table input.con { background: url(../images/confirm-bt.png) no-repeat; border: 0; width: 51px; height: 51px; cursor: pointer; position:absolute; margin-top:-10px; margin-left:-12px;}
 .detail table input.cancel { background: url(../images/cancel.png) no-repeat; border: 0; width: 55px; height: 55px; cursor: pointer; position:absolute; margin-left: 220px;}
 .detail div table tbody tr td textarea.longdesc { max-width:455px; max-height:80px; min-width:455px; min-height:80px; font-family: DB Adman X, Helvetica, Arial, sans-serif; color: #423C3B; font-size:16px;}
 
