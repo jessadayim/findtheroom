@@ -6,8 +6,8 @@
 <link rel="stylesheet" type="text/css" href="{{asset('js/gritter/css/jquery.gritter.css')}}" />
 
 {#fancybox#}
-<script type="text/javascript" src="{{asset('js/fancybox/jquery.fancybox-1.3.4.pack.js')}}"></script>
-<link rel="stylesheet" type="text/css" href="{{asset('css/jquery.fancybox-1.3.4.css')}}" media="screen" />
+{#<script type="text/javascript" src="{{asset('js/fancybox/jquery.fancybox-1.3.4.pack.js')}}"></script>#}
+{#<link rel="stylesheet" type="text/css" href="{{asset('css/jquery.fancybox-1.3.4.css')}}" media="screen" />#}
 
 <script>
 	var countValuePaging = {{entities|length}};
@@ -80,21 +80,34 @@
 			});
 		}
 
+
 	});
 
     function showFancy(){
-        $.fancybox({
-            'href'          : "#showMap",
-            'titleShow' 	: false,
-            'transitionIn' 	: 'elastic',
-            'transitionOut' : 'elastic',
-            'scrolling'		: 'no',
-            'height'		: 'auto',
-            'width'         : 'auto',
-            'onComplete'       : function(){
-                resizeMap();
-            }
+//        $.fancybox({
+//            'href'          : "#showMap",
+//            'titleShow' 	: false,
+//            'transitionIn' 	: 'elastic',
+//            'transitionOut' : 'elastic',
+//            'scrolling'		: 'no',
+//            'height'		: 'auto',
+//            'width'         : 'auto',
+//            'onComplete'       : function(){
+//                resizeMap();
+//            }
+//        });
+//        $("#hideFancy").show();
+        var $drag_overlay = $("#hideFancy"),
+            $preview = $(window);
+
+        $drag_overlay.css({
+            display: 'block',
+            position:'absolute',
+            top : $preview.height() / 2 - $drag_overlay.height() / 2 + $(window).scrollTop(),
+            left : $preview.width() / 2 - $drag_overlay.width() / 2 + $(window).scrollLeft(),
+            background: '#E9E9E9'
         });
+        resizeMap();
     }
 
 	var checkDoubleClickEdit = true;
@@ -500,6 +513,7 @@
         float: left;
     }
     #infoPanel {
+        margin-left: 10px;
         /*float: left;*/
         /*margin-left: 10px;*/
     }
@@ -538,30 +552,33 @@
     }
 </style>
 <div id="hideFancy" style="display: none;">
-    <div style="width:auto;height:auto;overflow: auto;position:relative;">
-        <div style="width: 900px; height: 500px;" id="showMap">
-            <div style="margin-bottom: 5px;">
-                <div>
-                    <input type="text" id="queryInput" value="pizza" style="width: 250px;">
-                    <input type="button" value="Find" onclick="doSearch()">
+    <fieldset>
+        <div align="right"><a href="#" onclick="$('#hideFancy').hide();return false;">Close</a></div>
+        <div style="width:auto;height:auto;overflow: auto;position:relative;">
+            <div style="width: 900px; height: 500px;" id="showMap">
+                <div style="margin-bottom: 5px;">
+                    <div>
+                        <input type="text" id="queryInput" placeholder="คำค้นหาตำแหน่ง" style="width: 250px;">
+                        <input type="button" value="ค้นหา" onclick="doSearch()">
+                    </div>
                 </div>
-            </div>
 
-            <div id="map" style="position: relative; background-color: rgb(229, 227, 223); overflow: hidden; "></div>
+                <div id="map" style="position: relative; background-color: rgb(229, 227, 223); overflow: hidden; "></div>
 
-           <div style="margin-left: 10px;">
-                <div id="infoPanel">
-                    <b>Marker status:</b>
-                    <div id="markerStatus"><i>Click and drag the marker.</i></div>
-                    <b>Current position:</b>
-                    <div id="info"></div>
-                    <b>Closest matching address:</b>
-                    <div id="address"></div>
-                </div>
-                <div >
-                    <div id="searchWell"></div>
+               <div style="margin-left: 10px;">
+                    <div id="infoPanel">
+                        <b>Marker status:</b>
+                        <div id="markerStatus"><i>Click and drag the marker.</i></div>
+                        <b>Current position:</b>
+                        <div id="info"></div>
+                        <b>Closest matching address:</b>
+                        <div id="address"></div>
+                    </div>
+                    <div >
+                        <div id="searchWell"></div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </fieldset>
 </div>
