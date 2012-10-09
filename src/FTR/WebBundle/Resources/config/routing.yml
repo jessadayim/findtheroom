@@ -70,12 +70,8 @@ TRWebBundle_reset:
     pattern:  /reset/{userId}
     defaults: { _controller: FTRWebBundle:Reset:reset}
 
-TRWebBundle_change:
-    pattern:  /reset/change
-    defaults: { _controller: FTRWebBundle:Reset:change}
-
 TRWebBundle_chgconfirm:
-    pattern:  /reset/change
+    pattern:  /reset/change/{userId}
     defaults: { _controller: FTRWebBundle:Reset:passchg}
 
 FTRWebBundle_forget:
