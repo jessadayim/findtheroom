@@ -39,6 +39,12 @@ select{
 	font-size: 18px !important;
 }
 
+a.clear
+{
+    clear:both;
+    display: inline !important;
+}
+
 select[disabled] { background-color: #EAEAEA !important; color:#BCBCBC !important;}
 /* Header*/
 #header { width:1000px; margin: 40px auto 0 auto; font-size:22px;}
