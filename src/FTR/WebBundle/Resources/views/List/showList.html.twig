@@ -48,7 +48,7 @@
                         </tr>
                         <tr>
                             <td width="90" valign="top">
-                                {% if rlist.addr_province == 'กรุงเทพ' %}
+                                {% if rlist.PROVINCE_NAME == "กรุงเทพมหานคร" %}
                                 โซนในกรุงเทพฯ
                                 {% else %}
                                 อำเภอ
@@ -56,14 +56,14 @@
 
                             </td>
                             <td width="180">
-                                {{ rlist.addr_prefecture }}
+                                {{ rlist.AMPHUR_NAME }}
                                 <!--{{ rlist.addr_number }} {{ rlist.addr_prefecture }} {{ rlist.addr_province }} {{ rlist.addr_zipcode }}-->
                             </td>
                             <td width="90">
                                 จังหวัด
                             </td>
                             <td width="180">
-                                {{ rlist.addr_province }}
+                                {{ rlist.PROVINCE_NAME }}
                             </td>
                         </tr>
                         <tr>
