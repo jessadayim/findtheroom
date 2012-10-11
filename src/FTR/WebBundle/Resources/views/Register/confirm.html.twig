@@ -15,7 +15,7 @@
 			$(document).ready(function() {
 				$("#login").click(function(e) {
 					$.fancybox({
-						'content' : "{{path('FTRWebBundle_loginpublish')}}",
+						'content' : "{{path('FTRWebBundle_loginpublish',{'message':'1'})}}",
 						'width' : 700,
 						'height' : 400,
 						'autoScale' : false,
@@ -44,7 +44,7 @@
 			{% if app.session.get('user') != NULL %}
 			<a id="home" href=""><img src="{{asset('images/back_home.png')}}" /></a>
 			{% else %}
-			<a id="login" href="{{path('FTRWebBundle_loginpublish')}}" style="margin-right:20px;"><img src="{{asset('images/login-bt2.png')}}" /></a>
+			<a id="login" href="{{path('FTRWebBundle_loginpublish',{'message':'1'})}}" style="margin-right:20px;"><img src="{{asset('images/login-bt2.png')}}" /></a>
 			<a id="home" href=""><img src="{{asset('images/back_home.png')}}" /></a>
 			{% endif %}
 
