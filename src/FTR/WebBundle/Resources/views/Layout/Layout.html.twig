@@ -48,7 +48,7 @@
 						success : function(data) {
 							if (data == 0) {
 								$.fancybox({
-									'content' : "{{path('FTRWebBundle_loginpublish')}}",
+									'content' : "{{path('FTRWebBundle_loginpublish', { 'message': '0'})}}",
 									'width' : 700,
 									'height' : 420,
 									'autoScale' : false,
@@ -62,7 +62,7 @@
 							} else if (data == 2) {
 
 								$.fancybox({
-									'content' : "{{path('FTRWebBundle_loginpublish')}}",
+									'content' : "{{path('FTRWebBundle_loginpublish', { 'message': '2'})}}",
 									'width' : 700,
 									'height' : 420,
 									'autoScale' : false,

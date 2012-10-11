@@ -68,7 +68,7 @@
 	</div>
     <div style="width:490px; display:block; position:relative; float:left;">
     	{% if app.session.get('user') == NULL %}
-		<a id="login" href="{{path('FTRWebBundle_loginpublish')}}"><img src="{{asset('images/login.png')}}" style="margin-left:10px; margin-top:27px;" /></a>
+		<a id="login" href="{{path('FTRWebBundle_loginpublish',{'message':'1'})}}"><img src="{{asset('images/login.png')}}" style="margin-left:10px; margin-top:27px;" /></a>
 		{% endif %}
 	</div>
 </div>-->
@@ -78,7 +78,7 @@
 		<a id="login2" href="{{path('FTRWebBundle_regis')}}"><img src="{{asset('images/pub-bt.png')}}" style="margin-left:10px; margin-top:10px;" /></a>
 	</div>
     <div style="width:490px; display:block; position:relative; float:left;">
-		<a id="login" href="{{path('FTRWebBundle_loginpublish')}}"><img src="{{asset('images/login.png')}}" style="margin-left:10px; margin-top:27px;" /></a>
+		<a id="login" href="{{path('FTRWebBundle_loginpublish',{'message':'1'})}}"><img src="{{asset('images/login.png')}}" style="margin-left:10px; margin-top:27px;" /></a>
 	</div>
 	{% else %}
 	<div style="width:950px; display:block; position:relative; height:250px; margin-top: 20px;">

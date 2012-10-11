@@ -59,7 +59,7 @@ FTRWebBundle_login:
     defaults: { _controller: FTRWebBundle:Security:login}
     
 FTRWebBundle_loginpublish:
-    pattern:  /loginpub
+    pattern:  /loginpub/{message}
     defaults: { _controller: FTRWebBundle:Security:logPublish}
 
 FTRWebBundle_logout:
