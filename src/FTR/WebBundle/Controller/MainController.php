@@ -284,14 +284,14 @@ class MainController extends Controller {
         try {
             $sqlCountView = "SELECT pro.PROVINCE_NAME, am.AMPHUR_NAME, b.slug, COUNT(ban.building_site_id), img.photo_name, img.building_site_id, b.id, b.building_name,n.name,t.type_name, b.start_price, b.end_price, nt.type_name AS nearlyType
                                 FROM banner_count ban
-                                INNER JOIN building_site b ON (ban.building_site_id = b.id )
-                                INNER JOIN building_type t ON (b.building_type_id = t.id AND t.deleted = 0)
-                                INNER JOIN nearly2site n2 ON (n2.building_site_id = b.id AND n2.deleted = 0)
-                                INNER JOIN nearly_location n ON (n.id = n2.nearly_location_id AND n.deleted = 0)
-                                INNER JOIN nearly_type nt ON (nt.id = n.nearly_type_id AND nt.deleted = 0)
-                                INNER JOIN image img ON (b.id = img.building_site_id AND img.photo_type = 'recommend' AND img.deleted = 0)
-                                INNER JOIN amphur am ON (b.addr_prefecture = am.AMPHUR_ID)
-                                INNER JOIN province pro ON (b.addr_province = pro.PROVINCE_ID)
+                                LEFT JOIN building_site b ON (ban.building_site_id = b.id )
+                                LEFT JOIN building_type t ON (b.building_type_id = t.id AND t.deleted = 0)
+                                LEFT JOIN nearly2site n2 ON (n2.building_site_id = b.id AND n2.deleted = 0)
+                                LEFT JOIN nearly_location n ON (n.id = n2.nearly_location_id AND n.deleted = 0)
+                                LEFT JOIN nearly_type nt ON (nt.id = n.nearly_type_id AND nt.deleted = 0)
+                                LEFT JOIN image img ON (b.id = img.building_site_id AND img.photo_type = 'recommend' AND img.deleted = 0)
+                                LEFT JOIN amphur am ON (b.addr_prefecture = am.AMPHUR_ID)
+                                LEFT JOIN province pro ON (b.addr_province = pro.PROVINCE_ID)
                                 WHERE b.recommend =1
                                     AND b.deleted =  0
                                 GROUP BY ban.building_site_id

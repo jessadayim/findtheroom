@@ -13,8 +13,8 @@ class SecurityController extends Controller
     public function loginAction()
     {
     	$username = $_POST['username'];
-		$password = md5($_POST['password']);
-		if($username !=NULL&& $password !=NULL){
+		$password = md5(trim(trim($_POST['password'])));
+		if($username != ""&& $password != ""){
 			$conn= $this->get('database_connection');
 			if(!$conn){ die("MySQL Connection error");}
 				try{
@@ -50,9 +50,15 @@ class SecurityController extends Controller
 			exit();
 		}
 	}
-	public function logPublishAction()
+	public function logPublishAction($message)
     {
-
+        if($message == '2'){
+            $alert = "กรุณากรอก ชื่อผู้ใช้งาน และรหัสผ่าน ให้ครบ";
+        }else if($message == '0'){
+            $alert = "กรุณาตรวจสอบ ชื่อผู้ใช้งาน หรือรหัสผ่าน";
+        }else{
+            $alert = "";
+        }
 //    		if(empty($_COOKIE['username'])){
 //				$username ="";
 //			}else{
@@ -68,7 +74,7 @@ class SecurityController extends Controller
 //			}
 			
 //			 return $this->render('FTRWebBundle:Security:login.html.twig',array('username'=>$username,'password'=>$password,'chbox'=>$chbox));
-        return $this->render('FTRWebBundle:Security:login.html.twig',array());
+        return $this->render('FTRWebBundle:Security:login.html.twig',array('message'=>$alert));
     }
 
 	public function logoutAction()
