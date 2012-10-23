@@ -24,7 +24,7 @@ use FTR\AdminBundle\Helper\Paginator;
 class UserbuildingController extends Controller
 {
 
-    public function indexAction($error_msg = NULL)
+    public function indexAction($error_msg = null)
     {
         $session = $this->get('session');
         $username = $session->get('user');
@@ -34,11 +34,14 @@ class UserbuildingController extends Controller
         }
 
         if (empty($errormsg)) { //Default error messeges
-            $error_msg = array('email' => NULL, 'password' => NULL, 'tel' => NULL, 'confirmpass' => 'ต้องใส่ยืนยันรหัสก่อนบันทึก');
+            $error_msg = array('email' => null,
+                'password' => null,
+                'tel' => null,
+                'confirmpass' => 'ต้องใส่ยืนยันรหัสก่อนบันทึก');
         }
         $conn = $this->get('database_connection');
         $enabled = null;
-        $arrdata = NULL;
+        $arrData = null;
         if (!$conn) {
             die("MySQL Connection error");
         }
@@ -70,7 +73,7 @@ class UserbuildingController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $conn = $this->get('database_connection');
         $enabled = null;
-        $arrData = NULL;
+        $arrData = null;
         if (!$conn) {
             die("MySQL Connection error");
         }
@@ -81,8 +84,7 @@ class UserbuildingController extends Controller
 
             $getTextSearch = null;
 
-            if($_GET)
-            {
+            if ($_GET) {
                 //get data
                 $getSelectPage = @$_GET['numPage'];
                 $getRecord = @$_GET['record'];
@@ -105,23 +107,23 @@ class UserbuildingController extends Controller
             ";
             //set paging
             $page = 1;
-            if (!empty($getSelectPage)){
+            if (!empty($getSelectPage)) {
                 $page = $getSelectPage;
             }
             $limit = 10;
             $midRange = 5;
-            if(!empty($getRecord)){
+            if (!empty($getRecord)) {
                 $limit = $getRecord;
-            }else {
+            } else {
                 $getRecord = $limit;
             }
-            $offset = $limit*$page-$limit;
+            $offset = $limit * $page - $limit;
 
-            if (empty($getOrderBy) && empty($getOrderByType)){
+            if (empty($getOrderBy) && empty($getOrderByType)) {
                 $getOrderBy = 'id';
                 $getOrderByType = 'asc';
             }
-            if (!empty($getTextSearch) && $getTextSearch != ''){
+            if (!empty($getTextSearch) && $getTextSearch != '') {
                 $sql2 = "
                     $sql2
                     AND b.id LIKE '%$getTextSearch%'
@@ -157,13 +159,11 @@ class UserbuildingController extends Controller
                 else {
                     $publish = "รอการยืนยัน";
                 }
-                if(empty($value['PROVINCE_NAME']))
-                {
+                if (empty($value['PROVINCE_NAME'])) {
                     $value['PROVINCE_NAME'] = 'nodata';
                 }
 
-                if(empty($value['AMPHUR_NAME']))
-                {
+                if (empty($value['AMPHUR_NAME'])) {
                     $value['AMPHUR_NAME'] = 'nodata';
                 }
                 $arrData[] = array(
@@ -180,31 +180,31 @@ class UserbuildingController extends Controller
         }
 
         //var_dump($sql2);exit();
-        $paging = new Paginator($itemCount,$offset,$limit,$midRange);
+        $paging = new Paginator($itemCount, $offset, $limit, $midRange);
         return $this->render('FTRWebBundle:Userbuilding:list_table.html.twig', array(
             'build_data' => $arrData,
             'paginator' => $paging,
             'countList' => $itemCount,
             'enabled' => $enabled,
-            'limit' 	        => $limit,
-            'noPage'	        => $page,
-            'record'	        => $getRecord,
-            'textSearch'        => $getTextSearch,
-            'orderBy'           => $getOrderBy,
-            'orderByType'       => $getOrderByType
+            'limit' => $limit,
+            'noPage' => $page,
+            'record' => $getRecord,
+            'textSearch' => $getTextSearch,
+            'orderBy' => $getOrderBy,
+            'orderByType' => $getOrderByType
         ));
     }
 
     public function addDataAction($id = null)
     {
-        $fac_inRoomList = NULL;
-        $fac_outRoomList = NULL;
-        $arrRoom = NULL;
-        $arrGallery = NULL;
+        $fac_inRoomList = null;
+        $fac_outRoomList = null;
+        $arrRoom = null;
+        $arrGallery = null;
         $countRoom = 0;
         $countGallery = 0;
-        $building_data = NULL;
-        $arrZone= NULL;
+        $building_data = null;
+        $arrZone = null;
         $session = $this->get('session');
         $user = $session->get('user');
         $building_id = null;
@@ -221,54 +221,54 @@ class UserbuildingController extends Controller
             }
 
             $enabled = $userData->getEnabled();
-            if(empty($enabled))
-            {
+            if (empty($enabled)) {
                 return $this->redirect($this->generateUrl('userbuilding'));
             }
             $building_data = $this->getBuildingData($id);
             if (!empty($id)) {
-               $building_id = $id;
+                $building_id = $id;
                 if ($building_data['izoneid'] != 0) {
-                    $zone_data = $em->getRepository('FTRWebBundle:Zone')->findOneBy(array('id' => $building_data['izoneid']));
+                    $zone_data = $em->getRepository('FTRWebBundle:Zone')
+                                    ->findOneBy(array('id' => $building_data['izoneid']));
                     //var_dump($zone_data);exit();
                     $arrZone[] = array(
-                        'id'        => $zone_data->getId(),
-                        'zonename'  => $zone_data->getZonename(),
-                        'latitude'  => $zone_data->getLatitude(),
+                        'id' => $zone_data->getId(),
+                        'zonename' => $zone_data->getZonename(),
+                        'latitude' => $zone_data->getLatitude(),
                         'longitude' => $zone_data->getLongitude(),
-                        'deleted'   => $zone_data->getDeleted(),
-                        'checked'   => 'yes',
+                        'deleted' => $zone_data->getDeleted(),
+                        'checked' => 'yes',
                     );
                 }
                 if ($building_data['ipaytypeid'] != 0) {
-                    $payType_data = $em->getRepository('FTRWebBundle:Pay_type')->findOneBy(array('id' => $building_data['ipaytypeid']));
+                    $payType_data = $em->getRepository('FTRWebBundle:Pay_type')
+                        ->findOneBy(array('id' => $building_data['ipaytypeid']));
                 }
                 //var_dump($buildtype_data);exit();
-            }else{
+            } else {
                 return $this->redirect($this->generateUrl('addNewBuildData'), 301);
             }
-            $linkImageHead = NULL;
-            $nameImageHead = NULL;
-            $linkImageMap = NULL;
-            $nameImageMap = NULL;
+            $linkImageHead = null;
+            $nameImageHead = null;
+            $linkImageMap = null;
+            $nameImageMap = null;
             $fac_inRoomList = $this->getFacility('inroom');
-            $fac_inRoomLoop = $this->getFacility('inroom','loop');
+            $fac_inRoomLoop = $this->getFacility('inroom', 'loop');
             $fac_outRoomList = $this->getFacility('outroom');
-            $fac_outRoomLoop = $this->getFacility('outroom','loop');
-            $arrRoom = $this->getImageData($building_id, NULL, 'room');
-            $arrGallery = $this->getImageData($building_id, NULL, 'gallery');
-            $imageHead = $this->getImageData($building_id, NULL, 'head');
-            $imageMap = $this->getImageData($building_id, NULL, 'map');
+            $fac_outRoomLoop = $this->getFacility('outroom', 'loop');
+            $arrRoom = $this->getImageData($building_id, null, 'room');
+            $arrGallery = $this->getImageData($building_id, null, 'gallery');
+            $imageHead = $this->getImageData($building_id, null, 'head');
+            $imageMap = $this->getImageData($building_id, null, 'map');
             $sqlFacilityListP = null;
-            if(!empty($building_id))
-            {
+            if (!empty($building_id)) {
                 $sqlFacilityListP = "
                  and building_site_id = $building_id
                 ";
             }
             $sqlFacilityList = "select facilitylist_id from facility2site where deleted = 0 $sqlFacilityListP";
             $facFetch = $conn->fetchAll($sqlFacilityList);
-            $facArray = NULL;
+            $facArray = null;
             foreach ($facFetch as $key => $value) {
                 $facArray[] = $value['facilitylist_id'];
             }
@@ -305,17 +305,17 @@ class UserbuildingController extends Controller
                 }
             }
 
-            $arrRoomData = NULL;
+            $arrRoomData = null;
             foreach ($arrRoom as $key => $roomPicValue) {
                 $roomType2site_id = $roomPicValue['roomtype2site_id'];
-                $roomType2siteData = $em->getRepository('FTRWebBundle:Roomtype2site')->findOneBy(array('id' => $roomType2site_id));
-                if(!empty($roomPicValue['photo_name']))
-                {
+                $roomType2siteData = $em->getRepository('FTRWebBundle:Roomtype2site')
+                                        ->findOneBy(array('id' => $roomType2site_id));
+                if (!empty($roomPicValue['photo_name'])) {
                     $linkPhoto = "images/building/$id/" . $roomPicValue['photo_name'];
-                    if(!file_exists($linkPhoto)){
+                    if (!file_exists($linkPhoto)) {
                         $linkPhoto = "images/show.png";
                     }
-                }else{
+                } else {
                     $linkPhoto = "images/show.png";
                 }
                 $arrRoomData[] = array(
@@ -327,16 +327,15 @@ class UserbuildingController extends Controller
                     'room_price' => $roomType2siteData->getRoomprice(),
                 );
             }
-            $arrGalleryData = NULL;
+            $arrGalleryData = null;
             foreach ($arrGallery as $key => $galleryPicValue) {
 
-                if(!empty($galleryPicValue['photo_name']))
-                {
+                if (!empty($galleryPicValue['photo_name'])) {
                     $linkPhoto = "images/building/$id/" . $galleryPicValue['photo_name'];
-                    if(!file_exists($linkPhoto)){
+                    if (!file_exists($linkPhoto)) {
                         $linkPhoto = "images/show.png";
                     }
-                }else{
+                } else {
                     $linkPhoto = "images/show.png";
                 }
                 $arrGalleryData[] = array(
@@ -346,10 +345,6 @@ class UserbuildingController extends Controller
                     'description' => $galleryPicValue['description'],
                 );
             }
-            /*echo "<pre>";
-                   var_dump($arrgallerydata);
-                   echo "</pre>";
-                   exit();*/
             if (!empty($imageHead)) {
                 $linkImageHead = "images/building/$id/" . $imageHead[0]['photo_name'];
                 $nameImageHead = $imageHead[0]['photo_name'];
@@ -360,17 +355,15 @@ class UserbuildingController extends Controller
             }
             $provinceName = null;
             $provinceId = $building_data['saddrprovince'];
-            if(!empty($provinceId))
-            {
-                $provinceName = $this->getProvinceDataAction($provinceId,'call');
+            if (!empty($provinceId)) {
+                $provinceName = $this->getProvinceDataAction($provinceId, 'call');
             }
 
             $payType = $this->getPayType($building_data['ipaytypeid']);
-            if(!empty($zone_data)){
+            if (!empty($zone_data)) {
                 $bkkZone = $this->getBkkZone($zone_data->getId());
                 $bkkZone = array_merge($arrZone, $bkkZone); // รวม array ของโซนในกรุงเทพ
-            }
-            else{
+            } else {
                 $bkkZone = $this->getBkkZone();
             }
 
@@ -378,11 +371,11 @@ class UserbuildingController extends Controller
             $province = $this->getProvince($building_data['saddrprovince'], null);
             $district = $this->getDistrictAction($provinceId, $building_data['saddrprefecture'], 'call');
             $provinceOther = $this->getProvince($provinceId, 'other');
-            $nearBTS = $this->getNearly(2,$building_id);
-            $nearMRT = $this->getNearly(3,$building_id);
-            $nearUniversity = $this->getNearly(4,$building_id);
-            $nearBy = $this->getNearly(5,$building_id);
-            $nearInCountry = $this->getNearly(6,$building_id);
+            $nearBTS = $this->getNearly(2, $building_id);
+            $nearMRT = $this->getNearly(3, $building_id);
+            $nearUniversity = $this->getNearly(4, $building_id);
+            $nearBy = $this->getNearly(5, $building_id);
+            $nearInCountry = $this->getNearly(6, $building_id);
             /*echo "<pre>";
                    var_dump($district);
                    echo "</pre>";
@@ -424,12 +417,10 @@ class UserbuildingController extends Controller
 
     public function addNewDataAction()
     {
-        if($_POST)
-        {
+        if ($_POST) {
             $id = $this->addNewBuilding();
-            return $this->redirect($this->generateUrl('addData',array('id'=>$id)), 301);
-        }
-        else{
+            return $this->redirect($this->generateUrl('addData', array('id' => $id)), 301);
+        } else {
             return $this->render('FTRWebBundle:Userbuilding:beforeAddData.html.twig');
         }
     }
@@ -469,7 +460,7 @@ class UserbuildingController extends Controller
     public function getBuildingData($id)
     {
         $em = $this->getDoctrine()->getEntityManager();
-        if(!empty($id)){
+        if (!empty($id)) {
             $build_data = $em->getRepository('FTRWebBundle:Building_site')->findOneBy(array('id' => $id));
             $arrdata = array(
                 'sbuildingname' => $build_data->getBuildingName(),
@@ -499,7 +490,7 @@ class UserbuildingController extends Controller
                 'saddrprovince' => $build_data->getAddrProvince(),
                 'saddrzipcode' => $build_data->getAddrZipcode(),
             );
-        }else{
+        } else {
             $arrdata = array(
                 'sbuildingname' => '',
                 'tbuildingaddress' => null,
@@ -527,7 +518,7 @@ class UserbuildingController extends Controller
                 'saddrprefecture' => null,
                 'saddrprovince' => null,
                 'saddrzipcode' => null,
-                );
+            );
         }
         return $arrdata;
     }
@@ -541,8 +532,8 @@ class UserbuildingController extends Controller
         }
         try {
 
-            if(!empty($buildId)){
-            $sql = "select * from image
+            if (!empty($buildId)) {
+                $sql = "select * from image
 								where deleted = 0 and building_site_id = '$buildId'
 									and photo_type = '$type'
 									or roomtype2site_id = '$roomType2SiteId'
@@ -560,7 +551,7 @@ class UserbuildingController extends Controller
         return $imageData;
     }
 
-    public function getFacility($type,$dataType=null)
+    public function getFacility($type, $dataType = null)
     {
         $fac_inRoomList = NULL;
         $fac_outRoomList = NULL;
@@ -576,16 +567,13 @@ class UserbuildingController extends Controller
                 $sql = "select * from facilitylist where facility_type = '$type' and display = 1";
                 $facList_inRoom = $conn->fetchAll($sql);
                 $countAll_inRoom = count($facList_inRoom);
-                if($dataType=='loop')
-                {
+                if ($dataType == 'loop') {
                     foreach ($facList_inRoom as $key => $value) {
                         $fac_ListReturn[] = array(
-                            'id' => 'fac'.$value['id'],
+                            'id' => 'fac' . $value['id'],
                         );
                     }
-                }
-                else
-                {
+                } else {
                     foreach ($facList_inRoom as $key => $value) {
                         $count = $key + 1;
                         $list[] = array(
@@ -611,16 +599,13 @@ class UserbuildingController extends Controller
                 $sql = "select * from facilitylist where facility_type = '$type' and display = 1";
                 $facList_outRoom = $conn->fetchAll($sql);
                 $countAll_outRoom = count($facList_outRoom);
-                if($dataType=='loop')
-                {
+                if ($dataType == 'loop') {
                     foreach ($facList_outRoom as $key => $value) {
                         $fac_ListReturn[] = array(
-                            'id' => 'fac'.$value['id'],
+                            'id' => 'fac' . $value['id'],
                         );
                     }
-                }
-                else
-                {
+                } else {
                     foreach ($facList_outRoom as $key => $value) {
                         $count = $key + 1;
                         $list[] = array(
@@ -673,22 +658,20 @@ class UserbuildingController extends Controller
         if ($_POST) {
             $post_array = $_POST;
             $buildingData = $em->getRepository('FTRWebBundle:Building_site')->findOneBy(array('id' => $id));
-            if(!empty($buildingData))
-            {
+            if (!empty($buildingData)) {
                 $publish = $buildingData->getPublish();
                 $emailBuilding = $buildingData->getContactEmail();
                 $buildingName = $buildingData->getBuildingName();
 
-                if($publish!=1)
-                {
+                if ($publish != 1) {
                     $buildingData->setPublish(2);
                     $em->flush();
                     $textHead = 'แจ้งการบันทึกข้อมูลเพื่อยืนยันการแสดงผล';
-                    $textToSend = '"'.$textHead.'"
+                    $textToSend = '"' . $textHead . '"
 
-ID หอพักในฐานข้อมูล : '.$id.'
-หอพัก ชื่อ: '.$buildingName.'
-Email ติดต่อ : '.$emailBuilding.'
+ID หอพักในฐานข้อมูล : ' . $id . '
+หอพัก ชื่อ: ' . $buildingName . '
+Email ติดต่อ : ' . $emailBuilding . '
 ทำการบันทึกข้อมูลแล้ว
 ส่งข้อมูลมาเพื่อรับการยืนยันให้แสดงผลบนเว็บ"findtheroom.com"
                     ';
@@ -697,22 +680,21 @@ Email ติดต่อ : '.$emailBuilding.'
                         'buildingName' => $buildingName,
                         'emailBuilding' => $emailBuilding,
                     );
-                    $this->sendemailAction($emailBuilding,$textHead,$textToSend,$arrData);
-                    $logger->addInfo('User '.$user.' update building');
+                    $this->sendemailAction($emailBuilding, $textHead, $textToSend, $arrData);
+                    $logger->addInfo('User ' . $user . ' update building');
                 }
             }
         }
         return $this->redirect($this->generateUrl('userbuilding'));
     }
 
-    public function sendemailAction($sendFrom,$textHead,$textToSend,$arrData)
+    public function sendemailAction($sendFrom, $textHead, $textToSend, $arrData)
     {
         //$arrEmail = array("jessaday@sourcecode.co.th");
-        $arrEmail = array("admin@findtheroom.com","webmaster@findtheroom.com");
-        foreach($arrEmail as $key => $value)
-        {
+        $arrEmail = array("admin@findtheroom.com", "webmaster@findtheroom.com");
+        foreach ($arrEmail as $key => $value) {
             $message = \Swift_Message::newInstance()
-                ->setSubject("=?utf-8?B?".base64_encode($textHead)."?=")
+                ->setSubject("=?utf-8?B?" . base64_encode($textHead) . "?=")
                 ->setFrom($sendFrom)
                 ->setTo($value)
                 ->addPart($textToSend)
@@ -774,8 +756,7 @@ Email ติดต่อ : '.$emailBuilding.'
                     $userOwner = $em->getRepository('FTRWebBundle:User_owner')->findOneBy(array('username' => $user));
                     $confirmPassMD5 = md5($confirmPass);
                     $passwordUser = $userOwner->getPassword();
-                    if($confirmPassMD5==$passwordUser)
-                    {
+                    if ($confirmPassMD5 == $passwordUser) {
                         $userOwner->setUsername($username);
                         $userOwner->setFirstname($first_name);
                         $userOwner->setLastname($last_name);
@@ -801,15 +782,14 @@ Email ติดต่อ : '.$emailBuilding.'
         $em = $this->getDoctrine()->getEntityManager();
         $session = $this->get('session');
         $user = $session->get('user');
-        if(!empty($user))
-        {
+        if (!empty($user)) {
             $userOwner = $em->getRepository('FTRWebBundle:User_owner')->findOneBy(array('username' => $user));
-            if($_POST){
+            if ($_POST) {
                 $newPassword = @$_POST['newpass'];
                 $savePassword = md5($newPassword);
                 $userOwner->setPassword($savePassword);
                 $em->flush();
-            }else{
+            } else {
                 return $this->render('FTRWebBundle:Userbuilding:changepass.html.twig', array());
             }
         }
@@ -828,7 +808,7 @@ Email ติดต่อ : '.$emailBuilding.'
         return $path;
     }
 
-    public function autoSaveFormAction($type,$id)
+    public function autoSaveFormAction($type, $id)
     {
         if ($_POST) {
             $arrImageData = NULL;
@@ -931,24 +911,24 @@ Email ติดต่อ : '.$emailBuilding.'
                 echo $alert;
             }
             elseif ($type == 'other') {
-                if(!empty($_POST['fac'])){
+                if (!empty($_POST['fac'])) {
                     $facilityList = @$_POST['fac'];
                     $alert = $this->saveFacilityData($id, $facilityList);
                 }
-                if(!empty($_POST['bkzone_ot'])){
+                if (!empty($_POST['bkzone_ot'])) {
                     $zoneLocation = @$_POST['bkzone_ot'];
-                }else{
+                } else {
                     $zoneLocation = null;
                 }
-                if(!empty($_POST['near_ot'])){
+                if (!empty($_POST['near_ot'])) {
                     $nearLocation = @$_POST['near_ot'];
-                }else{
+                } else {
                     $nearLocation = null;
                 }
                 $arrOther = array(
-                    'bts'       => @$_POST['bts_ot'],
-                    'mrt'       => @$_POST['mrt_ot'],
-                    'university'=> @$_POST['univer_ot'],
+                    'bts' => @$_POST['bts_ot'],
+                    'mrt' => @$_POST['mrt_ot'],
+                    'university' => @$_POST['univer_ot'],
                 );
                 $alert = $this->saveOtherData($id, $arrOther, $zoneLocation, $nearLocation);
 
@@ -1024,7 +1004,7 @@ Email ติดต่อ : '.$emailBuilding.'
                     $em->flush();
                 } else {
                     $oldImageName = $imageValue->getPhotoName();
-                    if($oldImageName!=''){
+                    if ($oldImageName != '') {
                         $pathImage = $this->getPathUpload($id);
                         $path = $pathImage . "/" . $oldImageName;
 
@@ -1061,14 +1041,14 @@ Email ติดต่อ : '.$emailBuilding.'
             $roomtype2site = new Roomtype2site();
             $roomtype2site->setRoomTypename($data['typename']);
             $roomtype2site->setBuildingSiteId($buildingid);
-            if(is_numeric(trim($data['room_size']))){
+            if (is_numeric(trim($data['room_size']))) {
                 $roomtype2site->setRoomsize(trim($data['room_size']));
-            }else{
+            } else {
                 $roomtype2site->setRoomsize(0);
             }
-            if(is_numeric(trim($data['room_price']))){
+            if (is_numeric(trim($data['room_price']))) {
                 $roomtype2site->setRoomprice(trim($data['room_price']));
-            }else{
+            } else {
                 $roomtype2site->setRoomprice(0);
             }
             $em->persist($roomtype2site);
@@ -1078,11 +1058,11 @@ Email ติดต่อ : '.$emailBuilding.'
         } else {
             $roomtype2sitedata->setRoomTypename(trim($data['typename']));
             $roomSize = trim($data['room_size']);
-            if(is_numeric($roomSize)||is_float($roomSize)){
+            if (is_numeric($roomSize) || is_float($roomSize)) {
                 $roomtype2sitedata->setRoomsize($roomSize);
             }
             $roomPrice = trim($data['room_price']);
-            if(is_numeric($roomPrice)||is_float($roomPrice)){
+            if (is_numeric($roomPrice) || is_float($roomPrice)) {
                 $roomtype2sitedata->setRoomprice($roomPrice);
             }
 
@@ -1138,7 +1118,7 @@ Email ติดต่อ : '.$emailBuilding.'
         $em = $this->getDoctrine()->getEntityManager();
         $buildingValue = $em->getRepository('FTRWebBundle:Building_site')->findOneBy(array('id' => $id));
         $buildingValue->setBuildingName($arrData['building_name']);
-        $dataSlug = str_replace(' ','-',$arrData['building_name']);
+        $dataSlug = str_replace(' ', '-', $arrData['building_name']);
         $buildingValue->setSlug($dataSlug);
         $buildingValue->setBuildingAddress($arrData['building_addr']);
 
@@ -1159,19 +1139,19 @@ Email ติดต่อ : '.$emailBuilding.'
         $buildingValue->setContactEmail($arrData['contact_email']);
         $buildingValue->setWebsite($arrData['website']);
         $monthStay = trim($arrData['month_stay']);
-        if(is_numeric($monthStay)||is_float($monthStay)){
+        if (is_numeric($monthStay) || is_float($monthStay)) {
             $buildingValue->setMonthStay($monthStay);
         }
         $waterPrice = trim($arrData['water_price']);
-        if(is_numeric($waterPrice)||is_float($waterPrice)){
+        if (is_numeric($waterPrice) || is_float($waterPrice)) {
             $buildingValue->setWaterUnit($waterPrice);
         }
         $electricPrice = trim($arrData['electric_price']);
-        if(is_numeric($electricPrice)||is_float($electricPrice)){
+        if (is_numeric($electricPrice) || is_float($electricPrice)) {
             $buildingValue->setElectricityUnit($electricPrice);
         }
         $internetPrice = trim($arrData['internet_price']);
-        if(is_numeric($internetPrice)||is_float($internetPrice)){
+        if (is_numeric($internetPrice) || is_float($internetPrice)) {
             $buildingValue->setInternetPrice($internetPrice);
         }
         $buildingValue->setAddrPrefecture($arrData['district']);
@@ -1186,11 +1166,11 @@ Email ติดต่อ : '.$emailBuilding.'
     {
         $em = $this->getDoctrine()->getEntityManager();
         $buildingValue = $em->getRepository('FTRWebBundle:Building_site')->findOneBy(array('id' => $id));
-        if(!empty($zone)||!empty($near)){
-            if(!empty($zone)){
+        if (!empty($zone) || !empty($near)) {
+            if (!empty($zone)) {
                 $buildingValue->setZoneId($zone);
             }
-            if(!empty($near)){
+            if (!empty($near)) {
                 $buildingValue->setNearlyPlace($near);
             }
             $em->flush();
@@ -1198,33 +1178,28 @@ Email ติดต่อ : '.$emailBuilding.'
 
         $nearlyValue = $em->getRepository('FTRWebBundle:Nearly2site')->findBy(array('building_site_id' => $id));
 
-        if(!empty($nearlyValue))
-        {
-            foreach($nearlyValue as $key => $data)
-            {
+        if (!empty($nearlyValue)) {
+            foreach ($nearlyValue as $key => $data) {
                 $em->remove($data);
             }
             $em->flush();
         }
         //echo "test";exit();
-        if(!empty($arrData['bts']))
-        {
+        if (!empty($arrData['bts'])) {
             $nearlyLocation = new Nearly2site();
             $nearlyLocation->setBuildingSiteId($id);
             $nearlyLocation->setNearlyLocationId($arrData['bts']);
             $nearlyLocation->setDeleted(0);
             $em->persist($nearlyLocation);
         }
-        if(!empty($arrData['mrt']))
-        {
+        if (!empty($arrData['mrt'])) {
             $nearlyLocation = new Nearly2site();
             $nearlyLocation->setBuildingSiteId($id);
             $nearlyLocation->setNearlyLocationId($arrData['mrt']);
             $nearlyLocation->setDeleted(0);
             $em->persist($nearlyLocation);
         }
-        if(!empty($arrData['university']))
-        {
+        if (!empty($arrData['university'])) {
             $nearlyLocation = new Nearly2site();
             $nearlyLocation->setBuildingSiteId($id);
             $nearlyLocation->setNearlyLocationId($arrData['university']);
@@ -1274,7 +1249,7 @@ Email ติดต่อ : '.$emailBuilding.'
         return "complete";
     }
 
-    function getBkkZone($id=0)
+    function getBkkZone($id = 0)
     {
         $result_data = array();
         $conn = $this->get('database_connection');
@@ -1290,11 +1265,10 @@ Email ติดต่อ : '.$emailBuilding.'
         } catch (Exception $e) {
             echo 'Caught exception: ', $e->getMessage(), "\n";
         }
-        if(empty($id))
-        {
-            $all[] = array('id' => 0, 'zonename' => '- กรุณาระบุ -', 'checked'=>'no');
+        if (empty($id)) {
+            $all[] = array('id' => 0, 'zonename' => '- กรุณาระบุ -', 'checked' => 'no');
             $result = array_merge($all, $result_data);
-        }else{
+        } else {
             $result = $result_data;
         }
         return $result;
@@ -1374,17 +1348,17 @@ Email ติดต่อ : '.$emailBuilding.'
         return $result;
     }
 
-    public function getProvinceDataAction($province,$type=null)
+    public function getProvinceDataAction($province, $type = null)
     {
         $conn = $this->get('database_connection');
         $result_data = array();
 
-            if (!$conn) {
-                    die("MySQL Connection error");
-                }
-            try {
+        if (!$conn) {
+            die("MySQL Connection error");
+        }
+        try {
 
-                $sql = "
+            $sql = "
                     SELECT
                       PROVINCE_NAME
                     FROM
@@ -1392,14 +1366,14 @@ Email ติดต่อ : '.$emailBuilding.'
                     WHERE
                       province_id = $province
                 ";
-                $result_data = $conn->fetchAll($sql);
+            $result_data = $conn->fetchAll($sql);
 
-            }  catch (Exception $e) {
-                echo 'Caught exception: ', $e->getMessage(), "\n";
-            }
-        if($type=='call'){
+        } catch (Exception $e) {
+            echo 'Caught exception: ', $e->getMessage(), "\n";
+        }
+        if ($type == 'call') {
             return $result_data[0]['PROVINCE_NAME'];
-        }else{
+        } else {
             echo $result_data[0]['PROVINCE_NAME'];
         }
         exit();
@@ -1523,7 +1497,7 @@ Email ติดต่อ : '.$emailBuilding.'
             die("MySQL Connection error");
         }
         try {
-            if(!empty($buildingTypeId)){
+            if (!empty($buildingTypeId)) {
                 $sql = "
                     (select
                       t.id,
@@ -1551,7 +1525,7 @@ Email ติดต่อ : '.$emailBuilding.'
                         building_site
                       where id = $buildingTypeId))
                 ";
-            }else{
+            } else {
                 $sql = "
                     select
                       t.id,
@@ -1565,7 +1539,7 @@ Email ติดต่อ : '.$emailBuilding.'
         } catch (Exception $e) {
             echo 'Caught exception: ', $e->getMessage(), "\n";
         }
-        if ($buildingTypeId == 0||empty($buildingTypeId)) {
+        if ($buildingTypeId == 0 || empty($buildingTypeId)) {
             $all[] = array('id' => 0, 'type_name' => '- กรุณาระบุ -', 'checked' => 'yes');
         } else {
             $all[] = array('id' => 0, 'type_name' => '- กรุณาระบุ -', 'checked' => 'no');
@@ -1624,7 +1598,7 @@ Email ติดต่อ : '.$emailBuilding.'
         return $result;
     }
 
-    function getNearly($type = 2,$buildingId)
+    function getNearly($type = 2, $buildingId)
     {
         $result_data = array();
         $conn = $this->get('database_connection');
@@ -1632,9 +1606,9 @@ Email ติดต่อ : '.$emailBuilding.'
             die("MySQL Connection error");
         }
         try {
-            $sqlP = null;$sqlP2 = null;
-            if(!empty($buildingId))
-            {
+            $sqlP = null;
+            $sqlP2 = null;
+            if (!empty($buildingId)) {
                 $sqlP = "
                  and id in
                   (select
@@ -1699,35 +1673,31 @@ Email ติดต่อ : '.$emailBuilding.'
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        if($_GET)
-        {
+        if ($_GET) {
             $getSequence = $_GET['sequence'];
             //$getImageId = $_GET['id'];
             $getType = $_GET['type'];
             $getBuildingId = $_GET['buildingId'];
 
-            $imageData = $em->getRepository('FTRWebBundle:Image')->findOneBy(array('building_site_id'=>$getBuildingId,'photo_type'=>$getType,'sequence'=>$getSequence));
+            $imageData = $em->getRepository('FTRWebBundle:Image')->findOneBy(array('building_site_id' => $getBuildingId, 'photo_type' => $getType, 'sequence' => $getSequence));
             $photoName = $imageData->getPhotoName();
 
-            $imageArray = $em->getRepository('FTRWebBundle:Image')->findBy(array('building_site_id'=>$getBuildingId,'photo_type'=>$getType));
+            $imageArray = $em->getRepository('FTRWebBundle:Image')->findBy(array('building_site_id' => $getBuildingId, 'photo_type' => $getType));
             $count = 0;
-            foreach($imageArray as $key => $value)
-            {
+            foreach ($imageArray as $key => $value) {
                 $imageName = $value->getPhotoName();
-                if($photoName==$imageName)
-                {
+                if ($photoName == $imageName) {
                     $pathFolder = $this->getPathUpload($getBuildingId);
-                    $path = $pathFolder.'/'.$photoName;
+                    $path = $pathFolder . '/' . $photoName;
 
                     $roomType2siteId = $value->getRoomtype2siteId();
-                    if(!empty($roomType2siteId)){
-                        $roomType2siteData = $em->getRepository('FTRWebBundle:Roomtype2site')->findOneBy(array('id'=>$roomType2siteId));
+                    if (!empty($roomType2siteId)) {
+                        $roomType2siteData = $em->getRepository('FTRWebBundle:Roomtype2site')->findOneBy(array('id' => $roomType2siteId));
                         $em->remove($roomType2siteData);
                     }
                     $this->deleteFile($path);
                     $em->remove($value);
-                }
-                else{
+                } else {
                     $value->setSequence($count);
                     $count++;
                 }
@@ -1747,18 +1717,17 @@ Email ติดต่อ : '.$emailBuilding.'
     public function deleteBuildingAction()
     {
         $em = $this->getDoctrine()->getEntityManager();
-        if($_GET)
-        {
+        if ($_GET) {
             $id = $_GET['id'];
-            $buildingData = $em->getRepository('FTRWebBundle:Building_site')->findOneBy(array('id'=>$id));
-            if(!empty($buildingData)){
+            $buildingData = $em->getRepository('FTRWebBundle:Building_site')->findOneBy(array('id' => $id));
+            if (!empty($buildingData)) {
                 $buildingData->setDeleted(1);
                 $em->flush();
                 echo 1;
-            }else{
+            } else {
                 echo 0;
             }
-        }else{
+        } else {
             echo 0;
         }
         exit();
