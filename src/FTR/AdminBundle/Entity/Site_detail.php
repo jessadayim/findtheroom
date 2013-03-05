@@ -60,7 +60,7 @@ class Site_detail
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -80,7 +80,7 @@ class Site_detail
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -100,7 +100,7 @@ class Site_detail
     /**
      * Get description
      *
-     * @return text 
+     * @return text
      */
     public function getDescription()
     {
@@ -120,7 +120,7 @@ class Site_detail
     /**
      * Get keyword
      *
-     * @return string 
+     * @return string
      */
     public function getKeyword()
     {
@@ -140,7 +140,7 @@ class Site_detail
     /**
      * Get tag_line
      *
-     * @return string 
+     * @return string
      */
     public function getTagLine()
     {
@@ -160,7 +160,7 @@ class Site_detail
     /**
      * Get base_url
      *
-     * @return string 
+     * @return string
      */
     public function getBaseUrl()
     {
