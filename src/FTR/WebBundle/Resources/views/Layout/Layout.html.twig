@@ -2,7 +2,27 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title>FindTheRoom</title>
+		{% block title %}
+        <title></title>
+        <meta name="description" content="..." />
+        <meta name="keyword" content="..."/>
+        <meta name="author" content=""/>
+        <meta name="copyright" content=""/>
+        <meta name="robot" content=""/>
+        <meta name="revisit-after" content=""/>
+        <meta name="distribution" content=""/>
+
+        <!-- facebook tag -->
+        <meta property="og:title" content="..."/>
+        <meta property="og:type" content="website"/>
+        <meta property="og:url" content="http://www.imdb.com/title/tt0117500/"/>
+        <meta property="og:image" content="http://ia.media-imdb.com/rock.jpg"/>
+        <meta property="og:site_name" content="IMDb"/>
+        <meta property="fb:admins" content="USER_ID"/>
+        <meta property="og:description" content="..."/>
+        {% endblock %}
+
+
 		<LINK REL="SHORTCUT ICON" HREF="{{ asset('favicon.ico') }}"/>
 		{% block css %}
 		<link rel="stylesheet" type="text/css" href="{{asset('css/main.css')}}" />
@@ -214,7 +234,8 @@
 
 			</script>
 			{% block body %}
-			{% endblock %}{% render "FTRWebBundle:Main:adsFooter" %}
+			{% endblock %}
+            {% render "FTRWebBundle:Main:adsFooter" %}
             {#<div class="ad1">#}
                 {#<div class='thumbframe'>#}
                     {#{%if app.session.get('zoneD1') is empty%}#}

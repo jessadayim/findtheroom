@@ -1,10 +1,10 @@
 <?php
-
 namespace FTR\WebBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FTR\WebBundle\Entity\Building_site;
 use FTR\WebBundle\Repository\Building_siteRepository;
+use FTR\Config\Config;
 
 class MainController extends Controller {
 
@@ -128,6 +128,22 @@ class MainController extends Controller {
         $zonea9 = $this->getAds('A-9');
         $zonea10 = $this->getAds('A-10');
 
+        /**
+         * Zone B
+         *
+         * Create by : MICK
+         * Date : 01-03-2013 16:57
+         */
+        $zoneBA1 = $this->getAds('BA-1');
+        $zoneBA2 = $this->getAds('BA-2');
+        $zoneBA3 = $this->getAds('BA-3');
+        $zoneBB1 = $this->getAds('BB-1');
+        $zoneBB2 = $this->getAds('BB-1');
+        $zoneBB3 = $this->getAds('BB-3');
+        $zoneBC1 = $this->getAds('BC-1');
+        $zoneBC2 = $this->getAds('BC-2');
+        $zoneBC3 = $this->getAds('BC-3');
+
         //Zone C
         $zonec1 = $this->getAds('C-1');
         $zonec2 = $this->getAds('C-2');
@@ -143,11 +159,56 @@ class MainController extends Controller {
         $top_last_building = $this -> getTopLastBuilding();
         $last_update = date("Y-m-d H:i:s", mktime(date("H"), date("i"), date("s"), date("m"), date("d"), date("Y")));
         $last_update = $this -> convertThaiDate($last_update);
+
+// เรียกข้อมูลเบื้องต้นของ website
+        $siteConfig = new Config();
+        $siteConfigDetail = $siteConfig->setSiteGlobal();
+
 //var_dump($enableRegis);
-        return $this -> render('FTRWebBundle:Main:index.html.twig', array('top_last_building' => $top_last_building
-        , 'last_update' => $last_update, 'enableRegis' => $enableRegis, 'enableReset' => $enableReset, 'userId' => $userId
-        , 'zoneA1'=>$zonea1, 'zoneA2'=>$zonea2, 'zoneA3'=>$zonea3, 'zoneA4'=>$zonea4, 'zoneA5'=>$zonea5, 'zoneA6'=>$zonea6, 'zoneA7'=>$zonea7, 'zoneA8'=>$zonea8, 'zoneA9'=>$zonea9, 'zoneA10'=>$zonea10
-        , 'zoneC1'=>$zonec1, 'zoneC2'=>$zonec2, 'zoneC3'=>$zonec3, 'zoneC4'=>$zonec4, 'zoneC5'=>$zonec5, 'zoneC6'=>$zonec6, 'zoneC7'=>$zonec7, 'zoneC8'=>$zonec8));
+        return $this -> render(
+            'FTRWebBundle:Main:index.html.twig',
+            array(
+                'top_last_building' => $top_last_building,
+                'last_update' => $last_update,
+                'enableRegis' => $enableRegis,
+                'enableReset' => $enableReset,
+                'userId' => $userId,
+                'zoneA1'=>$zonea1,
+                'zoneA2'=>$zonea2,
+                'zoneA3'=>$zonea3,
+                'zoneA4'=>$zonea4,
+                'zoneA5'=>$zonea5,
+                'zoneA6'=>$zonea6,
+                'zoneA7'=>$zonea7,
+                'zoneA8'=>$zonea8,
+                'zoneA9'=>$zonea9,
+                'zoneA10'=>$zonea10,
+                'zoneBA1'=>$zoneBA1,
+                'zoneBA2'=>$zoneBA2,
+                'zoneBA3'=>$zoneBA3,
+                'zoneBB1'=>$zoneBB1,
+                'zoneBB2'=>$zoneBB2,
+                'zoneBB3'=>$zoneBB3,
+                'zoneC1'=>$zonec1,
+                'zoneC2'=>$zonec2,
+                'zoneC3'=>$zonec3,
+                'zoneC4'=>$zonec4,
+                'zoneC5'=>$zonec5,
+                'zoneC6'=>$zonec6,
+                'zoneC7'=>$zonec7,
+                'zoneC8'=>$zonec8,
+                'siteTitle'=> $siteConfigDetail["siteTitle"],
+                'siteDesc' => $siteConfigDetail["siteDesc"],
+                'siteKeyword' => $siteConfigDetail["siteKeyword"],
+                'siteAuthor' => $siteConfigDetail["siteAuthor"],
+                'siteCopyRight' => $siteConfigDetail["siteCopyright"],
+                'siteRobot' => $siteConfigDetail["siteRobot"],
+                'siteRevisitAfter' => $siteConfigDetail["siteRevisitAfter"],
+                'siteDistribution' => $siteConfigDetail["siteDistribution"],
+                'siteImage' => $siteConfigDetail["siteImage"],
+                'siteUrl' => $siteConfigDetail["siteUrl"]
+            )
+        );
     }
 
     function getTopLastBuilding() {

@@ -16,7 +16,9 @@ class FTRConstant
      */
     public function getAdsPosition(){
         return array(
-            "A", "BA-1", "BA-2", "BA-3",
+            "A-1", "A-2", "A-3", "A-4", "A-5",
+            "A-6", "A-7", "A-8", "A-9", "A-10",
+            "BA-1", "BA-2", "BA-3",
             "BB-1", "BB-2", "BB-3",
             "BC-1", "BC-2", "BC-3",
             "BD-1", "BD-2", "BD-3",

@@ -3,7 +3,7 @@
 || #################################################################### ||
 || # vBulletin 4.0.5
 || # ---------------------------------------------------------------- # ||
-|| # Copyright ©2000-2010 vBulletin Solutions Inc. All Rights Reserved. ||
+|| # Copyright ï¿½2000-2010 vBulletin Solutions Inc. All Rights Reserved. ||
 || # This file may not be redistributed in whole or significant part. # ||
 || # ---------------- VBULLETIN IS NOT FREE SOFTWARE ---------------- # ||
 || # http://www.vbulletin.com | http://www.vbulletin.com/license.html # ||
@@ -366,7 +366,7 @@ function handle_wysiwyg_img($img_url, $fullurl)
 	// handle image attachments stored locally in our db
 	if (preg_match('#attachment.php\?attachmentid=(\d+)#si', $img_url, $matches) AND preg_match('#class=(\'|"|)([a-z0-9_-\s]+)?\s*previewthumb\s*([a-z0-9_-\s]+)?(\\1)#si', $fullurl))
 	{
-		return '[ATTACH=CONFIG]' . $matches[1] . '[/ATTACH]';
+		return '[ATTACH=Config]' . $matches[1] . '[/ATTACH]';
 	}
 
 	// handle images with a relative path

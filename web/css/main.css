@@ -310,3 +310,8 @@ input.regis { background: url(../images/regis-bt.png) no-repeat; border: 0; widt
 .thumb4img{float: left; position: absolute; top: 0%; left: 0%; width: 300px; height: auto;}
 .omega{margin-right: 0px; !important}
 .clear{clear:both}
+
+/*show in detail page*/
+#show{
+    margin-bottom: 20px;
+}

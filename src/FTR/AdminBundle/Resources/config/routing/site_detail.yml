@@ -1,0 +1,30 @@
+site_detail:
+    pattern:  /
+    defaults: { _controller: "FTRAdminBundle:Site_detail:index" }
+
+site_detail_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "FTRAdminBundle:Site_detail:show" }
+
+site_detail_new:
+    pattern:  /new
+    defaults: { _controller: "FTRAdminBundle:Site_detail:new" }
+
+site_detail_create:
+    pattern:  /create
+    defaults: { _controller: "FTRAdminBundle:Site_detail:create" }
+    requirements: { _method: post }
+
+site_detail_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "FTRAdminBundle:Site_detail:edit" }
+
+site_detail_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "FTRAdminBundle:Site_detail:update" }
+    requirements: { _method: post }
+
+site_detail_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "FTRAdminBundle:Site_detail:delete" }
+    requirements: { _method: post }

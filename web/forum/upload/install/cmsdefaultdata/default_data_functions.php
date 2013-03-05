@@ -3,7 +3,7 @@
 || #################################################################### ||
 || # vBulletin 4.0.5
 || # ---------------------------------------------------------------- # ||
-|| # Copyright ©2000-2010 vBulletin Solutions Inc. All Rights Reserved. ||
+|| # Copyright ï¿½2000-2010 vBulletin Solutions Inc. All Rights Reserved. ||
 || # This file may not be redistributed in whole or significant part. # ||
 || # ---------------- VBULLETIN IS NOT FREE SOFTWARE ---------------- # ||
 || # http://www.vbulletin.com | http://www.vbulletin.com/license.html # ||
@@ -134,7 +134,7 @@ function fix_images($filedirectory)
 
 		//get attachments and replace with new ids
 		$matches = array();
-		if (preg_match_all("#\\[ATTACH=CONFIG\\](\\d+)\\[/ATTACH\\]#i", $row['pagetext'], $matches))
+		if (preg_match_all("#\\[ATTACH=Config\\](\\d+)\\[/ATTACH\\]#i", $row['pagetext'], $matches))
 		{
 			foreach($matches[1] AS $attachmentid)
 			{
@@ -151,8 +151,8 @@ function fix_images($filedirectory)
 				$replacement = array();
 				foreach($attachment_map AS $oldid => $newid)
 				{
-					$orig[] = "[ATTACH=CONFIG]" . $oldid . "[/ATTACH]";
-					$replacement[] = "[ATTACH=CONFIG]" . $newid . "[/ATTACH]";
+					$orig[] = "[ATTACH=Config]" . $oldid . "[/ATTACH]";
+					$replacement[] = "[ATTACH=Config]" . $newid . "[/ATTACH]";
 				}
 
 				if (count($orig))
