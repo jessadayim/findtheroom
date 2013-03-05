@@ -1,22 +1,58 @@
- <h1>Site_detail edit</h1>
+{% extends 'FTRAdminBundle:Layout:panel_layout.html.twig' %}
 
-<form action="{{ path('site_detail_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
-    {{ form_widget(edit_form) }}
-    <p>
-        <button type="submit">Edit</button>
-    </p>
-</form>
+{% block body %}
+    <div id="wrap" class="container_12">
+        <div id="containerwrap">
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('site_detail') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('site_detail_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+            <div class="grid_12 createLists marginB_10 alpha" style="">
+                <h2>SITE DETAIL</h2>
+
+                <div class="clear"></div>
+                <p>Welcome to Visual Admin, a slick admin template for almost any project - front or back end. It's
+                    based on the 960 grid system which means you can have almost endless layout possibiliites as well as
+                    those that come ready to use straight out the box. Please have a click around and feel free to check
+                    out the screenshots.</p>
+
+                <div class="clear"></div>
+            </div>
+
+            <form action="{{ path('site_detail_update', { 'id': entity.id }) }}"
+                  method="post" {{ form_enctype(edit_form) }}>
+                <div class="grid_12 tableLists marginB_10 alpha" style="">
+                    <form>
+                        <fieldset>
+                            <legend>SITE DETAIL</legend>
+                            <div class="label" style="">TITLE:</div>
+                            {{ form_widget(edit_form.title, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+                            {{ form_errors(edit_form.title) }}<br>
+
+                            <div class="label" style="">DESCRIPTION:</div>
+                            {{ form_widget(edit_form.description, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+                            {{ form_errors(edit_form.description) }}<br>
+
+                            <div class="label" style="">KEYWORD:</div>
+                            {{ form_widget(edit_form.keyword, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+                            {{ form_errors(edit_form.keyword) }}<br>
+
+                            <div class="label" style="">TAG LINE:</div>
+                            {{ form_widget(edit_form.tag_line, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+                            {{ form_errors(edit_form.tag_line) }}<br>
+
+                            {#<div class="label" style="">FAVICON:</div>#}
+                            {#<input type="text" name="BuildingName" class="widfat"><br>#}
+
+                            <div class="label" style="">BASE URL:</div>
+                            {{ form_widget(edit_form.base_url, { 'attr': {'class': 'widfat'} }) }} &nbsp;
+                            {{ form_errors(edit_form.base_url) }}<br>
+                            <span style="float: right;"><input type="submit" value="UPDATE"></span>
+
+                            {{ form_rest(edit_form) }}
+                        </fieldset>
+                    </form>
+                    <div class="clear"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
