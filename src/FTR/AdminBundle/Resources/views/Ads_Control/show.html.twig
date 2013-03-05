@@ -27,10 +27,9 @@
     <br/>
     <table>
         <thead>
-            <th style="width: 100px !important;"><a class="btnOrderBy" href="#" id="sort_id">Id</a></th>
-            <th style="width: 400px !important;"><a class="btnOrderBy" href="#" id="sort_title">title</th>
+            <th width="100"><a class="btnOrderBy" href="#" id="sort_id">Id</a></th>
+            <th width="400"><a class="btnOrderBy" href="#" id="sort_title">title</th>
             <th><a class="btnOrderBy" href="#" id="sort_zone">Zone</a></th>
-            <th><a class="btnOrderBy" href="#" id="sort_codes">codes</a></th>
             <th><a class="btnOrderBy" href="#" id="sort_date_start">Date start</a></th>
             <th><a class="btnOrderBy" href="#" id="sort_date_end">Date end</a></th>
             <th><a class="btnOrderBy" href="#" id="sort_publish">Publish</a></th>
@@ -42,7 +41,6 @@
                 <td>{{ entity.id }}</td>
                 <td>{{ entity.title }}</td>
                 <td>{{ entity.zone }}</td>
-                <td>{{ entity.codes }}</td>
                 <td>{{ entity.date_start }}</td>
                 <td>{{ entity.date_end }}</td>
                 <td>{% if entity.publish == 1 %}

@@ -8,6 +8,7 @@ FTRWebBundle_recom:
     
 FTRWebBundle_search:
     pattern:  /search
+#    pattern:  /ค้นหาหอพัก
     defaults: { _controller: FTRWebBundle:Search:search }
 
 FTRWebBundle_detail:
@@ -16,10 +17,12 @@ FTRWebBundle_detail:
     
 FTRWebBundle_publish:
     pattern:  /publish
+#    pattern:  /ลงประกาศห้องพักฟรี
     defaults: { _controller: FTRWebBundle:Publish:publish }
 
 FTRWebBundle_contact:
     pattern:  /contact
+#    pattern:  /ติดต่อfindtheroom
     defaults: { _controller: FTRWebBundle:Contact:contact }
 
 FTRWebBundle_newimg:
@@ -96,6 +99,7 @@ FTRWebBundle_search_ampher:
 
 FTRWebBundle_banner:
     pattern:  /ads
+#    pattern:  /ลงโฆษณาหอพัก
     defaults: { _controller: FTRWebBundle:Banner:banner}
 
 FTRWebBundle_loginFacebook:

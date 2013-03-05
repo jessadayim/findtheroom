@@ -305,7 +305,8 @@ class Ads_ControlController extends Controller
     /*
      * Check ชื่อไม่ให้ซ้ำกัน
      */
-    private  function checkName($name, $sql){
+    private  function checkName($name, $sql)
+    {
         $sqlCheck = "
             SELECT
               *
@@ -324,7 +325,8 @@ class Ads_ControlController extends Controller
     /*
     * บันทึก log เกี่ยวกับการ insert, delete, update database
     */
-    private function addLogger($message, $entity){
+    private function addLogger($message, $entity)
+    {
         $logger = new LoggerHelper();
         $newArray = $logger->objectToArray($entity);
 
@@ -349,7 +351,8 @@ class Ads_ControlController extends Controller
     * Run คำสั่ง Sql
     * return array
     */
-    private function getDataArray($sql){
+    private function getDataArray($sql)
+    {
         $conn= $this->get('database_connection');
         if(!$conn){ die("MySQL Connection error");}
         try{

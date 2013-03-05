@@ -4,13 +4,32 @@ namespace FTR\WebBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FTR\AdminBundle\Helper\FTRConstant;
+use FTR\Config\Config;
 
 
 class SearchController extends Controller
 {
     public function searchAction()
     {
-        return $this->render('FTRWebBundle:Search:index.html.twig');
+// เรียกข้อมูลเบื้องต้นของ website
+        $siteConfig = new Config();
+        $siteConfigDetail = $siteConfig->setSiteGlobal();
+
+        return $this->render(
+            'FTRWebBundle:Search:index.html.twig',
+            array(
+                'siteTitle'             => $siteConfigDetail["pageSearchTitle"],
+                'siteDesc'              => $siteConfigDetail["pageSearchDesc"],
+                'siteKeyword'           => $siteConfigDetail["siteKeyword"],
+                'siteAuthor'            => $siteConfigDetail["siteAuthor"],
+                'siteCopyRight'         => $siteConfigDetail["siteCopyright"],
+                'siteRobot'             => $siteConfigDetail["siteRobot"],
+                'siteRevisitAfter'      => $siteConfigDetail["siteRevisitAfter"],
+                'siteDistribution'      => $siteConfigDetail["siteDistribution"],
+                'siteImage'             => $siteConfigDetail["siteImage"],
+                'siteUrl'               => $siteConfigDetail["siteUrl"]
+            )
+        );
 
     }
 
@@ -90,6 +109,8 @@ class SearchController extends Controller
         $pinApartment = $constant->getPinApartment();
         $pinMan = $constant->getPinMan();
         $pinWomen = $constant->getPinWomen();
+
+
 
         return $this->render('FTRWebBundle:Search:shortSearch.html.twig', array(
             'payType' 			    =>$payType,

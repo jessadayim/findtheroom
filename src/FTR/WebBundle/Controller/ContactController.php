@@ -3,13 +3,31 @@
 namespace FTR\WebBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
+use FTR\Config\Config;
 
 class ContactController extends Controller
 {
     public function ContactAction()
     {
-        return $this->render('FTRWebBundle:Contact:contact.html.twig', array());
+// เรียกข้อมูลเบื้องต้นของ website
+        $siteConfig = new Config();
+        $siteConfigDetail = $siteConfig->setSiteGlobal();
+
+        return $this->render(
+            'FTRWebBundle:Contact:contact.html.twig',
+            array(
+                'siteTitle'=> $siteConfigDetail["pageContactTitle"],
+                'siteDesc' => $siteConfigDetail["pageContactDesc"],
+                'siteKeyword' => $siteConfigDetail["siteKeyword"],
+                'siteAuthor' => $siteConfigDetail["siteAuthor"],
+                'siteCopyRight' => $siteConfigDetail["siteCopyright"],
+                'siteRobot' => $siteConfigDetail["siteRobot"],
+                'siteRevisitAfter' => $siteConfigDetail["siteRevisitAfter"],
+                'siteDistribution' => $siteConfigDetail["siteDistribution"],
+                'siteImage' => $siteConfigDetail["siteImage"],
+                'siteUrl' => $siteConfigDetail["siteUrl"]
+            )
+        );
     }
 	
 	public function sendContactAction(){

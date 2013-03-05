@@ -1,5 +1,27 @@
 {% extends 'FTRWebBundle:Layout:Layout.html.twig' %}
+{% block title %}
+<!-- รายละเอียด site -->
+    <title>{{ siteTitle }}</title>
+    <meta name="description" content="{{ siteDesc }}" />
+    <meta name="keyword" content="{{ siteKeyword }}"/>
+    <meta name="author" content="{{ siteAuthor }}"/>
+    <meta name="copyright" content="{{ siteCopyRight }}"/>
+    <meta name="robot" content="{{ siteRobot }}"/>
+    <meta name="revisit-after" content="{{ siteRevisitAfter }}"/>
+    <meta name="distribution" content="{{ siteDistribution }}"/>
+
+    <!-- facebook tag -->
+    <meta property="og:title" content="{{ siteTitle }}"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="{{ siteUrl }}"/>
+    <meta property="og:image" content="{{ siteImage }}"/>
+    <meta property="og:site_name" content="FindTheRoom"/>
+    <meta property="fb:admins" content="USER_ID"/>
+    <meta property="og:description" content="{{ siteDesc }}"/>
+<!-- #รายละเอียด site -->
+{% endblock %}
+
 {% block body %}
-{% render "FTRWebBundle:Search:fullsearch" %}
-{% render "FTRWebBundle:Main:recom" %}
+    {% render "FTRWebBundle:Search:fullsearch" %}
+    {% render "FTRWebBundle:Main:recom" %}
 {% endblock %}
