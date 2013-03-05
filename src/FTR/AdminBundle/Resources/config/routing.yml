@@ -66,6 +66,10 @@ FTRAdminBundle_ads_control:
     resource: "@FTRAdminBundle/Resources/config/routing/ads_control.yml"
     prefix:   /ads_control
 
+FTRAdminBundle_site_detail:
+    resource: "@FTRAdminBundle/Resources/config/routing/site_detail.yml"
+    prefix:   /site_detail
+
 # Routing of Backend Panel
 # Creator : MICK
 # Createtime : 2012-08-28
@@ -138,9 +142,9 @@ FTRAdminBundle_Createownerlists:
     pattern:  /createownerlists
     defaults: { _controller: FTRAdminBundle:userownerlists:create }
 
-FTRAdminBundle_Sitedetail:
-    pattern:  /sitedetail
-    defaults: { _controller: FTRAdminBundle:sitedetail:index }
+#FTRAdminBundle_Sitedetail:
+#    pattern:  /site_detail
+#    defaults: { _controller: FTRAdminBundle:sitedetail:index }
 
 FTRAdminBundle_Advertisingdetail:
     pattern:  /advertisingdetail
