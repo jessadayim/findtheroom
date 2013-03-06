@@ -60,3 +60,9 @@ swiftmailer:
 jms_security_extra:
     secure_controllers:  true
     secure_all_services: false
+    
+parameters:
+    dbserver: "%database_host%"
+    dbuser: "%database_user%"
+    dbpass: "%database_password%"
+    dbname: "%database_name%"
