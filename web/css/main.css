@@ -134,15 +134,16 @@ select[disabled] { background-color: #EAEAEA !important; color:#BCBCBC !importan
 #show .resultf .wifi, #show .result .wifi { background: url(../images/wifi.png) no-repeat; border: 0; width: 32px; height: 32px; position:absolute; margin-top:-11px; margin-left: -16px; z-index: 99}
 #show .resultf .wifi-none, #show .result .wifi-none { background: none; border: 0; width: 32px; height: 32px; position:absolute; margin-top:-11px; margin-left: -16px;}
 #show .resultf img, #show .result img { float: left;}
-#show .resultf .desc, #show .result .desc { float: left; margin-left: -10px; font-size:20px; display:block; position:relative; width:500px;}
+/*#show .resultf .desc, #show .result .desc { float: left; margin-left: -10px; font-size:20px; display:block; position:relative; width:500px;}*/
+#show .resultf .desc, #show .result .desc { float: left; margin-left: 0px; font-size:20px; display:block; position:relative; width:500px;}
 #show .resultf .desc, #show .result .desc .short{ display:block; position:relative; width:450px;height: 43px;word-wrap:break-word; overflow:hidden}
 #show .resultf .dmap , #show .result .dmap{ float: left; margin-left: 90px;}
 #show .resultf .dmap input.view, #show .result .dmap input.view { background: url(../images/view.png) no-repeat; border: 0; width: 71px; height: 71px; position:absolute; margin-top:50px; margin-left:50px; display:block; cursor: pointer;}
 
 /*Show Result Paging*/
-#paging { background-color: #423C3B; width: 1000px; height: 35px; display:block; position:relative; margin:30px auto 20px auto;}
-#paging a.page{ border:0px; color:#FFF; text-decoration:none; font-size:20px; display:block; /*padding-top: 10px;*/}
-#paging a.page:hover{ border:0px; color:#BF1E2D; text-decoration:none; font-size:20px; display:block; /*padding-top: 10px;*/}
+#paging { background-color: #423C3B; width: 1000px; height: 35px; display:block; position:relative; margin:15px auto 0px auto;}
+#paging a.page{ border:0px; color:#FFF; text-decoration:none; font-size:20px; display:block; padding-top: 10px;}
+#paging a.page:hover{ border:0px; color:#BF1E2D; text-decoration:none; font-size:20px; display:block; padding-top: 10px;}
 
 /*Detail*/
 .detail { background-color: #423C3B; width: 1000px; height: 200px; display:block; position:relative; margin:15px auto 0px auto;}
@@ -213,6 +214,8 @@ input.regis { background: url(../images/regis-bt.png) no-repeat; border: 0; widt
 .detail table input.back{ background: url(../images/back.png) no-repeat; border: 0; width: 51px; height: 51px; cursor: pointer; position:absolute; margin-top:-10px; margin-left:160px;}
 .detail div table tbody tr td textarea.place { max-width:180px; max-height:40px; min-width:180px; min-height:40px; font-family: DB Adman X, Helvetica, Arial, sans-serif; color: #423C3B; font-size:16px;}
 .detail div table tbody tr td textarea.ldesc { max-width:180px; max-height:80px; min-width:180px; min-height:80px; font-family: DB Adman X, Helvetica, Arial, sans-serif; color: #423C3B; font-size:16px;}
+.detail div table tbody tr td textarea.placeadd { max-width:190px; max-height:80px; min-width:190px; min-height:80px; font-family: DB Adman X, Helvetica, Arial, sans-serif; color: #423C3B; font-size:16px;}
+.detail div table tbody tr td textarea.ldescadd { max-width:622px; max-height:90px; min-width:622px; min-height:90px; font-family: DB Adman X, Helvetica, Arial, sans-serif; color: #423C3B; font-size:16px;}
 .detail div table tbody tr td textarea.galdesc { max-width:500px; max-height:110px; min-width:500px; min-height:110px; font-family: DB Adman X, Helvetica, Arial, sans-serif; color: #423C3B; font-size:16px;}
 #device { background-color: #423C3B; width: 1000px; height: 200px; display:block; position:relative; margin:15px auto 0px auto;}
 #device a.back { background: url(../images/back.png) no-repeat; border: 0; width: 51px; height: 51px; display:block; position:relative; cursor: pointer; margin-left: 430px; margin-top:20px;}
@@ -257,7 +260,7 @@ input.regis { background: url(../images/regis-bt.png) no-repeat; border: 0; widt
 #recommend #i_containTab2 ul#navi_containTab2 li#tabNavi7.active {background:url(../images/pop.png) no-repeat; background-position:0 -43px; display:block;}
 
 /*Ad*/
-.ad1 { width:1000px; margin: 20px auto 10px auto;}
+.ad1 { width:1000px; margin: 0 auto 10px auto;}
 .ad1 a { margin-right: 17px;}
 #ad2 { width:1000px; margin: 0 auto 10px auto; height:115px;}
 #ad2 a { margin-right: 17px;}
@@ -287,11 +290,18 @@ input.regis { background: url(../images/regis-bt.png) no-repeat; border: 0; widt
 
 
 /*Footer*/
-#footer { background-color: #423C3B; width: 1000px; height: 250px; display:block; position:relative; margin:-20px auto 0 auto;}
+/*#footer { background-color: #423C3B; width: 1000px; height: 250px; display:block; position:relative; margin:-20px auto 0 auto;}*/
+#footer { background-color: #423C3B; width: 1000px; height: auto; display:block; position:relative; margin:-20px auto 0 auto; padding: 0 0 10px 0;}
 #footer ul { list-style:none; padding:0; margin-top:0; width:100%;}
-#footer ul li.head { width: 225px; height: 50px; padding-left:20px; padding-top:10px; float:left;}
+/*#footer ul li.head { width: 225px; height: 50px; padding-left:20px; padding-top:10px; float:left;}*/
+#footer ul li.head { width: 225px; min-height: 550px; height: auto; padding-left:20px; padding-top:10px; float:left; font-size: 14px;}
+#footer ul li.head .footerImgTitle { float: left; margin: 0 0 10px 0; }
+#footer ul li.head .footerBuildingType { font-size: 25px; margin: 10px 0 10px 0; float: left; color: #FFFFFF; }
+#footer ul li.head h1 { float: left; font-size: 20px; }
+#footer ul li.head img { float: left; margin-right: 10px; }
 #footer ul li.head hr { color: #FFF; background-color: #FFF; width:95%; height: 1px; border: 0 none; padding:0; margin-top:10px;}
 #footer ul li.head a { color: #FFF; border: 0 none; text-decoration: none; display: block; margin-left: 10px; margin-top: 5px;}
+#footer ul li.head a:hover { color: red; border: 0 none; text-decoration: none; display: block; margin-left: 10px; margin-top: 5px;}
 
 #footer ul.ft { display:block; list-style:none; padding-left:25px; margin-top:0px; width:100%; text-decoration:none; float: none; width: 230px; position:relative;}
 #footer ul.ft li { margin-top: 10px;}
@@ -301,17 +311,23 @@ input.regis { background: url(../images/regis-bt.png) no-repeat; border: 0; widt
 #copyr { background-color: transparent; width: 1000px; height: 30px; display:block; position:relative; margin:10px auto 0 auto; font-family: DB Adman X; font-size: 18px; color: #423C3B;}
 
 /*Thumbnail*/
-.thumbframe{display:block; float: left; width: 234px; height: 120px; overflow: hidden; position: relative; z-index: 9; margin: 0 21px 20px 0;}
+/*.thumbframe{display:block; float: left; width: 234px; height: 120px; overflow: hidden; position: relative; z-index: 9; margin: 0 21px 20px 0;}*/
+.thumbframe{float: left; display: block; width: 234px; height: 120px; line-height: 100px; overflow: hidden; position: relative; z-index: 9; margin: 0px 10px 0 0; border: 0px #CCC solid; background-color: #FFF;}
 .thumbframe4add{display:block; float: left; width: 240px; height: 150px; overflow: hidden; position: relative; z-index: 9; margin: 0 21px 20px 0;}
 .thumbframe4gallery{display:block; float: left; width: 300px; height: 150px; overflow: hidden; position: relative; z-index: 9; margin: 0 21px 20px 0;}
 
-.thumb{float: left; position: absolute; top: 0%; left: 0%; width: 250px; height: auto;}
+/*.thumb{float: left; position: absolute; top: 0%; left: 0%; width: 250px; height: auto;}*/
+.thumb{ width: 234px; height: auto; float: left; position: absolute; top: -10%; left: 0%; }
 .thumb4gallery{float: left; position: absolute; top: 0%; left: 0%; width: 300px; height: auto;}
 .thumb4img{float: left; position: absolute; top: 0%; left: 0%; width: 300px; height: auto;}
-.omega{margin-right: 0px; !important}
+.omega{margin-right: 0px !important; }
 .clear{clear:both}
+
+/* thumbnail ads */
+.adsThumbFrame{float: left; display: block; width: 234px; height: 120px; line-height: 100px; overflow: hidden; position: relative; z-index: 9; margin: 0px 21px 20px 0; border: 0px #CCC solid; background-color: #FFF;}
+.adsThumb{ width: 234px; height: auto; float: left; position: absolute; top: -10%; left: 0%; }
 
 /*show in detail page*/
 #show{
-    /*margin-bottom: 20px;*/
+    margin-bottom: 20px;
 }
