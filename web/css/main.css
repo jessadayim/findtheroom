@@ -134,7 +134,8 @@ select[disabled] { background-color: #EAEAEA !important; color:#BCBCBC !importan
 #show .resultf .wifi, #show .result .wifi { background: url(../images/wifi.png) no-repeat; border: 0; width: 32px; height: 32px; position:absolute; margin-top:-11px; margin-left: -16px; z-index: 99}
 #show .resultf .wifi-none, #show .result .wifi-none { background: none; border: 0; width: 32px; height: 32px; position:absolute; margin-top:-11px; margin-left: -16px;}
 #show .resultf img, #show .result img { float: left;}
-#show .resultf .desc, #show .result .desc { float: left; margin-left: -10px; font-size:20px; display:block; position:relative; width:500px;}
+/*#show .resultf .desc, #show .result .desc { float: left; margin-left: -10px; font-size:20px; display:block; position:relative; width:500px;}*/
+#show .resultf .desc, #show .result .desc { float: left; margin-left: 0px; font-size:20px; display:block; position:relative; width:500px;}
 #show .resultf .desc, #show .result .desc .short{ display:block; position:relative; width:450px;height: 43px;word-wrap:break-word; overflow:hidden}
 #show .resultf .dmap , #show .result .dmap{ float: left; margin-left: 90px;}
 #show .resultf .dmap input.view, #show .result .dmap input.view { background: url(../images/view.png) no-repeat; border: 0; width: 71px; height: 71px; position:absolute; margin-top:50px; margin-left:50px; display:block; cursor: pointer;}
@@ -287,11 +288,18 @@ input.regis { background: url(../images/regis-bt.png) no-repeat; border: 0; widt
 
 
 /*Footer*/
-#footer { background-color: #423C3B; width: 1000px; height: 250px; display:block; position:relative; margin:-20px auto 0 auto;}
+/*#footer { background-color: #423C3B; width: 1000px; height: 250px; display:block; position:relative; margin:-20px auto 0 auto;}*/
+#footer { background-color: #423C3B; width: 1000px; height: auto; display:block; position:relative; margin:-20px auto 0 auto; padding: 0 0 10px 0;}
 #footer ul { list-style:none; padding:0; margin-top:0; width:100%;}
-#footer ul li.head { width: 225px; height: 50px; padding-left:20px; padding-top:10px; float:left;}
+/*#footer ul li.head { width: 225px; height: 50px; padding-left:20px; padding-top:10px; float:left;}*/
+#footer ul li.head { width: 225px; min-height: 550px; height: auto; padding-left:20px; padding-top:10px; float:left; font-size: 14px;}
+#footer ul li.head .footerImgTitle { float: left; margin: 0 0 10px 0; }
+#footer ul li.head .footerBuildingType { font-size: 25px; margin: 10px 0 10px 0; float: left; color: #FFFFFF; }
+#footer ul li.head h1 { float: left; font-size: 20px; }
+#footer ul li.head img { float: left; margin-right: 10px; }
 #footer ul li.head hr { color: #FFF; background-color: #FFF; width:95%; height: 1px; border: 0 none; padding:0; margin-top:10px;}
 #footer ul li.head a { color: #FFF; border: 0 none; text-decoration: none; display: block; margin-left: 10px; margin-top: 5px;}
+#footer ul li.head a:hover { color: red; border: 0 none; text-decoration: none; display: block; margin-left: 10px; margin-top: 5px;}
 
 #footer ul.ft { display:block; list-style:none; padding-left:25px; margin-top:0px; width:100%; text-decoration:none; float: none; width: 230px; position:relative;}
 #footer ul.ft li { margin-top: 10px;}
@@ -301,11 +309,13 @@ input.regis { background: url(../images/regis-bt.png) no-repeat; border: 0; widt
 #copyr { background-color: transparent; width: 1000px; height: 30px; display:block; position:relative; margin:10px auto 0 auto; font-family: DB Adman X; font-size: 18px; color: #423C3B;}
 
 /*Thumbnail*/
-.thumbframe{display:block; float: left; width: 234px; height: 120px; overflow: hidden; position: relative; z-index: 9; margin: 0 21px 20px 0;}
+/*.thumbframe{display:block; float: left; width: 234px; height: 120px; overflow: hidden; position: relative; z-index: 9; margin: 0 21px 20px 0;}*/
+.thumbframe{float: left; display: block; width: 234px; height: 120px; line-height: 100px; overflow: hidden; position: relative; z-index: 9; margin: 0px 10px 0 0; border: 0px #CCC solid; background-color: #FFF;}
 .thumbframe4add{display:block; float: left; width: 240px; height: 150px; overflow: hidden; position: relative; z-index: 9; margin: 0 21px 20px 0;}
 .thumbframe4gallery{display:block; float: left; width: 300px; height: 150px; overflow: hidden; position: relative; z-index: 9; margin: 0 21px 20px 0;}
 
-.thumb{float: left; position: absolute; top: 0%; left: 0%; width: 250px; height: auto;}
+/*.thumb{float: left; position: absolute; top: 0%; left: 0%; width: 250px; height: auto;}*/
+.thumb{ width: 234px; height: auto; float: left; position: absolute; top: -10%; left: 0%; }
 .thumb4gallery{float: left; position: absolute; top: 0%; left: 0%; width: 300px; height: auto;}
 .thumb4img{float: left; position: absolute; top: 0%; left: 0%; width: 300px; height: auto;}
 .omega{margin-right: 0px; !important}
