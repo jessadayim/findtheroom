@@ -287,14 +287,14 @@ class ListController extends Controller {
 
 		//setting $whereQuery
 
-		$result_data = array();
-		$conn = $this -> get('database_connection');
-		if (!$conn) {
-			die("MySQL Connection error");
-		}
-		try {
-			$selectFieldCount = "SELECT count(*) as count ";
-			$selectField = "
+        $result_data = array();
+        $conn = $this->get('database_connection');
+        if (!$conn) {
+            die("MySQL Connection error");
+        }
+        try {
+            $selectFieldCount = "SELECT count(*) as count ";
+            $selectField = "
                  SELECT
                     a.id,a.slug,
                     a.building_name,b.type_name,c.typename,
@@ -302,7 +302,7 @@ class ListController extends Controller {
                     a.addr_zipcode,a.detail,a.start_price,a.end_price,
                     a.latitude,a.longitude,d.facilitylist_id,p.PROVINCE_NAME,am.AMPHUR_NAME
             ";
-			$fromTable = "
+            $fromTable = "
                 FROM building_site a
                     INNER JOIN building_type b ON(a.building_type_id=b.id)
                     INNER JOIN pay_type c ON(a.pay_type_id=c.id)
@@ -312,30 +312,22 @@ class ListController extends Controller {
                     LEFT OUTER JOIN nearly2site e ON (e.building_site_id = a.id)
                     LEFT OUTER JOIN nearly_location f ON (e.nearly_location_id = f.id)
             ";
-			$limitDisplay = " LIMIT $numStart , $numShow";
+            //$limitDisplay = " LIMIT $numStart , $numShow";
 
-			$sql_c = "
-                $selectField
-                $fromTable
-                WHERE 1
-                    $whereQuery
-                     GROUP BY a.id
-            ";
-
-			$havingQuery = "";
-			if (($lessPrice == 0 || empty($lessPrice)) && empty($mostPrice)) {
-				$mostPrice = 9999999;
-			}
-			if (empty($lessPrice)) {
-				$lessPrice = 0;
-			}
-			if (!empty($lessPrice) && !empty($mostPrice) || ($lessPrice <= $mostPrice)) {
-				$havingQuery .= "
+            $havingQuery = "";
+            if (($lessPrice == 0 || empty($lessPrice)) && empty($mostPrice)) {
+                $mostPrice = 9999999;
+            }
+            if (empty($lessPrice)) {
+                $lessPrice = 0;
+            }
+            if (!empty($lessPrice) && !empty($mostPrice) || ($lessPrice <= $mostPrice)) {
+                $havingQuery .= "
                     HAVING 1
                         AND start_price >= $lessPrice
                         AND end_price <= $mostPrice
                 ";
-			}
+           }
 
 			$sql_c = "
                     $selectField
@@ -352,11 +344,10 @@ class ListController extends Controller {
                     $whereQuery
                      GROUP BY a.id
                 $havingQuery
-                $limitDisplay
+
             ";
-			//exit();
 			$resultCount = $conn -> fetchAll($sql_c);
-			$result = $conn -> fetchAll($sql);
+			$result = $conn->fetchAll($sql);
 
 			foreach ($result as $key => $value) {
 				$buildingId = $value['id'];
@@ -375,64 +366,90 @@ class ListController extends Controller {
                     where `building_site_id` = $buildingId
                       and `deleted` = 0
                  ";
-				$arrImage = $conn -> fetchAll($sqlImage);
-				foreach ($arrImage as $key2 => $value2) {
-					switch ($value2['photo_type']) {
-						case 'head' :
-							$result[$key]['image_head'] = $value2['photo_name'];
-							break;
-						case 'map' :
-							$result[$key]['image_map'] = $value2['photo_name'];
-							break;
+                $arrImage	= $conn->fetchAll($sqlImage);
+                foreach ($arrImage as $key2 => $value2) {
+                    switch ($value2['photo_type']) {
+                        case 'head':
+                            $result[$key]['image_head'] = $value2['photo_name'];
+                            break;
+                        case 'map':
+                            $result[$key]['image_map'] = $value2['photo_name'];
+                            break;
 
-						default :
-							break;
-					}
-				}
-			}
+                        default:
 
-		} catch (Exception $e) {
-			echo 'Caught exception: ', $e -> getMessage(), "\n";
-		}
+                            break;
+                    }
+                }
+            }
 
-		$numData = count($resultCount);
-		if ($numEnd > $numData) {
-			$numEnd = $numData;
-		}
-		$countNumPage = ceil($numData / $numShow);
+        } catch (Exception $e) {
+            echo 'Caught exception: ', $e->getMessage(), "\n";
+        }
 
-		$dataSetIsAjax = array('result' => $result, 'numData' => $numData, 'searchType' => $searchType, 'numStartDisplay' => $numStartDisplay, 'numEnd' => $numEnd, 'countNumPage' => $countNumPage, 'parameter' => $parameter, 'pageNumber' => $pageNumber, 'textSearch' => $textSearch, 'txtSearch' => $txtSearch, );
-		//var_dump( $isAjax);
-		if ($isAjax == "yes") {
-			return $this -> showListAction($dataSetIsAjax);
-			/*return $this->render('FTRWebBundle:List:showList.html.twig',array(
-			 'result'            => $result,
-			 'numData'           => $numData,
-			 'searchType'        => $searchType,
-			 'numStartDisplay'   => $numStartDisplay,
-			 'numEnd'            => $numEnd,
-			 'parameter'         => $parameter,
-			 'pageNumber'        => $pageNumber,
-			 'textSearch'        => $textSearch,
-			 'txtSearch'         => $txtSearch,
-			 ));*/
-		} else {
-			return $this -> render('FTRWebBundle:List:index.html.twig', array('result' => $result, 'numData' => $numData, 'searchType' => $searchType, 'numStartDisplay' => $numStartDisplay, 'numEnd' => $numEnd, 'countNumPage' => $countNumPage, 'parameter' => $parameter, 'pageNumber' => $pageNumber, 'textSearch' => $textSearch, 'txtSearch' => $txtSearch, 'dataSet' => $dataSetIsAjax, ));
-		}
-	}
+        $numData = count($result);
+        if ($numEnd > $numData) {
+            $numEnd = $numData;
+        }
+        $countNumPage = ceil($numData / $numShow);
 
-	/**
-	 * @param $zoneName
-	 * @return int
-	 */
-	public function convertNameZoneToID($zoneName) {
-		$resultData = 0;
-		$conn = $this -> get('database_connection');
-		if (!$conn) {
-			die("MySQL Connection error");
-		}
-		try {
-			$sql = "
+        $dataSetIsAjax = array(
+            'result' => array_slice($result, $numStart, $numShow),
+            'numData' => $numData,
+            'searchType' => $searchType,
+            'numStartDisplay' => $numStartDisplay,
+            'numEnd' => $numEnd,
+            'countNumPage' => $countNumPage,
+            'parameter' => $parameter,
+            'pageNumber' => $pageNumber,
+            'textSearch' => $textSearch,
+            'txtSearch' => $txtSearch,
+        );
+        //var_dump( $isAjax);
+        if ($isAjax == "yes") {
+            return $this->showListAction($dataSetIsAjax);
+            /*return $this->render('FTRWebBundle:List:showList.html.twig',array(
+                'result'            => $result,
+                'numData'           => $numData,
+                'searchType'        => $searchType,
+                'numStartDisplay'   => $numStartDisplay,
+                'numEnd'            => $numEnd,
+                'parameter'         => $parameter,
+                'pageNumber'        => $pageNumber,
+                'textSearch'        => $textSearch,
+                'txtSearch'         => $txtSearch,
+            ));*/
+        } else {
+            return $this->render('FTRWebBundle:List:index.html.twig',
+                array(
+                    'result' => $result,
+                    'numData' => $numData,
+                    'searchType' => $searchType,
+                    'numStartDisplay' => $numStartDisplay,
+                    'numEnd' => $numEnd,
+                    'countNumPage' => $countNumPage,
+                    'parameter' => $parameter,
+                    'pageNumber' => $pageNumber,
+                    'textSearch' => $textSearch,
+                    'txtSearch' => $txtSearch,
+                    'dataSet' => $dataSetIsAjax,
+                ));
+        }
+    }
+
+    /**
+     * @param $zoneName
+     * @return int
+     */
+    public function convertNameZoneToID($zoneName)
+    {
+        $resultData = 0;
+        $conn = $this->get('database_connection');
+        if (!$conn) {
+            die("MySQL Connection error");
+        }
+        try {
+            $sql = "
                SELECT
                   `id`
                 FROM `zone`
