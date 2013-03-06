@@ -20,7 +20,7 @@ class ListController extends Controller
         $selProvince = null;
         $lessPrice = null;
         $mostPrice = null;
-        $shortSearchType = "bkk";
+        $shortSearchType = "กรุงเทพมหานคร";
         $bc = null;
         $nBts = null;
         $nMrt = null;
