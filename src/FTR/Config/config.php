@@ -21,7 +21,7 @@ class Config
     {
     	$dbhost = 'localhost';
 		$dbuser = 'root';
-		$dbpass = '';
+		$dbpass = '1234';
 		$dbname = 'findtheroom';
     	
 		$arrData = $this->getSiteDetail($dbhost, $dbname, $dbuser, $dbpass);

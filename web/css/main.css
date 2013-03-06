@@ -260,7 +260,7 @@ input.regis { background: url(../images/regis-bt.png) no-repeat; border: 0; widt
 #recommend #i_containTab2 ul#navi_containTab2 li#tabNavi7.active {background:url(../images/pop.png) no-repeat; background-position:0 -43px; display:block;}
 
 /*Ad*/
-.ad1 { width:1000px; margin: 0 auto 10px auto;}
+.ad1 { width:1000px; margin: 20px auto 10px auto;}
 .ad1 a { margin-right: 17px;}
 #ad2 { width:1000px; margin: 0 auto 10px auto; height:115px;}
 #ad2 a { margin-right: 17px;}
