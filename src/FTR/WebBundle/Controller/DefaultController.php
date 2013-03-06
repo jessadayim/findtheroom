@@ -44,6 +44,16 @@ class DefaultController extends Controller
                 echo "i is not equal to 0, 1 or 2";
         }
 
+		/**
+		 * แยก link เพื่อเอา reference link ที่สำคัญเท่านั้น
+		 */
+		$urlExplode = explode('&',$refurl);
+		if (!empty($urlExplode[1])) {// เช็คว่ามีการ explode ไหม
+			$urlExplode2 = explode('?',$urlExplode[0]);
+			if ($urlExplode[1]=='searchType=shortSearch') {//เช็คว่า explode แล้วเป็น searchType=shortSearch ไหม
+				$refurl = $urlExplode2[0].'?'.$urlExplode[1];
+			}
+		}
 
         if(!empty($refurl)){
             $sql_insert = "

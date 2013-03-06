@@ -133,14 +133,12 @@
 
 <script language="javascript">
     $(document).ready(function () {
-        {% if shortSearchType == 'กรุงเทพมหานคร' %}
-        $('ul#detail_containTab > li.detailContent1').show();
-        $('ul#detail_containTab > li.detailContent2').hide();
-        {% endif %}
-
-        {% if shortSearchType == 'country' %}
+        {% if shortSearchType == 'ต่างจังหวัด' %}
         $('ul#detail_containTab > li.detailContent2').show();
         $('ul#detail_containTab > li.detailContent1').hide();
+        {% else %}
+        $('ul#detail_containTab > li.detailContent1').show();
+        $('ul#detail_containTab > li.detailContent2').hide();
         {% endif %}
     });
 </script>
@@ -149,9 +147,13 @@
 <div id="search1">
     <div id="i_containTab">
         <ul id="navi_containTab">
-            <li id="tabNavi1" {% if shortSearchType == 'bkk' %}class="active" {% endif %} onclick="enact(this)"></li>
-            <li id="tabNavi2" {% if shortSearchType == 'country' %}class="active" {% endif %}
-                onclick="enact(this)"></li>
+            {% if shortSearchType == 'ต่างจังหวัด' %}
+                <li id="tabNavi1" onclick="enact(this)"></li>
+                <li id="tabNavi2" class="active" onclick="enact(this)"></li>
+            {% else %}
+                <li id="tabNavi1" class="active" onclick="enact(this)"></li>
+                <li id="tabNavi2" onclick="enact(this)"></li>
+            {% endif %}
             <li id="tabNavi3" onclick="enact(this)"></li>
         </ul>
         <span class="or">หรือ</span><a href='{{ path('FTRWebBundle_search') }}' class="link" target="_new">ค้นหาอย่างละเอียด</a>
