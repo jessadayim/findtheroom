@@ -317,16 +317,7 @@ class ListController extends Controller
                     LEFT OUTER JOIN nearly2site e ON (e.building_site_id = a.id)
                     LEFT OUTER JOIN nearly_location f ON (e.nearly_location_id = f.id)
             ";
-            $limitDisplay = " LIMIT $numStart , $numShow";
-
-            $sql_c = "
-                $selectField
-                $fromTable
-                WHERE 1
-                    $whereQuery
-                     GROUP BY a.id
-            ";
-
+            //$limitDisplay = " LIMIT $numStart , $numShow";
 
             $havingQuery = "";
             if (($lessPrice == 0 || empty($lessPrice)) && empty($mostPrice)) {
@@ -350,10 +341,8 @@ class ListController extends Controller
                     $whereQuery
                      GROUP BY a.id
                 $havingQuery
-                $limitDisplay
+
             ";
-            //exit();
-            $resultCount = $conn->fetchAll($sql);
             $result = $conn->fetchAll($sql);
 
             foreach ($result as $key => $value) {
@@ -394,14 +383,14 @@ class ListController extends Controller
             echo 'Caught exception: ', $e->getMessage(), "\n";
         }
 
-        $numData = count($resultCount);
+        $numData = count($result);
         if ($numEnd > $numData) {
             $numEnd = $numData;
         }
         $countNumPage = ceil($numData / $numShow);
 
         $dataSetIsAjax = array(
-            'result' => $result,
+            'result' => array_slice($result, $numStart, $numShow),
             'numData' => $numData,
             'searchType' => $searchType,
             'numStartDisplay' => $numStartDisplay,
