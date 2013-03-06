@@ -1751,18 +1751,37 @@ Email ติดต่อ : ' . $emailBuilding . '
 		$buildingType = $this->getBuildingType($building_data['ibuildingtypeid']);
         $payType = $this->getPayType($building_data['ipaytypeid']);
         $province = $this->getProvince($building_data['saddrprovince'], null);
+		$provinceOther = $this->getProvince($provinceId, 'other');
         $district = $this->getDistrictAction($provinceId, $building_data['saddrprefecture'], 'call');
+		//var_dump($district);exit();
 		return $this->render('FTRWebBundle:Userbuilding:addNew.html.twig', array(
-            'buildingdata' => $building_data,
-            'payType' => $payType,
-            'buildingType' => $buildingType,
-            'province' => $province,
-            'district' => $district,
+            'buildingdata' 	=> $building_data,
+            'payType' 		=> $payType,
+            'buildingType' 	=> $buildingType,
+            'province' 		=> $province,
+            'provinceOther' => $provinceOther,
+            'district' 		=> $district,
             'linkimagehead' => $linkImageHead,
             'nameimagehead' => $nameImageHead,
-            'linkimagemap' => $linkImageMap,
-            'nameimagemap' => $nameImageMap,
+            'linkimagemap' 	=> $linkImageMap,
+            'nameimagemap' 	=> $nameImageMap,
 		));
+	}
+
+	public function postAddNewAction()
+	{
+		if ($_POST) {
+			var_dump($_POST);
+			exit();
+		} else {
+			echo 'fail';
+			exit();
+		}
+	}
+
+	public function addNewRoomAction()
+	{
+		
 	}
 }
 

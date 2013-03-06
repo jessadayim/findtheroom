@@ -54,6 +54,10 @@ addNew:
     pattern: /addnew
     defaults: { _controller: FTRWebBundle:Userbuilding:addNew }
 
+saveAddNew:
+    pattern: /saveaddnew
+    defaults: { _controller: FTRWebBundle:Userbuilding:postAddNew }
+
 addNewRoom:
     pattern: /addnewroom/{id}
     defaults: { _controller: FTRWebBundle:Userbuilding:addNewRoom }
