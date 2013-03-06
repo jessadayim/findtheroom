@@ -343,6 +343,7 @@ class ListController extends Controller
                 $selectField
                 $fromTable
                 WHERE 1
+                    AND a.deleted = 0
                     $whereQuery
                      GROUP BY a.id
                 $havingQuery

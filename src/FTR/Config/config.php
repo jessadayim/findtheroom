@@ -1,6 +1,13 @@
 <?php
 namespace FTR\Config;
 
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
+use Doctrine\DBAL\Configuration;
+use Doctrine\DBAL\DriverManager;
+/**
+ * Config file for global configs
+ */
 class Config
 {
     /**
@@ -10,19 +17,26 @@ class Config
      * Date: 3/1/13
      * Time: 1:43 PM
      */
-    public function setSiteGlobal(){
-
+    public function setSiteGlobal()
+    {
+    	$dbhost = 'localhost';
+		$dbuser = 'root';
+		$dbpass = '';
+		$dbname = 'findtheroom';
+    	
+		$arrData = $this->getSiteDetail($dbhost, $dbname, $dbuser, $dbpass);
+		
         // Default Site Config
-        $siteTitle = "รวมข้อมูลหอพัก และรายละเอียดหอพักที่ท่านตามหา";
-        $siteDesc = "หากวันนี้ท่านกำลังหาข้อมูลอยู่ findtheroom เป็นที่ีที่ท่านต้องการแนะนำ";
-        $siteKeyword = "หอพัก, รายละเอียด หอพัก";
+        $siteTitle = $arrData['title'];
+        $siteDesc = $arrData['description'];
+        $siteKeyword = $arrData['keyword'];
         $siteAuthor = "specialsquare.co.,led.";
         $siteCopyRight = "specialsquare.co.,led.";
         $siteRobot = "index";
         $siteRevisitAfter = "7 days";
         $siteDistribution = "Global";
-        $siteImage = "http://localhost:8081/findtheroom/web/images/logo.png";
-        $siteUrl = "http://localhost:8081/findtheroom/web/";
+        $siteImage = $arrData['base_url']."images/logo.png";
+        $siteUrl = $arrData['base_url'];
 
         // Page Site Config
         $pageBannerTitle = "ลงโฆษณาหอพัก | ".$siteTitle;
@@ -55,5 +69,31 @@ class Config
             "pageContactDesc" => $pageContactDesc
         );
     }
+
+	public function getSiteDetail($dbHost, $dbName, $dbUser, $dbPass)
+	{
+		$con = mysql_connect($dbHost, $dbUser, $dbPass) ;
+		mysql_set_charset('utf8',$con);
+		$db = mysql_select_db($dbName) ;
+		$sql = "SELECT
+  `id`,
+  `title`,
+  `description`,
+  `keyword`,
+  `tag_line`,
+  `base_url`
+FROM `site_detail` LIMIT 1";
+		$result = mysql_query($sql) ;
+		$arrData = mysql_fetch_array($result);
+		if(empty($arrData)){
+			$arrData = array(
+			'title'			=> 'รวมข้อมูลหอพัก และรายละเอียดหอพักที่ท่านตามหา',
+			'description'	=> 'หากวันนี้ท่านกำลังหาข้อมูลอยู่ findtheroom เป็นที่ีที่ท่านต้องการแนะนำ',
+			'keyword'		=> 'หอพัก, รายละเอียด หอพัก',
+			'base_url'		=> 'http://localhost/findtheroom/web/',
+			);
+		}
+		return $arrData;
+	}
 }
 
