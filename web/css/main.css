@@ -140,9 +140,9 @@ select[disabled] { background-color: #EAEAEA !important; color:#BCBCBC !importan
 #show .resultf .dmap input.view, #show .result .dmap input.view { background: url(../images/view.png) no-repeat; border: 0; width: 71px; height: 71px; position:absolute; margin-top:50px; margin-left:50px; display:block; cursor: pointer;}
 
 /*Show Result Paging*/
-#paging { background-color: #423C3B; width: 1000px; height: 35px; display:block; position:relative; margin:15px auto 0px auto;}
-#paging a.page{ border:0px; color:#FFF; text-decoration:none; font-size:20px; display:block; padding-top: 10px;}
-#paging a.page:hover{ border:0px; color:#BF1E2D; text-decoration:none; font-size:20px; display:block; padding-top: 10px;}
+#paging { background-color: #423C3B; width: 1000px; height: 35px; display:block; position:relative; margin:30px auto 20px auto;}
+#paging a.page{ border:0px; color:#FFF; text-decoration:none; font-size:20px; display:block; /*padding-top: 10px;*/}
+#paging a.page:hover{ border:0px; color:#BF1E2D; text-decoration:none; font-size:20px; display:block; /*padding-top: 10px;*/}
 
 /*Detail*/
 .detail { background-color: #423C3B; width: 1000px; height: 200px; display:block; position:relative; margin:15px auto 0px auto;}
@@ -211,8 +211,8 @@ input.regis { background: url(../images/regis-bt.png) no-repeat; border: 0; widt
 .detail table input.save{ background: url(../images/save.png) no-repeat; border: 0; width: 51px; height: 51px; cursor: pointer; position:absolute; margin-top:-10px; margin-left:100px;}
 .detail table input.canc{ background: url(../images/canc.png) no-repeat; border: 0; width: 51px; height: 51px; cursor: pointer; position:absolute; margin-top:-10px; margin-left:160px;}
 .detail table input.back{ background: url(../images/back.png) no-repeat; border: 0; width: 51px; height: 51px; cursor: pointer; position:absolute; margin-top:-10px; margin-left:160px;}
-.detail div table tbody tr td textarea.place { max-width:190px; max-height:80px; min-width:190px; min-height:80px; font-family: DB Adman X, Helvetica, Arial, sans-serif; color: #423C3B; font-size:16px;}
-.detail div table tbody tr td textarea.ldesc { max-width:622px; max-height:90px; min-width:622px; min-height:90px; font-family: DB Adman X, Helvetica, Arial, sans-serif; color: #423C3B; font-size:16px;}
+.detail div table tbody tr td textarea.place { max-width:180px; max-height:40px; min-width:180px; min-height:40px; font-family: DB Adman X, Helvetica, Arial, sans-serif; color: #423C3B; font-size:16px;}
+.detail div table tbody tr td textarea.ldesc { max-width:180px; max-height:80px; min-width:180px; min-height:80px; font-family: DB Adman X, Helvetica, Arial, sans-serif; color: #423C3B; font-size:16px;}
 .detail div table tbody tr td textarea.galdesc { max-width:500px; max-height:110px; min-width:500px; min-height:110px; font-family: DB Adman X, Helvetica, Arial, sans-serif; color: #423C3B; font-size:16px;}
 #device { background-color: #423C3B; width: 1000px; height: 200px; display:block; position:relative; margin:15px auto 0px auto;}
 #device a.back { background: url(../images/back.png) no-repeat; border: 0; width: 51px; height: 51px; display:block; position:relative; cursor: pointer; margin-left: 430px; margin-top:20px;}
@@ -313,5 +313,5 @@ input.regis { background: url(../images/regis-bt.png) no-repeat; border: 0; widt
 
 /*show in detail page*/
 #show{
-    margin-bottom: 20px;
+    /*margin-bottom: 20px;*/
 }
