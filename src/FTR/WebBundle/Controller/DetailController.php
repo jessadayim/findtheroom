@@ -24,7 +24,7 @@ class DetailController extends Controller
         $countData = 0;
         $em = $this->getDoctrine()->getEntityManager();
         $conn = $this->get('database_connection');
-        //echo $buildId;
+        
         if (!empty($buildId)) {
             $id = $buildId;
 //            $id = $this->getBuildingId($id);
@@ -44,7 +44,7 @@ class DetailController extends Controller
 
                 $objGeneral = $conn->fetchAll($sqlGeneral);
                 $countData = count($objGeneral);
-
+				//var_dump($sqlGeneral);exit();
                 if ($countData == 1) {
                     $detailData = $objGeneral[0];
 
@@ -146,6 +146,7 @@ class DetailController extends Controller
                         $objImage = "";
                     }
                 }else{
+                	echo "test";exit();
                     return $this->redirect($this->generateUrl('FTRWebBundle_list'));
                 }
             } catch (Exception $e) {

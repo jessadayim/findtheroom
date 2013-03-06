@@ -10,7 +10,8 @@ $(function() {// get more knowledge at http://www.uploadify.com/documentation/
 			'swf'      : swfpath,
 			'uploader' : uploaderpath,
 			//'uploadLimit' : 1,
-			//'queueSizeLimit' : 1,
+			'queueSizeLimit' : 1,
+			'multi'    : false,
 			'fileSizeLimit' : '120KB',
 			'fileTypeExts' : '*.gif; *.jpg; *.png',
 			'onFallback' : function() {/*alert('Flash was not detected.');*/},// detect flash compatible
@@ -29,7 +30,8 @@ $(function() {// get more knowledge at http://www.uploadify.com/documentation/
 			'swf'      : swfpath,
 			'uploader' : uploaderpath,
 			//'uploadLimit' : 1,
-			//'queueSizeLimit' : 1,
+			'queueSizeLimit' : 1,
+			'multi'    : false,
 			'fileSizeLimit' : '120KB',
 			'fileTypeExts' : '*.gif; *.jpg; *.png',
 			'onFallback' : function() {/*alert('Flash was not detected.');*/},// detect flash compatible
@@ -61,7 +63,8 @@ function uploadpicroom()
 			'swf'      : swfpath,
 			'uploader' : uploaderpath,
 			//'uploadLimit' : 1,
-			//'queueSizeLimit' : 1,
+			'queueSizeLimit' : 1,
+			'multi'    : false,
 			'fileSizeLimit' : '120KB',
 			'fileTypeExts' : '*.gif; *.jpg; *.png',
 			'onFallback' : function() {/*alert('Flash was not detected.');*/},// detect flash compatible
@@ -94,7 +97,8 @@ function uploadpicgallery()
 			'swf'      : swfpath,
 			'uploader' : uploaderpath,
 			//'uploadLimit' : 1,
-			//'queueSizeLimit' : 1,
+			'queueSizeLimit' : 1,
+			'multi'    : false,
 			'fileSizeLimit' : '120KB',
 			'fileTypeExts' : '*.gif; *.jpg; *.png',
 			'onFallback' : function() {/*alert('Flash was not detected.');*/},// detect flash compatible

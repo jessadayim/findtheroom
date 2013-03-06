@@ -49,3 +49,24 @@ deleteData:
 listApartment:
     pattern: /listapartment
     defaults: { _controller: FTRWebBundle:Userbuilding:listApartment }
+
+addNew:
+    pattern: /addnew
+    defaults: { _controller: FTRWebBundle:Userbuilding:addNew }
+
+saveAddNew:
+    pattern: /saveaddnew
+    defaults: { _controller: FTRWebBundle:Userbuilding:postAddNew }
+
+addNewRoom:
+    pattern: /addnewroom/{id}
+    defaults: { _controller: FTRWebBundle:Userbuilding:addNewRoom }
+
+addNewGallery:
+    pattern: /addnewgaller/{id}
+    defaults: { _controller: FTRWebBundle:Userbuilding:addNewGallery }
+
+addNewOther:
+    pattern: /addnewother/{id}
+    defaults: { _controller: FTRWebBundle:Userbuilding:addNewOther }
+    

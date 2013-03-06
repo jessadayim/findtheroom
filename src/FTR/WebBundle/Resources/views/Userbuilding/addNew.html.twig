@@ -1,0 +1,253 @@
+{% extends 'FTRWebBundle:Layout:Layout.html.twig' %}
+{% block body %}
+
+    <link rel="stylesheet" type="text/css" href="{{asset('js/uploadify/uploadify.css')}}">
+    <script type="text/javascript" src="{{asset('js/uploadify/jquery.uploadify-3.1.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/uploadify.control.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/sisyphus-autosave/sisyphus.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/gritter/js/jquery.gritter.js')}}"></script>
+    <link rel="stylesheet" type="text/css" href="{{asset('js/gritter/css/jquery.gritter.css')}}" />
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script language="javascript">
+        $(document).ready(function(){
+            $("div#upload_map.uploadify").css("marginTop","-80px");
+            var mybrowser=navigator.userAgent;
+            if(mybrowser.indexOf('MSIE')>0){
+                $("div#upload_map.uploadify").css("marginTop","-60px");
+                $("#headimage2").css("marginTop","-60px");
+                    }
+            // if((navigator.userAgent.match(/Android/i)) ||
+                    // (navigator.userAgent.match(/iPhone/i)) ||
+                    // (navigator.userAgent.match(/iPod/i)) ||
+                    // (navigator.userAgent.match(/iPad/i)))
+            // {
+                // document.getElementById('device').style.display='block';
+                // document.getElementById('fix').style.display='none';
+                // document.getElementById('datazone').style.display='none';
+                // document.getElementById('roomzone').style.display='none';
+                // document.getElementById('galleryzone').style.display='none';
+                // document.getElementById('etczone').style.display='none';
+            // }
+        });
+    </script>
+<script language="javascript">
+
+    var swfpath = "{{asset('js/uploadify/uploadify.swf')}}";
+    var uploaderpath = "{{asset('js/uploadify/uploadify.php')}}";
+    function getAmphur()
+    {
+        postData('head');
+
+        var provinceName = document.getElementById('province').value;
+        var pathtochange = "{{path('getDistrict')}}";
+        var addfixpath = pathtochange+'/'+provinceName;
+        var pathtochange2 = "{{path('getProvince')}}";
+        var addfixpath2 = pathtochange2+'/'+provinceName;
+        $.get(addfixpath2,
+                function(data) {
+                    if(data != "no")
+                    {
+                        document.getElementById('provinceChange').innerHTML = data;
+                    }
+                });
+        //document.getElementById('provinceChange').innerHTML = provinceName;
+
+        if(Trim(provinceName)==1)
+        {
+            var type = 0;
+        }
+        else
+        {
+            var type = 1;
+        }
+        fncAlert(type);
+        $.get(addfixpath,
+                function(data) {
+                    if(data != "no")
+                    {
+                        document.getElementById('divAmpher').innerHTML = data;
+                    }
+                });
+    }
+
+    function LTrim(str){
+        if (str==null){return null;}
+        for(var i=0;str.charAt(i)==" ";i++);
+        return str.substring(i,str.length);
+    }
+    function RTrim(str){
+        if (str==null){return null;}
+        for(var i=str.length-1;str.charAt(i)==" ";i--);
+        return str.substring(0,i+1);
+    }
+    function Trim(str){return LTrim(RTrim(str));}
+    function checkSubmitData()
+    {
+        var nameAp = document.getElementById('nameap').value;
+        var placeAp = document.getElementById('placeap').value;
+        var province = document.getElementById('province').value;
+        var district = document.getElementById('district').value;
+        var zipCode = document.getElementById('zipcode').value;
+        var longitude = document.getElementById('longitude').value;
+        var latitude = document.getElementById('latitude').value;
+        var apType = document.getElementById('aptype').value;
+        var telNumber = document.getElementById('telnumber').value;
+        var time = document.getElementById('time').value;
+        var contact_person = document.getElementById('contact_person').value;
+        var water_price = document.getElementById('water_price').value;
+        var contact_email = document.getElementById('contact_email').value;
+        var power_price = document.getElementById('power_price').value;
+        var pass ='';
+        if(nameAp==''||placeAp==''||zipCode==''||longitude==''||latitude==''||telNumber==''||time==''||contact_person==''||water_price==''||contact_email==''||power_price==''||province==0||district==0||apType==0)
+        {
+            alert('ข้อมูลที่จำเป็นยังกรอกไม่ครบ กรุณาตรวจสอบข้อมูลด้วยค่ะ');
+            return false;
+        }
+        else{
+            if(confirm("ยืนยันการบันทึกข้อมูล")==true)
+            {
+                return true;
+            }else{
+                return false;
+            }
+        }
+    }
+</script>
+	<form name="addform" id="addform" method="post" action="{{ path('saveAddNew') }}" onsubmit="javascript:return checkSubmitData();">
+    
+    <div id="datazone" class="detail" style="height: 730px; margin-bottom: 15px;">
+        <img src="{{asset('images/apdata.png')}}" style="display:block; position:relative; float:none;" />
+        <hr class="line" style="top: 60px;" />
+        <div style="width:1000px; display:block; position:relative; height:245px; margin-top: 20px;">
+            
+            <table style="margin-top: -10px; float:none;">
+                <tr height="50" valign="middle">
+                    <td align="right" width="240" style="font-size:24px;">ชื่อหอพัก / อพาร์ทเม้นท์ : *</td>
+                    <td align="left" width="200"><input name="nameap" id="nameap" type="text" maxlength="30" placeholder="กรุณากรอกชื่อหอพัก" style=" padding:2px; font-size:20px;" value="{{buildingdata.sbuildingname}}" onchange="postData('head');" /></td>
+                    <td align="right" width="240" style="font-size:24px;">จังหวัด : *</td>
+                    <td align="left" width="200">
+                        <div class="styled-select">
+                            <select id="province" name="province" class="select" onchange="getAmphur();">
+                                {% for list in province %}
+                                    {% if list.checked == 'no' %}
+                                        <option value="{{list.PROVINCE_ID}}">{{list.PROVINCE_NAME}}</option>
+                                    {% else %}
+                                        <option value="{{list.PROVINCE_ID}}" selected="selected">{{list.PROVINCE_NAME}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr height="50" valign="middle">
+                    <td align="right" valign="top" width="240" style="font-size:24px;" rowspan="2">ที่อยู่ : *</td>
+                    <td align="left" valign="top" width="200" rowspan="2"><textarea name="placeap" id="placeap" type="text" maxlength="500" class="placeadd"  onchange="postData('head');" />{{buildingdata.tbuildingaddress}}</textarea></td>
+                	<td align="right" width="240" style="font-size:24px;">เขต/อำเภอ : *</td>
+                    <td align="left" width="200">
+                    <span id="divAmpher">
+                        <div class="styled-select">
+                            <select id="district" name="district" class="select" onchange="postData('head');">
+                                {% for list in district %}
+                                    {% if list.checked == 'no' %}
+                                        <option value="{{list.AMPHUR_ID}}">{{list.AMPHUR_NAME}}</option>
+                                    {% else %}
+                                        <option value="{{list.AMPHUR_ID}}" selected="selected">{{list.AMPHUR_NAME}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </span>
+                    </td>
+                </tr>
+                <tr height="50" valign="middle">
+                    <td align="right" width="240" style="font-size:24px;">รหัสไปรษณีย์ : *</td>
+                    <td align="left" width="200"><input id="zipcode" name="zipcode" type="text" maxlength="30" placeholder="กรุณากรอกรหัสไปรษณีย์" style=" padding:2px; font-size:20px;" value="{{buildingdata.saddrzipcode}}" onchange="postData('head');" /></td>
+                </tr>
+            </table>
+            <table style="margin-top: 0px; float:left;">
+                <tr>
+                    <td align="right" width="240" valign="top" style="font-size:24px;">รายละเอียดเพิ่มเติม : &nbsp;</td>
+                    <td align="left" width="200"><textarea name="placedetail" type="text" maxlength="500" class="ldescadd" onchange="postData('head');" />{{buildingdata.tdetail}}</textarea></td>
+                </tr>
+            </table>
+        </div>
+        <div style="width:1000px; display:block; position:relative; height:240px; margin-top: 35px;">
+            <table style="margin-top: 0px;">
+                <tr height="50" valign="middle">
+                    <td align="right" width="240" style="font-size:24px;">Google Map ลองติจูด : *</td>
+                    <td align="left" width="200"><input id="longitude" name="longitude" type="text" maxlength="30" placeholder="กรุณากรอกตำแหน่งลองติจูด" style=" padding:2px; font-size:20px;" value="{{buildingdata.slongitude}}" onchange="postData('head');" /></td>
+                    <td align="right" width="240" style="font-size:24px;">Google Map ละติจูด : *</td>
+                    <td align="left" width="200"><input id="latitude" name="latitude" type="text" maxlength="30" placeholder="กรุณากรอกตำแหน่งละติจูด" style=" padding:2px; font-size:20px;" value="{{buildingdata.slatitude}}" onchange="postData('head');" /></td>
+                    <td align="left" width="30" style="font-size:24px;">&nbsp;</td>
+                </tr>
+                <tr height="50" valign="middle">
+                    <td align="right" width="240" style="font-size:24px;">ประเภทหอพัก : *</td>
+                    <td align="left" width="200">
+                        <div class="styled-select">
+                            <select id="aptype" name="aptype" class="select" onchange="postData('head');">
+                                {% for list in buildingType %}
+                                    {% if list.checked == 'no' %}
+                                        <option value="{{list.id}}">{{list.type_name}}</option>
+                                    {% else %}
+                                        <option value="{{list.id}}" selected="selected">{{list.type_name}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </td>
+                    <td align="right" width="210" style="font-size:24px;">ชนิด : *</td>
+                    <td align="left" width="190" style="font-size:24px;">
+                        <div class="styled-select">
+                            <select id="paytype" name="paytype" class="select" onchange="postData('head');">
+                                {% for list in payType %}
+                                    {% if list.checked == 'no' %}
+                                        <option value="{{list.id}}">{{list.typename}}</option>
+                                    {% else %}
+                                        <option value="{{list.id}}" selected="selected">{{list.typename}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div></td>
+                    <td align="left" width="30" style="font-size:24px;">&nbsp;</td>
+                </tr>
+                <tr height="50" valign="middle">
+                    <td align="right" width="240" style="font-size:24px;">เบอร์โทรติดต่อ : *</td>
+                    <td align="left" width="200"><input id="telnumber" name="telnumber" type="text" maxlength="15" placeholder="กรุณากรอกเบอร์โทรติดต่อ" style=" padding:2px; font-size:20px;" value="{{buildingdata.sphonenumber}}" onchange="postData('head');" /></td>
+                    <td align="right" width="210" style="font-size:24px;">ระยะเวลาเช่าขั้นต่ำ : *</td>
+                    <td align="left" width="190"><input id="time" name="time" type="text" maxlength="3" placeholder="กรุณากรอกระยะเวลาเช่าขั้นต่ำ" style=" padding:2px; font-size:20px;" value="{{buildingdata.smonthstay}}" onchange="postData('head');" /></td>
+                    <td align="left" width="30" style="font-size:24px;"> เดือน</td>
+                </tr>
+                <tr height="50" valign="middle">
+                    <td align="right" width="240" style="font-size:24px;">ติดต่อคุณ : *</td>
+                    <td align="left" width="200"><input id="contact_person" name="contact_person" type="text" placeholder="กรุณากรอกชื่อผ้ติดต่อ" style=" padding:2px; font-size:20px;" value="{{buildingdata.scontactname}}" onchange="postData('head');" /></td>
+                    <td align="right" width="210" style="font-size:24px;">ค่าน้ำ : *</td>
+                    <td align="left" width="190"><input id="water_price" name="water_price" type="text" maxlength="5" placeholder="กรุณากรอกค่าน้ำ" style=" padding:2px; font-size:20px;" value="{{buildingdata.fwaterunit}}" onchange="postData('head');" /></td>
+                    <td align="left" width="30" style="font-size:24px;"> บาท</td>
+                </tr>
+                <tr height="50" valign="middle">
+                    <td align="right" width="240" style="font-size:24px;">อีเมล : *</td>
+                    <td align="left" width="200"><input id="contact_email" name="contact_email" type="text" placeholder="กรุณากรอกอีเมล" style=" padding:2px; font-size:20px;" value="{{buildingdata.scontactemail}}" onchange="postData('head');" /></td>
+                    <td align="right" width="210" style="font-size:24px;">ค่าไฟ : *</td>
+                    <td align="left" width="190"><input id="power_price" name="power_price" type="text" maxlength="5" placeholder="กรุณากรอกค่าไฟ" style=" padding:2px; font-size:20px;" value="{{buildingdata.felectrictunit}}" onchange="postData('head');" /></td>
+                    <td align="left" width="30" style="font-size:24px;"> บาท</td>
+                </tr>
+                <tr height="50" valign="middle">
+                    <td align="right" width="240" style="font-size:24px;">เว็บไซต์ : &nbsp;</td>
+                    <td align="left" width="200"><input id="website" name="website" type="text" placeholder="กรุณากรอกเว็บไซต์" style=" padding:2px; font-size:20px;" value="{{buildingdata.swebsite}}" onchange="postData('head');" /></td>
+                    <td align="right" width="210" style="font-size:24px;">ค่าอินเตอร์เน็ต : &nbsp;</td>
+                    <td align="left" width="190"><input id="internet_price" name="internet_price" type="text" maxlength="5" placeholder="กรุณากรอกค่าอินเตอร์เน็ต" style=" padding:2px; font-size:20px;" value="{{buildingdata.iinternetprice}}" onchange="postData('head');" /></td>
+                    <td align="left" width="30" style="font-size:24px;"> บาท</td>
+                </tr>
+                <tr>
+                	<td colspan="3">
+                		&nbsp;
+                	</td>
+                	<td align="left" width="30">
+                		<input class="save" type="submit" value="" />
+                	</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    </form>
+{% endblock %}

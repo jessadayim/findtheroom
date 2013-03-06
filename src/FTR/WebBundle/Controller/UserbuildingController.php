@@ -1185,12 +1185,14 @@ Email ติดต่อ : ' . $emailBuilding . '
             $em->flush();
         }
         //echo "test";exit();
+        $checkInput = null;
         if (!empty($arrData['bts'])) {
             $nearlyLocation = new Nearly2site();
             $nearlyLocation->setBuildingSiteId($id);
             $nearlyLocation->setNearlyLocationId($arrData['bts']);
             $nearlyLocation->setDeleted(0);
             $em->persist($nearlyLocation);
+			$checkInput = 1;
         }
         if (!empty($arrData['mrt'])) {
             $nearlyLocation = new Nearly2site();
@@ -1198,6 +1200,7 @@ Email ติดต่อ : ' . $emailBuilding . '
             $nearlyLocation->setNearlyLocationId($arrData['mrt']);
             $nearlyLocation->setDeleted(0);
             $em->persist($nearlyLocation);
+			$checkInput = 2;
         }
         if (!empty($arrData['university'])) {
             $nearlyLocation = new Nearly2site();
@@ -1205,8 +1208,12 @@ Email ติดต่อ : ' . $emailBuilding . '
             $nearlyLocation->setNearlyLocationId($arrData['university']);
             $nearlyLocation->setDeleted(0);
             $em->persist($nearlyLocation);
-            $em->flush();
+			$checkInput = 3;
         }
+		if (!empty($checkInput)) {
+			// if nearly is not null
+            $em->flush();
+		}
         return "complete";
     }
 
@@ -1732,4 +1739,49 @@ Email ติดต่อ : ' . $emailBuilding . '
         }
         exit();
     }
+	
+	public function addNewAction()
+	{
+		$linkImageHead = null;
+        $nameImageHead = null;
+        $linkImageMap = null;
+        $nameImageMap = null;
+        $building_data = $this->getBuildingData(NULL);
+		$provinceId = $building_data['saddrprovince'];
+		$buildingType = $this->getBuildingType($building_data['ibuildingtypeid']);
+        $payType = $this->getPayType($building_data['ipaytypeid']);
+        $province = $this->getProvince($building_data['saddrprovince'], null);
+		$provinceOther = $this->getProvince($provinceId, 'other');
+        $district = $this->getDistrictAction($provinceId, $building_data['saddrprefecture'], 'call');
+		//var_dump($district);exit();
+		return $this->render('FTRWebBundle:Userbuilding:addNew.html.twig', array(
+            'buildingdata' 	=> $building_data,
+            'payType' 		=> $payType,
+            'buildingType' 	=> $buildingType,
+            'province' 		=> $province,
+            'provinceOther' => $provinceOther,
+            'district' 		=> $district,
+            'linkimagehead' => $linkImageHead,
+            'nameimagehead' => $nameImageHead,
+            'linkimagemap' 	=> $linkImageMap,
+            'nameimagemap' 	=> $nameImageMap,
+		));
+	}
+
+	public function postAddNewAction()
+	{
+		if ($_POST) {
+			var_dump($_POST);
+			exit();
+		} else {
+			echo 'fail';
+			exit();
+		}
+	}
+
+	public function addNewRoomAction()
+	{
+		
+	}
 }
+

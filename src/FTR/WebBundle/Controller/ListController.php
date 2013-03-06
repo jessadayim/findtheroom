@@ -345,7 +345,7 @@ class ListController extends Controller
             $sql_c = "
                     $selectField
                     $fromTable
-                    WHERE 1
+                    WHERE 1 AND a.deleted = 0 
                         $whereQuery
                          GROUP BY a.id
                 ";
@@ -353,13 +353,48 @@ class ListController extends Controller
             $sql = "
                 $selectField
                 $fromTable
-                WHERE 1
+                WHERE 1 AND a.deleted = 0 
                     $whereQuery
                      GROUP BY a.id
                 $limitDisplay
             ";
             $resultCount    = $conn->fetchAll($sql_c);
             $result         = $conn->fetchAll($sql);
+            //var_dump($sql);exit();
+            foreach ($result as $key => $value) {
+                $buildingId = $value['id'];
+                $sqlImage = "select 
+  `id`,
+  `building_site_id`,
+  `roomtype2site_id`,
+  `photo_name`,
+  `photo_type`,
+  `description`,
+  `sequence`,
+  `deleted` 
+from
+  `image` 
+where `building_site_id` = $buildingId 
+  and `deleted` = 0";
+  				$arrImage	= $conn->fetchAll($sqlImage);
+  				foreach ($arrImage as $key2 => $value2) {
+  					switch ($value2['photo_type']) {
+						case 'head':
+							$result[$key]['image_head'] = $value2['photo_name'];
+							break;
+						case 'map':
+							$result[$key]['image_map'] = $value2['photo_name'];
+							break;
+						  
+						default:
+							
+							break;
+					}
+				}
+            }
+            // echo '<pre>';
+            // var_dump($result);exit();
+            // echo '</pre>';
         } catch (Exception $e) {
             echo 'Caught exception: ',  $e->getMessage(), "\n";
         }
