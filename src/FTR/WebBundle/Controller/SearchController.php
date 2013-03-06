@@ -62,6 +62,8 @@ class SearchController extends Controller
         //rux
         $sqlGetMap1 = "
             SELECT
+              a.`start_price`,
+              a.`end_price`,
               a.id,
               a.building_name,
               IFNULL(a.latitude, 13.0) AS latitude,
@@ -76,7 +78,8 @@ class SearchController extends Controller
                   c.`photo_name`
                 ),
                 'images/default-image.png'
-              ) AS path_image
+              ) AS path_image,
+              d.`type_name`
             FROM
               building_site a
               INNER JOIN building_type b
@@ -86,6 +89,11 @@ class SearchController extends Controller
                   c.`building_site_id` = a.id
                   AND c.`photo_type` = 'head'
                   AND c.`deleted` = 0
+                )
+              INNER JOIN `building_type` d
+                ON (
+                  d.`id` = a.`building_type_id`
+                  AND d.`deleted` = 0
                 )
             WHERE 1
               AND a.publish = 1
