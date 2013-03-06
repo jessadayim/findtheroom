@@ -78,7 +78,6 @@ class SearchController extends Controller
         $sqlGetMap3 = "$sqlGetMap1 AND b.`id` = 2";
         $sqlGetMap4 = "$sqlGetMap1 AND b.`id` = 3";
 
-        echo $sqlGetMap4;
         try{
             $objGetMap1 = $conn->fetchAll($sqlGetMap1);
         } catch (Exception $e) {
