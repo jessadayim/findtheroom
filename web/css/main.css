@@ -329,5 +329,5 @@ input.regis { background: url(../images/regis-bt.png) no-repeat; border: 0; widt
 
 /*show in detail page*/
 #show{
-    margin-bottom: 20px;
+    /*margin-bottom: 20px;*/
 }
