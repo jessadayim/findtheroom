@@ -7,320 +7,297 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 class ListController extends Controller
 {
-    
+
     public function indexAction()
     {
-        $searchType         = "shortSearch";
-        $buildingType       = null;
-        $zone               = null;
-        $nearly             = null;
-        $textSearch         = "ห้องพัก";
-        $bkkPayType         = null;
-        $selZone            = null;
-        $selProvince        = null;
-        $lessPrice          = null;
-        $mostPrice          = null;
-        $shortSearchType    = "bkk";
-        $bc                 = null;
-        $nBts               = null;
-        $nMrt               = null;
-        $nUniversity        = null;
-        $inRoom             = null;
-        $outRoom            = null;
-        $inRoomQuery        = null;
-        $outRoomQuery       = null;
-        $selAmpher          = null;
-        $txtSearch          = "";
-        $result             = null;
-        $isAjax             = "no";
+        $searchType = "shortSearch";
+        $buildingType = null;
+        $zone = null;
+        $nearly = null;
+        $textSearch = "ห้องพัก";
+        $bkkPayType = null;
+        $selZone = null;
+        $selProvince = null;
+        $lessPrice = null;
+        $mostPrice = null;
+        $shortSearchType = "bkk";
+        $bc = null;
+        $nBts = null;
+        $nMrt = null;
+        $nUniversity = null;
+        $inRoom = null;
+        $outRoom = null;
+        $inRoomQuery = null;
+        $outRoomQuery = null;
+        $selAmpher = null;
+        $txtSearch = "";
+        $result = null;
+        $isAjax = "no";
 
         //query value
-        $whereQuery         = null;
-        $numShow            = 10;
-        $pageNumber         = 1;
-        $parameter          = array();
+        $whereQuery = null;
+        $numShow = 10;
+        $pageNumber = 1;
+        $parameter = array();
 
         // post zone aaaaaa
-        if($_GET){
-            $searchType     = @$_GET['searchType'];
-            $buildingType   = @$_GET['buildingType'];
-            $zone           = @$_GET['zone'];
-            $nearly         = @$_GET['nearly'];
-            $isAjax         = @$_GET['isAjax'];
-            $pageNumber     = @$_GET['numPage'];
+        if ($_GET) {
+            $searchType = @$_GET['searchType'];
+            $buildingType = @$_GET['buildingType'];
+            $zone = @$_GET['zone'];
+            $nearly = @$_GET['nearly'];
+            $isAjax = @$_GET['isAjax'];
+            $pageNumber = @$_GET['numPage'];
         }
-        if (empty($pageNumber)){
+        if (empty($pageNumber)) {
             $pageNumber = 1;
         }
-        $numStart =  $numShow*$pageNumber-$numShow;
-        $numStartDisplay    = $numStart + 1;
-        $numEnd             = $numStart + $numShow;
+        $numStart = $numShow * $pageNumber - $numShow;
+        $numStartDisplay = $numStart + 1;
+        $numEnd = $numStart + $numShow;
 
         //display textSearch
-        if( !empty($buildingType) )
-        {
+        if (!empty($buildingType)) {
             $textSearch = $this->getBuildingTypeSearch($buildingType);
             $whereQuery .= " AND a.building_type_id = '$buildingType'";
         }
-        if($zone == "bkk")
-        {
-            $textSearch = "โซนในกรุงเทพฯ";
-            $whereQuery .= " AND a.addr_province = 'กรุงเทพมหานคร'";
-        }
-        if(!empty($nearly)){
+        if (!empty($nearly)) {
             $textSearch = $this->getNearlyType($nearly);
             $whereQuery .= " AND f.nearly_type_id = '$nearly'";
         }
         // end get zone
 
+        $zoneName = urldecode(@$_GET['โซน']);
+        $zoneID = $this->convertNameZoneToID($zoneName);
+
+        /*if ($zoneName == "bkk") {
+            $textSearch = "โซนในกรุงเทพฯ";
+            $whereQuery .= " AND a.addr_province = 'กรุงเทพมหานคร'";
+        }*/
+
+        $bkkPayTypeName = urldecode(@$_GET['ชนิด']);
+        $bkkPayTypeID = $this->convertNamePayTypeToID($bkkPayTypeName);
+
+        $buildingTypeName = urldecode(@$_GET['ประเภทหอพัก']);
+        $buildingTypeID = $this->convertNameBuildingTypeToID($buildingTypeName);
+
+        $selProvinceName = urldecode(@$_GET['จังหวัด']);
+        $selProvinceID = $this->convertNameProvenceToID($selProvinceName);
+
+        $lessPrice = urldecode(@$_GET['ราคาเริ่มต้น']);
+        $mostPrice = urldecode(@$_GET['ราคาไม่เกิน']);
+
+
         // post zone
-        if($_POST)
-        {
+        if ($_GET) {
+
             //short search
-            //echo $searchType;
-            //var_dump(@$_POST);
             switch ($searchType) {
                 case "shortSearch":
-                        if(!empty($_POST['searchBkk']))
-                        {
-                            $shortSearchType = trim(@$_POST['searchBkk']);
-                            $whereQuery .= " AND a.zone_id != 0";
-                        }
-                        if(!empty($_POST['searchCountry']))
-                        {
-                            $shortSearchType = trim(@$_POST['searchCountry']);
-                            $whereQuery .= " AND a.zone_id = 0";
-                        }
-
-                        switch ($shortSearchType) {
-                            case "bkk":
-                                    $zone           = @$_POST['bkkZone'];
-                                    $bkkPayType     = @$_POST['bkkPayType'];
-                                    $buildingType   = @$_POST['bkkBuildingType'];
-                                    $lessPrice      = @$_POST['lessPrice'];
-                                    $mostPrice      = @$_POST['mostPrice'];
-
-                                    if(($zone != 0)&&(!empty($zone)))
-                                    {
-                                        $whereQuery .= " AND a.zone_id = $zone";
-                                    }
-                                    if(!empty($bkkPayType))
-                                    {
-                                        $whereQuery .= " AND a.pay_type_id = $bkkPayType";
-                                    }
-                                    if(($buildingType != 0)&&(!empty($buildingType)))
-                                    {
-                                        $whereQuery .= " AND a.building_type_id = $buildingType";
-                                    }
-
-                                    if(!empty($lessPrice)&&(!empty($mostPrice)))
-                                    {
-                                        $whereQuery .= "
-                                            AND (
-                                                a.start_price <= $lessPrice <= end_price  or
-                                                a.start_price <= $mostPrice <= end_price
-                                            )
-                                        ";
-                                    }
-
-
-                                break;
-                            case "country":
-                                    $selProvince    = @$_POST['selProvince'];
-                                    $bkkPayType     = @$_POST['bkkPayType'];
-                                    $buildingType   = @$_POST['bkkBuildingType'];
-                                    $lessPrice      = @$_POST['lessPrice'];
-                                    $mostPrice      = @$_POST['mostPrice'];
-
-                                    if(($selProvince != 0)&&(!empty($selProvince)))
-                                    {
-                                        $whereQuery .= " AND a.addr_province = '$selProvince''";
-                                    }
-                                    if(!empty($bkkPayType))
-                                    {
-                                        $whereQuery .= " AND a.pay_type_id = $bkkPayType";
-                                    }
-                                    if(($buildingType != 0)&&(!empty($buildingType)))
-                                    {
-                                        $whereQuery .= " AND a.building_type_id = $buildingType";
-                                    }
-
-                                    if(!empty($lessPrice)&&(!empty($mostPrice)))
-                                    {
-                                        $whereQuery .= "
-                                                AND (
-                                                    a.start_price <= $lessPrice <= end_price  or
-                                                    a.start_price <= $mostPrice <= end_price
-                                                )
-                                            ";
-                                    }
-                                break;
-                        }//end short search
-                     break;
-                case "fullSearch":
-                    //echo $searchType;
-                    //var_dump(@$_POST);
-                    $buildingType       = @$_POST['selBuildingType'];
-                    $lessPrice          = @$_POST['lessPrice'];
-                    $mostPrice          = @$_POST['mostPrice'];
-                    $bkkPayType         = @$_POST['bkkPayType'];
-                    $bc                 = @$_POST['bc'];
-                    $selProvince        = @$_POST['selProvince'];
-                    $zone               = @$_POST['bkkZone'];
-                    $nBts               = @$_POST['nBts'];
-                    $nMrt               = @$_POST['nMrt'];
-                    $nUniversity        = @$_POST['nUniversity'];
-                    $inRoom             = @$_POST['inRoom'];
-                    $outRoom            = @$_POST['outRoom'];
-                    $selAmpher          = @$_POST['selAmpher'];
-
-                    if(($buildingType != 0)&&(!empty($buildingType)))
-                    {
-                        $whereQuery .= " AND a.building_type_id = $buildingType";
+                    if (!empty($_GET['searchBkk'])) {
+                        $shortSearchType = trim(@$_GET['searchBkk']);
+                        $whereQuery .= " AND a.zone_id != 0";
+                    }
+                    if (!empty($_GET['searchCountry'])) {
+                        $shortSearchType = trim(@$_GET['searchCountry']);
+                        $whereQuery .= " AND a.zone_id = 0";
                     }
 
-                    if(!empty($lessPrice)&&(!empty($mostPrice)))
-                    {
+                    switch ($shortSearchType) {
+                        case "bkk":
+                            //$zone = $this->convertNameZoneToID(htmlentities(@$_GET['โซน']));
+                            //$bkkPayType = @$_GET['bkkPayType'];
+                            //$buildingType = @$_GET['bkkBuildingType'];
+                            //$lessPrice = @$_GET['lessPrice'];
+                            //$mostPrice = @$_GET['mostPrice'];
+
+                            if (($zoneID != 0) && (!empty($zoneID))) {
+                                $whereQuery .= " AND a.zone_id = $zoneID";
+                            }
+                            if (!empty($bkkPayTypeID)) {
+                                $whereQuery .= " AND a.pay_type_id = $bkkPayTypeID";
+                            }
+                            if (($buildingTypeID != 0) && (!empty($buildingTypeID))) {
+                                $whereQuery .= " AND a.building_type_id = $buildingTypeID";
+                            }
+
+                            /*if (!empty($lessPrice) && (!empty($mostPrice))) {
+                                $whereQuery .= "
+                                    AND (
+                                        a.start_price <= $lessPrice <= end_price  or
+                                        a.start_price <= $mostPrice <= end_price
+                                    )
+                                ";
+                            }*/
+                            break;
+                        case "country":
+                            //$selProvince = @$_GET['selProvince'];
+                            //$bkkPayType = @$_GET['bkkPayType'];
+                            //$buildingType = @$_GET['bkkBuildingType'];
+                            //$lessPrice = @$_GET['lessPrice'];
+                            //$mostPrice = @$_GET['mostPrice'];
+
+                            if (($selProvinceID != 0) && (!empty($selProvinceID))) {
+                                $whereQuery .= " AND a.addr_province = $selProvinceID";
+                            }
+                            if (!empty($bkkPayTypeID)) {
+                                $whereQuery .= " AND a.pay_type_id = $bkkPayTypeID";
+                            }
+                            if (($buildingTypeID != 0) && (!empty($buildingTypeID))) {
+                                $whereQuery .= " AND a.building_type_id = $buildingTypeID";
+                            }
+                            break;
+                    }
+                    //end short search
+                    break;
+                case "fullSearch":
+                    //echo $searchType;
+                    //var_dump(@$_GET);
+                    //$buildingType = @$_GET['selBuildingType'];
+                    $buildingTypeID = @$_GET['selBuildingType'];
+
+                    //$lessPrice = @$_GET['lessPrice'];
+                    $mostPrice = @$_GET['mostPrice'];
+                    //$bkkPayType = @$_GET['bkkPayType'];
+                    $bc = @$_GET['bc'];
+                    //$selProvince = @$_GET['selProvince'];
+                    //$zone = $this->convertNameZoneToID(htmlentities(@$_GET['โซน']));
+                    $nBts = @$_GET['nBts'];
+                    $nMrt = @$_GET['nMrt'];
+                    $nUniversity = @$_GET['nUniversity'];
+                    $inRoom = @$_GET['inRoom'];
+                    $outRoom = @$_GET['outRoom'];
+                    $selAmpher = @$_GET['selAmpher'];
+
+                    if (($buildingTypeID != 0) && (!empty($buildingTypeID))) {
+                        $whereQuery .= " AND a.building_type_id = $buildingTypeID";
+                    }
+
+                    /*if (!empty($lessPrice) && (!empty($mostPrice))) {
                         $whereQuery .= "
                             AND (
                                 a.start_price <= $lessPrice <= end_price  or
                                 a.start_price <= $mostPrice <= end_price
                             )
                         ";
+                    }*/
+
+                    if (!empty($bkkPayTypeID)) {
+                        $whereQuery .= " AND a.pay_type_id = $bkkPayTypeID";
                     }
 
-                    if(!empty($bkkPayType))
-                    {
-                        $whereQuery .= " AND a.pay_type_id = $bkkPayType";
-                    }
-
-                    if($bc=="bkk")
-                    {
-                        if(($zone==0)&&($nBts==0)&&($nMrt==0)&&($nUniversity==0))
-                        {
+                    if ($bc == "bkk") {
+                        if (($zoneID == 0) && ($nBts == 0) && ($nMrt == 0) && ($nUniversity == 0)) {
                             $nearlyZone = null;
                             $whereQuery .= " AND a.zone_id != 0 ";
-                        }
-                        else
-                        {
+                        } else {
                             $nearlyZone = "(";
-                            if($zone!=0){
-                                $nearlyZone .= "'".$zone."',";
+                            if ($zoneID != 0) {
+                                $nearlyZone .= "'" . $zoneID . "',";
                             }
 
-                            if($nBts!=0)
-                            {
-                                $nearlyZone .= "'".$nBts."',";
+                            if ($nBts != 0) {
+                                $nearlyZone .= "'" . $nBts . "',";
                             }
 
-                            if($nMrt!=0)
-                            {
-                                $nearlyZone .= "'".$nMrt."',";
+                            if ($nMrt != 0) {
+                                $nearlyZone .= "'" . $nMrt . "',";
                             }
 
-                            if($nUniversity!=0)
-                            {
-                                $nearlyZone .= "'".$nUniversity."',";
+                            if ($nUniversity != 0) {
+                                $nearlyZone .= "'" . $nUniversity . "',";
                             }
                             $nearlyZone .= "'')";
                             $whereQuery .= " AND f.id in $nearlyZone";
-                            $whereQuery .= " AND a.zone_id = $zone";
+                            $whereQuery .= " AND a.zone_id = $zoneID";
                         }
-                    }
-                    elseif($bc=="country"){
+                    } elseif ($bc == "country") {
                         $whereQuery .= "
                             AND a.zone_id = 0
-                            AND a.addr_province = '$selProvince'
+                            AND a.addr_province = '$selProvinceID'
                         ";
-                        if( $selAmpher != 0 && $selAmpher!= null){
-                             $whereQuery .= " a.addr_prefecture = '$selAmpher'";
+                        if ($selAmpher != 0 && $selAmpher != null) {
+                            $whereQuery .= " a.addr_prefecture = '$selAmpher'";
                         }
                     }
 
-                    if(is_array($inRoom)==true){
+                    if (is_array($inRoom) == true) {
                         $inRoomQuery = " d.facilitylist_id in (";
-                        foreach($inRoom as $key => $var){
-                            if($key==0){
-                                $inRoomQuery .="'".$inRoom[$key]."'";
-                            }
-                            else
-                            {
-                                $inRoomQuery .=",'".$inRoom[$key]."'";
+                        foreach ($inRoom as $key => $var) {
+                            if ($key == 0) {
+                                $inRoomQuery .= "'" . $inRoom[$key] . "'";
+                            } else {
+                                $inRoomQuery .= ",'" . $inRoom[$key] . "'";
                             }
                         }
                         $inRoomQuery .= ")";
                     }
-                    if(is_array($outRoom)==true){
+                    if (is_array($outRoom) == true) {
                         $outRoomQuery = " d.facilitylist_id in (";
-                        foreach($outRoom as $key => $var){
-                            if($key==0){
-                                $outRoomQuery .="'".$outRoom[$key]."'";
-                            }
-                            else
-                            {
-                                $outRoomQuery .=",'".$outRoom[$key]."'";
+                        foreach ($outRoom as $key => $var) {
+                            if ($key == 0) {
+                                $outRoomQuery .= "'" . $outRoom[$key] . "'";
+                            } else {
+                                $outRoomQuery .= ",'" . $outRoom[$key] . "'";
                             }
                         }
                         $outRoomQuery .= ")";
                     }
-                    if((is_array($inRoom)==true) && (is_array($outRoom)==true))
-                    {
+                    if ((is_array($inRoom) == true) && (is_array($outRoom) == true)) {
                         $whereQuery .= " AND ($inRoomQuery OR $outRoomQuery)";
-                    }
-                    elseif((is_array($inRoom)==true) && (is_array($outRoom)==false))
-                    {
-                         $whereQuery .= " AND ($inRoomQuery)";
-                    }
-                    elseif((is_array($inRoom)==false) && (is_array($outRoom)==true))
-                    {
-                         $whereQuery .= " AND ($outRoomQuery)";
+                    } elseif ((is_array($inRoom) == true) && (is_array($outRoom) == false)) {
+                        $whereQuery .= " AND ($inRoomQuery)";
+                    } elseif ((is_array($inRoom) == false) && (is_array($outRoom) == true)) {
+                        $whereQuery .= " AND ($outRoomQuery)";
                     }
                     break;
-                case"txtSearch":
-                         $txtSearch  =  trim(@$_POST['txtSearch']);
-                         $session = $this->get('session');
-                         $session->set('txtSearch', $txtSearch);
-                         if(!empty($txtSearch)&&$txtSearch!=null&&$txtSearch!=''){
-                             $whereQuery .= "
-                                AND (
-                                     a.building_name like '%$txtSearch%' OR
-                                     a.contact_name like '%$txtSearch%' OR
-                                     a.addr_prefecture like '%$txtSearch%' OR
-                                     a.addr_province like '%$txtSearch%' OR
-                                     b.type_name like '%$txtSearch%' OR
-                                     c.typename like '%$txtSearch%' OR
-                                     f.name like '%$txtSearch%'
-                                )
-                             ";
-                         }
+                case "txtSearch":
+                    $txtSearch = trim(@$_GET['txtSearch']);
+                    $session = $this->get('session');
+                    $session->set('txtSearch', $txtSearch);
+                    if (!empty($txtSearch) && $txtSearch != null && $txtSearch != '') {
+                        $whereQuery .= "
+                            AND (
+                                 a.building_name like '%$txtSearch%' OR
+                                 a.contact_name like '%$txtSearch%' OR
+                                 a.addr_prefecture like '%$txtSearch%' OR
+                                 a.addr_province like '%$txtSearch%' OR
+                                 b.type_name like '%$txtSearch%' OR
+                                 c.typename like '%$txtSearch%' OR
+                                 f.name like '%$txtSearch%'
+                            )
+                         ";
+                    }
                     break;
             }
         }
 
         //parameter for short search
-        $parameter['shortSearchType']   = $shortSearchType;
-        $parameter['zone']              = $zone;
-        $parameter['bkkPayType']        = $bkkPayType;
-        $parameter['buildingType']      = $buildingType;
-        $parameter['lessPrice']         = $lessPrice;
-        $parameter['mostPrice']         = $mostPrice;
-        $parameter['selProvince']       = $selProvince;
-        $parameter['bc']                = $bc;
-        $parameter['nBts']              = $nBts;
-        $parameter['nMrt']              = $nMrt;
-        $parameter['nUniversity']       = $nUniversity;
-        $parameter['inRoom']            = $inRoom;
-        $parameter['outRoom']           = $outRoom;
-        $parameter['selAmpher']         = $selAmpher;
+        $parameter['shortSearchType'] = $shortSearchType;
+        $parameter['zone'] = $zoneName;
+        $parameter['bkkPayType'] = $bkkPayTypeName;
+        $parameter['buildingType'] = $buildingTypeName;
+        $parameter['lessPrice'] = $lessPrice;
+        $parameter['mostPrice'] = $mostPrice;
+        $parameter['selProvince'] = $selProvinceName;
+        $parameter['bc'] = $bc;
+        $parameter['nBts'] = $nBts;
+        $parameter['nMrt'] = $nMrt;
+        $parameter['nUniversity'] = $nUniversity;
+        $parameter['inRoom'] = $inRoom;
+        $parameter['outRoom'] = $outRoom;
+        $parameter['selAmpher'] = $selAmpher;
 
         //end get zone
 
         //setting $whereQuery
 
         $result_data = array();
-        $conn= $this->get('database_connection');
-        if(!$conn){ die("MySQL Connection error");}
-        try{
+        $conn = $this->get('database_connection');
+        if (!$conn) {
+            die("MySQL Connection error");
+        }
+        try {
             $selectFieldCount = "SELECT count(*) as count ";
             $selectField = "
                  SELECT
@@ -343,87 +320,216 @@ class ListController extends Controller
             $limitDisplay = " LIMIT $numStart , $numShow";
 
             $sql_c = "
-                    $selectField
-                    $fromTable
-                    WHERE 1
-                        $whereQuery
-                         GROUP BY a.id
-                ";
-
-            $sql = "
                 $selectField
                 $fromTable
                 WHERE 1
                     $whereQuery
                      GROUP BY a.id
+            ";
+
+
+            $havingQuery = "";
+            if ($lessPrice == 0 && empty($mostPrice)) {
+                $mostPrice = 9999999;
+            }
+            if (!empty($lessPrice) && !empty($mostPrice) || ($lessPrice <= $mostPrice)) {
+                $havingQuery .= "
+                    HAVING 1
+                        AND start_price >= $lessPrice
+                        AND end_price <= $mostPrice
+                ";
+           }
+
+            echo $sql = "
+                $selectField
+                $fromTable
+                WHERE 1
+                    $whereQuery
+                     GROUP BY a.id
+                $havingQuery
                 $limitDisplay
             ";
-            $resultCount    = $conn->fetchAll($sql_c);
-            $result         = $conn->fetchAll($sql);
+            //exit();
+            $resultCount = $conn->fetchAll($sql);
+            $result = $conn->fetchAll($sql);
         } catch (Exception $e) {
-            echo 'Caught exception: ',  $e->getMessage(), "\n";
+            echo 'Caught exception: ', $e->getMessage(), "\n";
         }
 
         $numData = count($resultCount);
-        if($numEnd > $numData)
-        {
-             $numEnd = $numData;
+        if ($numEnd > $numData) {
+            $numEnd = $numData;
         }
-        $countNumPage = ceil($numData/$numShow);
+        $countNumPage = ceil($numData / $numShow);
 
-        $dataSet = array(
-            'result'            => $result,
-            'numData'           => $numData,
-            'searchType'        => $searchType,
-            'numStartDisplay'   => $numStartDisplay,
-            'numEnd'            => $numEnd,
-            'countNumPage'      => $countNumPage,
-            'parameter'         => $parameter,
-            'pageNumber'        => $pageNumber,
-            'textSearch'        => $textSearch,
-            'txtSearch'         => $txtSearch,
+        $dataSetIsAjax = array(
+            'result' => $result,
+            'numData' => $numData,
+            'searchType' => $searchType,
+            'numStartDisplay' => $numStartDisplay,
+            'numEnd' => $numEnd,
+            'countNumPage' => $countNumPage,
+            'parameter' => $parameter,
+            'pageNumber' => $pageNumber,
+            'textSearch' => $textSearch,
+            'txtSearch' => $txtSearch,
         );
-
-        if($isAjax=="yes")
-        {
-            return $this->showListAction($dataSet);
-//            return $this->render('FTRWebBundle:List:showList.html.twig',array(
-//                'result'            => $result,
-//                'numData'           => $numData,
-//                'searchType'        => $searchType,
-//                'numStartDisplay'   => $numStartDisplay,
-//                'numEnd'            => $numEnd,
-//                'parameter'         => $parameter,
-//                'pageNumber'        => $pageNumber,
-//                'textSearch'        => $textSearch,
-//                'txtSearch'         => $txtSearch,
-//            ));
-        }
-        else
-        {
-            return $this->render('FTRWebBundle:List:index.html.twig', array(
+        //var_dump( $isAjax);
+        if ($isAjax == "yes") {
+            return $this->showListAction($dataSetIsAjax);
+            /*return $this->render('FTRWebBundle:List:showList.html.twig',array(
                 'result'            => $result,
                 'numData'           => $numData,
                 'searchType'        => $searchType,
                 'numStartDisplay'   => $numStartDisplay,
                 'numEnd'            => $numEnd,
-                'countNumPage'      => $countNumPage,
                 'parameter'         => $parameter,
                 'pageNumber'        => $pageNumber,
                 'textSearch'        => $textSearch,
                 'txtSearch'         => $txtSearch,
-                'dataSet'           => $dataSet,
-            ));
-
+            ));*/
+        } else {
+            return $this->render('FTRWebBundle:List:index.html.twig',
+                array(
+                    'result' => $result,
+                    'numData' => $numData,
+                    'searchType' => $searchType,
+                    'numStartDisplay' => $numStartDisplay,
+                    'numEnd' => $numEnd,
+                    'countNumPage' => $countNumPage,
+                    'parameter' => $parameter,
+                    'pageNumber' => $pageNumber,
+                    'textSearch' => $textSearch,
+                    'txtSearch' => $txtSearch,
+                    'dataSet' => $dataSetIsAjax,
+                ));
         }
     }
 
-    function getBuildingTypeSearch($id)
+    /**
+     * @param $zoneName
+     * @return int
+     */
+    public function convertNameZoneToID($zoneName)
+    {
+        $resultData = 0;
+        $conn = $this->get('database_connection');
+        if (!$conn) {
+            die("MySQL Connection error");
+        }
+        try {
+            $sql = "
+               SELECT
+                  `id`
+                FROM `zone`
+                WHERE 1
+                  AND `zonename` LIKE '%$zoneName%'
+            ";
+            $result = $conn->fetchAll($sql);
+            if (count($result) == 1) {
+                $resultData = $result[0]['id'];
+            }
+        } catch (Exception $e) {
+            echo 'Caught exception: ', $e->getMessage(), "\n";
+        }
+        return $resultData;
+    }
+
+    /**
+     * @param $payTypeName
+     * @return int
+     */
+    public function convertNamePayTypeToID($payTypeName)
+    {
+        $resultData = 0;
+        $conn = $this->get('database_connection');
+        if (!$conn) {
+            die("MySQL Connection error");
+        }
+        try {
+            $sql = "
+               SELECT
+                  `id`
+                FROM `pay_type`
+                WHERE 1
+                  AND `typename` LIKE '%$payTypeName%'
+            ";
+            $result = $conn->fetchAll($sql);
+            if (count($result) == 1) {
+                $resultData = $result[0]['id'];
+            }
+        } catch (Exception $e) {
+            echo 'Caught exception: ', $e->getMessage(), "\n";
+        }
+        return $resultData;
+    }
+
+    /**
+     * @param $buildingTypeName
+     * @return int
+     */
+    public function convertNameBuildingTypeToID($buildingTypeName)
+    {
+        $resultData = 0;
+        $conn = $this->get('database_connection');
+        if (!$conn) {
+            die("MySQL Connection error");
+        }
+        try {
+            $sql = "
+               SELECT
+                  `id`
+                FROM `building_type`
+                WHERE 1
+                  AND `type_name` LIKE '%$buildingTypeName%'
+            ";
+            $result = $conn->fetchAll($sql);
+            if (count($result) == 1) {
+                $resultData = $result[0]['id'];
+            }
+        } catch (Exception $e) {
+            echo 'Caught exception: ', $e->getMessage(), "\n";
+        }
+        return $resultData;
+    }
+
+    /**
+     * @param $provenceName
+     * @return int
+     */
+    public function convertNameProvenceToID($provenceName)
+    {
+        $resultData = 0;
+        $conn = $this->get('database_connection');
+        if (!$conn) {
+            die("MySQL Connection error");
+        }
+        try {
+            $sql = "
+               SELECT
+                  `PROVINCE_ID`
+                FROM `province`
+                WHERE 1
+                  AND `PROVINCE_NAME` LIKE '%$provenceName%'
+            ";
+            $result = $conn->fetchAll($sql);
+            if (count($result) == 1) {
+                $resultData = $result[0]['PROVINCE_ID'];
+            }
+        } catch (Exception $e) {
+            echo 'Caught exception: ', $e->getMessage(), "\n";
+        }
+        return $resultData;
+    }
+
+    public function getBuildingTypeSearch($id)
     {
         $resultData = null;
-        $conn= $this->get('database_connection');
-        if(!$conn){ die("MySQL Connection error");}
-        try{
+        $conn = $this->get('database_connection');
+        if (!$conn) {
+            die("MySQL Connection error");
+        }
+        try {
             $sql = "
                 SELECT
                   type_name
@@ -432,21 +538,27 @@ class ListController extends Controller
                 WHERE id = $id
             ";
             $result = $conn->fetchAll($sql);
-            if(count($result)==1){
-                 $resultData = $result[0]['type_name'];
+            if (count($result) == 1) {
+                $resultData = $result[0]['type_name'];
             }
         } catch (Exception $e) {
-            echo 'Caught exception: ',  $e->getMessage(), "\n";
+            echo 'Caught exception: ', $e->getMessage(), "\n";
         }
         return $resultData;
     }
 
-    function getNearlyType($id)
+    /**
+     * @param $id
+     * @return null
+     */
+    public function getNearlyType($id)
     {
         $resultData = null;
-        $conn= $this->get('database_connection');
-        if(!$conn){ die("MySQL Connection error");}
-        try{
+        $conn = $this->get('database_connection');
+        if (!$conn) {
+            die("MySQL Connection error");
+        }
+        try {
             $sql = "
                 SELECT
                   label
@@ -455,37 +567,37 @@ class ListController extends Controller
                 WHERE id = $id
             ";
             $result = $conn->fetchAll($sql);
-            if(count($result)==1){
+            if (count($result) == 1) {
                 $resultData = $result[0]['label'];
             }
         } catch (Exception $e) {
-            echo 'Caught exception: ',  $e->getMessage(), "\n";
+            echo 'Caught exception: ', $e->getMessage(), "\n";
         }
         return $resultData;
     }
 
-    function showListAction($dataSet)
+    public function showListAction($dataSet)
     {
-        $result             = $dataSet['result'];
-        $numData            = $dataSet['numData'];
-        $searchType         = $dataSet['searchType'];
-        $numStartDisplay    = $dataSet['numStartDisplay'];
-        $numEnd             = $dataSet['numEnd' ];
-        $parameter          = $dataSet['parameter'];
-        $pageNumber         = $dataSet['pageNumber'];
-        $textSearch         = $dataSet['textSearch'];
-        $txtSearch          = $dataSet['txtSearch'];
+        $result = $dataSet['result'];
+        $numData = $dataSet['numData'];
+        $searchType = $dataSet['searchType'];
+        $numStartDisplay = $dataSet['numStartDisplay'];
+        $numEnd = $dataSet['numEnd'];
+        $parameter = $dataSet['parameter'];
+        $pageNumber = $dataSet['pageNumber'];
+        $textSearch = $dataSet['textSearch'];
+        $txtSearch = $dataSet['txtSearch'];
 
-        return $this->render('FTRWebBundle:List:showList.html.twig',array(
-            'result'            => $result,
-            'numData'           => $numData,
-            'searchType'        => $searchType,
-            'numStartDisplay'   => $numStartDisplay,
-            'numEnd'            => $numEnd,
-            'parameter'         => $parameter,
-            'pageNumber'        => $pageNumber,
-            'textSearch'        => $textSearch,
-            'txtSearch'         => $txtSearch,
+        return $this->render('FTRWebBundle:List:showList.html.twig', array(
+            'result' => $result,
+            'numData' => $numData,
+            'searchType' => $searchType,
+            'numStartDisplay' => $numStartDisplay,
+            'numEnd' => $numEnd,
+            'parameter' => $parameter,
+            'pageNumber' => $pageNumber,
+            'textSearch' => $textSearch,
+            'txtSearch' => $txtSearch,
         ));
     }
 }
