@@ -83,10 +83,23 @@
             });
             google.maps.event.addListener(marker, 'click', (function (marker, i) {
                 return function () {
-                    infowindow.setContent('<div style="width: 200px; height: auto; margin: 0;"><a href="' + locations[i][4] +
-                            '" target="_blank"><div style="width: 200px; margin-bottom: 10px; color: #F1592A; font-size: 14px; font-weight: bold;">' +
-                            locations[i][0] + '</div><div style="width: 200px; text-align:center;"><img src="' + locations[i][5] +
-                            '" width="150" style="float: left; margin-right: 10px;" border="0"></div></a></div>');
+                    infowindow.setContent('' +
+                            '<div class="ggInfoFrame" style="">' +
+                                '<div class="ggInfoImg" style="">' +
+                                    '<a href="' + locations[i][4] + '" target="_blank">' +
+                                        '<img src="' + locations[i][5] + '" />' +
+                                    '</a>' +
+                                '</div>' +
+                                '<div class="ggInfoTitle" style="">' +
+                                    '<a href="' + locations[i][4] + '" target="_blank">' +
+                                        locations[i][0] + '<br/> ' +
+                                    '</a>' +
+                                '</div>' +
+                                '<div class="ggInfoDesc">' +
+                                    'ประเภท : xxx <br/>' +
+                                    'ราคา : 1,800 - 3,000 <br/>' +
+                                '</div>' +
+                            '</div>');
                     infowindow.open(map, marker);
                 }
             })(marker, i));
@@ -301,4 +314,5 @@
             </li>
         </ul>
     </div>
+    <div class="clear"></div>
 </div>

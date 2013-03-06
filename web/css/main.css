@@ -65,7 +65,7 @@ select[disabled] { background-color: #EAEAEA !important; color:#BCBCBC !importan
 #menu hr { color: #D4D4D4; background-color: #D4D4D4; width:101.65%; height: 1px; border: 0 none; margin-left: -30px;}
 
 /*Search Block*/
-#search1 { background-color: #423C3B; width: 1000px; height: 200px; display:block; position:relative; margin:-20px auto 0 auto;}
+#search1 { background-color: #423C3B; width: 1000px; height: auto; display:block; position:relative; margin:-20px auto 0 auto;}
 #search1 ul#navi_containTab { list-style:none; padding:0; margin:0; width:100%;}
 #search1 ul#navi_containTab li { display:block; float:left; height:32px; border:0px; line-height:25px; cursor:pointer; text-align:left; padding-top:10px; color:#FFF; margin-top:15px; margin-left:20px; padding-left: 50px;} 
 #search1 a.link{ padding: 3px 5px; color: #FFF; background-color: #BF1E2D; text-decoration: none; margin-top:20px; margin-left: 640px; position:absolute; font-size:22px; display:block;} 
@@ -330,4 +330,21 @@ input.regis { background: url(../images/regis-bt.png) no-repeat; border: 0; widt
 /*show in detail page*/
 #show{
     /*margin-bottom: 20px;*/
+}
+
+/* Google Map */
+.ggInfoFrame {
+    width: auto !important; height: 120px; margin: 0;
+}
+. ggInfoFrame {
+    text-decoration: none;
+}
+.ggInfoTitle a{
+    width: auto !important; margin-bottom: 10px; color: #F1592A; font-size: 18px; font-weight: normal; text-decoration: none;
+}
+.ggInfoDesc {
+    font-size: 15px;
+}
+.ggInfoImg img{
+    width: 100px; text-align:center; float: left; margin-right: 10px;;
 }
