@@ -320,10 +320,10 @@ input.regis { background: url(../images/regis-bt.png) no-repeat; border: 0; widt
 .thumb{ width: 234px; height: auto; float: left; position: absolute; top: -10%; left: 0%; }
 .thumb4gallery{float: left; position: absolute; top: 0%; left: 0%; width: 300px; height: auto;}
 .thumb4img{float: left; position: absolute; top: 0%; left: 0%; width: 300px; height: auto;}
-.omega{margin-right: 0px !important;}
+.omega{margin-right: 0px !important; }
 .clear{clear:both}
 
-/* Thumb of ads */
+/* thumbnail ads */
 .adsThumbFrame{float: left; display: block; width: 234px; height: 120px; line-height: 100px; overflow: hidden; position: relative; z-index: 9; margin: 0px 21px 20px 0; border: 0px #CCC solid; background-color: #FFF;}
 .adsThumb{ width: 234px; height: auto; float: left; position: absolute; top: -10%; left: 0%; }
 
