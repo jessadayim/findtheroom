@@ -71,13 +71,13 @@ class SearchController extends Controller
             WHERE a.publish = 1
               AND b.deleted = 0 ";
         $sqlGetMap2 = "
-            $sqlGetMap1 AND b.`id` = 1
+            $sqlGetMap1 AND building_type.`id` = 1
         ";
         $sqlGetMap3 = "
-            $sqlGetMap1 AND b.`id` = 2
+            $sqlGetMap1 AND building_type.`id` = 2
         ";
         $sqlGetMap4 = "
-            $sqlGetMap1 AND b.`id` = 3
+            $sqlGetMap1 AND building_type.`id` = 3
         ";
         try{
             $objGetMap1 = $conn->fetchAll($sqlGetMap1);
