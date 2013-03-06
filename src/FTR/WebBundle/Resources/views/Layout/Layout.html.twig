@@ -138,6 +138,44 @@
 				what.className = 'active';
 			}
 		</script>
+		<script type="text/javascript">
+		$(document).ready(function() {
+			$("a#gmap").fancybox({
+				'overlayShow'	: true,
+				'transitionIn'	: 'elastic',
+				'transitionOut'	: 'elastic',
+				'showNavArrows' : false,
+				'width'			: 800,
+				'height'		: 600
+			});
+			$("a#imap").fancybox({
+				'overlayShow'	: true,
+				'transitionIn'	: 'elastic',
+				'transitionOut'	: 'elastic',
+				'showNavArrows' : false
+			});
+			$("a#cmap").fancybox({
+				'overlayShow'	: true,
+				'transitionIn'	: 'elastic',
+				'transitionOut'	: 'elastic',
+				'showNavArrows' : false
+			});
+			$("a#login").fancybox({
+				'width'				: 700,
+				'height'			: 400,
+				'autoScale'			: false,
+				'transitionIn'		: 'elastic',
+				'transitionOut'		: 'elastic',
+				'showNavArrows' : false,
+				'type'				: 'iframe'
+			});
+			$("a[rel=group]").fancybox({
+				'transitionIn'	: 'elastic',
+				'transitionOut'	: 'none',
+				'titlePosition' : 'over'
+			});
+		});
+</script>
 	</head>
 
 	<body>

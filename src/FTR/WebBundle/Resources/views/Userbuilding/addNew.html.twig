@@ -113,9 +113,9 @@
         }
     }
 </script>
-	<form name="addform" id="addform" method="post" action="" onsubmit="javascript:return checkSubmitData();">
+	<form name="addform" id="addform" method="post" action="{{ path('saveAddNew') }}" onsubmit="javascript:return checkSubmitData();">
     
-    <div id="datazone" class="detail" style="height: 780px; margin-bottom: 15px;">
+    <div id="datazone" class="detail" style="height: 730px; margin-bottom: 15px;">
         <img src="{{asset('images/apdata.png')}}" style="display:block; position:relative; float:none;" />
         <hr class="line" style="top: 60px;" />
         <div style="width:1000px; display:block; position:relative; height:245px; margin-top: 20px;">
@@ -141,7 +141,7 @@
                 </tr>
                 <tr height="50" valign="middle">
                     <td align="right" valign="top" width="240" style="font-size:24px;" rowspan="2">ที่อยู่ : *</td>
-                    <td align="left" valign="top" width="200" rowspan="2"><textarea name="placeap" id="placeap" type="text" maxlength="500" class="place"  onchange="postData('head');" />{{buildingdata.tbuildingaddress}}</textarea></td>
+                    <td align="left" valign="top" width="200" rowspan="2"><textarea name="placeap" id="placeap" type="text" maxlength="500" class="placeadd"  onchange="postData('head');" />{{buildingdata.tbuildingaddress}}</textarea></td>
                 	<td align="right" width="240" style="font-size:24px;">เขต/อำเภอ : *</td>
                     <td align="left" width="200">
                     <span id="divAmpher">
@@ -167,7 +167,7 @@
             <table style="margin-top: 0px; float:left;">
                 <tr>
                     <td align="right" width="240" valign="top" style="font-size:24px;">รายละเอียดเพิ่มเติม : &nbsp;</td>
-                    <td align="left" width="200"><textarea name="placedetail" type="text" maxlength="500" class="ldesc" onchange="postData('head');" />{{buildingdata.tdetail}}</textarea></td>
+                    <td align="left" width="200"><textarea name="placedetail" type="text" maxlength="500" class="ldescadd" onchange="postData('head');" />{{buildingdata.tdetail}}</textarea></td>
                 </tr>
             </table>
         </div>
@@ -237,6 +237,14 @@
                     <td align="right" width="210" style="font-size:24px;">ค่าอินเตอร์เน็ต : &nbsp;</td>
                     <td align="left" width="190"><input id="internet_price" name="internet_price" type="text" maxlength="5" placeholder="กรุณากรอกค่าอินเตอร์เน็ต" style=" padding:2px; font-size:20px;" value="{{buildingdata.iinternetprice}}" onchange="postData('head');" /></td>
                     <td align="left" width="30" style="font-size:24px;"> บาท</td>
+                </tr>
+                <tr>
+                	<td colspan="3">
+                		&nbsp;
+                	</td>
+                	<td align="left" width="30">
+                		<input class="save" type="submit" value="" />
+                	</td>
                 </tr>
             </table>
         </div>
