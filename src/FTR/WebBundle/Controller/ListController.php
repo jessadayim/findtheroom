@@ -329,8 +329,11 @@ class ListController extends Controller
 
 
             $havingQuery = "";
-            if ($lessPrice == 0 && empty($mostPrice)) {
+            if (($lessPrice == 0 || empty($lessPrice)) && empty($mostPrice)) {
                 $mostPrice = 9999999;
+            }
+            if (empty($lessPrice)) {
+                $lessPrice = 0;
             }
             if (!empty($lessPrice) && !empty($mostPrice) || ($lessPrice <= $mostPrice)) {
                 $havingQuery .= "
@@ -340,7 +343,7 @@ class ListController extends Controller
                 ";
            }
 
-            echo $sql = "
+            $sql = "
                 $selectField
                 $fromTable
                 WHERE 1
@@ -352,6 +355,41 @@ class ListController extends Controller
             //exit();
             $resultCount = $conn->fetchAll($sql);
             $result = $conn->fetchAll($sql);
+
+            foreach ($result as $key => $value) {
+                $buildingId = $value['id'];
+                $sqlImage = "
+                    select
+                      `id`,
+                      `building_site_id`,
+                      `roomtype2site_id`,
+                      `photo_name`,
+                      `photo_type`,
+                      `description`,
+                      `sequence`,
+                      `deleted`
+                    from
+                      `image`
+                    where `building_site_id` = $buildingId
+                      and `deleted` = 0
+                 ";
+                $arrImage	= $conn->fetchAll($sqlImage);
+                foreach ($arrImage as $key2 => $value2) {
+                    switch ($value2['photo_type']) {
+                        case 'head':
+                            $result[$key]['image_head'] = $value2['photo_name'];
+                            break;
+                        case 'map':
+                            $result[$key]['image_map'] = $value2['photo_name'];
+                            break;
+
+                        default:
+
+                            break;
+                    }
+                }
+            }
+
         } catch (Exception $e) {
             echo 'Caught exception: ', $e->getMessage(), "\n";
         }
