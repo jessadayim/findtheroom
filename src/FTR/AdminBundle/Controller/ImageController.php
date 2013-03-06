@@ -52,7 +52,7 @@ class ImageController extends Controller
         $ObjRoomType2SiteImage = $this->getDataArray($sqlGetRoomType2Site);
         foreach ($ObjRoomType2SiteImage as $key => $value) {
             if (empty($value['photo_name'])){
-                $ObjRoomType2SiteImage[$key]['photo_name'] = 'show.png';
+                $ObjRoomType2SiteImage[$key]['photo_name'] = 'default-image.png';
                 $ObjRoomType2SiteImage[$key]['image_id'] = 0;
             }else{
                 $ObjRoomType2SiteImage[$key]['photo_name'] = "building/$id/".$value['photo_name'];
@@ -97,7 +97,7 @@ class ImageController extends Controller
 
         foreach ($ObjGetGallery as $key => $value) {
             if (empty($value['photo_name'])){
-                $ObjGetGallery[$key]['photo_name'] = 'show.png';
+                $ObjGetGallery[$key]['photo_name'] = 'default-image.png';
 //                $ObjGetGallery[$key]['id'] = 0;
             }else{
                 $ObjGetGallery[$key]['photo_name'] = "building/$id/".$value['photo_name'];
@@ -122,7 +122,7 @@ class ImageController extends Controller
         ";
         $ObjGetHead = $this->getDataArray($sqlGetHead);
         if (empty($ObjGetHead[0]['photo_name'])){
-            $ObjGetHead[0]['photo_name'] = 'show.png';
+            $ObjGetHead[0]['photo_name'] = 'default-image.png';
             $ObjGetHead[0]['id'] = 0;
         }else{
             $ObjGetHead[0]['photo_name'] = "building/$id/" . $ObjGetHead[0]['photo_name'];
@@ -145,7 +145,7 @@ class ImageController extends Controller
         ";
         $ObjGetMap = $this->getDataArray($sqlGetMap);
         if (empty($ObjGetMap[0]['photo_name'])){
-            $ObjGetMap[0]['photo_name'] = 'show.png';
+            $ObjGetMap[0]['photo_name'] = 'default-image.png';
             $ObjGetMap[0]['id'] = 0;
         }else{
             $ObjGetMap[0]['photo_name'] = "building/$id/" . $ObjGetMap[0]['photo_name'];
@@ -169,7 +169,7 @@ class ImageController extends Controller
         ";
         $ObjGetRecommend = $this->getDataArray($sqlGetRecommend);
         if (empty($ObjGetRecommend[0]['photo_name'])){
-            $ObjGetRecommend[0]['photo_name'] = 'show.png';
+            $ObjGetRecommend[0]['photo_name'] = 'default-image.png';
             $ObjGetRecommend[0]['id'] = 0;
         }else{
             $ObjGetRecommend[0]['photo_name'] = "building/$id/" . $ObjGetRecommend[0]['photo_name'];
