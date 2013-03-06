@@ -74,6 +74,7 @@ class ListController extends Controller
             $textSearch = "โซนในกรุงเทพฯ";
             $whereQuery .= " AND a.addr_province = 'กรุงเทพมหานคร'";
         }*/
+        $shortSearchType = urldecode(@$_GET['ค้นหาจังหวัด']);
 
         $bkkPayTypeName = urldecode(@$_GET['ชนิด']);
         $bkkPayTypeID = $this->convertNamePayTypeToID($bkkPayTypeName);
@@ -94,14 +95,18 @@ class ListController extends Controller
             //short search
             switch ($searchType) {
                 case "shortSearch":
-                    if (!empty($_GET['searchBkk'])) {
-                        $shortSearchType = trim(@$_GET['searchBkk']);
+                    if ($shortSearchType == "กรุงเทพมหานคร") {
                         $whereQuery .= " AND a.zone_id != 0";
+                    } elseif ($shortSearchType == "ต่างจังหวัด") {
+                        $whereQuery .= " AND a.zone_id = 0";
+                    }
+
+                    /*if (!empty($_GET['searchBkk'])) {
+                        $shortSearchType = trim(@$_GET['searchBkk']);
                     }
                     if (!empty($_GET['searchCountry'])) {
                         $shortSearchType = trim(@$_GET['searchCountry']);
-                        $whereQuery .= " AND a.zone_id = 0";
-                    }
+                    }*/
 
                     switch ($shortSearchType) {
                         case "bkk":

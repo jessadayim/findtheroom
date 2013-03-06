@@ -120,7 +120,7 @@
 
 <script language="javascript">
     $(document).ready(function () {
-        {% if shortSearchType == 'bkk' %}
+        {% if shortSearchType == 'กรุงเทพมหานคร' %}
         $('ul#detail_containTab > li.detailContent1').show();
         $('ul#detail_containTab > li.detailContent2').hide();
         {% endif %}
@@ -147,7 +147,7 @@
             <li class="detailContent1">
                 <form action='{{ path('FTRWebBundle_list') }}?searchType=shortSearch' method="get" id="frmSearch"
                       name="frmSearch">
-                    <input type="hidden" value="bkk" name="searchBkk" id="searchBkk">
+                    <input type="hidden" value="กรุงเทพมหานคร" name="ค้นหาจังหวัด" id="searchBkk">
                     <input type="hidden" value="shortSearch" name="searchType">
 
                     <div>
@@ -217,7 +217,7 @@
 
             <li class="detailContent2">
                 <form action='{{ path('FTRWebBundle_list') }}' method="get" id="frmSearchCountry" name="frmSearch">
-                    <input type="hidden" value="country" name="searchCountry" id="searchCountry">
+                    <input type="hidden" value="ต่างจังหวัด" name="ค้นหาจังหวัด" id="searchCountry">
                     <input type="hidden" value="shortSearch" name="searchType">
 
                     <div>
