@@ -4,25 +4,25 @@
     //[building_name, latitude, longitude, 1, weburl, imageurl, typename]
     var locationsmap1 = [
         {% for map in get_map1 %}
-        ['{{map.building_name}}', {{map.latitude}}, {{map.longitude}}, 1, {{map.id}}, 'IMG URL.', '{{map.bt_id}}'],
+        ['{{map.building_name}}', {{map.latitude}}, {{map.longitude}}, 1, {{map.id}}, '{{map.path_image}}', '{{map.bt_id}}'],
         {% endfor %}
     ];
 
     var locationsmap2 = [
         {% for map in get_map2 %}
-        ['{{map.building_name}}', {{map.latitude}}, {{map.longitude}}, 1, {{map.id}}, 'IMG URL.', '{{map.bt_id}}'],
+        ['{{map.building_name}}', {{map.latitude}}, {{map.longitude}}, 1, {{map.id}}, '{{map.path_image}}', '{{map.bt_id}}'],
         {% endfor %}
     ];
 
     var locationsmap3 = [
         {% for map in get_map3 %}
-        ['{{map.building_name}}', {{map.latitude}}, {{map.longitude}}, 1, {{map.id}}, 'IMG URL.', '{{map.bt_id}}'],
+        ['{{map.building_name}}', {{map.latitude}}, {{map.longitude}}, 1, {{map.id}}, '{{map.path_image}}', '{{map.bt_id}}'],
         {% endfor %}
     ];
 
     var locationsmap4 = [
         {% for map in get_map4 %}
-        ['{{map.building_name}}', {{map.latitude}}, {{map.longitude}}, 1, {{map.id}}, 'IMG URL.', '{{map.bt_id}}'],
+        ['{{map.building_name}}', {{map.latitude}}, {{map.longitude}}, 1, {{map.id}}, '{{map.path_image}}', '{{map.bt_id}}'],
         {% endfor %}
     ];
 
