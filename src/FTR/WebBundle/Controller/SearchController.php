@@ -61,24 +61,24 @@ class SearchController extends Controller
         //rux
         $sqlGetMap1 = "
             SELECT 
-              a.*, 
+              a.id,
+              a.building_name,
+              IFNULL(a.latitude, 13.0) AS latitude,
+              IFNULL(a.longitude, 100.0) AS longitude,
               b.type_name,
 			  b.id as bt_id
             FROM
               building_site a
               INNER JOIN building_type b
                 ON (b.id = a.building_type_id)
-            WHERE a.publish = 1
+            WHERE 1
+              #AND a.publish = 1
               AND b.deleted = 0 ";
-        $sqlGetMap2 = "
-            $sqlGetMap1 AND building_type.`id` = 1
-        ";
-        $sqlGetMap3 = "
-            $sqlGetMap1 AND building_type.`id` = 2
-        ";
-        $sqlGetMap4 = "
-            $sqlGetMap1 AND building_type.`id` = 3
-        ";
+        $sqlGetMap2 = "$sqlGetMap1 AND b.`id` = 1";
+        $sqlGetMap3 = "$sqlGetMap1 AND b.`id` = 2";
+        $sqlGetMap4 = "$sqlGetMap1 AND b.`id` = 3";
+
+        echo $sqlGetMap4;
         try{
             $objGetMap1 = $conn->fetchAll($sqlGetMap1);
         } catch (Exception $e) {
