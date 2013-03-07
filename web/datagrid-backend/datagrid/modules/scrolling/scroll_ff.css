@@ -1,0 +1,7 @@
+.dg_scroll_outer                { position:relative; padding:26px 0 0 0; margin:0 auto;}
+.dg_scroll_outer TABLE          { width:100%; }
+.dg_scroll_outer THEAD TR       { position:absolute; top:0em; height:1.5em; left:0; width:99%; padding:0px;}
+.dg_scroll_outer TABLE THEAD TR TH { padding-left:9px; }
+.dg_scroll_outer th, .outer td  { }
+.dg_scroll_inner                { overflow:auto; margin:0; padding:0; }
+
