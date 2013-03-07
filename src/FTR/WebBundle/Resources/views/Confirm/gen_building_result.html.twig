@@ -1,0 +1,37 @@
+{% extends 'FTRWebBundle:Layout:Layout.html.twig' %}
+{% block title %}
+    <title>{{ siteTitle }}</title>
+    <meta name="description" content="{{ siteDesc }}" />
+    <meta name="keyword" content="{{ siteKeyword }}"/>
+    <meta name="author" content="{{ siteAuthor }}"/>
+    <meta name="copyright" content="{{ siteCopyRight }}"/>
+    <meta name="robot" content="{{ siteRobot }}"/>
+    <meta name="revisit-after" content="{{ siteRevisitAfter }}"/>
+    <meta name="distribution" content="{{ siteDistribution }}"/>
+
+    <!-- facebook tag -->
+    <meta property="og:title" content="{{ siteTitle }}"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="{{ siteUrl }}"/>
+    <meta property="og:image" content="{{ siteImage }}"/>
+    <meta property="og:site_name" content="FindTheRoom"/>
+    <meta property="fb:admins" content="USER_ID"/>
+    <meta property="og:description" content="{{ siteDesc }}"/>
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <H1>ผลการ Generate Email Code</H1>
+        {% if token != null %}
+
+            {% if confirmPassUpdate != null %}
+
+                {#{{ token }}<br/>#}
+                {#{{ confirmPassUpdate }}#}
+                <p>FindTheRoom.com ได้รับข้อมูลของท่านเป็นที่เรียบร้อยแล้ว กรุณา Confirm ข้อมูลของท่านด้วยการกด confirm link จาก email ที่ท่านได้ระบุไว้</p>
+
+            {% endif %}
+
+        {% endif %}
+        <div class="clear"></div>
+    </div>
+{% endblock %}

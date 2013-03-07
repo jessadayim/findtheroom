@@ -15,6 +15,11 @@ body {
     font-weight:normal;
 }
 
+/* Font Style */
+.fontRed{
+    color: red;
+}
+
 a img{
 	border:0px;
 }
@@ -146,7 +151,7 @@ select[disabled] { background-color: #EAEAEA !important; color:#BCBCBC !importan
 #paging a.page:hover{ border:0px; color:#BF1E2D; text-decoration:none; font-size:20px; display:block; padding-top: 10px;}
 
 /*Detail*/
-.detail { background-color: #423C3B; width: 1000px; height: 200px; display:block; position:relative; margin:15px auto 0px auto;}
+.detail { background-color: #423C3B; width: 1000px; height: 200px; display:block; position:relative; margin:15px auto 0px auto; padding: 1px 0 0 0;}
 .detail2 { background-color: #423C3B; width: 1000px; height: 100px; display:block; position:relative; margin:15px auto 0px auto; text-align:center; padding-top:60px;}
 .detail2 span.noData { color:#FFF;font-size:30px;}
 .detail img { padding-top:15px; padding-left:20px;}
@@ -170,6 +175,10 @@ select[disabled] { background-color: #EAEAEA !important; color:#BCBCBC !importan
 .detail #i_containTab3 ul#navi_containTab3 li#tabNavi7{ background:url(../images/pay.png) no-repeat; background-position:0 0; display:block;width:100px; }
 .detail #i_containTab3 ul#navi_containTab3 li#tabNavi8{ background:url(../images/pub.png) no-repeat; background-position:0 0; display:block;width:125px; }
 .detail #i_containTab3 ul#navi_containTab3 li#tabNavi9{ background:url(../images/package.png) no-repeat; background-position:0 0; display:block;width:100px; }
+
+.container{
+    width: 1000px; min-height: 230px; height: auto; display:block; position:relative; margin: 10px auto 0 auto;
+}
 
 /* class รูปแบบของแต่ละเนื้อหา */
 .detail .detailContent7{ display:block;}
