@@ -13,30 +13,8 @@
     <meta content='Advanced Power of PHP' name='author'>
 </head>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script>
-    function updateBuilding(id, publish) {
-        $.ajax({
-            type:"POST",
-            url:location.href,
-            data:{
-                buildingID:id,
-                publish:publish,
-                typePost:'updateBuilding'
-            },
-            success:function (msg) {
-                if (msg.search('finish')) {
-                    window.location.reload();
-                } else {
-                    alert(msg);
-                }
-            }
-        });
-    }
-</script>
 <body style="padding:10px">
 <?php
-
-
 
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
@@ -72,22 +50,17 @@ $sql = "
       `building_site`.*,
       `building_type`.*,
       `pay_type`.*,
-      CASE
-        WHEN `building_site`.`publish` = 0
-        THEN CONCAT('<input type=\"checkbox\"/><span style=\"color:#FF3B3B;\"><b>', 'Unapprove', '</b></span>')
-        WHEN `building_site`.`publish` = 1
-        THEN CONCAT('<input type=\"checkbox\" checked/><span style=\"color:#37D93F;\"><b>', 'Approve', '</b></span>')
-        WHEN `building_site`.`publish` = 2
-        THEN CONCAT('<input type=\"checkbox\"/><span style=\"color:#FFF83B;background-color:#B0A6FF; \"><b>',
-        '&nbsp;&nbsp;&nbsp;Waiting&nbsp;&nbsp;&nbsp;', '</b></span>')
-      END AS status_publish,
-      '<input type=\"checkbox\"/>' AS test
+      recommend_building.* ,
+      IF( recommend_building.id IS NULL, '<input type=\"checkbox\" disabled />Add',
+      '<input type=\"checkbox\" disabled checked/>') AS insert_recommend
     FROM
       `building_site`
       INNER JOIN `building_type`
         ON (`building_site`.`building_type_id` = `building_type`.`id`)
       INNER JOIN `pay_type`
         ON (`building_site`.`pay_type_id` = `pay_type`.`id`)
+      LEFT JOIN `recommend_building`
+        ON (`building_site`.`id` = recommend_building.`building_id`)
     WHERE 1
       AND `building_site`.`deleted` = 0
       AND `building_type`.`deleted` = 0
@@ -96,41 +69,7 @@ $sql = "
 $default_order = array("a_id" => "ASC");
 $dgrid->DataSource("PEAR", "mysql", $DB_HOST, $DB_NAME, $DB_USER, $DB_PASS, $sql, $default_order);
 
-if ($_POST) {
-    $getBuildingID = @$_POST['buildingID'];
-    $getPublish = @$_POST['publish'];
-    $getTypePost = @$_POST['typePost'];
-    if ($getTypePost == 'updateBuilding') {
-        $setPublish = 0;
-        $dateNow = date('Y-m-d H:i:s');
-        switch ($getPublish) {
-            case 0:
-                $setPublish = 1;
-                break;
-            case 1:
-                $setPublish = 0;
-                break;
-            case 2:
-                $setPublish = 1;
-                break;
-        }
-        $strSqlUpdate = "
-            UPDATE
-              building_site
-            SET
-              publish = $setPublish,
-              lastupdate = '$dateNow'
-            WHERE id = $getBuildingID
-        ";
-        if ($dgrid->Execute($strSqlUpdate)) {
-            echo 'finish';
-        } else {
-            echo 'fail';
-        }
-        exit();
-    }
-}
-$dg_caption = '<b><a href=approve-building.php>Approve Building</a></b>';
+$dg_caption = '<b><a href=recommend-building.php>List Building</a></b>';
 $dgrid->SetCaption($dg_caption);
 
 ## +---------------------------------------------------------------------------+
@@ -138,7 +77,7 @@ $dgrid->SetCaption($dg_caption);
 ## +---------------------------------------------------------------------------+
 ## +-- PostBack Submission Method ---------------------------------------------+
 ##  *** defines postback submission method for DataGrid: AJAX, POST(default) or GET
-$postback_method = 'AJAX';
+$postback_method = 'GET';
 $dgrid->SetPostBackMethod($postback_method);
 ##  *** set CSS class for datagrid
 ##  *** 'default|blue|gray|green|pink|empty|x-blue|x-gray|x-green' or your own css style
@@ -162,8 +101,8 @@ $sorting_option = true;
 $dgrid->AllowSorting($sorting_option);
 ##  *** set paging option: true(default) or false
 $paging_option = true;
-$rows_numeration = false;
-$numeration_sign = 'N #';
+$rows_numeration = true;
+$numeration_sign = 'ลำดับที่';
 $dropdown_paging = false;
 $dgrid->AllowPaging($paging_option, $rows_numeration, $numeration_sign, $dropdown_paging);
 ##  *** set paging settings
@@ -232,9 +171,31 @@ $vm_columns = array(
     'typename' => array('header' => ' ชนิด', 'type' => 'label', 'align' => 'left'),
     'datetimestamp' => array('header' => ' วันที่ลง', 'type' => 'label', 'align' => 'left'),
     'lastupdate' => array('header' => ' แก้ไขล่าสุด', 'type' => 'label', 'align' => 'left'),
-    'status_publish' => array('header' => ' Approve Status', 'type' => 'label', "width" => "110px",
-        "field_key" => "a_id", "field_key_1" => "publish", 'align' => 'left', "sort_by" => "publish",
-        "on_js_event" => "onclick=javascript:updateBuilding({0},{1})"),
+//    'insert_recommend' => array('header' => 'Insert to Recommend', 'type' => 'link', "width" => "110px",
+//        "field_key" => "a_id", "field_key_1" => "building_name", 'align' => 'left', 'field_data'=>'insert_recommend',
+//        "on_js_event" => "", "href" => "recommend-building.php?in_mode=add&in_rid={0}&b_name={1}"
+//    ),
+    'insert_recommend' => array(
+        'header' => 'Insert to Recommend',
+        'type' => 'link',
+        'align' => 'left',
+        'width' => 'X%|Xpx',
+        'wrap' => 'wrap|nowrap',
+        'text_length' => '-1',
+        'tooltip' => 'false',
+        'tooltip_type' => 'floating|simple',
+        'case' => 'normal|upper|lower|camel',
+        'summarize' => 'false', 'summarize_sign' => '',
+        'sort_type' => 'string|numeric',
+        'sort_by' => '',
+        'visible' => 'true',
+        'on_js_event' => '',
+        'field_key' => 'a_id',
+        'field_key_1' => 'building_name',
+        'field_data' => 'insert_recommend', 'rel' => '',
+        'title' => '', 'target' => '_self',
+        'href' => 'recommend-building.php?in_mode=add&in_rid={0}&b_name={1}'
+    ),
 //    'test' => array('header' => ' แก้ไขล่าสุด', 'type' => 'label', "field_key" => "a_id",
 //        "field_key_1" => "publish", 'align' => 'left',
 //        "on_js_event" => "onclick=javascript:updateBuilding({0},{1})"),
@@ -267,6 +228,8 @@ $dgrid->SetAutoColumnsInEditMode(true);
 ##  *** set debug mode & messaging options
 $dgrid->Bind();
 ob_end_flush();
+
+include "insert-recommend.php";
 
 ?>
 </body>
