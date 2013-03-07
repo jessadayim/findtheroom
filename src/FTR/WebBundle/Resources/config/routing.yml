@@ -114,3 +114,24 @@ FTRWebBundle_loginFacebook:
 FTRWebBundle_defalut_countclick:
     pattern:  /countclick
     defaults: { _controller: FTRWebBundle:Default:countClick}
+
+# DEV : MICK
+# Date : 07/03/2013
+# ใช้ตรวจสอบค่า Token จาก Email ในการ Confirm การสร้างห้องพักใหม่
+FTRWebBundle_confirm_building:
+    pattern:  /confirm_token/{id}/{token}
+    defaults: { _controller: FTRWebBundle:ConfirmBuilding:validateConfirmBuildingToken}
+
+# DEV : MICK
+# Date : 07/03/2013
+# แสดงผลการ validate confirm token จาก email
+FTRWebBundle_confirm_result:
+    pattern:  /confirm_result/{id}/{token}/{result}
+    defaults: { _controller: FTRWebBundle:ConfirmBuilding:showResultValidate}
+
+# DEV : MICK
+# Date : 07/03/2013
+# generate confirm token และ password update
+FTRWebBundle_gen_confirm_code:
+    pattern:  /gen_confirm_code/{id}
+    defaults: { _controller: FTRWebBundle:ConfirmBuilding:genConfirmBuildingCode}
