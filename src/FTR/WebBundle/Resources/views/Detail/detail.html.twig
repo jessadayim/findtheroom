@@ -40,7 +40,13 @@ $(function(){
 <div id="show">
     <div class="result">
     	<div class="wifi"> </div><div style=" display:block; position: absolute; margin-left: 0px; margin-top: 127px; width:200px; text-align:center;">ราคา {{general.start_price}} - {{general.end_price}} บาท</div>
-		<div class="thumbframe">{%if head is empty%}<img src="{{ asset('images/building/')}}{{ id }}/{{head}}" class="thumb omega" />{%else%}<img src='{{asset('images/default/default.jpg')}}' class='thumb omega'>{%endif%}</div>
+		<div class="thumbframe">
+            {%if head is empty%}
+                    <img src="{{ asset('images/building/')}}{{ id }}/{{head}}" class="thumb omega" />
+            {%else%}
+                    <img src='{{asset('images/default-image.png')}}' class='thumb omega'>
+            {%endif%}
+        </div>
     	<div class="desc">
         	<table border="0" width="500" style="margin-top:-8px;">
             	<tr style="font-size:26px">
@@ -261,13 +267,17 @@ $(function(){
                 {% for type in roomType %}
                 <tr height="135" valign="middle">
                     <td align="left" width="220">
-                        <div class="thumbframe">
-                            {%if type.photo_name != null%}
-                                <img src="{{ asset('images/building/')}}{{ type.building_site_id }}/{{type.photo_name}}" />
-                            {%else%}
-                                <img src='{{asset('images/default/default.jpg')}}'>
-                            {%endif%}
-                        </div>
+
+                        {%if type.photo_name != null%}
+                            <div class="defaultRoomShow">
+                                <img src="{{ asset('images/building/')}}{{ type.building_site_id }}/{{type.photo_name}}" class="defaultRoomShow"/>
+                            <div>
+                                {%else%}
+                            <div class="roomThumbFrame">
+                                <img src='{{asset('images/default-image.png')}}' class="roomThumb">
+                            </div>
+                        {%endif%}
+
                     </td>
                     <td align="left" width="150">{{type.room_typename}}</td>
                     <td align="right" width="110" style="padding-right:10px;">{{type.room_size}}</td>
@@ -299,10 +309,11 @@ $(function(){
                             {% else %}
                             <div class="ap" style="height: 160px;">
                                 {%endif%}
-                                <a class="pop" rel="group" href="{{ asset('images/building/')}}{{ image.building_site_id }}/{{image.photo_name}}" title="{{image.description}}"><div class="thumbframe4gallery">
-                                    <img src="{{ asset('images/building/')}}{{ image.building_site_id }}/{{image.photo_name}}" class="thumb4gallery"/>
-                                    {#<img src="{{asset('images/Apartment/ap3.png')}}" class="thumb4gallery"/>#}
-                                </div></a>
+                                <a class="pop" rel="group" href="{{ asset('images/building/')}}{{ image.building_site_id }}/{{image.photo_name}}" title="{{image.description}}">
+                                    <div class="thumbframe4gallery">
+                                        <img src="{{ asset('images/building/')}}{{ image.building_site_id }}/{{image.photo_name}}" class="thumb4gallery"/>
+                                    </div>
+                                </a>
                             </div>
                             {% set introw1 = introw1+1 %}
                             {% if introw1%6 == 0%}

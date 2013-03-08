@@ -5,15 +5,17 @@
     var locationsmap1 = [
         {% for map in get_map1 %}
         [
-            '{{map.building_name}}',
-            {{map.latitude}},
-            {{map.longitude}}, 1,
-            {{map.id}},
-            '{{map.path_image}}',
-            '{{map.bt_id}}',
-            '{{map.start_price}}',
-            '{{map.end_price}}',
-            '{{map.type_name}}'
+            '{{map.building_name}}',    // 0
+            {{map.latitude}},           // 1
+            {{map.longitude}},          // 2
+            1,                          // 3
+            {{map.id}},                 // 4
+            '{{map.path_image}}',       // 5
+            '{{map.bt_id}}',            // 6
+            '{{map.start_price}}',      // 7
+            '{{map.end_price}}',        // 8
+            '{{map.type_name}}',        // 9
+            "{{ path('FTRWebBundle_detail', {'buildId':map.id, 'province':map.province_name, 'prefecture':map.amphur_name, 'slug':map.slug}) }}"        // 10
         ],
         {% endfor %}
     ];
@@ -21,15 +23,17 @@
     var locationsmap2 = [
         {% for map in get_map2 %}
         [
-            '{{map.building_name}}',
-            {{map.latitude}},
-            {{map.longitude}}, 1,
-            {{map.id}},
-            '{{map.path_image}}',
-            '{{map.bt_id}}',
-            '{{map.start_price}}',
-            '{{map.end_price}}',
-            '{{map.type_name}}'
+            '{{map.building_name}}',    // 0
+            {{map.latitude}},           // 1
+            {{map.longitude}},          // 2
+            1,                          // 3
+            {{map.id}},                 // 4
+            '{{map.path_image}}',       // 5
+            '{{map.bt_id}}',            // 6
+            '{{map.start_price}}',      // 7
+            '{{map.end_price}}',        // 8
+            '{{map.type_name}}',        // 9
+            "{{ path('FTRWebBundle_detail', {'buildId':map.id, 'province':map.province_name, 'prefecture':map.amphur_name, 'slug':map.slug}) }}"        // 10
         ],
         {% endfor %}
     ];
@@ -37,15 +41,17 @@
     var locationsmap3 = [
         {% for map in get_map3 %}
         [
-            '{{map.building_name}}',
-            {{map.latitude}},
-            {{map.longitude}}, 1,
-            {{map.id}},
-            '{{map.path_image}}',
-            '{{map.bt_id}}',
-            '{{map.start_price}}',
-            '{{map.end_price}}',
-            '{{map.type_name}}'
+            '{{map.building_name}}',    // 0
+            {{map.latitude}},           // 1
+            {{map.longitude}},          // 2
+            1,                          // 3
+            {{map.id}},                 // 4
+            '{{map.path_image}}',       // 5
+            '{{map.bt_id}}',            // 6
+            '{{map.start_price}}',      // 7
+            '{{map.end_price}}',        // 8
+            '{{map.type_name}}',        // 9
+            "{{ path('FTRWebBundle_detail', {'buildId':map.id, 'province':map.province_name, 'prefecture':map.amphur_name, 'slug':map.slug}) }}"        // 10
         ],
         {% endfor %}
     ];
@@ -53,15 +59,17 @@
     var locationsmap4 = [
         {% for map in get_map4 %}
         [
-            '{{map.building_name}}',
-            {{map.latitude}},
-            {{map.longitude}}, 1,
-            {{map.id}},
-            '{{map.path_image}}',
-            '{{map.bt_id}}',
-            '{{map.start_price}}',
-            '{{map.end_price}}',
-            '{{map.type_name}}'
+            '{{map.building_name}}',    // 0
+            {{map.latitude}},           // 1
+            {{map.longitude}},          // 2
+            1,                          // 3
+            {{map.id}},                 // 4
+            '{{map.path_image}}',       // 5
+            '{{map.bt_id}}',            // 6
+            '{{map.start_price}}',      // 7
+            '{{map.end_price}}',        // 8
+            '{{map.type_name}}',        // 9
+            "{{ path('FTRWebBundle_detail', {'buildId':map.id, 'province':map.province_name, 'prefecture':map.amphur_name, 'slug':map.slug}) }}"        // 10
         ],
         {% endfor %}
     ];
@@ -125,19 +133,19 @@
                 return function () {
                     infowindow.setContent('' +
                             '<div class="ggInfoFrame" style="">' +
-                                '<div class="ggInfoImg" style="">' +
-                                    '<a href="' + locations[i][4] + '" target="_blank">' +
-                                        '<img src="' + locations[i][5] + '" />' +
+                                '<div class="ggInfoThumbFrame" style="">' +
+                                    '<a href="' + locations[i][10] + '" target="_blank">' +
+                                        '<img src="' + locations[i][5] + '" class="ggInfoImgThumb" />' +
                                     '</a>' +
                                 '</div>' +
                                 '<div class="ggInfoTitle" style="">' +
-                                    '<a href="' + locations[i][4] + '" target="_blank">' +
+                                    '<a href="' + locations[i][10] + '" target="_blank">' +
                                         locations[i][0] + '<br/> ' +
                                     '</a>' +
                                 '</div>' +
                                 '<div class="ggInfoDesc">' +
-                                    'ประเภท : xxx <br/>' +
-                                    'ราคา : 1,800 - 3,000 <br/>' +
+                                    'ประเภท : ' + locations[i][9] + ' <br/>' +
+                                    'ราคา : ' + locations[i][7] + ' - ' + locations[i][8] + ' <br/>' +
                                 '</div>' +
                             '</div>');
                     infowindow.open(map, marker);

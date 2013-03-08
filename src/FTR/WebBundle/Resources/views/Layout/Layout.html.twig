@@ -195,27 +195,34 @@
 			<span>Follow Us On :</span>
 			<div class="social">
 				<a href="http://www.facebook.com/FindTheRoom" target="_new"><img src="{{asset('images/fb-icon.gif')}}" /></a><a href='http://twitter.com/FindTheRoom' target="_blank"><img src="{{asset('images/tw-icon.gif')}}" /></a>
-			</div>
-			<div id="logo"><a href="{{path('FTRWebBundle_homepage')}}"><span></span></a></div>
-			{% if app.session.get('user')  %}
-			<div id="login" style="text-align:right; margin-right:60px;">
-				<form action="{{path('FTRWebBundle_logout')}}" method="post" >
-					Logged in as {{ app.session.get('user') }}
-					<input class="logout" type="submit" value=""/>
-				</form>
-				{% else %}
-				<div id="login">
-					<input id="username" name="username" type="text" value="{{app.request.cookies.get('username')}}" maxlength="25" placeholder="กรุณากรอกชื่อผู้ใช้งาน" />
-					<input id="password" name="password" type="password" value="{{app.request.cookies.get('password')}}" maxlength="25" placeholder="กรุณากรอกรหัสผ่าน" />
-					<input id="log2" class="login" type="submit" value="" />
-					{% endif %}
-				</div>
                 <form action="{{path('FTRWebBundle_list')}}?searchType=txtSearch" method="post">
                     <div id="topsearch">
                         <input type="text" value="{{ app.session.get('txtSearch') }}" name="txtSearch" id="s">
                         <input type="submit" id="searchsubmit" value="">
                     </div>
                 </form>
+			</div>
+			<div id="logo"><a href="{{path('FTRWebBundle_homepage')}}"><span></span></a></div>
+            {% if app.session.get('user')  %}
+			<div id="login" style="text-align:right; margin-right:60px;">
+				{#<form action="{{path('FTRWebBundle_logout')}}" method="post" >#}
+					{#Logged in as {{ app.session.get('user') }}#}
+					{#<input class="logout" type="submit" value=""/>#}
+				{#</form>#}
+			{% else %}
+				{#<div id="login">#}
+					{#<input id="username" name="username" type="text" value="{{app.request.cookies.get('username')}}" maxlength="25" placeholder="กรุณากรอกชื่อผู้ใช้งาน" />#}
+					{#<input id="password" name="password" type="password" value="{{app.request.cookies.get('password')}}" maxlength="25" placeholder="กรุณากรอกรหัสผ่าน" />#}
+					{#<input id="log2" class="login" type="submit" value="" />#}
+                {#</div>#}
+			{% endif %}
+
+                {#<form action="{{path('FTRWebBundle_list')}}?searchType=txtSearch" method="post">#}
+                    {#<div id="topsearch">#}
+                        {#<input type="text" value="{{ app.session.get('txtSearch') }}" name="txtSearch" id="s">#}
+                        {#<input type="submit" id="searchsubmit" value="">#}
+                    {#</div>#}
+                {#</form>#}
 			</div>
 
 			<div id="menu">
@@ -225,7 +232,8 @@
 						<a id="mainpage" href="{{path('FTRWebBundle_homepage')}}">หน้าแรก</a>
 					</li>
 					<li>
-						<a id="searchpage" href="{{path('FTRWebBundle_search')}}">ค้นหาอย่างละเอียด</a>
+						{#<a id="searchpage" href="{{path('FTRWebBundle_search')}}">ค้นหาอย่างละเอียด</a>#}
+						<a id="searchpage" href="{{path('FTRWebBundle_search')}}">ค้นหาห้องพัก</a>
 					</li>
 					<li>
 						<a id="bannerpage" href='{{path('FTRWebBundle_banner')}}'>ลงโฆษณา</a>
@@ -451,18 +459,18 @@
 				<ul>
                     <li class="head">
                         <div class="footerImgTitle"><img src="{{asset('images/footer-icon-building.png')}}"/></div>
-                        <div class="footerBuildingType">ประเภทหอพัก</div>
+                        <div class="footerBuildingType">ประเภทห้องพัก</div>
                         <hr />
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักชาย</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักหญิง</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักรายวัน</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักรายเดือน</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักชาย</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักหญิง</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักรายวัน</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักรายเดือน</a>
                         <a href="{{path('FTRWebBundle_homepage')}}">แมนชั่น</a>
                         <a href="{{path('FTRWebBundle_homepage')}}">อพาร์ทเม้นท์</a>
                         <a href="{{path('FTRWebBundle_homepage')}}">เซอร์วิส อพาร์ทเม้นท์</a>
                         <div class="clear"></div>
                         <div class="footerImgTitle" style="margin-top: 10px;"><img src="{{asset('images/footer-icon-building.png')}}"/></div>
-                        <div class="footerBuildingType">ราคาหอพัก</div>
+                        <div class="footerBuildingType">ราคาห้องพัก</div>
                         <hr />
                         <a href="{{path('FTRWebBundle_homepage')}}">ราคา 2,000 - 3,000 บาท</a>
                         <a href="{{path('FTRWebBundle_homepage')}}">ราคา 3,001 - 4,000 บาท</a>
@@ -549,7 +557,7 @@
                     </li>
                     <li class="head">
                         <div class="footerImgTitle"><img src="{{asset('images/footer-icon-building.png')}}"/></div>
-                        <div class="footerBuildingType">หอพักโซนในกรุงเทพฯ</div>
+                        <div class="footerBuildingType">ห้องพักโซนในกรุงเทพฯ</div>
                         <hr />
                         <a href="{{path('FTRWebBundle_homepage')}}">เทพารักษ์/ศรีนครินทร์/บางนา</a>
                         <a href="{{path('FTRWebBundle_homepage')}}">อ่อนนุช/ลาดกระบัง</a>
@@ -577,72 +585,72 @@
                     </li>
                     <li class="head">
                         <div class="footerImgTitle"><img src="{{asset('images/footer-icon-building.png')}}"/></div>
-                        <div class="footerBuildingType">หอพักใกล้สถานี BTS</div>
+                        <div class="footerBuildingType">ห้องพักใกล้สถานี BTS</div>
                         <hr />
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี หมอชิต</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี สะพานควาย</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี อารีย์</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี สนามเป้า</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี อนุสาวรีย์ชัยสมรภูมิ</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี พญาไท</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี ราชเทวี</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี สยาม</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี ชิดลม</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี เพลินจิต</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี นานา</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี อโศก</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี พร้อมพงษ์</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี ทองหล่อ</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี เอกมัย</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี อ่อนนุช</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี บางจาก</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี ปุณณวิถี</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี อุดมสุข</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี บางนา</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี หมอชิต</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี สะพานควาย</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี อารีย์</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี สนามเป้า</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี อนุสาวรีย์ชัยสมรภูมิ</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี พญาไท</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี ราชเทวี</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี สยาม</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี ชิดลม</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี เพลินจิต</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี นานา</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี อโศก</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี พร้อมพงษ์</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี ทองหล่อ</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี เอกมัย</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี อ่อนนุช</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี บางจาก</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี ปุณณวิถี</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี อุดมสุข</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี บางนา</a>
                     </li>
                     <li class="head">
                         <div class="footerImgTitle"><img src="{{asset('images/footer-icon-building.png')}}"/></div>
-                        <div class="footerBuildingType">หอพักใกล้สถานี BTS</div>
+                        <div class="footerBuildingType">ห้องพักใกล้สถานี BTS</div>
                         <hr />
 
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี แบริ่ง</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี สนามกีฬาแห่งชาติ</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี สยาม</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี ราชดำริ</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี ศาลาแดง</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี ช่องนนทรี</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี สุรศักดิ์</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี สะพานตากสิน</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี กรุงธนบุรี</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี วงเวียนใหญ่</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี โพธิ์นิมิตร</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี ตลาดพลู</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี วุฒากาศ</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี บางหว้า</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี แบริ่ง</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี สนามกีฬาแห่งชาติ</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี สยาม</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี ราชดำริ</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี ศาลาแดง</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี ช่องนนทรี</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี สุรศักดิ์</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี สะพานตากสิน</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี กรุงธนบุรี</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี วงเวียนใหญ่</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี โพธิ์นิมิตร</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี ตลาดพลู</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี วุฒากาศ</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี บางหว้า</a>
                         <div class="clear"></div>
                     </li>
                     <li class="head">
                         <div class="footerImgTitle"><img src="{{asset('images/footer-icon-building.png')}}"/></div>
-                        <div class="footerBuildingType">หอพักใกล้สถานี MRT</div>
+                        <div class="footerBuildingType">ห้องพักใกล้สถานี MRT</div>
                         <hr />
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี บางซื่อ</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี กำแพงเพชร</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี สวนจตุจักร</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี พหลโยธิน</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี ลาดพร้าว</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี รัชดาภิเษก</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี สุทธิสาร</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี ห้วยขวาง</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี ศูนย์วัฒนธรรมแห่งประเทศไทย</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี พระราม 9</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี เพชรบุรี</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี สุขุมวิท</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี ศูนยการประชุมแห่งชาติสิริกิติ์</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี คลองเตย</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี ลุมพินี</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี สีลม</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี สามย่าน</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}">หอพักใกล้สถานี หัวลำโพง</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี บางซื่อ</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี กำแพงเพชร</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี สวนจตุจักร</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี พหลโยธิน</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี ลาดพร้าว</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี รัชดาภิเษก</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี สุทธิสาร</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี ห้วยขวาง</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี ศูนย์วัฒนธรรมแห่งประเทศไทย</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี พระราม 9</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี เพชรบุรี</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี สุขุมวิท</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี ศูนยการประชุมแห่งชาติสิริกิติ์</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี คลองเตย</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี ลุมพินี</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี สีลม</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี สามย่าน</a>
+                        <a href="{{path('FTRWebBundle_homepage')}}">ห้องพักใกล้สถานี หัวลำโพง</a>
                     </li>
 
 
@@ -661,8 +669,8 @@
 					{#<li class="head"><img src="{{asset('images/footer2.png')}}" />#}
 						{#<hr />#}
 						{#<a href="{{path('FTRWebBundle_list')}}?searchType=shortSearch&buildingType=1">อพาร์ทเม้นท์</a>#}
-						{#<a href="{{path('FTRWebBundle_list')}}?searchType=shortSearch&buildingType=2">หอพักชาย</a>#}
-						{#<a href="{{path('FTRWebBundle_list')}}?searchType=shortSearch&buildingType=3">หอพักหญิง</a>#}
+						{#<a href="{{path('FTRWebBundle_list')}}?searchType=shortSearch&buildingType=2">ห้องพักชาย</a>#}
+						{#<a href="{{path('FTRWebBundle_list')}}?searchType=shortSearch&buildingType=3">ห้องพักหญิง</a>#}
 					{#</li>#}
 					{#<li class="head"><img src="{{asset('images/footer3.png')}}" />#}
 						{#<hr />#}

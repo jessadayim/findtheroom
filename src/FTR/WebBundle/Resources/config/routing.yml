@@ -135,3 +135,11 @@ FTRWebBundle_confirm_result:
 FTRWebBundle_gen_confirm_code:
     pattern:  /gen_confirm_code/{id}
     defaults: { _controller: FTRWebBundle:ConfirmBuilding:genConfirmBuildingCode}
+
+# DEV : MICK
+# Date : 08/03/2013
+# แสดง googlemap ขนาด 800x600 โดยส่งรายละเอียดดังนี้
+# id, building name, building type, start price, end price, google lat, google long
+FTRWebBundle_googlemap_view:
+    pattern:  /googlemap_view/{id}
+    defaults: { _controller: FTRWebBundle:Googlemap:sendToGooglemapView}
