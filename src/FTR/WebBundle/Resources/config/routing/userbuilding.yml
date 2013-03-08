@@ -3,7 +3,7 @@ userbuilding:
     defaults: { _controller: FTRWebBundle:Userbuilding:index }
     
 addData:
-    pattern: /add/{id}
+    pattern: /edit/{id}
     defaults: { _controller: FTRWebBundle:Userbuilding:addData ,'id' :null }
 
 addNewBuildData:
@@ -63,10 +63,14 @@ addNewRoom:
     defaults: { _controller: FTRWebBundle:Userbuilding:addNewRoom }
 
 addNewGallery:
-    pattern: /addnewgaller/{id}
+    pattern: /addnewgallery/{id}
     defaults: { _controller: FTRWebBundle:Userbuilding:addNewGallery }
 
 addNewOther:
     pattern: /addnewother/{id}
     defaults: { _controller: FTRWebBundle:Userbuilding:addNewOther }
+
+saveNewOther:
+    pattern: /savenewother/{id}
+    defaults: { _controller: FTRWebBundle:Userbuilding:saveNewOther }
     

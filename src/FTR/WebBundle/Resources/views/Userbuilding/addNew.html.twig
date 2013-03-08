@@ -3,7 +3,6 @@
 
     <link rel="stylesheet" type="text/css" href="{{asset('js/uploadify/uploadify.css')}}">
     <script type="text/javascript" src="{{asset('js/uploadify/jquery.uploadify-3.1.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/uploadify.control.js')}}"></script>
     <script type="text/javascript" src="{{asset('js/sisyphus-autosave/sisyphus.js')}}"></script>
     <script type="text/javascript" src="{{asset('js/gritter/js/jquery.gritter.js')}}"></script>
     <link rel="stylesheet" type="text/css" href="{{asset('js/gritter/css/jquery.gritter.css')}}" />
@@ -31,13 +30,57 @@
         });
     </script>
 <script language="javascript">
-
     var swfpath = "{{asset('js/uploadify/uploadify.swf')}}";
     var uploaderpath = "{{asset('js/uploadify/uploadify.php')}}";
+    var imagepath = "{{asset('images/building')}}";
+	$(function() {// get more knowledge at http://www.uploadify.com/documentation/
+		var ownername = '0';
+		var buildid = '0';
+		
+		$('#file_upload').uploadify({
+			'formData'      : {'ownername' : ownername, 'buildid' : buildid ,'fieldname' : 'head'},
+			//'debug'    : true,
+			'swf'      : swfpath,
+			'uploader' : uploaderpath,
+			//'uploadLimit' : 1,
+			'queueSizeLimit' : 1,
+			'multi'    : false,
+			'fileSizeLimit' : '120KB',
+			'fileTypeExts' : '*.gif; *.jpg; *.png',
+			'onFallback' : function() {/*alert('Flash was not detected.');*/},// detect flash compatible
+			'onUploadSuccess' : function(file, data, response) {
+            	//alert('The file ' + file.name + ' was successfully uploaded with a response of ' + response + ':' + data);
+            	document.getElementById('hdnfilename').value = data;
+            	//postData('image');
+				$('#headimage').fadeOut().html('<img src="'+imagepath+'/'+buildid+'/'+data+'" class="nopad thumb"/>').fadeIn("slow");
+        	}
+			// Your options here
+		});
+		
+		$('#upload_map').uploadify({
+			'formData'      : {'ownername' : ownername, 'buildid' : buildid ,'fieldname' : 'map'},
+			//'debug'    : true,
+			'swf'      : swfpath,
+			'uploader' : uploaderpath,
+			//'uploadLimit' : 1,
+			'queueSizeLimit' : 1,
+			'multi'    : false,
+			'fileSizeLimit' : '120KB',
+			'fileTypeExts' : '*.gif; *.jpg; *.png',
+			'onFallback' : function() {/*alert('Flash was not detected.');*/},// detect flash compatible
+			'onUploadSuccess' : function(file, data, response) {
+            	//alert('The file ' + file.name + ' was successfully uploaded with a response of ' + response + ':' + data);
+            	document.getElementById('hdnfilemap').value = data;
+            	//postData('image');
+            	$('#headimage2').fadeOut().html('<img src="'+imagepath+'/'+buildid+'/'+data+'" class="nopad thumb"/>').fadeIn("slow");
+        	}
+			// Your options here
+		});
+	});
     function getAmphur()
     {
-        postData('head');
-
+        //postData('head');
+		
         var provinceName = document.getElementById('province').value;
         var pathtochange = "{{path('getDistrict')}}";
         var addfixpath = pathtochange+'/'+provinceName;
@@ -47,7 +90,7 @@
                 function(data) {
                     if(data != "no")
                     {
-                        document.getElementById('provinceChange').innerHTML = data;
+                        //document.getElementById('provinceChange').innerHTML = data;
                     }
                 });
         //document.getElementById('provinceChange').innerHTML = provinceName;
@@ -60,7 +103,7 @@
         {
             var type = 1;
         }
-        fncAlert(type);
+        //fncAlert(type);
         $.get(addfixpath,
                 function(data) {
                     if(data != "no")
@@ -81,6 +124,7 @@
         return str.substring(0,i+1);
     }
     function Trim(str){return LTrim(RTrim(str));}
+    
     function checkSubmitData()
     {
         var nameAp = document.getElementById('nameap').value;
@@ -98,9 +142,40 @@
         var contact_email = document.getElementById('contact_email').value;
         var power_price = document.getElementById('power_price').value;
         var pass ='';
-        if(nameAp==''||placeAp==''||zipCode==''||longitude==''||latitude==''||telNumber==''||time==''||contact_person==''||water_price==''||contact_email==''||power_price==''||province==0||district==0||apType==0)
-        {
-            alert('ข้อมูลที่จำเป็นยังกรอกไม่ครบ กรุณาตรวจสอบข้อมูลด้วยค่ะ');
+        if (nameAp=='' || placeAp=='' || zipCode=='' || longitude=='' ||
+        latitude=='' || telNumber=='' || time=='' || contact_person=='' ||
+        water_price=='' || contact_email=='' || power_price=='' || province==0 ||
+        district==0 || apType==0) {
+            alert('ข้อมูลที่จำเป็นยังกรอกไม่ครบ กรุณาตรวจสอบข้อมูล');
+            if (nameAp=='') {
+            	document.getElementById('nameap').focus();
+            } else if (placeAp=='') {
+            	document.getElementById('placeap').focus();
+            } else if (province==0) {
+            	document.getElementById('province').focus();
+            } else if (district==0) {
+            	document.getElementById('district').focus();
+            } else if (zipCode=='') {
+            	document.getElementById('zipcode').focus();
+            } else if (longitude=='') {
+            	document.getElementById('longitude').focus();
+            } else if (latitude=='') {
+            	document.getElementById('latitude').focus();
+            } else if (apType==0) {
+            	document.getElementById('aptype').focus();
+            } else if (telNumber=='') {
+            	document.getElementById('telnumber').focus();
+            } else if (time=='') {
+            	document.getElementById('time').focus();
+            } else if (contact_person=='') {
+            	document.getElementById('contact_person').focus();
+            } else if (water_price=='') {
+            	document.getElementById('water_price').focus();
+            } else if (contact_email=='') {
+            	document.getElementById('contact_email').focus();
+            } else if (power_price=='') {
+            	document.getElementById('power_price').focus();
+            }
             return false;
         }
         else{
@@ -115,17 +190,40 @@
 </script>
 	<form name="addform" id="addform" method="post" action="{{ path('saveAddNew') }}" onsubmit="javascript:return checkSubmitData();">
     
-    <div id="datazone" class="detail" style="height: 730px; margin-bottom: 15px;">
+    <div id="datazone" class="detail" style="height: 830px; margin-bottom: 15px;">
         <img src="{{asset('images/apdata.png')}}" style="display:block; position:relative; float:none;" />
         <hr class="line" style="top: 60px;" />
         <div style="width:1000px; display:block; position:relative; height:245px; margin-top: 20px;">
-            
-            <table style="margin-top: -10px; float:none;">
+            <table style="margin-top: 0px; float:left;">
                 <tr height="50" valign="middle">
-                    <td align="right" width="240" style="font-size:24px;">ชื่อหอพัก / อพาร์ทเม้นท์ : *</td>
-                    <td align="left" width="200"><input name="nameap" id="nameap" type="text" maxlength="30" placeholder="กรุณากรอกชื่อหอพัก" style=" padding:2px; font-size:20px;" value="{{buildingdata.sbuildingname}}" onchange="postData('head');" /></td>
-                    <td align="right" width="240" style="font-size:24px;">จังหวัด : *</td>
-                    <td align="left" width="200">
+                    <td align="left" width="240">
+                        <div id="headimage" class="thumbframe4add">
+                            {% if linkimagehead != '' %}
+                                <img src="{{asset(linkimagehead)}}" class="nopad thumb" />
+                            {% else %}
+                                <img src="{{asset('images/ex.png')}}" class="nopad thumb" />
+                            {% endif %}
+                        </div>
+                    </td>
+                    <td align="left" width="210" valign="middle"><input style="margin-left: -20px;" type="file" name="file_upload" id="file_upload" />
+                        <input type="hidden" name="hdnfilename" id="hdnfilename" value="{{nameimagehead}}" /></td>
+                </tr>
+                <tr height="50" valign="middle">
+                    &nbsp;
+                </tr>
+            </table>
+            <table style="margin-top: -15px; float:none;  margin-left: 0px;">
+                <tr height="50" valign="middle">
+                    <td align="right" width="210" style="font-size:24px;">ชื่อหอพัก / อพาร์ทเม้นท์ : *</td>
+                    <td align="left" width="190"><input name="nameap" id="nameap" type="text" maxlength="30" placeholder="กรุณากรอกชื่อหอพัก" style=" padding:2px; font-size:20px;" value="{{buildingdata.sbuildingname}}" /></td>
+                </tr>
+                <tr height="50" valign="top">
+                    <td align="right" width="210" style="font-size:24px;">ที่อยู่ : *</td>
+                    <td align="left" width="190"><textarea name="placeap" id="placeap" type="text" maxlength="500" class="place" />{{buildingdata.tbuildingaddress}}</textarea></td>
+                </tr>
+                <tr height="50" valign="middle">
+                    <td align="right" width="210" style="font-size:24px;">จังหวัด : *</td>
+                    <td align="left" width="190">
                         <div class="styled-select">
                             <select id="province" name="province" class="select" onchange="getAmphur();">
                                 {% for list in province %}
@@ -139,14 +237,12 @@
                         </div>
                     </td>
                 </tr>
-                <tr height="50" valign="middle">
-                    <td align="right" valign="top" width="240" style="font-size:24px;" rowspan="2">ที่อยู่ : *</td>
-                    <td align="left" valign="top" width="200" rowspan="2"><textarea name="placeap" id="placeap" type="text" maxlength="500" class="placeadd"  onchange="postData('head');" />{{buildingdata.tbuildingaddress}}</textarea></td>
-                	<td align="right" width="240" style="font-size:24px;">เขต/อำเภอ : *</td>
-                    <td align="left" width="200">
+                <tr height="40" valign="middle">
+                    <td align="right" width="210" style="font-size:24px;">เขต/อำเภอ : *</td>
+                    <td align="left" width="190">
                     <span id="divAmpher">
                         <div class="styled-select">
-                            <select id="district" name="district" class="select" onchange="postData('head');">
+                            <select id="district" name="district" class="select">
                                 {% for list in district %}
                                     {% if list.checked == 'no' %}
                                         <option value="{{list.AMPHUR_ID}}">{{list.AMPHUR_NAME}}</option>
@@ -160,31 +256,44 @@
                     </td>
                 </tr>
                 <tr height="50" valign="middle">
-                    <td align="right" width="240" style="font-size:24px;">รหัสไปรษณีย์ : *</td>
-                    <td align="left" width="200"><input id="zipcode" name="zipcode" type="text" maxlength="30" placeholder="กรุณากรอกรหัสไปรษณีย์" style=" padding:2px; font-size:20px;" value="{{buildingdata.saddrzipcode}}" onchange="postData('head');" /></td>
+                    <td align="right" width="210" style="font-size:24px;">รหัสไปรษณีย์ : *</td>
+                    <td align="left" width="190"><input id="zipcode" name="zipcode" type="text" maxlength="30" placeholder="กรุณากรอกรหัสไปรษณีย์" style=" padding:2px; font-size:20px;" value="{{buildingdata.saddrzipcode}}" /></td>
                 </tr>
             </table>
             <table style="margin-top: 0px; float:left;">
                 <tr>
+                    <td align="right" width="240" style="font-size:24px;">
+                        <div id="headimage2" class="thumbframe4add" style="margin-top:-80px;">
+                            {% if linkimagemap != '' %}
+                                <img src="{{asset(linkimagemap)}}" class="nopad thumb" />
+                            {% else %}
+                                <img src="{{asset('images/exmap.png')}}" class="nopad thumb" />
+                            {% endif %}
+                        </div>
+                    </td>
+                    <td align="left" width="180" valign="middle">
+                        <input type="file" name="upload_map" id="upload_map"/>
+                        <input type="hidden" name="hdnfilemap" id="hdnfilemap" value="{{nameimagemap}}" />
+                    </td>
                     <td align="right" width="240" valign="top" style="font-size:24px;">รายละเอียดเพิ่มเติม : &nbsp;</td>
-                    <td align="left" width="200"><textarea name="placedetail" type="text" maxlength="500" class="ldescadd" onchange="postData('head');" />{{buildingdata.tdetail}}</textarea></td>
+                    <td align="left" width="200"><textarea id="placedetail" name="placedetail" type="text" maxlength="500" class="ldesc" />{{buildingdata.tdetail}}</textarea></td>
                 </tr>
             </table>
         </div>
-        <div style="width:1000px; display:block; position:relative; height:240px; margin-top: 35px;">
+        <div style="width:1000px; display:block; position:relative; height:240px; margin-top: 115px;">
             <table style="margin-top: 0px;">
                 <tr height="50" valign="middle">
                     <td align="right" width="240" style="font-size:24px;">Google Map ลองติจูด : *</td>
-                    <td align="left" width="200"><input id="longitude" name="longitude" type="text" maxlength="30" placeholder="กรุณากรอกตำแหน่งลองติจูด" style=" padding:2px; font-size:20px;" value="{{buildingdata.slongitude}}" onchange="postData('head');" /></td>
+                    <td align="left" width="200"><input id="longitude" name="longitude" type="text" maxlength="30" placeholder="กรุณากรอกตำแหน่งลองติจูด" style=" padding:2px; font-size:20px;" value="{{buildingdata.slongitude}}" /></td>
                     <td align="right" width="240" style="font-size:24px;">Google Map ละติจูด : *</td>
-                    <td align="left" width="200"><input id="latitude" name="latitude" type="text" maxlength="30" placeholder="กรุณากรอกตำแหน่งละติจูด" style=" padding:2px; font-size:20px;" value="{{buildingdata.slatitude}}" onchange="postData('head');" /></td>
+                    <td align="left" width="200"><input id="latitude" name="latitude" type="text" maxlength="30" placeholder="กรุณากรอกตำแหน่งละติจูด" style=" padding:2px; font-size:20px;" value="{{buildingdata.slatitude}}" /></td>
                     <td align="left" width="30" style="font-size:24px;">&nbsp;</td>
                 </tr>
                 <tr height="50" valign="middle">
                     <td align="right" width="240" style="font-size:24px;">ประเภทหอพัก : *</td>
                     <td align="left" width="200">
                         <div class="styled-select">
-                            <select id="aptype" name="aptype" class="select" onchange="postData('head');">
+                            <select id="aptype" name="aptype" class="select">
                                 {% for list in buildingType %}
                                     {% if list.checked == 'no' %}
                                         <option value="{{list.id}}">{{list.type_name}}</option>
@@ -198,7 +307,7 @@
                     <td align="right" width="210" style="font-size:24px;">ชนิด : *</td>
                     <td align="left" width="190" style="font-size:24px;">
                         <div class="styled-select">
-                            <select id="paytype" name="paytype" class="select" onchange="postData('head');">
+                            <select id="paytype" name="paytype" class="select">
                                 {% for list in payType %}
                                     {% if list.checked == 'no' %}
                                         <option value="{{list.id}}">{{list.typename}}</option>
@@ -212,30 +321,30 @@
                 </tr>
                 <tr height="50" valign="middle">
                     <td align="right" width="240" style="font-size:24px;">เบอร์โทรติดต่อ : *</td>
-                    <td align="left" width="200"><input id="telnumber" name="telnumber" type="text" maxlength="15" placeholder="กรุณากรอกเบอร์โทรติดต่อ" style=" padding:2px; font-size:20px;" value="{{buildingdata.sphonenumber}}" onchange="postData('head');" /></td>
+                    <td align="left" width="200"><input id="telnumber" name="telnumber" type="text" maxlength="15" placeholder="กรุณากรอกเบอร์โทรติดต่อ" style=" padding:2px; font-size:20px;" value="{{buildingdata.sphonenumber}}" /></td>
                     <td align="right" width="210" style="font-size:24px;">ระยะเวลาเช่าขั้นต่ำ : *</td>
-                    <td align="left" width="190"><input id="time" name="time" type="text" maxlength="3" placeholder="กรุณากรอกระยะเวลาเช่าขั้นต่ำ" style=" padding:2px; font-size:20px;" value="{{buildingdata.smonthstay}}" onchange="postData('head');" /></td>
+                    <td align="left" width="190"><input id="time" name="time" type="text" maxlength="3" placeholder="กรุณากรอกระยะเวลาเช่าขั้นต่ำ" style=" padding:2px; font-size:20px;" value="{{buildingdata.smonthstay}}" /></td>
                     <td align="left" width="30" style="font-size:24px;"> เดือน</td>
                 </tr>
                 <tr height="50" valign="middle">
                     <td align="right" width="240" style="font-size:24px;">ติดต่อคุณ : *</td>
-                    <td align="left" width="200"><input id="contact_person" name="contact_person" type="text" placeholder="กรุณากรอกชื่อผ้ติดต่อ" style=" padding:2px; font-size:20px;" value="{{buildingdata.scontactname}}" onchange="postData('head');" /></td>
+                    <td align="left" width="200"><input id="contact_person" name="contact_person" type="text" placeholder="กรุณากรอกชื่อผ้ติดต่อ" style=" padding:2px; font-size:20px;" value="{{buildingdata.scontactname}}" /></td>
                     <td align="right" width="210" style="font-size:24px;">ค่าน้ำ : *</td>
-                    <td align="left" width="190"><input id="water_price" name="water_price" type="text" maxlength="5" placeholder="กรุณากรอกค่าน้ำ" style=" padding:2px; font-size:20px;" value="{{buildingdata.fwaterunit}}" onchange="postData('head');" /></td>
+                    <td align="left" width="190"><input id="water_price" name="water_price" type="text" maxlength="5" placeholder="กรุณากรอกค่าน้ำ" style=" padding:2px; font-size:20px;" value="{{buildingdata.fwaterunit}}" /></td>
                     <td align="left" width="30" style="font-size:24px;"> บาท</td>
                 </tr>
                 <tr height="50" valign="middle">
                     <td align="right" width="240" style="font-size:24px;">อีเมล : *</td>
-                    <td align="left" width="200"><input id="contact_email" name="contact_email" type="text" placeholder="กรุณากรอกอีเมล" style=" padding:2px; font-size:20px;" value="{{buildingdata.scontactemail}}" onchange="postData('head');" /></td>
+                    <td align="left" width="200"><input id="contact_email" name="contact_email" type="text" placeholder="กรุณากรอกอีเมล" style=" padding:2px; font-size:20px;" value="{{buildingdata.scontactemail}}" /></td>
                     <td align="right" width="210" style="font-size:24px;">ค่าไฟ : *</td>
-                    <td align="left" width="190"><input id="power_price" name="power_price" type="text" maxlength="5" placeholder="กรุณากรอกค่าไฟ" style=" padding:2px; font-size:20px;" value="{{buildingdata.felectrictunit}}" onchange="postData('head');" /></td>
+                    <td align="left" width="190"><input id="power_price" name="power_price" type="text" maxlength="5" placeholder="กรุณากรอกค่าไฟ" style=" padding:2px; font-size:20px;" value="{{buildingdata.felectrictunit}}" /></td>
                     <td align="left" width="30" style="font-size:24px;"> บาท</td>
                 </tr>
                 <tr height="50" valign="middle">
                     <td align="right" width="240" style="font-size:24px;">เว็บไซต์ : &nbsp;</td>
-                    <td align="left" width="200"><input id="website" name="website" type="text" placeholder="กรุณากรอกเว็บไซต์" style=" padding:2px; font-size:20px;" value="{{buildingdata.swebsite}}" onchange="postData('head');" /></td>
+                    <td align="left" width="200"><input id="website" name="website" type="text" placeholder="กรุณากรอกเว็บไซต์" style=" padding:2px; font-size:20px;" value="{{buildingdata.swebsite}}" /></td>
                     <td align="right" width="210" style="font-size:24px;">ค่าอินเตอร์เน็ต : &nbsp;</td>
-                    <td align="left" width="190"><input id="internet_price" name="internet_price" type="text" maxlength="5" placeholder="กรุณากรอกค่าอินเตอร์เน็ต" style=" padding:2px; font-size:20px;" value="{{buildingdata.iinternetprice}}" onchange="postData('head');" /></td>
+                    <td align="left" width="190"><input id="internet_price" name="internet_price" type="text" maxlength="5" placeholder="กรุณากรอกค่าอินเตอร์เน็ต" style=" padding:2px; font-size:20px;" value="{{buildingdata.iinternetprice}}" /></td>
                     <td align="left" width="30" style="font-size:24px;"> บาท</td>
                 </tr>
                 <tr>

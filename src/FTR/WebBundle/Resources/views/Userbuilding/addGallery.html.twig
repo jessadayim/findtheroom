@@ -1,0 +1,222 @@
+{% extends 'FTRWebBundle:Layout:Layout.html.twig' %}
+{% block body %}
+
+    <link rel="stylesheet" type="text/css" href="{{asset('js/uploadify/uploadify.css')}}">
+    <script type="text/javascript" src="{{asset('js/uploadify/jquery.uploadify-3.1.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/sisyphus-autosave/sisyphus.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/gritter/js/jquery.gritter.js')}}"></script>
+    <link rel="stylesheet" type="text/css" href="{{asset('js/gritter/css/jquery.gritter.css')}}" />
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script language="javascript">
+        $(document).ready(function(){
+            $("div#upload_map.uploadify").css("marginTop","-80px");
+            var mybrowser=navigator.userAgent;
+            if(mybrowser.indexOf('MSIE')>0){
+                $("div#upload_map.uploadify").css("marginTop","-60px");
+                $("#headimage2").css("marginTop","-60px");
+                    }
+            if((navigator.userAgent.match(/Android/i)) ||
+                    (navigator.userAgent.match(/iPhone/i)) ||
+                    (navigator.userAgent.match(/iPod/i)) ||
+                    (navigator.userAgent.match(/iPad/i)))
+            {
+                document.getElementById('device').style.display='block';
+                document.getElementById('fix').style.display='none';
+                document.getElementById('datazone').style.display='none';
+                document.getElementById('roomzone').style.display='none';
+                document.getElementById('galleryzone').style.display='none';
+                document.getElementById('etczone').style.display='none';
+            }
+        });
+    </script>
+
+    <script language="javascript">
+
+    var swfpath = "{{asset('js/uploadify/uploadify.swf')}}";
+    var uploaderpath = "{{asset('js/uploadify/uploadify.php')}}";
+	
+	function uploadpicgallery()
+	{
+		var ownername = document.getElementById('hdnownername').value;
+		var buildid = document.getElementById('hdnbuildid').value;
+		var numberline = intLineGal;//parseInt(document.addform.hdnMaxLine.value);
+		for(i=0;i<=numberline;i++){
+		var name = '#gallery'+i
+	        //alert(name)
+		$(name).uploadify({
+				'formData'      : {'ownername' : ownername, 'buildid' : buildid ,'fieldname' : name ,'typefield' : 'gallery'},
+				//'debug'    : true,
+				'swf'      : swfpath,
+				'uploader' : uploaderpath,
+				//'uploadLimit' : 1,
+				'queueSizeLimit' : 1,
+				'multi'    : false,
+				'fileSizeLimit' : '120KB',
+				'fileTypeExts' : '*.gif; *.jpg; *.png',
+				'onFallback' : function() {/*alert('Flash was not detected.');*/},// detect flash compatible
+				'onUploadSuccess' : function(file, data, response) {
+	            	//alert('The file ' + file.name + ' was successfully uploaded with a response of ' + response + ':' + data);
+	            	var mySplitResult = data.split("_");
+	            	var textGalleryName = 'hdngalleryname'+mySplitResult[1];
+	                var trId = mySplitResult[1];
+	            	document.getElementById(textGalleryName).value = mySplitResult[0];
+	                //alert(imagepath);
+	            	postData('image');
+	                $('#gallerypic'+trId).fadeOut('slow').html('<img src="'+imagepath+'/'+buildid+'/'+mySplitResult[0]+'" class="nopad thumb4img"/>').fadeIn("slow");
+	        	}
+				// Your options here
+			});
+		}
+	}
+	
+    function loopbuttongallery()
+    {
+        uploadpicgallery();
+    }
+
+    var intLineGal = {{gellerylines}};
+    var arraygalleryimage =
+            [
+                {% for gallerydata in galleries %}
+                [{{gallerydata.id}}, "{{asset(gallerydata.link_photo)}}","{{gallerydata.photo_name}}","{{gallerydata.description}}"],
+                {% endfor %}
+            ];
+
+    var nullarrayGal = [-1, "{{asset('images/show.png')}}",'',''];
+    var pathimgdefault = "{{asset('images/')}}";
+
+    $(document).ready(function(){
+
+        if(arraygalleryimage.length == 0)
+        {
+            CreateNewRowGallery(nullarrayGal, 0);
+            arraygalleryimage = [nullarrayGal];
+        }
+        else{
+            genrowimageGal();
+        }
+    });
+    function genrowimageGal()
+    {
+        $("#tbgal").html('');
+        for(var i=0 ; i < arraygalleryimage.length ; i++)
+        {
+            CreateNewRowGallery(arraygalleryimage[i], i);
+        }
+    }
+
+    function CreateNewRowGallery(arraydata, num)
+    {
+        var imageid = arraydata[0];
+        var pathimage = arraydata[1];
+        var nameimage = arraydata[2];
+        var description = arraydata[3];
+
+        var strInner = '<tr>' +
+                '<td><img src="{{asset('images/delete.png')}}" style="padding-left:0px; margin-left:-10px; cursor:pointer;" onclick="RemoveRowGal('+num+','+imageid+');" /></td>' +
+                '<td><div id="gallerypic'+num+'" class="thumbframe4add"><img src="'+pathimage+'" class="nopad thumb4img"</div></td>' +
+                '<td><input type="file" name="gallery'+num+'" id="gallery'+num+'" /><input type="hidden" name="hdngalleryname'+num+'" id="hdngalleryname'+num+'" value="'+nameimage+'" /></td>' +
+                '<td><textarea id="galtitle'+num+'" name="galtitle'+num+'" maxlenght="500" placeholder="กรอกข้อมูลของรูปที่นี่" class="galdesc" onchange="postData('+"'"+"image"+"'"+');" >'+description+'</textarea><input type="hidden" name="imageidgal'+num+'" id="imageidgal'+num+'" value="'+imageid+'" /></td>' +
+                '</tr>';
+        $("#tbgal").append(strInner);
+
+        loopbuttongallery();
+        intLineGal++;
+        document.addform.hdnMaxLineGal.value = intLineGal;
+    }
+
+    function readdatagallery(numGal)
+    {
+        var arrayread = [];
+        var buildid = document.getElementById('hdnbuildid').value;
+        for(var i=0 ; i < intLineGal ; i++)
+        {
+            if (numGal != i){
+                if ($('#hdngalleryname'+i).val() == ''){
+                    var filename = pathimgdefault + 'show.png';
+                }else {
+                    var filename = pathimgbuilding + '/' + buildid + "/" + $('#hdngalleryname'+i).val();
+                }
+                var arrayadd = [$('#imageidgal'+i).val(), filename, $('#hdngalleryname'+i).val(), $('#galtitle'+i).val()];
+                arrayread.push(arrayadd);
+            }
+        }
+        arraygalleryimage = arrayread;
+    }
+
+    function RemoveRowGal(num, imageId)
+    {
+        deleteImage(num,imageId,'gallery');
+        if(intLineGal > 1)
+        {
+            readdatagallery(num);
+            intLineGal = 0;
+            document.addform.hdnMaxLineGal.value = intLineGal;
+            genrowimageGal();
+
+        }
+    }
+
+    
+
+    function deleteImage(num,imageId,type)
+    {
+        var buildid = document.getElementById('hdnbuildid').value;
+        $.get("{{ path('setDeleteImage') }}" , { buildingId:buildid, sequence:num, id:imageId, type:type},
+                function(data){
+                    //alert(data);
+                });
+    }
+    var imagepath = "{{asset('images/building')}}";
+    
+    function postData(typesave)
+    {
+        var type = typesave;
+        var pathtosave = "{{path('autoSaveForm', {'id': build_id})}}";
+        var addfixpath = pathtosave+'/'+type;
+        //alert(addfixpath);
+        $.post(addfixpath, $("#addform").serialize(),
+                function(data) {
+                    var completetext = data;
+                    //alert(completetext);
+                    $.gritter.add({
+                        // (string | mandatory) the heading of the notification
+                        title: 'บันทึกข้อมูลสำเร็จ',
+                        // (string | mandatory) the text inside the notification
+                        text: 'ข้อมูลของท่านได้รับการบันทึกโดยอัตโนมัติ'
+                    });
+                });
+    }
+    
+    </script>
+    <form name="addform" id="addform" method="post" action="{{path('addNewOther', {'id': build_id })}}">
+    <div id="device" style="height: 200px; margin-bottom: 15px;display: none;">
+        <div style="display: block; position: relative; width:1000px; color:#FFF; font-size:36px; text-align: center; padding-top:50px;">
+            ข้อความ
+            <a class="back" href="{{path('userbuilding')}}"></a> <a class="data" href="{{path('userbuilding')}}"></a>
+        </div>
+    </div>
+    <div id="galleryzone" class="detail" style="height: 100%; margin-bottom: 15px;">
+        <img src="{{asset('images/gallery.png')}}" style="display:block; position:relative; float:none;" />
+        <hr class="line" style="top: 60px;" />
+        <div>
+            <table id="tbgal">
+
+            
+            </table>
+            <table>
+            	<tr>
+            		<td align="right" width="780">
+            			<input class="save" type="submit" value="" />
+            		</td>
+            	</tr>
+            </table>
+            <img src="{{asset('images/addmore2.png')}}" class="nopad" onclick="CreateNewRowGallery(nullarrayGal, intLineGal);" style="margin-left: 130px;margin-bottom: 20px; cursor: pointer;">
+            <input type="hidden" id="hdnMaxLineGal" name="hdnMaxLineGal" value="{{gellerylines}}">
+        </div>
+    </div>
+    <table>
+    <input type="hidden" name="hdnownername" id="hdnownername" value="0" />
+    <input type="hidden" name="hdnbuildid" id="hdnbuildid" value="{{build_id}}" />
+    </form>
+{% endblock %}

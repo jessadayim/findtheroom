@@ -3,11 +3,252 @@
 
     <link rel="stylesheet" type="text/css" href="{{asset('js/uploadify/uploadify.css')}}">
     <script type="text/javascript" src="{{asset('js/uploadify/jquery.uploadify-3.1.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/uploadify.control.js')}}"></script>
     <script type="text/javascript" src="{{asset('js/sisyphus-autosave/sisyphus.js')}}"></script>
     <script type="text/javascript" src="{{asset('js/gritter/js/jquery.gritter.js')}}"></script>
     <link rel="stylesheet" type="text/css" href="{{asset('js/gritter/css/jquery.gritter.css')}}" />
     <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script language="javascript">
+        $(document).ready(function(){
+            $("div#upload_map.uploadify").css("marginTop","-80px");
+            var mybrowser=navigator.userAgent;
+            if(mybrowser.indexOf('MSIE')>0){
+                $("div#upload_map.uploadify").css("marginTop","-60px");
+                $("#headimage2").css("marginTop","-60px");
+                    }
+            if((navigator.userAgent.match(/Android/i)) ||
+                    (navigator.userAgent.match(/iPhone/i)) ||
+                    (navigator.userAgent.match(/iPod/i)) ||
+                    (navigator.userAgent.match(/iPad/i)))
+            {
+                document.getElementById('device').style.display='block';
+                document.getElementById('fix').style.display='none';
+                document.getElementById('datazone').style.display='none';
+                document.getElementById('roomzone').style.display='none';
+                document.getElementById('galleryzone').style.display='none';
+                document.getElementById('etczone').style.display='none';
+            }
+        });
+    </script>
+
+    <script language="javascript">
+
+    var swfpath = "{{asset('js/uploadify/uploadify.swf')}}";
+    var uploaderpath = "{{asset('js/uploadify/uploadify.php')}}";
+	
+	function uploadpicroom()
+	{
+		var ownername = document.getElementById('hdnownername').value;
+		var buildid = document.getElementById('hdnbuildid').value;
+		var numberline = intLine;//parseInt(document.addform.hdnMaxLine.value);
+		for(i=0;i<=numberline;i++){
+		var name = '#room'+i
+		$(name).uploadify({
+				'formData'      : {'ownername' : ownername, 'buildid' : buildid ,'fieldname' : name ,'typefield' : 'room'},
+				//'debug'    : true,
+				'swf'      : swfpath,
+				'uploader' : uploaderpath,
+				//'uploadLimit' : 1,
+				'queueSizeLimit' : 1,
+				'multi'    : false,
+				'fileSizeLimit' : '120KB',
+				'fileTypeExts' : '*.gif; *.jpg; *.png',
+				'onFallback' : function() {/*alert('Flash was not detected.');*/},// detect flash compatible
+				'onUploadSuccess' : function(file, data, response) {
+	            	//alert('The file ' + file.name + ' was successfully uploaded with a response of ' + response + ':' + data);
+	            	var mySplitResult = data.split("_");
+	            	var textRoomName = 'hdnfilename'+mySplitResult[1];
+	            	var trId = mySplitResult[1];
+	            	document.getElementById(textRoomName).value = mySplitResult[0];
+	            	postData('image');
+	            	//$('#roomtrid'+trId).fadeOut('slow').html('<img src="'+imagepath+'/'+buildid+'/'+mySplitResult[0]+'" class="nopad thumb"/>').fadeIn("slow");
+	                $('#roompic'+trId).fadeOut('slow').html('<img src="'+imagepath+'/'+buildid+'/'+mySplitResult[0]+'" class="nopad thumb4img"/>').fadeIn("slow");
+	        	}
+				// Your options here
+			});
+		}
+	}
+	
+    function loopbutton()
+    {
+        uploadpicroom();
+    }
+
+    var intLine = {{roomlines}};
+    var arraydataimage =
+            [
+                {% for roomdata in rooms %}
+                [{{roomdata.id}}, "{{asset(roomdata.link_photo)}}", '{{roomdata.roomtype_name}}', '{{roomdata.room_size}}', '{{roomdata.room_price}}',"{{roomdata.photo_name}}"],
+                {% endfor %}
+            ];
+
+    var nullarray = [-1, "{{asset('images/show.png')}}",'','','',''];
+    var pathimgdefault = "{{asset('images/')}}";
+    var pathimgbuilding = "{{asset('images/building')}}";
+
+    $(document).ready(function(){
+        if(arraydataimage.length == 0)
+        {
+            CreateNewRow(nullarray, 0);
+            arraydataimage = [nullarray];
+        }
+        else{
+            genrowimage();
+        }
+    });
+    function genrowimage()
+    {
+        $("#tableroom").html('<tr height="40" valign="bottom">'+
+                '<td align="left" colspan="4" style="font-size:24px;" width="500">ประเภทห้องพัก</td>'+
+                '<td align="center" width="100">ขนาด</td>'+
+                '<td width="100">&nbsp;</td>'+
+                '<td align="center" width="150">อัตราค่าเช่า / เดือน</td>'+
+                '<td width="60">&nbsp;</td>'+
+                '</tr>');
+        for(var i=0 ; i < arraydataimage.length ; i++)
+        {
+            CreateNewRow(arraydataimage[i], i);
+        }
+    }
+    function CreateNewRow(arraydata, num)
+    {
+        //var  parseInt(document.addform.hdnMaxLine.value);
+        // intLine++;
+		
+        var imageid = arraydata[0];
+        var pathimage = arraydata[1];
+        var typename = arraydata[2];
+        var roomsize = arraydata[3];
+        var roomprice = arraydata[4];
+        var nameimage = arraydata[5];
+
+        //alert('test');
+        var strInner = '<tr>' +
+                '<td><img src="{{asset('images/delete.png')}}" style="padding-left:0px; margin-left:-10px; cursor:pointer;" onclick="RemoveRow('+num+','+imageid+');" /></td>' +
+                '<td><div id="roompic'+num+'" class="thumbframe4add"><img src="'+pathimage+'" class="nopad thumb4img"</div></td>' +
+                '<td><input type="file" name="room'+num+'" id="room'+num+'" /><input type="hidden" name="hdnfilename'+num+'" id="hdnfilename'+num+'" value="'+nameimage+'" onchange="postData('+"'"+"image"+"'"+');" /></td>' +
+                '<td><input name="typeap_name'+num+'" id="typeap_name'+num+'" type="text" maxlength="30" placeholder="กรุณากรอกประเภทห้องพัก" value="'+typename+'" style=" padding:2px; font-size:20px;" onchange="postData('+"'"+"image"+"'"+');" /></td>' +
+                '<td><input name="typeap_size'+num+'" id="typeap_size'+num+'" type="text" maxlength="10" placeholder="ขนาด" value="'+roomsize+'" style=" padding:2px; font-size:20px; width:80px;" onchange="postData('+"'"+"image"+"'"+');" /></td>' +
+                '<td><LABEL align="left">ตารางเมตร</LABEL></td>' +
+                '<td><input name="typeap_price'+num+'" id="typeap_price'+num+'" type="text" maxlength="10" placeholder="อัตราค่าเช่า" value="'+roomprice+'" style=" padding:2px; font-size:20px; width:80px;" onchange="postData('+"'"+"image"+"'"+');" /></td>' +
+                '<td><LABEL align="left">บาท</LABEL><input type="hidden" name="imageid'+num+'" id="imageid'+num+'" value="'+imageid+'" /></td>' +
+                '</tr>';
+        $("#tableroom").append(strInner);
+
+        loopbutton();
+        intLine++;
+        document.addform.hdnMaxLine.value = intLine;
+    }
+
+    function readdataroom(num)
+    {
+        var arrayread = [];
+        var buildid = document.getElementById('hdnbuildid').value;
+        
+        for(var i=0 ; i < intLine ; i++)
+        {
+
+            if (num != i){
+                if ($('#hdnfilename'+i).val() == ''){
+                    var filename = pathimgdefault + 'show.png';
+                }else {
+                    var filename = pathimgbuilding + '/' + buildid + "/" + $('#hdnfilename'+i).val();
+                }
+                var arrayadd = [$('#imageid'+i).val(), filename, $('#typeap_name'+i).val(), $('#typeap_size'+i).val(), $('#typeap_price'+i).val(), $('#hdnfilename'+i).val()];
+                arrayread.push(arrayadd);
+            }
+        }
+        arraydataimage = arrayread;
+    }
+
+    function RemoveRow(num, imageId)
+    {
+        var strdefault = '<tr height="40" valign="bottom">'+
+                '<td align="left" colspan="4" style="font-size:24px;" width="500">ประเภทห้องพัก</td>'+
+                '<td align="center" width="100">ขนาด</td>'+
+                '<td width="100">&nbsp;</td>'+
+                '<td align="center" width="150">อัตราค่าเช่า / เดือน</td>'+
+                '<td width="60">&nbsp;</td>'+
+                '</tr>'
+
+        deleteImage(num,imageId,'room');
+
+        if(intLine > 1)
+        {
+            readdataroom(num);
+            $("#tableroom").html(strdefault);
+            intLine = 0;
+            document.addform.hdnMaxLine.value = intLine;
+            genrowimage();
+
+        }
+    }
+
     
 
+    function deleteImage(num,imageId,type)
+    {
+        var buildid = document.getElementById('hdnbuildid').value;
+        $.get("{{ path('setDeleteImage') }}" , { buildingId:buildid, sequence:num, id:imageId, type:type},
+                function(data){
+                    //alert(data);
+                });
+    }
+    var imagepath = "{{asset('images/building')}}";
+    
+    function postData(typesave)
+    {
+        var type = typesave;
+        var pathtosave = "{{path('autoSaveForm', {'id': build_id})}}";
+        var addfixpath = pathtosave+'/'+type;
+        //alert(addfixpath);
+        $.post(addfixpath, $("#addform").serialize(),
+                function(data) {
+                    var completetext = data;
+                    //alert(completetext);
+                    $.gritter.add({
+                        // (string | mandatory) the heading of the notification
+                        title: 'บันทึกข้อมูลสำเร็จ',
+                        // (string | mandatory) the text inside the notification
+                        text: 'ข้อมูลของท่านได้รับการบันทึกโดยอัตโนมัติ'
+                    });
+                });
+    }
+    
+    </script>
+    <form name="addform" id="addform" method="post" action="{{path('addNewGallery', {'id': build_id })}}" onsubmit="javascript:return checkSubmitData();">
+    <div id="device" style="height: 200px; margin-bottom: 15px;display: none;">
+        <div style="display: block; position: relative; width:1000px; color:#FFF; font-size:36px; text-align: center; padding-top:50px;">
+            ข้อความ
+            <a class="back" href="{{path('userbuilding')}}"></a> <a class="data" href="{{path('userbuilding')}}"></a>
+        </div>
+    </div>
+    <div id="roomzone" class="detail" style="height: 100%; margin-bottom: 15px;">
+        <img src="{{asset('images/roomap.png')}}" style="display:block; position:relative; float:none;" />
+        <hr class="line" style="top: 60px;" />
+        <div>
+            <table id="tableroom">
+                <tr height="40" valign="bottom">
+                    <td align="left" colspan="4" style="font-size:24px;" width="500">ประเภทห้องพัก</td>
+                    <td align="center" width="100">ขนาด</td>
+                    <td width="100">&nbsp;</td>
+                    <td align="center" width="150">อัตราค่าเช่า / เดือน</td>
+                    <td width="60">&nbsp;</td>
+                </tr>
+            </table>
+            <table>
+            	<tr>
+            		<td align="right" width="780">
+            			<input class="save" type="submit" value="" />
+            		</td>
+            	</tr>
+            </table>
+            <img src="{{asset('images/addmore2.png')}}" class="nopad" onclick="CreateNewRow(nullarray, intLine);" style="margin-left: 130px;margin-bottom: 20px; cursor: pointer;">
+            <input type="hidden" id="hdnMaxLine" name="hdnMaxLine" value="{{roomlines}}">
+            
+        </div>
+    </div>
+    
+    <input type="hidden" name="hdnownername" id="hdnownername" value="0" />
+    <input type="hidden" name="hdnbuildid" id="hdnbuildid" value="{{build_id}}" />
+    </form>
 {% endblock %}
