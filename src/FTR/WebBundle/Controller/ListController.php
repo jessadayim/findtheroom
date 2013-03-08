@@ -315,9 +315,9 @@ class ListController extends Controller
             $fromTable = "
                 FROM building_site a
                     LEFT JOIN building_type b ON(a.building_type_id=b.id)
-                    LEFT JOIN pay_type c ON(a.pay_type_id=c.id)
-                    LEFT JOIN province p ON(a.addr_province=p.PROVINCE_ID)
-                    LEFT JOIN amphur am ON(a.addr_prefecture=am.AMPHUR_ID)
+                    INNER JOIN pay_type c ON(a.pay_type_id=c.id)
+                    INNER JOIN province p ON(a.addr_province=p.PROVINCE_ID)
+                    INNER JOIN amphur am ON(a.addr_prefecture=am.AMPHUR_ID)
                     LEFT OUTER JOIN facility2site d ON (d.building_site_id = a.id)
                     LEFT OUTER JOIN nearly2site e ON (e.building_site_id = a.id)
                     LEFT OUTER JOIN nearly_location f ON (e.nearly_location_id = f.id)
@@ -339,7 +339,7 @@ class ListController extends Controller
                 ";
             }
 
-            $sql = "
+            echo $sql = "
                 $selectField
                 $fromTable
                 WHERE 1
