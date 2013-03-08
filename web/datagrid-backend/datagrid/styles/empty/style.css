@@ -1,0 +1,17 @@
+.empty_dg_caption { text-align:center;}
+.df_left { text-align: left; }
+.df_center { text-align: center; }
+.df_right { text-align: right; }
+.df_nowrap { white-space: nowrap; }
+.df_underline { text-decoration: underline; }
+.resizable-textarea .grippie { border-right: #ddd 1px solid; border-top:#ddd 0px solid;  overflow: hidden; border-left: #ddd 1px solid; cursor: s-resize; border-bottom: #ddd 1px solid; height:6px; }
+.empty_dg_question_mark    { border:0px; margin-bottom:-1px; width:13px; cursor:help; }
+.empty_dg_messages_wrapper { margin:10px auto 7px auto; text-align:center; }
+.empty_dg_textarea         { resize:none; }
+
+DIV.default_dg_sql_message      { font-family:arial; font-size:12px; color:#333333; }
+DIV.empty_dg_sql_message        { font-family:arial; font-size:12px; color:#333333; }
+DIV.empty_dg_ok_message SPAN    { margin-left:5px; margin-right:5px; }
+DIV.empty_dg_ok_message IMG     { margin-bottom:-2px; }
+DIV.empty_dg_error_message SPAN { margin-left:5px; margin-right:5px; }
+DIV.empty_dg_error_message IMG  { margin-bottom:-2px; }

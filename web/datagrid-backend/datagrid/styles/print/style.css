@@ -1,0 +1,74 @@
+/* common classes */
+pre {
+ PADDING: 0px; MARGIN: 0px;
+ white-space: pre-wrap;       /* css-3 */
+ white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+ white-space: -pre-wrap;      /* Opera 4-6 */
+ white-space: -o-pre-wrap;    /* Opera 7 */
+ word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+
+.dg_left { text-align:left; }
+.dg_center { text-align:center; }
+.dg_right { text-align:right; }
+.dg_nowrap { white-space:nowrap; }
+.dg_wrap   { word-wrap: break-word; word-break: break-all; }
+.dg_underline { text-decoration:underline; }
+.resizable-textarea .grippie {  }
+
+a.print_dg_a { }
+a.print_dg_a:link { }
+a.print_dg_a:hover { }
+a.print_dg_a:visited { }
+a.print_dg_a2 { }
+a.print_dg_a2:link { }
+a.print_dg_a2:hover { }
+a.print_dg_a2:visited { }
+/* columns header links */
+a.print_dg_a_header { }
+a.print_dg_a_header:link { }
+a.print_dg_a_header:hover { }
+a.print_dg_a_header:visited { }
+/* pagination links */
+/* table.print_dg_paging_table  { } */ 
+a.print_dg_p_a           { }
+a.print_dg_p_a_empty     { }
+a.print_dg_p_a:link      { }
+a.print_dg_p_a:hover     { }
+a.print_dg_p_a:visited   { }
+
+.print_dg_fieldset     { margin:0px; border:#dddddd 1px solid;}
+.print_dg_filter_table { border:#d0d0d0 0px solid; font:normal 12px tahoma;}
+.print_dg_filter_table tr td { font-size:12px; }
+.print_dg_legend       { font:normal 12px tahoma;}
+.print_dg_paging_table { border:#d0d0d0 0px solid; font:normal 12px tahoma;}
+.print_dg_table        { border-collapse:collapse; border:#d0d0d0 1px solid; font:normal 12px tahoma;}
+
+.print_dg_th          { border-bottom:#d0d0d0 1px solid; border-right:#d0d0d0 1px solid; padding-right:2px; padding-left:5px; padding-bottom:2px; font:bold 13px tahoma; color:#333333; padding-top:2px; }
+.print_dg_th_normal   { border-bottom:#d0d0d0 1px solid; border-right:#d0d0d0 1px solid; border-left:#e1e2e3 2px solid; margin-left:0px; padding-right:2px; padding-left:5px; padding-bottom:2px; font:bold 13px tahoma; color:#333333; padding-top:2px; }
+.print_dg_th_selected { border-bottom:#d0d0d0 1px solid; border-right:#d0d0d0 1px solid; padding-right:2px; padding-left:5px; padding-bottom:2px; font:bold 13px tahoma; color:#333333; padding-top:2px; }
+
+.print_dg_td          { border:#d0d0d0 1px solid; padding-right:6px; padding-left:6px; padding-bottom:2px; padding-top:2px; font:normal 12px tahoma;  }
+.print_dg_td_main     { border-top:#d0d0d0 1px solid; border-right:#d0d0d0 1px solid; border-left:#d0d0d0 1px solid; padding-right:6px; padding-left:6px; padding-bottom:2px; padding-top:2px; font:normal 12px tahoma; }
+.print_dg_td_selected { border:#d0d0d0 1px solid; padding-right:6px; padding-left:6px; padding-bottom:2px; font:normal 12px tahoma; padding-top:2px; }
+
+INPUT.print_dg_button { }
+.print_dg_select { }
+.print_dg_label { font-size:12px; }
+.print_dg_textbox { }
+.print_dg_textarea { resize:none; }
+.print_dg_checkbox { }
+.print_dg_radiobutton { }
+.print_dg_caption { font:normal 14px tahoma; font-weight:bold; text-align:center;  padding-bottom:0px; }
+.print_dg_error_message { }
+.print_dg_warning_message { }
+.print_dg_ok_message { }
+
+.print_question_mark  { border:0px; margin-bottom:-1px; width:13px; cursor:help; }
+
+DIV.default_dg_sql_message      { font-family:arial; font-size:12px; color:#333333; }
+DIV.print_dg_sql_message        { font-family:arial; font-size:12px; color:#333333; }
+DIV.print_dg_ok_message SPAN    { margin-left:5px; margin-right:5px; }
+DIV.print_dg_ok_message IMG     { margin-bottom:-2px; }
+DIV.print_dg_error_message SPAN { margin-left:5px; margin-right:5px; }
+DIV.print_dg_error_message IMG  { margin-bottom:-2px; }

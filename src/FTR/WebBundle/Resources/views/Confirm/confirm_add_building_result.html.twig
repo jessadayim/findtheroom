@@ -1,0 +1,12 @@
+{% extends 'FTRWebBundle:Layout:Layout.html.twig' %}
+{% block body %}
+        <div class="container">
+            <H1>ผลการยืนยันการสร้างห้องพักใหม่</H1>
+            {% if result == true %}
+                <p>FindTheRoom.com ได้รับการยืนยันข้อมูลจากท่านแล้วขณะนี้ห้องพักของท่านแสดงผลภายในเว็บไซต์ FindTheRoom.com แล้ว</p>
+            {% else %}
+                <p class="fontRed">กรุณายืนยันการสร้างห้องพักของท่านผ่านทาง link ที่ทางทีมงาน FindTheRoom.com ส่งให้ท่านใน Email ที่ระบุไว้ด้วยค่ะ</p>
+            {% endif %}
+            <div class="clear"></div>
+        </div>
+{% endblock %}
