@@ -431,6 +431,15 @@
             }
         }
     }
+    
+    function getLastestNumberImage()
+	{
+		var pathtoget = "{{path('getLastestNumberImage', {'id': build_id})}}";
+		$.get(pathtoget,
+                function(data) {
+                    document.addform.hdnImageNumber.value = data;
+                });
+	}
 </script>
     <form name="addform" id="addform" method="post" action="{{path('saveData', {'id': build_id })}}" onsubmit="javascript:return checkSubmitData();">
     <div id="device" style="height: 200px; margin-bottom: 15px;display: none;">
