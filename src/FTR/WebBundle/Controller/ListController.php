@@ -109,7 +109,7 @@ class ListController extends Controller
                     }*/
 
                     switch ($shortSearchType) {
-                        case "bkk":
+                        case "กรุงเทพมหานคร":
                             //$zone = $this->convertNameZoneToID(htmlentities(@$_GET['โซน']));
                             //$bkkPayType = @$_GET['bkkPayType'];
                             //$buildingType = @$_GET['bkkBuildingType'];
@@ -120,12 +120,12 @@ class ListController extends Controller
                                 $whereQuery .= " AND a.zone_id = $zoneID";
                             }
                             if (!empty($bkkPayTypeID)) {
-                                $whereQuery .= " AND a.pay_type_id = $bkkPayTypeID";
+                                // $whereQuery .= " AND a.pay_type_id = $bkkPayTypeID";
                             }
                             if (($buildingTypeID != 0) && (!empty($buildingTypeID))) {
                                 $whereQuery .= " AND a.building_type_id = $buildingTypeID";
                             }
-
+                            $whereQuery .= " AND a.addr_province = 1";
                             /*if (!empty($lessPrice) && (!empty($mostPrice))) {
                                 $whereQuery .= "
                                     AND (
@@ -135,18 +135,20 @@ class ListController extends Controller
                                 ";
                             }*/
                             break;
-                        case "country":
+                        case "ต่างจังหวัด":
                             //$selProvince = @$_GET['selProvince'];
                             //$bkkPayType = @$_GET['bkkPayType'];
                             //$buildingType = @$_GET['bkkBuildingType'];
                             //$lessPrice = @$_GET['lessPrice'];
                             //$mostPrice = @$_GET['mostPrice'];
 
+                            $whereQuery .= " AND a.addr_province != 1";
+
                             if (($selProvinceID != 0) && (!empty($selProvinceID))) {
                                 $whereQuery .= " AND a.addr_province = $selProvinceID";
                             }
                             if (!empty($bkkPayTypeID)) {
-                                $whereQuery .= " AND a.pay_type_id = $bkkPayTypeID";
+                                //$whereQuery .= " AND a.pay_type_id = $bkkPayTypeID";
                             }
                             if (($buildingTypeID != 0) && (!empty($buildingTypeID))) {
                                 $whereQuery .= " AND a.building_type_id = $buildingTypeID";
@@ -188,7 +190,7 @@ class ListController extends Controller
                     }*/
 
                     if (!empty($bkkPayTypeID)) {
-                        $whereQuery .= " AND a.pay_type_id = $bkkPayTypeID";
+                        //$whereQuery .= " AND a.pay_type_id = $bkkPayTypeID";
                     }
 
                     if ($bc == "bkk") {
@@ -314,8 +316,8 @@ class ListController extends Controller
             ";
             $fromTable = "
                 FROM building_site a
-                    LEFT JOIN building_type b ON(a.building_type_id=b.id)
-                    INNER JOIN pay_type c ON(a.pay_type_id=c.id)
+                    INNER JOIN building_type b ON(a.building_type_id=b.id)
+                    LEFT JOIN pay_type c ON(a.pay_type_id=c.id)
                     INNER JOIN province p ON(a.addr_province=p.PROVINCE_ID)
                     INNER JOIN amphur am ON(a.addr_prefecture=am.AMPHUR_ID)
                     LEFT OUTER JOIN facility2site d ON (d.building_site_id = a.id)
@@ -339,7 +341,7 @@ class ListController extends Controller
                 ";
             }
 
-            echo $sql = "
+            $sql = "
                 $selectField
                 $fromTable
                 WHERE 1
@@ -369,7 +371,7 @@ class ListController extends Controller
                     where `building_site_id` = $buildingId
                       and `deleted` = 0
                  ";
-                $arrImage	= $conn->fetchAll($sqlImage);
+                $arrImage = $conn->fetchAll($sqlImage);
                 foreach ($arrImage as $key2 => $value2) {
                     switch ($value2['photo_type']) {
                         case 'head':
