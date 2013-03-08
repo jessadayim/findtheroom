@@ -16,35 +16,14 @@ include "check-login.php";
     <meta content='Advanced Power of PHP' name='author'>
 </head>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script>
-    function updateBuilding(id, publish) {
-        $.ajax({
-            type:"POST",
-            url:location.href,
-            data:{
-                buildingID:id,
-                publish:publish,
-                typePost:'updateBuilding'
-            },
-            success:function (msg) {
-                if (msg.search('finish')) {
-                    window.location.reload();
-                } else {
-                    alert(msg);
-                }
-            }
-        });
-    }
-</script>
 <body style="padding:10px">
 <div align='left'><a href='<?php echo $getPathDashboard; ?>'>กลับไปหน้า Dashboard</a><br>
-<a href="recommend-building.php">หน้า Recommend Building</a><br>
-</div>
+    <a href="approve-building.php">หน้า Approve Building</a><br></div>
 <div align="right"><a href="<?php echo $getPathLogout; ?>"><b>Logout</b></a></div>
 <?php
+
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
-
 ################################################################################
 ## +---------------------------------------------------------------------------+
 ## | 1. Creating & Calling:                                                    |
@@ -52,11 +31,12 @@ ini_set("display_errors", 1);
 ##  *** define a relative (virtual) path to datagrid.class.php file
 ##  *** (relatively to the current file)
 ##  *** RELATIVE PATH ONLY ***
-define("DATAGRID_DIR", "datagrid/"); /* Ex.: "datagrid/" */
+define("DATAGRID_DIR", "datagrid/");
 require_once(DATAGRID_DIR . 'datagrid.class.php');
 
 // includes database connection parameters
 include_once('lib/base.inc.php');
+
 ##  *** set needed options
 $debug_mode = false;
 $messaging = true;
@@ -64,7 +44,6 @@ $unique_prefix = "f_";
 $dgrid = new DataGrid($debug_mode, $messaging, $unique_prefix);
 
 ob_start();
-
 
 ##  *** set data source with needed options
 ##  *** put a primary key on the first place
@@ -76,22 +55,17 @@ $sql = "
       `building_site`.*,
       `building_type`.*,
       `pay_type`.*,
-      CASE
-        WHEN `building_site`.`publish` = 0
-        THEN CONCAT('<input type=\"checkbox\"/><span style=\"color:#FF3B3B;\"><b>', 'Unapprove', '</b></span>')
-        WHEN `building_site`.`publish` = 1
-        THEN CONCAT('<input type=\"checkbox\" checked/><span style=\"color:#37D93F;\"><b>', 'Approve', '</b></span>')
-        WHEN `building_site`.`publish` = 2
-        THEN CONCAT('<input type=\"checkbox\"/><span style=\"color:#FFF83B;background-color:#B0A6FF; \"><b>',
-        '&nbsp;&nbsp;&nbsp;Waiting&nbsp;&nbsp;&nbsp;', '</b></span>')
-      END AS status_publish,
-      '<input type=\"checkbox\"/>' AS test
+      recommend_building.* ,
+      IF( recommend_building.id IS NULL, '<input type=\"checkbox\" disabled />Add',
+      '<input type=\"checkbox\" disabled checked/>Recommend') AS insert_recommend
     FROM
       `building_site`
       INNER JOIN `building_type`
         ON (`building_site`.`building_type_id` = `building_type`.`id`)
       INNER JOIN `pay_type`
         ON (`building_site`.`pay_type_id` = `pay_type`.`id`)
+      LEFT JOIN `recommend_building`
+        ON (`building_site`.`id` = recommend_building.`building_id`)
     WHERE 1
       AND `building_site`.`deleted` = 0
       AND `building_type`.`deleted` = 0
@@ -100,41 +74,7 @@ $sql = "
 $default_order = array("a_id" => "ASC");
 $dgrid->DataSource("PEAR", "mysql", $DB_HOST, $DB_NAME, $DB_USER, $DB_PASS, $sql, $default_order);
 
-if ($_POST) {
-    $getBuildingID = @$_POST['buildingID'];
-    $getPublish = @$_POST['publish'];
-    $getTypePost = @$_POST['typePost'];
-    if ($getTypePost == 'updateBuilding') {
-        $setPublish = 0;
-        $dateNow = date('Y-m-d H:i:s');
-        switch ($getPublish) {
-            case 0:
-                $setPublish = 1;
-                break;
-            case 1:
-                $setPublish = 0;
-                break;
-            case 2:
-                $setPublish = 1;
-                break;
-        }
-        $strSqlUpdate = "
-            UPDATE
-              building_site
-            SET
-              publish = $setPublish,
-              lastupdate = '$dateNow'
-            WHERE id = $getBuildingID
-        ";
-        if ($dgrid->Execute($strSqlUpdate)) {
-            echo 'finish';
-        } else {
-            echo 'fail';
-        }
-        exit();
-    }
-}
-$dg_caption = '<b><a href=approve-building.php>Approve Building</a></b>';
+$dg_caption = "<b><a href=recommend-building.php>Recommend Building</a></b>";
 $dgrid->SetCaption($dg_caption);
 
 ## +---------------------------------------------------------------------------+
@@ -142,11 +82,11 @@ $dgrid->SetCaption($dg_caption);
 ## +---------------------------------------------------------------------------+
 ## +-- PostBack Submission Method ---------------------------------------------+
 ##  *** defines postback submission method for DataGrid: AJAX, POST(default) or GET
-$postback_method = 'AJAX';
+$postback_method = 'GET';
 $dgrid->SetPostBackMethod($postback_method);
 ##  *** set CSS class for datagrid
 ##  *** 'default|blue|gray|green|pink|empty|x-blue|x-gray|x-green' or your own css style
-$css_class = 'x-blue';
+$css_class = 'pink';
 $dgrid->SetCssClass($css_class);
 
 $modes = array(
@@ -187,8 +127,8 @@ $sorting_option = true;
 $dgrid->AllowSorting($sorting_option);
 ##  *** set paging option: true(default) or false
 $paging_option = true;
-$rows_numeration = false;
-$numeration_sign = 'N #';
+$rows_numeration = true;
+$numeration_sign = 'ลำดับที่';
 $dropdown_paging = false;
 $dgrid->AllowPaging($paging_option, $rows_numeration, $numeration_sign, $dropdown_paging);
 ##  *** set paging settings
@@ -214,6 +154,8 @@ $pages_array = array(
 $default_page_size = 10;
 $paging_arrows = array('first' => '|&lt;&lt;', 'previous' => '&lt;&lt;', 'next' => '&gt;&gt;', 'last' => '&gt;&gt;|');
 $dgrid->SetPagingSettings($bottom_paging, $top_paging, $pages_array, $default_page_size, $paging_arrows);
+
+
 
 ## +---------------------------------------------------------------------------+
 ## | 5. Filter Settings:                                                       |
@@ -308,11 +250,12 @@ $vm_columns = array(
         'type' => 'label',
         'align' => 'left'
     ),
-//    'status_publish' => array('header' => ' Approve Status', 'type' => 'link', "width" => "110px",
-//        "field_key" => "a_id", "field_key_1" => "publish", 'align' => 'left', "sort_by" => "publish",
-//        "on_js_event" => "onclick=javascript:updateBuilding({0},{1})"),
-    'status_publish' => array(
-        'header' => 'Approve Status',
+//    'insert_recommend' => array('header' => 'Insert to Recommend', 'type' => 'link', "width" => "110px",
+//        "field_key" => "a_id", "field_key_1" => "building_name", 'align' => 'left', 'field_data'=>'insert_recommend',
+//        "on_js_event" => "", "href" => "recommend-building.php?in_mode=add&in_rid={0}&b_name={1}"
+//    ),
+    'insert_recommend' => array(
+        'header' => 'Insert to Recommend',
         'type' => 'link',
         'align' => 'left',
         'width' => 'X%|Xpx',
@@ -326,14 +269,14 @@ $vm_columns = array(
         'sort_type' => 'string|numeric',
         'sort_by' => '',
         'visible' => 'true',
-        'on_js_event' => 'onclick=javascript:updateBuilding({0},{1})',
+        'on_js_event' => '',
         'field_key' => 'a_id',
-        'field_key_1' => 'publish',
-        'field_data' => 'status_publish',
+        'field_key_1' => 'building_name',
+        'field_data' => 'insert_recommend',
         'rel' => '',
         'title' => '',
         'target' => '_self',
-        'href' => '#'
+        'href' => 'recommend-building.php?in_mode=add&in_rid={0}&b_name={1}'
     ),
 //    'test' => array('header' => ' แก้ไขล่าสุด', 'type' => 'label', "field_key" => "a_id",
 //        "field_key_1" => "publish", 'align' => 'left',
@@ -367,6 +310,8 @@ $dgrid->SetAutoColumnsInEditMode(true);
 ##  *** set debug mode & messaging options
 $dgrid->Bind();
 ob_end_flush();
+
+include "insert-recommend.php";
 
 ?>
 </body>

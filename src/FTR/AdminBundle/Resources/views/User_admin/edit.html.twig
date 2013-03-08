@@ -21,12 +21,13 @@
                 if (!confirm('คุณต้องการแก้ไขข้อมูล ใช่หรือไม่')) {
                     return false;
                 }
+                //alert(url);return false;
                 $.ajax({
                     type:"POST",
                     url:url,
                     data:$(this).serialize(),
                     success:function (msg) {
-//                        alert(msg);
+                        //alert(msg);
                         if (msg == 'finish') {
                             // $('#listBuildingSite').load(window.location + "show");
                             toggle(".editPanel", 'hide');
@@ -136,10 +137,12 @@
         } else if (regUser.test($('#ftr_adminbundle_user_admintype_username').val()) == true) {
             alert("ชื่อผู้ใช้งาน จะต้องเป็นอักขระอังกฤษ หรือตัวเลข");
             return false;
-        } else if ($("#ftr_adminbundle_user_admintype_password").val().length < 6) {
+        } else if ($('#ftr_adminbundle_user_admintype_password').val() != '' &&
+            $("#ftr_adminbundle_user_admintype_password").val().length < 6) {
             alert("รหัสผ่านจะต้องไม่น้อยกว่า 6 ตัว");
             return false;
-        } else if (!$("#ftr_adminbundle_user_admintype_password").val().match(regPass)) {
+        } else if ($('#ftr_adminbundle_user_admintype_password').val() != '' &&
+                !$("#ftr_adminbundle_user_admintype_password").val().match(regPass)) {
             alert("รหัสผ่านจะต้องเป็นตัวอักษร และตัวเลข");
             return false;
         } else if ($("#ftr_adminbundle_user_admintype_phone_number").val().length < 9 || $("#ftr_adminbundle_user_admintype_phone_number").val().length > 10) {
