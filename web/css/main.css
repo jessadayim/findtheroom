@@ -209,6 +209,12 @@ select[disabled] { background-color: #EAEAEA !important; color:#BCBCBC !importan
 .container{
     width: 1000px; min-height: 230px; height: auto; display:block; position:relative; margin: 10px auto 0 auto;
 }
+.row{
+    width: 1000px; min-height: 40px; height: auto; display:block; position:relative; margin: 10px auto 0 auto;
+}
+.hr{
+    border-bottom: 1px #000 solid;
+}
 
 /* class รูปแบบของแต่ละเนื้อหา */
 .detail .detailContent7{ display:block;}

@@ -540,7 +540,7 @@
                         <input type="hidden" name="hdnfilemap" id="hdnfilemap" value="{{nameimagemap}}" />
                     </td>
                     <td align="right" width="240" valign="top" style="font-size:24px;">รายละเอียดเพิ่มเติม : &nbsp;</td>
-                    <td align="left" width="200"><textarea name="placedetail" type="text" maxlength="500" class="ldesc" onchange="postData('head');" />{{buildingdata.tdetail}}</textarea></td>
+                    <td align="left" width="200"><textarea id="placedetail" name="placedetail" type="text" maxlength="500" class="ldesc" onchange="postData('head');" />{{buildingdata.tdetail}}</textarea></td>
                 </tr>
             </table>
         </div>
@@ -663,6 +663,7 @@
                         </div>
                     </td>
                     <input id="hdnProvinceName" name="hdnProvinceName" type="hidden" value="{{provinceName}}" />
+            		<input type="hidden" name="hdnImageNumber" id="hdnImageNumber" value="{{maximagenumber}}" />
                 </tr>
             </table>
 

@@ -10,9 +10,10 @@ $targetFolder = '/findtheroom/web/images/building'; // Relative to the root
 $ownername = $_POST['ownername'];
 $build_id = $_POST['buildid'];
 $fieldname = $_POST['fieldname'];
-$type =$_POST['typefield'];
+$type = $_POST['typefield'];
+$numberFile = $_POST['number'];
 $now = date('Y-m-d');
-$time = strtotime(date("Y-m-d H:i:s"));
+$time = date("YmdHis");
 if (!empty($_FILES)) {
 	// Validate the file type
 	$fileTypes = array('jpg','jpeg','gif','png'); // File extensions
@@ -26,8 +27,8 @@ if (!empty($_FILES)) {
 	}
 	$fileextension = $fileParts['extension'];
 	//$fixfilename = $newfieldname1.'.'.$fileextension;
-	$fixfilename = $time.'.'.$fileextension;
-	$filenamecallback = $time.'.'.$fileextension.'_'.$newfieldname2;
+	$fixfilename = $numberFile.'-'.$time.'.'.$fileextension;
+	$filenamecallback = $numberFile.'-'.$time.'.'.$fileextension.'_'.$newfieldname2;
 	
 	$tempFile = $_FILES['Filedata']['tmp_name'];
 	$targetPath = $_SERVER['DOCUMENT_ROOT'] . $targetFolder . '/' .$build_id;

@@ -409,6 +409,14 @@ $(function(){
 		</table>
 	</div>
 </div>
+<div class="row hr">
+	<form id="editform" name="editform" action="{{ path('addData', {'id':id})}}" method="post">
+    แก้ไขข้อมูลตึก :
+    <input type="text" id="bName" name="bName" placeholder="email"/>&nbsp;&nbsp;&nbsp;
+    <input type="password" id="bPassword" name="bPassword" placeholder="password"/>&nbsp;&nbsp;&nbsp;
+    <input type="submit" value="แก้ไขข้อมูล"/>
+    </form>
+</div>
 {% render "FTRWebBundle:Main:recom" %}
 
 {% endblock %}

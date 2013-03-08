@@ -62,7 +62,7 @@ class ConfirmBuildingController extends Controller
         $codePassUpdate = $this->randomString(8);
 
 // ข้อมูล token ในการ confirm ห้องพักและ password ในการแก้ไขข้อมูลห้องพัก
-        $confirmToken = $siteConfigDetail["siteUrl"]."/confirm_token/".$id."/".$codeToken;
+        $confirmToken = $siteConfigDetail["siteUrl"]."confirm_token/".$id."/".$codeToken;
         $confirmPassUpdate = $codePassUpdate;
 
 // Update ข้อมูล token และ password update เข้ายังห้องพัก
@@ -77,7 +77,17 @@ class ConfirmBuildingController extends Controller
                 WHERE id = ".$id."
             ";
             $queryUpdateConfirmCode = $conn->query($sqlUpdateConfirmCode);
-
+			
+			$sqlGetEmailForSendEmail = "
+				SELECT 
+				  contact_email 
+				FROM
+				  building_site 
+				WHERE id = $id
+				LIMIT 1
+			";
+			$resultEmail = $conn->fetchall($sqlGetEmailForSendEmail);
+			$emailForSendComfirm = $resultEmail[0]['contact_email'];
         } catch (Excaption $e) {
             echo $e;
         }
@@ -92,8 +102,8 @@ class ConfirmBuildingController extends Controller
         $var = var_export($arrConfirmBuilding, TRUE);
 
         $subject = "Email Confirm การสร้างหอพักใหม่ FindTheRoom.com";
-        $fromEmail = "wararits@sourcecode.co.th";
-        $toEmail = "manesz13@gmail.com";
+        $fromEmail = "ftr@sourcecode.co.th";
+        $toEmail = "$emailForSendComfirm";
         $message = $html;
         $partMessage = $var;
 
