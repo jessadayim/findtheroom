@@ -30,8 +30,8 @@ class Config
         $siteTitle = $arrData['title'];
         $siteDesc = $arrData['description'];
         $siteKeyword = $arrData['keyword'];
-        $siteAuthor = "specialsquare.co.,led.";
-        $siteCopyRight = "specialsquare.co.,led.";
+        $siteAuthor = "specialsquare.co.,ltd.";
+        $siteCopyRight = "specialsquare.co.,ltd.";
         $siteRobot = "index";
         $siteRevisitAfter = "7 days";
         $siteDistribution = "Global";

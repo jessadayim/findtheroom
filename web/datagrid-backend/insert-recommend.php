@@ -1,5 +1,4 @@
 <?php
-
 $debug_mode = false;
 $messaging = true;
 $unique_prefix = "in_";
@@ -54,7 +53,7 @@ $modes = array(
         'view' => false,
         'edit' => true,
         'type' => 'link',
-        'show_button' => true,
+        'show_button' => false,
         'show_add_button' => 'inside|outside'
     ),
     'edit' => array(
@@ -80,11 +79,18 @@ $modes = array(
 $dgridAddRecommend->SetModes($modes);
 
 ## +---------------------------------------------------------------------------+
+## | 3. Printing & Exporting Settings.                                            |
+## +---------------------------------------------------------------------------+
+$printing_option = false;
+$dgridAddRecommend->AllowPrinting($printing_option);
+
+## +---------------------------------------------------------------------------+
 ## | 4. Sorting & Paging Settings:                                             |
 ## +---------------------------------------------------------------------------+
 ##  *** set sorting option: true(default) or false
 $sorting_option = true;
 $dgridAddRecommend->AllowSorting($sorting_option);
+
 ##  *** set paging option: true(default) or false
 $paging_option = true;
 $rows_numeration = true;
@@ -168,10 +174,13 @@ $dgridAddRecommend->SetTableEdit($table_name, $primary_key, $condition);
 $arrRecommendType = array("1" => 'ห้องพักใกล้ BTS', "2" => 'ห้องพักใกล้ MRT', "3" => 'ห้องพักใกล้มหาวิทยาลัย');
 $arrListBuilding = array(@$_GET['in_rid'] => @$_GET['b_name']);
 
+//$get
+
 //เพิ่ม focus ไปที่จุดเพิ่มข้อมูล
 if (!empty($_GET['b_name'])) {
     echo "
-    <script>$(document).ready(function(){
+    <script>
+    $(document).ready(function(){
         $('#styrecommend_type').focus();
     });
     </script>
@@ -180,7 +189,7 @@ if (!empty($_GET['b_name'])) {
 $em_columns = array(
 
     'building_id' => array(
-        'header' => ' ประเภทห้องพักแนะนำ',
+        'header' => ' ชื่อห้องพัก',
         'type' => 'enum',
         'req_type' => 'sy',
         'width' => '200px',
@@ -211,7 +220,7 @@ $em_columns = array(
     'recommend_order' => array(
         'header' => ' ลำดับการแนะนำ',
         'type' => 'textbox',
-        'req_type' => 'rt',
+        'req_type' => 'ri',
         'width' => '210px',
         'title' => '',
         'readonly' => 'false',
@@ -225,6 +234,21 @@ $em_columns = array(
 );
 $dgridAddRecommend->SetColumnsInEditMode($em_columns);
 
+$getMode = @$_GET['in_mode'];
+if ($getMode == 'details') {
+    $foreign_keys = array(
+        "building_id" =>
+        array(
+            "table" => "building_site",
+            "field_key" => "id",
+            "field_name" => "building_name",
+            "view_type" => "dropdownlist",
+            "order_by_field" => "id",
+            "order_type" => "ASC"
+        )
+    );
+    $dgridAddRecommend->SetForeignKeysEdit($foreign_keys);
+}
 
 ## +---------------------------------------------------------------------------+
 ## | 8. Bind the DataGrid:                                                     |

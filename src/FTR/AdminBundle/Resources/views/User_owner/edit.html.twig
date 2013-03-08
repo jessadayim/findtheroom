@@ -148,13 +148,15 @@
         }else if (regUser.test($('#ftr_adminbundle_user_ownertype_username').val()) == true) {
             alert("ชื่อผู้ใช้งาน จะต้องเป็นอักขระอังกฤษ หรือตัวเลข");
             return false;
-        } else if ($("#ftr_adminbundle_user_ownertype_password").val().length < 6) {
+        } else if ($("#ftr_adminbundle_user_ownertype_password").val() != '' &&
+                $("#ftr_adminbundle_user_ownertype_password").val().length < 6) {
             alert("รหัสผ่านจะต้องไม่น้อยกว่า 6 ตัว");
             return false;
-        } else if (!$("#ftr_adminbundle_user_ownertype_password").val().match(regPass)) {
+        } else if ($('#ftr_adminbundle_user_ownertype_password').val() != '' &&
+                !$("#ftr_adminbundle_user_ownertype_password").val().match(regPass)) {
             alert("รหัสผ่านจะต้องเป็นตัวอักษร และตัวเลข");
             return false;
-        } else if (!$("#ftr_adminbundle_user_ownertype_email").val().match(regEmail)) {
+        }  else if (!$("#ftr_adminbundle_user_ownertype_email").val().match(regEmail)) {
             alert("กรุณากรอกอีเมลให้ถูกต้อง");
             return false;
         } else if ($("#ftr_adminbundle_user_ownertype_phone_number").val().length < 9 || $("#ftr_adminbundle_user_ownertype_phone_number").val().length > 10) {

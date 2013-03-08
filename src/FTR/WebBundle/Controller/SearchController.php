@@ -79,7 +79,10 @@ class SearchController extends Controller
                 ),
                 'images/default-image.png'
               ) AS path_image,
-              d.`type_name`
+              d.`type_name` ,
+              e.`PROVINCE_NAME` AS province_name,
+              f.`AMPHUR_NAME` AS amphur_name,
+              a.`slug`
             FROM
               building_site a
               INNER JOIN building_type b
@@ -94,6 +97,14 @@ class SearchController extends Controller
                 ON (
                   d.`id` = a.`building_type_id`
                   AND d.`deleted` = 0
+                )
+                INNER JOIN `province` e
+                ON (
+                a.`addr_province` = e.`PROVINCE_ID`
+                )
+                INNER JOIN `amphur` f
+                ON (
+                a.`addr_prefecture` = f.`AMPHUR_ID`
                 )
             WHERE 1
               AND a.publish = 1

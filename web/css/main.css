@@ -15,9 +15,38 @@ body {
     font-weight:normal;
 }
 
+/* Margin Style */
+.mrL10 {
+    margin-left: 10px; !important;
+}
+.mrR10{
+    margin-right: 10px !important;
+}
+.mrT10{
+    margin-top: 10px !important;
+}
+.mrB10{
+    margin-bottom: 10px !important;
+}
+/* Padding Style */
+.pdL10{
+    padding-left: 10px !important;
+}
+.pdR10{
+    padding-right: 10px !important;
+}
+.pdT10{
+    padding-top: 10px !important;
+}
+.pdB10{
+    padding-bottom: 10px !important;
+}
 /* Font Style */
 .fontRed{
     color: red;
+}
+.fontWhite{
+    color: #FFFFFF;
 }
 
 a img{
@@ -61,7 +90,8 @@ select[disabled] { background-color: #EAEAEA !important; color:#BCBCBC !importan
 #header #login input { width: 120px;}
 #header #login input.login { background: url(../images/login-bt.png) no-repeat; border: 0; width: 51px; height: 51px; cursor: pointer; position:absolute; margin-top:-10px; margin-left: 10px;}
 #header #login input.logout { background: url(../images/logout-bt.png) no-repeat; border: 0; width: 51px; height: 51px; cursor: pointer; position:absolute; margin-top:-10px; margin-left: 10px;}
-#header #topsearch { width: 250px; height:30px; background: url(../images/ss.png) no-repeat; background-color: #423C3B; position:absolute; display:block; margin-left: 691px; margin-top: 40px;}
+/*#header #topsearch { width: 250px; height:30px; background: url(../images/ss.png) no-repeat; background-color: #423C3B; position:absolute; display:block; margin-left: 691px; margin-top: 40px;}*/
+#header #topsearch { width: 250px; height:30px; background: url(../images/ss.png) no-repeat; background-color: #423C3B; position:absolute; display:block; margin-left: 580px; margin-top: 0px;}
 #header #topsearch #s { width: 205px; float: left; background: none; padding: 6px 10px 6px 36px; margin: 0; border: none; color: white; font-size:18px;}
 #header #topsearch #searchsubmit { background: url(../images/search-bt.png) no-repeat; float: left; cursor: pointer; border: none; display:block; width:51px; height:51px; position:absolute; margin-top:-10px; margin-left: 260px;}
 
@@ -329,18 +359,49 @@ input.regis { background: url(../images/regis-bt.png) no-repeat; border: 0; widt
 /*.thumbframe{display:block; float: left; width: 234px; height: 120px; overflow: hidden; position: relative; z-index: 9; margin: 0 21px 20px 0;}*/
 .thumbframe{float: left; display: block; width: 234px; height: 120px; line-height: 100px; overflow: hidden; position: relative; z-index: 9; margin: 0px 10px 0 0; border: 0px #CCC solid; background-color: #FFF;}
 .thumbframe4add{display:block; float: left; width: 240px; height: 150px; overflow: hidden; position: relative; z-index: 9; margin: 0 21px 20px 0;}
-.thumbframe4gallery{display:block; float: left; width: 300px; height: 150px; overflow: hidden; position: relative; z-index: 9; margin: 0 21px 20px 0;}
+
 
 /*.thumb{float: left; position: absolute; top: 0%; left: 0%; width: 250px; height: auto;}*/
 .thumb{ width: 234px; height: auto; float: left; position: absolute; top: -10%; left: 0%; }
-.thumb4gallery{float: left; position: absolute; top: 0%; left: 0%; width: 300px; height: auto;}
 .thumb4img{float: left; position: absolute; top: 0%; left: 0%; width: 300px; height: auto;}
 .omega{margin-right: 0px !important; }
 .clear{clear:both}
 
+/* thumbnail room detail */
+.roomThumbFrame{float: left; display: block; width: 234px; height: 120px; line-height: 100px; overflow: hidden; position: relative; z-index: 9; margin: 0px 21px 20px 0; border: 0px #CCC solid; background-color: #FFF;}
+.roomThumb{ width: 234px; height: auto; float: left; position: absolute; top: -10%; left: 0%; padding: 0px !important }
+.defaultRoomShow{ max-width: 234px; max-height: 400px; display: block; position: relative; }
+
+/* thumbnail room gallery */
+.thumbframe4gallery{display:block; float: left; width: 300px; height: 150px; overflow: hidden; position: relative; z-index: 9; margin: 0 21px 20px 0;}
+.thumb4gallery{float: left; position: absolute; top: 0%; left: 0%; width: 300px; height: auto;}
+
 /* thumbnail ads */
 .adsThumbFrame{float: left; display: block; width: 234px; height: 120px; line-height: 100px; overflow: hidden; position: relative; z-index: 9; margin: 0px 21px 20px 0; border: 0px #CCC solid; background-color: #FFF;}
 .adsThumb{ width: 234px; height: auto; float: left; position: absolute; top: -10%; left: 0%; }
+
+/* thumbnail googlemap */
+.ggInfoThumbFrame{
+    float: left;
+    display: block;
+    width: 100px !important;
+    height: 100px !important;
+    line-height: 100px;
+    overflow: hidden;
+    position: relative;
+    z-index: 9;
+    margin: 0px 21px 20px 0;
+    border: 0px #CCC solid;
+    background-color: #FFF;
+}
+.ggInfoImgThumb{
+    width: 110px !important;
+    height: auto;
+    float: left;
+    position: absolute;
+    top: -10%;
+    left: 0%;
+}
 
 /*show in detail page*/
 #show{
@@ -348,6 +409,13 @@ input.regis { background: url(../images/regis-bt.png) no-repeat; border: 0; widt
 }
 
 /* Google Map */
+#ggViewFancybox{
+    width: 800px;
+    height: 600px;
+    display: block;
+    position: relative;
+    background-color: red;
+}
 .ggInfoFrame {
     width: auto !important; height: 120px; margin: 0;
 }

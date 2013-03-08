@@ -40,7 +40,7 @@ class ConfirmBuildingController extends Controller
                             $queryUpdateConfirmCode = $conn->query($sqlUpdateConfirmCode);
                 }
 
-                return $this->render('FTRWebBundle:Confirm:confirm_add_building_result.html.twig', array(
+                return $this->render('FTRWebBundle:Confirm:confirmAddBuildingResult.html.twig', array(
                     'result' => $result
                 ));
 
@@ -113,7 +113,7 @@ class ConfirmBuildingController extends Controller
         $siteConfig = new Config();
         $siteConfigDetail = $siteConfig->setSiteGlobal();
 
-        return $this->render('FTRWebBundle:Confirm:gen_building_result.html.twig', array(
+        return $this->render('FTRWebBundle:Confirm:genBuildingResult.html.twig', array(
             'token' => $confirmToken,
             'confirmPassUpdate' => $confirmPassUpdate,
             'siteTitle'=> $siteConfigDetail["siteTitle"],

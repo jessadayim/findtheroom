@@ -93,23 +93,26 @@
 		{% endif %}
 	</div>
 </div>-->
-<div class="detail" style="height: 290px; margin-bottom: 15px;">
-	{% if app.session.get('user') == NULL %}
-    <div style="width:500px; display:block; position:relative; float:left; border-right:1px solid #FFF; height:250px; margin-top: 20px;">
-		<a id="login2" href="{{path('FTRWebBundle_regis')}}"><img src="{{asset('images/pub-bt.png')}}" style="margin-left:10px; margin-top:10px;" /></a>
-	</div>
-    <div style="width:490px; display:block; position:relative; float:left;">
-		<a id="login" href="{{path('FTRWebBundle_loginpublish',{'message':'1'})}}"><img src="{{asset('images/login.png')}}" style="margin-left:10px; margin-top:27px;" /></a>
-	</div>
-	{% else %}
-	<div style="width:950px; display:block; position:relative; height:250px; margin-top: 20px;">
-		<img src="{{asset('images/free-pub.png')}}" style="margin-left:30px; margin-top:40px;" />
-        <a href="{{path('addData')}}" class="pub-link">ลงประกาศฟรี!</a>
-        <span class="pub-nolink" style="margin-left:290px">หรือ</span>
-        <a href="{{path('userbuilding')}}" class="pub-link" style="margin-left:385px">แก้ไขรายละเอียด</a>
-	</div>
-	{% endif %}
-</div>
+{#DEV : MICK#}
+{#DATE : 08/03/2013 11:31#}
+{#Comment ระบบลงทะเบียน และเข้าสู่ระบบออก#}
+{#<div class="detail" style="height: 290px; margin-bottom: 15px;">#}
+	{#{% if app.session.get('user') == NULL %}#}
+    {#<div style="width:500px; display:block; position:relative; float:left; border-right:1px solid #FFF; height:250px; margin-top: 20px;">#}
+		{#<a id="login2" href="{{path('FTRWebBundle_regis')}}"><img src="{{asset('images/pub-bt.png')}}" style="margin-left:10px; margin-top:10px;" /></a>#}
+	{#</div>#}
+    {#<div style="width:490px; display:block; position:relative; float:left;">#}
+		{#<a id="login" href="{{path('FTRWebBundle_loginpublish',{'message':'1'})}}"><img src="{{asset('images/login.png')}}" style="margin-left:10px; margin-top:27px;" /></a>#}
+	{#</div>#}
+	{#{% else %}#}
+	{#<div style="width:950px; display:block; position:relative; height:250px; margin-top: 20px;">#}
+		{#<img src="{{asset('images/free-pub.png')}}" style="margin-left:30px; margin-top:40px;" />#}
+        {#<a href="{{path('addData')}}" class="pub-link">ลงประกาศฟรี!</a>#}
+        {#<span class="pub-nolink" style="margin-left:290px">หรือ</span>#}
+        {#<a href="{{path('userbuilding')}}" class="pub-link" style="margin-left:385px">แก้ไขรายละเอียด</a>#}
+	{#</div>#}
+	{#{% endif %}#}
+{#</div>#}
 <div class="detail" style="margin-bottom: 15px; height: 500px">
     <div id="i_containTab3">
         <ul id="navi_containTab3">  
@@ -120,20 +123,20 @@
         <hr class="line" style="top: 60px;" />
     	<ul id="detail_containTab3">  
             <li class="detailContent7">
-            	<div>
-                   
+            	<div class="container pdL10 pdR10 fontWhite">
+                   <p>ข้อมูลการลงประกาศฟรี</p>
                 </div>
             </li>
             
             <li class="detailContent8">
-            	<div>
-                    
+                <div class="container pdL10 pdR10 fontWhite">
+                    <p>ข้อมูลวิธีลงประกาศ</p>
                 </div>
             </li>
             
             <li class="detailContent9">
-            	<div>
-                	
+                <div class="container pdL10 pdR10 fontWhite">
+                	<p>ข้อมูลบริการเสริม</p>
                 </div>
             </li>
     	</ul>  
