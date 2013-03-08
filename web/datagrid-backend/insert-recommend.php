@@ -53,7 +53,7 @@ $modes = array(
         'view' => false,
         'edit' => true,
         'type' => 'link',
-        'show_button' => true,
+        'show_button' => false,
         'show_add_button' => 'inside|outside'
     ),
     'edit' => array(
@@ -220,7 +220,7 @@ $em_columns = array(
     'recommend_order' => array(
         'header' => ' ลำดับการแนะนำ',
         'type' => 'textbox',
-        'req_type' => 'rt',
+        'req_type' => 'ri',
         'width' => '210px',
         'title' => '',
         'readonly' => 'false',
