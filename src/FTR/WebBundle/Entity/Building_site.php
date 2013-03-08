@@ -239,6 +239,20 @@ class Building_site
     private $slug;
 
     /**
+     * @var string $confirm_add_building_token
+     *
+     * @ORM\Column(name="confirm_add_building_token", type="string", length=255)
+     */
+    private $confirm_add_building_token;
+
+    /**
+     * @var string $password_update_building
+     *
+     * @ORM\Column(name="password_update_building", type="string", length=8)
+     */
+    private $password_update_building;
+
+    /**
      * @var boolean $deleted
      *
      * @ORM\Column(name="deleted", type="boolean", nullable="true")
@@ -874,6 +888,46 @@ class Building_site
     public function getSlug()
     {
         return $this->slug;
+    }
+
+    /**
+     * Set confirm_add_building_token
+     *
+     * @param string $confirm_add_building_token
+     */
+    public function setConfirmAddBuildingToken($confirm_add_building_token)
+    {
+        $this->confirm_add_building_token = $confirm_add_building_token;
+    }
+
+    /**
+     * Get confirm_add_building_token
+     *
+     * @return string
+     */
+    public function getConfirmAddBuildingToken()
+    {
+        return $this->confirm_add_building_token;
+    }
+
+    /**
+     * Set password_update_building
+     *
+     * @param string $password_update_building
+     */
+    public function setPasswordUpdateBuilding($password_update_building)
+    {
+        $this->password_update_building = $password_update_building;
+    }
+
+    /**
+     * Get password_update_building
+     *
+     * @return string
+     */
+    public function getPasswordUpdateBuilding()
+    {
+        return $this->password_update_building;
     }
 
     /**

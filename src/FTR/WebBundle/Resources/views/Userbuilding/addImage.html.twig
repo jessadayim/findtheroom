@@ -39,11 +39,12 @@
 	{
 		var ownername = document.getElementById('hdnownername').value;
 		var buildid = document.getElementById('hdnbuildid').value;
+		var imageNum = document.getElementById('hdnImageNumber').value;
 		var numberline = intLine;//parseInt(document.addform.hdnMaxLine.value);
 		for(i=0;i<=numberline;i++){
 		var name = '#room'+i
 		$(name).uploadify({
-				'formData'      : {'ownername' : ownername, 'buildid' : buildid ,'fieldname' : name ,'typefield' : 'room'},
+				'formData'      : {'ownername' : ownername, 'buildid' : buildid , 'fieldname' : name , 'typefield' : 'room', 'number' : imageNum},
 				//'debug'    : true,
 				'swf'      : swfpath,
 				'uploader' : uploaderpath,
@@ -52,6 +53,7 @@
 				'multi'    : false,
 				'fileSizeLimit' : '120KB',
 				'fileTypeExts' : '*.gif; *.jpg; *.png',
+				'onSelect' : function() {getLastestNumberImage();},
 				'onFallback' : function() {/*alert('Flash was not detected.');*/},// detect flash compatible
 				'onUploadSuccess' : function(file, data, response) {
 	            	//alert('The file ' + file.name + ' was successfully uploaded with a response of ' + response + ':' + data);
@@ -60,6 +62,7 @@
 	            	var trId = mySplitResult[1];
 	            	document.getElementById(textRoomName).value = mySplitResult[0];
 	            	postData('image');
+	            	getLastestNumberImage();
 	            	//$('#roomtrid'+trId).fadeOut('slow').html('<img src="'+imagepath+'/'+buildid+'/'+mySplitResult[0]+'" class="nopad thumb"/>').fadeIn("slow");
 	                $('#roompic'+trId).fadeOut('slow').html('<img src="'+imagepath+'/'+buildid+'/'+mySplitResult[0]+'" class="nopad thumb4img"/>').fadeIn("slow");
 	        	}
@@ -113,7 +116,7 @@
     {
         //var  parseInt(document.addform.hdnMaxLine.value);
         // intLine++;
-		
+		getLastestNumberImage();
         var imageid = arraydata[0];
         var pathimage = arraydata[1];
         var typename = arraydata[2];
@@ -133,7 +136,7 @@
                 '<td><LABEL align="left">บาท</LABEL><input type="hidden" name="imageid'+num+'" id="imageid'+num+'" value="'+imageid+'" /></td>' +
                 '</tr>';
         $("#tableroom").append(strInner);
-
+		getLastestNumberImage();
         loopbutton();
         intLine++;
         document.addform.hdnMaxLine.value = intLine;
@@ -171,7 +174,7 @@
                 '</tr>'
 
         deleteImage(num,imageId,'room');
-
+		getLastestNumberImage();
         if(intLine > 1)
         {
             readdataroom(num);
@@ -191,6 +194,7 @@
         $.get("{{ path('setDeleteImage') }}" , { buildingId:buildid, sequence:num, id:imageId, type:type},
                 function(data){
                     //alert(data);
+                    getLastestNumberImage();
                 });
     }
     var imagepath = "{{asset('images/building')}}";
@@ -213,6 +217,15 @@
                     });
                 });
     }
+    
+    function getLastestNumberImage()
+	{
+		var pathtoget = "{{path('getLastestNumberImage', {'id': build_id})}}";
+		$.get(pathtoget,
+                function(data) {
+                    document.addform.hdnImageNumber.value = data;
+                });
+	}
     
     </script>
     <form name="addform" id="addform" method="post" action="{{path('addNewGallery', {'id': build_id })}}" onsubmit="javascript:return checkSubmitData();">
@@ -244,6 +257,7 @@
             </table>
             <img src="{{asset('images/addmore2.png')}}" class="nopad" onclick="CreateNewRow(nullarray, intLine);" style="margin-left: 130px;margin-bottom: 20px; cursor: pointer;">
             <input type="hidden" id="hdnMaxLine" name="hdnMaxLine" value="{{roomlines}}">
+            <input type="hidden" name="hdnImageNumber" id="hdnImageNumber" value="{{maximagenumber}}" />
             
         </div>
     </div>

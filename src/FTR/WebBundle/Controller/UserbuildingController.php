@@ -176,7 +176,7 @@ class UserbuildingController extends Controller
         $building_data = null;
         $arrZone = null;
         $session = $this->get('session');
-        $user = $session->get('user');
+        //$user = $session->get('user');
         $building_id = null;
         $em = $this->getDoctrine()->getEntityManager();
         $conn = $this->get('database_connection');
@@ -184,16 +184,16 @@ class UserbuildingController extends Controller
             die("MySQL Connection error");
         }
         try {
-            $userData = $em->getRepository('FTRWebBundle:User_owner')->findOneBy(array('username' => $user));
-            // เช็คถ้าไม่มีให้ redirect
-            if (empty($userData)) {
-                return $this->redirect($this->generateUrl('FTRWebBundle_publish'));
-            }
+            // $userData = $em->getRepository('FTRWebBundle:User_owner')->findOneBy(array('username' => $user));
+            // // เช็คถ้าไม่มีให้ redirect
+            // if (empty($userData)) {
+                // return $this->redirect($this->generateUrl('FTRWebBundle_publish'));
+            // }
 
-            $enabled = $userData->getEnabled();
-            if (empty($enabled)) {
-                return $this->redirect($this->generateUrl('userbuilding'));
-            }
+            // $enabled = $userData->getEnabled();
+            // if (empty($enabled)) {
+                // return $this->redirect($this->generateUrl('FTRWebBundle_homepage'));
+            // }
             $building_data = $this->getBuildingData($id);
             if (!empty($id)) {
                 $building_id = $id;
@@ -278,7 +278,14 @@ class UserbuildingController extends Controller
                 } else {
                     $linkPhoto = "images/show.png";
                 }
-                $arrRoomData[] = array('id' => $roomPicValue['id'], 'photo_name' => $roomPicValue['photo_name'], 'link_photo' => $linkPhoto, 'roomtype_name' => $roomType2siteData->getRoomTypename(), 'room_size' => $roomType2siteData->getRoomsize(), 'room_price' => $roomType2siteData->getRoomprice(),);
+                $arrRoomData[] = array(
+                	'id' => $roomPicValue['id'], 
+                	'photo_name' => $roomPicValue['photo_name'], 
+                	'link_photo' => $linkPhoto, 
+                	'roomtype_name' => $roomType2siteData->getRoomTypename(), 
+                	'room_size' => $roomType2siteData->getRoomsize(), 
+                	'room_price' => $roomType2siteData->getRoomprice(),
+				);
             }
             $arrGalleryData = null;
             foreach ($arrGallery as $key => $galleryPicValue) {
@@ -332,7 +339,8 @@ class UserbuildingController extends Controller
         } catch (Exception $e) {
             echo 'Caught exception: ', $e->getMessage(), "\n";
         }
-
+		
+		$countImage = $this->getNumberImage($id);
         return $this->render('FTRWebBundle:Userbuilding:add.html.twig', array(
         		'buildingdata' => $building_data, 
         		'payType' => $payType, 
@@ -361,6 +369,7 @@ class UserbuildingController extends Controller
         		'nameimagehead' => $nameImageHead, 
         		'linkimagemap' => $linkImageMap, 
         		'nameimagemap' => $nameImageMap,
+        		'maximagenumber' => $countImage,
 		));
     }
 
@@ -399,6 +408,8 @@ class UserbuildingController extends Controller
         $building->setElectricityUnit(0);
         $building->setDeleted(0);
         $building->setSlug('');
+		$building->setConfirmAddBuildingToken('');
+		$building->setPasswordUpdateBuilding('');
         $em->persist($building);
         $em->flush();
         $building_id = $building->getId();
@@ -426,18 +437,17 @@ class UserbuildingController extends Controller
             die("MySQL Connection error");
         }
         try {
-
+			$orQuery = NULL;
             if (!empty($buildId)) {
+            	if (!empty($roomType2SiteId)) {
+            		$orQuery = "or roomtype2site_id = '$roomType2SiteId'";
+            	}
                 $sql = "select * from image
 								where deleted = 0 and building_site_id = '$buildId'
 									and photo_type = '$type'
-									or roomtype2site_id = '$roomType2SiteId'
+									$orQuery
 									";
                 $imageData = $conn->fetchAll($sql);
-                //            echo "<pre>";
-                //                   var_dump($buildId);
-                //                   echo "</pre>";
-                //                   exit();
             }
         } catch (Exception $e) {
             echo 'Caught exception: ', $e->getMessage(), "\n";
@@ -572,7 +582,7 @@ Email ติดต่อ : ' . $emailBuilding . '
                 }
             }
         }
-        return $this->redirect($this->generateUrl('userbuilding'));
+        return $this->redirect($this->generateUrl('FTRWebBundle_homepage'));
     }
 
     public function sendemailAction($sendFrom, $textHead, $textToSend, $arrData)
@@ -888,6 +898,7 @@ Email ติดต่อ : ' . $emailBuilding . '
                     $imageValue->setPhotoType($photo_type);
                     $imageValue->setSequence($sequence);
                     $imageValue->setDescription($description);
+                    $imageValue->setDeleted(0);
 
                     $roomType2SiteId = $imageValue->getRoomtype2siteId();
 
@@ -1010,6 +1021,7 @@ Email ติดต่อ : ' . $emailBuilding . '
         $buildingValue->setContactName($arrData['contact_name']);
         $buildingValue->setContactEmail($arrData['contact_email']);
         $buildingValue->setWebsite($arrData['website']);
+		$buildingValue->setDeleted(0);
         $monthStay = trim($arrData['month_stay']);
         if (is_numeric($monthStay) || is_float($monthStay)) {
             $buildingValue->setMonthStay($monthStay);
@@ -1029,6 +1041,10 @@ Email ติดต่อ : ' . $emailBuilding . '
         $buildingValue->setAddrPrefecture($arrData['district']);
         $buildingValue->setAddrProvince($arrData['province']);
         $buildingValue->setAddrZipcode($arrData['zipcode']);
+		if ($stat == 'add') {
+			$buildingValue->setConfirmAddBuildingToken('');
+			$buildingValue->setPasswordUpdateBuilding('');
+		}
         if (empty($id) || $id == '') {
             $em->persist($buildingValue);
         }
@@ -1624,9 +1640,9 @@ Email ติดต่อ : ' . $emailBuilding . '
         exit();
     }
 
-    public function moveFile($filename, $sourceFile, $destination)
+    public function moveFile($filename, $filenameChange, $sourceFile, $destination)
     {
-        if (copy($sourceFile . $filename, $destination . $filename)) {
+        if (copy($sourceFile . $filename, $destination . $filenameChange)) {
             $delete[] = $sourceFile . $filename;
         } else {
             return false;
@@ -1639,7 +1655,9 @@ Email ติดต่อ : ' . $emailBuilding . '
     {
         $newBuildId = null;
         $session = $this->get('session');
-        $newBuildId = $session->get('addNewBuildId');
+		if($session->get('addNewBuildId')) {
+        	$newBuildId = $session->get('addNewBuildId');
+		}
         $linkImageHead = null;
         $nameImageHead = null;
         $linkImageMap = null;
@@ -1680,6 +1698,11 @@ Email ติดต่อ : ' . $emailBuilding . '
 
     public function postAddNewAction()
     {
+    	$newBuildId = '';
+        $session = $this->get('session');
+		if($session->get('addNewBuildId')) {
+        	$newBuildId = $session->get('addNewBuildId');
+		}
         if ($_POST) {
             if (!empty($_POST['hdnfilename'])) {
                 $sHeadImageName = trim(@$_POST['hdnfilename']);
@@ -1710,16 +1733,21 @@ Email ติดต่อ : ' . $emailBuilding . '
             	'electric_price' => $_POST['power_price'], 
             	'website' => $_POST['website'], 
             	'internet_price' => $_POST['internet_price'],
+            	'confirm_add_building_token' => ''
 			);
-            $result = $this->saveBuildingData('', $arrData, 'add');
+            $result = $this->saveBuildingData($newBuildId, $arrData, 'add');
             if (!empty($result)) {
                 $buildingId = $result;
                 $this->getPathUpload($buildingId);
                 $pathDestination = 'images/building/' . $buildingId . '/';
                 $pathSource = 'images/building/0/';
-                foreach ($arrImageData as $key => $valueImage) {
-                    $resultImageMove = $this->moveFile($valueImage['photo_name'], $pathSource, $pathDestination);
+                foreach ($arrImageData as $key => &$valueImage) {
+                	$newName = $this->changeFileName($valueImage['photo_name'], $key+1);
+                    $resultImageMove = $this->moveFile($valueImage['photo_name'], $newName, $pathSource, $pathDestination);
+					
+					$valueImage['photo_name'] = $newName;
                 }
+				
                 $alert = $this->saveImageData($buildingId, $arrImageData);
 
                 $session = $this->get('session');
@@ -1733,6 +1761,16 @@ Email ติดต่อ : ' . $emailBuilding . '
             return $this->redirect($this->generateUrl('FTRWebBundle_homepage'));
         }
     }
+
+	public function changeFileName($fileName, $no)
+	{
+		$fileParts = pathinfo($fileName);
+		$fileextension = $fileParts['extension'];
+		$nameChange = null;
+		$time = date("YmdHis");
+		$nameChange = $no.'-'.$time.$fileextension;
+		return $nameChange;
+	}
 
     public function addNewRoomAction($id)
     {
@@ -1758,12 +1796,21 @@ Email ติดต่อ : ' . $emailBuilding . '
             } else {
                 $linkPhoto = "images/show.png";
             }
-            $arrRoomData[] = array('id' => $roomPicValue['id'], 'photo_name' => $roomPicValue['photo_name'], 'link_photo' => $linkPhoto, 'roomtype_name' => $roomType2siteData->getRoomTypename(), 'room_size' => $roomType2siteData->getRoomsize(), 'room_price' => $roomType2siteData->getRoomprice(),);
+            $arrRoomData[] = array(
+            	'id' => $roomPicValue['id'], 
+            	'photo_name' => $roomPicValue['photo_name'], 
+            	'link_photo' => $linkPhoto, 
+            	'roomtype_name' => $roomType2siteData->getRoomTypename(), 
+            	'room_size' => $roomType2siteData->getRoomsize(), 
+            	'room_price' => $roomType2siteData->getRoomprice(),
+			);
         }
+		$countImage = $this->getNumberImage($buildingId);
         return $this->render('FTRWebBundle:Userbuilding:addImage.html.twig', array(
         	'build_id' => $buildingId, 
         	'rooms' => $arrRoomData, 
         	'roomlines' => $countRoom,
+        	'maximagenumber' => $countImage,
 		));
     }
 
@@ -1791,10 +1838,12 @@ Email ติดต่อ : ' . $emailBuilding . '
             }
             $arrGalleryData[] = array('id' => $galleryPicValue['id'], 'photo_name' => $galleryPicValue['photo_name'], 'link_photo' => $linkPhoto, 'description' => $galleryPicValue['description'],);
         }
+		$countImage = $this->getNumberImage($buildingId);
         return $this->render('FTRWebBundle:Userbuilding:addGallery.html.twig', array(
         	'build_id' => $buildingId, 
         	'galleries' => $arrGalleryData, 
         	'gellerylines' => $countGallery,
+        	'maximagenumber' => $countImage,
 		));
     }
 
@@ -1912,9 +1961,39 @@ Email ติดต่อ : ' . $emailBuilding . '
 
 	public function saveNewOtherAction($id)
 	{
-		echo $id.'<br>';
-		var_dump($_POST);
+		if(!empty($id)) {
+			$session = $this->get('session');
+        	$session->remove('addNewBuildId');
+        	
+			return $this->redirect($this->generateUrl('FTRWebBundle_gen_confirm_code', array('id' => $id)), 301);
+		} else {
+			return $this->redirect($this->generateUrl('FTRWebBundle_homepage'));
+		}
+	}
+	
+	public function getLastestNumberImageAction($id)
+	{
+		$number = $this->getNumberImage($id);
+		echo $number;
 		exit();
+	}
+	
+	private function getNumberImage($id)
+	{
+		$conn = $this->get('database_connection');
+        
+        $sqlGetLastest = "
+			SELECT
+			  COUNT(*) as count_number
+			FROM `image`
+			WHERE building_site_id = $id
+        ";
+        $arrFetch = $conn->fetchAll($sqlGetLastest);
+		$lastest_number = 0;
+		if (!empty($arrFetch)) {
+			$lastest_number = $arrFetch[0]['count_number'];
+		}
+		return $lastest_number;
 	}
 }
 

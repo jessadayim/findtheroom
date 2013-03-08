@@ -39,12 +39,13 @@
 	{
 		var ownername = document.getElementById('hdnownername').value;
 		var buildid = document.getElementById('hdnbuildid').value;
+		var imageNum = document.getElementById('hdnImageNumber').value;
 		var numberline = intLineGal;//parseInt(document.addform.hdnMaxLine.value);
 		for(i=0;i<=numberline;i++){
 		var name = '#gallery'+i
 	        //alert(name)
 		$(name).uploadify({
-				'formData'      : {'ownername' : ownername, 'buildid' : buildid ,'fieldname' : name ,'typefield' : 'gallery'},
+				'formData'      : {'ownername' : ownername, 'buildid' : buildid ,'fieldname' : name , 'typefield' : 'gallery', 'number' : imageNum},
 				//'debug'    : true,
 				'swf'      : swfpath,
 				'uploader' : uploaderpath,
@@ -53,6 +54,7 @@
 				'multi'    : false,
 				'fileSizeLimit' : '120KB',
 				'fileTypeExts' : '*.gif; *.jpg; *.png',
+				'onSelect' : function() {getLastestNumberImage();},
 				'onFallback' : function() {/*alert('Flash was not detected.');*/},// detect flash compatible
 				'onUploadSuccess' : function(file, data, response) {
 	            	//alert('The file ' + file.name + ' was successfully uploaded with a response of ' + response + ':' + data);
@@ -62,6 +64,7 @@
 	            	document.getElementById(textGalleryName).value = mySplitResult[0];
 	                //alert(imagepath);
 	            	postData('image');
+	            	getLastestNumberImage();
 	                $('#gallerypic'+trId).fadeOut('slow').html('<img src="'+imagepath+'/'+buildid+'/'+mySplitResult[0]+'" class="nopad thumb4img"/>').fadeIn("slow");
 	        	}
 				// Your options here
@@ -107,6 +110,7 @@
 
     function CreateNewRowGallery(arraydata, num)
     {
+    	getLastestNumberImage();
         var imageid = arraydata[0];
         var pathimage = arraydata[1];
         var nameimage = arraydata[2];
@@ -188,6 +192,15 @@
                 });
     }
     
+    function getLastestNumberImage()
+	{
+		var pathtoget = "{{path('getLastestNumberImage', {'id': build_id})}}";
+		$.get(pathtoget,
+                function(data) {
+                    document.addform.hdnImageNumber.value = data;
+                });
+	}
+    
     </script>
     <form name="addform" id="addform" method="post" action="{{path('addNewOther', {'id': build_id })}}">
     <div id="device" style="height: 200px; margin-bottom: 15px;display: none;">
@@ -213,6 +226,7 @@
             </table>
             <img src="{{asset('images/addmore2.png')}}" class="nopad" onclick="CreateNewRowGallery(nullarrayGal, intLineGal);" style="margin-left: 130px;margin-bottom: 20px; cursor: pointer;">
             <input type="hidden" id="hdnMaxLineGal" name="hdnMaxLineGal" value="{{gellerylines}}">
+            <input type="hidden" name="hdnImageNumber" id="hdnImageNumber" value="{{maximagenumber}}" />
         </div>
     </div>
     <table>

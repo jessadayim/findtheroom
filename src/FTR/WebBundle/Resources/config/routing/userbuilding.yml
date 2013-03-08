@@ -74,3 +74,6 @@ saveNewOther:
     pattern: /savenewother/{id}
     defaults: { _controller: FTRWebBundle:Userbuilding:saveNewOther }
     
+getLastestNumberImage:
+    pattern: /getlasttestnumberimage/{id}
+    defaults: { _controller: FTRWebBundle:Userbuilding:getLastestNumberImage }
