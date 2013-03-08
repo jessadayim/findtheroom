@@ -1,3 +1,6 @@
+<?php
+include "check-login.php";
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 <head>
@@ -14,6 +17,9 @@
 </head>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <body style="padding:10px">
+<div align='left'><a href='<?php echo $getPathDashboard; ?>'>กลับไปหน้า Dashboard</a><br>
+    <a href="approve-building.php">หน้า Approve Building</a><br></div>
+<div align="right"><a href="<?php echo $getPathLogout; ?>"><b>Logout</b></a></div>
 <?php
 
 error_reporting(E_ALL);
@@ -38,7 +44,6 @@ $unique_prefix = "f_";
 $dgrid = new DataGrid($debug_mode, $messaging, $unique_prefix);
 
 ob_start();
-
 
 ##  *** set data source with needed options
 ##  *** put a primary key on the first place
@@ -69,7 +74,7 @@ $sql = "
 $default_order = array("a_id" => "ASC");
 $dgrid->DataSource("PEAR", "mysql", $DB_HOST, $DB_NAME, $DB_USER, $DB_PASS, $sql, $default_order);
 
-$dg_caption = '<b><a href=recommend-building.php>List Building</a></b>';
+$dg_caption = "<b><a href=recommend-building.php>Recommend Building</a></b>";
 $dgrid->SetCaption($dg_caption);
 
 ## +---------------------------------------------------------------------------+

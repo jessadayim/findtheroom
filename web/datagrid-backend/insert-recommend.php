@@ -1,5 +1,4 @@
 <?php
-
 $debug_mode = false;
 $messaging = true;
 $unique_prefix = "in_";

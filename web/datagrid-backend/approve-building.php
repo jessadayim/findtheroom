@@ -1,3 +1,6 @@
+<?php
+include "check-login.php";
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 <head>
@@ -34,9 +37,14 @@
     }
 </script>
 <body style="padding:10px">
+<div align='left'><a href='<?php echo $getPathDashboard; ?>'>กลับไปหน้า Dashboard</a><br>
+<a href="recommend-building.php">หน้า Recommend Building</a><br>
+</div>
+<div align="right"><a href="<?php echo $getPathLogout; ?>"><b>Logout</b></a></div>
 <?php
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
+
 ################################################################################
 ## +---------------------------------------------------------------------------+
 ## | 1. Creating & Calling:                                                    |
@@ -49,7 +57,6 @@ require_once(DATAGRID_DIR . 'datagrid.class.php');
 
 // includes database connection parameters
 include_once('lib/base.inc.php');
-
 ##  *** set needed options
 $debug_mode = false;
 $messaging = true;
@@ -139,7 +146,7 @@ $postback_method = 'AJAX';
 $dgrid->SetPostBackMethod($postback_method);
 ##  *** set CSS class for datagrid
 ##  *** 'default|blue|gray|green|pink|empty|x-blue|x-gray|x-green' or your own css style
-$css_class = 'pink';
+$css_class = 'x-blue';
 $dgrid->SetCssClass($css_class);
 
 $modes = array(

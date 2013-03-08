@@ -23,3 +23,8 @@ ads_control_update:
     pattern:  /{id}/update
     defaults: { _controller: "FTRAdminBundle:Ads_Control:update" }
     requirements: { _method: post }
+
+approve_building:
+    pattern:  /approve/{page}
+    defaults: { _controller: "FTRAdminBundle:ApproveBuilding:index" }
+#    requirements: { _method: post }
