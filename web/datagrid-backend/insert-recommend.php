@@ -93,7 +93,11 @@ $dropdown_paging = false;
 $dgridAddRecommend->AllowPaging($paging_option, $rows_numeration, $numeration_sign, $dropdown_paging);
 ##  *** set paging settings
 $bottom_paging = array(
-    'results' => true, 'results_align' => 'left', 'pages' => true, 'pages_align' => 'center', 'page_size' => true,
+    'results' => true,
+    'results_align' => 'left',
+    'pages' => true,
+    'pages_align' => 'center',
+    'page_size' => true,
     'page_size_align' => 'right'
 );
 $top_paging = array(
