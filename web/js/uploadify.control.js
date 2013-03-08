@@ -3,9 +3,10 @@
 $(function() {// get more knowledge at http://www.uploadify.com/documentation/
 		var ownername = document.getElementById('hdnownername').value
 		var buildid = document.getElementById('hdnbuildid').value
+		var imageNum = document.getElementById('hdnImageNumber').value;
 		
 		$('#file_upload').uploadify({
-			'formData'      : {'ownername' : ownername, 'buildid' : buildid ,'fieldname' : 'head'},
+			'formData'      : {'ownername' : ownername, 'buildid' : buildid ,'fieldname' : 'head', 'number' : imageNum},
 			//'debug'    : true,
 			'swf'      : swfpath,
 			'uploader' : uploaderpath,
@@ -14,6 +15,7 @@ $(function() {// get more knowledge at http://www.uploadify.com/documentation/
 			'multi'    : false,
 			'fileSizeLimit' : '120KB',
 			'fileTypeExts' : '*.gif; *.jpg; *.png',
+			'onSelect' : function() {getLastestNumberImage();},
 			'onFallback' : function() {/*alert('Flash was not detected.');*/},// detect flash compatible
 			'onUploadSuccess' : function(file, data, response) {
             	//alert('The file ' + file.name + ' was successfully uploaded with a response of ' + response + ':' + data);
@@ -25,7 +27,7 @@ $(function() {// get more knowledge at http://www.uploadify.com/documentation/
 		});
 		
 		$('#upload_map').uploadify({
-			'formData'      : {'ownername' : ownername, 'buildid' : buildid ,'fieldname' : 'map'},
+			'formData'      : {'ownername' : ownername, 'buildid' : buildid ,'fieldname' : 'map', 'number' : imageNum},
 			//'debug'    : true,
 			'swf'      : swfpath,
 			'uploader' : uploaderpath,
@@ -34,6 +36,7 @@ $(function() {// get more knowledge at http://www.uploadify.com/documentation/
 			'multi'    : false,
 			'fileSizeLimit' : '120KB',
 			'fileTypeExts' : '*.gif; *.jpg; *.png',
+			'onSelect' : function() {getLastestNumberImage();},
 			'onFallback' : function() {/*alert('Flash was not detected.');*/},// detect flash compatible
 			'onUploadSuccess' : function(file, data, response) {
             	//alert('The file ' + file.name + ' was successfully uploaded with a response of ' + response + ':' + data);
@@ -54,11 +57,12 @@ function uploadpicroom()
 {
 	var ownername = document.getElementById('hdnownername').value;
 	var buildid = document.getElementById('hdnbuildid').value;
+		var imageNum = document.getElementById('hdnImageNumber').value;
 	var numberline = intLine;//parseInt(document.addform.hdnMaxLine.value);
 	for(i=0;i<=numberline;i++){
 	var name = '#room'+i
 	$(name).uploadify({
-			'formData'      : {'ownername' : ownername, 'buildid' : buildid ,'fieldname' : name ,'typefield' : 'room'},
+			'formData'      : {'ownername' : ownername, 'buildid' : buildid ,'fieldname' : name ,'typefield' : 'room', 'number' : imageNum},
 			//'debug'    : true,
 			'swf'      : swfpath,
 			'uploader' : uploaderpath,
@@ -67,6 +71,7 @@ function uploadpicroom()
 			'multi'    : false,
 			'fileSizeLimit' : '120KB',
 			'fileTypeExts' : '*.gif; *.jpg; *.png',
+			'onSelect' : function() {getLastestNumberImage();},
 			'onFallback' : function() {/*alert('Flash was not detected.');*/},// detect flash compatible
 			'onUploadSuccess' : function(file, data, response) {
             	//alert('The file ' + file.name + ' was successfully uploaded with a response of ' + response + ':' + data);
@@ -87,12 +92,13 @@ function uploadpicgallery()
 {
 	var ownername = document.getElementById('hdnownername').value;
 	var buildid = document.getElementById('hdnbuildid').value;
+		var imageNum = document.getElementById('hdnImageNumber').value;
 	var numberline = intLineGal;//parseInt(document.addform.hdnMaxLine.value);
 	for(i=0;i<=numberline;i++){
 	var name = '#gallery'+i
         //alert(name)
 	$(name).uploadify({
-			'formData'      : {'ownername' : ownername, 'buildid' : buildid ,'fieldname' : name ,'typefield' : 'gallery'},
+			'formData'      : {'ownername' : ownername, 'buildid' : buildid ,'fieldname' : name ,'typefield' : 'gallery', 'number' : imageNum},
 			//'debug'    : true,
 			'swf'      : swfpath,
 			'uploader' : uploaderpath,
@@ -101,6 +107,7 @@ function uploadpicgallery()
 			'multi'    : false,
 			'fileSizeLimit' : '120KB',
 			'fileTypeExts' : '*.gif; *.jpg; *.png',
+			'onSelect' : function() {getLastestNumberImage();},
 			'onFallback' : function() {/*alert('Flash was not detected.');*/},// detect flash compatible
 			'onUploadSuccess' : function(file, data, response) {
             	//alert('The file ' + file.name + ' was successfully uploaded with a response of ' + response + ':' + data);
