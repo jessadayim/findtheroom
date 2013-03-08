@@ -1009,7 +1009,9 @@ Email ติดต่อ : ' . $emailBuilding . '
         $buildingValue->setStartPrice($returnValue['startPrice']);
         $buildingValue->setEndPrice($returnValue['endPrice']);
         $buildingValue->setPhoneNumber($arrData['phone_number']);
-        //$buildingValue->setPublish(intval($arrData['publish']));
+		if($arrData['publish']) {
+        	$buildingValue->setPublish($arrData['publish']);
+		}
         $buildingValue->setLastupdate($today);
         $buildingValue->setUserupdate($username);
         $buildingValue->setLatitude($arrData['latitude']);
@@ -1733,7 +1735,8 @@ Email ติดต่อ : ' . $emailBuilding . '
             	'electric_price' => $_POST['power_price'], 
             	'website' => $_POST['website'], 
             	'internet_price' => $_POST['internet_price'],
-            	'confirm_add_building_token' => ''
+            	'confirm_add_building_token' => '',
+            	'publish' =>'2'
 			);
             $result = $this->saveBuildingData($newBuildId, $arrData, 'add');
             if (!empty($result)) {
@@ -1768,7 +1771,7 @@ Email ติดต่อ : ' . $emailBuilding . '
 		$fileextension = $fileParts['extension'];
 		$nameChange = null;
 		$time = date("YmdHis");
-		$nameChange = $no.'-'.$time.$fileextension;
+		$nameChange = $no.'-'.$time.'.'.$fileextension;
 		return $nameChange;
 	}
 
