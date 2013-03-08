@@ -78,6 +78,16 @@
 				'type'				: 'iframe',
 			});
 		});
+		
+		function checkSubmitData()
+		{
+			if (document.getElementById("checkConfirm").checked==true) {
+				return true;
+			} else {
+				alert("ท่านยังไม่ได้เลือกยืนยันการประกาศหอพัก");
+				return false;
+			}
+		}
 </script>
 <!--<div class="detail" style="height: 290px; margin-bottom: 15px;">
     <div style="width:500px; display:block; position:relative; float:left; border-right:1px solid #FFF; height:250px; margin-top: 20px;">
@@ -125,7 +135,9 @@
             <li class="detailContent7">
             	<div class="container pdL10 pdR10 fontWhite">
                    <p>ข้อมูลการลงประกาศฟรี</p>
-                    <input type="checkbox"> ยินยันการประกาศห้องพัก&nbsp;&nbsp;&nbsp;<input type="submit" value="ยืนยัน" style="margin-top: -3px !important;"/>
+                   <form id="confirmForm" name="confirmForm" action="{{ path('addNew') }}" method="post" onsubmit="javascript:return checkSubmitData();">
+                   <input type="checkbox" id="checkConfirm" name="checkConfirm"> ยินยันการประกาศห้องพัก&nbsp;&nbsp;&nbsp;<input type="submit" value="ยืนยัน" style="margin-top: -3px !important;"/>	
+                   </form>
                 </div>
             </li>
             
