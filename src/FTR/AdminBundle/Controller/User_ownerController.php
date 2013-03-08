@@ -138,7 +138,7 @@ class User_ownerController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('FTRWebBundle:User_owner')->find($id);
-        $entity = $this->getNewEntity($entity);
+        $entity = $this->getNewEntity($entity, false);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find User_owner entity.');
@@ -164,6 +164,7 @@ class User_ownerController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('FTRWebBundle:User_owner')->find($id);
+        $getPassword = $entity->getPassword();
         $getCheckUpdateDeleted = @$_POST['checkdelete'];
         if ($getCheckUpdateDeleted == 'deleted') {
             $entity->setDeleted(1);
@@ -173,7 +174,7 @@ class User_ownerController extends Controller
             exit();
         }
 
-        $entity = $this->getNewEntity($entity);
+        $entity = $this->getNewEntity($entity, false);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find User_owner entity.');
@@ -188,8 +189,14 @@ class User_ownerController extends Controller
         $username = $entity->getUsername();
         if ($this->checkUser($username, $id) == 1) {
             if ($editForm->isValid()) {
-                $password = md5($entity->getPassword());
-                $entity->setPassword($password);
+                $newPass = $entity->getPassword();
+                if (!empty($newPass)) {
+                    $password = md5($newPass);
+                    $entity->setPassword($password);
+                } else {
+                    $entity->setPassword($getPassword);
+                }
+
                 $em->persist($entity);
                 $em->flush();
 
@@ -237,7 +244,7 @@ class User_ownerController extends Controller
         return $this->createFormBuilder(array('id' => $id))->add('id', 'hidden')->getForm();
     }
 
-    private function getNewEntity($Entity)
+    private function getNewEntity($Entity, $requirePassword = true)
     {
 
         $conn = $this->get('database_connection');
@@ -254,6 +261,7 @@ class User_ownerController extends Controller
         ";
         try {
             $Entity->userlevel = $conn->fetchAll($sqlGetUserlevel);
+            $Entity->requiredPassword = $requirePassword;
         } catch (Exception $e) {
             echo 'Caught exception: ', $e->getMessage(), "\n";
         }
