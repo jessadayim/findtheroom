@@ -53,12 +53,17 @@ class DetailController extends Controller
                      * */
                     $sqlImageType = "SELECT photo_name, building_site_id, description, photo_type
                                      FROM image
-                                     WHERE photo_type = 'head' OR photo_type = 'map'
+                                     WHERE (photo_type = 'head'OR photo_type = 'map')
                                         AND building_site_id = $id
-                                        AND deleted = 0";
+                                        AND deleted = 0
+                                        ";
                     $objImageType = $conn->fetchAll($sqlImageType);
                     $head = "";
                     $map = "";
+//                    echo "<pre>";
+//                    var_dump($objImageType);exit();
+//                    echo "<pre/>";
+
                     foreach ($objImageType as $value) {
                         if($value['photo_type'] == 'head'){
                             $head = $value['photo_name'];
@@ -164,7 +169,7 @@ class DetailController extends Controller
                 'countData' => $countData,
                 'imageName'=> $objImage,
                 'countGallery'=>count($objImage),
-                'head'=>$head,
+                'imgHead'=>$head,
                 'map'=>$map
             ));
         } else {

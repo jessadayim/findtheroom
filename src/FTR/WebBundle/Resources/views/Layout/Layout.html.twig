@@ -232,7 +232,11 @@
 					</li>
 					<li>
 						{#<a id="searchpage" href="{{path('FTRWebBundle_search')}}">ค้นหาอย่างละเอียด</a>#}
-						<a id="searchpage" href="{{path('FTRWebBundle_search')}}">ค้นหาห้องพัก</a>
+						{#<a id="searchpage" href="{{path('FTRWebBundle_search')}}">ค้นหาห้องพัก</a>#}
+                        {#DEV : MICK#}
+                        {#DATE : 2013/03/08#}
+                        {#ยังไม่มีการใช้งานค้นหาแบบละเอียด เลย link มาที่หน้า list ซึ่งใช้งานค้นหาแบบง่ายและรายการ#}
+						<a id="searchpage" href="{{path('FTRWebBundle_list')}}">ค้นหาห้องพัก</a>
 					</li>
 					<li>
 						<a id="bannerpage" href='{{path('FTRWebBundle_banner')}}'>ลงโฆษณา</a>

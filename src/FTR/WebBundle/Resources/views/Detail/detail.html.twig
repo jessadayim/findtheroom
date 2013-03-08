@@ -65,8 +65,9 @@ $(function(){
     <div class="result">
     	<div class="wifi"> </div><div style=" display:block; position: absolute; margin-left: 0px; margin-top: 127px; width:200px; text-align:center;">ราคา {{general.start_price}} - {{general.end_price}} บาท</div>
 		<div class="thumbframe">
-            {%if head is empty%}
-                    <img src="{{ asset('images/building/')}}{{ id }}/{{head}}" class="thumb omega" />
+
+            {% if imgHead is not empty %}
+                    <img src="{{ asset('images/building/')}}{{ id }}/{{imgHead}}" class="thumb omega" />
             {%else%}
                     <img src='{{asset('images/default-image.png')}}' class='thumb omega'>
             {%endif%}
@@ -144,9 +145,15 @@ $(function(){
         </div>
         <div class="dmap">
         	<span style="float:left; margin-right: 15px;">แผนที่</span>
-            <a id="gmap" href="{{asset('images/default-image.png')}}" style="float:left; margin-right: 10px; margin-top: -10px;"><img src="{{asset('images/gmap.png')}}" /></a>
-            {#<a id="imap" href="{{ asset('images/building/')}}{{ id }}/{{map}}" style="float:left; margin-top: -10px;"><img src="{{asset('images/imap.png')}}" /></a>#}
-            <a id="imap" class="iframe" href="{{ path('FTRWebBundle_googlemap_view', {'id':id}) }}" style="float:left; margin-top: -10px;"><img src="{{asset('images/imap.png')}}" /></a>
+            {% if map is not empty %}
+                <a id="gmap" href="{{asset('images/default-image.png')}}" style="float:left; margin-right: 10px; margin-top: -10px;"><img src="{{asset('images/gmap.png')}}" /></a>
+            {% endif %}
+            {% if general.latitude %}
+                {% if general.longitude %}
+                    {#<a id="imap" href="{{ asset('images/building/')}}{{ id }}/{{map}}" style="float:left; margin-top: -10px;"><img src="{{asset('images/imap.png')}}" /></a>#}
+                    <a id="imap" class="iframe" href="{{ path('FTRWebBundle_googlemap_view', {'id':id}) }}" style="float:left; margin-top: -10px;"><img src="{{asset('images/imap.png')}}" /></a>
+                {% endif %}
+            {% endif %}
         </div>
     </div>
 </div>
