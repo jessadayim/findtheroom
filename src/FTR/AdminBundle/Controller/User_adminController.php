@@ -27,9 +27,12 @@ class User_adminController extends Controller
 
         $entities = $em->getRepository('FTRAdminBundle:User_admin')->findAll();
 
-        return $this->render('FTRAdminBundle:User_admin:index.html.twig', array(
-            'entities' => $entities
-        ));
+        return $this->render(
+            'FTRAdminBundle:User_admin:index.html.twig',
+            array(
+                'entities' => $entities
+            )
+        );
     }
 
     /**
@@ -67,19 +70,24 @@ class User_adminController extends Controller
         $getEntitiesAll = $em->getRepository('FTRAdminBundle:User_admin')->findBy(array('deleted' => 0));
         $countListEntities = count($getEntitiesAll);
 
-        $entities = $em->getRepository('FTRAdminBundle:User_admin')->getDataAdmin($limit, $offset, $getTextSearch, $countListEntities, "$getOrderBy");
+        $entities = $em->getRepository(
+            'FTRAdminBundle:User_admin'
+        )->getDataAdmin($limit, $offset, $getTextSearch, $countListEntities, "$getOrderBy");
         $paginator = new Paginator($countListEntities, $offset, $limit, $midRange);
 
-        return $this->render('FTRAdminBundle:User_admin:show.html.twig', array(
-            'entities' => $entities,
-            'paginator'	        => $paginator,
-            'countListEntities'		=> $countListEntities,
-            'limit' 	        => $limit,
-            'noPage'	        => $page,
-            'record'	        => $getRecord,
-            'textSearch'        => $getTextSearch,
-            'orderBy'             => $getOrderBy
-        ));
+        return $this->render(
+            'FTRAdminBundle:User_admin:show.html.twig',
+            array(
+                'entities' => $entities,
+                'paginator' => $paginator,
+                'countListEntities' => $countListEntities,
+                'limit' => $limit,
+                'noPage' => $page,
+                'record' => $getRecord,
+                'textSearch' => $getTextSearch,
+                'orderBy' => $getOrderBy
+            )
+        );
     }
 
     /**
@@ -88,15 +96,17 @@ class User_adminController extends Controller
      */
     public function newAction()
     {
-
         $entity = new User_admin();
         $entity = $this->getNewEntity($entity);
         $form = $this->createForm(new User_adminType(), $entity);
 
-        return $this->render('FTRAdminBundle:User_admin:new.html.twig', array(
-            'entity' => $entity,
-            'form' => $form->createView()
-        ));
+        return $this->render(
+            'FTRAdminBundle:User_admin:new.html.twig',
+            array(
+                'entity' => $entity,
+                'form' => $form->createView()
+            )
+        );
     }
 
     /**
@@ -107,7 +117,7 @@ class User_adminController extends Controller
     {
         $entity = new User_admin();
         $entity = $this->getNewEntity($entity);
-//        $entity = md5($entity->getPassword());
+        // $entity = md5($entity->getPassword());
 
         $request = $this->getRequest();
         $form = $this->createForm(new User_adminType(), $entity);
@@ -135,9 +145,13 @@ class User_adminController extends Controller
             exit();
         }
 
-        return $this->render('FTRAdminBundle:User_admin:new.html.twig', array(
-            'entity' => $entity,
-            'form' => $form->createView()));
+        return $this->render(
+            'FTRAdminBundle:User_admin:new.html.twig',
+            array(
+                'entity' => $entity,
+                'form' => $form->createView()
+            )
+        );
     }
 
     /**
@@ -149,7 +163,7 @@ class User_adminController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $entity = $em->getRepository('FTRAdminBundle:User_admin')->find($id);
 
-        $entity = $this->getNewEntity($entity);
+        $entity = $this->getNewEntity($entity, false);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find User_admin entity.');
@@ -158,11 +172,14 @@ class User_adminController extends Controller
         $editForm = $this->createForm(new User_adminType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('FTRAdminBundle:User_admin:edit.html.twig', array(
-            'entity' => $entity,
-            'edit_form' => $editForm->createView(),
-            //'delete_form' => $deleteForm->createView(),
-        ));
+        return $this->render(
+            'FTRAdminBundle:User_admin:edit.html.twig',
+            array(
+                'entity' => $entity,
+                'edit_form' => $editForm->createView(),
+                //'delete_form' => $deleteForm->createView(),
+            )
+        );
     }
 
     /**
@@ -174,7 +191,7 @@ class User_adminController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('FTRAdminBundle:User_admin')->find($id);
-
+        $getPassword = $entity->getPassword();
         //ตรวจสอบการ ส่งตัวแปรให้อัพเดท Building Site Feid Deleted เป็น 1
         $getCheckUpdateDeleted = @$_POST['checkdelete'];
         if ($getCheckUpdateDeleted == 'deleted') {
@@ -186,7 +203,7 @@ class User_adminController extends Controller
             exit();
         }
 
-        $entity = $this->getNewEntity($entity);
+        $entity = $this->getNewEntity($entity, false);
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find User_admin entity.');
         }
@@ -201,13 +218,19 @@ class User_adminController extends Controller
         $username = $entity->getUsername();
         if ($this->checkUser($username, $id) == 1) {
             if ($editForm->isValid()) {
-                $password = md5($entity->getPassword());
-                $entity->setPassword($password);
+                $newPass = $entity->getPassword();
+                if (!empty($newPass)) {
+                    $password = md5($newPass);
+                    $entity->setPassword($password);
+                } else {
+                    $entity->setPassword($getPassword);
+                }
+
                 $em->persist($entity);
                 $em->flush();
 
                 $logger = new LoggerHelper();
-                $logger->addInfo('test log for save data',$logger->objectToArray($entity));
+                $logger->addInfo('test log for save data', $logger->objectToArray($entity));
 
                 echo 'finish';
                 exit();
@@ -218,10 +241,14 @@ class User_adminController extends Controller
             exit();
         }
 
-        return $this->render('FTRAdminBundle:User_admin:edit.html.twig', array(
-            'entity' => $entity,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),));
+        return $this->render(
+            'FTRAdminBundle:User_admin:edit.html.twig',
+            array(
+                'entity' => $entity,
+                'edit_form' => $editForm->createView(),
+                'delete_form' => $deleteForm->createView(),
+            )
+        );
     }
 
     /**
@@ -259,7 +286,7 @@ class User_adminController extends Controller
         return $this->createFormBuilder(array('id' => $id))->add('id', 'hidden')->getForm();
     }
 
-    private function getNewEntity($Entity)
+    private function getNewEntity($Entity, $requirePassword = true)
     {
 
         $conn = $this->get('database_connection');
@@ -276,6 +303,7 @@ class User_adminController extends Controller
         ";
         try {
             $Entity->user_level = $conn->fetchAll($sqlGetUserlevel);
+            $Entity->requiredPassword = $requirePassword;
         } catch (Exception $e) {
             echo 'Caught exception: ', $e->getMessage(), "\n";
         }
