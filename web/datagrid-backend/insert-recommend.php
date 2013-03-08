@@ -1,6 +1,6 @@
 <?php
 
-$debug_mode = true;
+$debug_mode = false;
 $messaging = true;
 $unique_prefix = "in_";
 $dgridAddRecommend = new DataGrid($debug_mode, $messaging, $unique_prefix);
@@ -8,8 +8,20 @@ $dgridAddRecommend = new DataGrid($debug_mode, $messaging, $unique_prefix);
 ##  *** put a primary key on the first place
 $sql = "
     SELECT
-      `building_site`.*,
-      `building_site`.id as a_id
+      `building_site`.`building_name`,
+      `building_site`.id AS a_id,
+      `recommend_building`.`id` AS id,
+      `recommend_building`.`building_id`,
+      `recommend_building`.`recommend_type`,
+      `recommend_building`.`recommend_order`,
+      CASE
+        WHEN `recommend_building`.`recommend_type` = 1
+        THEN 'ห้องพักใกล้ BTS'
+        WHEN `recommend_building`.`recommend_type` = 2
+        THEN 'ห้องพักใกล้ MRT'
+        WHEN `recommend_building`.`recommend_type` = 3
+        THEN 'ห้องพักใกล้มหาวิทยาลัย'
+      END AS recommend_type_name
     FROM
       `building_site`
       INNER JOIN `recommend_building`
@@ -19,7 +31,7 @@ $sql = "
     WHERE 1
       AND building_site.`deleted` = 0
     ";
-$default_order = array("a_id" => "ASC");
+$default_order = array("`recommend_building`.`recommend_type`" => "ASC");
 $dgridAddRecommend->DataSource("PEAR", "mysql", $DB_HOST, $DB_NAME, $DB_USER, $DB_PASS, $sql, $default_order);
 
 $dg_caption = '<br><b>รายการหอพักแนะนำ</b>';
@@ -38,11 +50,32 @@ $css_class = 'x-green';
 $dgridAddRecommend->SetCssClass($css_class);
 
 $modes = array(
-    'add' => array('view' => false, 'edit' => true, 'type' => 'link', 'show_button' => true,
-        'show_add_button' => 'inside|outside'),
-    'edit' => array('view' => false, 'edit' => true, 'type' => 'link', 'show_button' => true, 'byFieldValue' => ''),
-    'details' => array('view' => true, 'edit' => false, 'type' => 'link', 'show_button' => false),
-    'delete' => array('view' => true, 'edit' => true, 'type' => 'image', 'show_button' => true)
+    'add' => array(
+        'view' => false,
+        'edit' => true,
+        'type' => 'link',
+        'show_button' => true,
+        'show_add_button' => 'inside|outside'
+    ),
+    'edit' => array(
+        'view' => true,
+        'edit' => true,
+        'type' => 'link',
+        'show_button' => true,
+        'byFieldValue' => ''
+    ),
+    'details' => array(
+        'view' => true,
+        'edit' => true,
+        'type' => 'link',
+        'show_button' => true
+    ),
+    'delete' => array(
+        'view' => true,
+        'edit' => true,
+        'type' => 'image',
+        'show_button' => true
+    )
 );
 $dgridAddRecommend->SetModes($modes);
 
@@ -88,22 +121,32 @@ $fill_from_array = array(
     '0' => 'Banned', '1' => 'Active', '2' => 'Closed', '3' => 'Removed'
 ); /* as 'value'=>'option' */
 $vm_columns = array(
-    'a_id' => array('header' => 'ID หอพัก', 'type' => 'label', 'align' => 'right'),
-    'building_name' => array('header' => ' ชื่อหอพัก', 'type' => 'label', 'align' => 'left'),
-    'type_name' => array('header' => ' ประเภท', 'type' => 'label', 'align' => 'left'),
-    'typename' => array('header' => ' ชนิด', 'type' => 'label', 'align' => 'left'),
-    'datetimestamp' => array('header' => ' วันที่ลง', 'type' => 'label', 'align' => 'left'),
-    'lastupdate' => array('header' => ' แก้ไขล่าสุด', 'type' => 'label', 'align' => 'left'),
-    'insert_recommend' => array('header' => 'Insert to Recommend', 'type' => 'label', "width" => "110px",
-        "field_key" => "a_id", "field_key_1" => "publish", 'align' => 'left',
-        "on_js_event" => "", "href" => ""),
+    'a_id' => array(
+        'header' => 'ID หอพัก',
+        'type' => 'label',
+        'align' => 'right'
+    ),
+    'building_name' => array(
+        'header' => ' ชื่อหอพัก',
+        'type' => 'label',
+        'align' => 'left'
+    ),
+    'recommend_type_name' => array(
+        'header' => ' ชนิด',
+        'type' => 'label',
+        'align' => 'left'
+    ),
+    'recommend_order' => array(
+        'header' => ' ลำดับ',
+        'type' => 'label',
+        'align' => 'right'
+    )
 
 );
 $dgridAddRecommend->SetColumnsInViewMode($vm_columns);
 ##  *** set auto-generated columns in view mode
 $auto_column_in_view_mode = false;
 $dgridAddRecommend->SetAutoColumnsInViewMode($auto_column_in_view_mode);
-
 
 
 ## +---------------------------------------------------------------------------+
@@ -120,11 +163,23 @@ $dgridAddRecommend->SetTableEdit($table_name, $primary_key, $condition);
 
 $arrRecommendType = array("1" => 'ห้องพักใกล้ BTS', "2" => 'ห้องพักใกล้ MRT', "3" => 'ห้องพักใกล้มหาวิทยาลัย');
 $arrListBuilding = array(@$_GET['in_rid'] => @$_GET['b_name']);
+
+//เพิ่ม focus ไปที่จุดเพิ่มข้อมูล
+if (!empty($_GET['b_name'])) {
+    echo "
+    <script>$(document).ready(function(){
+        $('#styrecommend_type').focus();
+    });
+    </script>
+    ";
+}
 $em_columns = array(
 
     'building_id' => array(
-        'header' => ' ประเภทห้องพักแนะนำ', 'type' => 'enum',
-        'req_type' => 'sy', 'width' => '200px',
+        'header' => ' ประเภทห้องพักแนะนำ',
+        'type' => 'enum',
+        'req_type' => 'sy',
+        'width' => '200px',
         'title' => '', 'readonly' => 'false',
         'maxlength' => '-1', 'default' => '',
         'unique' => 'false', 'unique_condition' => '',

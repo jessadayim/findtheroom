@@ -52,7 +52,7 @@ $sql = "
       `pay_type`.*,
       recommend_building.* ,
       IF( recommend_building.id IS NULL, '<input type=\"checkbox\" disabled />Add',
-      '<input type=\"checkbox\" disabled checked/>') AS insert_recommend
+      '<input type=\"checkbox\" disabled checked/>Recommend') AS insert_recommend
     FROM
       `building_site`
       INNER JOIN `building_type`
