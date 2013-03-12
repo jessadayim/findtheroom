@@ -933,6 +933,7 @@ Email ติดต่อ : ' . $emailBuilding . '
             } else {
                 $roomtype2site->setRoomprice(0);
             }
+			$roomtype2site->setDeleted(0);
             $em->persist($roomtype2site);
             $em->flush();
 
@@ -947,6 +948,7 @@ Email ติดต่อ : ' . $emailBuilding . '
             if (is_numeric($roomPrice) || is_float($roomPrice)) {
                 $roomtype2sitedata->setRoomprice($roomPrice);
             }
+			$roomtype2sitedata->setDeleted(0);
 
             $em->flush();
         }
