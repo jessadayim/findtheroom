@@ -99,12 +99,27 @@ class DetailController extends Controller
                     /**
                      * query Detail facility roomtype
                      * */
-                    $sqlRoomType = "SELECT r2.room_size, r2.room_price, r2.room_typename,img.building_site_id, img.photo_name, img.deleted, img.sequence
-                                    FROM roomtype2site r2
+                    $sqlRoomType = "SELECT
+                                    r2.room_size,
+                                    r2.room_price,
+                                    r2.room_typename,
+                                    r2.building_site_id,
+                                    img.photo_name,
+                                    img.photo_type,
+                                    img.deleted,
+                                    img.sequence
+                                  FROM
+                                    roomtype2site r2
                                     LEFT JOIN image img
-                                        ON (r2.id = img.roomtype2site_id AND img.deleted = 0 )
-                                    WHERE r2.building_site_id = $id AND r2.deleted = 0
-                                    ORDER BY img.sequence";
+                                      ON (
+                                        r2.id = img.roomtype2site_id
+                                        AND img.deleted = 0
+                                        AND img.photo_type != 'gallery'
+                                        AND img.photo_type != 'head'
+                                      )
+                                  WHERE r2.building_site_id = $id
+                                    AND r2.deleted = 0
+                                  ORDER BY img.sequence  ";
                     $objRoomType = $conn->fetchAll($sqlRoomType);
 
                     /**

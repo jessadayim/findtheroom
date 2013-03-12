@@ -174,8 +174,8 @@ select[disabled] { background-color: #EAEAEA !important; color:#BCBCBC !importan
 #show .resultf .desc, #show .result .desc .short{ display:block; position:relative; width:450px;height: 43px;word-wrap:break-word; overflow:hidden}
 #show .resultf .dmap , #show .result .dmap{ float: left; margin-left: 90px;}
 #show .resultf .dmap input.view, #show .result .dmap input.view { background: url(../images/view.png) no-repeat; border: 0; width: 71px; height: 71px; position:absolute; margin-top:50px; margin-left:50px; display:block; cursor: pointer;}
-/*#show .result a {text-decoration: none; color: #ffffff;}*/
-/*#show .result a:hover {text-decoration: none; color: red}*/
+#show .result a {text-decoration: none; color: #ffffff;}
+#show .result a:hover {text-decoration: none; color: red}
 
 /*Show Result Paging*/
 #paging { background-color: #423C3B; width: 1000px; height: 35px; display:block; position:relative; margin:15px auto 0px auto;}
