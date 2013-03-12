@@ -46,382 +46,382 @@
 		});
 </script>
 {# Disable Recommend Zone#}
-{#<div id="recommend">#}
-	{#<div id="i_containTab2">#}
-		{#<ul id="navi_containTab2">#}
-			{#<li id="tabNavi4" class="active" onclick="enact(this);"></li>#}
-			{#<li id="tabNavi5" onclick="enact(this);"></li>#}
-			{#<li id="tabNavi6" onclick="enact(this);"></li>#}
-			{#<li id="tabNavi7" onclick="enact(this);"></li>#}
-		{#</ul>#}
-		{#<hr class="line" style="top: 60px; position: inherit;" />#}
-		{#<ul id="detail_containTab2">#}
-			{#<li class="detailContent4">#}
-				{#<div id="container2">#}
-					{#{% if numrow1 != 0%}#}
-                        {#<div id="slides2">#}
-                            {#<div class="slides_container" style="width:950px;">#}
-                                {#{% set introw1 = 0 %}#}
-                                {#{% for recom1 in roomBts%}#}
-                                {#{% if introw1%3 == 0%}#}
-                                {#<div class="slide" style="width:950px;">#}
-                                    {#{%endif%}#}
-                                    {#{% set row1 = introw1+1 %}#}
-                                    {#{% if row1%3 == 0%}#}
-                                    {#<div class="ap2">#}
-                                        {#<a class="clear" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">#}
-                                        {#{% else %}#}
-                                        {#<div class="ap">#}
-                                            {#<a class="clear" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">#}
-                                            {#{%endif%}#}
-                                            {#<div class="recom"></div>#}
-                                                {#{%if recom1.photo_name != null%}#}
-                                                {#<img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />#}
-                                                {#{%else%}#}
-                                                {#<img src='{{asset('images/default/rec.jpg')}}'>#}
-                                                {#{%endif%}#}
-                                            {#<br />#}
-                                            {#<span style="color:#FFF;"> <b style="font-size:24px">{{recom1.building_name}}</b>#}
-                                                {#<br />#}
-                                                {#ประเภท : {{recom1.type_name}}#}
-                                                {#<br />#}
-                                                {#ใกล้ BTS สถานี : {{recom1.name}}#}
-                                                {#<br />#}
-                                                {#<br />#}
-                                                {#ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span>#}
-                                        {#</div></a>#}
-                                        {#{% set introw1 = introw1+1 %}#}
-                                        {#{% if introw1%3 == 0%}#}
-                                    {#</div>#}
-                                    {#{%endif%}#}
-                                    {#{% endfor %}#}
-                                {#</div>#}
-                                    {#{%if roomBts|length%3 == 0%}#}
-                                    {#<a style="display: inherit !important;" href='#' class="clear prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>#}
-                                    {#<a style="display: inherit !important;" href='#' class="clear next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>#}
-                                    {#{%endif%}#}
-                            {#</div>#}
-                            {#{%if roomBts|length%3 != 0%}#}
-                                {#<a style="display: inherit !important;" href='#' class="clear prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>#}
-                                {#<a style="display: inherit !important;" href='#' class="clear next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>#}
-                            {#{%endif%}#}
-					{#{%else%}#}
+<div id="recommend">
+	<div id="i_containTab2">
+		<ul id="navi_containTab2">
+			<li id="tabNavi4" class="active" onclick="enact(this);"></li>
+			<li id="tabNavi5" onclick="enact(this);"></li>
+			<li id="tabNavi6" onclick="enact(this);"></li>
+			<li id="tabNavi7" onclick="enact(this);"></li>
+		</ul>
+		<hr class="line" style="top: 60px; position: inherit;" />
+		<ul id="detail_containTab2">
+			<li class="detailContent4">
+				<div id="container2">
+					{% if numrow1 != 0%}
+                        <div id="slides2">
+                            <div class="slides_container" style="width:950px;">
+                                {% set introw1 = 0 %}
+                                {% for recom1 in roomBts%}
+                                {% if introw1%3 == 0%}
+                                <div class="slide" style="width:950px;">
+                                    {%endif%}
+                                    {% set row1 = introw1+1 %}
+                                    {% if row1%3 == 0%}
+                                    <div class="ap2">
+                                        <a class="clear" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
+                                        {% else %}
+                                        <div class="ap">
+                                            <a class="clear" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
+                                            {%endif%}
+                                            <div class="recom"></div>
+                                                {%if recom1.photo_name != null%}
+                                                <img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />
+                                                {%else%}
+                                                <img src='{{asset('images/default/rec.jpg')}}'>
+                                                {%endif%}
+                                            <br />
+                                            <span style="color:#FFF;"> <b style="font-size:24px">{{recom1.building_name}}</b>
+                                                <br />
+                                                ประเภท : {{recom1.type_name}}
+                                                <br />
+                                                ใกล้ BTS สถานี : {{recom1.name}}
+                                                <br />
+                                                <br />
+                                                ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span>
+                                        </div></a>
+                                        {% set introw1 = introw1+1 %}
+                                        {% if introw1%3 == 0%}
+                                    </div>
+                                    {%endif%}
+                                    {% endfor %}
+                                </div>
+                                    {%if roomBts|length%3 == 0%}
+                                    <a style="display: inherit !important;" href='#' class="clear prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>
+                                    <a style="display: inherit !important;" href='#' class="clear next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>
+                                    {%endif%}
+                            </div>
+                            {%if roomBts|length%3 != 0%}
+                                <a style="display: inherit !important;" href='#' class="clear prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>
+                                <a style="display: inherit !important;" href='#' class="clear next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>
+                            {%endif%}
+					{%else%}
 
-						{#<div class="slides_container" style="width:950px; display: inherit !important;">#}
-							{#{% set introw1 = 0 %}#}
-							{#{% for recom1 in roomBts%}#}
-							{#{% if introw1%3 == 0%}#}
-							{#<div class="slide">#}
-								{#{%endif%}#}
-								{#{% set row1 = introw1+1 %}#}
-								{#{% if row1%3 == 0%}#}
-								{#<div class="ap2">#}
-                                    {#<a class="clear" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">#}
-									{#{% else %}#}
-									{#<div class="ap">#}
-                                        {#<a class="clear" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">#}
-										{#{%endif%}#}
+						<div class="slides_container" style="width:950px; display: inherit !important;">
+							{% set introw1 = 0 %}
+							{% for recom1 in roomBts%}
+							{% if introw1%3 == 0%}
+							<div class="slide">
+								{%endif%}
+								{% set row1 = introw1+1 %}
+								{% if row1%3 == 0%}
+								<div class="ap2">
+                                    <a class="clear" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
+									{% else %}
+									<div class="ap">
+                                        <a class="clear" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
+										{%endif%}
 
-										{#<div class="recom"></div>#}
-                                            {#{%if recom1.photo_name != null%}#}
-                                            {#<img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />#}
-                                            {#{%else%}#}
-                                            {#<img src='{{asset('images/default/rec.jpg')}}'>#}
-                                            {#{%endif%}#}
-										{#<br />#}
-										{#<span style="color:#FFF;"> <b style="font-size:24px">{{recom1.building_name}}</b>#}
-											{#<br />#}
-											{#ประเภท : {{recom1.type_name}}#}
-											{#<br />#}
-											{#ใกล้ BTS สถานี : {{recom1.name}}#}
-											{#<br />#}
-											{#<br />#}
-											{#ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span>#}
-                                        {#</a>#}
-									{#</div>#}
-									{#{% set introw1 = introw1+1 %}#}
-									{#{% if introw1%3 == 0%}#}
-								{#</div>#}
-								{#{%endif%}#}
-								{#{% endfor %}#}
-						{#</div>#}
-					{#{%endif%}#}
-				{#</div>#}
-			{#</li>#}
-			{#<li class="detailContent5">#}
-				{#<div id="container3">#}
-					{#{% if numrow2 != 0%}#}
-						{#<div id="slides3">#}
-							{#<div class="slides_container" style="width:950px;">#}
-							{#{% set introw2 = 0 %}#}
-							{#{% for recom1 in roomMrt%}#}
-							{#{% if introw2%3 == 0%}#}
-							{#<div class="slide" style="width:950px;">#}
-								{#{%endif%}#}
-								{#{% set row2 = introw2+1 %}#}
-								{#{% if row2%3 == 0%}#}
-								{#<div class="ap2">#}
-                                    {#<a class="clear" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">#}
-									{#{% else %}#}
-									{#<div class="ap">#}
-                                        {#<a class="clear" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">#}
-										{#{%endif%}#}
+										<div class="recom"></div>
+                                            {%if recom1.photo_name != null%}
+                                            <img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />
+                                            {%else%}
+                                            <img src='{{asset('images/default/rec.jpg')}}'>
+                                            {%endif%}
+										<br />
+										<span style="color:#FFF;"> <b style="font-size:24px">{{recom1.building_name}}</b>
+											<br />
+											ประเภท : {{recom1.type_name}}
+											<br />
+											ใกล้ BTS สถานี : {{recom1.name}}
+											<br />
+											<br />
+											ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span>
+                                        </a>
+									</div>
+									{% set introw1 = introw1+1 %}
+									{% if introw1%3 == 0%}
+								</div>
+								{%endif%}
+								{% endfor %}
+						</div>
+					{%endif%}
+				</div>
+			</li>
+			<li class="detailContent5">
+				<div id="container3">
+					{% if numrow2 != 0%}
+						<div id="slides3">
+							<div class="slides_container" style="width:950px;">
+							{% set introw2 = 0 %}
+							{% for recom1 in roomMrt%}
+							{% if introw2%3 == 0%}
+							<div class="slide" style="width:950px;">
+								{%endif%}
+								{% set row2 = introw2+1 %}
+								{% if row2%3 == 0%}
+								<div class="ap2">
+                                    <a class="clear" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
+									{% else %}
+									<div class="ap">
+                                        <a class="clear" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
+										{%endif%}
 
-										{#<div class="recom"></div>#}
-                                            {#{%if recom1.photo_name != null%}#}
-                                            {#<img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />#}
-                                            {#{%else%}#}
-                                            {#<img src='{{asset('images/default/rec.jpg')}}'>#}
-                                            {#{%endif%}#}
-										{#<br />#}
-										{#<span style="color:#FFF;"> <b style="font-size:24px">{{recom1.building_name}}</b>#}
-											{#<br />#}
-											{#ประเภท : {{recom1.type_name}}#}
-											{#<br />#}
-											{#ใกล้ MRT สถานี : {{recom1.name}}#}
-											{#<br />#}
-											{#<br />#}
-											{#ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span>#}
-									{#</div></a>#}
-									{#{% set introw2 = introw2+1 %}#}
-									{#{% if introw2%3 == 0%}#}
-								{#</div>#}
-								{#{%endif%}#}
-								{#{% endfor %}#}
-							{#</div>#}
-                                {#{%if roomMrt|length%3 == 0%}#}
-                                {#<a style="display: inherit !important;" href='#' class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>#}
-                                {#<a style="display: inherit !important;" href='#' class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>#}
-                                {#{%endif%}#}
-						{#</div>#}
-                            {#{%if roomMrt|length%3 != 0%}#}
-                            {#<a style="display: inherit !important;" href='#' class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>#}
-                            {#<a style="display: inherit !important;" href='#' class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>#}
-                            {#{%endif%}#}
-					{#{%else%}#}
-						{#<div class="slides_container" style="width:950px; display: inherit !important;">#}
-							{#{% set introw2 = 0 %}#}
-							{#{% for recom1 in roomMrt%}#}
-							{#{% if introw2%3 == 0%}#}
-							{#<div class="slide" style="width:950px;">#}
-								{#{%endif%}#}
-								{#{% set row2 = introw2+1 %}#}
-								{#{% if row2%3 == 0%}#}
-								{#<div class="ap2">#}
-                                    {#<a class="clear" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">#}
-									{#{% else %}#}
-									{#<div class="ap">#}
-                                        {#<a class="clear" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">#}
-										{#{%endif%}#}
+										<div class="recom"></div>
+                                            {%if recom1.photo_name != null%}
+                                            <img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />
+                                            {%else%}
+                                            <img src='{{asset('images/default/rec.jpg')}}'>
+                                            {%endif%}
+										<br />
+										<span style="color:#FFF;"> <b style="font-size:24px">{{recom1.building_name}}</b>
+											<br />
+											ประเภท : {{recom1.type_name}}
+											<br />
+											ใกล้ MRT สถานี : {{recom1.name}}
+											<br />
+											<br />
+											ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span>
+									</div></a>
+									{% set introw2 = introw2+1 %}
+									{% if introw2%3 == 0%}
+								</div>
+								{%endif%}
+								{% endfor %}
+							</div>
+                                {%if roomMrt|length%3 == 0%}
+                                <a style="display: inherit !important;" href='#' class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>
+                                <a style="display: inherit !important;" href='#' class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>
+                                {%endif%}
+						</div>
+                            {%if roomMrt|length%3 != 0%}
+                            <a style="display: inherit !important;" href='#' class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>
+                            <a style="display: inherit !important;" href='#' class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>
+                            {%endif%}
+					{%else%}
+						<div class="slides_container" style="width:950px; display: inherit !important;">
+							{% set introw2 = 0 %}
+							{% for recom1 in roomMrt%}
+							{% if introw2%3 == 0%}
+							<div class="slide" style="width:950px;">
+								{%endif%}
+								{% set row2 = introw2+1 %}
+								{% if row2%3 == 0%}
+								<div class="ap2">
+                                    <a class="clear" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
+									{% else %}
+									<div class="ap">
+                                        <a class="clear" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
+										{%endif%}
 
-										{#<div class="recom"></div>#}
-                                            {#{%if recom1.photo_name != null%}#}
-                                            {#<img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />#}
-                                            {#{%else%}#}
-                                            {#<img src='{{asset('images/default/rec.jpg')}}'>#}
-                                            {#{%endif%}#}
-										{#<br />#}
-										{#<span style="color:#FFF;"> <b style="font-size:24px">{{recom1.building_name}}</b>#}
-											{#<br />#}
-											{#ประเภท : {{recom1.type_name}}#}
-											{#<br />#}
-											{#ใกล้ MRT สถานี : {{recom1.name}}#}
-											{#<br />#}
-											{#<br />#}
-											{#ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span></a>#}
-									{#</div>#}
-									{#{% set introw2 = introw2+1 %}#}
-									{#{% if introw2%3 == 0%}#}
-								{#</div>#}
-								{#{%endif%}#}
-								{#{% endfor %}#}
-						{#</div>#}
-					{#{%endif%}#}
-				{#</div>#}
-			{#</li>#}
-			{#<li class="detailContent6">#}
-				{#<div id="container4">#}
-					{#{% if numrow3 != 0%}#}
-						{#<div id="slides4">#}
-							{#<div class="slides_container" style="width:950px;">#}
-							{#{% set introw3 = 0 %}#}
-							{#{% for recom1 in roomCollege%}#}
-							{#{% if introw3%3 == 0%}#}
-							{#<div class="slide" style="width:950px;">#}
-								{#{%endif%}#}
-								{#{% set row3 = introw3+1 %}#}
-								{#{% if row3%3 == 0%}#}
-								{#<div class="ap2">#}
-                                    {#<a class="clear" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">#}
-									{#{% else %}#}
-									{#<div class="ap">#}
-                                        {#<a class="clear" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">#}
-										{#{%endif%}#}
+										<div class="recom"></div>
+                                            {%if recom1.photo_name != null%}
+                                            <img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />
+                                            {%else%}
+                                            <img src='{{asset('images/default/rec.jpg')}}'>
+                                            {%endif%}
+										<br />
+										<span style="color:#FFF;"> <b style="font-size:24px">{{recom1.building_name}}</b>
+											<br />
+											ประเภท : {{recom1.type_name}}
+											<br />
+											ใกล้ MRT สถานี : {{recom1.name}}
+											<br />
+											<br />
+											ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span></a>
+									</div>
+									{% set introw2 = introw2+1 %}
+									{% if introw2%3 == 0%}
+								</div>
+								{%endif%}
+								{% endfor %}
+						</div>
+					{%endif%}
+				</div>
+			</li>
+			<li class="detailContent6">
+				<div id="container4">
+					{% if numrow3 != 0%}
+						<div id="slides4">
+							<div class="slides_container" style="width:950px;">
+							{% set introw3 = 0 %}
+							{% for recom1 in roomCollege%}
+							{% if introw3%3 == 0%}
+							<div class="slide" style="width:950px;">
+								{%endif%}
+								{% set row3 = introw3+1 %}
+								{% if row3%3 == 0%}
+								<div class="ap2">
+                                    <a class="clear" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
+									{% else %}
+									<div class="ap">
+                                        <a class="clear" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
+										{%endif%}
 
-										{#<div class="recom"></div>#}
-                                            {#{%if recom1.photo_name != null%}#}
-                                            {#<img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />#}
-                                            {#{%else%}#}
-                                            {#<img src='{{asset('images/default/rec.jpg')}}'>#}
-                                            {#{%endif%}#}
-										{#<br />#}
-										{#<span style="color:#FFF;"> <b style="font-size:24px">{{recom1.building_name}}</b>#}
-											{#<br />#}
-											{#ประเภท : {{recom1.type_name}}#}
-											{#<br />#}
-											{#ใกล้มหาวิทยาลัย : {{recom1.name}}#}
-											{#<br />#}
-											{#<br />#}
-											{#ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span>#}
-									{#</div></a>#}
-									{#{% set introw3 = introw3+1 %}#}
-									{#{% if introw3%3 == 0%}#}
-								{#</div>#}
-								{#{%endif%}#}
-								{#{% endfor %}#}
-							{#</div>#}
-                                {#{%if roomCollege|length%3 == 0%}#}
-                                {#<a style="display: inherit !important;" href='#' class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>#}
-                                {#<a style="display: inherit !important;" href='#' class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>#}
-                                {#{%endif%}#}
-						{#</div>#}
-                            {#{%if roomCollege|length%3 != 0%}#}
-                            {#<a style="display: inherit !important;" href='#' class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>#}
-                            {#<a style="display: inherit !important;" href='#' class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>#}
-                            {#{%endif%}#}
-					{#{%else%}#}
-						{#<div class="slides_container" style="width:950px; display: inherit !important;">#}
-							{#{% set introw3 = 0 %}#}
-							{#{% for recom1 in roomCollege%}#}
-							{#{% if introw3%3 == 0%}#}
-							{#<div class="slide" style="width:950px;">#}
-								{#{%endif%}#}
-								{#{% set row3 = introw3+1 %}#}
-								{#{% if row3%3 == 0%}#}
-								{#<div class="ap2">#}
-                                    {#<a class="clear" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">#}
-									{#{% else %}#}
-									{#<div class="ap">#}
-                                        {#<a class="clear" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">#}
-										{#{%endif%}#}
+										<div class="recom"></div>
+                                            {%if recom1.photo_name != null%}
+                                            <img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />
+                                            {%else%}
+                                            <img src='{{asset('images/default/rec.jpg')}}'>
+                                            {%endif%}
+										<br />
+										<span style="color:#FFF;"> <b style="font-size:24px">{{recom1.building_name}}</b>
+											<br />
+											ประเภท : {{recom1.type_name}}
+											<br />
+											ใกล้มหาวิทยาลัย : {{recom1.name}}
+											<br />
+											<br />
+											ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span>
+									</div></a>
+									{% set introw3 = introw3+1 %}
+									{% if introw3%3 == 0%}
+								</div>
+								{%endif%}
+								{% endfor %}
+							</div>
+                                {%if roomCollege|length%3 == 0%}
+                                <a style="display: inherit !important;" href='#' class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>
+                                <a style="display: inherit !important;" href='#' class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>
+                                {%endif%}
+						</div>
+                            {%if roomCollege|length%3 != 0%}
+                            <a style="display: inherit !important;" href='#' class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>
+                            <a style="display: inherit !important;" href='#' class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>
+                            {%endif%}
+					{%else%}
+						<div class="slides_container" style="width:950px; display: inherit !important;">
+							{% set introw3 = 0 %}
+							{% for recom1 in roomCollege%}
+							{% if introw3%3 == 0%}
+							<div class="slide" style="width:950px;">
+								{%endif%}
+								{% set row3 = introw3+1 %}
+								{% if row3%3 == 0%}
+								<div class="ap2">
+                                    <a class="clear" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
+									{% else %}
+									<div class="ap">
+                                        <a class="clear" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
+										{%endif%}
 
-										{#<div class="recom"></div>#}
-                                            {#{%if recom1.photo_name != null%}#}
-                                            {#<img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />#}
-                                            {#{%else%}#}
-                                            {#<img src='{{asset('images/default/rec.jpg')}}'>#}
-                                            {#{%endif%}#}
-										{#<br />#}
-										{#<span style="color:#FFF;"> <b style="font-size:24px">{{recom1.building_name}}</b>#}
-											{#<br />#}
-											{#ประเภท : {{recom1.type_name}}#}
-											{#<br />#}
-											{#ใกล้มหาวิทยาลัย : {{recom1.name}}#}
-											{#<br />#}
-											{#<br />#}
-											{#ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span>#}
-									{#</div></a>#}
-									{#{% set introw3 = introw3+1 %}#}
-									{#{% if introw3%3 == 0%}#}
-								{#</div>#}
-								{#{%endif%}#}
-								{#{% endfor %}#}
-							{#</div>#}
-					{#{%endif%}#}
-				{#</div>#}
-			{#</li>#}
-			{#<li class="detailContent7">#}
-				{#<div id="container6">#}
-					{#{% if numrow4 != 0%}#}
-						{#<div id="slides6">#}
-							{#<div class="slides_container" style="width:950px;">#}
-							{#{% set introw4 = 0 %}#}
-							{#{% for recom1 in countView%}#}
-							{#{% if introw4%3 == 0%}#}
-							{#<div class="slide" style="width:950px;">#}
-								{#{%endif%}#}
-								{#{% set row4 = introw4+1 %}#}
-								{#{% if row4%3 == 0%}#}
-								{#<div class="ap2">#}
-                                    {#<a class="clear" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">#}
-									{#{% else %}#}
-									{#<div class="ap">#}
-                                        {#<a class="clear" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">#}
-										{#{%endif%}#}
+										<div class="recom"></div>
+                                            {%if recom1.photo_name != null%}
+                                            <img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />
+                                            {%else%}
+                                            <img src='{{asset('images/default/rec.jpg')}}'>
+                                            {%endif%}
+										<br />
+										<span style="color:#FFF;"> <b style="font-size:24px">{{recom1.building_name}}</b>
+											<br />
+											ประเภท : {{recom1.type_name}}
+											<br />
+											ใกล้มหาวิทยาลัย : {{recom1.name}}
+											<br />
+											<br />
+											ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span>
+									</div></a>
+									{% set introw3 = introw3+1 %}
+									{% if introw3%3 == 0%}
+								</div>
+								{%endif%}
+								{% endfor %}
+							</div>
+					{%endif%}
+				</div>
+			</li>
+			<li class="detailContent7">
+				<div id="container6">
+					{% if numrow4 != 0%}
+						<div id="slides6">
+							<div class="slides_container" style="width:950px;">
+							{% set introw4 = 0 %}
+							{% for recom1 in countView%}
+							{% if introw4%3 == 0%}
+							<div class="slide" style="width:950px;">
+								{%endif%}
+								{% set row4 = introw4+1 %}
+								{% if row4%3 == 0%}
+								<div class="ap2">
+                                    <a class="clear" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
+									{% else %}
+									<div class="ap">
+                                        <a class="clear" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
+										{%endif%}
 
-										{#<div class="recom"></div>#}
-                                            {#{%if recom1.photo_name != null%}#}
-                                            {#<img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />#}
-                                            {#{%else%}#}
-                                            {#<img src='{{asset('images/default/rec.jpg')}}'>#}
-                                            {#{%endif%}#}
-										{#<br />#}
-										{#<span style="color:#FFF;"> <b style="font-size:24px">{{recom1.building_name}}</b>#}
-											{#<br />#}
-											{#ประเภท : {{recom1.type_name}}#}
-											{#<br />#}
-											{#ใกล้ {{recom1.nearlyType}} : {{recom1.name}}#}
-											{#<br />#}
-											{#<br />#}
-											{#ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span>#}
-									{#</div></a>#}
-									{#{% set introw4 = introw4+1 %}#}
-									{#{% if introw4%3 == 0%}#}
-								{#</div>#}
-								{#{%endif%}#}
-								{#{% endfor %}#}
-							{#</div>#}
-                                {#{%if countView|length%3 == 0%}#}
-                                {#<a style="display: inherit !important;" href='#' class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>#}
-                                {#<a style="display: inherit !important;" href='#' class="clear next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>#}
-                                {#{%endif%}#}
-						{#</div>#}
-                            {#{%if countView|length%3 != 0%}#}
-                            {#<a style="display: inherit !important;" href='#' class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>#}
-                            {#<a style="display: inherit !important;" href='#' class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>#}
-                            {#{%endif%}#}
-					{#{%else%}#}
-						{#<div class="slides_container" style="width:950px; display: inherit !important;">#}
-							{#{% set introw4 = 0 %}#}
-							{#{% for recom1 in countView%}#}
-							{#{% if introw4%3 == 0%}#}
-							{#<div class="slide" style="width:950px;">#}
-								{#{%endif%}#}
-								{#{% set row4 = introw4+1 %}#}
-								{#{% if row4%3 == 0%}#}
-								{#<div class="ap2">#}
-                                    {#<a class="clear" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">#}
-									{#{% else %}#}
-									{#<div class="ap">#}
-                                        {#<a class="clear" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">#}
-										{#{%endif%}#}
+										<div class="recom"></div>
+                                            {%if recom1.photo_name != null%}
+                                            <img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />
+                                            {%else%}
+                                            <img src='{{asset('images/default/rec.jpg')}}'>
+                                            {%endif%}
+										<br />
+										<span style="color:#FFF;"> <b style="font-size:24px">{{recom1.building_name}}</b>
+											<br />
+											ประเภท : {{recom1.type_name}}
+											<br />
+											ใกล้ {{recom1.nearlyType}} : {{recom1.name}}
+											<br />
+											<br />
+											ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span>
+									</div></a>
+									{% set introw4 = introw4+1 %}
+									{% if introw4%3 == 0%}
+								</div>
+								{%endif%}
+								{% endfor %}
+							</div>
+                                {%if countView|length%3 == 0%}
+                                <a style="display: inherit !important;" href='#' class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>
+                                <a style="display: inherit !important;" href='#' class="clear next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>
+                                {%endif%}
+						</div>
+                            {%if countView|length%3 != 0%}
+                            <a style="display: inherit !important;" href='#' class="prev"><img src="{{asset('images/slider/arrow-prev2.png')}}" width="29" height="57" alt="Arrow Prev"></a>
+                            <a style="display: inherit !important;" href='#' class="next"><img src="{{asset('images/slider/arrow-next2.png')}}" width="29" height="57" alt="Arrow Next"></a>
+                            {%endif%}
+					{%else%}
+						<div class="slides_container" style="width:950px; display: inherit !important;">
+							{% set introw4 = 0 %}
+							{% for recom1 in countView%}
+							{% if introw4%3 == 0%}
+							<div class="slide" style="width:950px;">
+								{%endif%}
+								{% set row4 = introw4+1 %}
+								{% if row4%3 == 0%}
+								<div class="ap2">
+                                    <a class="clear" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
+									{% else %}
+									<div class="ap">
+                                        <a class="clear" href="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingRecom&id={{recom1.id}}&province={{recom1.PROVINCE_NAME}}&prefactre={{recom1.AMPHUR_NAME}}&slug={{recom1.slug}}" style="text-decoration: none">
+										{%endif%}
 
-										{#<div class="recom"></div>#}
-                                            {#{%if recom1.photo_name != null%}#}
-                                            {#<img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />#}
-                                            {#{%else%}#}
-                                            {#<img src='{{asset('images/default/rec.jpg')}}'>#}
-                                            {#{%endif%}#}
-										{#<br />#}
-										{#<span style="color:#FFF;"> <b style="font-size:24px">{{recom1.building_name}}</b>#}
-											{#<br />#}
-											{#ประเภท : {{recom1.type_name}}#}
-											{#<br />#}
-											{#ใกล้ {{recom1.nearlyType}} : {{recom1.name}}#}
-											{#<br />#}
-											{#<br />#}
-											{#ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span>#}
-									{#</div></a>#}
-									{#{% set introw4 = introw4+1 %}#}
-									{#{% if introw4%3 == 0%}#}
-								{#</div>#}
-								{#{%endif%}#}
-								{#{% endfor %}#}
-							{#</div>#}
-					{#{%endif%}#}
-				{#</div>#}
-			{#</li>#}
+										<div class="recom"></div>
+                                            {%if recom1.photo_name != null%}
+                                            <img src="{{ asset('images/building/')}}{{ recom1.building_site_id }}/{{recom1.photo_name}}" />
+                                            {%else%}
+                                            <img src='{{asset('images/default/rec.jpg')}}'>
+                                            {%endif%}
+										<br />
+										<span style="color:#FFF;"> <b style="font-size:24px">{{recom1.building_name}}</b>
+											<br />
+											ประเภท : {{recom1.type_name}}
+											<br />
+											ใกล้ {{recom1.nearlyType}} : {{recom1.name}}
+											<br />
+											<br />
+											ราคา : {{recom1.start_price}} - {{recom1.end_price}} บาท </span>
+									</div></a>
+									{% set introw4 = introw4+1 %}
+									{% if introw4%3 == 0%}
+								</div>
+								{%endif%}
+								{% endfor %}
+							</div>
+					{%endif%}
+				</div>
+			</li>
 
-		{#</ul>#}
-	{#</div>#}
-{#</div>#}
+		</ul>
+	</div>
+</div>

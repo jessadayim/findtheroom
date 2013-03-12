@@ -442,8 +442,8 @@ class ListController extends Controller
             'countNumPage' => $countNumPage,
             'parameter' => $parameter,
             'pageNumber' => $pageNumber,
-            'textSearch' => "aaa",
-            'txtSearch' => "aaa",
+            'textSearch' => $textSearch,
+            'txtSearch' => $txtSearch,
         );
         //var_dump( $isAjax);
         if ($isAjax == "yes") {

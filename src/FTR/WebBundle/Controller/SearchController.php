@@ -160,6 +160,9 @@ class SearchController extends Controller
         $pinMan = $constant->getPinMan();
         $pinWomen = $constant->getPinWomen();
 
+//        echo "<pre>";
+//        var_dump($objGetMap4);exit();
+//        echo "</pre>";
 
         return $this->render('FTRWebBundle:Search:shortSearch.html.twig', array(
             'payType' => $payType,
