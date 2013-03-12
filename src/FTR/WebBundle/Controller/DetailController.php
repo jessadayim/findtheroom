@@ -28,10 +28,11 @@ class DetailController extends Controller
         if (!empty($buildId)) {
             $id = $buildId;
 //            $id = $this->getBuildingId($id);
+
             try {
                 /**
                  * query Detail page general detail
-                 * */
+                 */
                 $sqlGeneral = "SELECT b.*, t.id,t.type_name,z.zonename,z.id,p.typename, pro.PROVINCE_NAME, am.AMPHUR_NAME
                                FROM building_site b
                                   LEFT JOIN building_type t ON (b.building_type_id = t.id AND t.deleted = 0)
@@ -165,6 +166,22 @@ class DetailController extends Controller
                     if(empty($objImage[0]['photo_name'])){
                         $objImage = "";
                     }
+
+                    /**
+                     * query wifi
+                     */
+                    $sqlWifi = "SELECT `id`
+                            FROM `facility2site`
+                            WHERE `building_site_id` = $id
+                            AND `facilitylist_id` = 2
+                            AND `deleted` = 0
+                        ";
+                    $objWifi = $conn->fetchAll($sqlWifi);
+                    if(empty($objWifi)){
+                        $objWifi = false;
+                    } else {
+                        $objWifi = $sqlWifi;
+                    }
                 }else{
                 	echo "test";exit();
                     return $this->redirect($this->generateUrl('FTRWebBundle_list'));
@@ -172,6 +189,10 @@ class DetailController extends Controller
             } catch (Exception $e) {
                 return $this->redirect($this->generateUrl('FTRWebBundle_list'));
             }
+//            echo "<pre>";
+//            var_dump($objInRoom);exit();
+//            echo "</pre>";
+
             return $this->render('FTRWebBundle:Detail:detail.html.twig', array(
                 'general' => $detailData,
                 'roomType' => $objRoomType,
@@ -185,7 +206,8 @@ class DetailController extends Controller
                 'imageName'=> $objImage,
                 'countGallery'=>count($objImage),
                 'imgHead'=>$head,
-                'map'=>$map
+                'map'=>$map,
+                'wifi'=>$objWifi
             ));
         } else {
             return $this->redirect($this->generateUrl('FTRWebBundle_list'));

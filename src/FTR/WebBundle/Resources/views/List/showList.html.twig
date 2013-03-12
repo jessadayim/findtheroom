@@ -13,8 +13,16 @@
         <form action="{{path('FTRWebBundle_defalut_countclick')}}?clickType=buildingsite&id={{rlist.id}}&province={{rlist.PROVINCE_NAME}}&prefactre={{rlist.AMPHUR_NAME}}&slug={{rlist.slug}}" method="post">
             <input type="hidden" value="{{ rlist.id }}" name ="bid" id="bid">
             <div class="result">
-                {% if rlist.facilitylist_id==1 or rlist.facilitylist_id==2 %}
-                <div class="wifi"></div>
+                {% if rlist.wifi == true %}
+
+                    <div class="wifi"></div>
+
+                    {#{% if rlist.wifi is not null %}#}
+                        {#{{ rlist.wifi}}#}
+                    {#{% else %}#}
+                        {#<div class="wifi"></div>#}
+                    {#{% endif %}#}
+
                 {% endif %}
 
                 <div style=" display:block; position: absolute; margin-left: 0px; margin-top: 127px; width:200px; text-align:center;">ราคา {{ rlist.start_price }} - {{ rlist.end_price }} บาท</div>

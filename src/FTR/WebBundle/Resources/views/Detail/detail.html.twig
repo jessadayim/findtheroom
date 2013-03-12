@@ -63,7 +63,13 @@ $(function(){
 
 <div id="show">
     <div class="result">
-    	<div class="wifi"> </div><div style=" display:block; position: absolute; margin-left: 0px; margin-top: 127px; width:200px; text-align:center;">ราคา {{general.start_price}} - {{general.end_price}} บาท</div>
+
+        {% if wifi is not empty %}
+            <div class="wifi"> </div>
+        {% endif %}
+
+        <div style=" display:block; position: absolute; margin-left: 0px; margin-top: 127px; width:200px; text-align:center;">ราคา {{general.start_price}} - {{general.end_price}} บาท</div>
+
 		<div class="thumbframe">
 
             {% if imgHead is not empty %}
@@ -85,6 +91,7 @@ $(function(){
                             -
                         {% else%}
                             <a herf="{{ path('FTRWebBundle_googlemap_view', {'id':id}) }}" target="_blank">{{general.building_name}}</a>
+
                         {% endif%}
                     </td>
                 </tr>
