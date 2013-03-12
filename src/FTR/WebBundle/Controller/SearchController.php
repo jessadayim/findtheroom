@@ -351,7 +351,9 @@ class SearchController extends Controller
         try {
             $whereQuery = null;
             $sql = "
-				select * from zone
+				SELECT *
+				FROM zone
+				WHERE deleted = 0
 			";
             $result_data = $conn->fetchAll($sql);
         } catch (Exception $e) {
@@ -454,7 +456,9 @@ class SearchController extends Controller
                 $whereQuery = " where id in (select distinct(building_type_id) from building_site where pay_type_id = $type)";
             }
             $sql = "
-				select * from building_type $whereQuery
+				SELECT *
+				FROM building_type $whereQuery
+				WHERE deleted = 0
 			";
             $result_data = $conn->fetchAll($sql);
         } catch (Exception $e) {
@@ -510,7 +514,10 @@ class SearchController extends Controller
         }
         try {
             $sql = "
-				select  `id`,`typename` from pay_type order by id desc
+				SELECT `id`,`typename`
+				FROM pay_type
+				WHERE deleted = 0
+				ORDER BY id DESC
 			";
             $result_data = $conn->fetchAll($sql);
         } catch (Exception $e) {

@@ -347,12 +347,18 @@
         {% for tlist in top_last_building %}
         <tr>
             <td class="first"><a href="{{ path('FTRWebBundle_detail',{'buildId':tlist.id,'province':tlist.PROVINCE_NAME,'prefecture':tlist.AMPHUR_NAME,'slug':tlist.slug}) }}" target="_blank">{{ tlist.building_name }}</a></td>
-            <td>{{ tlist.type_name }}</td>
-            <td>{{ tlist.typename }}</td>
+            <td>{{ tlist.b_type_name }}</td>
+            <td>
+                {#{{ tlist.typename }}#}
+                รายเดือน
+            </td>
             {% if tlist.PROVINCE_NAME !='กรุงเทพมหานคร' %}
             <td>{{ tlist.AMPHUR_NAME }}</td>
             {% else %}
-            <td>{{ tlist.zonename }}</td>
+            <td>
+                {#{{ tlist.zonename }}#}
+                {{ tlist.PROVINCE_NAME }}
+            </td>
             {% endif %}
             <td>{{ tlist.start_price }} - {{ tlist.end_price }} บาท</td>
         </tr>
