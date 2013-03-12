@@ -357,22 +357,48 @@ class ListController extends Controller
             foreach ($result as $key => $value) {
                 $buildingId = $value['id'];
                 $sqlImage = "
-                    select
-                      `id`,
-                      `building_site_id`,
-                      `roomtype2site_id`,
-                      `photo_name`,
-                      `photo_type`,
-                      `description`,
-                      `sequence`,
-                      `deleted`
-                    from
-                      `image`
-                    where `building_site_id` = $buildingId
-                      and `deleted` = 0
+                    SELECT
+                      a.`latitude`,
+                      a.`longitude`,
+                      a.`id`,
+                      a.`slug`,
+                      b.`building_site_id`,
+                      b.`roomtype2site_id`,
+                      b.`photo_name`,
+                      b.`photo_type`,
+                      b.`description`,
+                      b.`sequence`,
+                      b.`deleted`,
+                      c.`PROVINCE_NAME`,
+                      d.`AMPHUR_NAME`
+                    FROM
+                      building_site a
+                      INNER JOIN image b
+                        ON (a.`id` = b.`building_site_id`)
+                      INNER JOIN `province` c
+                        ON (
+                          a.`addr_province` = c.`PROVINCE_ID`
+                        )
+                        INNER JOIN `amphur` d
+                        ON (a.`addr_prefecture` = d.`AMPHUR_ID`)
+                    WHERE b.`building_site_id` = $buildingId
+                      AND b.`deleted` = 0
+                      AND a.`addr_prefecture` > 0
+                      AND a.`addr_province` > 0
                  ";
                 $arrImage = $conn->fetchAll($sqlImage);
+
                 foreach ($arrImage as $key2 => $value2) {
+//                    if(empty($value2['province_name'])){
+//                        $provinceName = "";
+//                    }else{
+//                        $provinceName = $value2['province_name'];
+//                    }
+//                    if(empty($value2['amphur_name'])){
+//                        $amphurName = "";
+//                    }else{
+//                        $amphurName = $value2['amphur_name'];
+//                    }
                     switch ($value2['photo_type']) {
                         case 'head':
                             $result[$key]['image_head'] = $value2['photo_name'];
@@ -382,9 +408,16 @@ class ListController extends Controller
                             break;
 
                         default:
-
                             break;
                     }
+
+                    $result[$key]['id'] = $value2['id'];
+//                    $result[$key]['province'] = $value2['PROVINCE_NAME'];
+//                    $result[$key]['amphur'] = $value2['AMPHUR_NAME'];
+                    $result[$key]['slug'] = $value2['slug'];
+
+                    $result[$key]['latitude'] = $value2['latitude'];
+                    $result[$key]['longitude'] = $value2['longitude'];
                 }
             }
 
@@ -397,7 +430,9 @@ class ListController extends Controller
             $numEnd = $numData;
         }
         $countNumPage = ceil($numData / $numShow);
-
+//        echo "<pre>";
+//        var_dump($result);exit();
+//        echo "<pre/>";
         $dataSetIsAjax = array(
             'result' => array_slice($result, $numStart, $numShow),
             'numData' => $numData,
@@ -425,6 +460,7 @@ class ListController extends Controller
                 'txtSearch'         => $txtSearch,
             ));*/
         } else {
+
             return $this->render('FTRWebBundle:List:index.html.twig',
                 array(
                     'result' => $result,

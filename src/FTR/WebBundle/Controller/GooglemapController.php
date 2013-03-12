@@ -14,7 +14,7 @@ class GooglemapController extends Controller
 
         $sql = "
         SELECT
-              a.building_name,
+              a.`building_name`,
               a.`start_price`,
               a.`end_price`,
               a.id,
@@ -66,6 +66,7 @@ class GooglemapController extends Controller
         ";
 
         $resultGoogleData = $this->getGogolemapDataArray($sql);
+//        var_dump($sql);
         $arrayReturn = array(
             "result"=>$resultGoogleData
         );

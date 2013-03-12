@@ -16,8 +16,10 @@
         font-weight:normal;
     }
     #ggViewFancybox {
-        width: 560px;
-        height: 340px;
+        /*width: 560px;*/
+        /*height: 340px;*/
+        width: 800px;
+        height: 600px;
         display: block;
         position: relative;
         background-color: #a9a9a9;
@@ -65,7 +67,11 @@
             '{{result[0].start_price}}', // 7
             '{{result[0].end_price}}', // 8
             '{{result[0].type_name}}', // 9
-            "{{ path('FTRWebBundle_detail', {'buildId':result[0].id, 'province':result[0].province_name, 'prefecture':result[0].amphur_name, 'slug':result[0].slug}) }}"        // 10
+            "{{ path('FTRWebBundle_detail', {
+            'buildId':result[0].id,
+            'province':result[0].province_name,
+            'prefecture':result[0].amphur_name,
+            'slug':result[0].slug}) }}"        // 10
         ]
     ];
 
