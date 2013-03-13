@@ -1,89 +1,91 @@
-<script type='text/javascript' src='{{asset("js/paging/jquery-1.4.2.js")}}'></script>
-<script type='text/javascript' src='{{asset("js/paging/data_table/table_paging.js")}}'></script>
+<script type='text/javascript' src='{{ asset("js/paging/jquery-1.4.2.js") }}'></script>
+<script type='text/javascript' src='{{ asset("js/paging/data_table/table_paging.js") }}'></script>
 
 {#gritter#}
-<script type="text/javascript" src="{{asset('js/gritter/js/jquery.gritter.js')}}"></script>
-<link rel="stylesheet" type="text/css" href="{{asset('js/gritter/css/jquery.gritter.css')}}" />
+<script type="text/javascript" src="{{ asset('js/gritter/js/jquery.gritter.js') }}"></script>
+<link rel="stylesheet" type="text/css" href="{{ asset('js/gritter/css/jquery.gritter.css') }}"/>
 
 {#fancybox#}
 {#<script type="text/javascript" src="{{asset('js/fancybox/jquery.fancybox-1.3.4.pack.js')}}"></script>#}
 {#<link rel="stylesheet" type="text/css" href="{{asset('css/jquery.fancybox-1.3.4.css')}}" media="screen" />#}
 
 <script>
-	var countValuePaging = {{entities|length}};
+    var countValuePaging = {{entities|length}};
 
     //show message
-    function showMessage(title, text){
+    function showMessage(title, text) {
         $.gritter.add({
             // (string | mandatory) the heading of the notification
-            title: title,
+            title:title,
             // (string | mandatory) the text inside the notification
-            text: text
+            text:text
         });
     }
 
-    $(document).ready(function() {
+    $(document).ready(function () {
 
-		//Click ปุ่ม Edit
-		$(".linkEditBuildingSite").click(function() {
-            reloadId('.innerPanel', this.href + '/edit');
+        //Click ปุ่ม Edit
+        $(".linkEditBuildingSite").click(function () {
+            //alert(this.href + '/edit');
+            //return false;
+            reloadId('.innerPanel', this.href);
             hideId(".createPanel");
             showId(".innerPanel");
 
             hideId("#createRecordCancel");
             showId("#createRecord");
             document.getElementById('createRecord').scrollIntoView();
-			return false;
-		});
+            return false;
+        });
 
-		//Click ปุ่ม Delete
-		$(".linkDelete").click(function() {
-			if (!confirm('คุณต้องการลบข้อมูลใช่ หรือไม่')) {
-				return false;
-			}
-			$.ajax({
-				type : "POST",
-				url : this.href + "/update",
-				data : {
-					checkdelete : 'deleted'
-				},
-				success : function(msg) {
-					if (msg == 'finish') {
-						//alert('การลบสร็จเรียบร้อย');
-						$('#listBuildingSite').fadeOut('slow').load(window.location + "show").fadeIn("slow");
+        //Click ปุ่ม Delete
+        $(".linkDelete").click(function () {
+            if (!confirm('คุณต้องการลบข้อมูลใช่ หรือไม่')) {
+                return false;
+            }
+            $.ajax({
+                type:"POST",
+                url:this.href,
+                data:{
+                    checkdelete:'deleted'
+                },
+                success:function (msg) {
+                    if (msg == 'finish') {
+                        //alert('การลบสร็จเรียบร้อย');
+                        $('#listBuildingSite').fadeOut('slow').load(window.location + "show").fadeIn("slow");
                         showMessage('ลบข้อมูลสำเร็จ', 'ลบข้อมูล Building Site แล้ว');
-					} else {
-						alert('การลบผิดพลาด');
-					}
-				}
-			});
-			return false;
-		});
+                    } else {
+                        alert('การลบผิดพลาด');
+                    }
+                }
+            });
+            return false;
+        });
 
-		//Click ปุ่ม  Edit Facility
-		$(".createSite").click(function() {
+        //Click ปุ่ม  Edit Facility
+        $(".createSite").click(function () {
             saveIdBuildingSite = null;
-			locationRoomType = this.href;
-			$('.innerPanel').fadeOut("slow").load(locationRoomType).fadeIn("slow");
-			toggle(".createPanel", 'hide');
-			$("#createRecordCancel").hide();
-			$("#createRecord").show('slow');
-			document.getElementById('createRecord').scrollIntoView();
-			return false;
-		});
+            locationRoomType = this.href;
+            $('.innerPanel').fadeOut("slow").load(locationRoomType).fadeIn("slow");
+            toggle(".createPanel", 'hide');
+            $("#createRecordCancel").hide();
+            $("#createRecord").show('slow');
+            document.getElementById('createRecord').scrollIntoView();
+            return false;
+        });
 
-		function toggle(id, toggle) {
-			$(id).animate({
-				left : '+=50',
-				height : toggle
-			}, 500, function() {
-			});
-		}
+        function toggle(id, toggle) {
+            $(id).animate({
+                left:'+=50',
+                height:toggle
+            }, 500, function () {
+            });
+        }
 
 
-	});
+    });
 
-    function showFancy(){
+    function showFancy() {
 //        $.fancybox({
 //            'href'          : "#showMap",
 //            'titleShow' 	: false,
@@ -98,22 +100,22 @@
 //        });
 //        $("#hideFancy").show();
         var $drag_overlay = $("#hideFancy"),
-            $preview = $(window);
+                $preview = $(window);
 
         $drag_overlay.css({
-            display: 'block',
+            display:'block',
             position:'absolute',
-            top : $preview.height() / 2 - $drag_overlay.height() / 2 + $(window).scrollTop(),
-            left : $preview.width() / 2 - $drag_overlay.width() / 2 + $(window).scrollLeft(),
-            background: '#E9E9E9'
+            top:$preview.height() / 2 - $drag_overlay.height() / 2 + $(window).scrollTop(),
+            left:$preview.width() / 2 - $drag_overlay.width() / 2 + $(window).scrollLeft(),
+            background:'#E9E9E9'
         });
         resizeMap();
     }
 
-	var checkDoubleClickEdit = true;
-	function changeCheckClick() {
-		checkDoubleClickEdit = true;
-	}
+    var checkDoubleClickEdit = true;
+    function changeCheckClick() {
+        checkDoubleClickEdit = true;
+    }
 
     // ค่าปัจจุบันในการ sort
     var orderByOld = "{{ orderBy }}";
@@ -125,13 +127,13 @@
 <fieldset>
     <table>
         <thead>
-            <th style="width: 100px !important;" ><a class="btnOrderBy" href="#" id="sort_id">id</a></th>
-            <th style="width: 410px !important;" ><a class="btnOrderBy" href="#" id="sort_building_name">name</a></th>
-            <th style="width: 70px !important;" >facility</th>
-            <th style="width: 110px !important;" >roomtype</th>
-            <th style="width: 100px !important;" >nearly</th>
-            <th style="width: 100px !important;" >gallery</th>
-            <th style="width: 50px !important;" >action</th>
+        <th style="width: 100px !important;"><a class="btnOrderBy" href="#" id="sort_id">id</a></th>
+        <th style="width: 410px !important;"><a class="btnOrderBy" href="#" id="sort_building_name">name</a></th>
+        <th style="width: 70px !important;">facility</th>
+        <th style="width: 110px !important;">roomtype</th>
+        <th style="width: 100px !important;">nearly</th>
+        <th style="width: 100px !important;">gallery</th>
+        <th style="width: 50px !important;">action</th>
         </thead>
         <tbody>
         {% for entity in entities %}
@@ -152,9 +154,10 @@
                 <td><a href="{{ path('image_show', { 'id': entity.id }) }}" class="createSite">Edit</a></td>
 
                 <td width="100">
-                    <a href="{{ entity.id }}" class="linkEditBuildingSite">Edit</a>
+                    <a href="{{ path('building_site_edit', { 'id': entity.id }) }}"
+                       class="linkEditBuildingSite">Edit</a>
                     &nbsp;&nbsp;
-                    <a href="{{ entity.id }}" class="linkDelete">Delete</a>
+                    <a href="{{ path('building_site_update', { 'id': entity.id }) }}" class="linkDelete">Delete</a>
                 </td>
             </tr>
         {% else %}
@@ -169,61 +172,64 @@
     <ul>
         <strong>showing {{ countList }} entities : Page </strong>
         {% for i in 1..paginator.numpages %}
-        {% if paginator.range.0 > 2 and i == paginator.range.0 %}
-        ...
-        {% endif %}
+            {% if paginator.range.0 > 2 and i == paginator.range.0 %}
+                ...
+            {% endif %}
 
-        {%  if(i==1 or i==paginator.numpages or i in paginator.range) %}
-        {% if i==paginator.currentpage %}
-        {% if i == noPage %}
-        <input class="disableBtn" type="button" value="{{i}}" id="Submit" name="submitPage" disabled="true"/>
-        {% else %}
-        <input class="inPage" type="button" value="{{i}}" id="Submit" name="submitPage"/>
-        {% endif %}
-        {% else %}
-        {% if i == noPage %}
-        <input class="disableBtn" type="button" value="{{i}}" id="Submit" name="submitPage" disabled="true"/>
-        {% else %}
-        <input class="inPage" type="button" value="{{i}}" id="Submit" name="submitPage"/>
-        {% endif %}
-        {% endif %}
-        {% endif %}
+            {% if(i==1 or i==paginator.numpages or i in paginator.range) %}
+                {% if i==paginator.currentpage %}
+                    {% if i == noPage %}
+                        <input class="disableBtn" type="button" value="{{ i }}" id="Submit" name="submitPage"
+                               disabled="true"/>
+                    {% else %}
+                        <input class="inPage" type="button" value="{{ i }}" id="Submit" name="submitPage"/>
+                    {% endif %}
+                {% else %}
+                    {% if i == noPage %}
+                        <input class="disableBtn" type="button" value="{{ i }}" id="Submit" name="submitPage"
+                               disabled="true"/>
+                    {% else %}
+                        <input class="inPage" type="button" value="{{ i }}" id="Submit" name="submitPage"/>
+                    {% endif %}
+                {% endif %}
+            {% endif %}
 
-        {% if paginator.range[paginator.midrange -1] < paginator.numpages -1 and i == paginator.range[paginator.midrange-1] %}
-        ...
-        {% endif %}
+            {% if paginator.range[paginator.midrange -1] < paginator.numpages -1 and i == paginator.range[paginator.midrange-1] %}
+                ...
+            {% endif %}
         {% endfor %}
-        <div align="right" style="float:right;" ><strong>Search:</strong>
-            <input id="tbxSearch" style="height: 25px;margin-bottom: 10px;" value="{{ textSearch }}" />&nbsp;&nbsp;
+        <div align="right" style="float:right;"><strong>Search:</strong>
+            <input id="tbxSearch" style="height: 25px;margin-bottom: 10px;" value="{{ textSearch }}"/>&nbsp;&nbsp;
             <select name="record" style="width:150px;" class="record">
-                <option value="10">10 Record </option>
+                <option value="10">10 Record</option>
                 {% if limit == '50' %}
                 <option selected="yes" value="50">50 Record</option>
                 <option value="100">100 Record</option>
                 <option value="500">500 Record</option>
                 {% elseif limit == '100' %}
-                <option value="50">50 Record</option>
-                <option selected="yes" value="100">100 Record</option>
-                <option value="500">500 Record</option>
+                    <option value="50">50 Record</option>
+                    <option selected="yes" value="100">100 Record</option>
+                    <option value="500">500 Record</option>
                 {% elseif limit == '500' %}
-                <option value="50">50 Record</option>
-                <option value="100">100 Record</option>
-                <option selected="yes" value="500">500 Record</option>
+                    <option value="50">50 Record</option>
+                    <option value="100">100 Record</option>
+                    <option selected="yes" value="500">500 Record</option>
                 {% else %}
-                <option value="50">50 Record</option>
-                <option value="100">100 Record</option>
-                <option value="500">500 Record</option>
+                    <option value="50">50 Record</option>
+                    <option value="100">100 Record</option>
+                    <option value="500">500 Record</option>
                 {% endif %}
             </select>
         </div>
     </ul>
 </div>
-<br />
+<br/>
 
 <div class="clear"></div>
 <link href="http://www.google.com/uds/css/gsearch.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
-<script src="http://www.google.com/uds/api?file=uds.js&v=1.0&key=ABQIAAAAjU0EJWnWPMv7oQ-jjS7dYxQ82LsCgTSsdpNEnBsExtoeJv4cdBSUkiLH6ntmAr_5O4EfjDwOa0oZBQ" type="text/javascript"></script>
+<script src="http://www.google.com/uds/api?file=uds.js&v=1.0&key=ABQIAAAAjU0EJWnWPMv7oQ-jjS7dYxQ82LsCgTSsdpNEnBsExtoeJv4cdBSUkiLH6ntmAr_5O4EfjDwOa0oZBQ"
+        type="text/javascript"></script>
 
 <script type="text/javascript">
 
@@ -231,15 +237,15 @@
     var nameLat = "#ftr_adminbundle_building_sitetype_latitude";
     var nameLong = "#ftr_adminbundle_building_sitetype_longitude";
 
-    var defaultLat =    13.752058;
-    var defaultLong =    100.496012;
+    var defaultLat = 13.752058;
+    var defaultLong = 100.496012;
 
     var geocoder = new google.maps.Geocoder();
 
     function geocodePosition(pos) {
         geocoder.geocode({
-            latLng: pos
-        }, function(responses) {
+            latLng:pos
+        }, function (responses) {
             if (responses && responses.length > 0) {
                 updateMarkerAddress(responses[0].formatted_address);
             } else {
@@ -266,15 +272,15 @@
     function initialize() {
         var latLng = new google.maps.LatLng(defaultLat, defaultLong);
         var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 12,
-            center: latLng,
-            mapTypeId: 'roadmap'//google.maps.MapTypeId.ROADMAP
+            zoom:12,
+            center:latLng,
+            mapTypeId:'roadmap'//google.maps.MapTypeId.ROADMAP
         });
         var marker = new google.maps.Marker({
-            position: latLng,
-            title: 'Point A',
-            map: map,
-            draggable: true
+            position:latLng,
+            title:'Point A',
+            map:map,
+            draggable:true
         });
 
         // Update current position info.
@@ -282,11 +288,11 @@
         geocodePosition(latLng);
 
         // Add dragging event listeners.
-        google.maps.event.addListener(marker, 'dragstart', function() {
+        google.maps.event.addListener(marker, 'dragstart', function () {
             updateMarkerAddress('Dragging...');
         });
 
-        google.maps.event.addListener(marker, 'drag', function() {
+        google.maps.event.addListener(marker, 'drag', function () {
             updateMarkerStatus('Dragging...');
             updateMarkerPosition(marker.getPosition());
 
@@ -296,7 +302,7 @@
             $(nameLong).val(latLng.lng());
         });
 
-        google.maps.event.addListener(marker, 'dragend', function() {
+        google.maps.event.addListener(marker, 'dragend', function () {
             updateMarkerStatus('Drag ended');
             geocodePosition(marker.getPosition());
         });
@@ -304,7 +310,7 @@
         ///////////////////////////////
         // Create one InfoWindow to open when a marker is clicked.
         gInfoWindow = new google.maps.InfoWindow;
-        google.maps.event.addListener(gInfoWindow, 'closeclick', function() {
+        google.maps.event.addListener(gInfoWindow, 'closeclick', function () {
             unselectMarkers();
         });
 
@@ -315,8 +321,8 @@
         gMap = map;
     }
 
-    function resizeMap(){
-        if ($(nameLat).val() != '' && $(nameLat).val() != "0" && $(nameLong).val() != '' && $(nameLong).val() != "0")  {
+    function resizeMap() {
+        if ($(nameLat).val() != '' && $(nameLat).val() != "0" && $(nameLong).val() != '' && $(nameLong).val() != "0") {
             defaultLat = $(nameLat).val();
             defaultLong = $(nameLong).val();
         }
@@ -424,7 +430,6 @@
     }
 
 
-
     // A class representing a single Local Search result returned by the
     // Google AJAX Search API.
     function LocalResult(result) {
@@ -432,37 +437,37 @@
         me.result_ = result;
         me.resultNode_ = me.node();
         me.marker_ = me.marker();
-        google.maps.event.addDomListener(me.resultNode_, 'mouseover', function() {
+        google.maps.event.addDomListener(me.resultNode_, 'mouseover', function () {
             // Highlight the marker and result icon when the result is
             // mouseovered.  Do not remove any other highlighting at this time.
             me.highlight(true);
         });
-        google.maps.event.addDomListener(me.resultNode_, 'mouseout', function() {
+        google.maps.event.addDomListener(me.resultNode_, 'mouseout', function () {
             // Remove highlighting unless this marker is selected (the info
             // window is open).
             if (!me.selected_) me.highlight(false);
         });
-        google.maps.event.addDomListener(me.resultNode_, 'click', function() {
+        google.maps.event.addDomListener(me.resultNode_, 'click', function () {
             me.select();
         });
         document.getElementById("searchWell").appendChild(me.resultNode_);
     }
 
-    LocalResult.prototype.node = function() {
+    LocalResult.prototype.node = function () {
         if (this.resultNode_) return this.resultNode_;
         return this.html();
     };
 
     // Returns the GMap marker for this result, creating it with the given
     // icon if it has not already been created.
-    LocalResult.prototype.marker = function() {
+    LocalResult.prototype.marker = function () {
         var me = this;
         if (me.marker_) return me.marker_;
         var marker = me.marker_ = new google.maps.Marker({
-            position: new google.maps.LatLng(parseFloat(me.result_.lat),
+            position:new google.maps.LatLng(parseFloat(me.result_.lat),
                     parseFloat(me.result_.lng)),
-            icon: gYellowIcon, shadow: gSmallShadow, map: gMap});
-        google.maps.event.addListener(marker, "click", function() {
+            icon:gYellowIcon, shadow:gSmallShadow, map:gMap});
+        google.maps.event.addListener(marker, "click", function () {
             me.select();
         });
         return marker;
@@ -470,7 +475,7 @@
 
     // Unselect any selected markers and then highlight this result and
     // display the info window on it.
-    LocalResult.prototype.select = function() {
+    LocalResult.prototype.select = function () {
         unselectMarkers();
         this.selected_ = true;
         this.highlight(true);
@@ -478,18 +483,18 @@
         gInfoWindow.open(gMap, this.marker());
     };
 
-    LocalResult.prototype.isSelected = function() {
+    LocalResult.prototype.isSelected = function () {
         return this.selected_;
     };
 
     // Remove any highlighting on this result.
-    LocalResult.prototype.unselect = function() {
+    LocalResult.prototype.unselect = function () {
         this.selected_ = false;
         this.highlight(false);
     };
 
     // Returns the HTML we display for a result before it has been "saved"
-    LocalResult.prototype.html = function() {
+    LocalResult.prototype.html = function () {
         var me = this;
         var container = document.createElement("div");
         container.className = "unselected";
@@ -497,8 +502,8 @@
         return container;
     }
 
-    LocalResult.prototype.highlight = function(highlight) {
-        this.marker().setOptions({icon: highlight ? gRedIcon : gYellowIcon});
+    LocalResult.prototype.highlight = function (highlight) {
+        this.marker().setOptions({icon:highlight ? gRedIcon : gYellowIcon});
         this.node().className = "unselected" + (highlight ? " red" : "");
     }
 
@@ -512,16 +517,30 @@
         height: 400px;
         float: left;
     }
+
     #infoPanel {
         margin-left: 10px;
         /*float: left;*/
         /*margin-left: 10px;*/
     }
+
     #infoPanel div {
         margin-bottom: 5px;
     }
-    #map {height: 350px; border: 1px solid rgb(151, 151, 151); position: relative; background-color: rgb(229, 227, 223); overflow: hidden;}
-    #searchWell {float: left; max-width: 330px;  }
+
+    #map {
+        height: 350px;
+        border: 1px solid rgb(151, 151, 151);
+        position: relative;
+        background-color: rgb(229, 227, 223);
+        overflow: hidden;
+    }
+
+    #searchWell {
+        float: left;
+        max-width: 330px;
+    }
+
     #searchWell .unselected {
         padding-left: 28px;
         padding-top: 1px;
@@ -531,7 +550,9 @@
         background-position: top left;
     }
 
-    .unselected .gs-watermark { display: none; }
+    .unselected .gs-watermark {
+        display: none;
+    }
 
     .unselected .gs-directions {
         display: none;
@@ -563,18 +584,22 @@
                     </div>
                 </div>
 
-                <div id="map" style="position: relative; background-color: rgb(229, 227, 223); overflow: hidden; "></div>
+                <div id="map"
+                     style="position: relative; background-color: rgb(229, 227, 223); overflow: hidden; "></div>
 
-               <div style="margin-left: 10px;">
+                <div style="margin-left: 10px;">
                     <div id="infoPanel">
                         <b>Marker status:</b>
+
                         <div id="markerStatus"><i>Click and drag the marker.</i></div>
                         <b>Current position:</b>
+
                         <div id="info"></div>
                         <b>Closest matching address:</b>
+
                         <div id="address"></div>
                     </div>
-                    <div >
+                    <div>
                         <div id="searchWell"></div>
                     </div>
                 </div>
