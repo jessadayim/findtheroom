@@ -75,9 +75,19 @@
 				'autoScale'			: false,
 				'transitionIn'		: 'elastic',
 				'transitionOut'		: 'elastic',
-				'type'				: 'iframe',
+				'type'				: 'iframe'
 			});
 		});
+</script>
+<script type="text/javascript">
+    function confirmBuilding(){
+        if(document.form["confirmB"].checked){
+            return true;
+        } else {
+            return false;
+            alert("กรุณาเลือกยืนยันที่ช่อง ยืนยันการประกาศห้องพัก ก่อนค่ะ");
+        }
+    }
 </script>
 <!--<div class="detail" style="height: 290px; margin-bottom: 15px;">
     <div style="width:500px; display:block; position:relative; float:left; border-right:1px solid #FFF; height:250px; margin-top: 20px;">
@@ -137,7 +147,11 @@
                     </ul>
 
                     <p style="margin: 30px 0 30px 0; padding-top: 30px !important;">ในกรณีที่ท่านต้องการให้ประกาศหอพักเป็นที่เห็นชัดและมีประสิทธิภาพดึงดูดให้ผู้ค้นหามีความสนใจในประกาศมากยิ่งขึ้นทางเรามีบริการเสริมให้ท่าน</p>
-                    <input type="checkbox"> ยินยันการประกาศห้องพัก&nbsp;&nbsp;&nbsp;<input type="submit" value="ยืนยัน" style="margin-top: -3px !important;"/>
+                    <form name="confirmBuilding" method="POST" action="" onsubmit="return confirmBuilding();">
+                        <input type="checkbox" name="confirmB" value="1"> ยินยันการประกาศห้องพัก&nbsp;&nbsp;&nbsp;
+                        <input type="submit" value="ยืนยัน" style="margin-top: -3px !important;"/>
+                    </form>
+
                 </div>
             </li>
             
@@ -158,7 +172,7 @@
                         <li style="height: auto !important;">ลงประกาศให้ คือ ทางทีมงาน FindTheRoom.com จะสมัครสมาชิก พร้อมกับลงประกาศหอพักให้ท่าน ท่านไม่ต้องยุ่งยากในการสมัครสมาชิก อัพโหลดรูป <br/>กรอกข้อมูลรายละเอียดต่างๆเอง</li>
                         <li style="height: auto !important;">
                             <p>โปรโมทประกาศ คือ การทำให้ประกาศหอพักของท่านเป็นที่ดึงดูดน่าสนใจ</p>
-                            <ul>
+                            <ul style="margin-top: -20px !important;">
                                 <li style="height: auto !important;">Slide Banner : ภาพสไลด์ กดเข้าเว็บมาครั้งแรกทุกคนก็จะสามารถเห็นได้</li>
                                 <li style="height: auto !important;">Banner : ภาพโฆษณาเล็กๆ แบ่งเป็นสองแบบ 2 แถวที่อยู่ใต้หอพักแนะนำนั้น จะอยู่ในเฉพาะหน้าแรก ส่วน 2 แถว ที่อยู่ก่อนเมนูด้านล่างจะอยู่ในทุกๆหน้า</li>
                                 <li style="height: auto !important;">หอพักแนะนำ : เป็นการดึงดูดผู้ค้นหาให้สนใจว่ามีหอพักอะไรแนะนำบ้าง แบ่งหัวข้อดังนี้ ใกล้ BTS / ใกล้ MRT / ใกล้มหาวิทยาลัย / ผู้ชมสูงสุด</li>
