@@ -259,7 +259,7 @@ class ListController extends Controller
                     }
                     break;
                 case "txtSearch":
-                    $txtSearch = trim(@$_GET['txtSearch']);
+                    $txtSearch = trim(@$_GET['คำค้นหา']);
                     $session = $this->get('session');
                     $session->set('txtSearch', $txtSearch);
                     if (!empty($txtSearch) && $txtSearch != null && $txtSearch != '') {
