@@ -304,7 +304,6 @@ class ListController extends Controller
         if (!$conn) {
             die("MySQL Connection error");
         }
-
         try {
             $selectFieldCount = "SELECT count(*) as count ";
             $selectField = "
@@ -355,8 +354,6 @@ class ListController extends Controller
             ";
             $result = $conn->fetchAll($sql);
 
-
-
             foreach ($result as $key => $value) {
                 $buildingId = $value['id'];
 
@@ -375,12 +372,6 @@ class ListController extends Controller
                 } else {
                     $resultWifiStatus = "1";
                 }
-
-//                echo "<pre>";
-//                var_dump($resultWifiStatus); echo $sqlWifi;
-//                echo "</pre>";
-
-
 
                 $sqlImage = "
                     SELECT
@@ -408,18 +399,7 @@ class ListController extends Controller
                       AND a.`addr_province` > 0
                  ";
                 $arrImage = $conn->fetchAll($sqlImage);
-
                 foreach ($arrImage as $key2 => $value2) {
-//                    if(empty($value2['province_name'])){
-//                        $provinceName = "";
-//                    }else{
-//                        $provinceName = $value2['province_name'];
-//                    }
-//                    if(empty($value2['amphur_name'])){
-//                        $amphurName = "";
-//                    }else{
-//                        $amphurName = $value2['amphur_name'];
-//                    }
                     switch ($value2['photo_type']) {
                         case 'head':
                             $result[$key]['image_head'] = $value2['photo_name'];
@@ -429,19 +409,20 @@ class ListController extends Controller
                             break;
 
                         default:
+
                             break;
                     }
-
-
 
                     $result[$key]['id'] = $value2['id'];
                     $result[$key]['slug'] = $value2['slug'];
 
                     $result[$key]['latitude'] = $value2['latitude'];
                     $result[$key]['longitude'] = $value2['longitude'];
+
                 }
 
                 $result[$key]['wifi'] = $resultWifiStatus;
+
             }
 
         } catch (Exception $e) {
@@ -453,6 +434,7 @@ class ListController extends Controller
             $numEnd = $numData;
         }
         $countNumPage = ceil($numData / $numShow);
+
         $dataSetIsAjax = array(
             'result' => array_slice($result, $numStart, $numShow),
             'numData' => $numData,
@@ -480,7 +462,6 @@ class ListController extends Controller
                 'txtSearch'         => $txtSearch,
             ));*/
         } else {
-
             return $this->render('FTRWebBundle:List:index.html.twig',
                 array(
                     'result' => $result,

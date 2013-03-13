@@ -194,9 +194,10 @@
 			<span>Follow Us On :</span>
 			<div class="social">
 				<a href="http://www.facebook.com/FindTheRoom" target="_new"><img src="{{asset('images/fb-icon.gif')}}" /></a><a href='http://twitter.com/FindTheRoom' target="_blank"><img src="{{asset('images/tw-icon.gif')}}" /></a>
-                <form action="{{path('FTRWebBundle_list')}}?searchType=txtSearch" method="post">
+                <form action="{{path('FTRWebBundle_list')}}?searchType=txtSearch" method="get">
                     <div id="topsearch">
-                        <input type="text" value="{{ app.session.get('txtSearch') }}" name="txtSearch" id="s">
+                        <input type="hidden" value="txtSearch" name="searchType"/>
+                        <input type="text" value="{{ app.session.get('txtSearch') }}" name="คำค้นหา" id="s">
                         <input type="submit" id="searchsubmit" value="">
                     </div>
                 </form>
