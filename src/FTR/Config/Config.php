@@ -80,13 +80,13 @@ class Config
 		mysql_set_charset('utf8',$con);
 		$db = mysql_select_db($dbName) ;
 		$sql = "SELECT
-  `id`,
-  `title`,
-  `description`,
-  `keyword`,
-  `tag_line`,
-  `base_url`
-FROM `site_detail` LIMIT 1";
+              `id`,
+              `title`,
+              `description`,
+              `keyword`,
+              `tag_line`,
+              `base_url`
+            FROM `site_detail` LIMIT 1";
 		$result = mysql_query($sql) ;
 		$arrData = mysql_fetch_array($result);
 		if(empty($arrData)){
