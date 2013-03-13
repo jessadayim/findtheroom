@@ -3,7 +3,7 @@
 || #################################################################### ||
 || # vBulletin 4.0.5
 || # ---------------------------------------------------------------- # ||
-|| # Copyright ©2000-2010 vBulletin Solutions Inc. All Rights Reserved. ||
+|| # Copyright ï¿½2000-2010 vBulletin Solutions Inc. All Rights Reserved. ||
 || # This file may not be redistributed in whole or significant part. # ||
 || # ---------------- VBULLETIN IS NOT FREE SOFTWARE ---------------- # ||
 || # http://www.vbulletin.com | http://www.vbulletin.com/license.html # ||
@@ -372,7 +372,7 @@ if ($_POST['do'] == 'doversion')
 		$md5_sum_versions = array('vbulletin' => '4.0.5');
 		$file_software_assoc = array();
 		$scanned_md5_files = array();
-		$ignored_files = array('/includes/config.php', '/includes/config.php.new', '/install/install.php', '/includes/version_vbulletin.php');
+		$ignored_files = array('/includes/Config.php', '/includes/Config.php.new', '/install/install.php', '/includes/version_vbulletin.php');
 		$ignored_dirs = array('/cpstyles/', '/includes/datastore');
 
 		while ($file = readdir($handle))

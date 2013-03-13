@@ -3,7 +3,7 @@
 || #################################################################### ||
 || # vBulletin 4.0.5
 || # ---------------------------------------------------------------- # ||
-|| # Copyright ©2000-2010 vBulletin Solutions Inc. All Rights Reserved. ||
+|| # Copyright ï¿½2000-2010 vBulletin Solutions Inc. All Rights Reserved. ||
 || # This file may not be redistributed in whole or significant part. # ||
 || # ---------------- VBULLETIN IS NOT FREE SOFTWARE ---------------- # ||
 || # http://www.vbulletin.com | http://www.vbulletin.com/license.html # ||
@@ -2102,7 +2102,7 @@ function can_administer()
 	}
 	else if (in_array($vbulletin->userinfo['userid'], $superadmins))
 	{
-		// user is a super administrator (defined in config.php) so can do anything
+		// user is a super administrator (defined in Config.php) so can do anything
 		return true;
 	}
 	else if (empty($do))

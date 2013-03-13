@@ -1240,7 +1240,7 @@ class vB_Database_MySQLi extends vB_Database
 	* @param	string  Username to connect to the database server
 	* @param	string  Password associated with the username for the database server
 	* @param	string  Persistent Connections - Not supported with MySQLi
-	* @param	string  Configuration file from config.php.ini (my.ini / my.cnf)
+	* @param	string  Configuration file from Config.php.ini (my.ini / my.cnf)
 	* @param	string  Mysqli Connection Charset PHP 5.1.0+ or 5.0.5+ / MySQL 4.1.13+ or MySQL 5.1.10+ Only
 	*
 	* @return	object  Mysqli Resource
@@ -2900,7 +2900,7 @@ class vB_Registry
 
 	// configuration
 	/**
-	* Array of data from config.php.
+	* Array of data from Config.php.
 	*
 	* @var	array
 	*/
@@ -3112,18 +3112,18 @@ class vB_Registry
 	{
 		// parse the config file
 		$config = array();
-		include(CWD . '/includes/config.php');
+		include(CWD . '/includes/Config.php');
 
 		if (sizeof($config) == 0)
 		{
-			if (file_exists(CWD. '/includes/config.php'))
+			if (file_exists(CWD. '/includes/Config.php'))
 			{
-				// config.php exists, but does not define $config
-				die('<br /><br /><strong>Configuration</strong>: includes/config.php exists, but is not in the 3.6+ format. Please convert your config file via the new config.php.new.');
+				// Config.php exists, but does not define $config
+				die('<br /><br /><strong>Configuration</strong>: includes/Config.php exists, but is not in the 3.6+ format. Please convert your config file via the new Config.php.new.');
 			}
 			else
 			{
-				die('<br /><br /><strong>Configuration</strong>: includes/config.php does not exist. Please fill out the data in config.php.new and rename it to config.php');
+				die('<br /><br /><strong>Configuration</strong>: includes/Config.php does not exist. Please fill out the data in Config.php.new and rename it to Config.php');
 			}
 		}
 

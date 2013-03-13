@@ -3,7 +3,7 @@
 || #################################################################### ||
 || # vBulletin 4.0.5
 || # ---------------------------------------------------------------- # ||
-|| # Copyright ©2000-2010 vBulletin Solutions Inc. All Rights Reserved. ||
+|| # Copyright ï¿½2000-2010 vBulletin Solutions Inc. All Rights Reserved. ||
 || # This file may not be redistributed in whole or significant part. # ||
 || # ---------------- VBULLETIN IS NOT FREE SOFTWARE ---------------- # ||
 || # http://www.vbulletin.com | http://www.vbulletin.com/license.html # ||
@@ -445,7 +445,7 @@ function verify_vb3_enviroment()
 	}
 
 	// config file check
-	if (!file_exists(DIR . '/includes/config.php'))
+	if (!file_exists(DIR . '/includes/Config.php'))
 	{
 		echo "<p>{$upgradecore_phrases['ensure_config_exists']}</p>";
 		$errorthrown = true;

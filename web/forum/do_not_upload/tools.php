@@ -3,7 +3,7 @@
 || #################################################################### ||
 || # vBulletin 4.0.5
 || # ---------------------------------------------------------------- # ||
-|| # Copyright ©2000–2010 vBulletin Solutions Inc. All Rights Reserved. ||
+|| # Copyright ï¿½2000ï¿½2010 vBulletin Solutions Inc. All Rights Reserved. ||
 || # This file may not be redistributed in whole or significant part. # ||
 || # ---------------- VBULLETIN IS NOT FREE SOFTWARE ---------------- # ||
 || # http://www.vbulletin.com | http://www.vbulletin.com/license.html # ||
@@ -169,7 +169,7 @@ if (empty($_REQUEST['do']))
 	print_column_style_code(array('width:30%'));
 	$vbulletin->options['cookiedomain'] = iif($vbulletin->options['cookiedomain'] == '', ' ( blank ) ', '<b>' . htmlspecialchars_uni($vbulletin->options['cookiedomain']) . '</b>');
 	$vbulletin->options['cookiepath'] = iif($vbulletin->options['cookiepath'] == '', ' ( blank ) ', '<b>' . htmlspecialchars_uni($vbulletin->options['cookiepath']) . '</b>');
-	print_label_row('Cookie Prefix', '<b>' . htmlspecialchars_uni(COOKIE_PREFIX) . '</b> (<em>set in includes/config.php</em>)');
+	print_label_row('Cookie Prefix', '<b>' . htmlspecialchars_uni(COOKIE_PREFIX) . '</b> (<em>set in includes/Config.php</em>)');
 	print_label_row(construct_link_code('Reset Cookie Domain', THIS_SCRIPT . '?do=cookie&amp;type=domain'), 'Reset the cookie domain to be blank<dfn>Currently: ' . $vbulletin->options['cookiedomain'] . '</dfn>');
 	print_label_row(construct_link_code('Reset Cookie Path', THIS_SCRIPT . '?do=cookie&amp;type=path'), 'Reset the cookie path to be <b>/</b><dfn>Currently: ' . $vbulletin->options['cookiepath'] . '</dfn>');
 	print_table_break();

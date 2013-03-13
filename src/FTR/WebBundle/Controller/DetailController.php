@@ -4,6 +4,7 @@ namespace FTR\WebBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FTR\AdminBundle\Helper\FTRHelper;
+use FTR\Config\Config;
 
 
 class DetailController extends Controller
@@ -44,6 +45,13 @@ class DetailController extends Controller
                                   AND b.deleted =0";
 
                 $objGeneral = $conn->fetchAll($sqlGeneral);
+
+                $buildingName = $objGeneral[0]["building_name"];
+                $buildingAddress = $objGeneral[0]["building_address"];
+                $buildingNearlyPlace = $objGeneral[0]["nearly_place"];
+
+//                echo $objGeneral[0]["building_name"];exit();
+
                 $countData = count($objGeneral);
 				//var_dump($sqlGeneral);exit();
                 if ($countData == 1) {
@@ -189,9 +197,13 @@ class DetailController extends Controller
             } catch (Exception $e) {
                 return $this->redirect($this->generateUrl('FTRWebBundle_list'));
             }
-//            echo "<pre>";
-//            var_dump($objInRoom);exit();
-//            echo "</pre>";
+
+            // เรียกข้อมูลเบื้องต้นของ website
+            $siteConfig = new Config();
+            $siteConfigDetail = $siteConfig->setSiteGlobal();
+
+            $buldingSiteTitle = $buildingName." - ".$siteConfigDetail["siteTitle"];
+            $buildingSiteKeyword = $buildingName.", ".$buildingNearlyPlace.", ".$siteConfigDetail["siteKeyword"];
 
             return $this->render('FTRWebBundle:Detail:detail.html.twig', array(
                 'general' => $detailData,
@@ -207,7 +219,17 @@ class DetailController extends Controller
                 'countGallery'=>count($objImage),
                 'imgHead'=>$head,
                 'map'=>$map,
-                'wifi'=>$objWifi
+                'wifi'=>$objWifi,
+                'siteTitle'=> $buldingSiteTitle,
+                'siteDesc' => $buildingAddress,
+                'siteKeyword' => $buildingSiteKeyword,
+                'siteAuthor' => $siteConfigDetail["siteAuthor"],
+                'siteCopyRight' => $siteConfigDetail["siteCopyright"],
+                'siteRobot' => $siteConfigDetail["siteRobot"],
+                'siteRevisitAfter' => $siteConfigDetail["siteRevisitAfter"],
+                'siteDistribution' => $siteConfigDetail["siteDistribution"],
+                'siteImage' => $siteConfigDetail["siteImage"],
+                'siteUrl' => $siteConfigDetail["siteUrl"]
             ));
         } else {
             return $this->redirect($this->generateUrl('FTRWebBundle_list'));

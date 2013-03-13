@@ -3,7 +3,7 @@
 || #################################################################### ||
 || # vBulletin 4.0.5
 || # ---------------------------------------------------------------- # ||
-|| # Copyright ©2000-2010 vBulletin Solutions Inc. All Rights Reserved. ||
+|| # Copyright ï¿½2000-2010 vBulletin Solutions Inc. All Rights Reserved. ||
 || # This file may not be redistributed in whole or significant part. # ||
 || # ---------------- VBULLETIN IS NOT FREE SOFTWARE ---------------- # ||
 || # http://www.vbulletin.com | http://www.vbulletin.com/license.html # ||
@@ -40,7 +40,7 @@ $upgradecore_phrases['login'] = 'Log in';
 $upgradecore_phrases['php_version_too_old'] = 'vBulletin 4.0 requires PHP version 5.2 or greater. Your PHP is version ' . PHP_VERSION . ', please ask your host to upgrade.';
 $upgradecore_phrases['mysql_version_too_old'] = 'vBulletin 4.0 requires MySQL version 4.1.0 or greater. Your MySQL is version %1$s, please ask your host to upgrade.';
 $upgradecore_phrases['ensure_config_exists'] = 'Please make sure you have created the new directory structure required by vBulletin 4';
-$upgradecore_phrases['mysql_strict_mode'] = 'MySQL is running in strict mode. While you may proceed, some areas of vBulletin may not function properly. It is <em>strongly recommended</em> that you set <code>$config[\'Database\'][\'force_sql_mode\']</code> to <code>true</code> in your includes/config.php file!';
+$upgradecore_phrases['mysql_strict_mode'] = 'MySQL is running in strict mode. While you may proceed, some areas of vBulletin may not function properly. It is <em>strongly recommended</em> that you set <code>$config[\'Database\'][\'force_sql_mode\']</code> to <code>true</code> in your includes/Config.php file!';
 $upgradecore_phrases['step_x_of_y'] = ' (Step %1$d of %2$d)';
 $upgradecore_phrases['unknown'] = 'Unknown';
 $upgradecore_phrases['file_not_found'] = 'File Not Found!';
@@ -273,7 +273,7 @@ $upgrade_phrases['upgrade_300b3.php']['steps'] = array(
 	42 => 'Upgrade to vBulletin ' . VERSION . ' Complete!'
 );
 $upgrade_phrases['upgrade_300b3.php']['tableprefix_not_empty'] = '$config[\'Database\'][\'tableprefix\'] is not empty!';
-$upgrade_phrases['upgrade_300b3.php']['tableprefix_not_empty_fix'] = "Within config.php \$config['Database']['tableprefix'] must be empty for the upgrade to proceed.";
+$upgrade_phrases['upgrade_300b3.php']['tableprefix_not_empty_fix'] = "Within Config.php \$config['Database']['tableprefix'] must be empty for the upgrade to proceed.";
 $upgrade_phrases['upgrade_300b3.php']['welcome'] = '<p style="font-size:10pt"><b>Welcome to vBulletin version 4.0</b></p>
 	<p>You are about to upgrade your forum, so it has been automatically shut down.</p>
 	<p>Clicking the <b>[Next Step]</b> button will begin the installation process on your database \'<i>%1$s</i>\'.</p>

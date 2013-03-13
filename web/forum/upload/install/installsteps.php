@@ -3,7 +3,7 @@
 || #################################################################### ||
 || # vBulletin 4.0.5
 || # ---------------------------------------------------------------- # ||
-|| # Copyright ©2000-2010 vBulletin Solutions Inc. All Rights Reserved. ||
+|| # Copyright ï¿½2000-2010 vBulletin Solutions Inc. All Rights Reserved. ||
 || # This file may not be redistributed in whole or significant part. # ||
 || # ---------------- VBULLETIN IS NOT FREE SOFTWARE ---------------- # ||
 || # http://www.vbulletin.com | http://www.vbulletin.com/license.html # ||
@@ -76,12 +76,12 @@ if ($vbulletin->GPC['step'] == 'welcome')
 
 if ($vbulletin->GPC['step'] == 1)
 {
-	if (!file_exists(DIR . '/includes/config.php'))
+	if (!file_exists(DIR . '/includes/Config.php'))
 	{
 		$vbulletin->GPC['step']--;
 		echo "<p>{$install_phrases['cant_find_config']}</p>";
 	}
-	else if (!is_readable(DIR . '/includes/config.php'))
+	else if (!is_readable(DIR . '/includes/Config.php'))
 	{
 		$vbulletin->GPC['step']--;
 		echo "<p>{$install_phrases['cant_read_config']}</p>";

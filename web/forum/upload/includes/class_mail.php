@@ -3,7 +3,7 @@
 || #################################################################### ||
 || # vBulletin 4.0.5
 || # ---------------------------------------------------------------- # ||
-|| # All PHP code in this file is ©2000-2010 vBulletin Solutions Inc. # ||
+|| # All PHP code in this file is ï¿½2000-2010 vBulletin Solutions Inc. # ||
 || # This file may not be redistributed in whole or significant part. # ||
 || # ---------------- VBULLETIN IS NOT FREE SOFTWARE ---------------- # ||
 || # http://www.vbulletin.com | http://www.vbulletin.com/liceNse.html # ||
@@ -320,7 +320,7 @@ class vB_Mail
 
 	/**
 	 * Send the mail.
-	 * Note: If you define DISABLE_MAIL in config.php as:
+	 * Note: If you define DISABLE_MAIL in Config.php as:
 	 * 	delimited email addresses	- Only mail for the recipients will be sent
 	 *	<filename>.log				- Mail will be logged to the given file if writable
 	 *  any other value				- Mail will be disabled

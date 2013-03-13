@@ -3,7 +3,7 @@
 || #################################################################### ||
 || # vBulletin 4.0.5
 || # ---------------------------------------------------------------- # ||
-|| # Copyright ©2000-2010 vBulletin Solutions Inc. All Rights Reserved. ||
+|| # Copyright ï¿½2000-2010 vBulletin Solutions Inc. All Rights Reserved. ||
 || # This file may not be redistributed in whole or significant part. # ||
 || # ---------------- VBULLETIN IS NOT FREE SOFTWARE ---------------- # ||
 || # http://www.vbulletin.com | http://www.vbulletin.com/license.html # ||
@@ -63,14 +63,14 @@ $vbulletin->adsense_host_id = '';
 
 if (CWD == '.')
 {
-	// getcwd() failed and so we need to be told the full forum path in config.php
+	// getcwd() failed and so we need to be told the full forum path in Config.php
 	if (!empty($vbulletin->config['Misc']['forumpath']))
 	{
 		define('DIR', $vbulletin->config['Misc']['forumpath']);
 	}
 	else
 	{
-		trigger_error('<strong>Configuration</strong>: You must insert a value for <strong>forumpath</strong> in config.php', E_USER_ERROR);
+		trigger_error('<strong>Configuration</strong>: You must insert a value for <strong>forumpath</strong> in Config.php', E_USER_ERROR);
 	}
 }
 else

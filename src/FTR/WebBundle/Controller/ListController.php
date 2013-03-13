@@ -4,6 +4,7 @@ namespace FTR\WebBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Session\Session;
+use FTR\Config\Config;
 
 class ListController extends Controller
 {
@@ -464,6 +465,11 @@ class ListController extends Controller
                 'txtSearch'         => $txtSearch,
             ));*/
         } else {
+
+            // เรียกข้อมูลเบื้องต้นของ website
+            $siteConfig = new Config();
+            $siteConfigDetail = $siteConfig->setSiteGlobal();
+
             return $this->render('FTRWebBundle:List:index.html.twig',
                 array(
                     'result' => $result,
@@ -477,6 +483,16 @@ class ListController extends Controller
                     'textSearch' => $textSearch,
                     'txtSearch' => $txtSearch,
                     'dataSet' => $dataSetIsAjax,
+                    'siteTitle'=> $siteConfigDetail["pageListTitle"],
+                    'siteDesc' => $siteConfigDetail["pageListDesc"],
+                    'siteKeyword' => $siteConfigDetail["siteKeyword"],
+                    'siteAuthor' => $siteConfigDetail["siteAuthor"],
+                    'siteCopyRight' => $siteConfigDetail["siteCopyright"],
+                    'siteRobot' => $siteConfigDetail["siteRobot"],
+                    'siteRevisitAfter' => $siteConfigDetail["siteRevisitAfter"],
+                    'siteDistribution' => $siteConfigDetail["siteDistribution"],
+                    'siteImage' => $siteConfigDetail["siteImage"],
+                    'siteUrl' => $siteConfigDetail["siteUrl"]
                 ));
         }
     }

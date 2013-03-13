@@ -3,7 +3,7 @@
 || #################################################################### ||
 || # vBulletin 4.0.5
 || # ---------------------------------------------------------------- # ||
-|| # Copyright ©2000-2010 vBulletin Solutions Inc. All Rights Reserved. ||
+|| # Copyright ï¿½2000-2010 vBulletin Solutions Inc. All Rights Reserved. ||
 || # This file may not be redistributed in whole or significant part. # ||
 || # ---------------- VBULLETIN IS NOT FREE SOFTWARE ---------------- # ||
 || # http://www.vbulletin.com | http://www.vbulletin.com/license.html # ||
@@ -196,7 +196,7 @@ $installcore_phrases['php_version_too_old'] = 'vBulletin ' . VERSION . ' require
 $installcore_phrases['mysql_version_too_old'] = 'vBulletin ' . VERSION . ' requires MySQL version 4.1.0 or greater. Your MySQL is version %1$s, please ask your host to upgrade.';
 $installcore_phrases['need_xml'] = 'vBulletin ' . VERSION . ' requires that the XML functions in PHP be available. Please ask your host to enable this.';
 $installcore_phrases['need_mysql'] = 'vBulletin ' . VERSION . ' requires that the MySQL functions in PHP be available. Please ask your host to enable this.';
-$installcore_phrases['need_config_file'] = 'Please make sure you have entered the values in to config.php.new and renamed the file to config.php.';
+$installcore_phrases['need_config_file'] = 'Please make sure you have entered the values in to Config.php.new and renamed the file to Config.php.';
 $installcore_phrases['step_x_of_y'] = ' (Step %1$d of %2$d)';
 $installcore_phrases['vb3_install_script'] = 'vBulletin ' . VERSION . ' Install Script';
 $installcore_phrases['may_take_some_time'] = '(Please be patient as some parts may take some time)';
@@ -209,7 +209,7 @@ $installcore_phrases['page_x_of_y'] = 'Page %1$d of %2$d';
 $installcore_phrases['eaccelerator_too_old'] = 'eAccelerator for PHP must be upgraded to 0.9.3 or newer.';
 $upgradecore_phrases['apc_too_old'] = 'Your server is running a version of the <a href="http://pecl.p' . 'hp.net/package/APC/">Alternative PHP Cache</a> (APC) that is incompatible with vBulletin. Please upgrade APC to version 3.0.0 or newer.';
 $installcore_phrases['mmcache_not_supported'] = 'Turck MMCache has been made obsolete by eAccelerator and does not function properly with vBulletin.';
-$installcore_phrases['dbname_is_mysql'] = 'The database name specified in <em>includes/config.php</em> as <code>$config[\'Database\'][\'dbname\']</code> must not be <strong>mysql</strong> as this is a reserved database name.<br />Execution has been halted to prevent possible damage.';
+$installcore_phrases['dbname_is_mysql'] = 'The database name specified in <em>includes/Config.php</em> as <code>$config[\'Database\'][\'dbname\']</code> must not be <strong>mysql</strong> as this is a reserved database name.<br />Execution has been halted to prevent possible damage.';
 
 #####################################
 # install.php phrases
@@ -243,14 +243,14 @@ $install_phrases['welcome'] = '<p style="font-size:10pt"><b>Welcome to vBulletin
 	<p>Clicking the <b>[Next Step]</b> button will begin the installation process on your database.</p>
 	<p>In order to prevent possible browser crashes during this script, we strongly recommend that you disable any additional toolbars you may be using on your browser, such as the <b>Google</b> toolbar etc.</p>';
 $install_phrases['turck'] = '<p><strong>Turck MMCache</strong> has been detected on your server.  <strong>Turck MMCache</strong> is not supported in recent versions of PHP and can cause problems with vBulletin. We recommend that it be disabled.</p>';
-$install_phrases['cant_find_config'] = 'We were unable to locate the \'includes/config.php\' file, please confirm that this file exists.';
-$install_phrases['cant_read_config'] = 'We were unable to read the \'includes/config.php\' file, please check the permissions.';
+$install_phrases['cant_find_config'] = 'We were unable to locate the \'includes/Config.php\' file, please confirm that this file exists.';
+$install_phrases['cant_read_config'] = 'We were unable to read the \'includes/Config.php\' file, please check the permissions.';
 $install_phrases['config_exists'] = 'Config file exists and is readable.';
 $install_phrases['attach_to_db'] = 'Attempting to attach to database';
 $install_phrases['no_db_found_will_create'] = 'No Database found, attempting to create.';
 $install_phrases['attempt_to_connect_again'] = 'Attempting to connect again.';
 $install_phrases['database_functions_not_detected'] = 'Selected database type \'%1$s\' was not detected within your compilation of PHP.';
-$install_phrases['unable_to_create_db'] = 'Unable to create database, please confirm the database name within the \'includes/config.php\' file or ask your host to create a database.';
+$install_phrases['unable_to_create_db'] = 'Unable to create database, please confirm the database name within the \'includes/Config.php\' file or ask your host to create a database.';
 $install_phrases['database_creation_successful'] = 'Database creation successful!';
 $install_phrases['connect_failed'] = 'Connect failed: unexpected error from the database.';
 $install_phrases['db_error_num'] = 'Error number: %1$s';
@@ -259,7 +259,7 @@ $install_phrases['check_dbserver'] = 'Please ensure that the database and server
 $install_phrases['connection_succeeded'] = 'Connection succeeded! The database already exists.';
 $install_phrases['vb_installed_maybe_upgrade'] = 'You have already installed vBulletin; do you wish to <a href="upgrade.php">upgrade</a>?';
 $install_phrases['wish_to_empty_db'] = 'Click here if you would like to see options for clearing the existing contents of your database.';
-$install_phrases['no_connect_permission'] = 'The database has failed to connect because you do not have permission to connect to the server. Please confirm the values entered in the \'includes/config.php\' file.';
+$install_phrases['no_connect_permission'] = 'The database has failed to connect because you do not have permission to connect to the server. Please confirm the values entered in the \'includes/Config.php\' file.';
 $install_phrases['reset_database'] = 'Reset Database';
 $install_phrases['delete_tables_instructions'] = '<p>The following is a list of all tables found in your database. Tables that are recognized as part of vBulletin have been selected for you. There may be other tables listed that were not recognized - these will be highlighted in the list.</p>
 <p style="font-size:12pt">All selected tables and their contents will be <strong>permanently and irreversibly deleted</strong> from the database when the <em>Delete Selected Tables</em> button is clicked.</p>
@@ -267,7 +267,7 @@ $install_phrases['delete_tables_instructions'] = '<p>The following is a list of 
 <p>vBulletin and vBulletin Solutions Inc. can accept no responsibility for any loss of data incurred as a result of deleting database tables.</p>';
 $install_phrases['select_deselect_all_tables'] = 'Select / Deselect All Tables';
 $install_phrases['delete_selected_tables'] = 'Delete Selected Tables';
-$install_phrases['mysql_strict_mode'] = 'MySQL is running in strict mode. While you may proceed, some areas of vBulletin may not function properly. It is <em>strongly recommended</em> that you set <code>$config[\'Database\'][\'force_sql_mode\']</code> to <code>true</code> in your includes/config.php file!';
+$install_phrases['mysql_strict_mode'] = 'MySQL is running in strict mode. While you may proceed, some areas of vBulletin may not function properly. It is <em>strongly recommended</em> that you set <code>$config[\'Database\'][\'force_sql_mode\']</code> to <code>true</code> in your includes/Config.php file!';
 $install_phrases['resetting_db'] = 'Resetting database...';
 $install_phrases['succeeded'] = 'succeeded';
 $install_phrases['script_reported_errors'] = 'The script reported errors in the installation of the tables. Only continue if you are sure that they are not serious.';

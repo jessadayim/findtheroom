@@ -1,5 +1,5 @@
 <?php
-//require_once('../../../src/FTR/Config/config.php');
+//require_once('../../../src/FTR/Config/Config.php');
 //$config = new Config();
 $path = "../../../";
 //$ini_array = parse_ini_file("../../../");

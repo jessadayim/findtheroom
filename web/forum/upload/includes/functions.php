@@ -5971,7 +5971,7 @@ function can_moderate($forumid = 0, $do = '', $userid = -1, $usergroupids = '')
 /**
 * Returns whether or not vBulletin is running in demo mode
 *
-* if DEMO_MODE is defined and set to true in config.php this function will return false,
+* if DEMO_MODE is defined and set to true in Config.php this function will return false,
 * the main purpose of which is to disable parsing of stuff that is undesirable for a
 * board running with a publicly accessible admin control panel
 *
