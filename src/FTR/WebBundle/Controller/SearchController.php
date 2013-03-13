@@ -11,7 +11,7 @@ class SearchController extends Controller
 {
     public function searchAction()
     {
-// เรียกข้อมูลเบื้องต้นของ website
+        // เรียกข้อมูลเบื้องต้นของ website
         $siteConfig = new Config();
         $siteConfigDetail = $siteConfig->setSiteGlobal();
 
@@ -45,6 +45,11 @@ class SearchController extends Controller
         $mostPrice = null;
         $selProvince = null;
 
+        $conn = $this->get('database_connection');
+        if (!$conn) {
+            die("MySQL Connection error");
+        }
+
         if ($parameter != null) {
             $shortSearchType = $parameter['shortSearchType'];
             $zone = $parameter['zone'];
@@ -53,12 +58,21 @@ class SearchController extends Controller
             $lessPrice = $parameter['lessPrice'];
             $mostPrice = $parameter['mostPrice'];
             $selProvince = $parameter['selProvince'];
+
+            // get รหัส pay_type_id
+//            $sqlGetType = "SELECT id
+//                FROM pay_type
+//                WHERE typename = '$bkkPayType'";
+//            $resultGetType = $conn->fetchAll($sqlGetType);
+//            $payTypeId = $resultGetType[0]["id"];
+
+            // query เพื่อแสดงผล
+//            $queryPayTypeSelect = "";
+//            $queryPayTypeFrom = "INNER JOIN `pay_type` g ON ( a.`pay_type_id` = g.`id` ) ";
+//            $queryPayTypeWhere = " AND g.`id` = $payTypeId";
         }
         //echo "shortSearchType = ".$shortSearchType;
-        $conn = $this->get('database_connection');
-        if (!$conn) {
-            die("MySQL Connection error");
-        }
+
         //rux
         $sqlGetMap1 = "
             SELECT
@@ -85,32 +99,18 @@ class SearchController extends Controller
               a.`slug`
             FROM
               building_site a
-              INNER JOIN building_type b
-                ON (b.id = a.building_type_id)
-              LEFT JOIN image c
-                ON (
-                  c.`building_site_id` = a.id
-                  AND c.`photo_type` = 'head'
-                  AND c.`deleted` = 0
-                )
-              INNER JOIN `building_type` d
-                ON (
-                  d.`id` = a.`building_type_id`
-                  AND d.`deleted` = 0
-                )
-                INNER JOIN `province` e
-                ON (
-                a.`addr_province` = e.`PROVINCE_ID`
-                )
-                INNER JOIN `amphur` f
-                ON (
-                a.`addr_prefecture` = f.`AMPHUR_ID`
-                )
+              INNER JOIN building_type b ON (b.id = a.building_type_id)
+              LEFT JOIN image c ON ( c.`building_site_id` = a.id AND c.`photo_type` = 'head' AND c.`deleted` = 0 )
+              INNER JOIN `building_type` d ON ( d.`id` = a.`building_type_id` AND d.`deleted` = 0 )
+              INNER JOIN `province` e ON ( a.`addr_province` = e.`PROVINCE_ID` )
+              INNER JOIN `amphur` f ON ( a.`addr_prefecture` = f.`AMPHUR_ID` )
             WHERE 1
               AND a.publish = 1
               AND b.`deleted` = 0
               AND b.deleted = 0
         ";
+
+//        echo $sqlGetMap1;exit();
 
         $sqlGetMap2 = "$sqlGetMap1 AND b.`id` = 1";
         $sqlGetMap3 = "$sqlGetMap1 AND b.`id` = 2";
@@ -540,7 +540,7 @@ class SearchController extends Controller
         }
         try {
             $sql = "
-				select * from nearly_location where nearly_type_id = $type
+				select * from nearly_location where nearly_type_id = $type AND deleted = 0
 			";
             $result_data = $conn->fetchAll($sql);
         } catch (Exception $e) {

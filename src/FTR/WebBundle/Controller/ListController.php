@@ -77,6 +77,7 @@ class ListController extends Controller
         $shortSearchType = urldecode(@$_GET['ค้นหาจังหวัด']);
 
         $bkkPayTypeName = urldecode(@$_GET['ชนิด']);
+
         $bkkPayTypeID = $this->convertNamePayTypeToID($bkkPayTypeName);
 
         $buildingTypeName = urldecode(@$_GET['ประเภทหอพัก']);
@@ -119,8 +120,9 @@ class ListController extends Controller
                             if (($zoneID != 0) && (!empty($zoneID))) {
                                 $whereQuery .= " AND a.zone_id = $zoneID";
                             }
+
                             if (!empty($bkkPayTypeID)) {
-                                // $whereQuery .= " AND a.pay_type_id = $bkkPayTypeID";
+                                 $whereQuery .= " AND a.pay_type_id = $bkkPayTypeID";
                             }
                             if (($buildingTypeID != 0) && (!empty($buildingTypeID))) {
                                 $whereQuery .= " AND a.building_type_id = $buildingTypeID";
@@ -148,7 +150,7 @@ class ListController extends Controller
                                 $whereQuery .= " AND a.addr_province = $selProvinceID";
                             }
                             if (!empty($bkkPayTypeID)) {
-                                //$whereQuery .= " AND a.pay_type_id = $bkkPayTypeID";
+                                $whereQuery .= " AND a.pay_type_id = $bkkPayTypeID";
                             }
                             if (($buildingTypeID != 0) && (!empty($buildingTypeID))) {
                                 $whereQuery .= " AND a.building_type_id = $buildingTypeID";
@@ -190,7 +192,7 @@ class ListController extends Controller
                     }*/
 
                     if (!empty($bkkPayTypeID)) {
-                        //$whereQuery .= " AND a.pay_type_id = $bkkPayTypeID";
+                        $whereQuery .= " AND a.pay_type_id = $bkkPayTypeID";
                     }
 
                     if ($bc == "bkk") {
@@ -259,7 +261,7 @@ class ListController extends Controller
                     }
                     break;
                 case "txtSearch":
-                    $txtSearch = trim(@$_GET['txtSearch']);
+                    $txtSearch = trim(@$_GET['คำค้นหา']);
                     $session = $this->get('session');
                     $session->set('txtSearch', $txtSearch);
                     if (!empty($txtSearch) && $txtSearch != null && $txtSearch != '') {
@@ -317,7 +319,7 @@ class ListController extends Controller
             $fromTable = "
                 FROM building_site a
                     INNER JOIN building_type b ON(a.building_type_id=b.id)
-                    LEFT JOIN pay_type c ON(a.pay_type_id=c.id)
+                    INNER JOIN pay_type c ON(a.pay_type_id=c.id)
                     INNER JOIN province p ON(a.addr_province=p.PROVINCE_ID)
                     INNER JOIN amphur am ON(a.addr_prefecture=am.AMPHUR_ID)
                     LEFT OUTER JOIN facility2site d ON (d.building_site_id = a.id)
@@ -525,9 +527,12 @@ class ListController extends Controller
                   `id`
                 FROM `pay_type`
                 WHERE 1
-                  AND `typename` LIKE '%$payTypeName%'
+                  AND `typename` LIKE '$payTypeName'
             ";
             $result = $conn->fetchAll($sql);
+
+//            var_dump($result);exit();
+
             if (count($result) == 1) {
                 $resultData = $result[0]['id'];
             }
