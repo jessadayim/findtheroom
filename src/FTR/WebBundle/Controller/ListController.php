@@ -34,6 +34,7 @@ class ListController extends Controller
         $txtSearch = "";
         $result = null;
         $isAjax = "no";
+        $searchTitle = null;
 
         //query value
         $whereQuery = null;
@@ -279,6 +280,99 @@ class ListController extends Controller
                          ";
                     }
                     break;
+                case "cateSearch":
+
+                    // รับค่าของประเภทการค้นหา
+                    $buildingTypeSearch = @$_GET['ประเภทห้องพัก'];
+                    $buildingPayTypeSearch = @$_GET['ชนิดห้องพัก'];
+                    $buildingNearlyBtsLocation = @$_GET['ใกล้เคียงสถานีbts'];
+                    $buildingNearlyMrtLocation = @$_GET['ใกล้เคียงสถานีmrt'];
+                    $buildingNearlyUniversityLocation = @$_GET['ใกล้มหาวิทยาลัย'];
+                    $buildingZoneLocation = $zoneID;
+
+                    // เงื่อนไขการค้นหาแบบประเภทห้องพัก
+                    if(!empty($buildingTypeSearch)){
+
+                        $cateSearch = trim($buildingTypeSearch);
+                        $session = $this->get('session');
+                        $session->set('cateSearch', $cateSearch);
+                        if (!empty($cateSearch) && $cateSearch != null && $cateSearch != '') {
+                            $whereQuery .= "
+                            AND b.type_name like '%$cateSearch%'
+                         ";
+
+                        $searchTitle = $cateSearch;
+                        }
+
+                    // เงื่อนไขการค้นหาแบบชนิดการจ่ายเงิน
+                    } elseif(!empty($buildingPayTypeSearch)) {
+
+                        $cateSearch = trim($buildingPayTypeSearch);
+                        $session = $this->get('session');
+                        $session->set('cateSearch', $cateSearch);
+                        if (!empty($cateSearch) && $cateSearch != null && $cateSearch != '') {
+                            $whereQuery .= "
+                            AND `typename` LIKE '%$cateSearch%'
+                         ";
+
+                            $searchTitle = $cateSearch;
+                        }
+
+                    // เงื่อนไขการค้นหาใกล้สถานี BTS
+                    } elseif(!empty($buildingNearlyBtsLocation)) {
+                        $cateSearch = trim($buildingNearlyBtsLocation);
+                        $session = $this->get('session');
+                        $session->set('cateSearch', $cateSearch);
+                        if (!empty($cateSearch) && $cateSearch != null && $cateSearch != '') {
+                            $whereQuery .= "
+                            AND `name` LIKE '%$cateSearch%'
+                         ";
+
+                            $searchTitle = "รถไฟฟ้า BTS".$cateSearch;
+                        }
+
+                    // เงื่อนไขการค้นหาใกล้สถานี MRT
+                    } elseif(!empty($buildingNearlyMrtLocation)) {
+                        $cateSearch = trim($buildingNearlyMrtLocation);
+                        $session = $this->get('session');
+                        $session->set('cateSearch', $cateSearch);
+                        if (!empty($cateSearch) && $cateSearch != null && $cateSearch != '') {
+                            $whereQuery .= "
+                            AND `name` LIKE '%$cateSearch%'
+                         ";
+
+                            $searchTitle = "รถไฟฟ้า MRT".$cateSearch;
+                        }
+
+                    // เงื่อนไขการค้นหาใกล้มหาวิทยาลัย
+                    } elseif(!empty($buildingNearlyUniversityLocation)) {
+                        $cateSearch = trim($buildingNearlyUniversityLocation);
+                        $session = $this->get('session');
+                        $session->set('cateSearch', $cateSearch);
+                        if (!empty($cateSearch) && $cateSearch != null && $cateSearch != '') {
+                            $whereQuery .= "
+                            AND `name` LIKE '%$cateSearch%'
+                         ";
+
+                            $searchTitle = $cateSearch;
+                        }
+
+                    // เงื่อนไขการค้นหาตามโซน
+                    } elseif(!empty($buildingZoneLocation)) {
+                        $cateSearch = trim($buildingZoneLocation);
+                        $session = $this->get('session');
+                        $session->set('cateSearch', $cateSearch);
+                        if (!empty($cateSearch) && $cateSearch != null && $cateSearch != '') {
+                            $whereQuery .= "
+                            AND a.`zone_id` = $cateSearch
+                         ";
+
+                            $searchTitle = "โซน".$zoneName;
+                        }
+                    }
+
+
+                    break;
             }
         }
 
@@ -312,10 +406,21 @@ class ListController extends Controller
             $selectField = "
                  SELECT
                     a.id,a.slug,
-                    a.building_name,b.type_name,c.typename,
-                    a.addr_number,a.addr_prefecture,a.addr_province,
-                    a.addr_zipcode,a.detail,a.start_price,a.end_price,
-                    a.latitude,a.longitude,d.facilitylist_id,p.PROVINCE_NAME,am.AMPHUR_NAME
+                    a.building_name,
+                    b.type_name,
+                    c.typename,
+                    a.addr_number,
+                    a.addr_prefecture,
+                    a.addr_province,
+                    a.addr_zipcode,
+                    a.detail,
+                    a.start_price,
+                    a.end_price,
+                    a.latitude,
+                    a.longitude,
+                    d.facilitylist_id,
+                    p.PROVINCE_NAME,
+                    am.AMPHUR_NAME
             ";
             $fromTable = "
                 FROM building_site a
@@ -421,6 +526,7 @@ class ListController extends Controller
 
                     $result[$key]['latitude'] = $value2['latitude'];
                     $result[$key]['longitude'] = $value2['longitude'];
+//                    $result[$key]['searchTitle'] = $searchTitle;
 
                 }
 
@@ -449,6 +555,7 @@ class ListController extends Controller
             'pageNumber' => $pageNumber,
             'textSearch' => $textSearch,
             'txtSearch' => $txtSearch,
+
         );
         //var_dump( $isAjax);
         if ($isAjax == "yes") {
@@ -492,7 +599,8 @@ class ListController extends Controller
                     'siteRevisitAfter' => $siteConfigDetail["siteRevisitAfter"],
                     'siteDistribution' => $siteConfigDetail["siteDistribution"],
                     'siteImage' => $siteConfigDetail["siteImage"],
-                    'siteUrl' => $siteConfigDetail["siteUrl"]
+                    'siteUrl' => $siteConfigDetail["siteUrl"],
+                    'searchTitle' => $searchTitle
                 ));
         }
     }

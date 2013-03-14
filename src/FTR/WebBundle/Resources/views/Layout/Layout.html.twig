@@ -175,6 +175,19 @@
 			});
 		});
 </script>
+        <script type="text/javascript">
+            function confirmBuilding(){
+
+                alert("hello");
+
+//        if(document.form["confirmB"].checked){
+//            return true;
+//        } else {
+//            return false;
+//            alert("กรุณาเลือกยืนยันที่ช่อง ยืนยันการประกาศห้องพัก ก่อนค่ะ");
+//        }
+            }
+        </script>
 	</head>
 
 	<body>
@@ -460,247 +473,248 @@
 			</script>
 
 			<div id="footer">
-				<ul>
-                    <li class="head">
-                        <div class="footerImgTitle"><img src="{{asset('images/footer-icon-building.png')}}"/></div>
-                        <div class="footerBuildingType">ประเภทห้องพัก</div>
-                        <div class="clear"></div>
-                        <hr />
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักชาย</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักหญิง</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักรายวัน</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักรายเดือน</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">แมนชั่น</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">อพาร์ทเม้นท์</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">เซอร์วิส อพาร์ทเม้นท์</a>
-                        <div class="clear"></div>
-                        <div class="footerImgTitle" style="margin-top: 10px;"><img src="{{asset('images/footer-icon-building.png')}}"/></div>
-                        <div class="footerBuildingType">ราคาห้องพัก</div>
-                        <div class="clear"></div>
-                        <hr />
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ราคา 2,000 - 3,000 บาท</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ราคา 3,001 - 4,000 บาท</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ราคา 4,001 - 5,000 บาท</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ราคา 5,001 - 7,000 บาท</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ราคา 7,001 - 10,000 บาท</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ราคามากกว่า 10,000 บาท</a>
-                        <div class="clear"></div>
-                    </li>
-                    <li class="head">
-                        <div class="footerImgTitle"><img src="{{asset('images/footer-icon-building.png')}}"/></div>
-                        <div class="footerBuildingType">ใกล้มหาวิทยาลัย</div>
-                        <div class="clear"></div>
-                        <hr />
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">จุฬาลงกรณ์มหาวิทยาลัย</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยเกษตรศาสตร์ วิทยาเขตบางเขน</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยธรรมศาสตร์ ท่าพระจันทร์</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยศรีนครินทรวิโรฒ (ประสานมิตร)</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยรามคำแหง</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยศิลปากร วังท่าพระ</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยมหิดล</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าธนบุรี บางมดและบางขุนเทียน</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าพระนครเหนือ</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยกรุงเทพมหานคร(มหาวิทยาลัยนวมินทราธิราช)</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">สถาบันบัณฑิตพัฒนบริหารศาสตร์ (นิด้า)</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยเทคโนโลยีราชมงคลกรุงเทพ</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยเทคโนโลยีราชมงคลพระนคร</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยเทคโนโลยีราชมงคลรัตนโกสินทร์</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยเทคโนโลยีราชมงคลตะวันออก วิทยาเขตจักรพงษภูวนารถ</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยเทคโนโลยีราชมงคลตะวันออก วิทยาเขตอุเทนถวาย</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยราชภัฏจันทรเกษม</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยราชภัฏบ้านสมเด็จเจ้าพระยา</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยราชภัฏพระนคร</a>
-                    </li>
-                    <li class="head">
-                        <div class="footerImgTitle"><img src="{{asset('images/footer-icon-building.png')}}"/></div>
-                        <div class="footerBuildingType">ใกล้มหาวิทยาลัย</div>
-                        <div class="clear"></div>
-                        <hr />
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยราชภัฏสวนดุสิต</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยราชภัฏสวนสุนันทา</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยราชภัฏวไลยอลงกรณ์ ในพระบรมราชูปถัมภ์ ศูนย์กรุงเทพมหานคร</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">สถาบันเทคโนโลยีปทุมวัน</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">วิทยาลัยการจัดการเพื่อการพัฒนา มหาวิทยาลัยทักษิณ</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">วิทยาลัยการจัดการเพื่อการพัฒนา มหาวิทยาลัยทักษิณ</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">สถาบันการบินพลเรือน</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">สถาบันการพลศึกษา (สำนักงานอธิการบดี)</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">วิทยาลัยแพทยศาสตร์พระมงกุฎเกล้า</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">วิทยาลัยป้องกันราชอาณาจักร</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">วิทยาลัยพยาบาลกองทัพบก</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">วิทยาลัยพยาบาลกองทัพเรือ</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">วิทยาลัยพยาบาลทหารอากาศ</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">วิทยาลัยพยาบาลบรมราชชนนี กรุงเทพ</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">วิทยาลัยพยาบาลบรมราชชนนี นพรัตน์วชิระ</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยหอการค้าไทย</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยรังสิต รังสิต,ศูนย์สาธรธานี,ศูนย์วิภาวดี</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยกรุงเทพ วิทยาเขตกล้วยน้ำไท</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยกรุงเทพธนบุรี</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยเกริก</a>
-                    </li>
-                    <li class="head">
-                        <div class="footerImgTitle"><img src="{{asset('images/footer-icon-building.png')}}"/></div>
-                        <div class="footerBuildingType">ใกล้มหาวิทยาลัย</div>
-                        <div class="clear"></div>
-                        <hr />
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยเกษมบัณฑิต พัฒนาการและร่มเกล้า</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยรัตนบัณฑิต</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยธนบุรี</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยธุรกิจบัณฑิตย์</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยศรีปทุม</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยสยาม</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยหัวเฉียวเฉลิมพระเกียรติ วิทยาเขตยศเส</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยเทคโนโลยีมหานคร</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยอัสสัมชัญ หัวหมาก,เซ็นทรัลเวิลด์</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยเอเชียอาคเนย์</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยเซนต์จอห์น</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยเซนต์จอห์น</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยนอร์ทกรุงเทพ วิทยาเขตสะพานใหม่</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">คณะพยาบาลศาสตร์มิชชั่น มหาวิทยาลัยนานาชาติเอเชีย-แปซิฟิก</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยนวมินทราธิราช</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยนานาชาติแสตมฟอร์ด พระราม 9</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยชินวัตร พญาไท</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยอีสเทิร์นเอเชีย</a>
-                        <div class="clear"></div>
-                    </li>
-                </ul>
-                <div class="clear"></div>
-                <ul>
-                    <li class="head">
-                        <div class="footerImgTitle"><img src="{{asset('images/footer-icon-building.png')}}"/></div>
-                        <div class="footerBuildingType">ห้องพักโซนในกรุงเทพฯ</div>
-                        <div class="clear"></div>
-                        <hr />
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">เทพารักษ์/ศรีนครินทร์/บางนา</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">อ่อนนุช/ลาดกระบัง</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มีนบุรี/หทัยราษฏร์/นิมิตใหม่/สุวินทวงศ์</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">พัฒนาการ/เพชรบุรีตัดใหม่</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">รามคำแหง/เสรีไทย</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">พระราม 9/รัชดาภิเษก</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ลาดพร้าว/เลียบด่วนเอกมัย-รามอินทรา</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">เกษตร-นวมินทร์/รามอินทรา</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">พหลโยธิน/อารีย์/รัชโยธิน/สะพานใหม่</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ดินแดง/วิภาวดี-รังสิต</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ราชปรารภ/พญาไท/ปทุมวัน/ราชเทวี/ราชวิถี</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">พระราม 1/ราชดำริ/วิทยุ</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">สุขุมวิทตอนต้น (สุขุมวิท1-77 และ สุขุมวิท 2-52)</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">สุขุมวิทตอนปลาย (ตั้งแต่ สุขุมวิท 79 และ 54 เป็นต้นไป)</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">พระราม 4/สาทร/เจริญกรุง</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">สีลม/สุรวงศ์/สี่พระยา</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">นราธิวาสราชนครินทร์/พระราม 3</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ธนบุรี/ตากสิน/เจริญนคร/สุขสวัสดิ์/ท่าพระ</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">วงศ์สว่าง/บางซื่อ/ประชาชื่น</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">หลักสี่/แจ้งวัฒนะ/ติวานนท์/ปากเกร็ด</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">รังสิต/ลำลูกกา/คลองหลวง/ธัญบุรี</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">งามวงศ์วาน/แคราย/รัตนาธิเบศร์/บางใหญ่</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">พระราม 2/บรมราชชนนี/เพชรเกษม/จรัญสนิทวงศ์</a>
-                    </li>
-                    <li class="head">
-                        <div class="footerImgTitle"><img src="{{asset('images/footer-icon-building.png')}}"/></div>
-                        <div class="footerBuildingType">ห้องพักใกล้สถานี BTS</div>
-                        <div class="clear"></div>
-                        <hr />
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี หมอชิต</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี สะพานควาย</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี อารีย์</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี สนามเป้า</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี อนุสาวรีย์ชัยสมรภูมิ</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี พญาไท</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี ราชเทวี</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี สยาม</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี ชิดลม</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี เพลินจิต</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี นานา</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี อโศก</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี พร้อมพงษ์</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี ทองหล่อ</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี เอกมัย</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี อ่อนนุช</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี บางจาก</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี ปุณณวิถี</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี อุดมสุข</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี บางนา</a>
-                    </li>
-                    <li class="head">
-                        <div class="footerImgTitle"><img src="{{asset('images/footer-icon-building.png')}}"/></div>
-                        <div class="footerBuildingType">ห้องพักใกล้สถานี BTS</div>
-                        <div class="clear"></div>
-                        <hr />
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี แบริ่ง</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี สนามกีฬาแห่งชาติ</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี สยาม</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี ราชดำริ</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี ศาลาแดง</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี ช่องนนทรี</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี สุรศักดิ์</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี สะพานตากสิน</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี กรุงธนบุรี</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี วงเวียนใหญ่</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี โพธิ์นิมิตร</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี ตลาดพลู</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี วุฒากาศ</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี บางหว้า</a>
-                        <div class="clear"></div>
-                    </li>
-                    <li class="head">
-                        <div class="footerImgTitle"><img src="{{asset('images/footer-icon-building.png')}}"/></div>
-                        <div class="footerBuildingType">ห้องพักใกล้สถานี MRT</div>
-                        <div class="clear"></div>
-                        <hr />
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี บางซื่อ</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี กำแพงเพชร</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี สวนจตุจักร</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี พหลโยธิน</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี ลาดพร้าว</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี รัชดาภิเษก</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี สุทธิสาร</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี ห้วยขวาง</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี ศูนย์วัฒนธรรมแห่งประเทศไทย</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี พระราม 9</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี เพชรบุรี</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี สุขุมวิท</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี ศูนยการประชุมแห่งชาติสิริกิติ์</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี คลองเตย</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี ลุมพินี</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี สีลม</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี สามย่าน</a>
-                        <a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี หัวลำโพง</a>
-                    </li>
+            {% render "FTRWebBundle:Footer:index" %}
+				{#<ul>#}
+                    {#<li class="head">#}
+                        {#<div class="footerImgTitle"><img src="{{asset('images/footer-icon-building.png')}}"/></div>#}
+                        {#<div class="footerBuildingType">ประเภทห้องพัก</div>#}
+                        {#<div class="clear"></div>#}
+                        {#<hr />#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักชาย</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักหญิง</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักรายวัน</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักรายเดือน</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">แมนชั่น</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">อพาร์ทเม้นท์</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">เซอร์วิส อพาร์ทเม้นท์</a>#}
+                        {#<div class="clear"></div>#}
+                        {#<div class="footerImgTitle" style="margin-top: 10px;"><img src="{{asset('images/footer-icon-building.png')}}"/></div>#}
+                        {#<div class="footerBuildingType">ราคาห้องพัก</div>#}
+                        {#<div class="clear"></div>#}
+                        {#<hr />#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ราคา 2,000 - 3,000 บาท</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ราคา 3,001 - 4,000 บาท</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ราคา 4,001 - 5,000 บาท</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ราคา 5,001 - 7,000 บาท</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ราคา 7,001 - 10,000 บาท</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ราคามากกว่า 10,000 บาท</a>#}
+                        {#<div class="clear"></div>#}
+                    {#</li>#}
+                    {#<li class="head">#}
+                        {#<div class="footerImgTitle"><img src="{{asset('images/footer-icon-building.png')}}"/></div>#}
+                        {#<div class="footerBuildingType">ใกล้มหาวิทยาลัย</div>#}
+                        {#<div class="clear"></div>#}
+                        {#<hr />#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">จุฬาลงกรณ์มหาวิทยาลัย</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยเกษตรศาสตร์ วิทยาเขตบางเขน</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยธรรมศาสตร์ ท่าพระจันทร์</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยศรีนครินทรวิโรฒ (ประสานมิตร)</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยรามคำแหง</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยศิลปากร วังท่าพระ</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยมหิดล</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าธนบุรี บางมดและบางขุนเทียน</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าพระนครเหนือ</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยกรุงเทพมหานคร(มหาวิทยาลัยนวมินทราธิราช)</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">สถาบันบัณฑิตพัฒนบริหารศาสตร์ (นิด้า)</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยเทคโนโลยีราชมงคลกรุงเทพ</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยเทคโนโลยีราชมงคลพระนคร</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยเทคโนโลยีราชมงคลรัตนโกสินทร์</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยเทคโนโลยีราชมงคลตะวันออก วิทยาเขตจักรพงษภูวนารถ</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยเทคโนโลยีราชมงคลตะวันออก วิทยาเขตอุเทนถวาย</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยราชภัฏจันทรเกษม</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยราชภัฏบ้านสมเด็จเจ้าพระยา</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยราชภัฏพระนคร</a>#}
+                    {#</li>#}
+                    {#<li class="head">#}
+                        {#<div class="footerImgTitle"><img src="{{asset('images/footer-icon-building.png')}}"/></div>#}
+                        {#<div class="footerBuildingType">ใกล้มหาวิทยาลัย</div>#}
+                        {#<div class="clear"></div>#}
+                        {#<hr />#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยราชภัฏสวนดุสิต</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยราชภัฏสวนสุนันทา</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยราชภัฏวไลยอลงกรณ์ ในพระบรมราชูปถัมภ์ ศูนย์กรุงเทพมหานคร</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">สถาบันเทคโนโลยีปทุมวัน</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">วิทยาลัยการจัดการเพื่อการพัฒนา มหาวิทยาลัยทักษิณ</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">วิทยาลัยการจัดการเพื่อการพัฒนา มหาวิทยาลัยทักษิณ</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">สถาบันการบินพลเรือน</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">สถาบันการพลศึกษา (สำนักงานอธิการบดี)</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">วิทยาลัยแพทยศาสตร์พระมงกุฎเกล้า</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">วิทยาลัยป้องกันราชอาณาจักร</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">วิทยาลัยพยาบาลกองทัพบก</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">วิทยาลัยพยาบาลกองทัพเรือ</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">วิทยาลัยพยาบาลทหารอากาศ</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">วิทยาลัยพยาบาลบรมราชชนนี กรุงเทพ</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">วิทยาลัยพยาบาลบรมราชชนนี นพรัตน์วชิระ</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยหอการค้าไทย</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยรังสิต รังสิต,ศูนย์สาธรธานี,ศูนย์วิภาวดี</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยกรุงเทพ วิทยาเขตกล้วยน้ำไท</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยกรุงเทพธนบุรี</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยเกริก</a>#}
+                    {#</li>#}
+                    {#<li class="head">#}
+                        {#<div class="footerImgTitle"><img src="{{asset('images/footer-icon-building.png')}}"/></div>#}
+                        {#<div class="footerBuildingType">ใกล้มหาวิทยาลัย</div>#}
+                        {#<div class="clear"></div>#}
+                        {#<hr />#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยเกษมบัณฑิต พัฒนาการและร่มเกล้า</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยรัตนบัณฑิต</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยธนบุรี</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยธุรกิจบัณฑิตย์</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยศรีปทุม</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยสยาม</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยหัวเฉียวเฉลิมพระเกียรติ วิทยาเขตยศเส</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยเทคโนโลยีมหานคร</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยอัสสัมชัญ หัวหมาก,เซ็นทรัลเวิลด์</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยเอเชียอาคเนย์</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยเซนต์จอห์น</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยเซนต์จอห์น</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยนอร์ทกรุงเทพ วิทยาเขตสะพานใหม่</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">คณะพยาบาลศาสตร์มิชชั่น มหาวิทยาลัยนานาชาติเอเชีย-แปซิฟิก</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยนวมินทราธิราช</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยนานาชาติแสตมฟอร์ด พระราม 9</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยชินวัตร พญาไท</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มหาวิทยาลัยอีสเทิร์นเอเชีย</a>#}
+                        {#<div class="clear"></div>#}
+                    {#</li>#}
+                {#</ul>#}
+                {#<div class="clear"></div>#}
+                {#<ul>#}
+                    {#<li class="head">#}
+                        {#<div class="footerImgTitle"><img src="{{asset('images/footer-icon-building.png')}}"/></div>#}
+                        {#<div class="footerBuildingType">ห้องพักโซนในกรุงเทพฯ</div>#}
+                        {#<div class="clear"></div>#}
+                        {#<hr />#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">เทพารักษ์/ศรีนครินทร์/บางนา</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">อ่อนนุช/ลาดกระบัง</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">มีนบุรี/หทัยราษฏร์/นิมิตใหม่/สุวินทวงศ์</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">พัฒนาการ/เพชรบุรีตัดใหม่</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">รามคำแหง/เสรีไทย</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">พระราม 9/รัชดาภิเษก</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ลาดพร้าว/เลียบด่วนเอกมัย-รามอินทรา</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">เกษตร-นวมินทร์/รามอินทรา</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">พหลโยธิน/อารีย์/รัชโยธิน/สะพานใหม่</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ดินแดง/วิภาวดี-รังสิต</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ราชปรารภ/พญาไท/ปทุมวัน/ราชเทวี/ราชวิถี</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">พระราม 1/ราชดำริ/วิทยุ</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">สุขุมวิทตอนต้น (สุขุมวิท1-77 และ สุขุมวิท 2-52)</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">สุขุมวิทตอนปลาย (ตั้งแต่ สุขุมวิท 79 และ 54 เป็นต้นไป)</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">พระราม 4/สาทร/เจริญกรุง</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">สีลม/สุรวงศ์/สี่พระยา</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">นราธิวาสราชนครินทร์/พระราม 3</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ธนบุรี/ตากสิน/เจริญนคร/สุขสวัสดิ์/ท่าพระ</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">วงศ์สว่าง/บางซื่อ/ประชาชื่น</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">หลักสี่/แจ้งวัฒนะ/ติวานนท์/ปากเกร็ด</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">รังสิต/ลำลูกกา/คลองหลวง/ธัญบุรี</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">งามวงศ์วาน/แคราย/รัตนาธิเบศร์/บางใหญ่</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">พระราม 2/บรมราชชนนี/เพชรเกษม/จรัญสนิทวงศ์</a>#}
+                    {#</li>#}
+                    {#<li class="head">#}
+                        {#<div class="footerImgTitle"><img src="{{asset('images/footer-icon-building.png')}}"/></div>#}
+                        {#<div class="footerBuildingType">ห้องพักใกล้สถานี BTS</div>#}
+                        {#<div class="clear"></div>#}
+                        {#<hr />#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี หมอชิต</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี สะพานควาย</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี อารีย์</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี สนามเป้า</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี อนุสาวรีย์ชัยสมรภูมิ</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี พญาไท</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี ราชเทวี</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี สยาม</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี ชิดลม</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี เพลินจิต</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี นานา</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี อโศก</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี พร้อมพงษ์</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี ทองหล่อ</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี เอกมัย</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี อ่อนนุช</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี บางจาก</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี ปุณณวิถี</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี อุดมสุข</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี บางนา</a>#}
+                    {#</li>#}
+                    {#<li class="head">#}
+                        {#<div class="footerImgTitle"><img src="{{asset('images/footer-icon-building.png')}}"/></div>#}
+                        {#<div class="footerBuildingType">ห้องพักใกล้สถานี BTS</div>#}
+                        {#<div class="clear"></div>#}
+                        {#<hr />#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี แบริ่ง</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี สนามกีฬาแห่งชาติ</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี สยาม</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี ราชดำริ</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี ศาลาแดง</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี ช่องนนทรี</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี สุรศักดิ์</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี สะพานตากสิน</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี กรุงธนบุรี</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี วงเวียนใหญ่</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี โพธิ์นิมิตร</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี ตลาดพลู</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี วุฒากาศ</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี บางหว้า</a>#}
+                        {#<div class="clear"></div>#}
+                    {#</li>#}
+                    {#<li class="head">#}
+                        {#<div class="footerImgTitle"><img src="{{asset('images/footer-icon-building.png')}}"/></div>#}
+                        {#<div class="footerBuildingType">ห้องพักใกล้สถานี MRT</div>#}
+                        {#<div class="clear"></div>#}
+                        {#<hr />#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี บางซื่อ</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี กำแพงเพชร</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี สวนจตุจักร</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี พหลโยธิน</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี ลาดพร้าว</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี รัชดาภิเษก</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี สุทธิสาร</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี ห้วยขวาง</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี ศูนย์วัฒนธรรมแห่งประเทศไทย</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี พระราม 9</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี เพชรบุรี</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี สุขุมวิท</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี ศูนยการประชุมแห่งชาติสิริกิติ์</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี คลองเตย</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี ลุมพินี</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี สีลม</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี สามย่าน</a>#}
+                        {#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">ห้องพักใกล้สถานี หัวลำโพง</a>#}
+                    {#</li>#}
 
 
-                    {#Footer ของเก่า#}
-                    {#Dev : MICK#}
-                    {#Datetime : 05-03-2013 18:00#}
-					{#<li class="head"><img src="{{asset('images/footer1.png')}}" />#}
-						{#<hr />#}
-						{#<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">หน้าแรก</a>#}
-						{#<a href="{{path('FTRWebBundle_search')}}">ค้นหาอย่างละเอียด</a>#}
-						{#<a href='#'>ลงโฆษณา</a>#}
-						{#<a href="{{path('FTRWebBundle_publish')}}">ลงประกาศห้องพักฟรี</a>#}
-						{#<!--<a href='#'>กระดานพูดคุย</a>-->#}
-						{#<a href="{{path('FTRWebBundle_contact')}}">ติดต่อเรา</a>#}
-					{#</li>#}
-					{#<li class="head"><img src="{{asset('images/footer2.png')}}" />#}
-						{#<hr />#}
-						{#<a href="{{path('FTRWebBundle_list')}}?searchType=shortSearch&buildingType=1">อพาร์ทเม้นท์</a>#}
-						{#<a href="{{path('FTRWebBundle_list')}}?searchType=shortSearch&buildingType=2">ห้องพักชาย</a>#}
-						{#<a href="{{path('FTRWebBundle_list')}}?searchType=shortSearch&buildingType=3">ห้องพักหญิง</a>#}
-					{#</li>#}
-					{#<li class="head"><img src="{{asset('images/footer3.png')}}" />#}
-						{#<hr />#}
-						{#<a href="{{path('FTRWebBundle_list')}}?searchType=shortSearch&zone=bkk">โซนในกรุงเทพฯ</a>#}
-						{#<a href="{{path('FTRWebBundle_list')}}?searchType=shortSearch&nearly=4">ใกล้มหาวิทยาลัย</a>#}
-						{#<a href="{{path('FTRWebBundle_list')}}?searchType=shortSearch&nearly=2">ใกล้รถไฟฟ้า BTS</a>#}
-						{#<a href="{{path('FTRWebBundle_list')}}?searchType=shortSearch&nearly=3">ใกล้รถไฟฟ้า MRT</a>#}
-						{#<!--<a href="{{path('FTRWebBundle_list')}}?searchType=shortSearch&nearly=5">ตามสถานที่ใกล้เคียง</a>-->#}
-					{#</li>#}
-					{#<li class="head"><img src="{{asset('images/footer4.png')}}" />#}
-						{#<hr />#}
-						{#<a href="http://www.facebook.com/FindTheRoom" target="_new">Facebook</a>#}
-						{#<a href="http://twitter.com/FindTheRoom" target="_new">Twitter</a>#}
-						{#<div class="fb-like-box" data-href="http://www.facebook.com/FindTheRoom" data-width="205" data-height="65" data-show-faces="false" data-stream="false" data-header="true" style='background-color:#FFF; margin-left: 10px; margin-top: 10px;'></div>#}
-					{#</li>#}
-				</ul>
+                    {#&#123;&#35;Footer ของเก่า&#35;&#125;#}
+                    {#&#123;&#35;Dev : MICK&#35;&#125;#}
+                    {#&#123;&#35;Datetime : 05-03-2013 18:00&#35;&#125;#}
+					{#&#123;&#35;<li class="head"><img src="{{asset('images/footer1.png')}}" />&#35;&#125;#}
+						{#&#123;&#35;<hr />&#35;&#125;#}
+						{#&#123;&#35;<a href="{{path('FTRWebBundle_homepage')}}" target="_blank">หน้าแรก</a>&#35;&#125;#}
+						{#&#123;&#35;<a href="{{path('FTRWebBundle_search')}}">ค้นหาอย่างละเอียด</a>&#35;&#125;#}
+						{#&#123;&#35;<a href='#'>ลงโฆษณา</a>&#35;&#125;#}
+						{#&#123;&#35;<a href="{{path('FTRWebBundle_publish')}}">ลงประกาศห้องพักฟรี</a>&#35;&#125;#}
+						{#&#123;&#35;<!--<a href='#'>กระดานพูดคุย</a>-->&#35;&#125;#}
+						{#&#123;&#35;<a href="{{path('FTRWebBundle_contact')}}">ติดต่อเรา</a>&#35;&#125;#}
+					{#&#123;&#35;</li>&#35;&#125;#}
+					{#&#123;&#35;<li class="head"><img src="{{asset('images/footer2.png')}}" />&#35;&#125;#}
+						{#&#123;&#35;<hr />&#35;&#125;#}
+						{#&#123;&#35;<a href="{{path('FTRWebBundle_list')}}?searchType=shortSearch&buildingType=1">อพาร์ทเม้นท์</a>&#35;&#125;#}
+						{#&#123;&#35;<a href="{{path('FTRWebBundle_list')}}?searchType=shortSearch&buildingType=2">ห้องพักชาย</a>&#35;&#125;#}
+						{#&#123;&#35;<a href="{{path('FTRWebBundle_list')}}?searchType=shortSearch&buildingType=3">ห้องพักหญิง</a>&#35;&#125;#}
+					{#&#123;&#35;</li>&#35;&#125;#}
+					{#&#123;&#35;<li class="head"><img src="{{asset('images/footer3.png')}}" />&#35;&#125;#}
+						{#&#123;&#35;<hr />&#35;&#125;#}
+						{#&#123;&#35;<a href="{{path('FTRWebBundle_list')}}?searchType=shortSearch&zone=bkk">โซนในกรุงเทพฯ</a>&#35;&#125;#}
+						{#&#123;&#35;<a href="{{path('FTRWebBundle_list')}}?searchType=shortSearch&nearly=4">ใกล้มหาวิทยาลัย</a>&#35;&#125;#}
+						{#&#123;&#35;<a href="{{path('FTRWebBundle_list')}}?searchType=shortSearch&nearly=2">ใกล้รถไฟฟ้า BTS</a>&#35;&#125;#}
+						{#&#123;&#35;<a href="{{path('FTRWebBundle_list')}}?searchType=shortSearch&nearly=3">ใกล้รถไฟฟ้า MRT</a>&#35;&#125;#}
+						{#&#123;&#35;<!--<a href="{{path('FTRWebBundle_list')}}?searchType=shortSearch&nearly=5">ตามสถานที่ใกล้เคียง</a>-->&#35;&#125;#}
+					{#&#123;&#35;</li>&#35;&#125;#}
+					{#&#123;&#35;<li class="head"><img src="{{asset('images/footer4.png')}}" />&#35;&#125;#}
+						{#&#123;&#35;<hr />&#35;&#125;#}
+						{#&#123;&#35;<a href="http://www.facebook.com/FindTheRoom" target="_new">Facebook</a>&#35;&#125;#}
+						{#&#123;&#35;<a href="http://twitter.com/FindTheRoom" target="_new">Twitter</a>&#35;&#125;#}
+						{#&#123;&#35;<div class="fb-like-box" data-href="http://www.facebook.com/FindTheRoom" data-width="205" data-height="65" data-show-faces="false" data-stream="false" data-header="true" style='background-color:#FFF; margin-left: 10px; margin-top: 10px;'></div>&#35;&#125;#}
+					{#&#123;&#35;</li>&#35;&#125;#}
+				{#</ul>#}
                 <div class="clear"></div>
 			</div>
 

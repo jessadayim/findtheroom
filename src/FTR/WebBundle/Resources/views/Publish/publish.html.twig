@@ -80,15 +80,17 @@
 		});
 </script>
 <script type="text/javascript">
-    function confirmBuilding(){
-        if(document.form["confirmB"].checked){
-            return true;
+    function confirmBuilding(confirmAdd){
+        if(confirmAdd.checked == 1){
+//            alert("thank you");
+            window.location = "http://localhost:8081/findtheroom/web/app_dev.php/publish/addnew"
         } else {
+            alert("please check a box");
             return false;
-            alert("กรุณาเลือกยืนยันที่ช่อง ยืนยันการประกาศห้องพัก ก่อนค่ะ");
         }
     }
 </script>
+
 <!--<div class="detail" style="height: 290px; margin-bottom: 15px;">
     <div style="width:500px; display:block; position:relative; float:left; border-right:1px solid #FFF; height:250px; margin-top: 20px;">
     	{% if app.session.get('user') == NULL %}
@@ -147,8 +149,8 @@
                     </ul>
 
                     <p style="margin: 30px 0 30px 0; padding-top: 30px !important;">ในกรณีที่ท่านต้องการให้ประกาศหอพักเป็นที่เห็นชัดและมีประสิทธิภาพดึงดูดให้ผู้ค้นหามีความสนใจในประกาศมากยิ่งขึ้นทางเรามีบริการเสริมให้ท่าน</p>
-                    <form name="confirmBuilding" method="POST" action="" onsubmit="return confirmBuilding();">
-                        <input type="checkbox" name="confirmB" value="1"> ยินยันการประกาศห้องพัก&nbsp;&nbsp;&nbsp;
+                    <form onsubmit="return confirmBuilding(confirmAdd);">
+                        <input type="checkbox" name="confirmAdd" value="1"> ยินยันการประกาศห้องพัก&nbsp;&nbsp;&nbsp;
                         <input type="submit" value="ยืนยัน" style="margin-top: -3px !important;"/>
                     </form>
 
