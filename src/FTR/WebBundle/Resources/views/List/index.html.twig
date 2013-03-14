@@ -1,8 +1,8 @@
 {% extends 'FTRWebBundle:Layout:Layout.html.twig' %}
 {% block title %}
 <!-- รายละเอียด site -->
-{% if searchTitle is defined %}
-<title>{{ searchTitle }} - {{ siteTitle }}</title>
+{% if searchTitle != null %}
+<title>{{ searchTitle }} {{ siteTitle }}</title>
 {% else %}
 <title>{{ siteTitle }}</title>
 {% endif %}
