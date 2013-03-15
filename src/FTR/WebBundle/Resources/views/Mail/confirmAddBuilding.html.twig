@@ -438,7 +438,7 @@ h4, .h4{
                                     <td class="headerContent">
 
                                         <!-- // Begin Module: Standard Header Image \\ -->
-                                        <img src="http://pre.findtheroom.com/web/images/head_mail.png" width="600" height="150" id="headerImage campaign-icon" style="max-width:600px;" mc:label="header_image" mc:edit="header_image" mc:allowdesigner mc:allowtext /></td>
+                                        <img src="http://pre.findtheroom.com/images/head_mail.png" width="600" height="150" id="headerImage campaign-icon" style="max-width:600px;" mc:label="header_image" mc:edit="header_image" mc:allowdesigner mc:allowtext /></td>
                                 </tr>
                             </table>
                             <!-- // End Template Header \\ -->
@@ -455,12 +455,13 @@ h4, .h4{
                                         <table border="0" cellpadding="20" cellspacing="0" width="100%">
                                             <tr>
                                                 <td valign="top">
-                                                    <div mc:edit="std_content00">
+                                                    <div mc:edit="std_content00" style="color: #000000 !important;">
                                                         <h3 class="h4" style="color: #333333">Email Confirm การสร้างห้องพักใหม่ </h3>
                                                         <p style="color: #000000 !important;">เรียนคุณ {{ name }}</p>
-                                                        <p style="color: #000000 !important;">ทางทีมงาน FindTheRoom.com ยินดีเป็นอย่างยิ่งที่ท่านได้เพิ่มข้อมูลห้อวพัก &quot;{{ building_name }}&quot; ของท่านกับเรา แล้วในวันที่ 00/00/0000 ทางทีมงาน FindTheRoom.com ได้รับข้อมูลเป็นที่เรียบร้อยแล้ว</p>
+                                                        <p style="color: #000000 !important;">ทางทีมงาน FindTheRoom.com ยินดีเป็นอย่างยิ่งที่ท่านได้เพิ่มข้อมูลห้อวพัก &quot;{{ building_name }}&quot; ของท่านกับเรา แล้วในวันที่ {{ createTime }} ทางทีมงาน FindTheRoom.com ได้รับข้อมูลเป็นที่เรียบร้อยแล้ว</p>
                                                         <p style="color: #000000 !important;">กรุณา confirm ข้อมูลการเพิ่มข้อมูลห้องพัก &quot;{{ building_name }}&quot; ของท่านด้วยการคลิก link ด้านล่าง เพื่อให้ระบบแสดงห้องพักของท่านบนเว็บไซต์ :<br />
-                                                            <a href="{{ token_url }}">{{ token_url }}</a></p>
+                                                            <a href="{{ token_url }}">{{ token_url }}</a>
+                                                        </p>
                                                         <p style="color: #000000 !important;">หากท่านต้องการแก้ไขข้อมูลห้องพัก &quot;{{ building_name }}&quot; กรุณากรอกรหัสผ่านด้านล่างเพื่อยืนยันการแก้ไข :<br />
                                                             รหัสผ่าน : <span class="" style="color: #FF0000; font-weight: bold;">{{ password }}</span></p>
                                                         <p class="" style="font-size: 10px; color: #333333 !important;">ทางทีมงาน FindTheRoom ขอขอบพระคุณ ณ โอกาศนี้ </p>

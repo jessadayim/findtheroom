@@ -221,7 +221,7 @@ class DetailController extends Controller
                 'map'=>$map,
                 'wifi'=>$objWifi,
                 'siteTitle'=> $buldingSiteTitle,
-                'siteDesc' => $buildingAddress,
+                'siteDesc' => $detailData["detail"],
                 'siteKeyword' => $buildingSiteKeyword,
                 'siteAuthor' => $siteConfigDetail["siteAuthor"],
                 'siteCopyRight' => $siteConfigDetail["siteCopyright"],

@@ -6,12 +6,14 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 */
 // get more knowledge at http://www.uploadify.com/documentation/
 // Define a destination
+$newfieldname2 = null;
+
 $targetFolder = '/findtheroom/web/images/building'; // Relative to the root
-$ownername = $_POST['ownername'];
-$build_id = $_POST['buildid'];
-$fieldname = $_POST['fieldname'];
-$type = $_POST['typefield'];
-$numberFile = $_POST['number'];
+$ownername = @$_POST['ownername'];
+$build_id = @$_POST['buildid'];
+$fieldname = @$_POST['fieldname'];
+$type = @$_POST['typefield'];
+$numberFile = @$_POST['number'];
 $now = date('Y-m-d');
 $time = date("YmdHis");
 if (!empty($_FILES)) {

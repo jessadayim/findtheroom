@@ -43,7 +43,7 @@ body {
 }
 /* Font Style */
 .fontRed{
-    color: red;
+    color: #BF1E2D;
 }
 .fontWhite{
     color: #FFFFFF;
@@ -165,7 +165,7 @@ select[disabled] { background-color: #EAEAEA !important; color:#BCBCBC !importan
 #show .styled-select { background: url(../images/new_arrow.png) no-repeat right center #FFF; width:70px; height: 30px; overflow: hidden; float:right; margin-top:-5px;}
 #show .styled-select .select{border: 0; /*font-family: DB Adman X;*/ font-size: 14px; color: #423C3B; background: transparent; padding: 5px; width:100px; height: 30px; -webkit-appearance: none;}
 #show .resultf{ border: 0; font-family: DB Adman X; font-size: 18px; color: #FFF; background: #423C3B; padding: 25px 0 0 30px; width:970px; height: 160px; margin: 40px auto 0px auto;}
-#show .result{ border: 0; font-family: DB Adman X; font-size: 18px; color: #FFF; background: #423C3B; padding: 25px 0 0 30px; width:970px; height: 160px; margin: 10px auto 0px auto;}
+#show .result{ border: 0; font-family: DB Adman X; font-size: 18px; color: #FFF; background: #423C3B; padding: 25px 0 10px 30px; width:970px; height: auto; margin: 10px auto 0px auto;}
 #show .resultf .wifi, #show .result .wifi { background: url(../images/wifi.png) no-repeat; border: 0; width: 32px; height: 32px; position:absolute; margin-top:-11px; margin-left: -16px; z-index: 99}
 #show .resultf .wifi-none, #show .result .wifi-none { background: none; border: 0; width: 32px; height: 32px; position:absolute; margin-top:-11px; margin-left: -16px;}
 #show .resultf img, #show .result img { float: left;}
@@ -372,7 +372,7 @@ input.regis { background: url(../images/regis-bt.png) no-repeat; border: 0; widt
 /* thumbnail room detail */
 .roomThumbFrame{float: left; display: block; width: 234px; height: 120px; line-height: 100px; overflow: hidden; position: relative; z-index: 9; margin: 0px 21px 20px 0; border: 0px #CCC solid; background-color: #FFF;}
 .roomThumb{ width: 234px; height: auto; float: left; position: absolute; top: -10%; left: 0%; padding: 0px !important }
-.defaultRoomShow{ max-width: 234px; max-height: 400px; display: block; position: relative; }
+.defaultRoomShow{ max-width: 234px; max-height: 400px; display: block; position: relative; margin: 0 20px 0 0; }
 
 /* thumbnail room gallery */
 .thumbframe4gallery{display:block; float: left; width: 300px; height: 150px; overflow: hidden; position: relative; z-index: 9; margin: 0 21px 20px 0;}

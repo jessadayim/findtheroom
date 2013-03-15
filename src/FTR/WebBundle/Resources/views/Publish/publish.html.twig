@@ -149,7 +149,7 @@
                     </ul>
 
                     <p style="margin: 30px 0 30px 0; padding-top: 30px !important;">ในกรณีที่ท่านต้องการให้ประกาศหอพักเป็นที่เห็นชัดและมีประสิทธิภาพดึงดูดให้ผู้ค้นหามีความสนใจในประกาศมากยิ่งขึ้นทางเรามีบริการเสริมให้ท่าน</p>
-                    <form onsubmit="return confirmBuilding(confirmAdd);">
+                    <form action="{{path('addNew')}}" method="POST" onsubmit="return confirmBuilding(confirmAdd);">
                         <input type="checkbox" name="confirmAdd" value="1"> ยินยันการประกาศห้องพัก&nbsp;&nbsp;&nbsp;
                         <input type="submit" value="ยืนยัน" style="margin-top: -3px !important;"/>
                     </form>

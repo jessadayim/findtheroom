@@ -77,16 +77,21 @@ class ConfirmBuildingController extends Controller
                 WHERE id = ".$id."
             ";
             $queryUpdateConfirmCode = $conn->query($sqlUpdateConfirmCode);
+
 			
 			$sqlGetEmailForSendEmail = "
-				SELECT 
-				  contact_email 
+				SELECT
+				  `building_name`,
+                  `contact_name`,
+				  `contact_email`
 				FROM
 				  building_site 
 				WHERE id = $id
 				LIMIT 1
 			";
 			$resultEmail = $conn->fetchall($sqlGetEmailForSendEmail);
+            $emailBuildingNameConfirm = $resultEmail[0]['building_name'];
+            $emailPersonConfirm = $resultEmail[0]['contact_name'];
 			$emailForSendComfirm = $resultEmail[0]['contact_email'];
         } catch (Excaption $e) {
             echo $e;
@@ -95,7 +100,7 @@ class ConfirmBuildingController extends Controller
 // ส่ง token และ update password ไปยัง email ของผู้กรอกข้อมูล
         $mailClass = new Mailer();
 
-        $arrConfirmBuilding = array("name"=> "member", "building_name"=>"ชื่อตึก", "token_url"=>$confirmToken, "password"=>$confirmPassUpdate);
+        $arrConfirmBuilding = array("name"=> $emailPersonConfirm, "building_name"=>$emailBuildingNameConfirm, "createTime"=>date("d/m/Y"), "token_url"=>$confirmToken, "password"=>$confirmPassUpdate);
 
         $html = $this->renderView('FTRWebBundle:Mail:confirmAddBuilding.html.twig', $arrConfirmBuilding);
 

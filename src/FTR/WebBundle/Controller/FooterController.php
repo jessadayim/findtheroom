@@ -180,7 +180,7 @@ class FooterController extends Controller
               `latitude`,
               `longitude`,
               `deleted`
-            FROM `findtheroom`.`zone`
+            FROM `zone`
             WHERE 1
               AND `deleted` = 0
               ";

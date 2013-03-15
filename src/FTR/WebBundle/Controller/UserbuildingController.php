@@ -1284,9 +1284,18 @@ Email ติดต่อ : ' . $emailBuilding . '
 
     public function getDistrictAction($province, $district = null, $call = null)
     {
-        //echo $province;//exit();
+
+        header('Content-Type: text/html; charset=utf-8'); // UPDATE 20130315
+
+        //echo $province;exit();
         if ($province != null) {
+
             $amphur = $this->getAmphur($province, $district);
+
+//            echo "<pre>";
+//            var_dump($amphur);exit();
+//            echo "</pre>";
+
             //var_dump($district);exit();
             if (!empty($call)) {
                 return $amphur;
@@ -1307,12 +1316,14 @@ Email ติดต่อ : ' . $emailBuilding . '
             }
             echo "no";
         }
-        echo 'ERROR ไม่สามารถดึงข้อมูลได้';
         exit();
     }
 
     function getAmphur($province = null, $district = null)
     {
+
+//        echo $province, $district;exit();
+
         $result_data = array();
         $all[] = array('AMPHUR_ID' => 0, 'AMPHUR_NAME' => ' - กรุณาระบุ - ', 'checked' => 'no');
         $whereQuery = NULL;
@@ -1360,7 +1371,7 @@ Email ติดต่อ : ' . $emailBuilding . '
                             province_id
                           FROM
                             province
-                          WHERE province_id LIKE '%$province%'))
+                          WHERE province_id = '$province'))
                         ORDER BY OrderBy ASC
                     ";
                 } else {
@@ -1378,7 +1389,7 @@ Email ติดต่อ : ' . $emailBuilding . '
                             province_id
                           FROM
                             province
-                          WHERE province_id LIKE '%$province%')
+                          WHERE province_id = '$province')
                     ";
                 }
                 $result_data = $conn->fetchAll($sql);
@@ -1658,6 +1669,12 @@ Email ติดต่อ : ' . $emailBuilding . '
     public function addNewAction()
     {
         $newBuildId = null;
+        $checkboxStatus = null;
+        $checkboxValue = @$_POST["confirmAdd"];
+        if(!empty($checkboxValue)){
+            $checkboxStatus = @$_POST["confirmAdd"];
+        }
+
         $session = $this->get('session');
 		if($session->get('addNewBuildId')) {
         	$newBuildId = $session->get('addNewBuildId');
@@ -1687,8 +1704,8 @@ Email ติดต่อ : ' . $emailBuilding . '
         }
 
         return $this->render('FTRWebBundle:Userbuilding:addNew.html.twig', array(
-        	'buildingdata' => $building_data, 
-        	'payType' => $payType, 
+        	'buildingdata' => $building_data,
+        	'payType' => $payType,
         	'buildingType' => $buildingType, 
         	'province' => $province, 
         	'provinceOther' => $provinceOther, 
@@ -1697,6 +1714,7 @@ Email ติดต่อ : ' . $emailBuilding . '
         	'nameimagehead' => $nameImageHead, 
         	'linkimagemap' => $linkImageMap, 
         	'nameimagemap' => $nameImageMap,
+            'checkStatus' => $checkboxStatus
 		));
     }
 
