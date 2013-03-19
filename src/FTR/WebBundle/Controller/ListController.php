@@ -290,6 +290,7 @@ class ListController extends Controller
                     $buildingNearlyUniversityLocation = @$_GET['ใกล้มหาวิทยาลัย'];
                     $buildingZoneLocation = $zoneID;
 
+
                     // เงื่อนไขการค้นหาแบบประเภทห้องพัก
                     if(!empty($buildingTypeSearch)){
 
@@ -444,8 +445,8 @@ class ListController extends Controller
             if (!empty($lessPrice) && !empty($mostPrice) || ($lessPrice <= $mostPrice)) {
                 $havingQuery .= "
                     HAVING 1
-                        AND start_price >= $lessPrice
-                        AND end_price <= $mostPrice
+                        AND a.start_price >= $lessPrice
+                        AND a.end_price <= $mostPrice
                 ";
             }
 

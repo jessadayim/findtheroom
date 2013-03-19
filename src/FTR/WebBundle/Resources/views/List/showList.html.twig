@@ -25,7 +25,10 @@
 
                 {% endif %}
 
-                <div style=" display:block; position: absolute; margin-left: 0px; margin-top: 127px; width:200px; text-align:center;">ราคา {{ rlist.start_price }} - {{ rlist.end_price }} บาท</div>
+                <div style=" display:block; position: absolute; margin-left: 0px; margin: 127px 0 10px 0; width:200px; text-align:center;">
+                    ราคา {{ rlist.start_price }} - {{ rlist.end_price }} บาท
+                    <div class="clear"></div>
+                </div>
                 <div class="thumbframe">
                         {#<img src="{{asset('images/default-image.png')}}" class="thumb omega"/>#}
 
@@ -112,6 +115,7 @@
                         {% endif %}
                     {% endif %}
                 </div>
+                <div class="clear"></div>
             </div>
         </form>
         {% endfor %}

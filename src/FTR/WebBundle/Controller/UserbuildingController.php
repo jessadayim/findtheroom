@@ -176,7 +176,8 @@ class UserbuildingController extends Controller
         $building_data = null;
         $arrZone = null;
         $session = $this->get('session');
-        //$user = $session->get('user');
+//        $user = $session->request('user');
+        $user = @$_POST["user"];
         $building_id = null;
         $em = $this->getDoctrine()->getEntityManager();
         $conn = $this->get('database_connection');
@@ -355,7 +356,7 @@ class UserbuildingController extends Controller
         		'nearUniversity' => $nearUniversity, 
         		'nearBy' => $nearBy, 
         		'nearInCountry' => $nearInCountry, 
-        		'username' => $user, 
+        		'username' => $user,
         		'build_id' => $building_id, 
         		'fac_inroom' => $fac_inRoomList, 
         		'fac_inroom_loop' => $fac_inRoomLoop, 
