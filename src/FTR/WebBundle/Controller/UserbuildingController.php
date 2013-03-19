@@ -2019,5 +2019,6 @@ Email ติดต่อ : ' . $emailBuilding . '
 		}
 		return $lastest_number;
 	}
+
 }
 
