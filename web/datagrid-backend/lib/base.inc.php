@@ -7,4 +7,4 @@ $path = "../../../";
 $DB_HOST = 'localhost';
 $DB_NAME = "findtheroom";
 $DB_USER = 'root';
-$DB_PASS = '';
+$DB_PASS = '1234';

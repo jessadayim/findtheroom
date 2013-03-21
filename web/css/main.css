@@ -382,6 +382,10 @@ input.regis { background: url(../images/regis-bt.png) no-repeat; border: 0; widt
 .adsThumbFrame{float: left; display: block; width: 234px; height: 120px; line-height: 100px; overflow: hidden; position: relative; z-index: 9; margin: 0px 21px 20px 0; border: 0px #CCC solid; background-color: #FFF;}
 .adsThumb{ width: 234px; height: auto; float: left; position: absolute; top: -10%; left: 0%; }
 
+/* thumbnail recommend */
+.recThumbFrame{float: left; display: block; width: 300px; height: 160px; line-height: 100px; overflow: hidden; position: relative; z-index: 9; margin: 0px 21px 20px 0; border: 0px #CCC solid; background-color: #FFF;}
+.recThumb{ width: 300px; height: auto; float: left; position: absolute; top: -10%; left: 0%; }
+
 /* thumbnail googlemap */
 .ggInfoThumbFrame{
     float: left;

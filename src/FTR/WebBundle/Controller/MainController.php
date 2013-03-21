@@ -292,18 +292,36 @@ class MainController extends Controller {
         }
 
         try {
-            $sql1Bts = "SELECT pro.PROVINCE_NAME, am.AMPHUR_NAME, b.slug, img.photo_name, img.building_site_id, b.id, b.building_name, n.name, t.type_name, b.start_price, b.end_price
-                        FROM building_site b
-                        LEFT JOIN building_type t ON (b.building_type_id = t.id AND t.deleted = 0)
-                        LEFT JOIN nearly2site n2 ON (n2.building_site_id = b.id AND n2.deleted = 0)
-                        LEFT JOIN nearly_location n ON (n.id = n2.nearly_location_id AND n.deleted = 0)
-                        LEFT JOIN nearly_type nt ON (nt.id = n.nearly_type_id AND nt.deleted = 0)
-                        LEFT JOIN image img ON (b.id = img.building_site_id AND img.photo_type = 'recommend' AND img.deleted = 0)
-                        LEFT JOIN amphur am ON (b.addr_prefecture = am.AMPHUR_ID)
-                        LEFT JOIN province pro ON (b.addr_province = pro.PROVINCE_ID)
-                        WHERE b.recommend = 1
-                            AND nt.type_name = 'bts'
-                            AND b.deleted =  0
+            $sql1Bts = "
+                    SELECT
+                      a.`id` AS id,
+                      a.`building_name` AS name,
+                      a.`start_price`,
+                      a.`slug`,
+                      a.`end_price`,
+                      CASE  WHEN b.`recommend_type` = 1 THEN 'bts'
+                        WHEN b.`recommend_type` = 2 THEN 'mrt'
+                        WHEN b.`recommend_type` = 3 THEN 'university'
+                      END AS rec_type,
+                      c.`type_name` AS type,
+                      d.`typename` AS pay_type,
+                      e.`PROVINCE_NAME` AS province,
+                      f.`AMPHUR_NAME` AS amphur,
+                      g.`photo_name` AS img,
+                      CASE  WHEN i.`nearly_type_id` = 2 THEN 'bts'
+                        WHEN i.`nearly_type_id` = 3 THEN 'mrt'
+                        WHEN i.`nearly_type_id` = 4 THEN 'university'
+                      END AS naerly_type,
+                      i.`name` AS nearly_name
+                    FROM building_site a
+                    INNER JOIN `recommend_building` b ON (a.`id` = b.`building_id` AND b.`recommend_type`= 1)
+                    LEFT JOIN `building_type` c ON (a.`building_type_id` = c.`id`)
+                    LEFT JOIN `pay_type` d ON (a.`pay_type_id` = d.`id`)
+                    LEFT JOIN `province` e ON (a.`addr_province` = e.`PROVINCE_ID`)
+                    LEFT JOIN `amphur` f ON (a.`addr_prefecture` = f.`AMPHUR_ID`)
+                    LEFT JOIN `image` g ON (a.`id` = g.`building_site_id` AND g.`photo_type` = 'head')
+                    INNER JOIN `nearly2site` h ON (a.`id` = h.`building_site_id` AND h.`deleted` = 0)
+                    INNER JOIN `nearly_location` i ON (i.`id` = h.`nearly_location_id` AND i.`nearly_type_id` = 2)
                             ";
             $objBts = $conn -> fetchAll($sql1Bts);
             if (count($objBts) <= 3) {
@@ -316,18 +334,52 @@ class MainController extends Controller {
             echo 'Caught exception: ', $e -> getMessage(), "\n";
         }
         try {
-            $sqlMrt = "SELECT pro.PROVINCE_NAME, am.AMPHUR_NAME, b.slug, img.photo_name, img.building_site_id, b.id, b.building_name, n.name, t.type_name, b.start_price, b.end_price
-                        FROM building_site b
-                        LEFT JOIN building_type t ON (b.building_type_id = t.id AND t.deleted = 0)
-                        LEFT JOIN nearly2site n2 ON (n2.building_site_id = b.id AND n2.deleted = 0)
-                        LEFT JOIN nearly_location n ON (n.id = n2.nearly_location_id AND n.deleted = 0)
-                        LEFT JOIN nearly_type nt ON (nt.id = n.nearly_type_id AND nt.deleted = 0)
-                        LEFT JOIN image img ON (b.id = img.building_site_id AND img.photo_type = 'recommend' AND img.deleted = 0)
-                        LEFT JOIN amphur am ON (b.addr_prefecture = am.AMPHUR_ID)
-                        LEFT JOIN province pro ON (b.addr_province = pro.PROVINCE_ID)
-                        WHERE b.recommend = 1
-                            AND nt.type_name = 'mrt'
-                            AND b.deleted =  0";
+
+            $sqlMrt = "
+                    SELECT
+                      a.`id` AS id,
+                      a.`building_name` AS name,
+                      a.`start_price`,
+                      a.`slug`,
+                      a.`end_price`,
+                      CASE  WHEN b.`recommend_type` = 1 THEN 'bts'
+                        WHEN b.`recommend_type` = 2 THEN 'mrt'
+                        WHEN b.`recommend_type` = 3 THEN 'university'
+                      END AS rec_type,
+                      c.`type_name` AS type,
+                      d.`typename` AS pay_type,
+                      e.`PROVINCE_NAME` AS province,
+                      f.`AMPHUR_NAME` AS amphur,
+                      g.`photo_name` AS img,
+                      CASE  WHEN i.`nearly_type_id` = 2 THEN 'bts'
+                        WHEN i.`nearly_type_id` = 3 THEN 'mrt'
+                        WHEN i.`nearly_type_id` = 4 THEN 'university'
+                      END AS naerly_type,
+                      i.`name` AS nearly_name
+                    FROM building_site a
+                    INNER JOIN `recommend_building` b ON (a.`id` = b.`building_id` AND b.`recommend_type`= 2)
+                    LEFT JOIN `building_type` c ON (a.`building_type_id` = c.`id`)
+                    LEFT JOIN `pay_type` d ON (a.`pay_type_id` = d.`id`)
+                    LEFT JOIN `province` e ON (a.`addr_province` = e.`PROVINCE_ID`)
+                    LEFT JOIN `amphur` f ON (a.`addr_prefecture` = f.`AMPHUR_ID`)
+                    LEFT JOIN `image` g ON (a.`id` = g.`building_site_id` AND g.`photo_type` = 'head')
+                    INNER JOIN `nearly2site` h ON (a.`id` = h.`building_site_id` AND h.`deleted` = 0)
+                    INNER JOIN `nearly_location` i ON (i.`id` = h.`nearly_location_id` AND i.`nearly_type_id` = 3)
+            ";
+//            $sqlMrt = "
+//                        SELECT pro.PROVINCE_NAME, am.AMPHUR_NAME, b.slug, img.photo_name, img.building_site_id, b.id, b.building_name, n.name, t.type_name, b.start_price, b.end_price
+//                        FROM building_site b
+//                        LEFT JOIN building_type t ON (b.building_type_id = t.id AND t.deleted = 0)
+//                        LEFT JOIN nearly2site n2 ON (n2.building_site_id = b.id AND n2.deleted = 0)
+//                        LEFT JOIN nearly_location n ON (n.id = n2.nearly_location_id AND n.deleted = 0)
+//                        LEFT JOIN nearly_type nt ON (nt.id = n.nearly_type_id AND nt.deleted = 0)
+//                        LEFT JOIN image img ON (b.id = img.building_site_id AND img.photo_type = 'recommend' AND img.deleted = 0)
+//                        LEFT JOIN amphur am ON (b.addr_prefecture = am.AMPHUR_ID)
+//                        LEFT JOIN province pro ON (b.addr_province = pro.PROVINCE_ID)
+//                        WHERE b.recommend = 1
+//                            AND nt.type_name = 'mrt'
+//                            AND b.deleted =  0
+//                            ";
             $objMrt = $conn -> fetchAll($sqlMrt);
             if (count($objMrt) <= 3) {
                 $numrow2 = 0;
@@ -339,18 +391,50 @@ class MainController extends Controller {
             echo 'Caught exception: ', $e -> getMessage(), "\n";
         }
         try {
-            $sqlCollege = "SELECT pro.PROVINCE_NAME, am.AMPHUR_NAME, b.slug, img.photo_name, img.building_site_id, b.id, b.building_name, n.name, t.type_name, b.start_price, b.end_price
-                        FROM building_site b
-                        LEFT JOIN building_type t ON (b.building_type_id = t.id AND t.deleted = 0)
-                        LEFT JOIN nearly2site n2 ON (n2.building_site_id = b.id AND n2.deleted = 0)
-                        LEFT JOIN nearly_location n ON (n.id = n2.nearly_location_id AND n.deleted = 0)
-                        LEFT JOIN nearly_type nt ON (nt.id = n.nearly_type_id AND nt.deleted = 0)
-                        LEFT JOIN image img ON (b.id = img.building_site_id AND img.photo_type = 'recommend' AND img.deleted = 0)
-                        LEFT JOIN amphur am ON (b.addr_prefecture = am.AMPHUR_ID)
-                        LEFT JOIN province pro ON (b.addr_province = pro.PROVINCE_ID)
-                        WHERE b.recommend = 1
-                            AND nt.type_name = 'university'
-                            AND b.deleted =  0";
+            $sqlCollege = "
+                    SELECT
+                      a.`id` AS id,
+                      a.`building_name` AS name,
+                      a.`start_price`,
+                      a.`slug`,
+                      a.`end_price`,
+                      CASE  WHEN b.`recommend_type` = 1 THEN 'bts'
+                        WHEN b.`recommend_type` = 2 THEN 'mrt'
+                        WHEN b.`recommend_type` = 3 THEN 'university'
+                      END AS rec_type,
+                      c.`type_name` AS type,
+                      d.`typename` AS pay_type,
+                      e.`PROVINCE_NAME` AS province,
+                      f.`AMPHUR_NAME` AS amphur,
+                      g.`photo_name` AS img,
+                      CASE  WHEN i.`nearly_type_id` = 2 THEN 'bts'
+                        WHEN i.`nearly_type_id` = 3 THEN 'mrt'
+                        WHEN i.`nearly_type_id` = 4 THEN 'university'
+                      END AS naerly_type,
+                      i.`name` AS nearly_name
+                    FROM building_site a
+                    INNER JOIN `recommend_building` b ON (a.`id` = b.`building_id` AND b.`recommend_type`= 3)
+                    LEFT JOIN `building_type` c ON (a.`building_type_id` = c.`id`)
+                    LEFT JOIN `pay_type` d ON (a.`pay_type_id` = d.`id`)
+                    LEFT JOIN `province` e ON (a.`addr_province` = e.`PROVINCE_ID`)
+                    LEFT JOIN `amphur` f ON (a.`addr_prefecture` = f.`AMPHUR_ID`)
+                    LEFT JOIN `image` g ON (a.`id` = g.`building_site_id` AND g.`photo_type` = 'head')
+                    INNER JOIN `nearly2site` h ON (a.`id` = h.`building_site_id` AND h.`deleted` = 0)
+                    INNER JOIN `nearly_location` i ON (i.`id` = h.`nearly_location_id` AND i.`nearly_type_id` = 4)
+            ";
+
+//            $sqlCollege = "SELECT pro.PROVINCE_NAME, am.AMPHUR_NAME, b.slug, img.photo_name, img.building_site_id, b.id, b.building_name, n.name, t.type_name, b.start_price, b.end_price
+//                        FROM building_site b
+//                        LEFT JOIN building_type t ON (b.building_type_id = t.id AND t.deleted = 0)
+//                        LEFT JOIN nearly2site n2 ON (n2.building_site_id = b.id AND n2.deleted = 0)
+//                        LEFT JOIN nearly_location n ON (n.id = n2.nearly_location_id AND n.deleted = 0)
+//                        LEFT JOIN nearly_type nt ON (nt.id = n.nearly_type_id AND nt.deleted = 0)
+//                        LEFT JOIN image img ON (b.id = img.building_site_id AND img.photo_type = 'recommend' AND img.deleted = 0)
+//                        LEFT JOIN amphur am ON (b.addr_prefecture = am.AMPHUR_ID)
+//                        LEFT JOIN province pro ON (b.addr_province = pro.PROVINCE_ID)
+//                        WHERE b.recommend = 1
+//                            AND nt.type_name = 'university'
+//                            AND b.deleted =  0";
             $objCollege = $conn -> fetchAll($sqlCollege);
             if (count($objCollege) <= 3) {
                 $numrow3 = 0;
@@ -361,20 +445,51 @@ class MainController extends Controller {
             echo 'Caught exception: ', $e -> getMessage(), "\n";
         }
         try {
-            $sqlCountView = "SELECT pro.PROVINCE_NAME, am.AMPHUR_NAME, b.slug, COUNT(ban.building_site_id), img.photo_name, img.building_site_id, b.id, b.building_name,n.name,t.type_name, b.start_price, b.end_price, nt.type_name AS nearlyType
-                                FROM banner_count ban
-                                LEFT JOIN building_site b ON (ban.building_site_id = b.id )
-                                LEFT JOIN building_type t ON (b.building_type_id = t.id AND t.deleted = 0)
-                                LEFT JOIN nearly2site n2 ON (n2.building_site_id = b.id AND n2.deleted = 0)
-                                LEFT JOIN nearly_location n ON (n.id = n2.nearly_location_id AND n.deleted = 0)
-                                LEFT JOIN nearly_type nt ON (nt.id = n.nearly_type_id AND nt.deleted = 0)
-                                LEFT JOIN image img ON (b.id = img.building_site_id AND img.photo_type = 'recommend' AND img.deleted = 0)
-                                LEFT JOIN amphur am ON (b.addr_prefecture = am.AMPHUR_ID)
-                                LEFT JOIN province pro ON (b.addr_province = pro.PROVINCE_ID)
-                                WHERE b.recommend =1
-                                    AND b.deleted =  0
-                                GROUP BY ban.building_site_id
-                                ORDER BY COUNT(ban.building_site_id) DESC";
+            $sqlCountView = "
+            SELECT
+                      a.`id` AS id,
+                      a.`building_name` AS name,
+                      a.`start_price`,
+                      a.`slug`,
+                      a.`end_price`,
+                      CASE  WHEN b.`recommend_type` = 1 THEN 'bts'
+                        WHEN b.`recommend_type` = 2 THEN 'mrt'
+                        WHEN b.`recommend_type` = 3 THEN 'university'
+                      END AS rec_type,
+                      c.`type_name` AS type,
+                      d.`typename` AS pay_type,
+                      e.`PROVINCE_NAME` AS province,
+                      f.`AMPHUR_NAME` AS amphur,
+                      g.`photo_name` AS img,
+                      CASE  WHEN i.`nearly_type_id` = 2 THEN 'bts'
+                        WHEN i.`nearly_type_id` = 3 THEN 'mrt'
+                        WHEN i.`nearly_type_id` = 4 THEN 'university'
+                      END AS naerly_type,
+                      i.`name` AS nearly_name
+                    FROM building_site a
+                    INNER JOIN `recommend_building` b ON (a.`id` = b.`building_id` AND b.`recommend_type`= 4)
+                    LEFT JOIN `building_type` c ON (a.`building_type_id` = c.`id`)
+                    LEFT JOIN `pay_type` d ON (a.`pay_type_id` = d.`id`)
+                    LEFT JOIN `province` e ON (a.`addr_province` = e.`PROVINCE_ID`)
+                    LEFT JOIN `amphur` f ON (a.`addr_prefecture` = f.`AMPHUR_ID`)
+                    LEFT JOIN `image` g ON (a.`id` = g.`building_site_id` AND g.`photo_type` = 'head')
+                    INNER JOIN `nearly2site` h ON (a.`id` = h.`building_site_id` AND h.`deleted` = 0)
+                    INNER JOIN `nearly_location` i ON (i.`id` = h.`nearly_location_id`)
+            ";
+//            $sqlCountView = "SELECT pro.PROVINCE_NAME, am.AMPHUR_NAME, b.slug, COUNT(ban.building_site_id), img.photo_name, img.building_site_id, b.id, b.building_name,n.name,t.type_name, b.start_price, b.end_price, nt.type_name AS nearlyType
+//                                FROM banner_count ban
+//                                LEFT JOIN building_site b ON (ban.building_site_id = b.id )
+//                                LEFT JOIN building_type t ON (b.building_type_id = t.id AND t.deleted = 0)
+//                                LEFT JOIN nearly2site n2 ON (n2.building_site_id = b.id AND n2.deleted = 0)
+//                                LEFT JOIN nearly_location n ON (n.id = n2.nearly_location_id AND n.deleted = 0)
+//                                LEFT JOIN nearly_type nt ON (nt.id = n.nearly_type_id AND nt.deleted = 0)
+//                                LEFT JOIN image img ON (b.id = img.building_site_id AND img.photo_type = 'recommend' AND img.deleted = 0)
+//                                LEFT JOIN amphur am ON (b.addr_prefecture = am.AMPHUR_ID)
+//                                LEFT JOIN province pro ON (b.addr_province = pro.PROVINCE_ID)
+//                                WHERE b.recommend =1
+//                                    AND b.deleted =  0
+//                                GROUP BY ban.building_site_id
+//                                ORDER BY COUNT(ban.building_site_id) DESC";
             $objCountView = $conn -> fetchAll($sqlCountView);
             if (count($objCountView) <= 3) {
                 $numrow4 = 0;
