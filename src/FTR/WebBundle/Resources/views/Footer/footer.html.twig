@@ -110,7 +110,7 @@
         {% if mrt > 0 %}
 
             {% for mrtList in mrt %}
-                <a href="{{path('FTRWebBundle_list')}}?searchType=cateSearch&ใกล้เคียงสถานีbts={{ mrtList.name }}" target="_blank">ห้องพักใกล้สถานี {{ mrtList.name }}</a>
+                <a href="{{path('FTRWebBundle_list')}}?searchType=cateSearch&ใกล้เคียงสถานีmrt={{ mrtList.name }}" target="_blank">ห้องพักใกล้สถานี {{ mrtList.name }}</a>
             {% endfor %}
 
         {% endif %}

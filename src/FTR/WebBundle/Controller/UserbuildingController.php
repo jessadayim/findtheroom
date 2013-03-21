@@ -167,6 +167,11 @@ class UserbuildingController extends Controller
 
     public function addDataAction($id = null)
     {
+
+        // username & password ในการแก้ไขห้องพัก
+        $username = @$_POST['bName'];
+        $password = @$_POST['bPassword'];
+
         $fac_inRoomList = null;
         $fac_outRoomList = null;
         $arrRoom = null;
@@ -206,7 +211,7 @@ class UserbuildingController extends Controller
                 if ($building_data['ipaytypeid'] != 0) {
                     $payType_data = $em->getRepository('FTRWebBundle:Pay_type')->findOneBy(array('id' => $building_data['ipaytypeid']));
                 }
-                //var_dump($buildtype_data);exit();
+
             } else {
                 return $this->redirect($this->generateUrl('addNewBuildData'), 301);
             }
@@ -342,36 +347,95 @@ class UserbuildingController extends Controller
         }
 		
 		$countImage = $this->getNumberImage($id);
-        return $this->render('FTRWebBundle:Userbuilding:add.html.twig', array(
-        		'buildingdata' => $building_data, 
-        		'payType' => $payType, 
-        		'zonelist' => $bkkZone, 
-        		'buildingType' => $buildingType, 
-        		'province' => $province, 
-        		'provinceName' => $provinceName, 
-        		'district' => $district, 
-        		'provinceOther' => $provinceOther, 
-        		'nearBTS' => $nearBTS, 
-        		'nearMRT' => $nearMRT, 
-        		'nearUniversity' => $nearUniversity, 
-        		'nearBy' => $nearBy, 
-        		'nearInCountry' => $nearInCountry, 
-        		'username' => $user,
-        		'build_id' => $building_id, 
-        		'fac_inroom' => $fac_inRoomList, 
-        		'fac_inroom_loop' => $fac_inRoomLoop, 
-        		'fac_outroom' => $fac_outRoomList, 
-        		'fac_outroom_loop' => $fac_outRoomLoop, 
-        		'rooms' => $arrRoomData, 
-        		'roomlines' => $countRoom, 
-        		'galleries' => $arrGalleryData, 
-        		'gellerylines' => $countGallery, 
-        		'linkimagehead' => $linkImageHead, 
-        		'nameimagehead' => $nameImageHead, 
-        		'linkimagemap' => $linkImageMap, 
-        		'nameimagemap' => $nameImageMap,
-        		'maximagenumber' => $countImage,
-		));
+
+        //ดึงค่า email จาก building_site มาตรวจสอบกับข้อมูลที่กรอกเข้ามา
+        if($building_data['scontactemail'] == $username and $building_data['sPasswordUpdateBuilding'] == $password)
+        {
+            $editValidate = true;
+//                    echo "<H1>".$editValidate."</H1><br/>";
+//                    echo "confirm code : ".$building_data['scontactemail'];echo "<br/>";
+//                    echo "username : ".$username;echo "<br/>";echo "<br/>";
+//                    echo "password code : ".$building_data['sPasswordUpdateBuilding'];echo "<br/>";
+//                    echo "password : ".$password;
+//                    exit();
+        } else {
+            $editValidate = false;
+//                    echo "<H1>".$editValidate."</H1><br/>";
+//                    echo "confirm code : ".$building_data['scontactemail'];echo "<br/>";
+//                    echo "username : ".$username;echo "<br/>";echo "<br/>";
+//                    echo "password code : ".$building_data['sPasswordUpdateBuilding'];echo "<br/>";
+//                    echo "password : ".$password;
+//                    exit();
+        }
+
+        if($editValidate == true){
+            return $this->render('FTRWebBundle:Userbuilding:add.html.twig', array(
+                'buildingdata' => $building_data,
+                'payType' => $payType,
+                'zonelist' => $bkkZone,
+                'buildingType' => $buildingType,
+                'province' => $province,
+                'provinceName' => $provinceName,
+                'district' => $district,
+                'provinceOther' => $provinceOther,
+                'nearBTS' => $nearBTS,
+                'nearMRT' => $nearMRT,
+                'nearUniversity' => $nearUniversity,
+                'nearBy' => $nearBy,
+                'nearInCountry' => $nearInCountry,
+                'username' => $user,
+                'build_id' => $building_id,
+                'fac_inroom' => $fac_inRoomList,
+                'fac_inroom_loop' => $fac_inRoomLoop,
+                'fac_outroom' => $fac_outRoomList,
+                'fac_outroom_loop' => $fac_outRoomLoop,
+                'rooms' => $arrRoomData,
+                'roomlines' => $countRoom,
+                'galleries' => $arrGalleryData,
+                'gellerylines' => $countGallery,
+                'linkimagehead' => $linkImageHead,
+                'nameimagehead' => $nameImageHead,
+                'linkimagemap' => $linkImageMap,
+                'nameimagemap' => $nameImageMap,
+                'maximagenumber' => $countImage,
+            ));
+        } else {
+
+            $conn = $this->get('database_connection');
+            if (!$conn) {
+                die("MySQL Connection error");
+            }
+
+            //get province id
+            try {
+                $sqlGetProvinceId = "SELECT PROVINCE_NAME FROM province WHERE PROVINCE_ID =".$building_data['saddrprovince'];
+                $resultGetProvinceId = $conn->fetchAll($sqlGetProvinceId);
+            } catch (Exception $e) {
+                echo 'Caught exception: ', $e->getMessage(), "\n";
+            }
+
+            //get amphur id
+            try {
+                $sqlGetAmphurId = "SELECT AMPHUR_NAME FROM amphur WHERE AMPHUR_ID =".$building_data['saddrprefecture'];
+                $resultGetAmphurId = $conn->fetchAll($sqlGetAmphurId);
+            } catch (Exception $e) {
+                echo 'Caught exception: ', $e->getMessage(), "\n";
+            }
+
+//            var_dump($resultGetProvinceId);exit();
+
+
+            return $this->render(
+                'FTRWebBundle:Main:result.html.twig',
+                array(
+                    "id" => $building_id,
+                    "province" => $resultGetProvinceId[0]["PROVINCE_NAME"],
+                    "district" => $resultGetAmphurId[0]["AMPHUR_NAME"],
+                    "slug" => $building_data['sSlug'],
+                )
+            );
+        }
+
     }
 
     public function addNewDataAction()
@@ -423,9 +487,66 @@ class UserbuildingController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         if (!empty($id)) {
             $build_data = $em->getRepository('FTRWebBundle:Building_site')->findOneBy(array('id' => $id));
-            $arrdata = array('sbuildingname' => $build_data->getBuildingName(), 'tbuildingaddress' => $build_data->getBuildingAddress(), 'istartprice' => $build_data->getStartPrice(), 'iendprice' => $build_data->getEndPrice(), 'sphonenumber' => $build_data->getPhoneNumber(), 'slatitude' => $build_data->getLatitude(), 'slongitude' => $build_data->getLongitude(), 'brecommend' => $build_data->getRecommend(), 'ibuildingtypeid' => $build_data->getBuildingTypeId(), 'izoneid' => $build_data->getZoneId(), 'ipaytypeid' => $build_data->getPayTypeId(), 'iuserownerid' => $build_data->getUserOwnerId(), 'tdetail' => $build_data->getDetail(), 'scontactname' => $build_data->getContactName(), 'scontactemail' => $build_data->getContactEmail(), 'swebsite' => $build_data->getWebsite(), 'smonthstay' => $build_data->getMonthStay(), 'fwaterunit' => $build_data->getWaterUnit(), 'felectrictunit' => $build_data->getElectricityUnit(), 'iinternetprice' => $build_data->getInternetPrice(), 'igooglemapurl' => $build_data->getGoogleMapUrl(), 'snearlyplace' => $build_data->getNearlyPlace(), 'saddrnumber' => $build_data->getAddrNumber(), 'saddrprefecture' => $build_data->getAddrPrefecture(), 'saddrprovince' => $build_data->getAddrProvince(), 'saddrzipcode' => $build_data->getAddrZipcode(),);
+            $arrdata = array(
+                'sbuildingname' => $build_data->getBuildingName(),
+                'tbuildingaddress' => $build_data->getBuildingAddress(),
+                'istartprice' => $build_data->getStartPrice(),
+                'iendprice' => $build_data->getEndPrice(),
+                'sphonenumber' => $build_data->getPhoneNumber(),
+                'slatitude' => $build_data->getLatitude(),
+                'slongitude' => $build_data->getLongitude(),
+                'brecommend' => $build_data->getRecommend(),
+                'ibuildingtypeid' => $build_data->getBuildingTypeId(),
+                'izoneid' => $build_data->getZoneId(),
+                'ipaytypeid' => $build_data->getPayTypeId(),
+                'iuserownerid' => $build_data->getUserOwnerId(),
+                'tdetail' => $build_data->getDetail(),
+                'scontactname' => $build_data->getContactName(),
+                'scontactemail' => $build_data->getContactEmail(),
+                'swebsite' => $build_data->getWebsite(),
+                'smonthstay' => $build_data->getMonthStay(),
+                'fwaterunit' => $build_data->getWaterUnit(),
+                'felectrictunit' => $build_data->getElectricityUnit(),
+                'iinternetprice' => $build_data->getInternetPrice(),
+                'igooglemapurl' => $build_data->getGoogleMapUrl(),
+                'snearlyplace' => $build_data->getNearlyPlace(),
+                'saddrnumber' => $build_data->getAddrNumber(),
+                'saddrprefecture' => $build_data->getAddrPrefecture(),
+                'saddrprovince' => $build_data->getAddrProvince(),
+                'saddrzipcode' => $build_data->getAddrZipcode(),
+                'sConfirmAddBuildingToken' => $build_data->getConfirmAddBuildingToken(),
+                'sPasswordUpdateBuilding' => $build_data->getPasswordUpdateBuilding(),
+                'sSlug' => $build_data->getslug(),
+            );
         } else {
-            $arrdata = array('sbuildingname' => '', 'tbuildingaddress' => null, 'istartprice' => null, 'iendprice' => null, 'sphonenumber' => null, 'slatitude' => null, 'slongitude' => null, 'brecommend' => null, 'ibuildingtypeid' => null, 'izoneid' => null, 'ipaytypeid' => null, 'iuserownerid' => null, 'tdetail' => null, 'scontactname' => null, 'scontactemail' => null, 'swebsite' => null, 'smonthstay' => null, 'fwaterunit' => null, 'felectrictunit' => null, 'iinternetprice' => null, 'igooglemapurl' => null, 'snearlyplace' => null, 'saddrnumber' => null, 'saddrprefecture' => null, 'saddrprovince' => null, 'saddrzipcode' => null,);
+            $arrdata = array(
+                'sbuildingname' => '',
+                'tbuildingaddress' => null,
+                'istartprice' => null,
+                'iendprice' => null,
+                'sphonenumber' => null,
+                'slatitude' => null,
+                'slongitude' => null,
+                'brecommend' => null,
+                'ibuildingtypeid' => null,
+                'izoneid' => null,
+                'ipaytypeid' => null,
+                'iuserownerid' => null,
+                'tdetail' => null,
+                'scontactname' => null,
+                'scontactemail' => null,
+                'swebsite' => null,
+                'smonthstay' => null,
+                'fwaterunit' => null,
+                'felectrictunit' => null,
+                'iinternetprice' => null,
+                'igooglemapurl' => null,
+                'snearlyplace' => null,
+                'saddrnumber' => null,
+                'saddrprefecture' => null,
+                'saddrprovince' => null,
+                'saddrzipcode' => null,
+            );
         }
         return $arrdata;
     }
@@ -570,12 +691,11 @@ class UserbuildingController extends Controller
                     $em->flush();
                     $textHead = 'แจ้งการบันทึกข้อมูลเพื่อยืนยันการแสดงผล';
                     $textToSend = '"' . $textHead . '"
-
-ID หอพักในฐานข้อมูล : ' . $id . '
-หอพัก ชื่อ: ' . $buildingName . '
-Email ติดต่อ : ' . $emailBuilding . '
-ทำการบันทึกข้อมูลแล้ว
-ส่งข้อมูลมาเพื่อรับการยืนยันให้แสดงผลบนเว็บ"findtheroom.com"
+                    ID หอพักในฐานข้อมูล : ' . $id . '
+                    หอพัก ชื่อ: ' . $buildingName . '
+                    Email ติดต่อ : ' . $emailBuilding . '
+                    ทำการบันทึกข้อมูลแล้ว
+                    ส่งข้อมูลมาเพื่อรับการยืนยันให้แสดงผลบนเว็บ"findtheroom.com"
                     ';
                     $arrData = array('buildingId' => $id, 'buildingName' => $buildingName, 'emailBuilding' => $emailBuilding,);
                     $this->sendemailAction($emailBuilding, $textHead, $textToSend, $arrData);
@@ -707,10 +827,27 @@ Email ติดต่อ : ' . $emailBuilding . '
         return $path;
     }
 
+    /**
+     * ใช้ auto update ค่าต่าง ๆ ในหน้า edit ของห้องพัก
+     * @param $type
+     * @param $id
+     */
     public function autoSaveFormAction($type, $id)
     {
+        /**
+         * MICK
+         * UPDATE 2013/03/20
+         * ตรวจสอบการแก้ไขข้อมูลห้องพัก
+         */
+//        header('Content-Type: text/html; charset=utf-8');
+//        echo "<pre>";
+//        echo $type;exit();
+//        echo "</pre>";
+
+        $arrImageData = NULL;
+
         if ($_POST) {
-            $arrImageData = NULL;
+
             if ($type == 'image') {
                 $iCountLineRoom = trim(@$_POST['hdnMaxLine']);
                 $iCountLineGallery = trim(@$_POST['hdnMaxLineGal']);
@@ -770,11 +907,32 @@ Email ติดต่อ : ' . $emailBuilding . '
                 $website = trim(@$_POST['website']);
                 $internet_price = trim(@$_POST['internet_price']);
 
+                $arrData = array(
+                    $building_name,         //1
+                    $building_addr,         //2
+                    $province,              //3
+                    $district,              //4
+                    $zipCode,               //5
+                    $detail,                //6
+                    $longitude,             //7
+                    $latitude,              //8
+                    $building_type,         //9
+                    $pay_type,              //10
+                    $phone_number,          //11
+                    $month_stay,            //12
+                    $contact_name,          //13
+                    $water_price,           //14
+                    $contact_email,         //15
+                    $electric_price,        //16
+                    $website,               //17
+                    $internet_price         //18
+                );
+
                 if (empty($internet_price)) {
                     $internet_price = null;
                 }
 
-                $arrbuilding_data = array(
+                $arrBuilding_data = array(
                 	'building_name' => $building_name, 
                 	'building_addr' => $building_addr, 
                 	'province' => $province, 
@@ -795,8 +953,9 @@ Email ติดต่อ : ' . $emailBuilding . '
                 	'internet_price' => $internet_price,
 				);
 
-                $alert = $this->saveBuildingData($id, $arrbuilding_data);
+                $alert = $this->saveBuildingData($id, $arrBuilding_data);
                 echo $alert;
+
             } elseif ($type == 'other') {
                 if (!empty($_POST['fac'])) {
                     $facilityList = @$_POST['fac'];
@@ -818,6 +977,7 @@ Email ติดต่อ : ' . $emailBuilding . '
                 echo $alert;
             }
         }
+
         exit();
     }
 
@@ -1003,6 +1163,12 @@ Email ติดต่อ : ' . $emailBuilding . '
             $buildingValue = new Building_site();
             $buildingValue->setUserOwnerId(0);
         }
+        if (!empty($id) || $id != '') {
+            $buildingValue = $em->getRepository('FTRWebBundle:Building_site')->findOneBy(array('id' => $id));
+        } else {
+            $buildingValue = new Building_site();
+            $buildingValue->setUserOwnerId(0);
+        }
         $buildingValue->setBuildingName($arrData['building_name']);
         $dataSlug = str_replace(' ', '-', $arrData['building_name']);
         $buildingValue->setSlug($dataSlug);
@@ -1012,7 +1178,7 @@ Email ติดต่อ : ' . $emailBuilding . '
         $buildingValue->setStartPrice($returnValue['startPrice']);
         $buildingValue->setEndPrice($returnValue['endPrice']);
         $buildingValue->setPhoneNumber($arrData['phone_number']);
-		if($arrData['publish']) {
+		if(!empty($arrData['publish'])) {
         	$buildingValue->setPublish($arrData['publish']);
 		}
         $buildingValue->setLastupdate($today);
@@ -1021,6 +1187,11 @@ Email ติดต่อ : ' . $emailBuilding . '
         $buildingValue->setLongitude($arrData['longitude']);
         $buildingValue->setBuildingTypeId($arrData['building_type']);
         /*$buildingValue->setZoneId($arrData['']);*/
+
+        //ตรวจสอบค่า zone id
+        $buildingZoneId = $buildingValue->getZoneId($arrData['province'], $arrData['district']);
+
+        $buildingValue->setZoneId($buildingZoneId);
         $buildingValue->setPayTypeId($arrData['pay_type']);
         $buildingValue->setDetail($arrData['detail']);
         $buildingValue->setContactName($arrData['contact_name']);
@@ -1046,6 +1217,16 @@ Email ติดต่อ : ' . $emailBuilding . '
         $buildingValue->setAddrPrefecture($arrData['district']);
         $buildingValue->setAddrProvince($arrData['province']);
         $buildingValue->setAddrZipcode($arrData['zipcode']);
+
+        $arrBuildingData = array(
+            "province" => $arrData['province'],
+            "district" => $arrData['district'],
+
+
+        );
+
+        var_dump($arrBuildingData);
+
 		if ($stat == 'add') {
 			$buildingValue->setConfirmAddBuildingToken('');
 			$buildingValue->setPasswordUpdateBuilding('');
@@ -2019,6 +2200,20 @@ Email ติดต่อ : ' . $emailBuilding . '
 		}
 		return $lastest_number;
 	}
+
+    private function getZoneId($province, $district)
+    {
+        $conn = $this->get('database_connection');
+
+        $sqlGetZoneId = "
+            SELECT `ZONE_ID`
+            FROM `amphur`
+            WHERE `PROVINCE_ID` = $province AND `AMPHUR_ID` = $district
+        ";
+        $resultGetZoneId = $conn->fetchAll($sqlGetZoneId);
+        $zoneId = $resultGetZoneId["ZONE_ID"];
+        return $zoneId;
+    }
 
 }
 

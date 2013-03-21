@@ -372,7 +372,7 @@ input.regis { background: url(../images/regis-bt.png) no-repeat; border: 0; widt
 /* thumbnail room detail */
 .roomThumbFrame{float: left; display: block; width: 234px; height: 120px; line-height: 100px; overflow: hidden; position: relative; z-index: 9; margin: 0px 21px 20px 0; border: 0px #CCC solid; background-color: #FFF;}
 .roomThumb{ width: 234px; height: auto; float: left; position: absolute; top: -10%; left: 0%; padding: 0px !important }
-.defaultRoomShow{ max-width: 234px; max-height: 400px; display: block; position: relative; margin: 0 20px 0 0; }
+.defaultRoomShow{ max-width: 234px; max-height: 400px; display: block; position: relative; margin: 0 20px 20px 0 !important; padding: 0 0 0 0 !important;}
 
 /* thumbnail room gallery */
 .thumbframe4gallery{display:block; float: left; width: 300px; height: 150px; overflow: hidden; position: relative; z-index: 9; margin: 0 21px 20px 0;}

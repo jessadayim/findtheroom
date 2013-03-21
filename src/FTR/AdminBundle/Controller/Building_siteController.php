@@ -83,7 +83,7 @@ class Building_siteController extends Controller
 
         if (empty($getOrderBy) && empty($getOrderByType)){
             $getOrderBy = 'id';
-            $getOrderByType = 'asc';
+            $getOrderByType = 'desc';
         }
         if (!empty($getTextSearch) && $getTextSearch != ''){
             $sqlGetEntity = "

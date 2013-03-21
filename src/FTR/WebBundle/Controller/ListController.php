@@ -101,7 +101,8 @@ class ListController extends Controller
                     if ($shortSearchType == "กรุงเทพมหานคร") {
                         //$whereQuery .= " AND a.zone_id != 0";
                     } elseif ($shortSearchType == "ต่างจังหวัด") {
-                        $whereQuery .= " AND a.zone_id = 0";
+//                        $whereQuery .= " AND a.zone_id = 0";
+                        $whereQuery .= " AND p.PROVINCE_ID != 1";
                     }
 
                     /*if (!empty($_GET['searchBkk'])) {
@@ -271,8 +272,8 @@ class ListController extends Controller
                             AND (
                                  a.building_name like '%$txtSearch%' OR
                                  a.contact_name like '%$txtSearch%' OR
-                                 a.addr_prefecture like '%$txtSearch%' OR
-                                 a.addr_province like '%$txtSearch%' OR
+                                 am.`AMPHUR_NAME` like '%$txtSearch%' OR
+                                 p.`PROVINCE_NAME` like '%$txtSearch%' OR
                                  b.type_name like '%$txtSearch%' OR
                                  c.typename like '%$txtSearch%' OR
                                  f.name like '%$txtSearch%'
@@ -459,6 +460,7 @@ class ListController extends Controller
                     $whereQuery
                      GROUP BY a.id
                 $havingQuery
+                    ORDER BY a.id DESC
 
             ";
             $result = $conn->fetchAll($sql);

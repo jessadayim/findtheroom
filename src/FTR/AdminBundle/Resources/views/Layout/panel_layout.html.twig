@@ -65,7 +65,8 @@
 			    </li>
                 <li class=""> <a>ADS</a>
                     <ul>
-                        <li class=""><a href="{{path('ads_control')}}">ADVERTISE</a></li>
+                        <li class=""><a href="#">ADVERTISE</a></li>
+                        <li class=""><a href="{{path('ads_control')}}">Advertise Banner</a></li>
                         <li class=""><a href="{{path('approve_building', {'page':'approve'})}}">Approve Building</a></li>
                         <li class=""><a href="{{path('approve_building', {'page':'recommend'})}}">Recommend Building</a></li>
                     </ul>
@@ -88,23 +89,29 @@
 			    <li class=""> <a>SITE CONTROL</a>
 			      <ul>
 			        <li class=""> <a href="{{path('site_detail_edit',{'id':1})}}">Site Detail</a> </li>
-			        <li class=""> <a href="{{path('FTRAdminBundle_Advertisingdetail')}}">Advertising Detail</a> </li>
-			        <li class=""> <a href="#">Menus Detail</a> </li>
+			        {#<li class=""> <a href="{{path('FTRAdminBundle_Advertisingdetail')}}">Advertising Detail</a> </li>#}
+			        {#<li class=""> <a href="#">Menus Detail</a> </li>#}
 			      </ul>
 			    </li>
-			    <li class=""> <a href="#">LOG</a> </li>
-			    <li class=""> <a href="#">Help</a> </li>
+                {#ยังไม่มีการใช้งานเรื่อง log และ การใช้งาน help จึงทำการปิดการใช้งานก่อน#}
+                {#MICK#}
+                {#2013/03/19#}
+			    {#<li class=""> <a href="#">LOG</a> </li>#}
+			    {#<li class=""> <a href="#">Help</a> </li>#}
 			  </ul>
 		</div><!-- End #headernav -->
 		<div id="userpanel" class="grid_4 omega" style="">
 			<ul>
-				<li><a href="#">Hi {{app.session.get('username')}}</a></li>
+				<li>Hi {{app.session.get('username')}}</li>
 				<li><a href="{{path('FTRAdminBundle_EditProfile')}}" id="setting">My Setting</a></li>
 				<li><a href="{{path('FTRAdminBundle_logout')}}"><STRONG>Log out</STRONG></a></li>
 
 			</ul>
-			<input type="text" name="txtsearch" id="txtsearch">
-			<input type="submit" name="btnsearch" id="btnsearch" value="SEARCH">
+            {#ยังไม่มีการใช้งาน search ในหลังบ้านจึงปิดการใช้งาน#}
+            {#MICK#}
+            {#2013/03/19#}
+			{#<input type="text" name="txtsearch" id="txtsearch">#}
+			{#<input type="submit" name="btnsearch" id="btnsearch" value="SEARCH">#}
 		</div><!-- End #userpanel -->
 	</header><!-- End .container_12 -->	
 {% endif %}

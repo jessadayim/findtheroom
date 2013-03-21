@@ -526,8 +526,10 @@ class SearchController extends Controller
         } catch (Exception $e) {
             echo 'Caught exception: ', $e->getMessage(), "\n";
         }
+        $all[] = array('id' => 0, 'typename' => 'ทุกชนิด');
 
-        $result = $result_data;
+//        $result = $result_data;
+        $result = array_merge($all, $result_data);
         return $result;
     }
 

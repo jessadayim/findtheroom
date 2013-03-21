@@ -276,12 +276,14 @@ function postData(typesave)
     var pathtosave = "{{path('autoSaveForm', {'id': build_id})}}";
     var addfixpath = pathtosave+'/'+type;
 
-//    alert(addfixpath);
+//    alert(type);
 
     $.post(addfixpath, $("#addform").serialize(),
             function(data) {
                 var completetext = data;
-                //alert(completetext);
+
+//                alert(completetext);
+
                 $.gritter.add({
                     // (string | mandatory) the heading of the notification
                     title: 'บันทึกข้อมูลสำเร็จ',
@@ -420,6 +422,9 @@ function checkSubmitData()
     var zipCode = document.getElementById('zipcode').value;
 //        var longitude = document.getElementById('longitude').value;
 //        var latitude = document.getElementById('latitude').value;
+    var longitude = document.getElementById('longitude').value;
+    var latitude = document.getElementById('latitude').value;
+    var isNanLat = document.write
     var apType = document.getElementById('aptype').value;
     var telNumber = document.getElementById('telnumber').value;
     var time = document.getElementById('time').value;
@@ -428,6 +433,25 @@ function checkSubmitData()
     var contact_email = document.getElementById('contact_email').value;
     var power_price = document.getElementById('power_price').value;
     var pass ='';
+
+    //ตรวจสอบการกรอกค่าตัวเลขของช่อง lat, long
+    if(parseFloat(longitude)){
+        var resultLongtitude = longitude;
+    } else {
+        var resultLongtitude = null;
+        alert('กรุณากรอกค่าลองติจูดเป็นตัวเลขค่ะ');
+        return false;
+    }
+
+    if(parseFloat(latitude)){
+        var resultLatitude = latitude;
+    } else {
+        var resultLatitude = null;
+        alert('กรุณากรอกค่าละติจูดเป็นตัวเลขค่ะ');
+        return false;
+    }
+
+    //ตรวจสอบค่าว่างของตัวแปร
     if(nameAp==''||placeAp==''||zipCode==''||telNumber==''||time==''||contact_person==''||water_price==''||contact_email==''||power_price==''||province==0||district==0||apType==0) //longitude==''||latitude==''||
     {
         alert('ข้อมูลที่จำเป็นยังกรอกไม่ครบ กรุณาตรวจสอบข้อมูลด้วยค่ะ');
@@ -446,6 +470,13 @@ function checkSubmitData()
         } else if (zipCode=='') {
             document.getElementById('zipcode').focus();
             $("#zipcode").addClass("error");
+
+        } else if( resultLatitude == null) {
+            $("#latitude").addClass("error");
+
+        } else if( resultLongtitude == null) {
+            $("#longtitude").addClass("error");
+
 //            } else if (longitude=='') {
 //            	document.getElementById('longitude').focus();
 //            } else if (latitude=='') {
