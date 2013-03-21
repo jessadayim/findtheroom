@@ -276,7 +276,7 @@ $vm_columns = array(
         'rel' => '',
         'title' => '',
         'target' => '_self',
-        'href' => 'recommend-building.php?in_mode=add&in_rid={0}&b_name={1}'
+        'href' => 'recommend-building.php?in_mode=add&b_id={0}&b_name={1}'
     ),
 //    'test' => array('header' => ' แก้ไขล่าสุด', 'type' => 'label', "field_key" => "a_id",
 //        "field_key_1" => "publish", 'align' => 'left',
