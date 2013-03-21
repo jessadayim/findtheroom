@@ -186,6 +186,9 @@ $(function(){
             {% endif %}
         </div>
         <div class="clear"></div>
+        <form id="editform" name="editform" action="{{ path('addData', {'id':id}) }}" method="post">
+            <div style="width: 51px; height: 51px; background: url('http://localhost:8081/findtheroom/web/images/edit-bt.png') no-repeat; float: right; margin: -80px 20px 0 0;"></div>
+        </form>
     </div>
 </div>
 
@@ -449,7 +452,7 @@ $(function(){
 	</div>
 </div>
 <div class="row hr">
-	<form id="editform" name="editform" action="{{ path('addData', {'id':id})}}" method="post">
+	<form id="editform" name="editform" action="{{ path('addData', {'id':id}) }}" method="post">
     แก้ไขข้อมูลตึก :
     <input type="text" id="bName" name="bName" placeholder="email"/>&nbsp;&nbsp;&nbsp;
     <input type="password" id="bPassword" name="bPassword" placeholder="password"/>&nbsp;&nbsp;&nbsp;

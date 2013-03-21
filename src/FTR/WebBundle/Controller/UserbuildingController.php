@@ -405,6 +405,13 @@ class UserbuildingController extends Controller
             if (!$conn) {
                 die("MySQL Connection error");
             }
+            //get building name
+            try {
+                $sqlGetBuildingName = "SELECT building_name FROM building_site WHERE id =".$building_id;
+                $resultGetBuildingName = $conn->fetchAll($sqlGetBuildingName);
+            } catch (Exception $e) {
+                echo 'Caught exception: ', $e->getMessage(), "\n";
+            }
 
             //get province id
             try {
@@ -429,6 +436,7 @@ class UserbuildingController extends Controller
                 'FTRWebBundle:Main:result.html.twig',
                 array(
                     "id" => $building_id,
+                    "name" => $resultGetBuildingName[0]["building_name"],
                     "province" => $resultGetProvinceId[0]["PROVINCE_NAME"],
                     "district" => $resultGetAmphurId[0]["AMPHUR_NAME"],
                     "slug" => $building_data['sSlug'],
