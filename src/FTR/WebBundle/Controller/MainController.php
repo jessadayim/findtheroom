@@ -219,47 +219,46 @@ class MainController extends Controller {
         if (!$conn) { die("MySQL Connection error");
         }
         try {
-//            $sql = "
-//				SELECT
-//					a.building_name,
-//					b.type_name,
-//					#c.typename,
-//					#d.zonename,
-//					pro.PROVINCE_NAME,
-//					am.AMPHUR_NAME,
-//					a.slug,
-//					FORMAT(a.start_price,0) AS start_price,
-//					FORMAT(a.end_price,0) AS end_price,
-//					a.id
-//				FROM
-//					building_site a
-//					INNER JOIN building_type b ON (a.building_type_id=b.id)
-//					#INNER JOIN pay_type c ON (a.pay_type_id=c.id)
-//					#INNER JOIN zone d ON (a.zone_id=d.id)
-//					INNER JOIN amphur am ON a.addr_prefecture	 = am.AMPHUR_ID
-//                    INNER JOIN province pro ON a.addr_province = pro.PROVINCE_ID
-//				WHERE a.publish = 1
-//				ORDER BY lastupdate DESC LIMIT 10
-//			";
-
             $sql = "
-            SELECT
-              a.`id`,
-              a.`building_name`,
-              a.`slug`,
-              FORMAT(a.`start_price`, 0) AS start_price,
-              FORMAT(a.`end_price`, 0) AS end_price,
-              b.`type_name` as b_type_name,
-              d.`PROVINCE_NAME`,
-              e.`AMPHUR_NAME`
-            FROM `building_site` a
-            INNER JOIN `building_type` b ON (a.`building_type_id` = b.`id`)
-            INNER JOIN `province` d ON (a.`addr_province` = d.`PROVINCE_ID`)
-            INNER JOIN `amphur` e ON (a.`addr_prefecture` = e.`AMPHUR_ID`)
-            WHERE publish = 1
-            ORDER BY lastupdate DESC
-            LIMIT 20
-            ";
+				SELECT
+                  a.`id`,
+                  a.`building_name`,
+                  a.`slug`,
+                  FORMAT(a.`start_price`, 0) AS start_price,
+                  FORMAT(a.`end_price`, 0) AS end_price,
+                  b.`type_name` AS b_type_name,
+                  f.`typename` AS pay_type_name,
+                  d.`PROVINCE_NAME`,
+                  e.`AMPHUR_NAME`
+                FROM
+                  `building_site` a
+                  INNER JOIN `building_type` b ON (a.`building_type_id` = b.`id`)
+                  INNER JOIN `province` d ON ( a.`addr_province` = d.`PROVINCE_ID` )
+                  INNER JOIN `amphur` e ON ( a.`addr_prefecture` = e.`AMPHUR_ID` )
+                  INNER JOIN `pay_type` f ON (a.`pay_type_id` = f.`id`)
+                WHERE publish = 1
+                ORDER BY lastupdate DESC
+                LIMIT 20
+			";
+
+//            $sql = "
+//            SELECT
+//              a.`id`,
+//              a.`building_name`,
+//              a.`slug`,
+//              FORMAT(a.`start_price`, 0) AS start_price,
+//              FORMAT(a.`end_price`, 0) AS end_price,
+//              b.`type_name` as b_type_name,
+//              d.`PROVINCE_NAME`,
+//              e.`AMPHUR_NAME`
+//            FROM `building_site` a
+//            INNER JOIN `building_type` b ON (a.`building_type_id` = b.`id`)
+//            INNER JOIN `province` d ON (a.`addr_province` = d.`PROVINCE_ID`)
+//            INNER JOIN `amphur` e ON (a.`addr_prefecture` = e.`AMPHUR_ID`)
+//            WHERE publish = 1
+//            ORDER BY lastupdate DESC
+//            LIMIT 20
+//            ";
             $result_data = $conn -> fetchAll($sql);
         } catch (Exception $e) {
             echo 'Caught exception: ', $e -> getMessage(), "\n";

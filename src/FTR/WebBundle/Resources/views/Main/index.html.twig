@@ -349,8 +349,8 @@
             <td class="first"><a href="{{ path('FTRWebBundle_detail',{'buildId':tlist.id,'province':tlist.PROVINCE_NAME,'prefecture':tlist.AMPHUR_NAME,'slug':tlist.slug}) }}" target="_blank">{{ tlist.building_name }}</a></td>
             <td>{{ tlist.b_type_name }}</td>
             <td>
-                {#{{ tlist.typename }}#}
-                รายเดือน
+                {{ tlist.pay_type_name }}
+                {#รายเดือน#}
             </td>
             {% if tlist.PROVINCE_NAME !='กรุงเทพมหานคร' %}
             <td>{{ tlist.AMPHUR_NAME }}</td>
