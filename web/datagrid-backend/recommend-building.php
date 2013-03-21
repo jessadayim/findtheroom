@@ -64,7 +64,7 @@ $sql = "
         ON (`building_site`.`building_type_id` = `building_type`.`id`)
       INNER JOIN `pay_type`
         ON (`building_site`.`pay_type_id` = `pay_type`.`id`)
-      LEFT JOIN `recommend_building`
+      INNER JOIN `recommend_building`
         ON (`building_site`.`id` = recommend_building.`building_id`)
     WHERE 1
       AND `building_site`.`deleted` = 0

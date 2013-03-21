@@ -76,9 +76,13 @@
                                             {%endif%}
                                             <div class="recom"></div>
                                                 {%if recom1.img != null%}
-                                                <img src="{{ asset('images/building/')}}{{ recom1.id }}/{{recom1.img}}" />
+                                                <div class="recThumbFrame">
+                                                    <img src="{{ asset('images/building/')}}{{ recom1.id }}/{{recom1.img}}" class="recThumb"/>
+                                                </div>
                                                 {%else%}
-                                                <img src='{{asset('images/default/rec.jpg')}}'>
+                                                <div class="recThumbFrame">
+                                                    <img src='{{asset('images/default/rec.jpg')}}' class="recThumb">
+                                                </div>
                                                 {%endif%}
                                             <br />
                                             <span style="color:#FFF;"> <b style="font-size:24px">{{recom1.name}}</b>
