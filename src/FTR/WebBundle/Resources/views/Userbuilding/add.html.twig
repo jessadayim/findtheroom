@@ -435,20 +435,24 @@ function checkSubmitData()
     var pass ='';
 
     //ตรวจสอบการกรอกค่าตัวเลขของช่อง lat, long
-    if(parseFloat(longitude)){
-        var resultLongtitude = longitude;
-    } else {
-        var resultLongtitude = null;
-        alert('กรุณากรอกค่าลองติจูดเป็นตัวเลขค่ะ');
-        return false;
+    if(longitude != ""){
+        if(parseFloat(longitude)){
+            var resultLongtitude = longitude;
+        } else {
+            var resultLongtitude = null;
+            alert('กรุณากรอกค่าลองติจูดเป็นตัวเลขค่ะ');
+            return false;
+        }
     }
 
-    if(parseFloat(latitude)){
-        var resultLatitude = latitude;
-    } else {
-        var resultLatitude = null;
-        alert('กรุณากรอกค่าละติจูดเป็นตัวเลขค่ะ');
-        return false;
+    if(latitude != ""){
+        if(parseFloat(latitude)){
+            var resultLatitude = latitude;
+        } else {
+            var resultLatitude = null;
+            alert('กรุณากรอกค่าละติจูดเป็นตัวเลขค่ะ');
+            return false;
+        }
     }
 
     //ตรวจสอบค่าว่างของตัวแปร

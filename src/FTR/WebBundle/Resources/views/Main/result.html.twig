@@ -10,13 +10,12 @@
 </style>
 <div class="result" style="width: 1000px; min-height: 210px; margin: 0 auto 0 auto; !important">
     <H1 class="fontRed">กรุณากรอกข้อมูลของท่านให้ครบถ้วน</H1>
-    <p class="">username หรือ password ห้องพัก <span style="color: red">{{name}}</span> ไม่ถูกต้องกรุณากรอกข้อมูลให้ถูกต้องด้วย ค่ะ</p>
+    <p class="">กรุณากรอกข้อมูลเพื่อแก้ไขห้องพัก <span style="color: red">{{name}}</span> ด้วยค่ะ</p>
     <form id="editform" name="editform" action="{{ path('addData', {'id':id})}}" method="post">
-        แก้ไขข้อมูลตึก :
-        <input type="text" id="bName" name="bName" placeholder="email"/>&nbsp;&nbsp;&nbsp;
-        <input type="password" id="bPassword" name="bPassword" placeholder="password"/>&nbsp;&nbsp;&nbsp;
+        email : <input type="text" id="bName" name="bName" placeholder="email"/>&nbsp;&nbsp;&nbsp;
+        password : <input type="password" id="bPassword" name="bPassword" placeholder="password"/>&nbsp;&nbsp;&nbsp;
         <input type="hidden" name="user" value="1"/>
-        <input type="submit" value="แก้ไขข้อมูล"/>
+        <input class="editBuilding2" type="submit">
     </form>
     <p>
         <a href="{{ path('FTRWebBundle_detail', {'buildId':id, 'province':province, 'prefecture':district, 'slug':slug}) }}">

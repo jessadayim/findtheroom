@@ -409,6 +409,32 @@ input.regis { background: url(../images/regis-bt.png) no-repeat; border: 0; widt
     left: 0%;
 }
 
+/* button style */
+.editBuilding{
+    width: 51px;
+    height: 51px;
+    background: url('http://localhost:8081/findtheroom/web/images/edit-bt.png') 0 0 no-repeat;
+    float: right;
+    margin: -40px 20px 0 0;
+    padding: 0;
+    border: none;
+    font-size: 0;
+    cursor: hand;
+    cursor: pointer;
+}
+.editBuilding2{
+    width: 51px;
+    height: 51px;
+    background: url('http://localhost:8081/findtheroom/web/images/edit-bt.png') 0 0 no-repeat;
+    /*float: right;*/
+    margin: 0 0 0 0;
+    padding: 0;
+    border: none;
+    font-size: 0;
+    cursor: hand;
+    cursor: pointer;
+}
+
 /*show in detail page*/
 #show{
     /*margin-bottom: 20px;*/
