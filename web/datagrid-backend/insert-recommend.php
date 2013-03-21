@@ -172,12 +172,37 @@ $dgridAddRecommend->SetAutoColumnsInEditMode(false);
 $dgridAddRecommend->SetTableEdit($table_name, $primary_key, $condition);
 
 $arrRecommendType = array("1" => 'ห้องพักใกล้ BTS', "2" => 'ห้องพักใกล้ MRT', "3" => 'ห้องพักใกล้มหาวิทยาลัย');
-$arrListBuilding = array(@$_GET['in_rid'] => @$_GET['b_name']);
+
+$getMode = @$_GET['in_mode'];
+$b_id = @$_GET['b_id'];
+$in_rid = @$_GET['in_rid'];
+$buildingName = @$_GET['b_name'];
+if ($getMode == 'add') {
+    $arrListBuilding = array($b_id => $buildingName);
+} else if ($getMode == 'edit') {
+    $sql = "
+        SELECT
+          `building_site`.`building_name`
+        FROM
+          `recommend_building`
+          INNER JOIN `building_site`
+        WHERE `building_site`.`id` = `recommend_building`.`building_id`
+          AND `recommend_building`.`id` = $in_rid
+    ";
+    $dSet = $dgridAddRecommend->ExecuteSql($sql);
+    while ($row = $dSet->fetchRow()) {
+        for ($c = 0; ($c < $dSet->numCols()); $c++) {
+            $buildingName = $row[$c];
+        }
+    }
+    $b_id = $in_rid;
+}
+$arrListBuilding = array($b_id => $buildingName);
 
 //$get
 
 //เพิ่ม focus ไปที่จุดเพิ่มข้อมูล
-if (!empty($_GET['b_name'])) {
+if ($getMode == 'edit' || $getMode == 'add') {
     echo "
     <script>
     $(document).ready(function(){
@@ -256,4 +281,10 @@ if ($getMode == 'details') {
 ##  *** set debug mode & messaging options
 $dgridAddRecommend->Bind();
 
-?>
+if ($getMode == 'update' && $in_rid == '-1' || $getMode == 'delete') {
+    ?>
+    <script>
+        window.location.href = "<?php echo 'recommend-building.php';?>";
+    </script>
+    <?php
+}
