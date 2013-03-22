@@ -105,8 +105,7 @@ class ConfirmBuildingController extends Controller
         $html = $this->renderView('FTRWebBundle:Mail:confirmAddBuilding.html.twig', $arrConfirmBuilding);
 
 //        $var = var_export($arrConfirmBuilding, TRUE);
-        $var = "เรียนคุณ ".$arrConfirmBuilding["name"];
-        $var .= "ทางทีมงาน FindTheRoom.com ยินดีเป็นอย่างยิ่งที่ท่านได้เพิ่มข้อมูลห้องพัก  ".$arrConfirmBuilding["building_name"]." ของท่านกับเรา แล้วในวันที่ ".$arrConfirmBuilding["createTime"]." ทางทีมงาน FindTheRoom.com ได้รับข้อมูลเป็นที่เรียบร้อยแล้ว";
+        $var = "ทางทีมงาน FindTheRoom.com ยินดีเป็นอย่างยิ่งที่ท่านได้เพิ่มข้อมูลห้องพัก  ".$arrConfirmBuilding["building_name"]." ของท่านกับเรา แล้วในวันที่ ".$arrConfirmBuilding["createTime"]." ทางทีมงาน FindTheRoom.com ได้รับข้อมูลเป็นที่เรียบร้อยแล้ว";
         $var .= "กรุณา confirm ข้อมูลการเพิ่มข้อมูลห้องพัก ".$arrConfirmBuilding["building_name"]." ของท่านด้วยการคลิก link ".$arrConfirmBuilding["token_url"]." เพื่อให้ระบบแสดงห้องพักของท่านบนเว็บไซต์";
         $var .= "หากท่านต้องการแก้ไขข้อมูลห้องพัก ".$arrConfirmBuilding["building_name"]." กรุณากรอกรหัสผ่านด้านล่างเพื่อยืนยันการแก้ไข :".$arrConfirmBuilding["password"];
 
