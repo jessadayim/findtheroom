@@ -200,6 +200,8 @@ class UserbuildingController extends Controller
             // if (empty($enabled)) {
                 // return $this->redirect($this->generateUrl('FTRWebBundle_homepage'));
             // }
+
+            //จัดข้อมูลห้องพัก
             $building_data = $this->getBuildingData($id);
             if (!empty($id)) {
                 $building_id = $id;
@@ -227,6 +229,8 @@ class UserbuildingController extends Controller
             $arrGallery = $this->getImageData($building_id, null, 'gallery');
             $imageHead = $this->getImageData($building_id, null, 'head');
             $imageMap = $this->getImageData($building_id, null, 'map');
+
+            //จัดข้อมูล Facility
             $sqlFacilityListP = null;
             if (!empty($building_id)) {
                 $sqlFacilityListP = "
@@ -240,6 +244,7 @@ class UserbuildingController extends Controller
                 $facArray[] = $value['facilitylist_id'];
             }
 
+            //จัดข้อมูล สิ่งอำนวยความสะดวกในห้อง
             foreach ($fac_inRoomList as $key => $value) {
                 $row = $fac_inRoomList[$key]['loop'];
                 foreach ($row as $keyRow => $valueRow) {
@@ -256,6 +261,7 @@ class UserbuildingController extends Controller
                 }
             }
 
+            //จัดข้อมูลสิ่งอำนวยความสะดวกนอกอาคาร
             foreach ($fac_outRoomList as $key => $value) {
                 $row = $fac_outRoomList[$key]['loop'];
                 foreach ($row as $keyRow => $valueRow) {
@@ -272,6 +278,7 @@ class UserbuildingController extends Controller
                 }
             }
 
+            //จ้ดข้อมูลประเภทห้อง
             $arrRoomData = null;
             foreach ($arrRoom as $key => $roomPicValue) {
                 $roomType2site_id = $roomPicValue['roomtype2site_id'];
@@ -293,6 +300,8 @@ class UserbuildingController extends Controller
                 	'room_price' => $roomType2siteData->getRoomprice(),
 				);
             }
+
+            //จัดข้อมูล gallery
             $arrGalleryData = null;
             foreach ($arrGallery as $key => $galleryPicValue) {
 
@@ -314,12 +323,15 @@ class UserbuildingController extends Controller
                 $linkImageMap = "images/building/$id/" . $imageMap[0]['photo_name'];
                 $nameImageMap = $imageMap[0]['photo_name'];
             }
+
+            //จัดข้อมูลจังหวัด
             $provinceName = null;
             $provinceId = $building_data['saddrprovince'];
             if (!empty($provinceId)) {
                 $provinceName = $this->getProvinceDataAction($provinceId, 'call');
             }
 
+            //จัดข้อมูลประเภท
             $payType = $this->getPayType($building_data['ipaytypeid']);
             if (!empty($zone_data)) {
                 $bkkZone = $this->getBkkZone($zone_data->getId());
@@ -369,11 +381,13 @@ class UserbuildingController extends Controller
         }
 
         if($editValidate == true){
+
             return $this->render('FTRWebBundle:Userbuilding:add.html.twig', array(
                 'buildingdata' => $building_data,
                 'payType' => $payType,
                 'zonelist' => $bkkZone,
                 'buildingType' => $buildingType,
+                'building_province' => $provinceId,
                 'province' => $province,
                 'provinceName' => $provinceName,
                 'district' => $district,

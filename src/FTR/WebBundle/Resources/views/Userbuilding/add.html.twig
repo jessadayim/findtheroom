@@ -585,6 +585,7 @@ function getLastestNumberImage()
                 &nbsp;
             </tr>
         </table>
+
         <table style="margin-top: -15px; float:none;  margin-left: 0px;">
             <tr height="50" valign="middle">
                 <td align="right" width="210" style="font-size:24px;">ชื่อหอพัก / อพาร์ทเม้นท์ : *</td>
@@ -598,13 +599,24 @@ function getLastestNumberImage()
                 <td align="right" width="210" style="font-size:24px;">จังหวัด : *</td>
                 <td align="left" width="190">
                     <div class="styled-select">
+
                         <select id="province" name="province" class="select" onchange="getAmphur();" class="error">
+
                             {% for list in province %}
-                            {% if list.checked == 'no' %}
-                            <option value="{{list.PROVINCE_ID}}">{{list.PROVINCE_NAME}}</option>
-                            {% else %}
-                            <option value="{{list.PROVINCE_ID}}" selected="selected">{{list.PROVINCE_NAME}}</option>
-                            {% endif %}
+                                {#{% if list.checked == 'no' %}#}
+                                {#<option value="{{list.PROVINCE_ID}}">{{list.PROVINCE_NAME}}</option>#}
+                                {#{% else %}#}
+                                {#<option value="{{list.PROVINCE_ID}}" selected="selected">{{list.PROVINCE_NAME}}</option>#}
+                                {#{% endif %}#}
+
+                                {#แก้ไขให้ focus จังหวัดที่เลือกได้ถูกต้อง#}
+                                {#MICK#}
+                                {#2013/03/22#}
+                                {% if list.PROVINCE_ID == building_province %}
+                                    <option value="{{list.PROVINCE_ID}}" selected="selected">{{list.PROVINCE_NAME}}</option>
+                                {% else %}
+                                    <option value="{{list.PROVINCE_ID}}">{{list.PROVINCE_NAME}}</option>
+                                {% endif %}
                             {% endfor %}
                         </select>
                     </div>
