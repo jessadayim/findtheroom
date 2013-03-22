@@ -168,6 +168,7 @@ class DetailController extends Controller
                                         AND img.deleted = 0
                                         AND img.photo_type != 'gallery'
                                         AND img.photo_type != 'head'
+                                        AND img.photo_name != ''
                                       )
                                   WHERE r2.building_site_id = $id
                                     AND r2.deleted = 0
@@ -211,6 +212,7 @@ class DetailController extends Controller
                                     FROM image
                                     WHERE photo_type = 'gallery'
                                       AND building_site_id = $id
+                                      AND photo_name != ''
                                       AND deleted = 0
                                     ORDER BY sequence";
                     $objImage = $conn->fetchAll($sqlImage);
