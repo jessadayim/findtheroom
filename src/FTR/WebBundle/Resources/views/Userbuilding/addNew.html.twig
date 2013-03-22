@@ -1,6 +1,8 @@
 {% extends 'FTRWebBundle:Layout:Layout.html.twig' %}
 {% block body %}
-
+{#เพิ่มห้องพักใหม่#}
+{#MICK#}
+{#2013/03/22#}
     <link rel="stylesheet" type="text/css" href="{{asset('js/uploadify/uploadify.css')}}">
     <script type="text/javascript" src="{{asset('js/uploadify/jquery.uploadify-3.1.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('js/sisyphus-autosave/sisyphus.js')}}"></script>
@@ -145,14 +147,24 @@
         var contact_email = document.getElementById('contact_email').value;
         var power_price = document.getElementById('power_price').value;
         var pass ='';
+        var head_image = document.getElementById('hdnfilename').value;
+        var map_image = document.getElementById('upload_map').value;
+
+
         if (nameAp=='' || placeAp=='' || zipCode=='' || longitude=='' ||
         latitude=='' || telNumber=='' || time=='' || contact_person=='' ||
         water_price=='' || contact_email=='' || power_price=='' || province==0 ||
-        district==0 || apType==0) {
+        district==0 || apType==0 || head_image == '' || map_image == '') {
             alert('ข้อมูลที่จำเป็นยังกรอกไม่ครบ กรุณาตรวจสอบข้อมูล');
-            if (nameAp=='') {
+            if(head_image == ''){
+//                document.getElementById('hdnfilename').focus();
+                alert("กรุณากรอกภาพห้องพักด้วยค่ะ");
+            } else if(map_image == ''){
+                alert("กรุณากรอกแผนที่ห้องพักด้วยค่ะ");
+            } else if (nameAp=='') {
             	document.getElementById('nameap').focus();
                 $("#nameap").addClass("error");
+                alert(map_image);
             } else if (placeAp=='') {
             	document.getElementById('placeap').focus();
                 $("#placeap").addClass("error");
