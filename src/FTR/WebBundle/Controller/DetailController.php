@@ -153,7 +153,7 @@ class DetailController extends Controller
                      * */
                     $sqlRoomType = "SELECT
                                     r2.room_size,
-                                    r2.room_price,
+                                    FORMAT(r2.room_price, 0) as room_price,
                                     r2.room_typename,
                                     r2.building_site_id,
                                     img.photo_name,
