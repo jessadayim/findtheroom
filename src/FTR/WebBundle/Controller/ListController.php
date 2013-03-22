@@ -416,8 +416,8 @@ class ListController extends Controller
                     a.addr_province,
                     a.addr_zipcode,
                     a.detail,
-                    FORMAT(a.start_price, 0) as start_price,
-                    FORMAT(a.end_price, 0) as end_price,
+                    a.start_price,
+                    a.end_price,
                     a.latitude,
                     a.longitude,
                     d.facilitylist_id,
@@ -437,6 +437,9 @@ class ListController extends Controller
             //$limitDisplay = " LIMIT $numStart , $numShow";
 
             $havingQuery = "";
+
+            $orderBy = "ORDER BY a.id DESC";
+
             if (($lessPrice == 0 || empty($lessPrice)) && empty($mostPrice)) {
                 $mostPrice = 9999999;
             }
@@ -449,6 +452,15 @@ class ListController extends Controller
                         AND start_price >= $lessPrice
                         AND end_price <= $mostPrice
                 ";
+
+                $orderBy = "ORDER BY start_price ASC";
+            } elseif($lessPrice > $mostPrice) {
+                $havingQuery .= "
+                    HAVING 1
+                        AND end_price <= $mostPrice
+                ";
+
+                $orderBy = "ORDER BY start_price ASC";
             }
 
             $sql = "
@@ -460,8 +472,7 @@ class ListController extends Controller
                     $whereQuery
                      GROUP BY a.id
                 $havingQuery
-                    ORDER BY a.id DESC
-
+                $orderBy
             ";
             $result = $conn->fetchAll($sql);
 
