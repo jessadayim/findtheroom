@@ -155,7 +155,7 @@
         latitude=='' || telNumber=='' || time=='' || contact_person=='' ||
         water_price=='' || contact_email=='' || power_price=='' || province==0 ||
         district==0 || apType==0 || head_image == '' || map_image == '') {
-            alert('ข้อมูลที่จำเป็นยังกรอกไม่ครบ กรุณาตรวจสอบข้อมูล');
+
             if(head_image == ''){
 //                document.getElementById('hdnfilename').focus();
                 alert("กรุณากรอกภาพห้องพักด้วยค่ะ");
@@ -164,19 +164,23 @@
             } else if (nameAp=='') {
             	document.getElementById('nameap').focus();
                 $("#nameap").addClass("error");
-                alert(map_image);
+                alert('ข้อมูลที่จำเป็นยังกรอกไม่ครบ กรุณาตรวจสอบข้อมูล');
             } else if (placeAp=='') {
             	document.getElementById('placeap').focus();
                 $("#placeap").addClass("error");
+                alert('ข้อมูลที่จำเป็นยังกรอกไม่ครบ กรุณาตรวจสอบข้อมูล');
             } else if (province==0) {
             	document.getElementById('province').focus();
                 $("#province").addClass("error");
+                alert('ข้อมูลที่จำเป็นยังกรอกไม่ครบ กรุณาตรวจสอบข้อมูล');
             } else if (district==0) {
             	document.getElementById('district').focus();
                 $("#district").addClass("error");
+                alert('ข้อมูลที่จำเป็นยังกรอกไม่ครบ กรุณาตรวจสอบข้อมูล');
             } else if (zipCode=='') {
             	document.getElementById('zipcode').focus();
                 $("#zipcode").addClass("error");
+                alert('ข้อมูลที่จำเป็นยังกรอกไม่ครบ กรุณาตรวจสอบข้อมูล');
 //            } else if (longitude=='') {
 //            	document.getElementById('longitude').focus();
 //            } else if (latitude=='') {
@@ -184,24 +188,31 @@
             } else if (apType==0) {
             	document.getElementById('aptype').focus();
                 $("#aptype").addClass("error");
+                alert('ข้อมูลที่จำเป็นยังกรอกไม่ครบ กรุณาตรวจสอบข้อมูล');
             } else if (telNumber=='') {
             	document.getElementById('telnumber').focus();
                 $("#telnumber").addClass("error");
+                alert('ข้อมูลที่จำเป็นยังกรอกไม่ครบ กรุณาตรวจสอบข้อมูล');
             } else if (time=='') {
             	document.getElementById('time').focus();
                 $("#time").addClass("error");
+                alert('ข้อมูลที่จำเป็นยังกรอกไม่ครบ กรุณาตรวจสอบข้อมูล');
             } else if (contact_person=='') {
             	document.getElementById('contact_person').focus();
                 $("#contact_person").addClass("error");
+                alert('ข้อมูลที่จำเป็นยังกรอกไม่ครบ กรุณาตรวจสอบข้อมูล');
             } else if (water_price=='') {
             	document.getElementById('water_price').focus();
                 $("#water_price").addClass("error");
+                alert('ข้อมูลที่จำเป็นยังกรอกไม่ครบ กรุณาตรวจสอบข้อมูล');
             } else if (contact_email=='') {
             	document.getElementById('contact_email').focus();
                 $("#contact_email").addClass("error");
+                alert('ข้อมูลที่จำเป็นยังกรอกไม่ครบ กรุณาตรวจสอบข้อมูล');
             } else if (power_price=='') {
             	document.getElementById('power_price').focus();
                 $("#power_price").addClass("error");
+                alert('ข้อมูลที่จำเป็นยังกรอกไม่ครบ กรุณาตรวจสอบข้อมูล');
             }
             return false;
         }
