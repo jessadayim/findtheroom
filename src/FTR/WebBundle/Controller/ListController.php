@@ -416,8 +416,8 @@ class ListController extends Controller
                     a.addr_province,
                     a.addr_zipcode,
                     a.detail,
-                    a.start_price,
-                    a.end_price,
+                    FORMAT(a.start_price, 0) as start_price,
+                    FORMAT(a.end_price, 0) as end_price,
                     a.latitude,
                     a.longitude,
                     d.facilitylist_id,
@@ -446,8 +446,8 @@ class ListController extends Controller
             if (!empty($lessPrice) && !empty($mostPrice) || ($lessPrice <= $mostPrice)) {
                 $havingQuery .= "
                     HAVING 1
-                        AND a.start_price >= $lessPrice
-                        AND a.end_price <= $mostPrice
+                        AND start_price >= $lessPrice
+                        AND end_price <= $mostPrice
                 ";
             }
 

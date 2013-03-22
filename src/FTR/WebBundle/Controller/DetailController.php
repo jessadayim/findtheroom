@@ -34,7 +34,49 @@ class DetailController extends Controller
                 /**
                  * query Detail page general detail
                  */
-                $sqlGeneral = "SELECT b.*, t.id,t.type_name,z.zonename,z.id,p.typename, pro.PROVINCE_NAME, am.AMPHUR_NAME
+                $sqlGeneral = "SELECT
+                                  b.`id`,
+                                  b.`building_name`,
+                                  b.`building_address`,
+                                  FORMAT(b.`start_price`, 0) as start_price,
+                                  FORMAT(b.`end_price`, 0) as end_price,
+                                  b.`phone_number`,
+                                  b.`publish`,
+                                  b.`datetimestamp`,
+                                  b.`lastupdate`,
+                                  b.`userupdate`,
+                                  b.`latitude`,
+                                  b.`longitude`,
+                                  b.`recommend`,
+                                  b.`building_type_id`,
+                                  b.`zone_id`,
+                                  b.`pay_type_id`,
+                                  b.`user_owner_id`,
+                                  b.`deleted`,
+                                  b.`detail`,
+                                  b.`contact_name`,
+                                  b.`contact_email`,
+                                  b.`website`,
+                                  b.`month_stay`,
+                                  b.`water_unit`,
+                                  b.`electricity_unit`,
+                                  b.`internet_price`,
+                                  b.`googlemap_url`,
+                                  b.`addr_number`,
+                                  b.`addr_prefecture`,
+                                  b.`addr_province`,
+                                  b.`addr_zipcode`,
+                                  b.`nearly_place`,
+                                  b.`slug`,
+                                  b.`confirm_add_building_token`,
+                                  b.`password_update_building`,
+                                  t.id,
+                                  t.type_name,
+                                  z.zonename,
+                                  z.id,
+                                  p.typename,
+                                  pro.PROVINCE_NAME,
+                                  am.AMPHUR_NAME
                                FROM building_site b
                                   LEFT JOIN building_type t ON (b.building_type_id = t.id AND t.deleted = 0)
                                   LEFT JOIN zone z ON (b.zone_id = z.id AND z.deleted = 0)
