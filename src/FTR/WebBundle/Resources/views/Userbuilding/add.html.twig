@@ -678,12 +678,23 @@ function getLastestNumberImage()
                 <td align="left" width="200">
                     <div class="styled-select">
                         <select id="aptype" name="aptype" class="select" onchange="postData('head');">
+                            {#{% for list in buildingType %}#}
+                            {#{% if list.checked == 'no' %}#}
+                            {#<option value="{{list.id}}">{{list.type_name}}</option>#}
+                            {#{% else %}#}
+                            {#<option value="{{list.id}}" selected="selected">{{list.type_name}}</option>#}
+                            {#{% endif %}#}
+                            {#{% endfor %}#}
+
+                            {#แสดงผล selected เมื่อ id ของจังหวัดตรงกัน#}
+                            {#MICK#}
+                            {#2013/03/22#}
                             {% for list in buildingType %}
-                            {% if list.checked == 'no' %}
-                            <option value="{{list.id}}">{{list.type_name}}</option>
-                            {% else %}
-                            <option value="{{list.id}}" selected="selected">{{list.type_name}}</option>
-                            {% endif %}
+                                {% if list.id == building_type %}
+                                    <option value="{{list.id}}" selected="selected">{{list.type_name}}</option>
+                                {% else %}
+                                    <option value="{{list.id}}">{{list.type_name}}</option>
+                                {% endif %}
                             {% endfor %}
                         </select>
                     </div>
@@ -692,12 +703,23 @@ function getLastestNumberImage()
                 <td align="left" width="190" style="font-size:24px;">
                     <div class="styled-select">
                         <select id="paytype" name="paytype" class="select" onchange="postData('head');">
+                            {#{% for list in payType %}#}
+                            {#{% if list.checked == 'no' %}#}
+                            {#<option value="{{list.id}}">{{list.typename}}</option>#}
+                            {#{% else %}#}
+                            {#<option value="{{list.id}}" selected="selected">{{list.typename}}</option>#}
+                            {#{% endif %}#}
+                            {#{% endfor %}#}
+
+                            {#แสดงผล selected เมื่อ id ของชนิดห้องพักตรงกัน#}
+                            {#MICK#}
+                            {#2013/03/22#}
                             {% for list in payType %}
-                            {% if list.checked == 'no' %}
-                            <option value="{{list.id}}">{{list.typename}}</option>
-                            {% else %}
-                            <option value="{{list.id}}" selected="selected">{{list.typename}}</option>
-                            {% endif %}
+                                {% if list.id == building_pay_type %}
+                                    <option value="{{list.id}}" selected="selected">{{list.typename}}</option>
+                                {% else %}
+                                <option value="{{list.id}}">{{list.typename}}</option>
+                                {% endif %}
                             {% endfor %}
                         </select>
                     </div></td>

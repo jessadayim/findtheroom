@@ -384,10 +384,12 @@ class UserbuildingController extends Controller
 
             return $this->render('FTRWebBundle:Userbuilding:add.html.twig', array(
                 'buildingdata' => $building_data,
+                'building_province' => $provinceId,
+                'building_type' =>$building_data['ibuildingtypeid'],
+                'building_pay_type' =>$building_data['ipaytypeid'],
                 'payType' => $payType,
                 'zonelist' => $bkkZone,
                 'buildingType' => $buildingType,
-                'building_province' => $provinceId,
                 'province' => $province,
                 'provinceName' => $provinceName,
                 'district' => $district,
