@@ -210,7 +210,7 @@
                 <form action="{{path('FTRWebBundle_list')}}?searchType=txtSearch" method="get">
                     <div id="topsearch">
                         <input type="hidden" value="txtSearch" name="searchType"/>
-                        <input type="text" value="{{ app.session.get('txtSearch') }}" name="คำค้นหา" id="s">
+                        <input type="text" value="{{ app.session.get('txtSearch') }}" name="คำค้นหา" id="s" placeholder="ชื่อตึก, จังหวัด, อำเภอ, ประเภท, ชนิด">
                         <input type="submit" id="searchsubmit" value="">
                     </div>
                 </form>
