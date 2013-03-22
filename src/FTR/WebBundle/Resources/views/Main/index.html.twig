@@ -353,12 +353,14 @@
                 {#รายเดือน#}
             </td>
             {% if tlist.PROVINCE_NAME !='กรุงเทพมหานคร' %}
-            <td>{{ tlist.AMPHUR_NAME }}</td>
+                <td>
+                    {{ tlist.AMPHUR_NAME }}
+                </td>
             {% else %}
-            <td>
-                {#{{ tlist.zonename }}#}
-                {{ tlist.PROVINCE_NAME }}
-            </td>
+                <td>
+                    {#{{ tlist.zonename }}#}
+                    {{ tlist.AMPHUR_NAME }}
+                </td>
             {% endif %}
             <td>{{ tlist.start_price }} - {{ tlist.end_price }} บาท</td>
         </tr>
