@@ -444,7 +444,12 @@ class ListController extends Controller
                     INNER JOIN pay_type c ON(a.pay_type_id=c.id)
                     INNER JOIN province p ON(a.addr_province=p.PROVINCE_ID)
                     INNER JOIN amphur am ON(a.addr_prefecture=am.AMPHUR_ID)
-                    LEFT OUTER JOIN facility2site d ON (d.building_site_id = a.id)
+                    LEFT OUTER JOIN facility2site d
+                    ON (
+                      d.building_site_id = a.id
+                      AND d.`facilitylist_id` = 2
+                      AND d.`deleted` = 0
+                    )
                     LEFT OUTER JOIN nearly2site e ON (e.building_site_id = a.id)
                     LEFT OUTER JOIN nearly_location f ON (e.nearly_location_id = f.id)
             ";

@@ -33,7 +33,7 @@
                 <div class="thumbframe">
                         {#<img src="{{asset('images/default-image.png')}}" class="thumb omega"/>#}
 
-                    {% if rlist.image_head is defined %}
+                    {% if rlist.image_head is not null %}
                         <a href="{{ path('FTRWebBundle_detail', {'buildId':rlist.id, 'province':rlist.PROVINCE_NAME, 'prefecture':rlist.AMPHUR_NAME, 'slug':rlist.slug}) }}" target="_blank">
                             <img src="{{ asset('images/building/')}}{{ rlist.id }}/{{rlist.image_head}}" class="thumb omega" />
                         </a>
