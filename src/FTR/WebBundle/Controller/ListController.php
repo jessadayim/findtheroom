@@ -407,22 +407,36 @@ class ListController extends Controller
             $selectFieldCount = "SELECT count(*) as count ";
             $selectField = "
                  SELECT
-                    a.id,a.slug,
-                    a.building_name,
-                    b.type_name,
-                    c.typename,
-                    a.addr_number,
-                    a.addr_prefecture,
-                    a.addr_province,
-                    a.addr_zipcode,
-                    a.detail,
-                    a.start_price,
-                    a.end_price,
-                    a.latitude,
-                    a.longitude,
-                    d.facilitylist_id,
-                    p.PROVINCE_NAME,
-                    am.AMPHUR_NAME
+                  a.id,
+                  a.slug,
+                  a.building_name,
+                  b.type_name,
+                  c.typename,
+                  a.addr_number,
+                  a.addr_prefecture,
+                  a.addr_province,
+                  a.addr_zipcode,
+                  a.detail,
+                  a.start_price,
+                  a.end_price,
+                  a.latitude,
+                  a.longitude,
+                  d.facilitylist_id,
+                  p.PROVINCE_NAME,
+                  am.AMPHUR_NAME,
+                  IF(d.`facilitylist_id` IS NULL, 0, 1) AS wifi,
+                  (SELECT
+                    `photo_name`
+                  FROM
+                    `image`
+                  WHERE `building_site_id` = a.`id`
+                    AND `photo_type` = 'head') AS image_head,
+                  (SELECT
+                    `photo_name`
+                  FROM
+                    `image`
+                  WHERE `building_site_id` = a.`id`
+                    AND `photo_type` = 'map') AS image_map
             ";
             $fromTable = "
                 FROM building_site a
@@ -447,37 +461,38 @@ class ListController extends Controller
                 $lessPrice = 0;
             }
             if (!empty($lessPrice) && !empty($mostPrice) || ($lessPrice <= $mostPrice)) {
-//                AND start_price >= $lessPrice
-//                AND end_price <= $mostPrice
+                //AND start_price >= $lessPrice
+                //AND end_price <= $mostPrice
                 $havingQuery .= "
                     HAVING 1
-                        AND (a.start_price BETWEEN $lessPrice AND $mostPrice)
-                        OR (a.end_price BETWEEN $lessPrice AND $mostPrice)
+                        AND (start_price BETWEEN $lessPrice AND $mostPrice)
+                        OR (end_price BETWEEN $lessPrice AND $mostPrice)
                 ";
 
-                $orderBy = "ORDER BY a.start_price ASC";
+                $orderBy = "ORDER BY start_price ASC";
             } elseif($lessPrice > $mostPrice) {
                 $havingQuery .= "
                     HAVING 1
-                        AND a.end_price <= $mostPrice
+                        AND end_price <= $mostPrice
                 ";
 
-                $orderBy = "ORDER BY a.start_price ASC";
+                $orderBy = "ORDER BY start_price ASC";
             }
 
-            echo $sql = "
+            $sql = "
                 $selectField
                 $fromTable
                 WHERE 1
                     AND a.deleted = 0
                     AND a.publish = 1
                     $whereQuery
-                     GROUP BY a.id
+                     GROUP BY id
                 $havingQuery
                 $orderBy
             ";
             $result = $conn->fetchAll($sql);
 
+            /*
             foreach ($result as $key => $value) {
                 $buildingId = $value['id'];
 
@@ -539,17 +554,16 @@ class ListController extends Controller
 
                     $result[$key]['id'] = $value2['id'];
                     $result[$key]['slug'] = $value2['slug'];
-
                     $result[$key]['latitude'] = $value2['latitude'];
                     $result[$key]['longitude'] = $value2['longitude'];
-//                    $result[$key]['searchTitle'] = $searchTitle;
+                    $result[$key]['searchTitle'] = $searchTitle;
 
                 }
 
                 $result[$key]['wifi'] = $resultWifiStatus;
 
             }
-
+        */
         } catch (Exception $e) {
             echo 'Caught exception: ', $e->getMessage(), "\n";
         }

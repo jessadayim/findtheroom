@@ -47,6 +47,8 @@ class Config
         $pagePublishDesc = $siteDesc;
         $pageContactTitle = "ติดต่อ FindTheRoom | ".$siteTitle;
         $pageContactDesc = $siteDesc;
+        $pageListTitle = "รายชื่อห้องพัก | ".$siteTitle;
+        $pageListDesc = $siteDesc;
 
         return array(
             "siteTitle"=>$siteTitle,
@@ -66,7 +68,9 @@ class Config
             "pagePublishTitle" => $pagePublishTitle,
             "pagePublishDesc" => $pagePublishDesc,
             "pageContactTitle" => $pageContactTitle,
-            "pageContactDesc" => $pageContactDesc
+            "pageContactDesc" => $pageContactDesc,
+            "pageListTitle" => $pageListTitle,
+            "pageListDesc" => $pageListDesc
         );
     }
 
@@ -76,13 +80,13 @@ class Config
 		mysql_set_charset('utf8',$con);
 		$db = mysql_select_db($dbName) ;
 		$sql = "SELECT
-  `id`,
-  `title`,
-  `description`,
-  `keyword`,
-  `tag_line`,
-  `base_url`
-FROM `site_detail` LIMIT 1";
+              `id`,
+              `title`,
+              `description`,
+              `keyword`,
+              `tag_line`,
+              `base_url`
+            FROM `site_detail` LIMIT 1";
 		$result = mysql_query($sql) ;
 		$arrData = mysql_fetch_array($result);
 		if(empty($arrData)){
