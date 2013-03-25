@@ -238,7 +238,7 @@ class MainController extends Controller {
                   INNER JOIN `pay_type` f ON (a.`pay_type_id` = f.`id`)
                 WHERE publish = 1
                 ORDER BY lastupdate DESC
-                LIMIT 20
+                LIMIT 0, 20
 			";
 
 //            $sql = "
@@ -446,35 +446,35 @@ class MainController extends Controller {
         }
         try {
             $sqlCountView = "
-            SELECT
-              a.`id` AS id,
-              a.`building_name` AS name,
-              a.`start_price`,
-              a.`slug`,
-              a.`end_price`,
-              CASE  WHEN b.`recommend_type` = 1 THEN 'bts'
-                WHEN b.`recommend_type` = 2 THEN 'mrt'
-                WHEN b.`recommend_type` = 3 THEN 'university'
-              END AS rec_type,
-              c.`type_name` AS type,
-              d.`typename` AS pay_type,
-              e.`PROVINCE_NAME` AS province,
-              f.`AMPHUR_NAME` AS amphur,
-              g.`photo_name` AS img,
-              CASE  WHEN i.`nearly_type_id` = 2 THEN 'bts'
-                WHEN i.`nearly_type_id` = 3 THEN 'mrt'
-                WHEN i.`nearly_type_id` = 4 THEN 'university'
-              END AS naerly_type,
-              i.`name` AS nearly_name
-            FROM building_site a
-            INNER JOIN `recommend_building` b ON (a.`id` = b.`building_id` AND b.`recommend_type`= 4)
-            LEFT JOIN `building_type` c ON (a.`building_type_id` = c.`id`)
-            LEFT JOIN `pay_type` d ON (a.`pay_type_id` = d.`id`)
-            LEFT JOIN `province` e ON (a.`addr_province` = e.`PROVINCE_ID`)
-            LEFT JOIN `amphur` f ON (a.`addr_prefecture` = f.`AMPHUR_ID`)
-            LEFT JOIN `image` g ON (a.`id` = g.`building_site_id` AND g.`photo_type` = 'head')
-            INNER JOIN `nearly2site` h ON (a.`id` = h.`building_site_id` AND h.`deleted` = 0)
-            INNER JOIN `nearly_location` i ON (i.`id` = h.`nearly_location_id`)
+                SELECT
+                  a.`id` AS id,
+                  a.`building_name` AS name,
+                  a.`start_price`,
+                  a.`slug`,
+                  a.`end_price`,
+                  CASE  WHEN b.`recommend_type` = 1 THEN 'bts'
+                    WHEN b.`recommend_type` = 2 THEN 'mrt'
+                    WHEN b.`recommend_type` = 3 THEN 'university'
+                  END AS rec_type,
+                  c.`type_name` AS type,
+                  d.`typename` AS pay_type,
+                  e.`PROVINCE_NAME` AS province,
+                  f.`AMPHUR_NAME` AS amphur,
+                  g.`photo_name` AS img,
+                  CASE  WHEN i.`nearly_type_id` = 2 THEN 'bts'
+                    WHEN i.`nearly_type_id` = 3 THEN 'mrt'
+                    WHEN i.`nearly_type_id` = 4 THEN 'university'
+                  END AS naerly_type,
+                  i.`name` AS nearly_name
+                FROM building_site a
+                INNER JOIN `recommend_building` b ON (a.`id` = b.`building_id` AND b.`recommend_type`= 4)
+                LEFT JOIN `building_type` c ON (a.`building_type_id` = c.`id`)
+                LEFT JOIN `pay_type` d ON (a.`pay_type_id` = d.`id`)
+                LEFT JOIN `province` e ON (a.`addr_province` = e.`PROVINCE_ID`)
+                LEFT JOIN `amphur` f ON (a.`addr_prefecture` = f.`AMPHUR_ID`)
+                LEFT JOIN `image` g ON (a.`id` = g.`building_site_id` AND g.`photo_type` = 'head')
+                INNER JOIN `nearly2site` h ON (a.`id` = h.`building_site_id` AND h.`deleted` = 0)
+                INNER JOIN `nearly_location` i ON (i.`id` = h.`nearly_location_id`)
             ";
 //            $sqlCountView = "SELECT pro.PROVINCE_NAME, am.AMPHUR_NAME, b.slug, COUNT(ban.building_site_id), img.photo_name, img.building_site_id, b.id, b.building_name,n.name,t.type_name, b.start_price, b.end_price, nt.type_name AS nearlyType
 //                                FROM banner_count ban

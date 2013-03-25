@@ -447,23 +447,25 @@ class ListController extends Controller
                 $lessPrice = 0;
             }
             if (!empty($lessPrice) && !empty($mostPrice) || ($lessPrice <= $mostPrice)) {
+//                AND start_price >= $lessPrice
+//                AND end_price <= $mostPrice
                 $havingQuery .= "
                     HAVING 1
-                        AND start_price >= $lessPrice
-                        AND end_price <= $mostPrice
+                        AND (a.start_price BETWEEN $lessPrice AND $mostPrice)
+                        OR (a.end_price BETWEEN $lessPrice AND $mostPrice)
                 ";
 
-                $orderBy = "ORDER BY start_price ASC";
+                $orderBy = "ORDER BY a.start_price ASC";
             } elseif($lessPrice > $mostPrice) {
                 $havingQuery .= "
                     HAVING 1
-                        AND end_price <= $mostPrice
+                        AND a.end_price <= $mostPrice
                 ";
 
-                $orderBy = "ORDER BY start_price ASC";
+                $orderBy = "ORDER BY a.start_price ASC";
             }
 
-            $sql = "
+            echo $sql = "
                 $selectField
                 $fromTable
                 WHERE 1
